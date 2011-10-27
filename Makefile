@@ -1,3 +1,4 @@
+# COPYRIGHT NOTICE TBD NOT FOR RELEASE
 
 C_TOOL    = gcc
 EXE_TOOL    = gcc
@@ -13,14 +14,28 @@ OPTIMIZE_FLAGS = -O3
 LDFLAGS+=-L.  -L/usr/local/lib -L/client/lib -L/lib/arm-linux-gnueabi
 LDFLAGS+=-lm
 
+ALLFILES = NE10_addc.c_r.o NE10_subc.c_r.o NE10_rsbc.c_r.o NE10_mulc.c_r.o NE10_divc.c_r.o NE10_mlac.c_r.o NE10_setc.c_r.o NE10_add.c_r.o NE10_sub.c_r.o NE10_mul.c_r.o NE10_div.c_r.o NE10_mla.c_r.o NE10_abs.c_r.o NE10_len.c_r.o NE10_normalize.c_r.o NE10_addc.neon_r.o NE10_subc.neon_r.o NE10_rsbc.neon_r.o NE10_mulc.neon_r.o NE10_divc.neon_r.o NE10_mlac.neon_r.o NE10_setc.neon_r.o NE10_add.neon_r.o NE10_sub.neon_r.o NE10_mul.neon_r.o NE10_div.neon_r.o NE10_mla.neon_r.o NE10_abs.neon_r.o NE10_len.neon_r.o NE10_normalize.neon_r.o
+
 #TARGET_ARCH = stdc
 
 .PHONY: all clean
 
-all : NE10_addc.test_r.ex
+all: NE10_test_static.ex NE10_test_dynamic.ex
 
 clean:
 	./cleanall.sh
+
+NE10_test_static.ex : libNE10.a NE10_init.h NE10_test.c
+		$(EXE_TOOL) $(OPTIMIZE_FLAGS) $(ARM_FLAGS) ./NE10_init.c ./NE10_test.c -o $@ -l:libNE10.a $(C_FLAGS) -L/lib/arm-linux-gnueabi
+
+NE10_test_dynamic.ex : libNE10.so NE10_init.h NE10_test.c
+		$(EXE_TOOL) $(OPTIMIZE_FLAGS) $(ARM_FLAGS) ./NE10_init.c ./NE10_test.c -o $@ -l:libNE10.so $(C_FLAGS) -L/lib/arm-linux-gnueabi
+
+libNE10.a : $(ALLFILES) NE10_init.h NE10_init.c
+		ar rcs libNE10.a $(ALLFILES)
+
+libNE10.so : $(ALLFILES) NE10_init.h NE10_init.c
+		gcc -shared -o $@ $(ALLFILES) 
 
 %.test_r.ex : %.asm_r.o %.c_r.o %.neon_r.o ./source/%_test.c  ./inc/NE10.h
 		$(EXE_TOOL) $(OPTIMIZE_FLAGS) $(ARM_FLAGS) $^ -o $@ $(C_FLAGS) -L/lib/arm-linux-gnueabi
@@ -40,4 +55,3 @@ clean:
 # Rules for the C version
 %.neon_r.o : ./source/%.neon.c ./inc/NE10.h
 		$(C_TOOL) $(OPTIMIZE_FLAGS) $(ARM_FLAGS) -mfpu=neon -c $< -o $@ $(C_FLAGS)
-

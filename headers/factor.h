@@ -19,8 +19,11 @@
  */
 
 // Typebuilding MACROs
+// - Slight difference between toolchain versions on intrinsics
 #define FLOAT32_2x3(x1,y1,x2,y2,x3,y3) \
-    { x1,y1,x2,y2,x3,y3 }
+    {{ \
+        {x1, y1}, {x2,y2}, {x3,y3} \
+    }}
 
 // Unit test use this macro to index into their function table
 // "opc" stands for operation's code (which function),

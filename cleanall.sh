@@ -21,12 +21,13 @@
 
 PRODUCT_NAME=NE10
 
-rm *.ex *.a *.o
+rm *.ex *.a *.o *.so
 rm res_*.txt
 rm .*.swp
 rm .exp.tmp
 rm testlog.txt
 for dir in `find * -maxdepth 0 -type d -name "${PRODUCT_NAME}_*"`; do rm -rf $dir; done;
+rm -rf ./java
 for fl  in `find * -maxdepth 0 -type f -name "${PRODUCT_NAME}_*.tgz"`; do rm -rf $fl; done;
 if [ "$CLS" != "0" ]; then
  clear

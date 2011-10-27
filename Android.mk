@@ -8,11 +8,11 @@ ne10_neon_source := \
     source/NE10_addc.neon.c \
     source/NE10_normalize.neon.s \
     source/NE10_mlac.neon.c \
-    source/NE10_abs.neon.c \
+    source/NE10_abs.neon.s \
     source/NE10_div.neon.c \
     source/NE10_add.neon.c \
     source/NE10_divc.neon.c \
-    source/NE10_mul.neon.c \
+    source/NE10_mul.neon.s \
     source/NE10_len.neon.s \
     source/NE10_sub.neon.c \
     source/NE10_rsbc.neon.c \
