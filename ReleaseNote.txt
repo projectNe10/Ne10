@@ -121,7 +121,7 @@ This release has been built and tested on the following host environments:
 
 The source code has been successfully built with the following toolchains:
 
- 1) Linaro GCC v4.6.1
+ 1) Linaro GCC v4.6.1 ( https://launchpad.net/gcc-linaro/4.6 )
  2) Prebuilt GCC toolchain provided with ICS release of ASOP
 
 To build natively on ARM
