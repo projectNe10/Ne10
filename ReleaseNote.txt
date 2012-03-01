@@ -18,9 +18,7 @@
  * NE10 Library : ReleaseNote.txt
  */
 NE10 SIMD LIBRARY - Release Note
-LAST UPDATED ON: 22 / DEC / 2011
-
-
+LAST UPDATED ON: 1 / MAR / 2012
 
 ========
 Contents
@@ -38,16 +36,14 @@ Contents
          3-b. Alternative Approach
 
 
-
 ==========
 1. Preface
 ==========
 
 1-a. License details
 --------------------
-NE10 is an open source project, free software released under the Apache License,
-Version 2.0 (ALv2). It is free, and the 'source code' behind the program is
-available. See the file LICENSE for the full text of the ALv2.
+NE10 is an open source project released under the Apache License,
+Version 2.0 (ALv2).  See the file LICENSE for the full text of the ALv2.
 
 
 1-b. Product status
@@ -57,14 +53,13 @@ is actively under development and more functions as well as improved versions of
 the available functions will be contributed to the source code.
 
 
-
 ==================
 2. Release details
 ==================
 
 2-a. Product release status
 ---------------------------
-Version 1.0
+Version 0.9 beta
 
 2-b. Functions included
 ---------------------------
@@ -126,8 +121,8 @@ This release has been built and tested on the following host environments:
 
 The source code has been successfully built with the following toolchains:
 
- 1) GCC v4.6.1
- 2) Prebuilt GCC toolchain provided with ICS release of Android
+ 1) Linaro GCC v4.6.1
+ 2) Prebuilt GCC toolchain provided with ICS release of ASOP
 
 To build natively on ARM
 
