@@ -1,0 +1,15 @@
+addc
+subc
+rsbc
+mulc
+divc
+mlac
+setc
+add
+sub
+mul
+div
+mla
+abs
+len
+normalize
