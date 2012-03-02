@@ -124,20 +124,31 @@ The source code has been successfully built with the following toolchains:
  1) Linaro GCC v4.6.1 ( https://launchpad.net/gcc-linaro/4.6 )
  2) Prebuilt GCC toolchain provided with ICS release of ASOP
 
-To build natively on ARM
+
+3-b. Native Building
+--------------------
+
+Native building (building directly on an ARM platform) is supported via
+
+    make
+
+This will build a libne10.a and libne10.so in the local directory along with
+some test binaries.
 
     ./nightly.pl
 
 Will build and run a set of tests
 
+3-c. Android Building
+
 To build as part of the Android Open Source Project, copy the release
 directory into 'external' within the source directories and build as
 normal.  This will install the libne10.so library into system/lib on the
 final Android OS image, where other applications will be able to access it in
-a similar way to other shared libraries.
+a similar way to other shared libraries.  You will need to build with
+TARGET_ARCH_VARIANT=armv7-a-neon defined to enable NEON support.
 
-
-3-b. Alternative Approach
+3-d. Alternative Approach
 -------------------------
 While not supported, the functions within this library can be taken and
 incorporated (licensing conflicts permitting) within other projects as is.
