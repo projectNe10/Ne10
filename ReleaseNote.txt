@@ -59,7 +59,11 @@ the available functions will be contributed to the source code.
 
 2-a. Product release status
 ---------------------------
-Version 0.9 beta
+Version 0.9 dev
+
+Implemented functions have been tested and are believed to be working, but the
+complete set of functions planned for the initial release are not in this
+release.
 
 2-b. Functions included
 ---------------------------
