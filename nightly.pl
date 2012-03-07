@@ -77,14 +77,5 @@ foreach my $success (@built)
     }
 }
 
-
- # loop through successfully built units
- foreach my $unit (@built)
- {
-  # build a string for all STDOUT text files (test outputs) and STDERR files (perflogs)
-  my $stdout_str = `cat res_std_NE10_${unit}_*_$iterations.txt`;
-  my $stderr_str = `cat res_err_NE10_${unit}_*_$iterations.txt`;
- }
-
  # print out a summary of this run
  print ( $testlog );

@@ -49,7 +49,7 @@ libNE10.a : $(ALLFILES) NE10_init.h NE10_init.c
 		ar rcs libNE10.a $(ALLFILES)
 
 libNE10.so : $(ALLFILES) NE10_init.h NE10_init.c
-		gcc -shared -o $@ $(ALLFILES) 
+		gcc -shared -o $@ $(C_FLAGS) $(ALLFILES) 
 
 %.test_r.ex : %.asm_r.o %.c_r.o %.neon_r.o ./source/%_test.c  ./inc/NE10.h
 		$(EXE_TOOL) $(OPTIMIZE_FLAGS) $(ARM_FLAGS) $^ -o $@ $(C_FLAGS) -L/lib/arm-linux-gnueabi

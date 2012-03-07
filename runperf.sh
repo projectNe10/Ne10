@@ -18,8 +18,7 @@
 #
 # NE10 Library : runperf.sh
 #
-#stty echo
-#clear
+
 # NOTE: the following string comparisons differ between BASH and SH
 if [ ! -n "$1" ]; then exit; fi
 if [ ! -n "$2" ]; then exit; fi
@@ -29,7 +28,6 @@ OP_COUNT=$?
 IMPL_COUNT=3
 ITERATIONS=$2
 PERF_CMD="perf stat -e cycles,instructions,cache-references,cache-misses,branches,branch-misses,bus-cycles,cpu-clock,task-clock,faults,minor-faults,major-faults,context-switches,migrations,alignment-faults,emulation-faults -x,"
-#stty echo
 rm res_*_$1_*.txt
 for o in $(seq $OP_COUNT)
 do
@@ -45,8 +43,6 @@ do
   fi
   for i in $(seq $IMPL_COUNT)
   do
-   #./NE10_mulc_test_r.ex $o $i $ITERATIONS
-   #echo "TEST#"$o";"$i >>res_err.txt
      ./$1.test_r.ex $o $i $ITERATIONS 1>/dev/null 2>/dev/null
      RET=$?
      if [ "$RET" -ne "0" ]; then
@@ -55,12 +51,10 @@ do
      else
         STDOUT_FILE="res_std_"$1_$o"_"$i"_"$ITERATIONS".txt";
         STDERR_FILE="res_err_"$1_$o"_"$i"_"$ITERATIONS".txt";
-        echo "$STDOUT_FILE" > $STDOUT_FILE;
-        echo "$STDERR_FILE" > $STDERR_FILE;
-        $PERF_CMD ./$1.test_r.ex $o $i $ITERATIONS 1>>$STDOUT_FILE 2>>$STDERR_FILE;
+# Uncomment and use the following three lines if you would like to see the output from perf
+#        echo "$STDOUT_FILE" > $STDOUT_FILE;
+#        echo "$STDERR_FILE" > $STDERR_FILE;
+#        $PERF_CMD ./$1.test_r.ex $o $i $ITERATIONS 1>>$STDOUT_FILE 2>>$STDERR_FILE;
      fi
-   #echo $o $i;
-   #q=12;
   done
 done
-#stty echo

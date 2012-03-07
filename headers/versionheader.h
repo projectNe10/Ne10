@@ -26,6 +26,6 @@
 #define VERSION_MINOR      0
 #define VERSION_REVISION   10
 
-#define PAHSE              1
+#define PHASE              1
 #define COPYRIGHT_YEAR     2011
 #define COPYRIGHT_HOLDER   "ARM Ltd."
