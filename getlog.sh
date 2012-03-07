@@ -33,28 +33,28 @@ echo
 echo
 echo -e "\033[4mINSTALLED TOOLS:\033[0m"
 echo "git:"
-if [ "`which git`" == "" ]; then
+if [ "`which git`" = "" ]; then
  echo "fatal: 'git' is not installed on this system" 1>&2
  exit 1
 fi
 git --version | paste -s -d ';' -
 echo
 echo "gcc:"
-if [ "`which gcc`" == "" ]; then
+if [ "`which gcc`" = "" ]; then
  echo "fatal: 'gcc' is not installed on this system" 1>&2
  exit 1
 fi
 gcc --version | paste -s -d ';' -
 echo
 echo "as:"
-if [ "`which as`" == "" ]; then
+if [ "`which as`" = "" ]; then
  echo "fatal: 'as' is not installed on this system" 1>&2
  exit 1
 fi
 as --version | paste -s -d ';' -
 echo
 echo "ar:"
-if [ "`which ar`" == "" ]; then
+if [ "`which ar`" = "" ]; then
  echo "fatal: 'ar' is not installed on this system" 1>&2
  exit 1
 fi
@@ -62,7 +62,7 @@ ar --version | paste -s -d ';' -
 echo
 echo
 echo "perl:"
-if [ "`which perl`" == "" ]; then
+if [ "`which perl`" = "" ]; then
  echo "fatal: 'perl' is not installed on this system" 1>&2
  exit 1
 fi
