@@ -79,7 +79,7 @@ extern arm_result_t (*addc_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src, const ar
     Subtracts a constant scalar from all the elements of an input array and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
-    @param[in]  cst   Pointer to the 2D vector added to the input values
+    @param[in]  cst   The constant scalar subtracted from the input values
     @param[in]  count The number of items in the input array
  */
 extern arm_result_t (*subc_float)(arm_float_t * dst, arm_float_t * src, const arm_float_t cst, unsigned int count);
