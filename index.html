@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html><head>
 
-
-
   
-  <meta charset="utf-8"><title>NE10lib/NE10 @ GitHub</title>
+  <meta charset="utf-8"><title>projectNe10/Ne10 @ GitHub</title>
   
 
   
@@ -12,6 +10,7 @@
   <style type="text/css">
 body {
   margin-top: 1em;
+  background-color: #000000;
   font-family: Helvetica,Arial,FreeSans,san-serif;
   color: #ffffff;
 }
@@ -27,9 +26,17 @@ h2 {
   font-size: 1.5em;
   text-decoration: none;
 }
+ie {
+}
+nrml {
+  text-shadow: #000000 1px 1px 2px, #000000 -1px -1px 1px;
+  color: #ffffff;
+  margin-top: 1em;
+  font-family: Helvetica,Arial,FreeSans,san-serif;
+}
 a {
-  text-shadow: #000000 1px 1px 0px;
   color: #cccc33;
+  text-decoration: none;
 }
 pre {
   padding: 15px;
@@ -42,12 +49,6 @@ hr {
   border-width: 0 0 1px;
   width: 80%;
 }
-nrml {
-  font-family: Helvetica,Arial,FreeSans,san-serif;
-  margin-top: 1em;
-  color: #ffffff;
-  text-shadow: #000000 1px 1px 0px;
-}
 .footer {
   text-align: center;
   padding-top: 30px;
@@ -55,29 +56,39 @@ nrml {
 }
 
 </style></head><body style="background-image: url(Neon.jpg);">
-<a href="https://github.com/NE10lib/NE10"><img style="border: 0pt none ; position: absolute; top: 0pt; right: 0pt;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+<a href="https://github.com/projectNe10/Ne10"><img style="border: 0pt none ; position: absolute; top: 0pt; right: 0pt;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 <div id="container">
-
-<h1 style="text-align: center;"><a href="https://github.com/NE10lib/NE10"><img style="border: 0px solid ; width: 674px; height: 212px;" alt="Ne10 - An Open Optimized Software Library Project for the ARM Architecture" src="NE10+tag_final.png"></a><a href="https://github.com/NE10lib/NE10"><br>
+<h1 style="text-align: center;"><a href="https://github.com/projectNe10/Ne10"><img style="border: 0px solid ; width: 674px; height: 212px;" alt="Ne10 - An Open Optimized Software Library Project for the ARM Architecture" src="Ne10+tag_final.png"></a><a href="https://github.com/projectNe10/Ne10"><br>
 </a><span class="small"></span></h1>
-<p><nrml>The NE10 project has been set up
+<p><nrml>The Ne10 project has been set up
 to provide a set of common, useful functions which have been heavily
-optimized for the ARM Architecture and provide consistent well tested
+optimized for the <a href="http://www.arm.com/products/processors/technologies/instruction-set-architectures.php" target="_blank">ARM Architecture</a> and provide consistent well
+tested
 behavior that can be easily incorporated into applications. C
-interfaces to the functions are provided. The library supports static
+interfaces to the functions are provided for both assember and <a href="http://www.arm.com/products/processors/technologies/neon.php" target="_blank">NEON</a> implenetations. The library supports static
 and dynamic linking and is modular, so that functionality that is not
 required can be discarded.</nrml></p>
-<h2 style="color: rgb(204, 204, 51);">License</h2><nrml>Apache 2.0</nrml><h2 style="color: rgb(204, 204, 51);">Contact</h2><nrml> (matthew.dupuy@arm.com)
+<h2 style="color: rgb(204, 204, 51);">License</h2>
+<nrml>Apache 2.0</nrml>
+<h2 style="color: rgb(204, 204, 51);">Contact</h2>
+<nrml> (matthew.dupuy@arm.com)
 <br>
-</nrml><h2 style="color: rgb(204, 204, 51);">Download</h2><nrml> You can download this project in either <a href="https://github.com/NE10lib/NE10/zipball/master">zip</a> or <a href="https://github.com/NE10lib/NE10/tarball/master">tar formats. </a></nrml>
-<p><nrml><a href="https://github.com/NE10lib/NE10/tarball/master">You can
+</nrml>
+<h2 style="color: rgb(204, 204, 51);">Download</h2>
+<nrml> You can download this project in either <a href="https://github.com/projectNe10/Ne10/zipball/master">zip</a> or <a href="https://github.com/projectNe10/Ne10/tarball/master">tar formats.
+</a></nrml>
+<p><nrml><a href="https://github.com/projectNe10/Ne10/tarball/master">You
+can
 also clone the project with </a><a href="http://git-scm.com/">Git</a>
 by running: <nrml></nrml></nrml></p>
-<pre>$ git clone git://github.com/NE10lib/NE10</pre>
-<div class="footer"> get the source code on GitHub : <a href="https://github.com/NE10lib/NE10">NE10lib/NE10</a><br>
+<pre>$ git clone git://github.com/projectNe10/Ne10</pre>
+<div class="footer"> get the source code on GitHub : <a href="https://github.com/projectNe10/Ne10">projectNe10/Ne10</a><br>
 </div>
-<div style="text-align: center;"><nrml><a href="https://github.com/NE10lib/NE10/wiki/F.A.Q.">Frequently Asked Questions</a></nrml><br>
+<div style="text-align: center;"><nrml><a href="https://github.com/projectNe10/Ne10/wiki/F.A.Q.">Frequently
+Asked
+Questions</a></nrml><br>
 </div>
+
 </div>
 
 <script type="\&quot;text/javascript\&quot;">
@@ -88,5 +99,9 @@ document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/
 try {
 var pageTracker = _gat._getTracker("UA-27682067-1");
 pageTracker._trackPageview();
-} catch(err) {}</script>
+} catch(err) {}</script><small><small>
+</small></small>
+<div style="text-align: right;"><br>
+<a href="http://en.wikipedia.org/wiki/File:Neon.JPG" target="_blank"><small><small>background</small></small></a><nrml><small><small> licenced under <a href="http://creativecommons.org/licenses/by-sa/2.5/deed.en" target="_blank">CC-SA</a></small></small></nrml></div>
+
 </body></html>
