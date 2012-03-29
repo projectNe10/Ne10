@@ -27,6 +27,10 @@ The design is intended to be available as a simple 'drop and go' pre-built
 library and as a set of modular functions that can be incorporated in a more
 modular pick and mix form where binary size might be an issue.
 
+Each function is implemented in C, ARM Assembly and NEON code as a basis for
+comparison. Assembly versions, while efficient, are not intended as 
+best-practice examples. NEON versions are intended as best-practice examples.
+
 Future releases are intended to expand on the functions provided and possibly
 the supported languages (C++ being near the top of that list).
 
