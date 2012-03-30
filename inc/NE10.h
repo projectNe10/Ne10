@@ -391,51 +391,206 @@ extern arm_result_t (*normalize_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src, uns
 
 
 
+
+/*!
+    Generates a 2D vector from the absolute values of each of the components of an input vector
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src   Pointer to the source array
+    @param[in]  count The number of items in the input array
+ */
 extern arm_result_t (*abs_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src, unsigned int count);
+/*!
+    Generates a 3D vector from the absolute values of each of the components of an input vector
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src   Pointer to the source array
+    @param[in]  count The number of items in the input array
+ */
 extern arm_result_t (*abs_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src, unsigned int count);
+/*!
+    Generates a 4D vector from the absolute values of each of the components of an input vector
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src   Pointer to the source array
+    @param[in]  count The number of items in the input array
+ */
 extern arm_result_t (*abs_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src, unsigned int count);
 
 
 
 // ## SIMD Component-wise Arithmetic on Two Vectors ##
+
+/*!
+    Multiplies the components of a 2D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vmul_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+/*!
+    Multiplies the components of a 3D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vmul_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+/*!
+    Multiplies the components of a 4D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vmul_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 
 
+/*!
+    Divides the components of a 2D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the nominators' source array
+    @param[in]  src2   Pointer to the denominators' source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vdiv_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+/*!
+    Divides the components of a 3D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the nominators' source array
+    @param[in]  src2   Pointer to the denominators' source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vdiv_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+/*!
+    Divides the components of a 4D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the nominators' source array
+    @param[in]  src2   Pointer to the denominators' source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vdiv_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 
 
+/*!
+    Performs a multiply and accumulate operation on the components of a 2D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vmla_vec2f)(arm_vec2f_t * acc, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+/*!
+    Performs a multiply and accumulate operation on the components of a 3D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vmla_vec3f)(arm_vec3f_t * acc, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+/*!
+    Performs a multiply and accumulate operation on the components of a 4D vector with the corresponding components of another
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*vmla_vec4f)(arm_vec4f_t * acc, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 
 
 // ## Vector-Vector Algebra ##
+
+/*!
+    Vector addition of two 2D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*add_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+/*!
+    Vector addition of two 3D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*add_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+/*!
+    Vector addition of two 4D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*add_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 
 
+/*!
+    Vector subtraction of two 2D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*sub_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+/*!
+    Vector subtraction of two 3D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*sub_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+/*!
+    Vector subtraction of two 4D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*sub_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 
 
+/*!
+    Dot product of two 2D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*dot_vec2f)(arm_float_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+/*!
+    Dot product of two 3D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*dot_vec3f)(arm_float_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+/*!
+    Dot product of two 4D vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*dot_vec4f)(arm_float_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 
 
+/*!
+    Performs a cross product operation on the two input vectors
+    @param[out] dst   Pointer to the destination array
+    @param[in]  src1   Pointer to the first source array
+    @param[in]  src2   Pointer to the second source array
+    @param[in]  count The number of items in the input arrays
+ */
 extern arm_result_t (*cross_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+
 
 
 

@@ -45,10 +45,6 @@ struct timezone zone;
 // there is a max of "4" components in a vec
 #define MAX_VEC_COMPONENTS 4
 
-arm_float_t * guarded_src1 = NULL;
-arm_float_t * guarded_src2 = NULL;
-arm_float_t * guarded_dst[IMPL_COUNT];
-
 arm_float_t * thesrc1 = NULL;
 arm_float_t * thesrc2 = NULL;
 arm_float_t * thedst[IMPL_COUNT]; // output from different implementations are stored in separate arrays for varification
@@ -56,26 +52,18 @@ int done_init = 0;
 
 arm_result_t test_operation()
 {
-  const unsigned int fixed_length = ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS;
-
   // initialize if not done so
   if ( 0 == done_init )
   {
-    guarded_src1 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
-    GUARD_ARRAY( guarded_src1, (2*ARRAY_GUARD_LEN) + fixed_length );
-    thesrc1 = (arm_float_t*) ( (void*)guarded_src1 + 16);
-    FILL_FLOAT_ARRAY( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    thesrc1 = (arm_float_t*) malloc( ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS );
+    FILL_FLOAT_ARRAY_LIMIT( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
-    guarded_src2 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
-    GUARD_ARRAY( guarded_src2, (2*ARRAY_GUARD_LEN) + fixed_length );
-    thesrc2 = (arm_float_t*) ( (void*)guarded_src2 + 16);
-    FILL_FLOAT_ARRAY( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    thesrc2 = (arm_float_t*) malloc( ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS );
+    FILL_FLOAT_ARRAY_LIMIT( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     for ( i = 0; i<IMPL_COUNT; i++ )
     {
-      guarded_dst[i] = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
-      GUARD_ARRAY( guarded_dst[i], (2*ARRAY_GUARD_LEN) + fixed_length );
-      thedst[i] = (arm_float_t*) ( (void*)guarded_dst[i] + 16);
+      thedst[i] = (arm_float_t*) malloc( ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS );
     }
 
     done_init = 1;
@@ -85,16 +73,6 @@ arm_result_t test_operation()
   MEASURE( dt_test_sample,
     ftbl [ FTBL_IDX(opcode, impl) ] ( thedst[ impl-1 ] , thesrc1, thesrc2, ARRLEN );
   );
-  if ( ! CHECK_ARRAY_GUARD(guarded_dst[ impl -1 ], (2*ARRAY_GUARD_LEN) + fixed_length) ||
-       ! CHECK_ARRAY_GUARD(guarded_src1, (2*ARRAY_GUARD_LEN) + fixed_length) ||
-       ! CHECK_ARRAY_GUARD(guarded_src2, (2*ARRAY_GUARD_LEN) + fixed_length) )
-  {
-                fprintf ( stderr, "\t FATAL ERROR: Operation number %d implementation [%d] has failed the guard test. \n", opcode, impl );
-                exit( NE10_ERR );
-  }
-
-  // this test to make sure passing zero as the length won't cause segmentation faults
-  ftbl [ FTBL_IDX(opcode, impl) ] ( thedst[ impl-1 ] , thesrc1, thesrc2, 0 );
 
           MEASURE( elapsed,
             for ( i = 0; i < max; i++  )
@@ -182,7 +160,7 @@ arm_result_t run_test( int argc, char **argv )
                          assert ( _output[ ((1-1)*item_width)+pos ] == _output[ ((1-1)*item_width)+pos ] ); // check for not-a-number
                          assert ( _output[ ((impl-1)*item_width)+pos ] == _output[ ((impl-1)*item_width)+pos ] );  // check for not-a-number
 
-                         if ( ! EQUALS_FLOAT( _output[ ((1-1)*item_width)+pos ] , _output[ ((impl-1)*item_width)+pos ], ERROR_MARGIN_SMALL ) )
+                         if ( ! EQUALS_FLOAT( _output[ ((1-1)*item_width)+pos ] , _output[ ((impl-1)*item_width)+pos ], ERROR_MARGIN_LARGE ) ) // accept larger errors
                          { fprintf( stderr, "\t\t WARNING: In opcode [%d], implementation [1] != implemenation [%d] on item [%d -> %d]\n",
                                     opcode, impl, i, pos+1 );
                              warns++; }
@@ -197,7 +175,7 @@ arm_result_t run_test( int argc, char **argv )
              }
              free( _output ); _output = (arm_float_t *) NULL;
 
-             if ( warns < ACCEPTABLE_WARNS )
+             if ( 0 == warns )
              {
                return NE10_OK;
              }
@@ -222,11 +200,11 @@ arm_result_t run_test( int argc, char **argv )
 
 
   // free any allocated memory...
-  free( guarded_src1 );
-  free( guarded_src2 );
+  free( thesrc1 );
+  free( thesrc2 );
   for ( i = 0; i<IMPL_COUNT; i++ )
   {
-    free( guarded_dst[i] );
+    free( thedst[i] );
   }
 
   return NE10_OK;

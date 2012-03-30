@@ -119,9 +119,9 @@ extern arm_result_t vdiv_vec4f_neon(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_v
 
 
 
-extern arm_result_t vmla_vec2f_neon(arm_vec2f_t * acc, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
-extern arm_result_t vmla_vec3f_neon(arm_vec3f_t * acc, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
-extern arm_result_t vmla_vec4f_neon(arm_vec4f_t * acc, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+extern arm_result_t vmla_vec2f_neon(arm_vec2f_t * dst, arm_vec2f_t * acc, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+extern arm_result_t vmla_vec3f_neon(arm_vec3f_t * dst, arm_vec3f_t * acc, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+extern arm_result_t vmla_vec4f_neon(arm_vec4f_t * dst, arm_vec4f_t * acc, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 
 

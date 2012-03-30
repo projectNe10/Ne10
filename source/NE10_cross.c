@@ -15,21 +15,20 @@
  */
 
 /*
- * NE10 Library : source/NE10_sub.neon.c
+ * NE10 Library : source/NE10_cross.c
  */
 
 #include "NE10.h"
 #include "../headers/macros.h"
 
 #include <assert.h>
-#include <arm_neon.h>
 
-arm_result_t sub_float_neon(arm_float_t * dst, arm_float_t * src1, arm_float_t * src2, unsigned int count)
+arm_result_t cross_vec3f_c(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count)
 {
-    NE10_X_OPERATION_FLOAT_NEON
-    (
-        n_dst = vsubq_f32( n_src , n_src2 );
-        ,
-        n_tmp_src = vsub_f32( n_tmp_src, n_tmp_src2 );
-    );
+  NE10_X_OPERATION_FLOAT_C
+  (
+    dst[ itr ].x = (src1[ itr ].y * src2[ itr ].z) - (src1[ itr ].z * src2[ itr ].y);
+    dst[ itr ].y = (src1[ itr ].z * src2[ itr ].x) - (src1[ itr ].x * src2[ itr ].z);
+    dst[ itr ].z = (src1[ itr ].x * src2[ itr ].y) - (src1[ itr ].y * src2[ itr ].x);
+  );
 }
