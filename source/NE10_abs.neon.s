@@ -54,14 +54,13 @@ abs_float_neon:
 
         @ load the 1st set of values
           vld1.32         {q0}, [r1]!
-          subs            r2, r2, #4
+          subs            r2, r2, #8          @ 4 for this set, and 4 for the 2nd set
 
         @ absolute values of the 1st set
           vabs.f32        q3, q0         @ q3 = abs( q0 )
 
         @ load the 2nd set of values
           vld1.32         {q0}, [r1]!
-          subs            r2, r2, #4
 
           ble             .L_mainloopend_float
 
@@ -143,7 +142,7 @@ abs_vec2f_neon:
 
         @ load the 1st set of values
           vld2.32         {q0-q1}, [r1]!
-          subs            r2, r2, #4
+          subs            r2, r2, #8          @ 4 for this set, and 4 for the 2nd set
 
         @ absolute values of the 1st set
           vabs.f32        q3, q0         @ q3 = abs( q0 )
@@ -151,7 +150,6 @@ abs_vec2f_neon:
 
         @ load the 2nd set of values
           vld2.32         {q0-q1}, [r1]!
-          subs            r2, r2, #4
 
           ble             .L_mainloopend_vec2
 
@@ -236,7 +234,7 @@ abs_vec3f_neon:
         @ load the 1st set of values
           vld3.32         {d0, d2, d4}, [r1]!
           vld3.32         {d1, d3, d5}, [r1]!
-          subs            r2, r2, #4
+          subs            r2, r2, #4          @ 4 for this set, and 4 for the 2nd set
 
         @ absolute values of the 1st set
           vabs.f32        q5, q0
@@ -246,7 +244,6 @@ abs_vec3f_neon:
         @ load the 2nd set of values
           vld3.32         {d0, d2, d4}, [r1]!
           vld3.32         {d1, d3, d5}, [r1]!
-          subs            r2, r2, #4
 
           ble             .L_mainloopend_vec3
 
@@ -341,7 +338,7 @@ abs_vec4f_neon:
         @ load the 1st set of values
           vld4.32         {d0, d2, d4, d6}, [r1]!
           vld4.32         {d1, d3, d5, d7}, [r1]!
-          subs            r2, r2, #4
+          subs            r2, r2, #8          @ 4 for this set, and 4 for the 2nd set
 
         @ absolute values of the 1st set
           vabs.f32        q10, q0
@@ -352,7 +349,6 @@ abs_vec4f_neon:
         @ load the 2nd set of values
           vld4.32         {d0, d2, d4, d6}, [r1]!
           vld4.32         {d1, d3, d5, d7}, [r1]!
-          subs            r2, r2, #4
 
           ble             .L_mainloopend_vec4
 

@@ -15,7 +15,7 @@
  */
 
 /*
- * NE10 Library : headers/unit_test_x_operation_x.h
+ * NE10 Library : headers/unit_test_cross_operation_x.h
  */
 
 #include "./unit_test_common.h"
@@ -64,12 +64,12 @@ arm_result_t test_operation()
     guarded_src1 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
     GUARD_ARRAY( guarded_src1, (2*ARRAY_GUARD_LEN) + fixed_length );
     thesrc1 = (arm_float_t*) ( (void*)guarded_src1 + 16);
-    FILL_FLOAT_ARRAY( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    FILL_FLOAT_ARRAY_LIMIT( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     guarded_src2 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
     GUARD_ARRAY( guarded_src2, (2*ARRAY_GUARD_LEN) + fixed_length );
     thesrc2 = (arm_float_t*) ( (void*)guarded_src2 + 16);
-    FILL_FLOAT_ARRAY( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    FILL_FLOAT_ARRAY_LIMIT( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     for ( i = 0; i<IMPL_COUNT; i++ )
     {
@@ -165,7 +165,7 @@ arm_result_t run_test( int argc, char **argv )
              // now verify
              arm_float_t * _output = NULL; // [ IMPL_COUNT * MAX_VEC_COMPONENTS ]; // one for each implementation, c, asm, neon...
              int warns = 0;
-             int item_width = opcode; // there's no easy way to guess the actual number of an item's components but using the opcode (1=float, 2=vec2, ...)
+             int item_width = 3; // cross has only one form at the moment, the vec3 with 3 components, x, y, and z
              _output = (arm_float_t*) malloc( IMPL_COUNT * sizeof(arm_float_t) * item_width );
              for ( i = 0; i < ARRLEN; i++ )
              {

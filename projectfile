@@ -13,3 +13,5 @@ mla
 abs
 len
 normalize
+dot
+cross
