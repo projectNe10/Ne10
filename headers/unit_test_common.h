@@ -77,7 +77,7 @@
 #define ACCEPTABLE_WARNS 12
 #define ACCEPTABLE_WARNS_MATRICES 48
 
-inline void FILL_FLOAT_ARRAY( float *arr, unsigned int count )
+inline void FILL_FLOAT_ARRAY( arm_float_t *arr, unsigned int count )
 {
     unsigned int i = 0;
 
@@ -91,7 +91,7 @@ inline void FILL_FLOAT_ARRAY( float *arr, unsigned int count )
     }
 }
 
-inline void FILL_FLOAT_ARRAY_LIMIT( float *arr, unsigned int count )
+inline void FILL_FLOAT_ARRAY_LIMIT( arm_float_t *arr, unsigned int count )
 {
     unsigned int i = 0;
 
@@ -101,7 +101,21 @@ inline void FILL_FLOAT_ARRAY_LIMIT( float *arr, unsigned int count )
 
     for ( i = 0; i < count; i++ )
     {
-      arr[i] = NE10_float_rng_limit_next();
+        arr[ i ] = NE10_float_rng_limit_next();
+    }
+}
+
+inline void FILL_FLOAT_ARRAY_LIMIT_GT1( arm_float_t *arr, unsigned int count )
+{
+    unsigned int i = 0;
+
+    sleep ( 1 );
+
+    NE10_float_rng_limit_gt1_init( time(NULL) );
+
+    for ( i = 0; i < count; i++ )
+    {
+        arr[ i ] = NE10_float_rng_limit_gt1_next();
     }
 }
 
