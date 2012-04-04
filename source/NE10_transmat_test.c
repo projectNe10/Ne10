@@ -18,8 +18,6 @@
  * NE10 Library : source/NE10_transmat_test.c
  */
 
-// TODO: Apply some sort of self-verifying method to the test system.
-
 //Make sure the following are defined before including "unit_test.h"
 
 // length of the data arrays
