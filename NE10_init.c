@@ -134,6 +134,9 @@ arm_result_t NE10_init()
       detmat_2x2f = detmat_2x2f_neon;
       detmat_3x3f = detmat_3x3f_neon;
       detmat_4x4f = detmat_4x4f_neon;
+      invmat_2x2f = invmat_2x2f_neon;
+      invmat_3x3f = invmat_3x3f_neon;
+      invmat_4x4f = invmat_4x4f_neon;
     }
     else
     {
@@ -216,6 +219,9 @@ arm_result_t NE10_init()
       detmat_2x2f = detmat_2x2f_c;
       detmat_3x3f = detmat_3x3f_c;
       detmat_4x4f = detmat_4x4f_c;
+      invmat_2x2f = invmat_2x2f_c;
+      invmat_3x3f = invmat_3x3f_c;
+      invmat_4x4f = invmat_4x4f_c;
     }
 }
 
@@ -299,3 +305,7 @@ arm_result_t (*mulcmatvec_cm2x2f_v2f)(arm_vec2f_t * dst, const arm_mat2x2f_t * c
 arm_result_t (*detmat_4x4f)(arm_float_t * dst, arm_mat4x4f_t * src, unsigned int count);
 arm_result_t (*detmat_3x3f)(arm_float_t * dst, arm_mat3x3f_t * src, unsigned int count);
 arm_result_t (*detmat_2x2f)(arm_float_t * dst, arm_mat2x2f_t * src, unsigned int count);
+arm_result_t (*invmat_4x4f)(arm_mat4x4f_t * dst, arm_mat4x4f_t * src, unsigned int count);
+arm_result_t (*invmat_3x3f)(arm_mat3x3f_t * dst, arm_mat3x3f_t * src, unsigned int count);
+arm_result_t (*invmat_2x2f)(arm_mat2x2f_t * dst, arm_mat2x2f_t * src, unsigned int count);
+

@@ -178,6 +178,10 @@ extern arm_result_t detmat_4x4f_neon(arm_float_t * dst, arm_mat4x4f_t * src, uns
 extern arm_result_t detmat_3x3f_neon(arm_float_t * dst, arm_mat3x3f_t * src, unsigned int count);
 extern arm_result_t detmat_2x2f_neon(arm_float_t * dst, arm_mat2x2f_t * src, unsigned int count);
 
+extern arm_result_t invmat_4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src, unsigned int count);
+extern arm_result_t invmat_3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src, unsigned int count);
+extern arm_result_t invmat_2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src, unsigned int count);
+
 extern arm_result_t invert_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src, unsigned int count);
 extern arm_result_t trans_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src, unsigned int count);
 extern arm_result_t identity_mat4x4f_neon(arm_mat4x4f_t * dst, unsigned int count);
