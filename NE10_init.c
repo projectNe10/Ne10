@@ -128,6 +128,10 @@ arm_result_t NE10_init()
       mulmat_2x2f = mulmat_2x2f_neon;
       mulmat_3x3f = mulmat_3x3f_neon;
       mulmat_4x4f = mulmat_4x4f_neon;
+
+      mulcmatvec_cm2x2f_v2f = mulcmatvec_cm2x2f_v2f_neon;
+      mulcmatvec_cm3x3f_v3f = mulcmatvec_cm3x3f_v3f_neon;
+      mulcmatvec_cm4x4f_v4f = mulcmatvec_cm4x4f_v4f_neon;
     }
     else
     {
@@ -204,6 +208,10 @@ arm_result_t NE10_init()
       mulmat_2x2f = mulmat_2x2f_c;
       mulmat_3x3f = mulmat_3x3f_c;
       mulmat_4x4f = mulmat_4x4f_c;
+
+      mulcmatvec_cm2x2f_v2f = mulcmatvec_cm2x2f_v2f_c;
+      mulcmatvec_cm3x3f_v3f = mulcmatvec_cm3x3f_v3f_c;
+      mulcmatvec_cm4x4f_v4f = mulcmatvec_cm4x4f_v4f_c;
     }
 }
 
@@ -282,4 +290,6 @@ arm_result_t (*mulmat_2x2f)(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x
 arm_result_t (*mulmat_3x3f)(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
 arm_result_t (*mulmat_4x4f)(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
 
-
+arm_result_t (*mulcmatvec_cm4x4f_v4f)(arm_vec4f_t * dst, const arm_mat4x4f_t * cst, arm_vec4f_t * src, unsigned int count);
+arm_result_t (*mulcmatvec_cm3x3f_v3f)(arm_vec3f_t * dst, const arm_mat3x3f_t * cst, arm_vec3f_t * src, unsigned int count);
+arm_result_t (*mulcmatvec_cm2x2f_v2f)(arm_vec2f_t * dst, const arm_mat2x2f_t * cst, arm_vec2f_t * src, unsigned int count);
