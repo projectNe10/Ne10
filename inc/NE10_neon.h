@@ -151,23 +151,23 @@ extern arm_result_t cross_vec3f_neon(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_
 // ## Matrix-Constant Arithmetic ##
 
 // arm_mat4x4f_t
-extern arm_result_t add_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
-extern arm_result_t sub_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
-extern arm_result_t mul_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
-extern arm_result_t div_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
-extern arm_result_t set_mat4x4f_neon(arm_mat4x4f_t * dst, const arm_float_t cst, unsigned int count);
+extern arm_result_t addmat_4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
+extern arm_result_t submat_4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
+extern arm_result_t mulmat_4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
+extern arm_result_t divmat_4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
+extern arm_result_t setmat_4x4f_neon(arm_mat4x4f_t * dst, const arm_float_t cst, unsigned int count);
 
-extern arm_result_t add_mat3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
-extern arm_result_t sub_mat3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
-extern arm_result_t mul_mat3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
-extern arm_result_t div_mat3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
-extern arm_result_t set_mat3x3f_neon(arm_mat3x3f_t * dst, const arm_float_t cst, unsigned int count);
+extern arm_result_t addmat_3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
+extern arm_result_t submat_3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
+extern arm_result_t mulmat_3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
+extern arm_result_t divmat_3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
+extern arm_result_t setmat_3x3f_neon(arm_mat3x3f_t * dst, const arm_float_t cst, unsigned int count);
 
-extern arm_result_t add_mat2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
-extern arm_result_t sub_mat2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
-extern arm_result_t mul_mat2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
-extern arm_result_t div_mat2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
-extern arm_result_t set_mat2x2f_neon(arm_mat2x2f_t * dst, const arm_float_t cst, unsigned int count);
+extern arm_result_t addmat_2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+extern arm_result_t submat_2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+extern arm_result_t mulmat_2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+extern arm_result_t divmat_2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+extern arm_result_t setmat_2x2f_neon(arm_mat2x2f_t * dst, const arm_float_t cst, unsigned int count);
 
 
 

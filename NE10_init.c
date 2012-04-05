@@ -118,6 +118,13 @@ arm_result_t NE10_init()
       dot_vec3f = dot_vec3f_neon;
       dot_vec4f = dot_vec4f_neon;
       cross_vec3f = cross_vec3f_neon;
+
+      addmat_2x2f = addmat_2x2f_neon;
+      addmat_3x3f = addmat_3x3f_neon;
+      addmat_4x4f = addmat_4x4f_neon;
+      submat_2x2f = submat_2x2f_neon;
+      submat_3x3f = submat_3x3f_neon;
+      submat_4x4f = submat_4x4f_neon;
     }
     else
     {
@@ -181,9 +188,16 @@ arm_result_t NE10_init()
       sub_vec3f = sub_vec3f_c;
       sub_vec4f = sub_vec4f_c;
       dot_vec2f = dot_vec2f_c;
-      dot_vec3f = dot_vec3f_neon;
-      dot_vec4f = dot_vec4f_neon;
-      cross_vec3f = cross_vec3f_neon;
+      dot_vec3f = dot_vec3f_c;
+      dot_vec4f = dot_vec4f_c;
+      cross_vec3f = cross_vec3f_c;
+
+      addmat_2x2f = addmat_2x2f_c;
+      addmat_3x3f = addmat_3x3f_c;
+      addmat_4x4f = addmat_4x4f_c;
+      submat_2x2f = submat_2x2f_c;
+      submat_3x3f = submat_3x3f_c;
+      submat_4x4f = submat_4x4f_c;
     }
 }
 
@@ -251,4 +265,11 @@ arm_result_t (*dot_vec2f)(arm_float_t * dst, arm_vec2f_t * src1, arm_vec2f_t * s
 arm_result_t (*dot_vec3f)(arm_float_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
 arm_result_t (*dot_vec4f)(arm_float_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 arm_result_t (*cross_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+
+arm_result_t (*addmat_2x2f)(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+arm_result_t (*addmat_3x3f)(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
+arm_result_t (*addmat_4x4f)(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
+arm_result_t (*submat_2x2f)(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+arm_result_t (*submat_3x3f)(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
+arm_result_t (*submat_4x4f)(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
 
