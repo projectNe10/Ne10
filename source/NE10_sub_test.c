@@ -23,26 +23,48 @@
 // length of the data arrays
 #define ARRLEN TEST_ARRLEN
 // number of the operations in a given unit
-#define OP_COUNT 1
+#define OP_COUNT 4
 // number of the different implementations of each of the functions (C, ASM, NEON, ...)
 #define IMPL_COUNT 3
 
 
 #include "../headers/unit_test_x_operation_x.h"
 
+extern arm_result_t sub_float_c   (arm_float_t * dst, arm_float_t * src1, arm_float_t * src2, unsigned int count);
+//extern arm_result_t sub_float_asm (arm_float_t * dst, arm_float_t * src1, arm_float_t * src2, unsigned int count); // the assembly versions haven't been implemented; these are for future use
+extern arm_result_t sub_float_neon(arm_float_t * dst, arm_float_t * src1, arm_float_t * src2, unsigned int count);
 
-extern arm_result_t sub_float_c    (arm_float_t * dst, arm_float_t * src1, arm_float_t * src2, unsigned int count);
-extern arm_result_t sub_float_asm  (arm_float_t * dst, arm_float_t * src1, arm_float_t * src2, unsigned int count);
-extern arm_result_t sub_float_neon (arm_float_t * dst, arm_float_t * src1, arm_float_t * src2, unsigned int count);
+extern arm_result_t sub_vec2f_c   (arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+//extern arm_result_t sub_vec2f_asm (arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+extern arm_result_t sub_vec2f_neon(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
 
+extern arm_result_t sub_vec3f_c   (arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+//extern arm_result_t sub_vec3f_asm (arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+extern arm_result_t sub_vec3f_neon(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+
+extern arm_result_t sub_vec4f_c   (arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+//extern arm_result_t sub_vec4f_asm (arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+extern arm_result_t sub_vec4f_neon(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
 
 void init_ftbl()
 {
    // manually initialize the global function table with
    //  those functions that do have an actual implementation.
    ftbl[ 0] = (arm_func_4args_t) sub_float_c;
-   ftbl[ 1] = (arm_func_4args_t) sub_float_asm;
+   ftbl[ 1] = (arm_func_4args_t) sub_float_c; // using the c version in place of the assembly version
    ftbl[ 2] = (arm_func_4args_t) sub_float_neon;
+
+   ftbl[ 3] = (arm_func_4args_t) sub_vec2f_c;
+   ftbl[ 4] = (arm_func_4args_t) sub_vec2f_c; // using the c version in place of the assembly version
+   ftbl[ 5] = (arm_func_4args_t) sub_vec2f_neon;
+
+   ftbl[ 6] = (arm_func_4args_t) sub_vec3f_c;
+   ftbl[ 7] = (arm_func_4args_t) sub_vec3f_c; // using the c version in place of the assembly version
+   ftbl[ 8] = (arm_func_4args_t) sub_vec3f_neon;
+
+   ftbl[ 9] = (arm_func_4args_t) sub_vec4f_c;
+   ftbl[10] = (arm_func_4args_t) sub_vec4f_c; // using the c version in place of the assembly version
+   ftbl[11] = (arm_func_4args_t) sub_vec4f_neon;
 }
 
 arm_result_t main( int argc, char **argv )
