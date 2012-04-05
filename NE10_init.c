@@ -95,6 +95,29 @@ arm_result_t NE10_init()
       normalize_vec2f = normalize_vec2f_neon;
       normalize_vec3f = normalize_vec3f_neon;
       normalize_vec4f = normalize_vec4f_neon;
+
+      abs_vec2f = abs_vec2f_neon;
+      abs_vec3f = abs_vec3f_neon;
+      abs_vec4f = abs_vec4f_neon;
+      vmul_vec2f = vmul_vec2f_neon;
+      vmul_vec3f = vmul_vec3f_neon;
+      vmul_vec4f = vmul_vec4f_neon;
+      vdiv_vec2f = vdiv_vec2f_neon;
+      vdiv_vec3f = vdiv_vec3f_neon;
+      vdiv_vec4f = vdiv_vec4f_neon;
+      vmla_vec2f = vmla_vec2f_neon;
+      vmla_vec3f = vmla_vec3f_neon;
+      vmla_vec4f = vmla_vec4f_neon;
+      add_vec2f = add_vec2f_neon;
+      add_vec3f = add_vec3f_neon;
+      add_vec4f = add_vec4f_neon;
+      sub_vec2f = sub_vec2f_neon;
+      sub_vec3f = sub_vec3f_neon;
+      sub_vec4f = sub_vec4f_neon;
+      dot_vec2f = dot_vec2f_neon;
+      dot_vec3f = dot_vec3f_neon;
+      dot_vec4f = dot_vec4f_neon;
+      cross_vec3f = cross_vec3f_neon;
     }
     else
     {
@@ -138,6 +161,29 @@ arm_result_t NE10_init()
       normalize_vec2f = normalize_vec2f_c;
       normalize_vec3f = normalize_vec3f_c;
       normalize_vec4f = normalize_vec4f_c;
+
+      abs_vec2f = abs_vec2f_c;
+      abs_vec3f = abs_vec3f_c;
+      abs_vec4f = abs_vec4f_c;
+      vmul_vec2f = vmul_vec2f_c;
+      vmul_vec3f = vmul_vec3f_c;
+      vmul_vec4f = vmul_vec4f_c;
+      vdiv_vec2f = vdiv_vec2f_c;
+      vdiv_vec3f = vdiv_vec3f_c;
+      vdiv_vec4f = vdiv_vec4f_c;
+      vmla_vec2f = vmla_vec2f_c;
+      vmla_vec3f = vmla_vec3f_c;
+      vmla_vec4f = vmla_vec4f_c;
+      add_vec2f = add_vec2f_c;
+      add_vec3f = add_vec3f_c;
+      add_vec4f = add_vec4f_c;
+      sub_vec2f = sub_vec2f_c;
+      sub_vec3f = sub_vec3f_c;
+      sub_vec4f = sub_vec4f_c;
+      dot_vec2f = dot_vec2f_c;
+      dot_vec3f = dot_vec3f_neon;
+      dot_vec4f = dot_vec4f_neon;
+      cross_vec3f = cross_vec3f_neon;
     }
 }
 
@@ -182,4 +228,27 @@ arm_result_t (*len_vec4f)(arm_float_t * dst, arm_vec4f_t * src, unsigned int cou
 arm_result_t (*normalize_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src, unsigned int count);
 arm_result_t (*normalize_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src, unsigned int count);
 arm_result_t (*normalize_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src, unsigned int count);
+
+arm_result_t (*abs_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src, unsigned int count);
+arm_result_t (*abs_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src, unsigned int count);
+arm_result_t (*abs_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src, unsigned int count);
+arm_result_t (*vmul_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+arm_result_t (*vmul_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+arm_result_t (*vmul_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+arm_result_t (*vdiv_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+arm_result_t (*vdiv_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+arm_result_t (*vdiv_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+arm_result_t (*vmla_vec2f)(arm_vec2f_t * acc, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+arm_result_t (*vmla_vec3f)(arm_vec3f_t * acc, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+arm_result_t (*vmla_vec4f)(arm_vec4f_t * acc, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+arm_result_t (*add_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+arm_result_t (*add_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+arm_result_t (*add_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+arm_result_t (*sub_vec2f)(arm_vec2f_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+arm_result_t (*sub_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+arm_result_t (*sub_vec4f)(arm_vec4f_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+arm_result_t (*dot_vec2f)(arm_float_t * dst, arm_vec2f_t * src1, arm_vec2f_t * src2, unsigned int count);
+arm_result_t (*dot_vec3f)(arm_float_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
+arm_result_t (*dot_vec4f)(arm_float_t * dst, arm_vec4f_t * src1, arm_vec4f_t * src2, unsigned int count);
+arm_result_t (*cross_vec3f)(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
 
