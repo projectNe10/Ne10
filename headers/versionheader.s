@@ -23,11 +23,11 @@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
         .equ      VERSION_MAJOR,    0
-        .equ      VERSION_MINOR,    0
+        .equ      VERSION_MINOR,    9
         .equ      VERSION_REVISION, 10
 
         .equ      PHASE,            1
-        .equ      COPYRIGHT_YEAR,   2011
+        .equ      COPYRIGHT_YEAR,   2012
 
 COPYRIGHT_HOLDER:
         .asciz                      "ARM Ltd."

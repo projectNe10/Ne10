@@ -23,9 +23,9 @@
 /////////////////////////////////////////////////////////
 
 #define VERSION_MAJOR      0
-#define VERSION_MINOR      0
+#define VERSION_MINOR      9
 #define VERSION_REVISION   10
 
 #define PHASE              1
-#define COPYRIGHT_YEAR     2011
+#define COPYRIGHT_YEAR     2012
 #define COPYRIGHT_HOLDER   "ARM Ltd."

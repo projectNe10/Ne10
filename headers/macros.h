@@ -165,6 +165,8 @@
    ); \
   }
 
+#define NE10_DOT_OPERATION_X_C NE10_X_OPERATION_FLOAT_C
+
 ///// The "DstSrc" group of functions //////
 
 #define NE10_ABS_OPERATION_X_C(loopCode) { \
