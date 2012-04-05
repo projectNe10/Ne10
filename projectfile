@@ -18,3 +18,4 @@ submat
 mulmat
 mulcmatvec
 detmat
+invmat

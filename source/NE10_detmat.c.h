@@ -18,12 +18,15 @@
  * NE10 Library : source/NE10_detmat.c.h
  */
 
+#ifndef __NE10_DETMAT_C_H__
+#define __NE10_DETMAT_C_H__
+
 #include "NE10.h"
 #include "../headers/macros.h"
 
 #include <assert.h>
 
-inline arm_float_t DET2x2( arm_mat2x2f_t * mat )
+static inline arm_float_t DET2x2( arm_mat2x2f_t * mat )
 {
     // 2x2 matrix layout
     //  c1r1 c2r1
@@ -33,7 +36,7 @@ inline arm_float_t DET2x2( arm_mat2x2f_t * mat )
              -(mat->c2.r1 * mat->c1.r2) );
 }
 
-inline arm_float_t DET3x3( arm_mat3x3f_t * mat )
+static inline arm_float_t DET3x3( arm_mat3x3f_t * mat )
 {
     // 3x3 matrix layout
     //  c1r1 c2r1 c3r1
@@ -48,7 +51,7 @@ inline arm_float_t DET3x3( arm_mat3x3f_t * mat )
             + (mat->c3.r1*DET2x2( &subm31 ));
 }
 
-inline arm_float_t DET4x4( arm_mat4x4f_t * mat )
+static inline arm_float_t DET4x4( arm_mat4x4f_t * mat )
 {
     // 4x4 matrix layout
     //  c1r1 c2r1 c3r1 c4r1
@@ -77,3 +80,8 @@ inline arm_float_t DET4x4( arm_mat4x4f_t * mat )
             + (mat->c3.r1*DET3x3( &subm31 ))
             - (mat->c4.r1*DET3x3( &subm41 ));
 }
+
+
+
+
+#endif

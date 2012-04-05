@@ -21,6 +21,27 @@
 
 
 
+         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         @ Get determinants of two 2x2 matrices in dRes
+         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         .macro GET_DET_2x2MATS_ARGS  dA, dB, dC, dD, dRes
+           vmul.f32        \dRes, \dA, \dD
+           vmls.f32        \dRes, \dB, \dC
+         .endm
+
+
+
+
+         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         @ Get negated determinants of two 2x2 matrices in dRes
+         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+         .macro GET_NEG_DET_2x2MATS_ARGS  dA, dB, dC, dD, dRes
+            GET_DET_2x2MATS_ARGS \dC, \dD, \dA, \dB, \dRes
+         .endm
+
+
+
+
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ A macro used inside detmat_3x3f_neon() to load 3x3 matrices.
         @ Two 3x3 matrices are loaded from the source address
@@ -73,6 +94,18 @@
            vmls.f32    \res, \dd, \tmp2   @ t1 = a*(ei-fh) - d*(bi-ch)
            vmla.f32    \res, \gg, \tmp3   @ t1 = a*(ei-fh) - d*(bi-ch) + g*(bf-ec) = det(M1), det(M2)
        .endm
+
+
+
+
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @ This macro calculates nagated determinant of two 3x3 matrices
+        @ The result is stored in \res
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        .macro GET_NEG_DET_3x3MATS_ARGS   aa, bb, cc, dd, ee, ff, gg, hh, ii, res, tmp2, tmp3
+           @ det = - a*(ei-fh) + d*(bi-ch) - g*(bf-ec)
+           GET_DETERMINANT_of_3x3MATS_ARGS   \dd, \ee, \ff, \aa, \bb, \cc, \gg, \hh, \ii, \res, \tmp2, \tmp3    @ Using the column exchange property
+        .endm
 
 
 
@@ -136,3 +169,27 @@
            vmla.f32    \res, \ii, \tmp3
            vmls.f32    \res, \mm, \tmp4
        .endm
+
+
+
+
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        @ A macro used inside detmat_4x4f_neon() to load four 4x4 matrices
+        @ from the memory location pointed to by the \addr register.
+        @ The loaded matrices are stored in registers dst00-07 and
+        @ finaklly rearranged using the corresponding registers qr00-qr03.
+        @ qtmp1-qtmp4 are scratch registers which are not resotred in this
+        @ maroc. The caller must restored them if needed.
+        @ NOTE: Through out Ne10, matrices are loaded and stored in
+        @ column major format.
+        @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        .macro LOAD_SINGLE_4x4MAT_ARGS dst00, dst01, dst02, dst03, dst04, dst05, dst06, dst07, qr00, qr01, qr02, qr03, qtmp1, qtmp2, qtmp3, qtmp4, addr
+
+            vld4.32     { \dst00, \dst02, \dst04, \dst06 }, [\addr]!
+            vld4.32     { \dst01, \dst03, \dst05, \dst07 }, [\addr]!
+
+             vtrn.32     \qr00, \qtmp1
+             vtrn.32     \qr01, \qtmp2
+             vtrn.32     \qr02, \qtmp3
+             vtrn.32     \qr03, \qtmp4
+         .endm
