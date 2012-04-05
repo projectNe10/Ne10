@@ -28,7 +28,7 @@ OPTIMIZE_FLAGS = -O3
 LDFLAGS+=-L.  -L/usr/local/lib -L/client/lib -L/lib/arm-linux-gnueabi
 LDFLAGS+=-lm
 
-ALLFILES = NE10_addc.c_r.o NE10_subc.c_r.o NE10_rsbc.c_r.o NE10_mulc.c_r.o NE10_divc.c_r.o NE10_mlac.c_r.o NE10_setc.c_r.o NE10_add.c_r.o NE10_sub.c_r.o NE10_mul.c_r.o NE10_div.c_r.o NE10_mla.c_r.o NE10_abs.c_r.o NE10_len.c_r.o NE10_normalize.c_r.o NE10_addc.neon_r.o NE10_subc.neon_r.o NE10_rsbc.neon_r.o NE10_mulc.neon_r.o NE10_divc.neon_r.o NE10_mlac.neon_r.o NE10_setc.neon_r.o NE10_add.neon_r.o NE10_sub.neon_r.o NE10_mul.neon_r.o NE10_div.neon_r.o NE10_mla.neon_r.o NE10_abs.neon_r.o NE10_len.neon_r.o NE10_normalize.neon_r.o NE10_dot.c_r.o NE10_dot.neon_r.o NE10_cross.c_r.o NE10_cross.neon_r.o NE10_addmat.c_r.o NE10_addmat.neon_r.o NE10_submat.c_r.o NE10_submat.neon_r.o NE10_mulmat.c_r.o NE10_mulmat.neon_r.o
+ALLFILES = NE10_addc.c_r.o NE10_subc.c_r.o NE10_rsbc.c_r.o NE10_mulc.c_r.o NE10_divc.c_r.o NE10_mlac.c_r.o NE10_setc.c_r.o NE10_add.c_r.o NE10_sub.c_r.o NE10_mul.c_r.o NE10_div.c_r.o NE10_mla.c_r.o NE10_abs.c_r.o NE10_len.c_r.o NE10_normalize.c_r.o NE10_addc.neon_r.o NE10_subc.neon_r.o NE10_rsbc.neon_r.o NE10_mulc.neon_r.o NE10_divc.neon_r.o NE10_mlac.neon_r.o NE10_setc.neon_r.o NE10_add.neon_r.o NE10_sub.neon_r.o NE10_mul.neon_r.o NE10_div.neon_r.o NE10_mla.neon_r.o NE10_abs.neon_r.o NE10_len.neon_r.o NE10_normalize.neon_r.o NE10_dot.c_r.o NE10_dot.neon_r.o NE10_cross.c_r.o NE10_cross.neon_r.o NE10_addmat.c_r.o NE10_addmat.neon_r.o NE10_submat.c_r.o NE10_submat.neon_r.o NE10_mulmat.c_r.o NE10_mulmat.neon_r.o NE10_mulcmatvec.c_r.o NE10_mulcmatvec.neon_r.o
 
 #TARGET_ARCH = stdc
 
