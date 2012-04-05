@@ -50,7 +50,7 @@ add_float_asm:
         add       r1, r1, #4              @ move to the next entry
         vldr      s2, [r2]                @ Load s2 = src2[i]
         add       r2, r2, #4              @ next entry
-        vadd.f32  s10, s1, s2             @ s10 = src1[i] + src2[i]
+        vadd.f32  s10, s1, s2             @ s10 = src1[i] * src2[i]
         vstr      s10, [r0]               @ Store the result back into the main memory
         add       r0, r0, #4              @ next entry in the dst
         subs      r3, r3, #1              @ count down using the current index (i--)
