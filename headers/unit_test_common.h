@@ -128,13 +128,24 @@ inline int EQUALS_FLOAT( float fa, float fb , unsigned int err )
     float        vf;
   } conv1, conv2;
 
+  unsigned int ui1, ui2;
+
   if ( fa == fb ) return 1; // if identical, then return TRUE
 
   conv1.vf = fa;
   conv2.vf = fb;
 
-  if ( (conv1.vi & NAN_OR_INF) == NAN_OR_INF ) { return 0; } // INF or NAN, unacceptable return FALSE
-  if ( (conv2.vi & NAN_OR_INF) == NAN_OR_INF ) { return 0; } // INF or NAN, unacceptable return FALSE
+  if ( (conv1.vi & NAN_OR_INF) == NAN_OR_INF )
+  {
+     fprintf( stderr, "HINT: The 1st floating-point value is either \'Not a number\' or \'Infinity\'. " );
+     return 0; // INF or NAN, unacceptable return FALSE
+  }
+
+  if ( (conv2.vi & NAN_OR_INF) == NAN_OR_INF )
+  {
+     fprintf( stderr, "HINT: The 1st floating-point value is either \'Not a number\' or \'Infinity\'. " );
+     return 0; // INF or NAN, unacceptable return FALSE
+  }
 
   int cut1 = conv1.vi & SIGNBIT_MASK; // drop the sign bit - i.e. the left most bit
   int cut2 = conv2.vi & SIGNBIT_MASK;
@@ -146,12 +157,18 @@ inline int EQUALS_FLOAT( float fa, float fb , unsigned int err )
   {  // then we have an unacceptable error
 
      // report an unaaceptable error
-     unsigned int ui1, ui2;
-
      memcpy( &ui1,  &fa, sizeof(float) );
      memcpy( &ui2,  &fb, sizeof(float) );
 
      fprintf( stderr, "HINT: %e (0x%04X) != %e (0x%04X) ", fa, ui1, fb, ui2 );
+
+     return 0;
+  }
+
+  if ( fb*fa < 0.0f )
+  {
+
+     fprintf( stderr, "HINT: %e (0x%04X) is the opposite of %e (0x%04X) ", fa, ui1, fb, ui2 );
 
      return 0;
   }
