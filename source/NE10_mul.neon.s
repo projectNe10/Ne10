@@ -58,7 +58,7 @@ mul_float_neon:
         @ load the 1st set of values
           vld1.32         {q0}, [r1]!
           vld1.32         {q1}, [r2]!
-          subs            r3, r3, #4
+          subs            r3, r3, #8          @ 4 for this set, and 4 for the 2nd set
 
         @ calculate values for the 1st set
           vmul.f32        q3, q0, q1         @ q3 = q0 * q1
@@ -66,7 +66,6 @@ mul_float_neon:
         @ load the 2nd set of values
           vld1.32         {q0}, [r1]!
           vld1.32         {q1}, [r2]!
-          subs            r3, r3, #4
 
           ble             .L_mainloopend_float
 
@@ -157,7 +156,7 @@ vmul_vec2f_neon:
         @ load the 1st set of values
           vld2.32         {q0-q1}, [r1]!
           vld2.32         {q2-q3}, [r2]!
-          subs            r3, r3, #4
+          subs            r3, r3, #8          @ 4 for this set, and 4 for the 2nd set
 
         @ calculate values for the 1st set
           vmul.f32        q4, q0, q2
@@ -166,7 +165,6 @@ vmul_vec2f_neon:
         @ load the 2nd set of values
           vld2.32         {q0-q1}, [r1]!
           vld2.32         {q2-q3}, [r2]!
-          subs            r3, r3, #4
 
           ble             .L_mainloopend_vec2
 
