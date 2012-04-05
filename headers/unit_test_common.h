@@ -69,7 +69,8 @@
 #define EXPONENT_MASK 0x807FFFFF
 
 // What's the acceptable error between the integer representations of two float values
-#define ACCEPTABLE_ERROR 2
+#define ERROR_MARGIN_SMALL 0x02
+#define ERROR_MARGIN_LARGE 0xFF
 
 // What's the acceptable number of warnings in a test
 #define ACCEPTABLE_WARNS 10

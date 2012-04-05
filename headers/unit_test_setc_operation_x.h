@@ -195,7 +195,7 @@ arm_result_t run_test( int argc, char **argv )
                          assert ( _output[ ((1-1)*item_width)+pos ] == _output[ ((1-1)*item_width)+pos ] ); // check for not-a-number
                          assert ( _output[ ((impl-1)*item_width)+pos ] == _output[ ((impl-1)*item_width)+pos ] );  // check for not-a-number
 
-                         if ( ! EQUALS_FLOAT( _output[ ((1-1)*item_width)+pos ] , _output[ ((impl-1)*item_width)+pos ], ACCEPTABLE_ERROR ) )
+                         if ( ! EQUALS_FLOAT( _output[ ((1-1)*item_width)+pos ] , _output[ ((impl-1)*item_width)+pos ], ERROR_MARGIN_SMALL ) )
                          { fprintf( stderr, "\t\t WARNING: In opcode [%d], implementation [1] != implemenation [%d] on item [%d -> %d]\n",
                                     opcode, impl, i, pos+1 );
                              warns++; }
