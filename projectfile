@@ -19,3 +19,5 @@ mulmat
 mulcmatvec
 detmat
 invmat
+transmat
+identitymat
