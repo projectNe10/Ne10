@@ -59,17 +59,17 @@ typedef struct
 } arm_vec4f_t; // a 4-tuple of float values
 
 
-typedef struct { float r1; float r2; } arm_mat_row2f;
+typedef struct { float r1; float r2; } __attribute__((packed)) arm_mat_row2f;
 
 typedef struct
 {
         arm_mat_row2f c1;
         arm_mat_row2f c2;
 
-} arm_mat2x2f_t;     // a 2x2 matrix
+} __attribute__((packed)) arm_mat2x2f_t;     // a 2x2 matrix
 
 
-typedef struct { float r1; float r2; float r3; }  arm_mat_row3f;
+typedef struct { float r1; float r2; float r3; } __attribute__((packed)) arm_mat_row3f;
 
 typedef struct
 {
@@ -77,10 +77,10 @@ typedef struct
         arm_mat_row3f c2;
         arm_mat_row3f c3;
 
-} arm_mat3x3f_t;     // a 3x3 matrix
+} __attribute__((packed)) arm_mat3x3f_t;     // a 3x3 matrix
 
 
-typedef struct { float r1; float r2; float r3; float r4; } arm_mat_row4f;
+typedef struct { float r1; float r2; float r3; float r4; } __attribute__((packed)) arm_mat_row4f;
 
 typedef struct
 {
@@ -89,6 +89,6 @@ typedef struct
         arm_mat_row4f c3;
         arm_mat_row4f c4;
 
-} arm_mat4x4f_t;     // a 4x4 matrix
+} __attribute__((packed)) arm_mat4x4f_t;     // a 4x4 matrix
 
 #endif

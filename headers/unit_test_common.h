@@ -60,7 +60,8 @@
 //  number of random values are stored in the array and passed
 //  into the array as the input stream.
 // 2^11 + 3 = 2051, it is not divisible by 2, 3, or 4
-#define TEST_ARRLEN 2051
+#define TEST_ARRLEN          2051
+#define TEST_ARRLEN_MATRICES 1051
 
 // NAN_OR_INF is to check whether the value is a NAN or an INF
 #define NAN_OR_INF (0xFF << 23)
@@ -73,7 +74,8 @@
 #define ERROR_MARGIN_LARGE 0xFF
 
 // What's the acceptable number of warnings in a test
-#define ACCEPTABLE_WARNS 10
+#define ACCEPTABLE_WARNS 12
+#define ACCEPTABLE_WARNS_MATRICES 48
 
 inline void FILL_FLOAT_ARRAY( float *arr, unsigned int count )
 {
