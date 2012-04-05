@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <float.h>
+#include <math.h>
 
 // Please look at http://en.wikipedia.org/wiki/Linear_congruential_generator
 // According to this page, these values are the ones used in "glibc"
@@ -170,8 +171,8 @@ float NE10_float_rng_max()
 
 // the same as above functions except the range of values are limited
 
-#define IS_TOO_SMALL(f) ((f<1.0e-6)?1:0)
-#define   IS_TOO_BIG(f) ((f>1.0e12)?1:0)
+#define IS_TOO_SMALL(f) ((fabs(f)<1.0e-6)?1:0)
+#define   IS_TOO_BIG(f) ((fabs(f)>1.0e12)?1:0)
 
 static NE10_float_rng_t __NE10_float_rng_limit; // local array for internal use only
 
@@ -193,6 +194,35 @@ float NE10_float_rng_limit_next()
 }
 
 float NE10_float_rng_limit_max()
+{
+  return NE10_float_rng_max_g(NULL);
+}
+
+// the same as above functions except the range of values are limited and all the values are greater than 1.0e-6
+
+#define IS_TOO_SMALL_GT1(f) ((fabs(f)<1.0e-6)?1:0)
+#define   IS_TOO_BIG_GT1(f) ((fabs(f)>1.0e+3)?1:0)
+
+static NE10_float_rng_t __NE10_float_rng_limit_gt1; // local array for internal use only
+
+void NE10_float_rng_limit_gt1_init(uint32_t seed)
+{
+   NE10_float_rng_init_g( &__NE10_float_rng_limit , seed );
+}
+
+float NE10_float_rng_limit_gt1_next()
+{
+   float ret = 0.0f;
+
+   do
+   {
+      ret = NE10_float_rng_next_g( &__NE10_float_rng_limit );
+   } while ( IS_TOO_SMALL_GT1(ret) || IS_TOO_BIG_GT1(ret) );
+
+   return ret;
+}
+
+float NE10_float_rng_limit_gt1_max()
 {
   return NE10_float_rng_max_g(NULL);
 }

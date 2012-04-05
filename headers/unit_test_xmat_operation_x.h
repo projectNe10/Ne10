@@ -19,6 +19,7 @@
  */
 
 #include "./unit_test_common.h"
+#include "../inc/NE10_types.h"
 
 // This function signature applies the operations with the format "*c_*_*" (e.g. 'add'c_'float'_'neon')
 typedef arm_result_t (*arm_func_4args_t)(void * dst, void * src1, void * src2, unsigned int count);
@@ -64,12 +65,12 @@ arm_result_t test_operation()
     guarded_src1 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
     GUARD_ARRAY( guarded_src1, (2*ARRAY_GUARD_LEN) + fixed_length );
     thesrc1 = (arm_float_t*) ( (void*)guarded_src1 + 16);
-    FILL_FLOAT_ARRAY( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    FILL_FLOAT_ARRAY_LIMIT_GT1( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     guarded_src2 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
     GUARD_ARRAY( guarded_src2, (2*ARRAY_GUARD_LEN) + fixed_length );
     thesrc2 = (arm_float_t*) ( (void*)guarded_src2 + 16);
-    FILL_FLOAT_ARRAY( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    FILL_FLOAT_ARRAY_LIMIT_GT1( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     for ( i = 0; i<IMPL_COUNT; i++ )
     {
