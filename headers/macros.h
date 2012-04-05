@@ -216,6 +216,8 @@
      ); \
   }
 
+#define NE10_DETMAT_OPERATION_X_C NE10_ABS_OPERATION_X_C
+
 ///// The "DstAccSrc1Src2" group of functions //////
 
 #define NE10_MLA_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \

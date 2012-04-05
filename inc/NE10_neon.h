@@ -172,18 +172,21 @@ extern arm_result_t setmat_2x2f_neon(arm_mat2x2f_t * dst, const arm_float_t cst,
 
 
 // ## Operations on Matrices ##
+
+
+extern arm_result_t detmat_4x4f_neon(arm_float_t * dst, arm_mat4x4f_t * src, unsigned int count);
+extern arm_result_t detmat_3x3f_neon(arm_float_t * dst, arm_mat3x3f_t * src, unsigned int count);
+extern arm_result_t detmat_2x2f_neon(arm_float_t * dst, arm_mat2x2f_t * src, unsigned int count);
+
 extern arm_result_t invert_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src, unsigned int count);
-extern arm_result_t det_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src, unsigned int count);
 extern arm_result_t trans_mat4x4f_neon(arm_mat4x4f_t * dst, arm_mat4x4f_t * src, unsigned int count);
 extern arm_result_t identity_mat4x4f_neon(arm_mat4x4f_t * dst, unsigned int count);
 
 extern arm_result_t invert_mat3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src, unsigned int count);
-extern arm_result_t det_mat3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src, unsigned int count);
 extern arm_result_t trans_mat3x3f_neon(arm_mat3x3f_t * dst, arm_mat3x3f_t * src, unsigned int count);
 extern arm_result_t identity_mat3x3f_neon(arm_mat3x3f_t * dst, unsigned int count);
 
 extern arm_result_t invert_mat2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src, unsigned int count);
-extern arm_result_t det_mat2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src, unsigned int count);
 extern arm_result_t trans_mat2x2f_neon(arm_mat2x2f_t * dst, arm_mat2x2f_t * src, unsigned int count);
 extern arm_result_t identity_mat2x2f_neon(arm_mat2x2f_t * dst, unsigned int count);
 
