@@ -18,7 +18,7 @@
  * NE10 Library : ReleaseNote.txt
  */
 NE10 SIMD LIBRARY - Release Note
-LAST UPDATED ON: 1 / MAR / 2012
+LAST UPDATED ON: 10 / APR / 2012
 
 ========
 Contents
@@ -34,6 +34,8 @@ Contents
    3. Installation
          3-a. Requirements
          3-b. Alternative Approach
+   4. Changelog
+         4-a. r1.0_beta
 
 
 ==========
@@ -59,11 +61,16 @@ the available functions will be contributed to the source code.
 
 2-a. Product release status
 ---------------------------
-Version 0.9 dev
+Version 1.0 beta
 
-Implemented functions have been tested and are believed to be working, but the
-complete set of functions planned for the initial release are not in this
-release.
+The set of functions planned for this release are in place.  However some issues
+remain where their intended behaviour diverges from the planned specification.
+
+The aim is for all functions to operate such that it is valid for the source
+parameter to match the destination.  This requirement may be relaxed where it
+is impractical to implement or it is not possible to provide that behaviour 
+efficiently.  Currently some functions are not capable of fulfilling that
+requirement:
 
 2-b. Functions included
 ---------------------------
@@ -96,9 +103,37 @@ The following is a list of currently available functions.
 
   c) Operations on Vectors:
 
-   len_vec2f, len_vec3f, len_vec4f
-   normalize_vec2f, normalize_vec3f, normalize_vec4f
+   abs_vec2f, abs_vec3f, abs_vec4f,
+   addc_vec2f, addc_vec3f, addc_vec4f,
+   add_vec2f, add_vec3f, add_vec4f,
+   divc_vec2f, divc_vec3f, divc_vec4f,
+   dot_vec2f, dot_vec3f, dot_vec4f
+   len_vec2f, len_vec3f, len_vec4f,
+   mlac_vec2f, mlac_vec3f, mlac_vec4f,
+   mulc_vec2f, mulc_vec3f, mulc_vec4f,
+   normalize_vec2f, normalize_vec3f, normalize_vec4f,
+   rsbc_vec2f, rsbc_vec3f, rsbc_vec4f,
+   setc_vec2f, setc_vec3f, setc_vec4f,
+   subc_vec2f, subc_vec3f, subc_vec4f,
+   sub_vec2f, sub_vec3f, sub_vec4f,
+   vdiv_vec2f, vdiv_vec3f, vdiv_vec4f,
+   vmla_vec2f, vmla_vec3f, vmla_vec4f,
+   vmul_vec2f, vmul_vec3f, vmul_vec4f,
+   cross_vec3f
 
+  d) Matrix operations:
+
+   addmat_2x2f, addmat_3x3f, addmat_4x4f,
+   detmat_2x2f, detmat_3x3f, detmat_4x4f,
+   divmat_2x2f, divmat_3x3f, divmat_4x4f,
+   identitymat_2x2f, identitymat_3x3f, identitymat_4x4f,
+   invmat_2x2f, invmat_3x3f, invmat_4x4f,
+   mulcmatvec_2x2f, mulcmatvec_3x3f, mulcmatvec_4x4f,
+   mulmat_2x2f, mulmat_3x3f, mulmat_4x4f,
+   multrans_mat2x2f, multrans_mat3x3f, multrans_mat4x4f,
+   setmat_2x2f, setmat_3x3f, setmat_4x4f,
+   submat_2x2f, submat_3x3f, submat_4x4f,
+   transmat_2x2f, transmat_3x3f, transmat_4x4f,
 
 2-c. Test cases and results
 ---------------------------
@@ -107,8 +142,6 @@ perform.  Functions in each of these categories accept different types of input
 data. Each set is accompanied with a unit test. These unit tests are provided
 as part of this library and can be used to verify and benchmark these functions
 on a target platform.
-
-
 
 ===============
 3. Installation
@@ -158,4 +191,32 @@ While not supported, the functions within this library can be taken and
 incorporated (licensing conflicts permitting) within other projects as is.
 Details of how to do this are too project specific to detail here.
 
+============
+4. Changelog
+============
+
+4-a. r1.0_beta
+
+    * Updated AOSP Makefile, cleaned native Makefile
+        * Adding new files to the AOSP build
+        * Made the default makefile a little more readable
+    * New functions: Matrix transpose and identity matrix routines.
+    * New functions: Matrix inversion routines.
+    * New functions: Matrix determinant routines.
+    * New functions: Matrix-vector multiplication routines.
+    * New functions: Matrix multiplication routines.
+    * New functions: Matrix multiplication routines.
+    * New functions: Matrix addition and subtraction.
+    * New functions: Cross product routine.
+    * New functions: Dot product routines.
+    * New functions: vectorized mla routines.
+    * New functions: vectorized division routines.
+    * New functions: vectorized abs routine.
+    * New functions: vector-sub routines.
+    * New functions: vector-add routines.
+    * Added the disclaimer:
+        Each function is implemented in C, ARM Assembly and NEON code as a
+        basis for comparison. Assembly versions, while efficient, are not
+        intended as best-practice examples. NEON versions are intended as
+        best-practice examples.
 
