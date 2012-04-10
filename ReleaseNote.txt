@@ -64,13 +64,13 @@ the available functions will be contributed to the source code.
 Version 1.0 beta
 
 The set of functions planned for this release are in place.  However some issues
-remain where their intended behaviour diverges from the planned specification.
+remain where their intended behaviour diverges from the planned specification:
 
-The aim is for all functions to operate such that it is valid for the source
-parameter to match the destination.  This requirement may be relaxed where it
-is impractical to implement or it is not possible to provide that behaviour 
-efficiently.  Currently some functions are not capable of fulfilling that
-requirement:
+In the release version, unless impractical and explicitly stated, all functions
+will operate correctly when the output area of the result is the same as one
+of the input areas. (ie. where the src1 or src2 parameter == the dst parameter)
+
+In this beta release that behaviour cannot be assumed.
 
 2-b. Functions included
 ---------------------------
@@ -205,18 +205,16 @@ Details of how to do this are too project specific to detail here.
     * New functions: Matrix determinant routines.
     * New functions: Matrix-vector multiplication routines.
     * New functions: Matrix multiplication routines.
-    * New functions: Matrix multiplication routines.
     * New functions: Matrix addition and subtraction.
     * New functions: Cross product routine.
     * New functions: Dot product routines.
-    * New functions: vectorized mla routines.
-    * New functions: vectorized division routines.
-    * New functions: vectorized abs routine.
-    * New functions: vector-sub routines.
-    * New functions: vector-add routines.
+    * New functions: Vectorized mla routines.
+    * New functions: Vectorized division routines.
+    * New functions: Vectorized abs routine.
+    * New functions: Vector-sub routines.
+    * New functions: Vector-add routines.
     * Added the disclaimer:
         Each function is implemented in C, ARM Assembly and NEON code as a
         basis for comparison. Assembly versions, while efficient, are not
-        intended as best-practice examples. NEON versions are intended as
-        best-practice examples.
+        intended as best-practice examples.
 
