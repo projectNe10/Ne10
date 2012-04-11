@@ -78,17 +78,20 @@ foreach my $success (@built)
 }
 
 # print out a summary of this run
-if (length @failed == 0) {
-  print "** No Build Failures";
+if (scalar(@failed) == 0) {
+  print "** No Build Failures\n";
 } else {
+  print "** BUILDS FAILED\n";
   for my $fail (@failed) {
-    print "$fail failed to build";
+    print "  $fail failed to build\n";
   }
 }
-if (length @warn == 0) {
-  print "** No Test Failures"
+if (scalar(@warn) == 0) {
+  print "** No Test Failures\n";
+} else {
+  print "** TESTS FAILED!\n";
   for my $warned (@warn) {
-    print "$warned failed test";
+    print "  $warned failed test\n";
   }
 }
 #print ( $testlog );
