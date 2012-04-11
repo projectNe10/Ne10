@@ -69,9 +69,11 @@ fi
 perl --version | paste -s -d ';' -
 
 echo
-echo
-echo -e "\033[4mCURRENT 'git' CONFIGURATION:\033[0m"
-git config -l
+if [ -e .git ]; then
+ echo
+ echo -e "\033[4mCURRENT 'git' CONFIGURATION:\033[0m"
+ git config -l
+fi
 
 echo
 echo
@@ -88,7 +90,10 @@ echo "LD_LIBRARY_PATH = " $LD_LIBRARY_PATH
 
 
 echo
+if [ -e .git ]; then
 echo
 echo -e "\033[4mCURRENT GIT/SOURCE STATUS:\033[0m"
-git show
+  git show
+fi
+
 

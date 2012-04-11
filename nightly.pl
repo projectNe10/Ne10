@@ -61,7 +61,7 @@ $success_percentage = 100 * $units_succeeded / $units_count;
 system ( "./getlog.sh > ./testlog.txt" );
 my $platform = `echo \$NE10PLATFORM`;
 my $syslog = `cat ./testlog.txt`;
-my $testlog; # this will keep the sammary text that will be stored in the database
+my $testlog; # this will keep the summary text that will be stored in the database
 my $ACCEPTABLE_WARNS = 10; # note: this is defined in unit_test_common.h
 
 # try and run perf on the successfully built units
@@ -77,5 +77,18 @@ foreach my $success (@built)
     }
 }
 
- # print out a summary of this run
- print ( $testlog );
+# print out a summary of this run
+if (length @failed == 0) {
+  print "** No Build Failures";
+} else {
+  for my $fail (@failed) {
+    print "$fail failed to build";
+  }
+}
+if (length @warn == 0) {
+  print "** No Test Failures"
+  for my $warned (@warn) {
+    print "$warned failed test";
+  }
+}
+#print ( $testlog );
