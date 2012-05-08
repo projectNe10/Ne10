@@ -81,7 +81,7 @@ arm_result_t test_operation()
 
   // test the special case where dst == src
   unsigned int tmp_len = 13; // Just an odd number bigger than 8
-  unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(float);
+  unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(arm_float_t);
   esp_buf[0] = (arm_float_t*) malloc( inbytes ); // input 1
   esp_buf[2] = (arm_float_t*) malloc( inbytes ); // copy of 1st input
   esp_buf[4] = (arm_float_t*) malloc( inbytes ); // use this as the output buffer
