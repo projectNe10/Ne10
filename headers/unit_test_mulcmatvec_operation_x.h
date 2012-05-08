@@ -99,9 +99,9 @@ arm_result_t test_operation()
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[1] , thecst, esp_buf[1], tmp_len );
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[4] , thecst, esp_buf[3], tmp_len );
 
-  for ( i = 0;  i < tmp_len * opcode; i++ ) // at this point the two outputs must be identical
+  for ( i = 0;  i < tmp_len * (opcode+1); i++ ) // at this point the two outputs must be identical
   {
-      if ( esp_buf[0][i] != esp_buf[4][i] )
+      if ( esp_buf[1][i] != esp_buf[4][i] )
       {
           fprintf ( stderr, "\t FATAL ERROR: Operation number %d implementation [%d] has failed the dst==src test case. \n", opcode, impl );
           fprintf ( stderr, "\t NOTE: Usually implementation 1=C, 2=ASM/VFP, and 3=ASM/NEON. \n");
