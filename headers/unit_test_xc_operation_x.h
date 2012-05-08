@@ -88,24 +88,29 @@ arm_result_t test_operation()
 
   // test the special case where dst == src
   unsigned int tmp_len = 13; // Just an odd number bigger than 8
-  unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(float);
+  unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(arm_float_t);
   esp_buf[0] = (arm_float_t*) malloc( inbytes ); // input 1
-  esp_buf[1] = (arm_float_t*) malloc( inbytes ); // input 2
+  esp_buf[1] = (arm_float_t*) malloc( MAX_VEC_COMPONENTS * sizeof(arm_float_t) ); // input 2 - constant
   esp_buf[2] = (arm_float_t*) malloc( inbytes ); // copy of 1st input
-  esp_buf[3] = (arm_float_t*) malloc( inbytes ); // copy of 2nd input
+  esp_buf[3] = (arm_float_t*) malloc( MAX_VEC_COMPONENTS * sizeof(arm_float_t) ); // copy of 2nd input
   esp_buf[4] = (arm_float_t*) malloc( inbytes ); // use this as the output buffer
 
   FILL_FLOAT_ARRAY_LIMIT( esp_buf[0], tmp_len * MAX_VEC_COMPONENTS ); // initialize the array with random numbers
-  FILL_FLOAT_ARRAY_LIMIT( esp_buf[1], tmp_len * MAX_VEC_COMPONENTS ); // initialize the array with random numbers
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[1], MAX_VEC_COMPONENTS ); // initialize the array with random numbers
   memcpy( esp_buf[2], esp_buf[0], inbytes );
-  memcpy( esp_buf[3], esp_buf[1], inbytes );
+  memcpy( esp_buf[3], esp_buf[1], MAX_VEC_COMPONENTS * sizeof(arm_float_t) );
 
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[0] , esp_buf[0], esp_buf[1], tmp_len );
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[4] , esp_buf[2], esp_buf[3], tmp_len );
 
+
+  fprintf ( stderr, "** NTOE: Due to the nature of this test we cannot use an assert - the values may or may not be the same... make sure NAN values are not geenrated by using FILL_FLOAT_ARRAY_\'LIMIT\'. \n" );
+
   for ( i = 0;  i < tmp_len * opcode; i++ ) // at this point the two outputs must be identical
   {
-      if ( esp_buf[0][i] != esp_buf[4][i] )
+      // assert( esp_buf[0][i] == esp_buf[4][i] ); // check for not-a-number
+
+      if ( ! EQUALS_FLOAT( esp_buf[0][i] , esp_buf[4][i], ERROR_MARGIN_LARGE*10 ) )
       {
           fprintf ( stderr, "\t FATAL ERROR: Operation number %d implementation [%d] has failed the dst==src test case. \n", opcode, impl );
           fprintf ( stderr, "\t NOTE: Usually implementation 1=C, 2=ASM/VFP, and 3=ASM/NEON. \n");
