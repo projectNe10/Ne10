@@ -54,6 +54,10 @@ arm_float_t * thesrc2 = NULL;
 arm_float_t * thedst[IMPL_COUNT]; // output from different implementations are stored in separate arrays for varification
 int done_init = 0;
 
+// Eight buffers that are used for especial test cases such as when the destination and source point to the same address.
+// They may vary in size from one case to another and from one function to another.
+arm_float_t*  esp_buf[8];
+
 arm_result_t test_operation()
 {
   const unsigned int fixed_length = ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS;
@@ -80,6 +84,37 @@ arm_result_t test_operation()
 
     done_init = 1;
   }
+
+
+  // test the especial case where dst == src
+  unsigned int tmp_len = 13; // Just an odd number bigger than 8
+  unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(arm_float_t); 
+  esp_buf[0] = (arm_float_t*) malloc( inbytes ); // input 1
+  esp_buf[1] = (arm_float_t*) malloc( inbytes ); // input 2
+  esp_buf[2] = (arm_float_t*) malloc( inbytes ); // copy of 1st input
+  esp_buf[3] = (arm_float_t*) malloc( inbytes ); // copy of 2nd input
+  esp_buf[4] = (arm_float_t*) malloc( inbytes ); // use this as the output buffer
+
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[0], tmp_len * MAX_VEC_COMPONENTS ); // initialization the array with random numbers
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[1], tmp_len * MAX_VEC_COMPONENTS ); // initialization the array with random numbers
+  memcpy( esp_buf[2], esp_buf[0], inbytes );
+  memcpy( esp_buf[3], esp_buf[1], inbytes );
+
+  ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[0] , esp_buf[0], esp_buf[1], tmp_len );
+  ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[4] , esp_buf[2], esp_buf[3], tmp_len );
+
+  for ( i = 0;  i < tmp_len * opcode; i++ ) // at this point the two outputs must be identical
+  {
+      if ( esp_buf[0][i] != esp_buf[4][i] )
+      {
+          fprintf ( stderr, "\t FATAL ERROR: Operation number %d implementation [%d] has failed the dst==src test case. \n", opcode, impl );
+          fprintf ( stderr, "\t NOTE: Usually implementation 1=C, 2=ASM/VFP, and 3=ASM/NEON. \n");
+          exit( NE10_ERR );
+     }
+  }
+
+  free(esp_buf[0]); free(esp_buf[1]); free(esp_buf[2]); free(esp_buf[3]); free(esp_buf[4]);
+
 
   // sample run
   MEASURE( dt_test_sample,
