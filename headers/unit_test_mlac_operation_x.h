@@ -56,7 +56,7 @@ arm_float_t * thesrc = NULL;
 arm_float_t * thedst[IMPL_COUNT]; // output from different implementations are stored in separate arrays for varification
 int done_init = 0;
 
-// Eight buffers that are used for especial test cases such as when the destination and source point to the same address.
+// Nine buffers that are used for especial test cases such as when the destination and source point to the same address.
 // They may vary in size from one case to another and from one function to another.
 arm_float_t*  esp_buf[9];
 

@@ -53,7 +53,7 @@ arm_float_t * thedst[IMPL_COUNT]; // output from different implementations are s
 int done_init = 0;
 
 
-// Eight buffers that are used for especial test cases such as when the destination and source point to the same address.
+// Eight buffers that are used for special test cases such as when the destination and source point to the same address.
 // They may vary in size from one case to another and from one function to another.
 arm_float_t*  esp_buf[8];
 
@@ -67,7 +67,7 @@ arm_result_t test_operation()
     guarded_src = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
     GUARD_ARRAY( guarded_src, (2*ARRAY_GUARD_LEN) + fixed_length );
     thesrc = (arm_float_t*) ( (void*)guarded_src + 16);
-    FILL_FLOAT_ARRAY( thesrc, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    FILL_FLOAT_ARRAY( thesrc, ARRLEN * MAX_VEC_COMPONENTS ); // random initialize
 
     for ( i = 0; i<IMPL_COUNT; i++ )
     {
@@ -80,7 +80,7 @@ arm_result_t test_operation()
   }
 
 
-  // test the especial case where dst == src
+  // test the special case where dst == src
   unsigned int tmp_len = 13; // Just an odd number bigger than 8
   unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(arm_float_t);
   esp_buf[0] = (arm_float_t*) malloc( inbytes ); // input 1

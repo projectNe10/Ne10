@@ -156,7 +156,7 @@ inline int EQUALS_FLOAT( float fa, float fb , unsigned int err )
   if ( abs( cut1 - cut2 ) > err ) // this is the log() of the actual error
   {  // then we have an unacceptable error
 
-     // report an unaaceptable error
+     // report an unacceptable error
      memcpy( &ui1,  &fa, sizeof(arm_float_t) );
      memcpy( &ui2,  &fb, sizeof(arm_float_t) );
 
