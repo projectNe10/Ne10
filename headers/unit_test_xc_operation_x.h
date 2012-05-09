@@ -104,11 +104,10 @@ arm_result_t test_operation()
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[4] , esp_buf[2], esp_buf[3], tmp_len );
 
 
-  fprintf ( stderr, "** NTOE: Due to the nature of this test we cannot use an assert - the values may or may not be the same... make sure NAN values are not geenrated by using FILL_FLOAT_ARRAY_\'LIMIT\'. \n" );
-
   for ( i = 0;  i < tmp_len * opcode; i++ ) // at this point the two outputs must be identical
   {
-      // assert( esp_buf[0][i] == esp_buf[4][i] ); // check for not-a-number
+      assert ( esp_buf[0][i] == esp_buf[0][i] ); // check for NAN values
+      assert ( esp_buf[4][i] == esp_buf[4][i] );
 
       if ( ! EQUALS_FLOAT( esp_buf[0][i] , esp_buf[4][i], ERROR_MARGIN_LARGE*10 ) )
       {
