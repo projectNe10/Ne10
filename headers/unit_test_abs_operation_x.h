@@ -87,7 +87,7 @@ arm_result_t test_operation()
   esp_buf[2] = (arm_float_t*) malloc( inbytes ); // copy of 1st input
   esp_buf[4] = (arm_float_t*) malloc( inbytes ); // use this as the output buffer
 
-  FILL_FLOAT_ARRAY_LIMIT( esp_buf[0], tmp_len * MAX_VEC_COMPONENTS ); // initialization the array with random numbers
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[0], tmp_len * MAX_VEC_COMPONENTS ); // initialize the array with random numbers
   memcpy( esp_buf[2], esp_buf[0], inbytes );
 
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[0] , esp_buf[0], tmp_len );
