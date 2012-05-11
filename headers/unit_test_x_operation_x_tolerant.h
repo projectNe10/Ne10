@@ -45,42 +45,97 @@ struct timezone zone;
 // there is a max of "4" components in a vec
 #define MAX_VEC_COMPONENTS 4
 
+arm_float_t * guarded_src1 = NULL;
+arm_float_t * guarded_src2 = NULL;
+arm_float_t * guarded_dst[IMPL_COUNT];
+
 arm_float_t * thesrc1 = NULL;
 arm_float_t * thesrc2 = NULL;
 arm_float_t * thedst[IMPL_COUNT]; // output from different implementations are stored in separate arrays for varification
 int done_init = 0;
 
+// Eight buffers that are used for special test cases such as when the destination and source point to the same address.
+// They may vary in size from one case to another and from one function to another.
+arm_float_t*  esp_buf[8];
+
 arm_result_t test_operation()
 {
+  const unsigned int fixed_length = ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS;
+
   // initialize if not done so
   if ( 0 == done_init )
   {
-    thesrc1 = (arm_float_t*) malloc( ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS );
+    guarded_src1 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
+    GUARD_ARRAY( guarded_src1, (2*ARRAY_GUARD_LEN) + fixed_length );
+    thesrc1 = (arm_float_t*) ( (void*)guarded_src1 + 16);
     FILL_FLOAT_ARRAY_LIMIT( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
-    thesrc2 = (arm_float_t*) malloc( ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS );
+    guarded_src2 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
+    GUARD_ARRAY( guarded_src2, (2*ARRAY_GUARD_LEN) + fixed_length );
+    thesrc2 = (arm_float_t*) ( (void*)guarded_src2 + 16);
     FILL_FLOAT_ARRAY_LIMIT( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     for ( i = 0; i<IMPL_COUNT; i++ )
     {
-      thedst[i] = (arm_float_t*) malloc( ARRLEN * sizeof(arm_float_t) * MAX_VEC_COMPONENTS );
+      guarded_dst[i] = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
+      GUARD_ARRAY( guarded_dst[i], (2*ARRAY_GUARD_LEN) + fixed_length );
+      thedst[i] = (arm_float_t*) ( (void*)guarded_dst[i] + 16);
     }
 
     done_init = 1;
   }
+
+  // test the special case where dst == src
+  unsigned int tmp_len = 13; // Just an odd number bigger than 8
+  unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(arm_float_t);
+  esp_buf[0] = (arm_float_t*) malloc( inbytes ); // input 1
+  esp_buf[1] = (arm_float_t*) malloc( inbytes ); // input 2
+  esp_buf[2] = (arm_float_t*) malloc( inbytes ); // copy of 1st input
+  esp_buf[3] = (arm_float_t*) malloc( inbytes ); // copy of 2nd input
+  esp_buf[4] = (arm_float_t*) malloc( inbytes ); // use this as the output buffer
+
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[0], tmp_len * MAX_VEC_COMPONENTS ); // initialize the array with random numbers
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[1], tmp_len * MAX_VEC_COMPONENTS ); // initialize the array with random numbers
+  memcpy( esp_buf[2], esp_buf[0], inbytes );
+  memcpy( esp_buf[3], esp_buf[1], inbytes );
+
+  ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[0] , esp_buf[0], esp_buf[1], tmp_len );
+  ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[4] , esp_buf[2], esp_buf[3], tmp_len );
+
+  for ( i = 0;  i < tmp_len * opcode; i++ ) // at this point the two outputs must be identical
+  {
+      if ( esp_buf[0][i] != esp_buf[4][i] )
+      {
+          fprintf ( stderr, "\t FATAL ERROR: Operation number %d implementation [%d] has failed the dst==src test case. \n", opcode, impl );
+          fprintf ( stderr, "\t NOTE: Usually implementation 1=C, 2=ASM/VFP, and 3=ASM/NEON. \n");
+          exit( NE10_ERR );
+     }
+  }
+
+  free(esp_buf[0]); free(esp_buf[1]); free(esp_buf[2]); free(esp_buf[3]); free(esp_buf[4]);
+
 
   // sample run
   MEASURE( dt_test_sample,
     ftbl [ FTBL_IDX(opcode, impl) ] ( thedst[ impl-1 ] , thesrc1, thesrc2, ARRLEN );
   );
 
-          MEASURE( elapsed,
-            for ( i = 0; i < max; i++  )
-            {
-               // call the function
-               ftbl [ FTBL_IDX(opcode, impl) ] ( thedst[ impl -1 ] , thesrc1, thesrc2, ARRLEN );
-            }
-           );
+  if ( ! CHECK_ARRAY_GUARD(guarded_dst[ impl -1 ], (2*ARRAY_GUARD_LEN) + fixed_length) ||
+       ! CHECK_ARRAY_GUARD(guarded_src1, (2*ARRAY_GUARD_LEN) + fixed_length) ||
+       ! CHECK_ARRAY_GUARD(guarded_src2, (2*ARRAY_GUARD_LEN) + fixed_length) )
+  {
+                fprintf ( stderr, "\t FATAL ERROR: Operation number %d implementation [%d] has failed the guard test. \n", opcode, impl );
+                exit( NE10_ERR );
+  }
+
+
+  MEASURE( elapsed,
+    for ( i = 0; i < max; i++  )
+    {
+      // call the function
+      ftbl [ FTBL_IDX(opcode, impl) ] ( thedst[ impl -1 ] , thesrc1, thesrc2, ARRLEN );
+    }
+   );
 
   if ( !mute )
        printf( "%02.8f;%013.3f\n", elapsed - dt_test_overhead,
@@ -200,11 +255,11 @@ arm_result_t run_test( int argc, char **argv )
 
 
   // free any allocated memory...
-  free( thesrc1 );
-  free( thesrc2 );
+  free( guarded_src1 );
+  free( guarded_src2 );
   for ( i = 0; i<IMPL_COUNT; i++ )
   {
-    free( thedst[i] );
+    free( guarded_dst[i] );
   }
 
   return NE10_OK;
