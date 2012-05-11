@@ -153,13 +153,13 @@ inline int EQUALS_FLOAT( float fa, float fb , unsigned int err )
   if ( (cut1 & EXPONENT_MASK) == cut1 ) { cut1 = 0; } // zero out subnormal float values
   if ( (cut2 & EXPONENT_MASK) == cut2 ) { cut2 = 0; } // zero out subnormal float values
 
+  memcpy( &ui1,  &fa, sizeof(arm_float_t) );
+  memcpy( &ui2,  &fb, sizeof(arm_float_t) );
+
   if ( abs( cut1 - cut2 ) > err ) // this is the log() of the actual error
   {  // then we have an unacceptable error
 
-     // report an unaaceptable error
-     memcpy( &ui1,  &fa, sizeof(float) );
-     memcpy( &ui2,  &fb, sizeof(float) );
-
+     // report an unacceptable error
      fprintf( stderr, "HINT: %e (0x%04X) != %e (0x%04X) ", fa, ui1, fb, ui2 );
 
      return 0;
