@@ -401,9 +401,9 @@ abs_vec4f_neon:
 
         @ absolute values
         vabs.f32          d0, d0
-        vabs.f32          d1, d1
         vabs.f32          d2, d2
-        vabs.f32          d3, d3
+        vabs.f32          d4, d4
+        vabs.f32          d6, d6
 
         vst4.32          {d0[0], d2[0], d4[0], d6[0]}, [r0]!     @ The values are loaded like so:
 

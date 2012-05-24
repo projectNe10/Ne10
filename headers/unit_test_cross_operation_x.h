@@ -15,11 +15,10 @@
  */
 
 /*
- * NE10 Library : headers/unit_test_addmat_operation_x.h
+ * NE10 Library : headers/unit_test_cross_operation_x.h
  */
 
 #include "./unit_test_common.h"
-#include "../inc/NE10_types.h"
 
 // This function signature applies the operations with the format "*c_*_*" (e.g. 'add'c_'float'_'neon')
 typedef arm_result_t (*arm_func_4args_t)(void * dst, void * src1, void * src2, unsigned int count);
@@ -43,8 +42,8 @@ double dt_test_sample = 0.0;
 double elapsed = 0.0;
 struct timezone zone;
 
-// there is a max of "16" components in a matrix
-#define MAX_VEC_COMPONENTS 16
+// there is a max of "4" components in a vec
+#define MAX_VEC_COMPONENTS 4
 
 arm_float_t * guarded_src1 = NULL;
 arm_float_t * guarded_src2 = NULL;
@@ -55,7 +54,7 @@ arm_float_t * thesrc2 = NULL;
 arm_float_t * thedst[IMPL_COUNT]; // output from different implementations are stored in separate arrays for varification
 int done_init = 0;
 
-// Eight buffers that are used for special test cases such as when the destination and source point to the same address.
+// Eight buffers that are used for especial test cases such as when the destination and source point to the same address.
 // They may vary in size from one case to another and from one function to another.
 arm_float_t*  esp_buf[8];
 
@@ -69,12 +68,12 @@ arm_result_t test_operation()
     guarded_src1 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
     GUARD_ARRAY( guarded_src1, (2*ARRAY_GUARD_LEN) + fixed_length );
     thesrc1 = (arm_float_t*) ( (void*)guarded_src1 + 16);
-    FILL_FLOAT_ARRAY_LIMIT_GT1( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    FILL_FLOAT_ARRAY_LIMIT( thesrc1, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     guarded_src2 = (arm_float_t*) malloc( (2*ARRAY_GUARD_LEN) + fixed_length ); // 16 extra bytes at the begining and 16 extra bytes at the end
     GUARD_ARRAY( guarded_src2, (2*ARRAY_GUARD_LEN) + fixed_length );
     thesrc2 = (arm_float_t*) ( (void*)guarded_src2 + 16);
-    FILL_FLOAT_ARRAY_LIMIT_GT1( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
+    FILL_FLOAT_ARRAY_LIMIT( thesrc2, ARRLEN * MAX_VEC_COMPONENTS ); // random initialization
 
     for ( i = 0; i<IMPL_COUNT; i++ )
     {
@@ -86,7 +85,8 @@ arm_result_t test_operation()
     done_init = 1;
   }
 
-  // test the special case where dst == src
+
+  // test the especial case where dst == src
   unsigned int tmp_len = 13; // Just an odd number bigger than 8
   unsigned int inbytes = tmp_len * MAX_VEC_COMPONENTS * sizeof(arm_float_t);
   esp_buf[0] = (arm_float_t*) malloc( inbytes ); // input 1
@@ -95,17 +95,21 @@ arm_result_t test_operation()
   esp_buf[3] = (arm_float_t*) malloc( inbytes ); // copy of 2nd input
   esp_buf[4] = (arm_float_t*) malloc( inbytes ); // use this as the output buffer
 
-  FILL_FLOAT_ARRAY_LIMIT( esp_buf[0], tmp_len * MAX_VEC_COMPONENTS ); // initialize the array with random numbers
-  FILL_FLOAT_ARRAY_LIMIT( esp_buf[1], tmp_len * MAX_VEC_COMPONENTS ); // initialize the array with random numbers
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[0], tmp_len * MAX_VEC_COMPONENTS ); // initialization the array with random numbers
+  FILL_FLOAT_ARRAY_LIMIT( esp_buf[1], tmp_len * MAX_VEC_COMPONENTS ); // initialization the array with random numbers
   memcpy( esp_buf[2], esp_buf[0], inbytes );
   memcpy( esp_buf[3], esp_buf[1], inbytes );
 
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[0] , esp_buf[0], esp_buf[1], tmp_len );
   ftbl [ FTBL_IDX(opcode, impl) ] ( esp_buf[4] , esp_buf[2], esp_buf[3], tmp_len );
 
-  for ( i = 0;  i < tmp_len * (opcode+1) * (opcode+1); i++ ) // at this point the two outputs must be identical
+  fprintf ( stderr, "** NTOE: Due to the nature of this test we cannot use an assert - the values may or may not be the same... make sure NAN values are not geenrated by using FILL_FLOAT_ARRAY_\'LIMIT\'. \n" );
+
+  for ( i = 0;  i < tmp_len * opcode; i++ ) // at this point the two outputs must be identical
   {
-      if ( esp_buf[0][i] != esp_buf[4][i] )
+      // assert( esp_buf[0][i] == esp_buf[4][i] ); // check for not-a-number
+
+      if ( ! EQUALS_FLOAT( esp_buf[0][i] , esp_buf[4][i], ERROR_MARGIN_LARGE*10 ) )
       {
           fprintf ( stderr, "\t FATAL ERROR: Operation number %d implementation [%d] has failed the dst==src test case. \n", opcode, impl );
           fprintf ( stderr, "\t NOTE: Usually implementation 1=C, 2=ASM/VFP, and 3=ASM/NEON. \n");
@@ -114,6 +118,7 @@ arm_result_t test_operation()
   }
 
   free(esp_buf[0]); free(esp_buf[1]); free(esp_buf[2]); free(esp_buf[3]); free(esp_buf[4]);
+
 
   // sample run
   MEASURE( dt_test_sample,
@@ -199,31 +204,30 @@ arm_result_t run_test( int argc, char **argv )
              // now verify
              arm_float_t * _output = NULL; // [ IMPL_COUNT * MAX_VEC_COMPONENTS ]; // one for each implementation, c, asm, neon...
              int warns = 0;
-             int item_width = opcode+1; // using the opcode (1=mat2x2, 2=mat3x3, ...)
-             const int item_width_p2 = item_width * item_width;
-             _output = (arm_float_t*) malloc( IMPL_COUNT * sizeof(arm_float_t) * item_width_p2 );
+             int item_width = 3; // cross has only one form at the moment, the vec3 with 3 components, x, y, and z
+             _output = (arm_float_t*) malloc( IMPL_COUNT * sizeof(arm_float_t) * item_width );
              for ( i = 0; i < ARRLEN; i++ )
              {
                  for ( impl= 1; impl <= IMPL_COUNT; impl ++ )
                  {
-                     memcpy ( &_output[  (impl-1) * item_width_p2  ], &thedst[ impl-1 ][ i * item_width_p2 ],  sizeof(arm_float_t) * item_width_p2  );
+                     memcpy ( &_output[  (impl-1) * item_width  ], &thedst[ impl-1 ][ i * item_width ],  sizeof(arm_float_t) * item_width  );
                  }
 
                  int pos = 0;
                  for ( impl = 2; impl <= IMPL_COUNT; impl ++ ) // compare the output from the 2nd, 3rd, 4th, etc. to the first one so start at 2
                  {
-                     for ( pos = 0; pos < item_width_p2; pos++ ) // compare corresponding components of the items
+                     for ( pos = 0; pos < item_width; pos++ ) // compare corresponding components of the items
                      {
-                         assert ( _output[ ((1-1)*item_width_p2)+pos ] == _output[ ((1-1)*item_width_p2)+pos ] ); // check for not-a-number
-                         assert ( _output[ ((impl-1)*item_width_p2)+pos ] == _output[ ((impl-1)*item_width_p2)+pos ] );  // check for not-a-number
+                         assert ( _output[ ((1-1)*item_width)+pos ] == _output[ ((1-1)*item_width)+pos ] ); // check for not-a-number
+                         assert ( _output[ ((impl-1)*item_width)+pos ] == _output[ ((impl-1)*item_width)+pos ] );  // check for not-a-number
 
-                         if ( ! EQUALS_FLOAT( _output[ ((1-1)*item_width_p2)+pos ] , _output[ ((impl-1)*item_width_p2)+pos ], ERROR_MARGIN_SMALL ) )
+                         if ( ! EQUALS_FLOAT( _output[ ((1-1)*item_width)+pos ] , _output[ ((impl-1)*item_width)+pos ], ERROR_MARGIN_SMALL ) )
                          { fprintf( stderr, "\t\t WARNING: In opcode [%d], implementation [1] != implemenation [%d] on item [%d -> %d]\n",
                                     opcode, impl, i, pos+1 );
                              warns++; }
 
                          // stop after 10 warnings
-                         if ( warns >= ACCEPTABLE_WARNS_MATRICES )
+                         if ( warns >= ACCEPTABLE_WARNS )
                          {    fprintf ( stderr, "\t WARNING: One or more mismatching values were found. \n" );
                               exit( NE10_ERR );
                          }
@@ -232,7 +236,7 @@ arm_result_t run_test( int argc, char **argv )
              }
              free( _output ); _output = (arm_float_t *) NULL;
 
-             if ( warns < ACCEPTABLE_WARNS_MATRICES )
+             if ( warns < ACCEPTABLE_WARNS )
              {
                return NE10_OK;
              }

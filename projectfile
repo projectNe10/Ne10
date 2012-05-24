@@ -13,6 +13,8 @@ mla
 abs
 len
 normalize
+dot
+cross
 addmat
 submat
 mulmat
