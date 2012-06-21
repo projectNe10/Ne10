@@ -24,7 +24,7 @@
     The routines that are provided by this library are all declared in this header file.
  */
 
-#include "../headers/versionheader.h"
+//#include "../headers/versionheader.h"
 #include <NE10_types.h>
 #include <NE10_c.h>
 #include <NE10_asm.h>
@@ -32,6 +32,10 @@
 
 #ifndef NE10_H
 #define NE10_H
+
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 ///////////////////////////
 // function prototypes:
@@ -648,5 +652,9 @@ extern arm_result_t (*mulcmatvec_cm2x2f_v2f)(arm_vec2f_t * dst, const arm_mat2x2
 extern arm_result_t (*multrans_mat4x4f)(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
 extern arm_result_t (*multrans_mat3x3f)(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
 extern arm_result_t (*multrans_mat2x2f)(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

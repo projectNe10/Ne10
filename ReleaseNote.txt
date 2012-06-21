@@ -217,4 +217,4 @@ Details of how to do this are too project specific to detail here.
         Each function is implemented in C, ARM Assembly and NEON code as a
         basis for comparison. Assembly versions, while efficient, are not
         intended as best-practice examples.
-
+    * Added support for C++

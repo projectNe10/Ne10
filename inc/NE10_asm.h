@@ -18,11 +18,14 @@
  * NE10 Library : inc/NE10_asm.h
  */
 
-#include "../headers/versionheader.h"
+//#include "../headers/versionheader.h"
 
 #ifndef NE10_ASM_H
 #define NE10_ASM_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 ///////////////////////////
 // function prototypes:
@@ -147,7 +150,6 @@ extern arm_result_t dot_vec4f_asm(arm_float_t * dst, arm_vec4f_t * src1, arm_vec
 extern arm_result_t cross_vec3f_asm(arm_vec3f_t * dst, arm_vec3f_t * src1, arm_vec3f_t * src2, unsigned int count);
 
 
-
 // ## Matrix-Constant Arithmetic ##
 
 // arm_mat4x4f_t
@@ -204,5 +206,9 @@ extern arm_result_t mulcmatvec_cm2x2f_v2f_asm(arm_vec2f_t * dst, const arm_mat2x
 extern arm_result_t multrans_mat4x4f_asm(arm_mat4x4f_t * dst, arm_mat4x4f_t * src1, arm_mat4x4f_t * src2, unsigned int count);
 extern arm_result_t multrans_mat3x3f_asm(arm_mat3x3f_t * dst, arm_mat3x3f_t * src1, arm_mat3x3f_t * src2, unsigned int count);
 extern arm_result_t multrans_mat2x2f_asm(arm_mat2x2f_t * dst, arm_mat2x2f_t * src1, arm_mat2x2f_t * src2, unsigned int count);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
