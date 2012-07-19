@@ -120,7 +120,7 @@ add_vec2f_neon:
         @  r3: int count & the number of items in the input array that can be
         @                   processed in chunks of 4 vectors
         @
-        @  r4:  the number of items that are residual that will be processed at the begin of
+        @  r4: the number of items that are residual that will be processed at the begin of
         @                   the input array
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
