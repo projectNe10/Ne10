@@ -146,7 +146,7 @@ add_vec2f_neon:
 .L_check_mainloop_vec2:
         cbz               r3, .L_return_vec2
 
-        @ load the 1st set of values
+        @ load the current set of values
         vld2.32         {q0-q1}, [r1]!
         vld2.32         {q2-q3}, [r2]!
 
