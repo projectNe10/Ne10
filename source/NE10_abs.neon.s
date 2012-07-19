@@ -109,7 +109,7 @@ abs_vec2f_neon:
         @  r1: *src & current src entry's address
         @  r2: int count & the number of items in the input array that can be
         @                   processed in chunks of 4 vectors
-        @  r3: the number of items that are left to be processed at the end of
+        @  r3: the number of items that are residual that will be processed at the begin of
         @                   the input array
         @
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -174,7 +174,7 @@ abs_vec3f_neon:
         @  r1: *src & current src entry's address
         @  r2: int count & the number of items in the input array that can be
         @                   processed in chunks of 4 vectors
-        @  r3: the number of items that are left to be processed at the end of
+        @  r3: the number of items that are residual that will be processed at the begin of
         @                   the input array
         @
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -249,7 +249,7 @@ abs_vec4f_neon:
         @  r1: *src & current src entry's address
         @  r2: int count & the number of items in the input array that can be
         @                   processed in chunks of 4 vectors
-        @  r3: the number of items that are left to be processed at the end of
+        @  r3: the number of items that are residual that will be processed at the begin of
         @                   the input array
         @
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
