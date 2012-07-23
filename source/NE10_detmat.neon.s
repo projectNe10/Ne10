@@ -29,7 +29,7 @@
 
 
 
-        .balign   4
+        .align   4
         .global   detmat_2x2f_neon
         .thumb
         .thumb_func
@@ -60,63 +60,52 @@ detmat_2x2f_neon:
         @ memory address, and move onto the next four.
 
         @ load the 1st set of values
-          vld4.32         {d0, d2, d4, d6}, [r1]!
-          vld4.32         {d1, d3, d5, d7}, [r1]!
-          subs            r2, r2, #8          @ 4 for this set, and 4 for the 2nd set
+        vld4.32         {d0, d2, d4, d6}, [r1]!
+        vld4.32         {d1, d3, d5, d7}, [r1]!
+        subs            r2, r2, #4
 
-        @ calculate values for the 1st set
-          vmul.f32        q15, q0, q3
-          vmls.f32        q15, q1, q2
+        @ calculate values for current set
+        vmul.f32        q15, q0, q3
+        vmls.f32        q15, q1, q2
 
-        @ load the 2nd set of values
-          vld4.32         {d0, d2, d4, d6}, [r1]!
-          vld4.32         {d1, d3, d5, d7}, [r1]!
-
-          ble             .L_mainloopend_mat2x2
+        ble             .L_mainloopend_mat2x2
 
 .L_mainloop_mat2x2:
-        @ store the result for the 1st/next (e.g. 3rd) set
-          vst1.32         {q15}, [r0]!
+        @ store the result for current set
+        vst1.32         {q15}, [r0]!
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-          vmul.f32        q15, q0, q3
-          vmls.f32        q15, q1, q2
+        @ load the next set of values
+        vld4.32         {d0, d2, d4, d6}, [r1]!
+        vld4.32         {d1, d3, d5, d7}, [r1]!
+        subs            r2, r2, #4
 
-       @ load the next (e.g. 3rd) set of values
-          subs            r2, r2, #4
-          vld4.32         {d0, d2, d4, d6}, [r1]!
-          vld4.32         {d1, d3, d5, d7}, [r1]!
+        @ calculate values for next set
+        vmul.f32        q15, q0, q3
+        vmls.f32        q15, q1, q2
 
         bgt             .L_mainloop_mat2x2             @ loop if r2 > 0, if we have at least another 4 vectors (8 floats) to process
 
 .L_mainloopend_mat2x2:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
-          vst1.32         {q15}, [r0]!
-
-        @ calculate values for the last (e.g. 3rd) set
-          vmul.f32        q15, q0, q3
-          vmls.f32        q15, q1, q2
-
-        @ store the result for the last (e.g. 3rd) set
-          vst1.32         {q15}, [r0]!
+        @ store the result for the last set
+        vst1.32         {q15}, [r0]!
 
 .L_check_mat2x2:
-     @ check if anything left to process at the end of the input array
+        @ check if anything left to process at the end of the input array
         cmp               r3, #0
         ble               .L_return_mat2x2
 
 .L_secondloop_mat2x2:
-     @ process the last few items left in the input array
+        @ process the last few items left in the input array
         vld1.32         {d0, d1}, [r1]! @ Load matrix [A]
 
         subs            r3, r3, #1
 
         @ calculate det([A]) = |A|
-          vrev64.32        d1, d1
-          vmul.f32         d2, d0, d1
-          vrev64.32        d2, d2
-          vmls.f32         d2, d0, d1  @ At this point d2 = { -|A|, |A| }
+        vrev64.32        d1, d1
+        vmul.f32         d2, d0, d1
+        vrev64.32        d2, d2
+        vmls.f32         d2, d0, d1  @ At this point d2 = { -|A|, |A| }
 
         @ store the result which is in d2[1]
         vst1.32           {d2[1]}, [r0]!
@@ -131,7 +120,7 @@ detmat_2x2f_neon:
 
 
 
-        .align  2
+        .align  4
         .global detmat_3x3f_neon
         .thumb
         .thumb_func
@@ -162,41 +151,30 @@ detmat_3x3f_neon:
         @ memory address, and move onto the next two.
 
         @ load the 1st set of values
-          LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d16, d17, d18, d19, d20, d21,  q0, q1, q2, q8, q9, q10, r1
+        LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d16, d17, d18, d19, d20, d21,  q0, q1, q2, q8, q9, q10, r1
+        subs            r2, r2, #2
 
-          subs            r2, r2, #4          @ 2 for this set, and 2 for the 2nd set
+        @ calculate values for the current set
+        GET_DETERMINANT_of_3x3MATS_ARGS  d0, d2, d4, d16, d18, d20, d1, d3, d5, d22, d24, d26
 
-        @ calculate values for the 1st set
-          GET_DETERMINANT_of_3x3MATS_ARGS  d0, d2, d4, d16, d18, d20, d1, d3, d5, d22, d24, d26
-
-        @ load the 2nd set of values
-          LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d16, d17, d18, d19, d20, d21,  q0, q1, q2, q8, q9, q10, r1
-
-          ble             .L_mainloopend_mat3x3
+        ble             .L_mainloopend_mat3x3
 
 .L_mainloop_mat3x3:
-        @ store the result for the 1st/next (e.g. 3rd) set
-          vst1.32         {d22}, [r0]!
+        @ store the result for the current set
+        vst1.32         {d22}, [r0]!
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-          GET_DETERMINANT_of_3x3MATS_ARGS  d0, d2, d4, d16, d18, d20, d1, d3, d5, d22, d24, d26
+        @ load the next set of values
+        LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d16, d17, d18, d19, d20, d21,  q0, q1, q2, q8, q9, q10, r1
+        subs            r2, r2, #2
 
-       @ load the next (e.g. 3rd) set of values
-          LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d16, d17, d18, d19, d20, d21,  q0, q1, q2, q8, q9, q10, r1
-
-          subs            r2, r2, #2
+        @ calculate values for the next set
+        GET_DETERMINANT_of_3x3MATS_ARGS  d0, d2, d4, d16, d18, d20, d1, d3, d5, d22, d24, d26
 
         bgt               .L_mainloop_mat3x3             @ loop if r2 > 0, if we have at least another 4 vectors (12 floats) to process
 
 .L_mainloopend_mat3x3:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
-          vst1.32         {d22}, [r0]!
-
-        @ calculate values for the last (e.g. 3rd) set
-          GET_DETERMINANT_of_3x3MATS_ARGS  d0, d2, d4, d16, d18, d20, d1, d3, d5, d22, d24, d26
-
-        @ store the result for the last (e.g. 3rd) set
+        @ store the result for the last set
           vst1.32         {d22}, [r0]!
 
 .L_check_mat3x3:
@@ -231,7 +209,7 @@ detmat_3x3f_neon:
 
 
 
-        .align  2
+        .align  4
         .global detmat_4x4f_neon
         .thumb
         .thumb_func
@@ -264,40 +242,29 @@ detmat_4x4f_neon:
 
         @ load the 1st set of values
          LOAD_4x4MATS_ARGS  d0, d1, d2, d3, d4, d5, d6, d7,  d16, d17, d18, d19, d20, d21, d22, d23,  q0, q1, q2, q3, q8, q9, q10, q11, r1
+         subs            r2, r2, #2
 
-          subs            r2, r2, #4          @ 2 for this set and 2 for the next set
-
-        @ calculate values for the 1st set
+        @ calculate values for the current set
          GET_DETERMINANT_of_4x4MATS_ARGS   d0, d2, d4, d6, d16, d18, d20, d22, d1, d3, d5, d7, d17, d19, d21, d23,  d24, d26, d28, d30, d25, d27
 
-        @ load the 2nd set of values
-         LOAD_4x4MATS_ARGS  d0, d1, d2, d3, d4, d5, d6, d7,  d16, d17, d18, d19, d20, d21, d22, d23,  q0, q1, q2, q3, q8, q9, q10, q11, r1
-
-          ble             .L_mainloopend_mat4x4
+         ble             .L_mainloopend_mat4x4
 
 .L_mainloop_mat4x4:
-        @ store the result for the 1st/next (e.g. 3rd) set
+        @ store the result for the current set
          vst1.32         {d24}, [r0]!
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-         GET_DETERMINANT_of_4x4MATS_ARGS   d0, d2, d4, d6, d16, d18, d20, d22, d1, d3, d5, d7, d17, d19, d21, d23,  d24, d26, d28, d30, d25, d27
-
-          subs            r2, r2, #2
-       @ load the next (e.g. 3rd) set of values
+       @ load the next set of values
          LOAD_4x4MATS_ARGS  d0, d1, d2, d3, d4, d5, d6, d7,  d16, d17, d18, d19, d20, d21, d22, d23,  q0, q1, q2, q3, q8, q9, q10, q11, r1
+         subs            r2, r2, #2
 
+        @ calculate values for the next set
+         GET_DETERMINANT_of_4x4MATS_ARGS   d0, d2, d4, d6, d16, d18, d20, d22, d1, d3, d5, d7, d17, d19, d21, d23,  d24, d26, d28, d30, d25, d27
 
         bgt               .L_mainloop_mat4x4             @ loop if xx is > r2, if we have at least another 4 vectors (16 floats) to process
 
 .L_mainloopend_mat4x4:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
-         vst1.32         {d24}, [r0]!
-
-        @ calculate values for the last (e.g. 3rd) set
-         GET_DETERMINANT_of_4x4MATS_ARGS   d0, d2, d4, d6, d16, d18, d20, d22, d1, d3, d5, d7, d17, d19, d21, d23,  d24, d26, d28, d30, d25, d27
-
-        @ store the result for the last (e.g. 3rd) set
+        @ store the result for the last set
          vst1.32         {d24}, [r0]!
 
 .L_check_mat4x4:
