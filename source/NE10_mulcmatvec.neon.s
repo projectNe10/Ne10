@@ -45,19 +45,13 @@
         @
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         .macro MUL_MAT2x2_VEC2
-          vmul.f32        q12,  q8 ,  d0[0]    @ a*x1,x3
-          vmul.f32        q14,  q10,  d0[0]    @   x2,x4
-          vmul.f32        q8 ,  q8 ,  d1[0]    @ b*x1,x3
-          vmul.f32        q10,  q10,  d1[0]    @   x2,x4
-          vmul.f32        q13,  q9 ,  d2[0]    @ c*y1,y3
-          vmul.f32        q15,  q11,  d2[0]    @   y2,y4
-          vmul.f32        q9 ,  q9 ,  d3[0]    @ d*y1,y3
-          vmul.f32        q11,  q11,  d3[0]    @   y2,y4
+          vmul.f32        q10,  q8 ,  d0[0]    @ a*x1,x2,x3,x4
+          vmul.f32        q8 ,  q8 ,  d1[0]    @ b*x1,x2,x3,x4
+          vmul.f32        q11,  q9 ,  d2[0]    @ c*y1,y2,y3,y4
+          vmul.f32        q9 ,  q9 ,  d3[0]    @ d*y1,y2,y3,y4
 
-          vadd.f32        q14,  q14,  q15      @ 3) res24.x = a*x2,x4 + c*y2,y4   @ These results need to be stored in the order noted
-          vadd.f32        q12,  q12,  q13      @ 1) res13.x = a*x1,x3 + c*y1,y3
-          vadd.f32        q15,  q10,  q11      @ 4) res24.y = b*x2,x4 + d*y2,y4
-          vadd.f32        q13,  q8 ,  q9       @ 2) res13.y = b*x1,x3 + d*y1,y3
+          vadd.f32        q12,  q10,  q11      @ 3) res24.x = a*(x1,x2,x3,x4) + c*(y1,y2,y3,y4)   @ These results need to be stored in the order noted
+          vadd.f32        q13,  q8,   q9       @ 4) res24.y = b*(x1,x2,x3,x4) + d*(y1,y2,y3,y4)
         .endm
 
 
@@ -91,94 +85,75 @@ mulcmatvec_cm2x2f_v2f_neon:
         and               r4, r3, #3          @ r4 = count % 4;
         sub               r3, r3, r4          @ count = count - r3; This is what's left to be processed after this loop
 
-        cmp               r3, #0
-        beq               .L_check_mat2x2
-
         @ First we load the constant 2x2 matrix, then each time we load
         @ eight vectors of 2-floats, multiply each vector with the matrix,
         @ finally store the resutlting vectors in the destination memory
         @ address, and move on to the next four vectors.
 
         @ load the constant matrix
-          @ d0 = m11(a)  d2 = m12(c)
-          @ d1 = m21(b)  d3 = m22(d)
-          vld4.32         { d0[0], d1[0], d2[0], d3[0] }, [r1]
+        @ d0 = m11(a)  d2 = m12(c)
+        @ d1 = m21(b)  d3 = m22(d)
+        vld4.32         { d0[0], d1[0], d2[0], d3[0] }, [r1]
 
+        cmp               r3, #0
+        beq               .L_check_mat2x2
 
         @ load the 1st set of values
-          @ if {V1, V2, ..., V8} are eight vec2's in memory
-          @ then after the load operations the eithet vectors
-          @ are stored in registers q8-q11 like so:
-          @
-          @       d16=(x1,x3) d18=(y1,y3) d20=(x2,x4) d22=(y2,y4);
-          @       d17=(x5,x7) d19=(y5,y7) d21=(x6,x8) d23=(y6,y8);
+        @ if {V1, V2, V3, V4} are 4 vec2's in memory
+        @ then after the load operations the 4 vectors
+        @ are stored in registers q8-q9 like so:
+        @
+        @       q8=(x1,x2,x3,x4)
+        @       q9=(y1,y2,y3,y4)
 
-          vld4.32         {  d16,  d18,  d20,  d22 }, [r2]!
-          vld4.32         {  d17,  d19,  d21,  d23 }, [r2]!
+        vld2.32         {  d16,  d17,  d18,  d19 }, [r2]!
 
-          subs            r3, r3, #16          @ 8 for this set, and 8 for the 2nd set
+        subs            r3, r3, #4          @ 8 for this set
 
         @ calculate values for the 1st set
-          MUL_MAT2x2_VEC2
+        MUL_MAT2x2_VEC2
 
-        @ load the 2nd set of values
-          vld4.32         {  d16,  d18,  d20,  d22 }, [r2]!
-          vld4.32         {  d17,  d19,  d21,  d23 }, [r2]!
-
-          ble             .L_mainloopend_mat2x2
+        ble             .L_mainloopend_mat2x2
 
 .L_mainloop_mat2x2:
-        @ store the result for the 1st/next (e.g. 3rd) set
-          vst4.32        { d24, d26, d28, d30 }, [r0]!
-          vst4.32        { d25, d27, d29, d31 }, [r0]!
+        @ store the result for the current set
+        vst2.32        { d24, d25, d26, d27 }, [r0]!
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-          MUL_MAT2x2_VEC2
+        @ load the next set of values
+        vld2.32         {  d16,  d17,  d18,  d19 }, [r2]!
+        subs            r3, r3, #4
 
-       @ load the next (e.g. 3rd) set of values
-          subs            r3, r3, #8
-          vld4.32         {  d16,  d18,  d20,  d22 }, [r2]!
-          vld4.32         {  d17,  d19,  d21,  d23 }, [r2]!
-
+        @ calculate values for the next set
+        MUL_MAT2x2_VEC2
 
         bgt             .L_mainloop_mat2x2             @ loop if r2 is > r3, if we have at least another 4 vectors (8 floats) to process
 
 .L_mainloopend_mat2x2:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
-          vst4.32        { d24, d26, d28, d30 }, [r0]!
-          vst4.32        { d25, d27, d29, d31 }, [r0]!
-
-
-        @ calculate values for the last (e.g. 3rd) set
-          MUL_MAT2x2_VEC2
-
-        @ store the result for the last (e.g. 3rd) set
-          vst4.32        { d24, d26, d28, d30 }, [r0]!
-          vst4.32        { d25, d27, d29, d31 }, [r0]!
-
+        @ store the result for the last set
+        vst2.32        { d24, d25, d26, d27 }, [r0]!
 
 .L_check_mat2x2:
-     @ check if anything left to process at the end of the input array
+        @ check if anything left to process at the end of the input array
         cmp               r4, #0
         ble               .L_return_mat2x2
 
 .L_secondloop_mat2x2:
-     @ process the last few items left in the input array
+        @ process the last few items left in the input array
         vld2.32         {  d16[0],  d18[0] }, [r2]!
 
         subs              r4, r4, #1
 
         @ calculate values
-          MUL_MAT2x2_VEC2
+        MUL_MAT2x2_VEC2
 
         @ store the results
-          vst2.32        { d24[0], d26[0] }, [r0]!
+        vst2.32        { d24[0], d26[0] }, [r0]!
 
         bgt               .L_secondloop_mat2x2
 
 .L_return_mat2x2:
-     @ return
+       @ return
         pop               {r4}
         mov               r0, #0
         bx                lr
@@ -253,7 +228,7 @@ mulcmatvec_cm3x3f_v3f_neon:
         @  r2: *src & current src entry's gddress
         @  r3: int count & the number of items in the input array
         @
-        @  r4:  the number of items that are left to be processed at the 
+        @  r4:  the number of items that are left to be processed at the
         @                   end of the input array
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -261,74 +236,65 @@ mulcmatvec_cm3x3f_v3f_neon:
         and               r4, r3, #3          @ r3 = count % 4;
         sub               r3, r3, r4          @ count = count - r3; This is what's left to be processed after this loop
 
-        cmp               r3, #0
-        beq               .L_check_mat3x3
-
         @ First we load the constant 3x3 matrix, then each time we load
         @ four vectors of 3-floats, multiply each vector with the matrix,
         @ finally store the resutlting vectors in the destination memory
         @ address, and move on to the next four vectors.
 
         @ load the constant matrix into q0-q2
-          vld3.32         { d0   , d2   , d4    }, [r1]!
-          vld3.32         { d1[0], d3[0], d5[0] }, [r1]
+        vld3.32         { d0   , d2   , d4    }, [r1]!
+        vld3.32         { d1[0], d3[0], d5[0] }, [r1]
+
+        cmp               r3, #0
+        beq               .L_check_mat3x3
 
 
         @ load the 1st set of values
-          LOAD_FOUR_VEC3
-          subs            r3, r3, #8          @ 4 for this set, and 4 for the 2nd set
+        LOAD_FOUR_VEC3
+        subs            r3, r3, #4          @ 4 for this set
 
         @ calculate values for the 1st set
-          MUL_MAT3x3_VEC3
+        MUL_MAT3x3_VEC3
 
-        @ load the 2nd set of values
-          LOAD_FOUR_VEC3
           ble             .L_mainloopend_mat3x3
 
 .L_mainloop_mat3x3:
-        @ store the result for the 1st/next (e.g. 3rd) set
-          STORE_FOUR_VEC3
+        @ store the result for the current set
+        STORE_FOUR_VEC3
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-          MUL_MAT3x3_VEC3
+        @ load the next set of values
+        LOAD_FOUR_VEC3
+        subs            r3, r3, #4
 
-        @ load the next (e.g. 3rd) set of values
-          LOAD_FOUR_VEC3
-
-          subs            r3, r3, #4
+        @ calculate values for the next set
+        MUL_MAT3x3_VEC3
 
         bgt               .L_mainloop_mat3x3             @ loop if r2 is > r3, if we have at least another 4 vectors (12 floats) to process
 
 .L_mainloopend_mat3x3:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
-          STORE_FOUR_VEC3
-
-        @ calculate values for the last (e.g. 3rd) set
-          MUL_MAT3x3_VEC3
-
-        @ store the result for the last (e.g. 3rd) set
-          STORE_FOUR_VEC3
+        @ store the result for the last set
+        STORE_FOUR_VEC3
 
 .L_check_mat3x3:
-     @ check if anything left to process at the end of the input array
+        @ check if anything left to process at the end of the input array
         cmp               r4, #0
         ble               .L_return_mat3x3
 
 .L_secondloop_mat3x3:
-     @ process the last few items left in the input array
-            vld3.32         { d16[0], d18[0], d20[0]  }, [r2]!
+        @ process the last few items left in the input array
+        vld3.32         { d16[0], d18[0], d20[0]  }, [r2]!
 
-          subs            r4, r4, #1
+        subs            r4, r4, #1
 
-          MUL_MAT3x3_VEC3
+        MUL_MAT3x3_VEC3
 
-            vst3.32         { d22[0], d24[0], d26[0]  }, [r0]!
+        vst3.32         { d22[0], d24[0], d26[0]  }, [r0]!
 
         bgt               .L_secondloop_mat3x3
 
 .L_return_mat3x3:
-     @ return
+        @ return
         pop               { r4 }
         mov               r0, #0
         bx                lr
@@ -411,11 +377,11 @@ mulcmatvec_cm4x4f_v4f_neon:
         @  r0: *dst & current dst entry's address
         @      (this register is updated and mvoed to the next entry
         @       after every store operation)
-        @  r1: *cst, pointer to memory where the constant matrix is kept 
+        @  r1: *cst, pointer to memory where the constant matrix is kept
         @  r2: *src & current src entry's address
         @  r3: int count & the number of items in the input array
         @
-        @  r4:  the number of items that are left to be processed at the 
+        @  r4:  the number of items that are left to be processed at the
         @                   end of the input array
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
@@ -423,84 +389,66 @@ mulcmatvec_cm4x4f_v4f_neon:
         and               r4, r3, #3          @ r4 = count % 4;
         sub               r3, r3, r4          @ count = count - r4; This is what's left to be processed after this loop
 
-        cmp               r3, #0
-        beq               .L_check_mat4x4
-
         @ First we load the constant 4x4 matrix, then each time we load
         @ four vectors of 4-floats, multiply each vector with the matrix,
         @ finally store the resutlting vectors in the destination memory
         @ address, and move on to the next four vectors.
 
         @ load the constant matrix into q0-q3
-          vld4.32         { d0, d2, d4, d6 }, [r1]!
-          vld4.32         { d1, d3, d5, d7 }, [r1]
+        vld4.32         { d0, d2, d4, d6 }, [r1]!
+        vld4.32         { d1, d3, d5, d7 }, [r1]
+
+        cmp               r3, #0
+        beq               .L_check_mat4x4
 
         @ load the 1st set of values
-          LOAD_FOUR_VEC4
-
-          subs            r3, r3, #8
+        LOAD_FOUR_VEC4
+        subs            r3, r3, #4
 
         @ calculate values for the 1st set
-          MUL_MAT4x4_VEC4
+        MUL_MAT4x4_VEC4
 
-        @ load the 2nd set of values
-          LOAD_FOUR_VEC4
-
-          ble             .L_mainloopend_mat4x4
+        ble             .L_mainloopend_mat4x4
 
 .L_mainloop_mat4x4:
-        @ store the result for the 1st/next (e.g. 3rd) set
-          STORE_FOUR_VEC4
+        @ store the result for the current set
+        STORE_FOUR_VEC4
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-          MUL_MAT4x4_VEC4
+        @ load the next set of values
+        LOAD_FOUR_VEC4
+        subs            r3, r3, #4
 
-
-       @ load the next (e.g. 3rd) set of values
-          subs            r3, r3, #4
-          LOAD_FOUR_VEC4
-
+        @ calculate values for the next set
+        MUL_MAT4x4_VEC4
 
         bgt               .L_mainloop_mat4x4             @ loop if r2 is > r3, if we have at least another 4 vectors (16 floats) to process
 
 .L_mainloopend_mat4x4:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
-          STORE_FOUR_VEC4
-
-
-        @ calculate values for the last (e.g. 3rd) set
-          MUL_MAT4x4_VEC4
-
-
-        @ store the result for the last (e.g. 3rd) set
-          STORE_FOUR_VEC4
-
+        @ store the result for the last set
+        STORE_FOUR_VEC4
 
 .L_check_mat4x4:
-     @ check if anything left to process at the end of the input array
+        @ check if anything left to process at the end of the input array
         cmp               r4, #0
         ble               .L_return_mat4x4
 
 .L_secondloop_mat4x4:
-     @ process the last few items left in the input array
-            vld4.32         { d16[0], d18[0], d20[0], d22[0]  }, [r2]!
+        @ process the last few items left in the input array
+        vld4.32         { d16[0], d18[0], d20[0], d22[0]  }, [r2]!
 
-
-          subs            r4, r4, #1
+        subs            r4, r4, #1
 
         @ calculate values
-          MUL_MAT4x4_VEC4
-
+        MUL_MAT4x4_VEC4
 
         @ store the results
-            vst4.32         { d24[0], d26[0], d28[0], d30[0]  }, [r0]!
-
+        vst4.32         { d24[0], d26[0], d28[0], d30[0]  }, [r0]!
 
         bgt               .L_secondloop_mat4x4
 
 .L_return_mat4x4:
-     @ return
+        @ return
         pop               {r4}
         mov               r0, #0
         bx                lr
