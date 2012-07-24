@@ -82,7 +82,7 @@ CONST_FLOAT_1Em12:
 
 
 
-        .balign   4
+        .align   4
         .global   invmat_2x2f_neon
         .thumb
         .thumb_func
@@ -123,46 +123,34 @@ invmat_2x2f_neon:
         @ load the 1st set of values
           vld4.32         {d16, d18, d20, d22}, [r1]!
           vld4.32         {d17, d19, d21, d23}, [r1]!
-          subs            r2, r2, #8          @ 4 for this set, and 4 for the 2nd set
+          subs            r2, r2, #4          @ 4 for this set
 
         @ calculate values for the 1st set
           GET_INVERSE_2x2MATS
 
-        @ load the 2nd set of values
-          vld4.32         {d16, d18, d20, d22}, [r1]!
-          vld4.32         {d17, d19, d21, d23}, [r1]!
-
           ble             .L_mainloopend_mat2x2
 
 .L_mainloop_mat2x2:
-        @ store the result for the 1st/next (e.g. 3rd) set
+        @ store the result for the current set
           vst4.32         {d24, d26, d28, d30}, [r0]!
           vst4.32         {d25, d27, d29, d31}, [r0]!
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-          GET_INVERSE_2x2MATS
-
-       @ load the next (e.g. 3rd) set of values
-          subs            r2, r2, #4
+        @ load the next set of values
           vld4.32         {d16, d18, d20, d22}, [r1]!
           vld4.32         {d17, d19, d21, d23}, [r1]!
+          subs            r2, r2, #4
+
+        @ calculate values for the next set
+          GET_INVERSE_2x2MATS
 
 
         bgt             .L_mainloop_mat2x2             @ loop if r2 > 0, if we have at least another 4 vectors (8 floats) to process
 
 .L_mainloopend_mat2x2:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
+        @ store the result for the last set
           vst4.32         {d24, d26, d28, d30}, [r0]!
           vst4.32         {d25, d27, d29, d31}, [r0]!
-
-        @ calculate values for the last (e.g. 3rd) set
-          GET_INVERSE_2x2MATS
-
-        @ store the result for the last (e.g. 3rd) set
-          vst4.32         {d24, d26, d28, d30}, [r0]!
-          vst4.32         {d25, d27, d29, d31}, [r0]!
-
 
 .L_check_mat2x2:
      @ check if anything left to process at the end of the input array
@@ -265,7 +253,7 @@ invmat_2x2f_neon:
 
 
 
-        .align  2
+        .align  4
         .global invmat_3x3f_neon
         .thumb
         .thumb_func
@@ -307,41 +295,30 @@ invmat_3x3f_neon:
         @ load the 1st set of values
           LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d6, d7, d8, d9, d10, d11,  q0, q1, q2, q3, q4, q5, r1
 
-          subs            r2, r2, #4          @ 2 for this set, and 2 for the 2nd set
+          subs            r2, r2, #2          @ 2 for this set
 
         @ calculate values for the 1st set
           GET_INVERSE_3x3MATS
-
-        @ load the 2nd set of values
-          LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d6, d7, d8, d9, d10, d11,  q0, q1, q2, q3, q4, q5, r1
 
 
           ble             .L_mainloopend_mat3x3
 
 .L_mainloop_mat3x3:
-        @ store the result for the 1st/next (e.g. 3rd) set
+        @ store the result for the current set
           STORE_3x3INVMATS
 
-        @ calculate values for the 2nd/next (e.g. 3rd) set
-          GET_INVERSE_3x3MATS
-
-        @ load the next (e.g. 3rd) set of values
+        @ load the next set of values
           LOAD_3x3MATS_ARGS  d0, d1, d2, d3, d4, d5,  d6, d7, d8, d9, d10, d11,  q0, q1, q2, q3, q4, q5, r1
-
-
           subs            r2, r2, #2
+
+        @ calculate values for the next set
+          GET_INVERSE_3x3MATS
 
 	bgt               .L_mainloop_mat3x3             @ loop if r2 > 0, if we have at least another 4 vectors (12 floats) to process
 
 .L_mainloopend_mat3x3:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
-          STORE_3x3INVMATS
-
-        @ calculate values for the last (e.g. 3rd) set
-          GET_INVERSE_3x3MATS
-
-        @ store the result for the last (e.g. 3rd) set
+        @ store the result for the last set
           STORE_3x3INVMATS
 
 
@@ -480,7 +457,7 @@ invmat_3x3f_neon:
 
 
 
-        .align  2
+        .align  4
         .global invmat_4x4f_neon
         .thumb
         .thumb_func
@@ -519,14 +496,10 @@ invmat_4x4f_neon:
 
         @ load the 1st set of values
          LOAD_4x4MATS_ARGS  d0, d1, d2, d3, d4, d5, d6, d7,  d8, d9, d10, d11, d12, d13, d14, d15,  q0, q1, q2, q3, q4, q5, q6, q7, r1
-          subs            r2, r2, #4          @ two for the first set and another two for the second set
+          subs            r2, r2, #2          @ two for the first set
 
         @ calculate values for the 1st set
           GET_INVERSE_4x4MATS
-
-        @ load the 2nd set of values
-         LOAD_4x4MATS_ARGS  d0, d1, d2, d3, d4, d5, d6, d7,  d8, d9, d10, d11, d12, d13, d14, d15,  q0, q1, q2, q3, q4, q5, q6, q7, r1
-
 
           ble             .L_mainloopend_mat4x4
 
@@ -534,27 +507,20 @@ invmat_4x4f_neon:
         @ store the result for the 1st/next (e.g. 3rd) set
           STORE_4x4INVMATS
 
+        @ load the next (e.g. 3rd) set of values
+          LOAD_4x4MATS_ARGS  d0, d1, d2, d3, d4, d5, d6, d7,  d8, d9, d10, d11, d12, d13, d14, d15,  q0, q1, q2, q3, q4, q5, q6, q7, r1
+          subs            r2, r2, #2
+
         @ calculate values for the 2nd/next (e.g. 3rd) set
           GET_INVERSE_4x4MATS
-
-       @ load the next (e.g. 3rd) set of values
-          subs            r2, r2, #2
-         LOAD_4x4MATS_ARGS  d0, d1, d2, d3, d4, d5, d6, d7,  d8, d9, d10, d11, d12, d13, d14, d15,  q0, q1, q2, q3, q4, q5, q6, q7, r1
 
 
         bgt               .L_mainloop_mat4x4             @ loop if r2 > 0, if we have at least another 4 vectors (16 floats) to process
 
 .L_mainloopend_mat4x4:
         @ the last iteration for this call
-        @ store the result for the set of values before the last one (e.g 2nd set)
+        @ store the result for the last set
           STORE_4x4INVMATS
-
-        @ calculate values for the last (e.g. 3rd) set
-          GET_INVERSE_4x4MATS
-
-        @ store the result for the last (e.g. 3rd) set
-          STORE_4x4INVMATS
-
 
 .L_check_mat4x4:
      @ check if anything left to process at the end of the input array
