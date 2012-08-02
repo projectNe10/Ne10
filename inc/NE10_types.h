@@ -37,41 +37,51 @@
 /////////////////////////////////////////////////////////
 // some external definitions to be exposed to the users
 /////////////////////////////////////////////////////////
-typedef float arm_float_t;      // a single float value
-typedef int   arm_result_t;     // resulting [error-]code
+
+typedef signed char             ne10_int8_t;
+typedef unsigned char           ne10_uint8_t;
+typedef signed short            ne10_int16_t;
+typedef unsigned short          ne10_uint16_t;
+typedef signed int              ne10_int32_t;
+typedef unsigned int            ne10_uint32_t;
+typedef signed long long int    ne10_int64_t;
+typedef unsigned long long int  ne10_uint64_t;
+typedef float                   ne10_float32_t;
+typedef double                  ne10_float64_t;
+typedef int                     ne10_result_t;     // resulting [error-]code
 
 typedef struct
 {
-        float x;
-        float y;
-} arm_vec2f_t; // a 2-tuple of float values
+        ne10_float32_t x;
+        ne10_float32_t y;
+} ne10_vec2f_t; // a 2-tuple of ne10_float32_t values
 
 typedef struct
 {
-        float x;
-        float y;
-        float z;
-} arm_vec3f_t; // a 3-tuple of float values
+        ne10_float32_t x;
+        ne10_float32_t y;
+        ne10_float32_t z;
+} ne10_vec3f_t; // a 3-tuple of ne10_float32_t values
 
 typedef struct
 {
-        float x;
-        float y;
-        float z;
-        float w;
-} arm_vec4f_t; // a 4-tuple of float values
+        ne10_float32_t x;
+        ne10_float32_t y;
+        ne10_float32_t z;
+        ne10_float32_t w;
+} ne10_vec4f_t; // a 4-tuple of ne10_float32_t values
 
 
-typedef struct { float r1; float r2; } __attribute__((packed)) arm_mat_row2f;
+typedef struct { ne10_float32_t r1; ne10_float32_t r2; } __attribute__((packed)) ne10_mat_row2f;
 
 typedef struct
 {
-        arm_mat_row2f c1;
-        arm_mat_row2f c2;
+        ne10_mat_row2f c1;
+        ne10_mat_row2f c2;
 
-} __attribute__((packed)) arm_mat2x2f_t;     // a 2x2 matrix
+} __attribute__((packed)) ne10_mat2x2f_t;     // a 2x2 matrix
 
-static inline void createColumnMajorMatrix2x2( arm_mat2x2f_t * outMat, arm_float_t m11, arm_float_t m21, arm_float_t m12, arm_float_t m22)
+static inline void createColumnMajorMatrix2x2( ne10_mat2x2f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m12, ne10_float32_t m22)
 {
    assert( NULL != outMat );
 
@@ -82,19 +92,19 @@ static inline void createColumnMajorMatrix2x2( arm_mat2x2f_t * outMat, arm_float
 }
 
 
-typedef struct { float r1; float r2; float r3; } __attribute__((packed)) arm_mat_row3f;
+typedef struct { ne10_float32_t r1; ne10_float32_t r2; ne10_float32_t r3; } __attribute__((packed)) ne10_mat_row3f;
 
 typedef struct
 {
-        arm_mat_row3f c1;
-        arm_mat_row3f c2;
-        arm_mat_row3f c3;
+        ne10_mat_row3f c1;
+        ne10_mat_row3f c2;
+        ne10_mat_row3f c3;
 
-} __attribute__((packed)) arm_mat3x3f_t;     // a 3x3 matrix
+} __attribute__((packed)) ne10_mat3x3f_t;     // a 3x3 matrix
 
-static inline void createColumnMajorMatrix3x3( arm_mat3x3f_t * outMat, arm_float_t m11, arm_float_t m21, arm_float_t m31,
-                                                                       arm_float_t m12, arm_float_t m22, arm_float_t m32,
-                                                                       arm_float_t m13, arm_float_t m23, arm_float_t m33)
+static inline void createColumnMajorMatrix3x3( ne10_mat3x3f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31,
+                                                                       ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32,
+                                                                       ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33)
 {
     assert( NULL != outMat );
 
@@ -112,21 +122,21 @@ static inline void createColumnMajorMatrix3x3( arm_mat3x3f_t * outMat, arm_float
 }
 
 
-typedef struct { float r1; float r2; float r3; float r4; } __attribute__((packed)) arm_mat_row4f;
+typedef struct { ne10_float32_t r1; ne10_float32_t r2; ne10_float32_t r3; ne10_float32_t r4; } __attribute__((packed)) ne10_mat_row4f;
 
 typedef struct
 {
-        arm_mat_row4f c1;
-        arm_mat_row4f c2;
-        arm_mat_row4f c3;
-        arm_mat_row4f c4;
+        ne10_mat_row4f c1;
+        ne10_mat_row4f c2;
+        ne10_mat_row4f c3;
+        ne10_mat_row4f c4;
 
-} __attribute__((packed)) arm_mat4x4f_t;     // a 4x4 matrix
+} __attribute__((packed)) ne10_mat4x4f_t;     // a 4x4 matrix
 
-static inline void createColumnMajorMatrix4x4( arm_mat4x4f_t * outMat, arm_float_t m11, arm_float_t m21, arm_float_t m31, arm_float_t m41,
-                                                                       arm_float_t m12, arm_float_t m22, arm_float_t m32, arm_float_t m42,
-                                                                       arm_float_t m13, arm_float_t m23, arm_float_t m33, arm_float_t m43,
-                                                                       arm_float_t m14, arm_float_t m24, arm_float_t m34, arm_float_t m44)
+static inline void createColumnMajorMatrix4x4( ne10_mat4x4f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31, ne10_float32_t m41,
+                                                                       ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32, ne10_float32_t m42,
+                                                                       ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33, ne10_float32_t m43,
+                                                                       ne10_float32_t m14, ne10_float32_t m24, ne10_float32_t m34, ne10_float32_t m44)
 {
     assert( NULL != outMat );
 

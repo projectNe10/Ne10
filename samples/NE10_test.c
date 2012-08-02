@@ -14,23 +14,15 @@
  *  limitations under the License.
  */
 
-/*
- * NE10 Library : inc/NE10.h
- */
-
-#ifndef NE10_H
-#define NE10_H
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#include "NE10_types.h"
+#include "NE10.h"
 #include "NE10_init.h"
-#include "NE10_math.h"
 
-#ifdef __cplusplus
+// This test code shows you how you can statically embed NE10 in your code
+
+void main()
+{
+    printf ("Going to initialze NE10...\n");
+    NE10_init();
+    printf ("NE10 has been initialized.\n");
 }
-#endif
 
-#endif

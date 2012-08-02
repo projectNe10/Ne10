@@ -14,20 +14,29 @@
  *  limitations under the License.
  */
 
-/*
- * NE10 Library : inc/NE10.h
- */
+#include "NE10.h"
 
-#ifndef NE10_H
-#define NE10_H
+#ifndef NE10_init_H
+#define NE10_init_H
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#include "NE10_types.h"
-#include "NE10_init.h"
-#include "NE10_math.h"
+/*!
+    This routine returns NE10_OK if the running platform supports NEON, otherwise it returns NE10_ERR
+ */
+extern ne10_result_t NE10_HasNEON();
+
+/*!
+    This routine initializes all the function pointers.
+ */
+extern ne10_result_t NE10_init();
+
+/*!
+    This routine initializes all the math function pointers defined in "NE10_math.h" with pointers to ARM NEON or ARM VFP implementations.
+ */
+extern ne10_result_t NE10_init_math(ne10_int32_t is_NEON_available);
 
 #ifdef __cplusplus
 }

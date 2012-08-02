@@ -15,22 +15,17 @@
  */
 
 /*
- * NE10 Library : inc/NE10.h
+ * NE10 Library : common/versionheader.h
  */
 
-#ifndef NE10_H
-#define NE10_H
+/////////////////////////////////////////////////////////
+// version information
+/////////////////////////////////////////////////////////
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#define VERSION_MAJOR      0
+#define VERSION_MINOR      9
+#define VERSION_REVISION   10
 
-#include "NE10_types.h"
-#include "NE10_init.h"
-#include "NE10_math.h"
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif
+#define PHASE              1
+#define COPYRIGHT_YEAR     2012
+#define COPYRIGHT_HOLDER   "ARM Ltd."
