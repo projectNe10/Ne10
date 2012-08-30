@@ -21,8 +21,13 @@
 
 void main()
 {
+    ne10_result_t status;
     printf ("Going to initialze NE10...\n");
-    NE10_init();
+
+    status = NE10_init();
+    if (status != NE10_OK)
+        printf ("NE10 init failed.\n");
+
     printf ("NE10 has been initialized.\n");
 }
 

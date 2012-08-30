@@ -18,7 +18,7 @@ ne10_neon_source := \
     modules/math/NE10_mulcmatvec.neon.s \
     modules/math/NE10_mulc.neon.c \
     modules/math/NE10_mulmat.neon.s \
-    modules/math/NE10_mul.neon.c \
+    modules/math/NE10_mul.neon.s \
     modules/math/NE10_normalize.neon.s \
     modules/math/NE10_rsbc.neon.c \
     modules/math/NE10_setc.neon.c \
@@ -78,6 +78,8 @@ ne10_source_files := \
     modules/math/NE10_submat.c \
     modules/math/NE10_sub.c \
     modules/math/NE10_transmat.c \
+    modules/math/NE10_init_math.c \
+    modules/NE10_init.c \
 
 include $(CLEAR_VARS)
 

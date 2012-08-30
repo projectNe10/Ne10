@@ -34,6 +34,7 @@ ne10_result_t NE10_init()
     ne10_int8_t    cpuinfo[CPUINFO_BUFFER_SIZE];  // The buffer to read in the string
     ne10_uint32_t  bytes = 0;                     // Numbers of bytes read from the file
     ne10_int32_t     i = 0;                         // Temporary loop counter
+    ne10_result_t status = NE10_ERR;
 
     memset (cpuinfo, 0, CPUINFO_BUFFER_SIZE);
     infofile = fopen ("/proc/cpuinfo", "r");
@@ -54,6 +55,12 @@ ne10_result_t NE10_init()
     }
 
 #if defined (NE10_ENABLE_MATH)
-    NE10_init_math (is_NEON_available);
+    status = NE10_init_math (is_NEON_available);
+    if (status != NE10_OK)
+    {
+        fprintf(stderr, "ERROR: init math failed\n");
+        return NE10_ERR;
+    }
 #endif
+    return NE10_OK;
 }

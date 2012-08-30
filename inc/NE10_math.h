@@ -479,7 +479,7 @@ extern ne10_result_t (*vdiv_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmla_vec2f)(ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*vmla_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 /*!
     Performs a multiply and accumulate operation on the components of a 3D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -487,7 +487,7 @@ extern ne10_result_t (*vmla_vec2f)(ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmla_vec3f)(ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*vmla_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 /*!
     Performs a multiply and accumulate operation on the components of a 4D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -495,7 +495,7 @@ extern ne10_result_t (*vmla_vec3f)(ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmla_vec4f)(ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*vmla_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
