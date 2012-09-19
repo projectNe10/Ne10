@@ -17,6 +17,7 @@
 #include "NE10.h"
 
 #include <stdio.h>
+#include <string.h>
 
 #define CPUINFO_BUFFER_SIZE  (1024*4)
 

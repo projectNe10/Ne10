@@ -72,41 +72,41 @@
 // A few macros to check pointers and their address range to make sure there's
 //  no unwanted overlap between any two of them
 #define NE10_CHECKPOINTER_DstSrcCst_OPERATION \
-   if ( dst < src ) \
-    { assert ( dst + count <= src ); } \
-   else if ( dst > src ) \
-    { assert ( src + count <= dst ); }
+   if ( (void *)dst < (void *)src ) \
+    { assert ( (void *)dst + count <= (void *)src ); } \
+   else if ( (void *)dst > (void *)src ) \
+    { assert ( (void *)src + count <= (void *)dst ); }
 
 #define NE10_CHECKPOINTER_DstSrc_OPERATION NE10_CHECKPOINTER_DstSrcCst_OPERATION
 
 #define NE10_CHECKPOINTER_3POINTER_OPERATION(arg1, arg2, arg3) \
-   if ( arg1 < arg2 ) \
-    { assert ( arg1 + count <= arg2 ); } \
-   else if ( arg1 > arg2 ) \
-    { assert ( arg2 + count <= arg1 ); } \
-   if ( arg1 < arg3 ) \
-    { assert ( arg1 + count <= arg3 ); } \
-   else if ( arg1 > arg3 ) \
-    { assert ( arg3 + count <= arg1 ); } \
-   if ( arg3 < arg2 ) \
-    { assert ( arg3 + count <= arg2 ); } \
-   else if ( arg3 > arg2 ) \
-    { assert ( arg2 + count <= arg3 ); }
+   if ( (void *)arg1 < (void *)arg2 ) \
+    { assert ( (void *)arg1 + count <= (void *)arg2 ); } \
+   else if ( (void *)arg1 > (void *)arg2 ) \
+    { assert ( (void *)arg2 + count <= (void *)arg1 ); } \
+   if ( (void *)arg1 < (void *)arg3 ) \
+    { assert ( (void *)arg1 + count <= (void *)arg3 ); } \
+   else if ( (void *)arg1 > (void *)arg3 ) \
+    { assert ( (void *)arg3 + count <= (void *)arg1 ); } \
+   if ( (void *)arg3 < (void *)arg2 ) \
+    { assert ( (void *)arg3 + count <= (void *)arg2 ); } \
+   else if ( (void *)arg3 > (void *)arg2 ) \
+    { assert ( (void *)arg2 + count <= (void *)arg3 ); }
 
 #define NE10_CHECKPOINTER_4POINTER_OPERATION(arg1, arg2, arg3, arg4) \
    NE10_CHECKPOINTER_3POINTER_OPERATION(arg1, arg2, arg3) \
-   if ( arg1 < arg4 ) \
-    { assert ( arg1 + count <= arg4 ); } \
-   else if ( arg1 > arg4 ) \
-    { assert ( arg4 + count <= arg1 ); } \
-   if ( arg2 < arg4 ) \
-    { assert ( arg2 + count <= arg4 ); } \
-   else if ( arg2 > arg4 ) \
-    { assert ( arg4 + count <= arg2 ); } \
-   if ( arg4 < arg3 ) \
-    { assert ( arg4 + count <= arg3 ); } \
-   else if ( arg4 > arg3 ) \
-    { assert ( arg3 + count <= arg4 ); }
+   if ( (void *)arg1 < (void *)arg4 ) \
+    { assert ( (void *)arg1 + count <= (void *)arg4 ); } \
+   else if ( (void *)arg1 > (void *)arg4 ) \
+    { assert ( (void *)arg4 + count <= (void *)arg1 ); } \
+   if ( (void *)arg2 < (void *)arg4 ) \
+    { assert ( (void *)arg2 + count <= (void *)arg4 ); } \
+   else if ( (void *)arg2 > (void *)arg4 ) \
+    { assert ( (void *)arg4 + count <= (void *)arg2 ); } \
+   if ( (void *)arg4 < (void *)arg3 ) \
+    { assert ( (void *)arg4 + count <= (void *)arg3 ); } \
+   else if ( (void *)arg4 > (void *)arg3 ) \
+    { assert ( (void *)arg3 + count <= (void *)arg4 ); }
 
 
 
