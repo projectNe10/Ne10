@@ -24,12 +24,12 @@
 // This local variable indicates whether or not the running platform supports ARM NEON
 ne10_result_t is_NEON_available = NE10_ERR;
 
-ne10_result_t NE10_HasNEON()
+ne10_result_t ne10_HasNEON()
 {
     return is_NEON_available;
 }
 
-ne10_result_t NE10_init()
+ne10_result_t ne10_init()
 {
     FILE*   infofile = NULL;               // To open the file /proc/cpuinfo
     ne10_int8_t    cpuinfo[CPUINFO_BUFFER_SIZE];  // The buffer to read in the string
@@ -56,12 +56,22 @@ ne10_result_t NE10_init()
     }
 
 #if defined (NE10_ENABLE_MATH)
-    status = NE10_init_math (is_NEON_available);
+    status = ne10_init_math (is_NEON_available);
     if (status != NE10_OK)
     {
         fprintf(stderr, "ERROR: init math failed\n");
         return NE10_ERR;
     }
 #endif
+
+#if defined (NE10_ENABLE_MATH)
+    ne10_init_dsp (is_NEON_available);
+    if (status != NE10_OK)
+    {
+        fprintf(stderr, "ERROR: init dsp failed\n");
+        return NE10_ERR;
+    }
+#endif
+
     return NE10_OK;
 }

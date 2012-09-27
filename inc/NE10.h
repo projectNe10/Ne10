@@ -18,6 +18,7 @@
  * NE10 Library : inc/NE10.h
  */
 
+
 #ifndef NE10_H
 #define NE10_H
 
@@ -28,6 +29,7 @@ extern "C" {
 #include "NE10_types.h"
 #include "NE10_init.h"
 #include "NE10_math.h"
+#include "NE10_dsp.h"
 
 #ifdef __cplusplus
 }
