@@ -15,7 +15,7 @@
  */
 
 /*
- * NE10 Library : dsp/NE10_fft.c
+ * NE10 Library : dsp/NE10_cfft.c
  */
 
 #include "NE10_types.h"

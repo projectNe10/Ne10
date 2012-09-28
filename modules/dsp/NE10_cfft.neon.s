@@ -15,7 +15,7 @@
 ; */
 
 ;/*
-; * NE10 Library : dsp/NE10_fft.neon.s
+; * NE10 Library : dsp/NE10_cfft.neon.s
 ; */
 
         .text
