@@ -225,8 +225,13 @@ void ne10_radix4_butterfly_float_c(
     }
 
     /* if the N is even power of 4, copy the output to dst buffer */
-    asm("CLZ %[result], %[input]" : [result] "=r"(SubFFTNum) : [input] "r"(N));
-    SubFFTNum = (32-SubFFTNum)>>1;
+    SubFFTNum = 0;
+    set = N;
+    while (set > 1)
+    {
+        set = set>>2;
+        SubFFTNum++;
+    }
 
     if((SubFFTNum&1) == 0)
     {
@@ -550,8 +555,13 @@ void ne10_radix4_butterfly_inverse_float_c(
 
 
     /* if the N is even power of 4, copy the output to dst buffer */
-    asm("CLZ %[result], %[input]" : [result] "=r"(SubFFTNum) : [input] "r"(N));
-    SubFFTNum = (32-SubFFTNum)>>1;
+    SubFFTNum = 0;
+    set = N;
+    while (set > 1)
+    {
+        set = set>>2;
+        SubFFTNum++;
+    }
 
     if((SubFFTNum&1) == 0)
     {

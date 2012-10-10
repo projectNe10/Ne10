@@ -49,4 +49,5 @@ void (*ne10_radix4_butterfly_inverse_float)(ne10_float32_t *pDst,
 void (*ne10_rfft_float)(
                      const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst);
+                     ne10_float32_t * pDst,
+                     ne10_float32_t * pTemp);

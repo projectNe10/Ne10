@@ -463,7 +463,8 @@ static void ne10_split_rifft_float_neon(
 void ne10_rfft_float_neon(
                      const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst)
+                     ne10_float32_t * pDst,
+                     ne10_float32_t * pTemp)
 {
     const ne10_cfft_radix4_instance_f32_t *S_CFFT = S->p_cfft;
 
@@ -472,16 +473,16 @@ void ne10_rfft_float_neon(
     {
         /*  Real IFFT core process */
         ne10_split_rifft_float_neon(pSrc, S->fft_len_real, S->p_twiddle_A_real,
-                S->p_twiddle_B_real, pDst);
+                S->p_twiddle_B_real, pTemp);
         /* Complex radix-4 IFFT process */
-        ne10_radix4_butterfly_inverse_float_neon(pDst, pSrc, S_CFFT->fft_len, S_CFFT->p_twiddle);
+        ne10_radix4_butterfly_inverse_float_neon(pDst, pTemp, S_CFFT->fft_len, S_CFFT->p_twiddle);
     }
     else
     {
         /* Complex radix-4 FFT process */
-        ne10_radix4_butterfly_float_neon(pDst, pSrc, S_CFFT->fft_len, S_CFFT->p_twiddle);
+        ne10_radix4_butterfly_float_neon(pTemp, pSrc, S_CFFT->fft_len, S_CFFT->p_twiddle);
         /*  Real FFT core process */
-        ne10_split_rfft_float_neon(pSrc, S->fft_len_real, S->p_twiddle_A_real,
+        ne10_split_rfft_float_neon(pTemp, S->fft_len_real, S->p_twiddle_A_real,
                 S->p_twiddle_B_real, pDst);
     }
 
