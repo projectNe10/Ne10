@@ -14,10 +14,10 @@
  *  limitations under the License.
  */
 
-#include "NE10.h"
-
 #include <stdio.h>
 #include <string.h>
+
+#include "NE10.h"
 
 #define CPUINFO_BUFFER_SIZE  (1024*4)
 
@@ -64,8 +64,8 @@ ne10_result_t ne10_init()
     }
 #endif
 
-#if defined (NE10_ENABLE_MATH)
-    ne10_init_dsp (is_NEON_available);
+#if defined (NE10_ENABLE_DSP)
+    status = ne10_init_dsp (is_NEON_available);
     if (status != NE10_OK)
     {
         fprintf(stderr, "ERROR: init dsp failed\n");
