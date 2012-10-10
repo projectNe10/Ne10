@@ -20,7 +20,7 @@
 
 #include "NE10_mask_table.h"
 
-const ne10_uint32_t ne10_qMaskTable32[MaskTableSize32] =
+const ne10_uint32_t ne10_qMaskTable32[Q_MASK_TABLE_SIZE] =
 {
         0x00000000, 0x00000000, 0x00000000, 0x00000000,
         0xFFFFFFFF, 0x00000000, 0x00000000, 0x00000000,
@@ -28,7 +28,7 @@ const ne10_uint32_t ne10_qMaskTable32[MaskTableSize32] =
         0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0x00000000,
         0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
 };
-const ne10_uint32_t ne10_dMaskTable32[6] =
+const ne10_uint32_t ne10_dMaskTable32[D_MASK_TABLE_SIZE] =
 {
         0x00000000, 0x00000000,
         0xFFFFFFFF, 0x00000000,
