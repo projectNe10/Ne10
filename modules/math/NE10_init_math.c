@@ -18,7 +18,7 @@
 
 #include "NE10_math.h"
 
-ne10_result_t NE10_init_math (int is_NEON_available)
+ne10_result_t ne10_init_math (int is_NEON_available)
 {
     if (NE10_OK == is_NEON_available)
     {

@@ -112,6 +112,55 @@ if(NE10_ENABLE_MATH)
     set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_MATH_NEON_SRCS})
 endif()
 
+if(NE10_ENABLE_DSP)
+    #enable NE10_init_dsp
+    add_definitions(-DNE10_ENABLE_DSP)
+    # Add dsp C files.
+    set(NE10_DSP_C_SRCS
+        ${PROJECT_SOURCE_DIR}/common/NE10_mask_table.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft_init.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_init.c
+    )
+
+    # Add dsp intrinsic NEON files.
+    set(NE10_DSP_INTRINSIC_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft.neon.c
+    )
+
+    # Tell CMake these files need to be compiled with "-mfpu=neon"
+    foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
+    set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+    endforeach(intrinsic_file)
+
+    # Add dsp NEON files.
+    set(NE10_DSP_NEON_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft.neon.s
+    )
+
+    # Tell CMake these files need to go to the C compiler
+    set(FLAGS "-mfpu=neon -Wa,-I${PROJECT_SOURCE_DIR}/inc -Wa,-I${PROJECT_SOURCE_DIR}/common" )
+    foreach(neon_file ${NE10_DSP_NEON_SRCS})
+        set_property (SOURCE ${neon_file} PROPERTY LANGUAGE C)
+        set_source_files_properties(
+            ${neon_file} PROPERTIES COMPILE_FLAGS
+            ${FLAGS}
+        )
+    endforeach(neon_file)
+
+    # Add dsp init files.
+    set(NE10_DSP_INIT_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_init_dsp.c
+    )
+
+    # Add math files
+    set(NE10_INIT_SRCS ${NE10_INIT_SRCS} ${NE10_DSP_INIT_SRCS})
+    set(NE10_C_SRCS ${NE10_C_SRCS} ${NE10_DSP_C_SRCS})
+    set(NE10_INTRINSIC_SRCS ${NE10_INTRINSIC_SRCS} ${NE10_DSP_INTRINSIC_SRCS})
+    set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_DSP_NEON_SRCS})
+endif()
+
 include_directories (
     ${PROJECT_SOURCE_DIR}/inc
     ${PROJECT_SOURCE_DIR}/common
