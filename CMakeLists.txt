@@ -34,6 +34,7 @@ endif()
 
 #select functionalities to be compiled
 option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
+option(NE10_ENABLE_DSP "Build dsp functionalities to NE10" ON)
 
 set(NE10_VERSION 10)
 

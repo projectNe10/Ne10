@@ -26,6 +26,7 @@
 #define NE10_TYPES_H
 
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 /////////////////////////////////////////////////////////
@@ -71,6 +72,9 @@ typedef struct
         ne10_float32_t w;
 } ne10_vec4f_t; // a 4-tuple of ne10_float32_t values
 
+/////////////////////////////////////////////////////////
+// definitions for matrix
+/////////////////////////////////////////////////////////
 
 typedef struct { ne10_float32_t r1; ne10_float32_t r2; } __attribute__((packed)) ne10_mat_row2f;
 
@@ -161,5 +165,38 @@ static inline void createColumnMajorMatrix4x4( ne10_mat4x4f_t * outMat, ne10_flo
     outMat->c4.r4 = m44;
 }
 
+/////////////////////////////////////////////////////////
+// definitions for fft
+/////////////////////////////////////////////////////////
+
+/**
+ * @brief Instance structure for the floating point CFFT/CIFFT function.
+ */
+typedef struct
+{
+    ne10_uint16_t fft_len;                           /**< Length of the FFT. */
+    ne10_uint8_t ifft_flag;                          /**< Flag for selection of CFFT/ICFFT */
+    ne10_uint8_t bit_reverse_flag;                   /**< Flag for selection of bitreversal or not */
+    ne10_float32_t *p_twiddle;                       /**< Points to the twiddle factors array. The array is of length 2 * MaxFFTSize. */
+    ne10_uint16_t *p_bit_rev_table;                  /**< Points to the bit reversal array. The array is of size	MaxFFTSize/4 */
+    ne10_uint16_t twid_coef_modifier;                /**< Modifier to support different FFT sizes with same twiddle table */
+    ne10_uint16_t bit_rev_factor;                    /**< Modifier to support different FFT sizes with same bit reversal table */
+    ne10_float32_t one_by_fft_len;                   /**< 1/(Length of the FFT). */
+} ne10_cfft_radix4_instance_f32_t;
+
+/**
+ * @brief Instance structure for the floating point RFFT/RIFFT function.
+ */
+typedef struct
+{
+    ne10_uint32_t fft_len_real;                      /**< Length of the floating point Real FFT. */
+    ne10_uint16_t fft_len_by2;                       /**< Length of the floating point Complex FFT. */
+    ne10_uint8_t ifft_flag_r;                        /**< Flag for selection of floating point RFFT/RIFFT */
+    ne10_uint8_t bit_reverse_flag_r;                 /**< Flag for selection of bitreversal or not */
+    ne10_uint32_t twid_coef_r_modifier;              /**< Modifier to support different FFT sizes with same twiddle table */
+    ne10_float32_t *p_twiddle_A_real;                /**< Points to the real twiddle factors array. The array is of length MaxFFTSize. */
+    ne10_float32_t *p_twiddle_B_real;                /**< Points to the imag twiddle factors array. The array is of length MaxFFTSize. */
+    ne10_cfft_radix4_instance_f32_t *p_cfft;         /**< Pointer to the complex FFT Instance. */
+} ne10_rfft_instance_f32_t;
 
 #endif

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2012 ARM Limited
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,20 +14,18 @@
  *  limitations under the License.
  */
 
-#include "NE10.h"
-#include "NE10_init.h"
+/*
+ * NE10 Library : common/NE10_mask_table.h
+ */
 
-// This test code shows you how you can statically embed NE10 in your code
+#include "NE10_types.h"
+#ifndef _ARM_MASK_TABLE_H
+#define _ARM_MASK_TABLE_H
 
-void main()
-{
-    ne10_result_t status;
-    printf ("Going to initialze NE10...\n");
+#define Q_MASK_TABLE_SIZE 20
+#define D_MASK_TABLE_SIZE 6
 
-    status = ne10_init();
-    if (status != NE10_OK)
-        printf ("NE10 init failed.\n");
-
-    printf ("NE10 has been initialized.\n");
-}
+extern const ne10_uint32_t ne10_qMaskTable32[Q_MASK_TABLE_SIZE];
+extern const ne10_uint32_t ne10_dMaskTable32[D_MASK_TABLE_SIZE];
+#endif
 
