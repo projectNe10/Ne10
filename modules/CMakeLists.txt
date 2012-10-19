@@ -122,6 +122,10 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft_init.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_init.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir_init.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir_init.c
     )
 
     # Add dsp intrinsic NEON files.
@@ -137,6 +141,8 @@ if(NE10_ENABLE_DSP)
     # Add dsp NEON files.
     set(NE10_DSP_NEON_SRCS
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
     )
 
     # Tell CMake these files need to go to the C compiler

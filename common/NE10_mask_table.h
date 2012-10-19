@@ -22,10 +22,12 @@
 #ifndef _ARM_MASK_TABLE_H
 #define _ARM_MASK_TABLE_H
 
-#define Q_MASK_TABLE_SIZE 20
-#define D_MASK_TABLE_SIZE 6
+#define Q_MASK_TABLE_SIZE        20
+#define D_MASK_TABLE_SIZE        6
+#define DIV_LOOKUP_TABLE_SIZE    255
 
 extern const ne10_uint32_t ne10_qMaskTable32[Q_MASK_TABLE_SIZE];
 extern const ne10_uint32_t ne10_dMaskTable32[D_MASK_TABLE_SIZE];
+extern const ne10_uint32_t ne10_divLookUpTable[DIV_LOOKUP_TABLE_SIZE];
 #endif
 
