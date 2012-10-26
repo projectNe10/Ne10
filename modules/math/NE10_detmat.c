@@ -35,7 +35,7 @@
 
 #include <assert.h>
 
-ne10_result_t detmat_2x2f_c (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_detmat_2x2f_c (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count)
 {
     NE10_DETMAT_OPERATION_X_C
     (
@@ -43,7 +43,7 @@ ne10_result_t detmat_2x2f_c (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_ui
     );
 }
 
-ne10_result_t detmat_3x3f_c (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_detmat_3x3f_c (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
 {
     NE10_DETMAT_OPERATION_X_C
     (
@@ -52,7 +52,7 @@ ne10_result_t detmat_3x3f_c (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_ui
     );
 }
 
-ne10_result_t detmat_4x4f_c (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_detmat_4x4f_c (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count)
 {
     NE10_DETMAT_OPERATION_X_C
     (

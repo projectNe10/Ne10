@@ -42,14 +42,14 @@
 
 
         .balign   4
-        .global   transmat_2x2f_neon
+        .global   ne10_transmat_2x2f_neon
         .thumb
         .thumb_func
 
-transmat_2x2f_neon:
+ne10_transmat_2x2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t transmat_2x2f(arm_mat2x2f_t * dst,
+        @ arm_result_t ne10_transmat_2x2f(arm_mat2x2f_t * dst,
         @                 arm_mat2x2f_t * src,
         @                 unsigned int count)
         @
@@ -128,13 +128,13 @@ transmat_2x2f_neon:
 
 
         .align  2
-        .global transmat_3x3f_neon
+        .global ne10_transmat_3x3f_neon
         .thumb
         .thumb_func
-transmat_3x3f_neon:
+ne10_transmat_3x3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t transmat_3x3f(arm_mat3x3f_t * dst,
+        @ arm_result_t ne10_transmat_3x3f(arm_mat3x3f_t * dst,
         @                 arm_mat3x3f_t * src1,
         @                 arm_mat3x3f_t * src2,
         @                 unsigned int count)
@@ -230,13 +230,13 @@ transmat_3x3f_neon:
 
 
         .align  2
-        .global transmat_4x4f_neon
+        .global ne10_transmat_4x4f_neon
         .thumb
         .thumb_func
-transmat_4x4f_neon:
+ne10_transmat_4x4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t transmat_4x4f(arm_mat4x4f_t * dst,
+        @ arm_result_t ne10_transmat_4x4f(arm_mat4x4f_t * dst,
         @                 arm_mat4x4f_t * src1,
         @                 arm_mat4x4f_t * src2,
         @                 unsigned int count)

@@ -35,14 +35,14 @@
 .include "NE10header.s"
 
         .balign   4
-        .global   mlac_float_asm
+        .global   ne10_mlac_float_asm
         .thumb
         .thumb_func
 
-mlac_float_asm:
+ne10_mlac_float_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mlac_float(arm_vec2f_t * dst, arm_vec2f_t * acc,
+        @ arm_result_t ne10_mlac_float(arm_vec2f_t * dst, arm_vec2f_t * acc,
         @                 arm_float_t * src, const arm_float_t * cst,
         @                 unsigned int count)
         @
@@ -87,14 +87,14 @@ mlac_float_asm:
 
 
         .balign   4
-        .global   mlac_vec2f_asm
+        .global   ne10_mlac_vec2f_asm
         .thumb
         .thumb_func
 
-mlac_vec2f_asm:
+ne10_mlac_vec2f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mlac_vec2f(arm_vec2f_t * dst,
+        @ arm_result_t ne10_mlac_vec2f(arm_vec2f_t * dst,
         @                 arm_vec2f_t * src, const arm_vec2f_t * cst,
         @                 unsigned int count)
         @
@@ -144,14 +144,14 @@ mlac_vec2f_asm:
 
 
         .balign   4
-        .global   mlac_vec3f_asm
+        .global   ne10_mlac_vec3f_asm
         .thumb
         .thumb_func
 
-mlac_vec3f_asm:
+ne10_mlac_vec3f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mlac_vec3f(arm_vec3f_t * dst,
+        @ arm_result_t ne10_mlac_vec3f(arm_vec3f_t * dst,
         @                 arm_vec3f_t * src, const arm_vec3f_t * cst,
         @                 unsigned int count)
         @
@@ -206,14 +206,14 @@ mlac_vec3f_asm:
 
 
         .balign   4
-        .global   mlac_vec4f_asm
+        .global   ne10_mlac_vec4f_asm
         .thumb
         .thumb_func
 
-mlac_vec4f_asm:
+ne10_mlac_vec4f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mlac_vec4f(arm_vec4f_t * dst,
+        @ arm_result_t ne10_mlac_vec4f(arm_vec4f_t * dst,
         @                 arm_vec4f_t * src, const arm_vec4f_t * cst,
         @                 unsigned int count)
         @

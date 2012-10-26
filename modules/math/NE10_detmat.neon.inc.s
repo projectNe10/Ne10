@@ -54,7 +54,7 @@
 
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        @ A macro used inside detmat_3x3f_neon() to load 3x3 matrices.
+        @ A macro used inside ne10_detmat_3x3f_neon() to load 3x3 matrices.
         @ Two 3x3 matrices are loaded from the source address
         @ into registers dst00-11. The corresponding qr00-qr05
         @ registers are then rearranged so the order of the data fits the
@@ -122,7 +122,7 @@
 
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        @ A macro used inside detmat_4x4f_neon() to load 4x4 matrices.
+        @ A macro used inside ne10_detmat_4x4f_neon() to load 4x4 matrices.
         @ Two 4x4 matrices are loaded from the source address register \addr
         @ into registers dst00-15. The corresponding qr00-qr07
         @ registers are then rearranged so the order of the data fits the
@@ -185,7 +185,7 @@
 
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        @ A macro used inside detmat_4x4f_neon() to load four 4x4 matrices
+        @ A macro used inside ne10_detmat_4x4f_neon() to load four 4x4 matrices
         @ from the memory location pointed to by the \addr register.
         @ The loaded matrices are stored in registers dst00-07 and
         @ finaklly rearranged using the corresponding registers qr00-qr03.

@@ -43,7 +43,7 @@
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ This macro multiplies a single 2x2 matrix by eight vec2's
         @ The elements of the vectors are loaded into registers q8-q11
-        @ by the caller (mulcmatvec_cm2x2f_v2f_neon) in the following
+        @ by the caller (ne10_mulcmatvec_cm2x2f_v2f_neon) in the following
         @ order:
         @
         @       d16=(x1,x3) d18=(y1,y3) d20=(x2,x4) d22=(y2,y4);
@@ -69,14 +69,14 @@
 
 
         .balign   4
-        .global   mulcmatvec_cm2x2f_v2f_neon
+        .global   ne10_mulcmatvec_cm2x2f_v2f_neon
         .thumb
         .thumb_func
 
-mulcmatvec_cm2x2f_v2f_neon:
+ne10_mulcmatvec_cm2x2f_v2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @  arm_result_t mulcmatvec_cm2x2f_v2f ( arm_vec2f_t * dst,
+        @  arm_result_t ne10_mulcmatvec_cm2x2f_v2f ( arm_vec2f_t * dst,
         @                                       const arm_mat2x2f_t * cst,
         @                                       arm_vec2f_t * src,
         @                                       unsigned int count)
@@ -220,14 +220,14 @@ mulcmatvec_cm2x2f_v2f_neon:
 
 
         .align  2
-        .global   mulcmatvec_cm3x3f_v3f_neon
+        .global   ne10_mulcmatvec_cm3x3f_v3f_neon
         .thumb
         .thumb_func
 
-mulcmatvec_cm3x3f_v3f_neon:
+ne10_mulcmatvec_cm3x3f_v3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @  arm_result_t mulcmatvec_cm3x3f_v3f ( arm_vec3f_t * dst,
+        @  arm_result_t ne10_mulcmatvec_cm3x3f_v3f ( arm_vec3f_t * dst,
         @                                       const arm_mat3x3f_t * cst,
         @                                       arm_vec3f_t * src,
         @                                       unsigned int count)
@@ -316,7 +316,7 @@ mulcmatvec_cm3x3f_v3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ A macro to load four vec4's into registers q8-q11.
         @ This macro uses r2 (the thirs parameter in
-        @ mulcmatvec_cm4x4f_v4f_neon) as the address register.
+        @ ne10_mulcmatvec_cm4x4f_v4f_neon) as the address register.
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         .macro LOAD_FOUR_VEC4
             vld4.32         { d16, d18, d20, d22  }, [r2]!
@@ -326,7 +326,7 @@ mulcmatvec_cm3x3f_v3f_neon:
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ This macro multiplies the constant 4x4 matrix that is loaded
-        @ in mulcmatvec_cm4x4f_v4f_neon by four vec4's that are loaded in
+        @ in ne10_mulcmatvec_cm4x4f_v4f_neon by four vec4's that are loaded in
         @ the above macro LOAD_FOUR_VEC4.
         @ The resulting four vectors are returned in registers q12 to q15.
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -360,7 +360,7 @@ mulcmatvec_cm3x3f_v3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ This macro stores the results from the above macro MUL_MAT4x4_VEC4
         @ from registers q12-q15 in to the destination memory (r0) which is
-        @ the first parameter of mulcmatvec_cm4x4f_v4f_neon().
+        @ the first parameter of ne10_mulcmatvec_cm4x4f_v4f_neon().
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         .macro STORE_FOUR_VEC4
 
@@ -373,14 +373,14 @@ mulcmatvec_cm3x3f_v3f_neon:
 
 
         .align  2
-        .global   mulcmatvec_cm4x4f_v4f_neon
+        .global   ne10_mulcmatvec_cm4x4f_v4f_neon
         .thumb
         .thumb_func
 
-mulcmatvec_cm4x4f_v4f_neon:
+ne10_mulcmatvec_cm4x4f_v4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @  arm_result_t mulcmatvec_cm4x4f_v4f ( arm_vec4f_t * dst,
+        @  arm_result_t ne10_mulcmatvec_cm4x4f_v4f ( arm_vec4f_t * dst,
         @                                       const arm_mat4x4f_t * cst,
         @                                       arm_vec4f_t * src,
         @                                       unsigned int count)

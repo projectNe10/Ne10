@@ -34,7 +34,7 @@
 
 #include <assert.h>
 
-ne10_result_t mulmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_mulmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count)
 {
 #define A1 src1[ itr ].c1.r1
 #define A2 src2[ itr ].c1.r1
@@ -64,7 +64,7 @@ ne10_result_t mulmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_m
 #undef D2
 }
 
-ne10_result_t mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count)
 {
 #define A1 src1[ itr ].c1.r1
 #define A2 src2[ itr ].c1.r1
@@ -120,7 +120,7 @@ ne10_result_t mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_m
 #undef I2
 }
 
-ne10_result_t mulmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_mulmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count)
 {
 #define A1 src1[ itr ].c1.r1
 #define A2 src2[ itr ].c1.r1

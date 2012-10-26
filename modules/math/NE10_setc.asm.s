@@ -35,14 +35,14 @@
 .include "NE10header.s"
 
         .balign   4
-        .global   setc_float_asm
+        .global   ne10_setc_float_asm
         .thumb
         .thumb_func
 
-setc_float_asm:
+ne10_setc_float_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t setc_float(arm_float_t * dst,
+        @ arm_result_t ne10_setc_float(arm_float_t * dst,
         @                 const arm_float_t cst,
         @                 unsigned int count)
         @
@@ -69,14 +69,14 @@ setc_float_asm:
 
 
         .balign   4
-        .global   setc_vec2f_asm
+        .global   ne10_setc_vec2f_asm
         .thumb
         .thumb_func
 
-setc_vec2f_asm:
+ne10_setc_vec2f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t setc_vec2f(arm_vec2f_t * dst,
+        @ arm_result_t ne10_setc_vec2f(arm_vec2f_t * dst,
         @                 const arm_vec2f_t * cst,
         @                 unsigned int count)
         @
@@ -108,14 +108,14 @@ setc_vec2f_asm:
 
 
         .balign   4
-        .global   setc_vec3f_asm
+        .global   ne10_setc_vec3f_asm
         .thumb
         .thumb_func
 
-setc_vec3f_asm:
+ne10_setc_vec3f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t setc_vec3f(arm_vec3f_t * dst,
+        @ arm_result_t ne10_setc_vec3f(arm_vec3f_t * dst,
         @                 const arm_vec3f_t * cst,
         @                 unsigned int count)
         @
@@ -149,14 +149,14 @@ setc_vec3f_asm:
 
 
         .balign   4
-        .global   setc_vec4f_asm
+        .global   ne10_setc_vec4f_asm
         .thumb
         .thumb_func
 
-setc_vec4f_asm:
+ne10_setc_vec4f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t setc_vec4f(arm_vec4f_t * dst,
+        @ arm_result_t ne10_setc_vec4f(arm_vec4f_t * dst,
         @                 const arm_vec4f_t * cst,
         @                 unsigned int count)
         @
