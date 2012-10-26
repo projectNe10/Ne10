@@ -35,14 +35,14 @@
 .include "NE10header.s"
 
         .balign   4
-        .global   mla_float_asm
+        .global   ne10_mla_float_asm
         .thumb
         .thumb_func
 
-mla_float_asm:
+ne10_mla_float_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mla_float(arm_vec2f_t * dst, arm_float_t * acc,
+        @ arm_result_t ne10_mla_float(arm_vec2f_t * dst, arm_float_t * acc,
         @                 arm_float_t * src1, const arm_float_t * src2,
         @                 unsigned int count)
         @

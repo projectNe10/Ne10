@@ -38,11 +38,11 @@
 
 
         .align   4
-        .global   dot_vec2f_neon
+        .global   ne10_dot_vec2f_neon
         .thumb
         .thumb_func
 
-dot_vec2f_neon:
+ne10_dot_vec2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
         @ arm_result_t dot_float(arm_float_t * dst,
@@ -113,10 +113,10 @@ dot_vec2f_neon:
 
 
         .align  4
-        .global dot_vec3f_neon
+        .global ne10_dot_vec3f_neon
         .thumb
         .thumb_func
-dot_vec3f_neon:
+ne10_dot_vec3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
         @ arm_result_t dot_float(arm_float_t * dst,
@@ -199,10 +199,10 @@ dot_vec3f_neon:
 
 
         .align  4
-        .global dot_vec4f_neon
+        .global ne10_dot_vec4f_neon
         .thumb
         .thumb_func
-dot_vec4f_neon:
+ne10_dot_vec4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
         @ arm_result_t dot_float(arm_float_t * dst,

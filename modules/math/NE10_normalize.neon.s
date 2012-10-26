@@ -38,14 +38,14 @@
 
 
         .balign   4
-        .global   normalize_vec2f_neon
+        .global   ne10_normalize_vec2f_neon
         .thumb
         .thumb_func
 
-normalize_vec2f_neon:
+ne10_normalize_vec2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t normalize_vec2f(arm_vec2f_t * dst,
+        @ arm_result_t ne10_normalize_vec2f(arm_vec2f_t * dst,
         @                 arm_vec2f_t * src,
         @                 unsigned int count);
         @
@@ -150,13 +150,13 @@ normalize_vec2f_neon:
 
 
         .align  2
-        .global normalize_vec3f_neon
+        .global ne10_normalize_vec3f_neon
         .thumb
         .thumb_func
-normalize_vec3f_neon:
+ne10_normalize_vec3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t normalize_vec3f(arm_vec3t_t * dst,
+        @ arm_result_t ne10_normalize_vec3f(arm_vec3t_t * dst,
         @                 arm_vec3f_t * src,
         @                 unsigned int count);
         @
@@ -278,13 +278,13 @@ normalize_vec3f_neon:
 
 
         .align  2
-        .global normalize_vec4f_neon
+        .global ne10_normalize_vec4f_neon
         .thumb
         .thumb_func
-normalize_vec4f_neon:
+ne10_normalize_vec4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t normalize_vec4f(arm_vec4f_t * dst,
+        @ arm_result_t ne10_normalize_vec4f(arm_vec4f_t * dst,
         @                 arm_vec4f_t * src,
         @                 unsigned int count);
         @

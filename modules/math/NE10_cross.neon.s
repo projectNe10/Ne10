@@ -38,13 +38,13 @@
 
 
         .align  4
-        .global cross_vec3f_neon
+        .global ne10_cross_vec3f_neon
         .thumb
         .thumb_func
-cross_vec3f_neon:
+ne10_cross_vec3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t cross_vec3f(arm_vec3f_t * dst,
+        @ arm_result_t ne10_cross_vec3f(arm_vec3f_t * dst,
         @                 arm_vec3f_t * src1,
         @                 arm_vec3f_t * src2,
         @                 unsigned int count)

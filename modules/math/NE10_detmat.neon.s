@@ -41,14 +41,14 @@
 
 
         .align   4
-        .global   detmat_2x2f_neon
+        .global   ne10_detmat_2x2f_neon
         .thumb
         .thumb_func
 
-detmat_2x2f_neon:
+ne10_detmat_2x2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t detmat_2x2f(arm_float_t * dst,
+        @ arm_result_t ne10_detmat_2x2f(arm_float_t * dst,
         @                 arm_mat2x2f_t * src,
         @                 unsigned int count)
         @
@@ -132,13 +132,13 @@ detmat_2x2f_neon:
 
 
         .align  4
-        .global detmat_3x3f_neon
+        .global ne10_detmat_3x3f_neon
         .thumb
         .thumb_func
-detmat_3x3f_neon:
+ne10_detmat_3x3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t detmat_3x3f(arm_float_t * dst,
+        @ arm_result_t ne10_detmat_3x3f(arm_float_t * dst,
         @                 arm_mat3x3f_t * src,
         @                 unsigned int count)
         @
@@ -221,13 +221,13 @@ detmat_3x3f_neon:
 
 
         .align  4
-        .global detmat_4x4f_neon
+        .global ne10_detmat_4x4f_neon
         .thumb
         .thumb_func
-detmat_4x4f_neon:
+ne10_detmat_4x4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t detmat_float(arm_float_t * dst,
+        @ arm_result_t ne10_detmat_float(arm_float_t * dst,
         @                 arm_mat4x4f_t * src1,
         @                 unsigned int count)
         @

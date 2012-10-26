@@ -27,18 +27,18 @@
 
 #include "NE10_types.h"
 
-ne10_result_t addmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_addmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count)
 {
-    return add_vec2f_neon ( (ne10_vec2f_t*) dst, (ne10_vec2f_t*) src1, (ne10_vec2f_t*) src2, count * 2);
+    return ne10_add_vec2f_neon ( (ne10_vec2f_t*) dst, (ne10_vec2f_t*) src1, (ne10_vec2f_t*) src2, count * 2);
 }
 
-ne10_result_t addmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_addmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count)
 {
-    return add_vec3f_neon ( (ne10_vec3f_t*) dst, (ne10_vec3f_t*) src1, (ne10_vec3f_t*) src2, count * 3);
+    return ne10_add_vec3f_neon ( (ne10_vec3f_t*) dst, (ne10_vec3f_t*) src1, (ne10_vec3f_t*) src2, count * 3);
 }
 
-ne10_result_t addmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_addmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count)
 {
-    return add_vec4f_neon ( (ne10_vec4f_t*) dst, (ne10_vec4f_t*) src1, (ne10_vec4f_t*) src2, count * 4);
+    return ne10_add_vec4f_neon ( (ne10_vec4f_t*) dst, (ne10_vec4f_t*) src1, (ne10_vec4f_t*) src2, count * 4);
 }
 

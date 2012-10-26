@@ -36,7 +36,7 @@
 
 #include <math.h>
 
-ne10_result_t normalize_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_normalize_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count)
 {
     ne10_float32_t len;
 
@@ -50,7 +50,7 @@ ne10_result_t normalize_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_ui
     );
 }
 
-ne10_result_t normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count)
 {
     ne10_float32_t len;
 
@@ -66,7 +66,7 @@ ne10_result_t normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_ui
     );
 }
 
-ne10_result_t normalize_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_normalize_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count)
 {
     ne10_float32_t len;
 

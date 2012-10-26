@@ -42,7 +42,7 @@ inline void swap (ne10_float32_t *a, ne10_float32_t *b)
     *b = tmp;
 }
 
-ne10_result_t transmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_transmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count)
 {
     NE10_DETMAT_OPERATION_X_C
     (
@@ -53,7 +53,7 @@ ne10_result_t transmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_
     );
 }
 
-ne10_result_t transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
 {
     NE10_DETMAT_OPERATION_X_C
     (
@@ -71,7 +71,7 @@ ne10_result_t transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_
     );
 }
 
-ne10_result_t transmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_transmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count)
 {
     NE10_DETMAT_OPERATION_X_C
     (
