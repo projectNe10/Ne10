@@ -44,6 +44,7 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
         ne10_fir_sparse_float = ne10_fir_sparse_float_neon;
 
         ne10_iir_lattice_float = ne10_iir_lattice_float_neon;
+
     }
     else
     {
@@ -73,8 +74,7 @@ void (*ne10_radix4_butterfly_inverse_float)(ne10_float32_t *pDst,
                      ne10_uint16_t N,
                      ne10_float32_t *pCoef);
 
-void (*ne10_rfft_float)(
-                     const ne10_rfft_instance_f32_t * S,
+void (*ne10_rfft_float)(const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_float32_t * pTemp);

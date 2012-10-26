@@ -56,8 +56,7 @@ extern void (*ne10_radix4_butterfly_inverse_float)(ne10_float32_t *pDst,
                      ne10_uint16_t N,
                      ne10_float32_t *pCoef);
 
-extern void (*ne10_rfft_float)(
-                     const ne10_rfft_instance_f32_t * S,
+extern void (*ne10_rfft_float)(const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_float32_t * pTemp);
@@ -81,8 +80,7 @@ extern void ne10_radix4_butterfly_inverse_float_c(ne10_float32_t *pDst,
                      ne10_uint16_t N,
                      ne10_float32_t *pCoef);
 
-extern void ne10_rfft_float_c(
-                     const ne10_rfft_instance_f32_t * S,
+extern void ne10_rfft_float_c(const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_float32_t * pTemp);
@@ -99,8 +97,7 @@ extern void ne10_radix4_butterfly_inverse_float_neon(ne10_float32_t *pDst,
                      ne10_uint16_t N,
                      ne10_float32_t *pCoef);
 
-extern void ne10_rfft_float_neon(
-                     const ne10_rfft_instance_f32_t * S,
+extern void ne10_rfft_float_neon(const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_float32_t * pTemp);
@@ -112,26 +109,22 @@ extern void (*ne10_fir_float)(const ne10_fir_instance_f32_t * S,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void (*ne10_fir_decimate_float)(
-                     const ne10_fir_decimate_instance_f32_t * S,
+extern void (*ne10_fir_decimate_float)(const ne10_fir_decimate_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void (*ne10_fir_interpolate_float)(
-                     const ne10_fir_interpolate_instance_f32_t * S,
+extern void (*ne10_fir_interpolate_float)(const ne10_fir_interpolate_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void (*ne10_fir_lattice_float)(
-                     const ne10_fir_lattice_instance_f32_t * S,
+extern void (*ne10_fir_lattice_float)(const ne10_fir_lattice_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void (*ne10_fir_sparse_float)(
-                     ne10_fir_sparse_instance_f32_t * S,
+extern void (*ne10_fir_sparse_float)(ne10_fir_sparse_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_float32_t * pScratchIn,
@@ -145,30 +138,26 @@ extern ne10_result_t ne10_fir_init_float(ne10_fir_instance_f32_t * S,
                      ne10_float32_t * pState,
                      ne10_uint32_t blockSize);
 
-extern ne10_result_t ne10_fir_decimate_init_float(
-                     ne10_fir_decimate_instance_f32_t * S,
+extern ne10_result_t ne10_fir_decimate_init_float(ne10_fir_decimate_instance_f32_t * S,
                      ne10_uint16_t numTaps,
                      ne10_uint8_t M,
                      ne10_float32_t * pCoeffs,
                      ne10_float32_t * pState,
                      ne10_uint32_t blockSize);
 
-extern ne10_result_t ne10_fir_interpolate_init_float(
-                     ne10_fir_interpolate_instance_f32_t * S,
+extern ne10_result_t ne10_fir_interpolate_init_float(ne10_fir_interpolate_instance_f32_t * S,
                      ne10_uint8_t L,
                      ne10_uint16_t numTaps,
                      ne10_float32_t * pCoeffs,
                      ne10_float32_t * pState,
                      ne10_uint32_t blockSize);
 
-extern ne10_result_t ne10_fir_lattice_init_float(
-                     ne10_fir_lattice_instance_f32_t * S,
+extern ne10_result_t ne10_fir_lattice_init_float(ne10_fir_lattice_instance_f32_t * S,
                      ne10_uint16_t numStages,
                      ne10_float32_t * pCoeffs,
                      ne10_float32_t * pState);
 
-extern ne10_result_t ne10_fir_sparse_init_float(
-                     ne10_fir_sparse_instance_f32_t * S,
+extern ne10_result_t ne10_fir_sparse_init_float(ne10_fir_sparse_instance_f32_t * S,
                      ne10_uint16_t numTaps,
                      ne10_float32_t * pCoeffs,
                      ne10_float32_t * pState,
@@ -182,26 +171,22 @@ extern void ne10_fir_float_c(const ne10_fir_instance_f32_t * S,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void ne10_fir_decimate_float_c(
-                     const ne10_fir_decimate_instance_f32_t * S,
+extern void ne10_fir_decimate_float_c(const ne10_fir_decimate_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void ne10_fir_interpolate_float_c(
-                     const ne10_fir_interpolate_instance_f32_t * S,
+extern void ne10_fir_interpolate_float_c(const ne10_fir_interpolate_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void ne10_fir_lattice_float_c(
-                     const ne10_fir_lattice_instance_f32_t * S,
+extern void ne10_fir_lattice_float_c(const ne10_fir_lattice_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_uint32_t blockSize);
 
-extern void ne10_fir_sparse_float_c(
-                     ne10_fir_sparse_instance_f32_t * S,
+extern void ne10_fir_sparse_float_c(ne10_fir_sparse_instance_f32_t * S,
                      ne10_float32_t * pSrc,
                      ne10_float32_t * pDst,
                      ne10_float32_t * pScratchIn,

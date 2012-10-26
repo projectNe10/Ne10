@@ -39,7 +39,6 @@
 
 ne10_iir_lattice_float_neon:
                         PUSH    {r4-r12,lr}
-                        @VPUSH   {d8,d9}
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -372,7 +371,6 @@ firLatticeEnd:
 .unreq    dGnext_0
 .unreq    dGnext_1
 
-                            @VPOP        {d8,d9}
                             POP         {r4-r12,pc}
 
         .end

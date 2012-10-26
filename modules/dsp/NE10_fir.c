@@ -106,8 +106,7 @@
  *
  */
 
-void ne10_fir_float_c (
-    const ne10_fir_instance_f32_t * S,
+void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
     ne10_float32_t * pSrc,
     ne10_float32_t * pDst,
     ne10_uint32_t blockSize)
@@ -351,8 +350,7 @@ void ne10_fir_float_c (
    * @return none.
    */
 
-void ne10_fir_decimate_float_c (
-    const ne10_fir_decimate_instance_f32_t * S,
+void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
     ne10_float32_t * pSrc,
     ne10_float32_t * pDst,
     ne10_uint32_t blockSize)
@@ -516,8 +514,7 @@ void ne10_fir_decimate_float_c (
  * @return none.
  */
 
-void ne10_fir_interpolate_float_c (
-    const ne10_fir_interpolate_instance_f32_t * S,
+void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S,
     ne10_float32_t * pSrc,
     ne10_float32_t * pDst,
     ne10_uint32_t blockSize)
@@ -700,8 +697,7 @@ void ne10_fir_interpolate_float_c (
    * @return none.
    */
 
-void ne10_fir_lattice_float_c (
-    const ne10_fir_lattice_instance_f32_t * S,
+void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
     ne10_float32_t * pSrc,
     ne10_float32_t * pDst,
     ne10_uint32_t blockSize)
@@ -1001,8 +997,7 @@ void ne10_fir_lattice_float_c (
    * @brief floating-point Circular write function.
    */
 
-static void ne10_circular_write_float (
-    ne10_int32_t * circBuffer,
+static void ne10_circular_write_float (ne10_int32_t * circBuffer,
     ne10_int32_t L,
     ne10_uint16_t * writeOffset,
     ne10_int32_t bufferInc,
@@ -1046,8 +1041,7 @@ static void ne10_circular_write_float (
 /**
  * @brief floating-point Circular Read function.
  */
-static void ne10_circular_read_float (
-    ne10_int32_t * circBuffer,
+static void ne10_circular_read_float (ne10_int32_t * circBuffer,
     ne10_int32_t L,
     ne10_int32_t * readOffset,
     ne10_int32_t bufferInc,
@@ -1108,8 +1102,7 @@ static void ne10_circular_read_float (
  * @return none.
  */
 
-void ne10_fir_sparse_float_c (
-    ne10_fir_sparse_instance_f32_t * S,
+void ne10_fir_sparse_float_c (ne10_fir_sparse_instance_f32_t * S,
     ne10_float32_t * pSrc,
     ne10_float32_t * pDst,
     ne10_float32_t * pScratchIn,

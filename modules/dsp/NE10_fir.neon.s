@@ -1608,6 +1608,7 @@ firLatticeEnd:
 
 ne10_fir_sparse_float_neon:
                             PUSH    {r4-r12,lr}
+                            @ save the point of struct to stack for stateIndex update
                             PUSH    {r0}
 
 @/*ARM Registers*/
