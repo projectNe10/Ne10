@@ -50,7 +50,7 @@ option(NE10_ENABLE_DSP "Build dsp functionalities to NE10" ON)
 set(NE10_VERSION 10)
 
 # set complile flags for ARM.
-set( CMAKE_C_FLAGS "-O3 -mthumb-interwork -march=armv7-a -mcpu=cortex-a9 -mfpu=vfp3" )
+set( CMAKE_C_FLAGS "-O2 -mthumb-interwork -march=armv7-a -mcpu=cortex-a9 -mfpu=vfp3" )
 
 set( CMAKE_ASM_FLAGS "-mthumb-interwork -march=armv7-a -mcpu=cortex-a9 -mfpu=neon" )
 
