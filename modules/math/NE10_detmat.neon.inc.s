@@ -1,17 +1,28 @@
 @
-@  Copyright 2011-12 ARM Limited
+@  Copyright 2012 ARM Limited
+@  All rights reserved.
 @
-@  Licensed under the Apache License, Version 2.0 (the "License");
-@  you may not use this file except in compliance with the License.
-@  You may obtain a copy of the License at
+@  Redistribution and use in source and binary forms, with or without
+@  modification, are permitted provided that the following conditions are met:
+@    * Redistributions of source code must retain the above copyright
+@      notice, this list of conditions and the following disclaimer.
+@    * Redistributions in binary form must reproduce the above copyright
+@      notice, this list of conditions and the following disclaimer in the
+@      documentation and/or other materials provided with the distribution.
+@    * Neither the name of ARM Limited nor the
+@      names of its contributors may be used to endorse or promote products
+@      derived from this software without specific prior written permission.
 @
-@      http://www.apache.org/licenses/LICENSE-2.0
-@
-@  Unless required by applicable law or agreed to in writing, software
-@  distributed under the License is distributed on an "AS IS" BASIS,
-@  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-@  See the License for the specific language governing permissions and
-@  limitations under the License.
+@  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
+@  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+@  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+@  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+@  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+@  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+@  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+@  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+@  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @
 
 @
@@ -43,7 +54,7 @@
 
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        @ A macro used inside detmat_3x3f_neon() to load 3x3 matrices.
+        @ A macro used inside ne10_detmat_3x3f_neon() to load 3x3 matrices.
         @ Two 3x3 matrices are loaded from the source address
         @ into registers dst00-11. The corresponding qr00-qr05
         @ registers are then rearranged so the order of the data fits the
@@ -111,7 +122,7 @@
 
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        @ A macro used inside detmat_4x4f_neon() to load 4x4 matrices.
+        @ A macro used inside ne10_detmat_4x4f_neon() to load 4x4 matrices.
         @ Two 4x4 matrices are loaded from the source address register \addr
         @ into registers dst00-15. The corresponding qr00-qr07
         @ registers are then rearranged so the order of the data fits the
@@ -174,7 +185,7 @@
 
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        @ A macro used inside detmat_4x4f_neon() to load four 4x4 matrices
+        @ A macro used inside ne10_detmat_4x4f_neon() to load four 4x4 matrices
         @ from the memory location pointed to by the \addr register.
         @ The loaded matrices are stored in registers dst00-07 and
         @ finaklly rearranged using the corresponding registers qr00-qr03.

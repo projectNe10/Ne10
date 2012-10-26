@@ -1,17 +1,28 @@
 @
-@  Copyright 2011-12 ARM Limited
+@  Copyright 2012 ARM Limited
+@  All rights reserved.
 @
-@  Licensed under the Apache License, Version 2.0 (the "License");
-@  you may not use this file except in compliance with the License.
-@  You may obtain a copy of the License at
+@  Redistribution and use in source and binary forms, with or without
+@  modification, are permitted provided that the following conditions are met:
+@    * Redistributions of source code must retain the above copyright
+@      notice, this list of conditions and the following disclaimer.
+@    * Redistributions in binary form must reproduce the above copyright
+@      notice, this list of conditions and the following disclaimer in the
+@      documentation and/or other materials provided with the distribution.
+@    * Neither the name of ARM Limited nor the
+@      names of its contributors may be used to endorse or promote products
+@      derived from this software without specific prior written permission.
 @
-@      http://www.apache.org/licenses/LICENSE-2.0
-@
-@  Unless required by applicable law or agreed to in writing, software
-@  distributed under the License is distributed on an "AS IS" BASIS,
-@  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-@  See the License for the specific language governing permissions and
-@  limitations under the License.
+@  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
+@  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+@  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+@  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+@  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+@  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+@  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+@  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+@  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+@  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @
 
 @
@@ -32,7 +43,7 @@
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ This macro multiplies a single 2x2 matrix by eight vec2's
         @ The elements of the vectors are loaded into registers q8-q11
-        @ by the caller (mulcmatvec_cm2x2f_v2f_neon) in the following
+        @ by the caller (ne10_mulcmatvec_cm2x2f_v2f_neon) in the following
         @ order:
         @
         @       d16=(x1,x3) d18=(y1,y3) d20=(x2,x4) d22=(y2,y4);
@@ -58,14 +69,14 @@
 
 
         .balign   4
-        .global   mulcmatvec_cm2x2f_v2f_neon
+        .global   ne10_mulcmatvec_cm2x2f_v2f_neon
         .thumb
         .thumb_func
 
-mulcmatvec_cm2x2f_v2f_neon:
+ne10_mulcmatvec_cm2x2f_v2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @  arm_result_t mulcmatvec_cm2x2f_v2f ( arm_vec2f_t * dst,
+        @  arm_result_t ne10_mulcmatvec_cm2x2f_v2f ( arm_vec2f_t * dst,
         @                                       const arm_mat2x2f_t * cst,
         @                                       arm_vec2f_t * src,
         @                                       unsigned int count)
@@ -209,14 +220,14 @@ mulcmatvec_cm2x2f_v2f_neon:
 
 
         .align  2
-        .global   mulcmatvec_cm3x3f_v3f_neon
+        .global   ne10_mulcmatvec_cm3x3f_v3f_neon
         .thumb
         .thumb_func
 
-mulcmatvec_cm3x3f_v3f_neon:
+ne10_mulcmatvec_cm3x3f_v3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @  arm_result_t mulcmatvec_cm3x3f_v3f ( arm_vec3f_t * dst,
+        @  arm_result_t ne10_mulcmatvec_cm3x3f_v3f ( arm_vec3f_t * dst,
         @                                       const arm_mat3x3f_t * cst,
         @                                       arm_vec3f_t * src,
         @                                       unsigned int count)
@@ -305,7 +316,7 @@ mulcmatvec_cm3x3f_v3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ A macro to load four vec4's into registers q8-q11.
         @ This macro uses r2 (the thirs parameter in
-        @ mulcmatvec_cm4x4f_v4f_neon) as the address register.
+        @ ne10_mulcmatvec_cm4x4f_v4f_neon) as the address register.
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         .macro LOAD_FOUR_VEC4
             vld4.32         { d16, d18, d20, d22  }, [r2]!
@@ -315,7 +326,7 @@ mulcmatvec_cm3x3f_v3f_neon:
 
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ This macro multiplies the constant 4x4 matrix that is loaded
-        @ in mulcmatvec_cm4x4f_v4f_neon by four vec4's that are loaded in
+        @ in ne10_mulcmatvec_cm4x4f_v4f_neon by four vec4's that are loaded in
         @ the above macro LOAD_FOUR_VEC4.
         @ The resulting four vectors are returned in registers q12 to q15.
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -349,7 +360,7 @@ mulcmatvec_cm3x3f_v3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @ This macro stores the results from the above macro MUL_MAT4x4_VEC4
         @ from registers q12-q15 in to the destination memory (r0) which is
-        @ the first parameter of mulcmatvec_cm4x4f_v4f_neon().
+        @ the first parameter of ne10_mulcmatvec_cm4x4f_v4f_neon().
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         .macro STORE_FOUR_VEC4
 
@@ -362,14 +373,14 @@ mulcmatvec_cm3x3f_v3f_neon:
 
 
         .align  2
-        .global   mulcmatvec_cm4x4f_v4f_neon
+        .global   ne10_mulcmatvec_cm4x4f_v4f_neon
         .thumb
         .thumb_func
 
-mulcmatvec_cm4x4f_v4f_neon:
+ne10_mulcmatvec_cm4x4f_v4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @  arm_result_t mulcmatvec_cm4x4f_v4f ( arm_vec4f_t * dst,
+        @  arm_result_t ne10_mulcmatvec_cm4x4f_v4f ( arm_vec4f_t * dst,
         @                                       const arm_mat4x4f_t * cst,
         @                                       arm_vec4f_t * src,
         @                                       unsigned int count)

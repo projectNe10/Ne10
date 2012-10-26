@@ -1,17 +1,28 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2012 ARM Limited
+ *  All rights reserved.
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ *  Redistribution and use in source and binary forms, with or without
+ *  modification, are permitted provided that the following conditions are met:
+ *    * Redistributions of source code must retain the above copyright
+ *      notice, this list of conditions and the following disclaimer.
+ *    * Redistributions in binary form must reproduce the above copyright
+ *      notice, this list of conditions and the following disclaimer in the
+ *      documentation and/or other materials provided with the distribution.
+ *    * Neither the name of ARM Limited nor the
+ *      names of its contributors may be used to endorse or promote products
+ *      derived from this software without specific prior written permission.
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
+ *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+ *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+ *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ *  ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 /*
@@ -47,7 +58,7 @@ extern "C" {
     @param[in]  cst   The constant scalar added to the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*addc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_addc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
 /*!
     Adds a constant 2D vector to all of the vectors in an input array and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -55,7 +66,7 @@ extern ne10_result_t (*addc_float)(ne10_float32_t * dst, ne10_float32_t * src, c
     @param[in]  cst   Pointer to the 2D vector added to the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*addc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_addc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
 /*!
     Adds a constant 3D vector to all of the vectors in an input array and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -63,7 +74,7 @@ extern ne10_result_t (*addc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const
     @param[in]  cst   Pointer to the 3D vector added to the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*addc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_addc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
 /*!
     Adds a constant 4D vector to all of the vectors in an input array and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -71,7 +82,7 @@ extern ne10_result_t (*addc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const
     @param[in]  cst   Pointer to the 4D vector added to the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*addc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_addc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
@@ -82,7 +93,7 @@ extern ne10_result_t (*addc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const
     @param[in]  cst   The constant scalar subtracted from the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*subc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_subc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
 /*!
     Subtracts a constant 2D vector from all of the vectors in an input array and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -90,7 +101,7 @@ extern ne10_result_t (*subc_float)(ne10_float32_t * dst, ne10_float32_t * src, c
     @param[in]  cst   Pointer to the 2D vector subtracted from the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*subc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_subc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
 /*!
     Subtracts a constant 3D vector from all of the vectors in an input array and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -98,7 +109,7 @@ extern ne10_result_t (*subc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const
     @param[in]  cst   Pointer to the 3D vector subtracted from the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*subc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_subc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
 /*!
     Subtracts a constant 4D vector from all of the vectors in an input array and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -106,7 +117,7 @@ extern ne10_result_t (*subc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const
     @param[in]  cst   Pointer to the 4D vector subtracted from the input values
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*subc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_subc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
@@ -117,7 +128,7 @@ extern ne10_result_t (*subc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const
     @param[in]  cst   The constant scalar to subtract the input values from
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*rsbc_float)(ne10_float32_t * dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_rsbc_float)(ne10_float32_t * dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count);
 /*!
     Subtracts the vectors in an input array from a constant 2D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -125,7 +136,7 @@ extern ne10_result_t (*rsbc_float)(ne10_float32_t * dst, ne10_float32_t *src, co
     @param[in]  cst   Pointer to the 2D vector to subtract the input values from
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*rsbc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_rsbc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
 /*!
     Subtracts the vectors in an input array from a constant 3D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -133,7 +144,7 @@ extern ne10_result_t (*rsbc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const
     @param[in]  cst   Pointer to the 3D vector to subtract the input values from
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*rsbc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_rsbc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
 /*!
     Subtracts the vectors in an input array from a constant 4D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -141,7 +152,7 @@ extern ne10_result_t (*rsbc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const
     @param[in]  cst   Pointer to the 4D vector to subtract the input values from
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*rsbc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_rsbc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
@@ -152,7 +163,7 @@ extern ne10_result_t (*rsbc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const
     @param[in]  cst   The constant scalar to multiply the input values with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mulc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
 /*!
     Multiplies the components of 2D vectors in an input array by the components of a constant 2D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -160,7 +171,7 @@ extern ne10_result_t (*mulc_float)(ne10_float32_t * dst, ne10_float32_t * src, c
     @param[in]  cst   Pointer to the 2D vector to multiply the input values with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mulc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
 /*!
     Multiplies the components of 3D vectors in an input array by the components of a constant 3D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -168,7 +179,7 @@ extern ne10_result_t (*mulc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const
     @param[in]  cst   Pointer to the 3D vector to multiply the input values with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mulc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
 /*!
     Multiplies the components of 4D vectors in an input array by the components of a constant 4D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -176,7 +187,7 @@ extern ne10_result_t (*mulc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const
     @param[in]  cst   Pointer to the 4D vector to multiply the input values with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mulc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
@@ -187,7 +198,7 @@ extern ne10_result_t (*mulc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const
     @param[in]  cst   The constant scalar to divide the input values by
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*divc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_divc_float)(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
 /*!
     Divides the components of 2D vectors in an input array with the components of a constant 2D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -195,7 +206,7 @@ extern ne10_result_t (*divc_float)(ne10_float32_t * dst, ne10_float32_t * src, c
     @param[in]  cst   Pointer to the 2D vector to divide the input values by
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*divc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_divc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
 /*!
     Divides the components of 3D vectors in an input array with the components of a constant 3D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -203,7 +214,7 @@ extern ne10_result_t (*divc_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, const
     @param[in]  cst   Pointer to the 3D vector to divide the input values by
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*divc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_divc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
 /*!
     Divides the components of 4D vectors in an input array with the components of a constant 4D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
@@ -211,7 +222,7 @@ extern ne10_result_t (*divc_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, const
     @param[in]  cst   Pointer to the 4D vector to divide the input values by
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*divc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_divc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
@@ -221,28 +232,28 @@ extern ne10_result_t (*divc_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, const
     @param[in]  cst   The constant scalar to set the input values to
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*setc_float)(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_setc_float)(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 /*!
     Sets the components of 2D vectors in an input array to the components of a constant 2D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  cst   Pointer to the 2D vector to set the input values to
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*setc_vec2f)(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_setc_vec2f)(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
 /*!
     Sets the components of 3D vectors in an input array to the components of a constant 3D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  cst   Pointer to the 3D vector to set the input values to
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*setc_vec3f)(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_setc_vec3f)(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
 /*!
     Sets the components of 3D vectors in an input array to the components of a constant 3D vector and stores the results in an output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  cst   Pointer to the 4D vector to set the input values to
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*setc_vec4f)(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_setc_vec4f)(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
@@ -255,7 +266,7 @@ extern ne10_result_t (*setc_vec4f)(ne10_vec4f_t * dst, const ne10_vec4f_t * cst,
     @param[in]  cst   The constant scalar to multiply the input elements with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mlac_float)(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mlac_float)(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
 /*!
    Multiplies each entry in the source array (src) by the 2D vector cst, then adds the result to
      the corresponding item of the accumulation array (acc), and stores the result in the destination array.
@@ -265,7 +276,7 @@ extern ne10_result_t (*mlac_float)(ne10_float32_t * dst, ne10_float32_t * acc, n
     @param[in]  cst   Pointer to the 2D vector to multiply the input vectors with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mlac_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mlac_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
 /*!
    Multiplies each entry in the source array (src) by the 3D vector cst, then adds the result to
      the corresponding item of the accumulation array (acc), and stores the result in the destination array.
@@ -275,7 +286,7 @@ extern ne10_result_t (*mlac_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_
     @param[in]  cst   Pointer to the 3D vector to multiply the input vectors with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mlac_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mlac_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
 /*!
    Multiplies each entry in the source array (src) by the 4D vector cst, then adds the result to
      the corresponding item of the accumulation array (acc), and stores the result in the destination array.
@@ -285,7 +296,7 @@ extern ne10_result_t (*mlac_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_
     @param[in]  cst   Pointer to the 4D vector to multiply the input vectors with
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*mlac_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mlac_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
@@ -298,7 +309,7 @@ extern ne10_result_t (*mlac_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_
     @param[in]  src2  The second array to use as the input array
     @param[in]  count The number of items in the two input arrays
  */
-extern ne10_result_t (*add_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_add_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 /*!
     Subtracts the elements of src2 from the elements of src2 and stores the results in the dst.
     @param[out] dst   Pointer to the destination array
@@ -306,7 +317,7 @@ extern ne10_result_t (*add_float)(ne10_float32_t * dst, ne10_float32_t * src1, n
     @param[in]  src2  The second array to use as the input array
     @param[in]  count The number of items in the two input arrays
  */
-extern ne10_result_t (*sub_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_sub_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 /*!
     Multiplies the elements of src1 by the elements of src2 and stores the results in the dst.
     @param[out] dst   Pointer to the destination array
@@ -314,7 +325,7 @@ extern ne10_result_t (*sub_float)(ne10_float32_t * dst, ne10_float32_t * src1, n
     @param[in]  src2  The second array to use as the input array
     @param[in]  count The number of items in the two input arrays
  */
-extern ne10_result_t (*mul_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mul_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 /*!
     Divides the elements of src1 by the elements of src2 and stores the results in the dst.
     @param[out] dst   Pointer to the destination array
@@ -322,7 +333,7 @@ extern ne10_result_t (*mul_float)(ne10_float32_t * dst, ne10_float32_t * src1, n
     @param[in]  src2  The second array to use as the input array
     @param[in]  count The number of items in the two input arrays
  */
-extern ne10_result_t (*div_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_div_float)(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 /*!
     Performs a multiply and accumulate operation using the corresponding elements in acc, src1, and src2.
     @param[out] dst   Pointer to the destination array
@@ -331,14 +342,14 @@ extern ne10_result_t (*div_float)(ne10_float32_t * dst, ne10_float32_t * src1, n
     @param[in]  src2  The second array to use as the input array
     @param[in]  count The number of items in the two input arrays
  */
-extern ne10_result_t (*mla_float)(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mla_float)(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
 /*!
     Calculates the absolute value of each element in the source array and stores the result in the corresponding entry of the destination array.
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*abs_float)(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_abs_float)(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
 
 
 
@@ -349,21 +360,21 @@ extern ne10_result_t (*abs_float)(ne10_float32_t * dst, ne10_float32_t * src, ne
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*len_vec2f)(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_len_vec2f)(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
 /*!
     Returns length of 3D vectors in corresponding elements of the output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*len_vec3f)(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_len_vec3f)(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
 /*!
     Returns length of 4D vectors in corresponding elements of the output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*len_vec4f)(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_len_vec4f)(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
@@ -373,21 +384,21 @@ extern ne10_result_t (*len_vec4f)(ne10_float32_t * dst, ne10_vec4f_t * src, ne10
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*normalize_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_normalize_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
 /*!
     Normalizes 3D vectors of the input array and stores them in the corresponding elements of the output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*normalize_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_normalize_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
 /*!
     Normalizes 4D vectors of the input array and stores them in the corresponding elements of the output array.
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*normalize_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_normalize_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
@@ -398,21 +409,21 @@ extern ne10_result_t (*normalize_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, 
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*abs_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_abs_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
 /*!
     Generates a 3D vector from the absolute values of each of the components of an input vector
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*abs_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_abs_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
 /*!
     Generates a 4D vector from the absolute values of each of the components of an input vector
     @param[out] dst   Pointer to the destination array
     @param[in]  src   Pointer to the source array
     @param[in]  count The number of items in the input array
  */
-extern ne10_result_t (*abs_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_abs_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
@@ -425,7 +436,7 @@ extern ne10_result_t (*abs_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_u
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmul_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vmul_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 /*!
     Multiplies the components of a 3D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -433,7 +444,7 @@ extern ne10_result_t (*vmul_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmul_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vmul_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 /*!
     Multiplies the components of a 4D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -441,7 +452,7 @@ extern ne10_result_t (*vmul_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmul_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vmul_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
@@ -452,7 +463,7 @@ extern ne10_result_t (*vmul_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10
     @param[in]  src2   Pointer to the denominators' source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vdiv_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vdiv_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 /*!
     Divides the components of a 3D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -460,7 +471,7 @@ extern ne10_result_t (*vdiv_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10
     @param[in]  src2   Pointer to the denominators' source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vdiv_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vdiv_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 /*!
     Divides the components of a 4D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -468,7 +479,7 @@ extern ne10_result_t (*vdiv_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10
     @param[in]  src2   Pointer to the denominators' source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vdiv_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vdiv_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
@@ -479,7 +490,7 @@ extern ne10_result_t (*vdiv_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmla_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vmla_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 /*!
     Performs a multiply and accumulate operation on the components of a 3D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -487,7 +498,7 @@ extern ne10_result_t (*vmla_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmla_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vmla_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 /*!
     Performs a multiply and accumulate operation on the components of a 4D vector with the corresponding components of another
     @param[out] dst   Pointer to the destination array
@@ -495,7 +506,7 @@ extern ne10_result_t (*vmla_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*vmla_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_vmla_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
@@ -508,7 +519,7 @@ extern ne10_result_t (*vmla_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*add_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_add_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 /*!
     Vector addition of two 3D vectors
     @param[out] dst   Pointer to the destination array
@@ -516,7 +527,7 @@ extern ne10_result_t (*add_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*add_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_add_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 /*!
     Vector addition of two 4D vectors
     @param[out] dst   Pointer to the destination array
@@ -524,7 +535,7 @@ extern ne10_result_t (*add_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*add_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_add_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
@@ -535,7 +546,7 @@ extern ne10_result_t (*add_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*sub_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_sub_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 /*!
     Vector subtraction of two 3D vectors
     @param[out] dst   Pointer to the destination array
@@ -543,7 +554,7 @@ extern ne10_result_t (*sub_vec2f)(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*sub_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_sub_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 /*!
     Vector subtraction of two 4D vectors
     @param[out] dst   Pointer to the destination array
@@ -551,7 +562,7 @@ extern ne10_result_t (*sub_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*sub_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_sub_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
@@ -562,7 +573,7 @@ extern ne10_result_t (*sub_vec4f)(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*dot_vec2f)(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_dot_vec2f)(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
 /*!
     Dot product of two 3D vectors
     @param[out] dst   Pointer to the destination array
@@ -570,7 +581,7 @@ extern ne10_result_t (*dot_vec2f)(ne10_float32_t * dst, ne10_vec2f_t * src1, ne1
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*dot_vec3f)(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_dot_vec3f)(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 /*!
     Dot product of two 4D vectors
     @param[out] dst   Pointer to the destination array
@@ -578,7 +589,7 @@ extern ne10_result_t (*dot_vec3f)(ne10_float32_t * dst, ne10_vec3f_t * src1, ne1
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*dot_vec4f)(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_dot_vec4f)(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
@@ -589,7 +600,7 @@ extern ne10_result_t (*dot_vec4f)(ne10_float32_t * dst, ne10_vec4f_t * src1, ne1
     @param[in]  src2   Pointer to the second source array
     @param[in]  count The number of items in the input arrays
  */
-extern ne10_result_t (*cross_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_cross_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
 
 
@@ -597,57 +608,57 @@ extern ne10_result_t (*cross_vec3f)(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne1
 // ## Matrix-Constant Arithmetic ##
 
 // ne10_mat4x4f_t
-extern ne10_result_t (*addmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*submat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*mulmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*divmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*setmat_4x4f)(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_addmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_submat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_divmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_setmat_4x4f)(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t (*addmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*submat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*mulmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*divmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*setmat_3x3f)(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_addmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_submat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_divmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_setmat_3x3f)(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t (*addmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*submat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*mulmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*divmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*setmat_2x2f)(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_addmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_submat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_divmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_setmat_2x2f)(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
 
 
 // ## Operations on Matrices ##
 
-extern ne10_result_t (*detmat_4x4f)(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*detmat_3x3f)(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*detmat_2x2f)(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_detmat_4x4f)(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_detmat_3x3f)(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_detmat_2x2f)(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t (*invmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*invmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*invmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_invmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_invmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_invmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t (*transmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*identitymat_4x4f)(ne10_mat4x4f_t * dst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_transmat_4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_identitymat_4x4f)(ne10_mat4x4f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t (*transmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*identitymat_3x3f)(ne10_mat3x3f_t * dst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_transmat_3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_identitymat_3x3f)(ne10_mat3x3f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t (*transmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*identitymat_2x2f)(ne10_mat2x2f_t * dst, ne10_uint32_t count);
+extern ne10_result_t (*ne10_transmat_2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_identitymat_2x2f)(ne10_mat2x2f_t * dst, ne10_uint32_t count);
 
 
 
 // ## Matrix-Vector Algebra ##
-extern ne10_result_t (*mulcmatvec_cm4x4f_v4f)(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*mulcmatvec_cm3x3f_v3f)(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t (*mulcmatvec_cm2x2f_v2f)(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulcmatvec_cm4x4f_v4f)(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulcmatvec_cm3x3f_v3f)(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t (*ne10_mulcmatvec_cm2x2f_v2f)(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
 
 
 // ## Matrix-Matrix Algebra ##
-extern ne10_result_t (*multrans_mat4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*multrans_mat3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t (*multrans_mat2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_multrans_mat4x4f)(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_multrans_mat3x3f)(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t (*ne10_multrans_mat2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
 
 
 ///////////////////////////
@@ -657,176 +668,176 @@ extern ne10_result_t (*multrans_mat2x2f)(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * 
 
 // ## Vector-Constant Arithmetic ##
 
-extern ne10_result_t addc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t subc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
 
 
 
-extern ne10_result_t rsbc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
 
 
 
-extern ne10_result_t mulc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t divc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_float_c(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t setc_float_c(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec2f_c(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec3f_c(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec4f_c(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_float_c(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec2f_c(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec3f_c(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec4f_c(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t mlac_float_c(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_float_c(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 // ## Arithmetic functions over arrays of cst values ##
-extern ne10_result_t add_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t mul_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t div_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t mla_float_c(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t abs_float_c(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_add_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mul_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_div_float_c(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mla_float_c(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_float_c(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
 
 // ## Operations on Vectors ##
-extern ne10_result_t len_vec2f_c(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t len_vec3f_c(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t len_vec4f_c(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec2f_c(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec3f_c(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec4f_c(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
-extern ne10_result_t normalize_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t normalize_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t normalize_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
-extern ne10_result_t abs_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t abs_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t abs_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
 // ## SIMD Component-wise Arithmetic on Two Vectors ##
-extern ne10_result_t vmul_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmul_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmul_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t vdiv_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vdiv_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vdiv_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t vmla_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmla_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmla_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
 // ## Vector-Vector Algebra ##
-extern ne10_result_t add_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t add_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t add_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t sub_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec2f_c(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec4f_c(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t dot_vec2f_c(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t dot_vec3f_c(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t dot_vec4f_c(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec2f_c(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec3f_c(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec4f_c(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t cross_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_cross_vec3f_c(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
 
 
 // ## Matrix-Constant Arithmetic ##
 
 // ne10_mat4x4f_t
-extern ne10_result_t addmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_4x4f_c(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_4x4f_c(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t addmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_3x3f_c(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_3x3f_c(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t addmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_2x2f_c(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_2x2f_c(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
 
 
 // ## Operations on Matrices ##
 
-extern ne10_result_t detmat_4x4f_c(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t detmat_3x3f_c(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t detmat_2x2f_c(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_4x4f_c(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_3x3f_c(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_2x2f_c(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t invmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t invmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t invmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t transmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_4x4f_c(ne10_mat4x4f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_4x4f_c(ne10_mat4x4f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t transmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_3x3f_c(ne10_mat3x3f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_3x3f_c(ne10_mat3x3f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t transmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_2x2f_c(ne10_mat2x2f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_2x2f_c(ne10_mat2x2f_t * dst, ne10_uint32_t count);
 
 
 
 // ## Matrix-Vector Algebra ##
-extern ne10_result_t mulcmatvec_cm4x4f_v4f_c(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
-extern ne10_result_t mulcmatvec_cm3x3f_v3f_c(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t mulcmatvec_cm2x2f_v2f_c(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_c(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_c(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_c(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
 
 
 // ## Matrix-Matrix Algebra ##
-extern ne10_result_t multrans_mat4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t multrans_mat3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t multrans_mat2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat4x4f_c(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat3x3f_c(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
 
 
 /////////////////////////////
@@ -836,181 +847,181 @@ extern ne10_result_t multrans_mat2x2f_c(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * s
 
 // ## Vector-Constant Arithmetic ##
 
-extern ne10_result_t addc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t subc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
 
 
 
-extern ne10_result_t rsbc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
 
 
 
-extern ne10_result_t mulc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t divc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_float_neon(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t setc_float_neon(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec2f_neon(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec3f_neon(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec4f_neon(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_float_neon(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec2f_neon(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec3f_neon(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec4f_neon(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t mlac_float_neon(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_float_neon(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
 // ## Arithmetic functions over arrays of cst values ##
-extern ne10_result_t add_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t mul_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t div_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t mla_float_neon(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t abs_float_neon(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_add_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mul_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_div_float_neon(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mla_float_neon(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_float_neon(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
 
 // ## Operations on Vectors ##
-extern ne10_result_t len_vec2f_neon(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t len_vec3f_neon(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t len_vec4f_neon(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec2f_neon(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec3f_neon(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec4f_neon(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
-extern ne10_result_t normalize_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t normalize_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t normalize_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
-extern ne10_result_t abs_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t abs_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t abs_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
 // ## SIMD Component-wise Arithmetic on Two Vectors ##
-extern ne10_result_t vmul_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmul_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmul_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t vdiv_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vdiv_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vdiv_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t vmla_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmla_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmla_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
 // ## Vector-Vector Algebra ##
-extern ne10_result_t add_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t add_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t add_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t sub_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec2f_neon(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec4f_neon(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t dot_vec2f_neon(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t dot_vec3f_neon(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t dot_vec4f_neon(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec2f_neon(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec3f_neon(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec4f_neon(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t cross_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_cross_vec3f_neon(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
 
 
 // ## Matrix-Constant Arithmetic ##
 
 // ne10_mat4x4f_t
-extern ne10_result_t addmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_4x4f_neon(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_4x4f_neon(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t addmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_3x3f_neon(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_3x3f_neon(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t addmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_2x2f_neon(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_2x2f_neon(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
 
 
 // ## Operations on Matrices ##
 
 
-extern ne10_result_t detmat_4x4f_neon(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t detmat_3x3f_neon(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t detmat_2x2f_neon(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_4x4f_neon(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_3x3f_neon(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_2x2f_neon(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t invmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t invmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t invmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t transmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_4x4f_neon(ne10_mat4x4f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t transmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_3x3f_neon(ne10_mat3x3f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t transmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_2x2f_neon(ne10_mat2x2f_t * dst, ne10_uint32_t count);
 
 
 
 // ## Matrix-Vector Algebra ##
-extern ne10_result_t mulcmatvec_cm4x4f_v4f_neon(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
-extern ne10_result_t mulcmatvec_cm3x3f_v3f_neon(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t mulcmatvec_cm2x2f_v2f_neon(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_neon(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_neon(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_neon(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
 
 
 
 
 // ## Matrix-Matrix Algebra ##
-extern ne10_result_t multrans_mat4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t multrans_mat3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t multrans_mat2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat4x4f_neon(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat3x3f_neon(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
 
 
 ////////////////////////////
@@ -1019,179 +1030,179 @@ extern ne10_result_t multrans_mat2x2f_neon(ne10_mat2x2f_t * dst, ne10_mat2x2f_t 
 
 // ## Vector-Constant Arithmetic ##
 
-extern ne10_result_t addc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t addc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t subc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
-extern ne10_result_t subc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
+extern ne10_result_t ne10_subc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
 
 
 
-extern ne10_result_t rsbc_float_asm(ne10_float32_t * dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t *src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t *src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
-extern ne10_result_t rsbc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t *src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_float_asm(ne10_float32_t * dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t *src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t *src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
+extern ne10_result_t ne10_rsbc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t *src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
 
 
 
-extern ne10_result_t mulc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mulc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mulc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t divc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t divc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_float_asm(ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_divc_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t setc_float_asm(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec2f_asm(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec3f_asm(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t setc_vec4f_asm(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_float_asm(ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec2f_asm(ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec3f_asm(ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_setc_vec4f_asm(ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
-extern ne10_result_t mlac_float_asm(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-extern ne10_result_t mlac_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_float_asm(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+extern ne10_result_t ne10_mlac_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
 
 // ## Arithmetic functions over arrays of cst values ##
-extern ne10_result_t add_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t mul_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t div_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t mla_float_asm(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-extern ne10_result_t abs_float_asm(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_add_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mul_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_div_float_asm(ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mla_float_asm(ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_float_asm(ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
 
 // ## Operations on Vectors ##
-extern ne10_result_t len_vec2f_asm(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t len_vec3f_asm(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t len_vec4f_asm(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec2f_asm(ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec3f_asm(ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_len_vec4f_asm(ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
-extern ne10_result_t normalize_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t normalize_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t normalize_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_normalize_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
-extern ne10_result_t abs_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-extern ne10_result_t abs_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t abs_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_abs_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
 
 
 
 // ## SIMD Component-wise Arithmetic on Two Vectors ##
-extern ne10_result_t vmul_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmul_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmul_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmul_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t vdiv_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vdiv_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vdiv_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vdiv_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t vmla_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmla_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t vmla_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_vmla_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
 // ## Vector-Vector Algebra ##
-extern ne10_result_t add_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t add_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t add_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_add_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t sub_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t sub_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec2f_asm(ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_sub_vec4f_asm(ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t dot_vec2f_asm(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t dot_vec3f_asm(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t dot_vec4f_asm(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec2f_asm(ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec3f_asm(ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_dot_vec4f_asm(ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
 
 
 
-extern ne10_result_t cross_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_cross_vec3f_asm(ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
 
 
 // ## Matrix-Constant Arithmetic ##
 
 // ne10_mat4x4f_t
-extern ne10_result_t addmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_4x4f_asm(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_4x4f_asm(ne10_mat4x4f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t addmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_3x3f_asm(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_3x3f_asm(ne10_mat3x3f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
-extern ne10_result_t addmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t submat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t mulmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t divmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-extern ne10_result_t setmat_2x2f_asm(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
+extern ne10_result_t ne10_addmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_submat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_mulmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_divmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_setmat_2x2f_asm(ne10_mat2x2f_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
 
 
 // ## Operations on Matrices ##
 
-extern ne10_result_t detmat_4x4f_asm(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t detmat_3x3f_asm(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t detmat_2x2f_asm(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_4x4f_asm(ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_3x3f_asm(ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_detmat_2x2f_asm(ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t invmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t invmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t invmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_invmat_2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
 
-extern ne10_result_t transmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_4x4f_asm(ne10_mat4x4f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t transmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-extern ne10_result_t identitymat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_transmat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identitymat_3x3f_asm(ne10_mat3x3f_t * dst, ne10_uint32_t count);
 
-extern ne10_result_t trans_mat2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-extern ne10_result_t identity_mat2x2f_asm(ne10_mat2x2f_t * dst, ne10_uint32_t count);
+extern ne10_result_t ne10_trans_mat2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_identity_mat2x2f_asm(ne10_mat2x2f_t * dst, ne10_uint32_t count);
 
 
 
 // ## Matrix-Vector Algebra ##
-extern ne10_result_t mulcmatvec_cm4x4f_v4f_asm(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
-extern ne10_result_t mulcmatvec_cm3x3f_v3f_asm(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
-extern ne10_result_t mulcmatvec_cm2x2f_v2f_asm(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_asm(ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_asm(ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
+extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_asm(ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
 
 
 
 
 // ## Matrix-Matrix Algebra ##
-extern ne10_result_t multrans_mat4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-extern ne10_result_t multrans_mat3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-extern ne10_result_t multrans_mat2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat4x4f_asm(ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat3x3f_asm(ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+extern ne10_result_t ne10_multrans_mat2x2f_asm(ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
 
 #ifdef __cplusplus
 }
