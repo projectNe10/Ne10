@@ -38,14 +38,14 @@
 
 
         .balign   4
-        .global   mla_float_neon
+        .global   ne10_mla_float_neon
         .thumb
         .thumb_func
 
-mla_float_neon:
+ne10_mla_float_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mla_float(arm_float_t * dst,
+        @ arm_result_t ne10_mla_float(arm_float_t * dst,
         @                 arm_float_t * acc,
         @                 arm_float_t * src1,
         @                 arm_float_t * src2,
@@ -133,14 +133,14 @@ mla_float_neon:
 
 
         .balign   4
-        .global   vmla_vec2f_neon
+        .global   ne10_vmla_vec2f_neon
         .thumb
         .thumb_func
 
-vmla_vec2f_neon:
+ne10_vmla_vec2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t vmla_vec2f(arm_vec2f_t * dst,
+        @ arm_result_t ne10_vmla_vec2f(arm_vec2f_t * dst,
         @                 arm_vec2f_t * acc,
         @                 arm_vec2f_t * src1,
         @                 arm_vec2f_t * src2,
@@ -230,13 +230,13 @@ vmla_vec2f_neon:
 
 
         .align  2
-        .global vmla_vec3f_neon
+        .global ne10_vmla_vec3f_neon
         .thumb
         .thumb_func
-vmla_vec3f_neon:
+ne10_vmla_vec3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t vmla_vec3f(arm_vec3f_t * dst,
+        @ arm_result_t ne10_vmla_vec3f(arm_vec3f_t * dst,
         @                 arm_vec3f_t * acc,
         @                 arm_vec3f_t * src1,
         @                 arm_vec3f_t * src2,
@@ -348,13 +348,13 @@ vmla_vec3f_neon:
 
 
         .align  2
-        .global vmla_vec4f_neon
+        .global ne10_vmla_vec4f_neon
         .thumb
         .thumb_func
-vmla_vec4f_neon:
+ne10_vmla_vec4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t vmla_vec4f(arm_vec4f_t * dst,
+        @ arm_result_t ne10_vmla_vec4f(arm_vec4f_t * dst,
         @                 arm_vec4f_t * acc,
         @                 arm_vec4f_t * src1,
         @                 arm_vec4f_t * src2,

@@ -38,14 +38,14 @@
 
 
         .align   4
-        .global   abs_float_neon
+        .global   ne10_abs_float_neon
         .thumb
         .thumb_func
 
-abs_float_neon:
+ne10_abs_float_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t abs_float(arm_float_t * dst,
+        @ arm_result_t ne10_abs_float(arm_float_t * dst,
         @                 arm_float_t * src,
         @                 unsigned int count);
         @
@@ -105,14 +105,14 @@ abs_float_neon:
 
 
         .align   4
-        .global   abs_vec2f_neon
+        .global   ne10_abs_vec2f_neon
         .thumb
         .thumb_func
 
-abs_vec2f_neon:
+ne10_abs_vec2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t abs_vec2f(arm_vec2f_t * dst,
+        @ arm_result_t ne10_abs_vec2f(arm_vec2f_t * dst,
         @                 arm_vec2f_t * src,
         @                 unsigned int count);
         @
@@ -171,13 +171,13 @@ abs_vec2f_neon:
 
 
         .align  4
-        .global abs_vec3f_neon
+        .global ne10_abs_vec3f_neon
         .thumb
         .thumb_func
-abs_vec3f_neon:
+ne10_abs_vec3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t abs_vec3f(arm_vec3t_t * dst,
+        @ arm_result_t ne10_abs_vec3f(arm_vec3t_t * dst,
         @                 arm_vec3f_t * src,
         @                 unsigned int count);
         @
@@ -246,13 +246,13 @@ abs_vec3f_neon:
 
 
         .align  4
-        .global abs_vec4f_neon
+        .global ne10_abs_vec4f_neon
         .thumb
         .thumb_func
-abs_vec4f_neon:
+ne10_abs_vec4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t abs_vec4f(arm_vec4f_t * dst,
+        @ arm_result_t ne10_abs_vec4f(arm_vec4f_t * dst,
         @                 arm_vec4f_t * src,
         @                 unsigned int count);
         @

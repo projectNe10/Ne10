@@ -35,14 +35,14 @@
 .include "NE10header.s"
 
         .balign   4
-        .global   add_float_asm
+        .global   ne10_add_float_asm
         .thumb
         .thumb_func
 
-add_float_asm:
+ne10_add_float_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t add_float(arm_vec2f_t * dst,
+        @ arm_result_t ne10_add_float(arm_vec2f_t * dst,
         @                 arm_float_t * src1, const arm_float_t * src2,
         @                 unsigned int count)
         @

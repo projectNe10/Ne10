@@ -38,14 +38,14 @@
 
 
         .align   4
-        .global   div_float_neon
+        .global   ne10_div_float_neon
         .thumb
         .thumb_func
 
-div_float_neon:
+ne10_div_float_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t div_float(arm_float_t * dst,
+        @ arm_result_t ne10_div_float(arm_float_t * dst,
         @                 arm_float_t * src1,
         @                 arm_float_t * src2,
         @                 unsigned int count)
@@ -118,14 +118,14 @@ div_float_neon:
 
 
         .align   4
-        .global   vdiv_vec2f_neon
+        .global   ne10_vdiv_vec2f_neon
         .thumb
         .thumb_func
 
-vdiv_vec2f_neon:
+ne10_vdiv_vec2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t div_float(arm_vec2f_t * dst,
+        @ arm_result_t ne10_div_float(arm_vec2f_t * dst,
         @                 arm_vec2f_t * src1,
         @                 arm_vec2f_t * src2,
         @                 unsigned int count)
@@ -204,13 +204,13 @@ vdiv_vec2f_neon:
 
 
         .align  4
-        .global vdiv_vec3f_neon
+        .global ne10_vdiv_vec3f_neon
         .thumb
         .thumb_func
-vdiv_vec3f_neon:
+ne10_vdiv_vec3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t div_float(arm_vec3f_t * dst,
+        @ arm_result_t ne10_div_float(arm_vec3f_t * dst,
         @                 arm_vec3f_t * src1,
         @                 arm_vec3f_t * src2,
         @                 unsigned int count)
@@ -316,13 +316,13 @@ vdiv_vec3f_neon:
 
 
         .align  4
-        .global vdiv_vec4f_neon
+        .global ne10_vdiv_vec4f_neon
         .thumb
         .thumb_func
-vdiv_vec4f_neon:
+ne10_vdiv_vec4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t div_float(arm_vec4f_t * dst,
+        @ arm_result_t ne10_div_float(arm_vec4f_t * dst,
         @                 arm_vec4f_t * src1,
         @                 arm_vec4f_t * src2,
         @                 unsigned int count)

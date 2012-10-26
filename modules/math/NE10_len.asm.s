@@ -35,14 +35,14 @@
 .include "NE10header.s"
 
         .balign   4
-        .global   len_vec2f_asm
+        .global   ne10_len_vec2f_asm
         .thumb
         .thumb_func
 
-len_vec2f_asm:
+ne10_len_vec2f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t len_vec2f(arm_float_t * dst,
+        @ arm_result_t ne10_len_vec2f(arm_float_t * dst,
         @                 arm_vec2f_t * src, unsigned int count)
         @
         @  r0: *dst and current destination item's address
@@ -73,14 +73,14 @@ len_vec2f_asm:
 
 
         .balign   4
-        .global   len_vec3f_asm
+        .global   ne10_len_vec3f_asm
         .thumb
         .thumb_func
 
-len_vec3f_asm:
+ne10_len_vec3f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t len_vec3f(arm_float_t * dst,
+        @ arm_result_t ne10_len_vec3f(arm_float_t * dst,
         @                 arm_vec3f_t * src, unsigned int count)
         @
         @  r0: *dst and current destination item's address
@@ -113,14 +113,14 @@ len_vec3f_asm:
 
 
         .balign   4
-        .global   len_vec4f_asm
+        .global   ne10_len_vec4f_asm
         .thumb
         .thumb_func
 
-len_vec4f_asm:
+ne10_len_vec4f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t len_vec4f(arm_float_t * dst,
+        @ arm_result_t ne10_len_vec4f(arm_float_t * dst,
         @                 arm_vec4f_t * src, unsigned int count)
         @
         @  r0: *dst and current destination item's address

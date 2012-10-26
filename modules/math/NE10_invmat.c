@@ -39,7 +39,7 @@
 // This macro is used to determine floating point values that are small enough to be consiedered nearly zero
 #define IS_FLOAT_NEAR_ZERO(x) ( ((fabs(x))<(1e-12)) ? 1 : 0 )
 
-ne10_result_t invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count)
 {
     ne10_float32_t det = 0.0f;
 
@@ -60,7 +60,7 @@ ne10_result_t invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_ui
     );
 }
 
-ne10_result_t invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
 {
 #define aa   (src[ itr ].c1.r1)
 #define bb   (src[ itr ].c1.r2)
@@ -120,7 +120,7 @@ ne10_result_t invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_ui
 #undef ii
 }
 
-ne10_result_t invmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count)
+ne10_result_t ne10_invmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count)
 {
 #define aa   (src[ itr ].c1.r1)
 #define bb   (src[ itr ].c1.r2)

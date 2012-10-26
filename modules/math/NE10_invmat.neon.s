@@ -94,14 +94,14 @@ CONST_FLOAT_1Em12:
 
 
         .align   4
-        .global   invmat_2x2f_neon
+        .global   ne10_invmat_2x2f_neon
         .thumb
         .thumb_func
 
-invmat_2x2f_neon:
+ne10_invmat_2x2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t invmat_2x2f(arm_mat2x2f_t * dst,
+        @ arm_result_t ne10_invmat_2x2f(arm_mat2x2f_t * dst,
         @                 arm_mat2x2f_t * src,
         @                 unsigned int count)
         @
@@ -265,13 +265,13 @@ invmat_2x2f_neon:
 
 
         .align  4
-        .global invmat_3x3f_neon
+        .global ne10_invmat_3x3f_neon
         .thumb
         .thumb_func
-invmat_3x3f_neon:
+ne10_invmat_3x3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t invmat_3x3f(arm_mat3x3f_t * dst,
+        @ arm_result_t ne10_invmat_3x3f(arm_mat3x3f_t * dst,
         @                 arm_mat3x3f_t * src1,
         @                 arm_mat3x3f_t * src2,
         @                 unsigned int count)
@@ -469,13 +469,13 @@ invmat_3x3f_neon:
 
 
         .align  4
-        .global invmat_4x4f_neon
+        .global ne10_invmat_4x4f_neon
         .thumb
         .thumb_func
-invmat_4x4f_neon:
+ne10_invmat_4x4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t invmat_4x4f(arm_mat4x4f_t * dst,
+        @ arm_result_t ne10_invmat_4x4f(arm_mat4x4f_t * dst,
         @                 arm_mat4x4f_t * src1,
         @                 arm_mat4x4f_t * src2,
         @                 unsigned int count)

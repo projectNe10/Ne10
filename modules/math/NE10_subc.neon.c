@@ -36,7 +36,7 @@
 #include <arm_neon.h>
 
 
-ne10_result_t subc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count)
+ne10_result_t ne10_subc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count)
 {
     NE10_XC_OPERATION_FLOAT_NEON
     (
@@ -46,7 +46,7 @@ ne10_result_t subc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const
     );
 }
 
-ne10_result_t subc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count)
+ne10_result_t ne10_subc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count)
 {
     NE10_XC_OPERATION_VEC2F_NEON
     (
@@ -56,7 +56,7 @@ ne10_result_t subc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne1
     );
 }
 
-ne10_result_t subc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count)
+ne10_result_t ne10_subc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count)
 {
     NE10_XC_OPERATION_VEC3F_NEON
     (
@@ -70,7 +70,7 @@ ne10_result_t subc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne1
     );
 }
 
-ne10_result_t subc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count)
+ne10_result_t ne10_subc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count)
 {
     NE10_XC_OPERATION_VEC4F_NEON
     (

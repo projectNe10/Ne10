@@ -41,14 +41,14 @@
 
 
         .balign   4
-        .global   mulmat_2x2f_neon
+        .global   ne10_mulmat_2x2f_neon
         .thumb
         .thumb_func
 
-mulmat_2x2f_neon:
+ne10_mulmat_2x2f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mulmat_2x2f(arm_mat2x2f_t * dst,
+        @ arm_result_t ne10_mulmat_2x2f(arm_mat2x2f_t * dst,
         @                 arm_mat2x2f_t * src1,
         @                 arm_mat2x2f_t * src2,
         @                 unsigned int count)
@@ -282,13 +282,13 @@ mulmat_2x2f_neon:
 
 
         .align  2
-        .global mulmat_3x3f_neon
+        .global ne10_mulmat_3x3f_neon
         .thumb
         .thumb_func
-mulmat_3x3f_neon:
+ne10_mulmat_3x3f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mulmat_3x3f(arm_mat3x3f_t * dst,
+        @ arm_result_t ne10_mulmat_3x3f(arm_mat3x3f_t * dst,
         @                 arm_mat3x3f_t * src1,
         @                 arm_mat3x3f_t * src2,
         @                 unsigned int count)
@@ -459,13 +459,13 @@ mulmat_3x3f_neon:
 
 
         .align  2
-        .global mulmat_4x4f_neon
+        .global ne10_mulmat_4x4f_neon
         .thumb
         .thumb_func
-mulmat_4x4f_neon:
+ne10_mulmat_4x4f_neon:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t mulmat_4x4f(arm_mat4x4f_t * dst,
+        @ arm_result_t ne10_mulmat_4x4f(arm_mat4x4f_t * dst,
         @                 arm_mat4x4f_t * src1,
         @                 arm_mat4x4f_t * src2,
         @                 unsigned int count)

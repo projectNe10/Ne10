@@ -35,14 +35,14 @@
 .include "NE10header.s"
 
         .balign   4
-        .global   normalize_vec2f_asm
+        .global   ne10_normalize_vec2f_asm
         .thumb
         .thumb_func
 
-normalize_vec2f_asm:
+ne10_normalize_vec2f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t normalize_vec2f(arm_vec2f_t * dst,
+        @ arm_result_t ne10_normalize_vec2f(arm_vec2f_t * dst,
         @                 arm_vec2f_t * src, unsigned int count)
         @
         @  r0: *dst and current destination item's address
@@ -75,14 +75,14 @@ normalize_vec2f_asm:
 
 
         .balign   4
-        .global   normalize_vec3f_asm
+        .global   ne10_normalize_vec3f_asm
         .thumb
         .thumb_func
 
-normalize_vec3f_asm:
+ne10_normalize_vec3f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t normalize_vec3f(arm_vec3f_t * dst,
+        @ arm_result_t ne10_normalize_vec3f(arm_vec3f_t * dst,
         @                 arm_vec3f_t * src, unsigned int count)
         @
         @  r0: *dst and current destination item's address
@@ -119,14 +119,14 @@ normalize_vec3f_asm:
 
 
         .balign   4
-        .global   normalize_vec4f_asm
+        .global   ne10_normalize_vec4f_asm
         .thumb
         .thumb_func
 
-normalize_vec4f_asm:
+ne10_normalize_vec4f_asm:
         @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         @
-        @ arm_result_t normalize_vec4f(arm_vec4f_t * dst,
+        @ arm_result_t ne10_normalize_vec4f(arm_vec4f_t * dst,
         @                 arm_vec4f_t * src, unsigned int count)
         @
         @  r0: *dst and current destination item's address

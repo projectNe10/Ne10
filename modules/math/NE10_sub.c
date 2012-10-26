@@ -34,7 +34,7 @@
 
 #include <assert.h>
 
-ne10_result_t sub_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_sub_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count)
 {
     NE10_X_OPERATION_FLOAT_C
     (
@@ -42,7 +42,7 @@ ne10_result_t sub_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_flo
     );
 }
 
-ne10_result_t sub_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_sub_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count)
 {
     NE10_X_OPERATION_FLOAT_C
     (
@@ -51,7 +51,7 @@ ne10_result_t sub_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t
     );
 }
 
-ne10_result_t sub_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_sub_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count)
 {
     NE10_X_OPERATION_FLOAT_C
     (
@@ -61,7 +61,7 @@ ne10_result_t sub_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t
     );
 }
 
-ne10_result_t sub_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count)
+ne10_result_t ne10_sub_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count)
 {
     NE10_X_OPERATION_FLOAT_C
     (
