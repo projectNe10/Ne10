@@ -210,4 +210,74 @@ typedef struct
     ne10_cfft_radix4_instance_f32_t *p_cfft;         /**< Pointer to the complex FFT Instance. */
 } ne10_rfft_instance_f32_t;
 
+/////////////////////////////////////////////////////////
+// definitions for fir
+/////////////////////////////////////////////////////////
+
+/*
+ * @brief Instance structure for the floating-point FIR filter.
+ */
+typedef struct
+{
+    ne10_uint16_t numTaps;    /**< Length of the filter. */
+    ne10_float32_t *pState;    /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
+    ne10_float32_t *pCoeffs;   /**< Points to the coefficient array. The array is of length numTaps. */
+} ne10_fir_instance_f32_t;
+
+/*
+ * @brief Instance structure for the floating point FIR Lattice filter.
+ */
+typedef struct
+{
+    ne10_uint16_t numStages;    /**< numStages of the of lattice filter. */
+    ne10_float32_t *pState;      /**< Points to the state variable array. The array is of length numStages. */
+    ne10_float32_t *pCoeffs;     /**< Points to the coefficient array. The array is of length numStages. */
+} ne10_fir_lattice_instance_f32_t;
+
+/*
+ * @brief Instance structure for the floating-point FIR Decimation.
+ */
+typedef struct
+{
+    ne10_uint8_t  M;            /**< Decimation Factor. */
+    ne10_uint16_t numTaps;      /**< Length of the filter. */
+    ne10_float32_t    *pCoeffs;      /**< Points to the coefficient array. The array is of length numTaps.*/
+    ne10_float32_t    *pState;       /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
+} ne10_fir_decimate_instance_f32_t;
+
+/*
+ * @brief Instance structure for the floating-point FIR Interpolation.
+ */
+typedef struct
+{
+    ne10_uint8_t L;             /**< Interpolation Factor. */
+    ne10_uint16_t phaseLength;  /**< Length of each polyphase filter component. */
+    ne10_float32_t *pCoeffs;         /**< Points to the coefficient array. The array is of length numTaps.*/
+    ne10_float32_t *pState;          /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
+} ne10_fir_interpolate_instance_f32_t;
+
+/*
+ * @brief Instance structure for the floating-point FIR Sparse filter.
+ */
+typedef struct
+{
+    ne10_uint16_t numTaps;      /**< Length of the filter. */
+    ne10_uint16_t stateIndex;   /**< Index pointer for the state buffer .*/
+    ne10_float32_t *pState;          /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
+    ne10_float32_t *pCoeffs;         /**< Points to the coefficient array. The array is of length numTaps.*/
+    ne10_uint16_t  maxDelay;    /**< the largest number of delay line values .*/
+    ne10_int32_t  *pTapDelay;    /**< Pointer to the array containing positions of the non-zero tap values. */
+} ne10_fir_sparse_instance_f32_t;
+
+/**
+   * @brief Instance structure for the floating point IIR Lattice filter.
+   */
+typedef struct
+{
+    ne10_uint16_t numStages;    /**< numStages of the of lattice filter. */
+    ne10_float32_t *pState;      /**< Points to the state variable array. The array is of length numStages + blockSize -1. */
+    ne10_float32_t *pkCoeffs;    /**< Points to the reflection coefficient array. The array is of length numStages. */
+    ne10_float32_t *pvCoeffs;    /**< Points to the ladder coefficient array. The array is of length numStages+1. */
+} ne10_iir_lattice_instance_f32_t;
+
 #endif
