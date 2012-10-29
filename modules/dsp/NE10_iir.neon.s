@@ -25,6 +25,10 @@
 @  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @
 
+@
+@ Currently, this is for soft VFP EABI, not for hard vfpv3 ABI yet
+@
+
 @/*
 @ * NE10 Library : dsp/NE10_iir.neon.s
 @ */
