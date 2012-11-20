@@ -29,6 +29,12 @@
 @ * NE10 Library : dsp/NE10_cfft.neon.s
 @ */
 
+@/*
+@ * Note:
+@ * 1. Currently, this is for soft VFP EABI, not for hard vfpv3 ABI yet
+@ * 2. In the assembly code, we use D0-D31 registers. So VFPv3-D32 is used. In VFPv3-D16, there will be failure
+@ */
+
         .text
         .syntax   unified
 
@@ -49,8 +55,9 @@
 
 ne10_radix4_butterfly_float_neon:
 
-        PUSH    {r4-r12,lr}
+        PUSH    {r4-r11,lr}
         VPUSH   {d8-d15}
+        SUB     sp, sp, #4    @keep stack 8 bytes aligned
 
         qInp1   .qn Q0.F32
         qInp2   .qn Q1.F32
@@ -313,8 +320,9 @@ fftCopyLoop:
 
 fftEnd:
         @/* Retureq From Function*/
+        ADD     sp, sp, #4
         VPOP    {d8-d15}
-        POP     {r4-r12,pc}
+        POP     {r4-r11,pc}
 
         @/*
         @ * @brief  Core radix-4 IFFT of floating-point data.  Do not call this function directly.
@@ -333,8 +341,9 @@ fftEnd:
 
 ne10_radix4_butterfly_inverse_float_neon:
 
-        PUSH    {r4-r12,lr}
+        PUSH    {r4-r11,lr}
         VPUSH   {d8-d15}
+        SUB     sp, sp, #4    @keep stack 8 bytes aligned
 
         qInp1   .qn Q0.F32
         qInp2   .qn Q1.F32
@@ -716,8 +725,9 @@ ifftCopyLoop:
 
 ifftEnd:
         @/* Retureq From Function*/
+        ADD     sp, sp, #4
         VPOP    {d8-d15}
-        POP     {r4-r12,pc}
+        POP     {r4-r11,pc}
 
 
         .end

@@ -25,12 +25,14 @@
 @  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @
 
-@
-@ Currently, this is for soft VFP EABI, not for hard vfpv3 ABI yet
-@
-
 @/*
 @ * NE10 Library : dsp/NE10_iir.neon.s
+@ */
+
+@/*
+@ * Note:
+@ * 1. Currently, this is for soft VFP EABI, not for hard vfpv3 ABI yet
+@ * 2. In the assembly code, we use D0-D31 registers. So VFPv3-D32 is used. In VFPv3-D16, there will be failure
 @ */
 
 
@@ -38,7 +40,12 @@
         .syntax   unified
 
         @/**
+        @ *
         @ * @brief Processing function for the floating-point IIR lattice filter.
+        @ *
+        @ * when  tap > 16, you could get
+        @ * maximized improvement
+        @ *
         @ * @param[in] *S points to an instance of the floating-point IIR lattice structure.
         @ * @param[in] *pSrc points to the block of input data.
         @ * @param[out] *pDst points to the block of output data.
@@ -53,7 +60,9 @@
         .thumb_func
 
 ne10_iir_lattice_float_neon:
-                        PUSH    {r4-r12,lr}
+                        PUSH    {r4-r11,lr}
+                        VPUSH   {d8-d9}
+                        SUB     sp, sp, #4    @keep stack 8 bytes aligned
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -159,10 +168,10 @@ dGnext_1         .dn   D31.F32
 
                             @/*while blockSize > 0*/
                             CMP         blockSize, #0
-                            BEQ         firLatticeCopy
+                            BEQ         iirLatticeCopy
 
 
-firLatticeOuterLoop:
+iirLatticeOuterLoop:
                             VLD1        {dFcurr_0[],dFcurr_1[]},[pSrc]!
                             MOV         pX,pState
                             VEOR        qAcc0,qAcc0
@@ -176,10 +185,10 @@ firLatticeOuterLoop:
 
                             SUBS        tapCnt,numStages,#4
                             ADD         pV,pV,#4
-                            BLT         firLatticeEndInnerLoop
+                            BLT         iirLatticeEndInnerLoop
 
 
-firLatticeInnerLoop:
+iirLatticeInnerLoop:
 
 
 
@@ -219,8 +228,8 @@ firLatticeInnerLoop:
                             VLD1        {dCoeff0_0,dCoeff0_1},[pK]!
 
                             SUBS        tapCnt,#4
-                            BGE         firLatticeInnerLoop
-firLatticeEndInnerLoop:
+                            BGE         iirLatticeInnerLoop
+iirLatticeEndInnerLoop:
                             @/* If the filter length is not a multiple of 4, compute the remaining filter taps */
                             ADDS        tapCnt,#4
                             IT          GT
@@ -289,13 +298,13 @@ firLatticeEndInnerLoop:
 
                             SUBS        blockSize,#1
 
-                            BGT         firLatticeOuterLoop
+                            BGT         iirLatticeOuterLoop
 
 
                             @/* copy last S->numStages samples to start of the buffer
                             @for next frame process */
 
-firLatticeCopy:
+iirLatticeCopy:
                             AND         mask,numStages,#3
                             ADD         pTemp,pMask,mask,LSL #4
                             LDR         pX,[pStateStruct,#-12]
@@ -303,13 +312,13 @@ firLatticeCopy:
                             VLD1        {dFcurr_0,dFcurr_1},[pState]!
                             VLD1        {dMask_0,dMask_1},[pTemp]
                             SUBS        tapCnt,numStages,#4
-                            BLT         firLatticeEnd
-firLatticeCopyLoop:
+                            BLT         iirLatticeEnd
+iirLatticeCopyLoop:
                             VST1        {dFcurr_0,dFcurr_1},[pX]!
                             SUBS        tapCnt,#4
                             VLD1        {dFcurr_0,dFcurr_1},[pState]!
-                            BGE         firLatticeCopyLoop
-firLatticeEnd:
+                            BGE         iirLatticeCopyLoop
+iirLatticeEnd:
                             VLD1        {dTemp_0,dTemp_1},[pX]
                             VBSL        qMask,qFcurr,qTemp
                             VST1        {dOut_0,dOut_1},[pX]
@@ -385,7 +394,8 @@ firLatticeEnd:
 .unreq    qGnext
 .unreq    dGnext_0
 .unreq    dGnext_1
-
-                            POP         {r4-r12,pc}
+                            ADD     sp, sp, #4
+                            VPOP    {d8-d9}
+                            POP     {r4-r11,pc}
 
         .end
