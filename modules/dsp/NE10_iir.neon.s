@@ -60,9 +60,8 @@
         .thumb_func
 
 ne10_iir_lattice_float_neon:
-                        PUSH    {r4-r11,lr}
+                        PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
                         VPUSH   {d8-d9}
-                        SUB     sp, sp, #4    @keep stack 8 bytes aligned
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -394,8 +393,7 @@ iirLatticeEnd:
 .unreq    qGnext
 .unreq    dGnext_0
 .unreq    dGnext_1
-                            ADD     sp, sp, #4
                             VPOP    {d8-d9}
-                            POP     {r4-r11,pc}
+                            POP     {r4-r12,pc}
 
         .end

@@ -55,9 +55,8 @@
 
 ne10_radix4_butterfly_float_neon:
 
-        PUSH    {r4-r11,lr}
+        PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
         VPUSH   {d8-d15}
-        SUB     sp, sp, #4    @keep stack 8 bytes aligned
 
         qInp1   .qn Q0.F32
         qInp2   .qn Q1.F32
@@ -320,9 +319,8 @@ fftCopyLoop:
 
 fftEnd:
         @/* Retureq From Function*/
-        ADD     sp, sp, #4
         VPOP    {d8-d15}
-        POP     {r4-r11,pc}
+        POP     {r4-r12,pc}
 
         @/*
         @ * @brief  Core radix-4 IFFT of floating-point data.  Do not call this function directly.
@@ -341,9 +339,8 @@ fftEnd:
 
 ne10_radix4_butterfly_inverse_float_neon:
 
-        PUSH    {r4-r11,lr}
+        PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
         VPUSH   {d8-d15}
-        SUB     sp, sp, #4    @keep stack 8 bytes aligned
 
         qInp1   .qn Q0.F32
         qInp2   .qn Q1.F32
@@ -664,6 +661,8 @@ ifftLastStageSetLoop:
         VDUP.S32      q8,grpCount
         VCVT.F32.S32  q8,  q8
         VRECPE.F32    q8,  q8
+        @LDR           grpCount,[sp,#0]          @revert the original value
+        @VDUP.f32      q8,grpCount
 
         VMUL    qInp1,qInp1,qRe1
         VMUL    qInp2,qInp2,qRe1
@@ -725,9 +724,8 @@ ifftCopyLoop:
 
 ifftEnd:
         @/* Retureq From Function*/
-        ADD     sp, sp, #4
         VPOP    {d8-d15}
-        POP     {r4-r11,pc}
+        POP     {r4-r12,pc}
 
 
         .end

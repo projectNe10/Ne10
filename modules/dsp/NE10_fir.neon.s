@@ -66,8 +66,7 @@
         .thumb_func
 
 ne10_fir_float_neon:
-                    PUSH    {r4-r11,lr}
-                    SUB     sp, sp, #4    @keep stack 8 bytes aligned
+                    PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
 @/*ARM Registers*/
 pStateStruct     .req   R0
 pSrc             .req   R1
@@ -347,8 +346,7 @@ firEnd:
                     ADD         pStateCurnt,pStateCurnt,mask, LSL #2
 
                     @/*Return From Function*/
-                    ADD     sp, sp, #4
-                    POP     {r4-r11,pc}
+                    POP     {r4-r12,pc}
 @/*ARM Registers*/
 .unreq    pStateStruct
 .unreq    pSrc
@@ -439,9 +437,8 @@ firEnd:
 
 ne10_fir_decimate_float_neon:
 
-                            PUSH    {r4-r11,lr}
+                            PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
                             VPUSH   {d8-d9}
-                            SUB     sp, sp, #4    @keep stack 8 bytes aligned
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -762,9 +759,8 @@ firDecimateEnd:
                     ADD         pX,pX,mask, LSL #2
 
                     @// Return From Function
-                    ADD     sp, sp, #4
                     VPOP    {d8-d9}
-                    POP     {r4-r11,pc}
+                    POP     {r4-r12,pc}
 
 @/*ARM Registers*/
 .unreq    pStateStruct
@@ -874,8 +870,7 @@ firDecimateEnd:
         .thumb_func
 
 ne10_fir_interpolate_float_neon:
-                            PUSH    {r4-r11,lr}
-                            SUB     sp, sp, #4    @keep stack 8 bytes aligned
+                            PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
 
 
 @/*ARM Registers*/
@@ -1165,8 +1160,7 @@ firInterpolateEnd:
                     ADD         pStateCurnt,pStateCurnt,mask, LSL #2
 
                     @/*Return From Function*/
-                    ADD     sp, sp, #4
-                    POP     {r4-r11,pc}
+                    POP     {r4-r12,pc}
 @/*ARM Registers*/
 .unreq    pStateStruct
 .unreq    pSrc
@@ -1265,8 +1259,7 @@ firInterpolateEnd:
 
 ne10_fir_lattice_float_neon:
 
-                        PUSH    {r4-r11,lr}
-                        SUB     sp, sp, #4    @keep stack 8 bytes aligned
+                        PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -1553,8 +1546,7 @@ firLatticeEndinnerLoop1:
 
 firLatticeEnd:
                             @/*Return From Function*/
-                            ADD     sp, sp, #4
-                            POP     {r4-r11,pc}
+                            POP     {r4-r12,pc}
 
 @/*ARM Registers*/
 .unreq    pStateStruct
