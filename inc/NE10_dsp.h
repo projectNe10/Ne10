@@ -54,7 +54,8 @@ extern void (*ne10_radix4_butterfly_float)(ne10_float32_t *pDst,
 extern void (*ne10_radix4_butterfly_inverse_float)(ne10_float32_t *pDst,
                      ne10_float32_t *pSrc,
                      ne10_uint16_t N,
-                     ne10_float32_t *pCoef);
+                     ne10_float32_t *pCoef,
+                     ne10_float32_t onebyN);
 
 extern void (*ne10_rfft_float)(const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
@@ -78,7 +79,8 @@ extern void ne10_radix4_butterfly_float_c(ne10_float32_t *pDst,
 extern void ne10_radix4_butterfly_inverse_float_c(ne10_float32_t *pDst,
                      ne10_float32_t *pSrc,
                      ne10_uint16_t N,
-                     ne10_float32_t *pCoef);
+                     ne10_float32_t *pCoef,
+                     ne10_float32_t onebyN);
 
 extern void ne10_rfft_float_c(const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,
@@ -95,7 +97,8 @@ extern void ne10_radix4_butterfly_float_neon(ne10_float32_t *pDst,
 extern void ne10_radix4_butterfly_inverse_float_neon(ne10_float32_t *pDst,
                      ne10_float32_t *pSrc,
                      ne10_uint16_t N,
-                     ne10_float32_t *pCoef);
+                     ne10_float32_t *pCoef,
+                     ne10_float32_t onebyN);
 
 extern void ne10_rfft_float_neon(const ne10_rfft_instance_f32_t * S,
                      ne10_float32_t * pSrc,

@@ -29,6 +29,12 @@
 @ * NE10 Library : dsp/NE10_cfft.neon.s
 @ */
 
+@/*
+@ * Note:
+@ * 1. Currently, this is for soft VFP EABI, not for hard vfpv3 ABI yet
+@ * 2. In the assembly code, we use D0-D31 registers. So VFPv3-D32 is used. In VFPv3-D16, there will be failure
+@ */
+
         .text
         .syntax   unified
 
@@ -49,7 +55,7 @@
 
 ne10_radix4_butterfly_float_neon:
 
-        PUSH    {r4-r12,lr}
+        PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
         VPUSH   {d8-d15}
 
         qInp1   .qn Q0.F32
@@ -322,6 +328,7 @@ fftEnd:
         @ * @param[in]  *pSrc             points to the input buffer
         @ * @param[in]  N                 length of FFT
         @ * @param[in]  *pCoef            points to the twiddle factors
+        @ * @param[in]  onebyN            reciprocal of FFT length
         @ * @retureq none.
         @ * The function implements a Radix-4 Complex FFT
         @ */
@@ -333,7 +340,7 @@ fftEnd:
 
 ne10_radix4_butterfly_inverse_float_neon:
 
-        PUSH    {r4-r12,lr}
+        PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
         VPUSH   {d8-d15}
 
         qInp1   .qn Q0.F32
@@ -651,10 +658,8 @@ ifftLastStageSetLoop:
         VSUB    qInp8,qIm2,qRe4
 
         @/* multiply onebyN */
-        ASR           grpCount,fftSize,#1          @revert the original value
-        VDUP.S32      q8,grpCount
-        VCVT.F32.S32  q8,  q8
-        VRECPE.F32    q8,  q8
+        LDR           grpCount,[sp,#104]          @revert the original value
+        VDUP.f32      q8,grpCount
 
         VMUL    qInp1,qInp1,qRe1
         VMUL    qInp2,qInp2,qRe1

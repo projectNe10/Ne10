@@ -270,7 +270,8 @@ void ne10_radix4_butterfly_inverse_float_c(
                      ne10_float32_t *pDst,
                      ne10_float32_t *pSrc,
                      ne10_uint16_t N,
-                     ne10_float32_t *pCoef)
+                     ne10_float32_t *pCoef,
+                     ne10_float32_t onebyN)
 {
     ne10_int32_t     set,grp;
     ne10_int32_t     setCount,grpCount,grpStep,twidStep;
@@ -283,7 +284,7 @@ void ne10_radix4_butterfly_inverse_float_c(
     ne10_float32_t       TwRe2,TwIm2,TwRe3,TwIm3,TwRe4,TwIm4;
     ne10_float32_t       ReTmpT2,ImTmpT2,ReTmpT3,ImTmpT3,ReTmpT4,ImTmpT4;
     ne10_int32_t     InpStep=(N>>2),OutStep=1;
-    ne10_float32_t onebyN = (ne10_float32_t)1/N;
+
     /*First stage*/
     grpCount = SubFFTNum;
     pT1 = pSrc;

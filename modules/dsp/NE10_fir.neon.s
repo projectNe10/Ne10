@@ -25,14 +25,15 @@
 @  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 @
 
-@
-@ Currently, this is for soft VFP EABI, not for hard vfpv3 ABI yet
-@
-
 @/*
 @ * NE10 Library : dsp/NE10_fir.neon.s
 @ */
 
+@/*
+@ * Note:
+@ * 1. Currently, this is for soft VFP EABI, not for hard vfpv3 ABI yet
+@ * 2. In the assembly code, we use D0-D31 registers. So VFPv3-D32 is used. In VFPv3-D16, there will be failure
+@ */
 
         .text
         .syntax   unified
@@ -49,6 +50,9 @@
         @ *
         @ * <code>45 + 8 * numTaps + 12.25 * blockSize + 4.375 * numTaps * blockSize</code>
         @ *
+        @ * when the block size > 32, the tap is > 4, you could get
+        @ * maximized improvement
+        @ *
         @ * @param[in]  *S                points to struct parameter
         @ * @param[in]  *pSrc             points to the input buffer
         @ * @param[out]  *pDst            points to the output buffer
@@ -62,7 +66,7 @@
         .thumb_func
 
 ne10_fir_float_neon:
-                    PUSH    {r4-r12,lr}
+                    PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
 @/*ARM Registers*/
 pStateStruct     .req   R0
 pSrc             .req   R1
@@ -120,6 +124,9 @@ qMaskTmp         .qn   Q14.U32
 dMaskTmp_0       .dn   D28.U32
 dMaskTmp_1       .dn   D29.U32
 
+qAcc1            .qn   Q3.F32
+qAcc2            .qn   Q13.F32
+qAcc3            .qn   Q15.F32
 
 
 
@@ -186,35 +193,40 @@ firOuterLoop:
                     BLT         firEndInnerLoop
 
 firInnerLoop:
-
-
                     VEXT        qTemp1,qInp,qTemp,#1
                     @/* acc0 +=  b[numTaps] * x[n-numTaps-1]+ b[numTaps] * x[n-numTaps-2] +
                     @* b[numTaps] * x[n-numTaps-3] +  b[numTaps] * x[n-numTaps-4]*/
                     VMLA        qAcc0,qInp,dCoeff_0[0]
-                    VEXT        qTemp2,qInp,qTemp,#2
                     @/* acc1 +=  b[numTaps-1] * x[n-numTaps-2]+ b[numTaps-1] * x[n-numTaps-3] +
                     @b[numTaps-1] * x[n-numTaps-4] +*b[numTaps-1] * x[n-numTaps-5]*/
-                    VMLA        qAcc0,qTemp1,dCoeff_0[1]
-                    VEXT        qTemp3,qInp,qTemp,#3
+                    VMUL        qAcc1,qTemp1,dCoeff_0[1]
+
+                    VEXT        qTemp2,qInp,qTemp,#2
                     @/* acc2 +=  b[numTaps-2] * x[n-numTaps-3]+ b[numTaps-2] * x[n-numTaps-4] +
                     @b[numTaps-2] * x[n-numTaps-5] + *b[numTaps-2] * x[n-numTaps-6]*/
-                    @//vacc0q_f32 = vmlaq_lane_f32(vacc0q_f32,vxtemp2q_f32,vget_high_f32(vcq_f32),0)@
-                    VMLA        qAcc0,qTemp2,dCoeff_1[0]
-                    VMOV        qInp,qTemp
+                    VMUL        qAcc2,qTemp2,dCoeff_1[0]
+                    VADD        qAcc0, qAcc0, qAcc1
+
+                    VEXT        qTemp3,qInp,qTemp,#3
                     @/* acc3 +=  b[numTaps-3] * x[n-numTaps-4]+ b[numTaps-3] * x[n-numTaps-5] +
                     @b[numTaps-3] * x[n-numTaps-6] +*b[numTaps-3] * x[n-numTaps-7]  */
+                    VMUL        qAcc3,qTemp3,dCoeff_1[1]
+                    VADD        qAcc0, qAcc0, qAcc2
 
-                    VMLA        qAcc0,qTemp3,dCoeff_1[1]
+                    VMOV        qInp,qTemp
+                    VLD1        {dTemp_0,dTemp_1},[pX]!
+                    VADD        qAcc0, qAcc0, qAcc3
 
+                    SUBS        tapCnt,#4
                     @/* Read the b[numTaps-4] to b[numTaps-7]  coefficients */
                     VLD1        {dCoeff_0,dCoeff_1},[pB]!
-                    SUBS        tapCnt,#4
-                    VLD1        {dTemp_0,dTemp_1},[pX]!
+
 
                     BGE         firInnerLoop
 firEndInnerLoop:
 
+                    ADDS        tapCnt, tapCnt, #4
+                    BEQ         firStoreOutput
 
                     @/* If the filter length is not a multiple of 4, compute the remaining filter taps */
                     @/*Select only the remaining filter Taps*/
@@ -224,13 +236,11 @@ firEndInnerLoop:
                     VMLA        qAcc0,qInp,dOut_0[0]
                     VEXT        qTemp2,qInp,qTemp,#2
                     VMLA        qAcc0,qTemp1,dOut_0[1]
-                    VEXT        qTemp3,qInp,qTemp,#3
                     VMLA        qAcc0,qTemp2,dOut_1[0]
+
+firStoreOutput:
                     @/* Advance the state pointer by 4 to process the next group of 4 samples */
                     ADD         pState,#16
-
-                    VMLA        qAcc0,qTemp3,dOut_1[1]
-
 
                     @/* The results in the 4 accumulators are in 2.30 format.  Convert to 1.31
                     @ * Then store the 4 outputs in the destination buffer. */
@@ -290,11 +300,9 @@ firEndInnerLoop1:
                     VMLA        qAcc0,qInp,dOut_0[0]
                     VEXT        qTemp2,qInp,qTemp,#2
                     VMLA        qAcc0,qTemp1,dOut_0[1]
-                    VEXT        qTemp3,qInp,qTemp,#3
                     VMLA        qAcc0,qTemp2,dOut_1[0]
                     VMOV        qMask,qMask1
                     VLD1        {dTemp_0,dTemp_1},[pDst]
-                    VMLA        qAcc0,qTemp3,dOut_1[1]
 
 
                     @/* If the blockSize is not a multiple of 4, Mask the unwanted Output */
@@ -395,6 +403,10 @@ firEnd:
 .unreq    dMaskTmp_0
 .unreq    dMaskTmp_1
 
+.unreq    qAcc1
+.unreq    qAcc2
+.unreq    qAcc3
+
         @/**
         @ * @details
         @ * This function operates on floating-point data types.
@@ -406,6 +418,9 @@ firEnd:
         @ * <b>Cycle Count:</b>
         @ *
         @ * <code> Co + C1 * numTaps + C3 * blockSize * decimation Factor + c4 * numTaps * blockSize</code>
+        @ *
+        @ * when the block size > 32, the tap > 4, you could get
+        @ * maximized improvement
         @ *
         @ * @param[in]  *S                points to struct parameter
         @ * @param[in]  *pSrc             points to the input buffer
@@ -422,7 +437,8 @@ firEnd:
 
 ne10_fir_decimate_float_neon:
 
-                            PUSH    {r4-r12,lr}
+                            PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
+                            VPUSH   {d8-d9}
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -743,6 +759,7 @@ firDecimateEnd:
                     ADD         pX,pX,mask, LSL #2
 
                     @// Return From Function
+                    VPOP    {d8-d9}
                     POP     {r4-r12,pc}
 
 @/*ARM Registers*/
@@ -835,6 +852,9 @@ firDecimateEnd:
         @ *
         @ * <b>Cycle Count:</b>
         @ *
+        @ * when the S->tapnumTaps/S->L is big , you could get
+        @ * maximized improvement
+        @ *
         @ * <code> C0 + C2 * blockSize + C3 * blockSize * interpolateFactor + C4 * numTaps * blockSize * interpolateFactor </code>
         @ *
         @ * @param[in]  *S                points to struct parameter
@@ -850,7 +870,7 @@ firDecimateEnd:
         .thumb_func
 
 ne10_fir_interpolate_float_neon:
-                            PUSH    {r4-r12,lr}
+                            PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
 
 
 @/*ARM Registers*/
@@ -1220,6 +1240,9 @@ firInterpolateEnd:
         @ *
         @ * <b>Cycle Count:</b>
         @ *
+        @ * when the block size >= 32, the tap is little, you could get
+        @ * maximized improvement
+        @ *
         @ * <code>c0 + c1 * blockSize + c2 * numStages * blockSize</code>
         @ *
         @ * @param[in]  *S                points to struct parameter
@@ -1236,7 +1259,7 @@ firInterpolateEnd:
 
 ne10_fir_lattice_float_neon:
 
-                        PUSH    {r4-r12,lr}
+                        PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -1522,7 +1545,7 @@ firLatticeEndinnerLoop1:
                             BGT         firLatticeOuterLoop1
 
 firLatticeEnd:
-                             @/*Return From Function*/
+                            @/*Return From Function*/
                             POP     {r4-r12,pc}
 
 @/*ARM Registers*/
@@ -1604,9 +1627,8 @@ firLatticeEnd:
         @ *
         @ * <code> C0 * blockSize + C1 * numTaps + C2 * numTaps * blockSize</code>
         @ *
-        @ * <b>Cycle Count:</b>
-        @ *
-        @ * <code> C0 + C2 * blockSize + C3 * blockSize * interpolateFactor + C4 * numTaps * blockSize * interpolateFactor </code>
+        @ * when the block size >= 32, you could get
+        @ * maximized improvement
         @ *
         @ * @param[in]  *S                points to struct parameter
         @ * @param[in]  *pSrc             points to the input buffer
@@ -1622,9 +1644,8 @@ firLatticeEnd:
         .thumb_func
 
 ne10_fir_sparse_float_neon:
-                            PUSH    {r4-r12,lr}
-                            @ save the point of struct to stack for stateIndex update
-                            PUSH    {r0}
+                            @ save the point of struct(r0) to stack for stateIndex update
+                            PUSH    {r0,r4-r11,lr}
 
 @/*ARM Registers*/
 pStateStruct     .req   R0
@@ -1680,19 +1701,19 @@ dMask_0          .dn   D6.U32
 dMask_1          .dn   D7.U32
 
 
-qAcc0            .qn   Q4.F32
-dAcc0_0          .dn   D8.F32
-dAcc0_1          .dn   D9.F32
+qAcc0            .qn   Q8.F32
+dAcc0_0          .dn   D16.F32
+dAcc0_1          .dn   D17.F32
 
 
-qTemp            .qn   Q8.F32
-dTemp_0          .dn   D16.F32
-dTemp_1          .dn   D17.F32
+qTemp            .qn   Q9.F32
+dTemp_0          .dn   D18.F32
+dTemp_1          .dn   D19.F32
 
 
-qMaskTmp         .qn   Q9.U32
-dMaskTmp_0       .dn   D18.U32
-dMaskTmp_1       .dn   D19.U32
+qMaskTmp         .qn   Q10.U32
+dMaskTmp_0       .dn   D20.U32
+dMaskTmp_1       .dn   D21.U32
 
 
                     /*Load Mask Table*/
@@ -1705,7 +1726,7 @@ dMaskTmp_1       .dn   D19.U32
                     LDR         pTapDelay,[pStateStruct],#4
 
                     @// Load blockSize from Stack
-                    LDR         blockSize,[SP,#44]
+                    LDR         blockSize,[SP,#40]
                     LDR         pMask,=ne10_qMaskTable32
                     ADD         delaySize,blockSize,maxDelay
 
@@ -1782,7 +1803,7 @@ firSparseEndcopy2:
 
 
                     @// Load blockSize from Stack
-                    LDR         blockSize,[SP,#44]
+                    LDR         blockSize,[SP,#40]
 
 
                     MOV         pOut,pDst
@@ -1825,7 +1846,7 @@ firSparseEndInnerLoop:
 firSparseOuterLoop:
 
                     @// Load blockSize from Stack
-                    LDR         blockSize,[SP,#44]
+                    LDR         blockSize,[SP,#40]
 
                     MOV         pY,pState
                     MOV         pX,pScratch
@@ -1859,7 +1880,7 @@ firSparseCopy4:
 firSparseEndcopy4:
 
                     @// Load blockSize from Stack
-                    LDR         blockSize,[SP,#44]
+                    LDR         blockSize,[SP,#40]
 
 
                     MOV         pOut,pDst
@@ -1905,8 +1926,7 @@ firSparseEndInnerLoop1:
                     BGT         firSparseOuterLoop
 firSparseEnd:
                     @// Return From Function
-                    POP     {r0}
-                    POP     {r4-r12,pc}
+                    POP     {r0,r4-r11,pc}
 
 @/*ARM Registers*/
 .unreq    pStateStruct
