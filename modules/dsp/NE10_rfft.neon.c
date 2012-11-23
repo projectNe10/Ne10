@@ -486,7 +486,7 @@ void ne10_rfft_float_neon(
         ne10_split_rifft_float_neon(pSrc, S->fft_len_real, S->p_twiddle_A_real,
                 S->p_twiddle_B_real, pTemp);
         /* Complex radix-4 IFFT process */
-        ne10_radix4_butterfly_inverse_float_neon(pDst, pTemp, S_CFFT->fft_len, S_CFFT->p_twiddle);
+        ne10_radix4_butterfly_inverse_float_neon(pDst, pTemp, S_CFFT->fft_len, S_CFFT->p_twiddle, S_CFFT->one_by_fft_len);
     }
     else
     {
