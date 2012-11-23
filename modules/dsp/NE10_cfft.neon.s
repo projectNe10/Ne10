@@ -328,6 +328,7 @@ fftEnd:
         @ * @param[in]  *pSrc             points to the input buffer
         @ * @param[in]  N                 length of FFT
         @ * @param[in]  *pCoef            points to the twiddle factors
+        @ * @param[in]  onebyN            reciprocal of FFT length
         @ * @retureq none.
         @ * The function implements a Radix-4 Complex FFT
         @ */
@@ -657,12 +658,8 @@ ifftLastStageSetLoop:
         VSUB    qInp8,qIm2,qRe4
 
         @/* multiply onebyN */
-        ASR           grpCount,fftSize,#1          @revert the original value
-        VDUP.S32      q8,grpCount
-        VCVT.F32.S32  q8,  q8
-        VRECPE.F32    q8,  q8
-        @LDR           grpCount,[sp,#0]          @revert the original value
-        @VDUP.f32      q8,grpCount
+        LDR           grpCount,[sp,#104]          @revert the original value
+        VDUP.f32      q8,grpCount
 
         VMUL    qInp1,qInp1,qRe1
         VMUL    qInp2,qInp2,qRe1
