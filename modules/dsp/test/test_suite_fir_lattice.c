@@ -76,35 +76,40 @@ static ne10_float32_t time_savings = 0.0f;
 /* ----------------------------------------------------------------------
 ** Coefficients of 9-tap filter
 ** ------------------------------------------------------------------- */
-static ne10_float32_t testCoeffs9_f32[9] = {
--0.954402,    -0.250769,    0.265646,    0.605696,    1.809474,    -1.971027,    -0.923924,    -4.488990,
-0.833201
+static ne10_float32_t testCoeffs9_f32[9] =
+{
+    -0.954402,    -0.250769,    0.265646,    0.605696,    1.809474,    -1.971027,    -0.923924,    -4.488990,
+    0.833201
 };
 
 
 /* ----------------------------------------------------------------------
 ** Coefficients of 7-tap filter
 ** ------------------------------------------------------------------- */
-static ne10_float32_t testCoeffs7_f32[7] = {
--0.065427,    0.109759,    0.235029,    0.246238,    0.164377,    0.061674,    0.017830
+static ne10_float32_t testCoeffs7_f32[7] =
+{
+    -0.065427,    0.109759,    0.235029,    0.246238,    0.164377,    0.061674,    0.017830
 };
 
 /* ----------------------------------------------------------------------
 ** Coefficients of 32-tap filter
 ** ------------------------------------------------------------------- */
-static ne10_float32_t testCoeffs31_f32[31] = {
--0.741096,    -0.137409,    -0.328637,    -0.562875,    -0.325412,    -0.576636,    -0.131379,    -0.274755,
--0.558034,    -1.856812,    1.793911,    0.782613,    -0.577362,    2.154587,    1.501139,    -0.361869,
-1.423258,    0.737657,    -0.757648,    -2.062143,    1.221977,    6.311065,    -1.170156,    0.328045,
-0.580640,    0.835362,    -0.864583,    -6.735667,    0.471679,    -1.376339,    1.530487
+static ne10_float32_t testCoeffs31_f32[31] =
+{
+    -0.741096,    -0.137409,    -0.328637,    -0.562875,    -0.325412,    -0.576636,    -0.131379,    -0.274755,
+    -0.558034,    -1.856812,    1.793911,    0.782613,    -0.577362,    2.154587,    1.501139,    -0.361869,
+    1.423258,    0.737657,    -0.757648,    -2.062143,    1.221977,    6.311065,    -1.170156,    0.328045,
+    0.580640,    0.835362,    -0.864583,    -6.735667,    0.471679,    -1.376339,    1.530487
 };
 
 /* ----------------------------------------------------------------------
 ** Coefficients of 14-tap filter
 ** ------------------------------------------------------------------- */
-static ne10_float32_t testCoeffs14_f32[14] = {
-4.146424,    -1.367689,    -1.247910,    1.186711,    2.587415,    -0.442874,    -0.400162,    -1.183718,
--2.242936,    2.275107,    1.522946,    -1.355056,    1.683295,    1.283139};
+static ne10_float32_t testCoeffs14_f32[14] =
+{
+    4.146424,    -1.367689,    -1.247910,    1.186711,    2.587415,    -0.442874,    -0.400162,    -1.183718,
+    -2.242936,    2.275107,    1.522946,    -1.355056,    1.683295,    1.283139
+};
 
 /* ----------------------------------------------------------------------
 ** Test input data for F32
@@ -113,7 +118,7 @@ static ne10_float32_t testCoeffs14_f32[14] = {
 
 static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 {
-      -0.432565,    -1.665584,    0.125332,    0.287676,    -1.146471,    1.190915,    1.189164,    -0.037633,
+    -0.432565,    -1.665584,    0.125332,    0.287676,    -1.146471,    1.190915,    1.189164,    -0.037633,
     0.327292,    0.174639,    -0.186709,    0.725791,    -0.588317,    2.183186,    -0.136396,    0.113931,
     1.066768,    0.059281,    -0.095648,    -0.832349,    0.294411,    -1.336182,    0.714325,    1.623562,
     -0.691776,    0.857997,    1.254001,    -1.593730,    -1.440964,    0.571148,    -0.399886,    0.689997,
@@ -161,36 +166,38 @@ static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 ** ------------------------------------------------------------------- */
 typedef struct
 {
-  ne10_uint32_t blockSize;
-  ne10_uint32_t numTaps;
-  ne10_uint32_t numFrames;
-  ne10_float32_t *coeffsF32;
-  ne10_float32_t *inputF32;
+    ne10_uint32_t blockSize;
+    ne10_uint32_t numTaps;
+    ne10_uint32_t numFrames;
+    ne10_float32_t *coeffsF32;
+    ne10_float32_t *inputF32;
 } test_config;
 
 /* All Test configurations, 100% Code Coverage */
-static test_config CONFIG[] = {
-                     {2, 31, 160, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {32, 9, 10, &testCoeffs9_f32[0], &testInput_f32[0]},
-                     {5, 31, 64, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {32, 9, 10, &testCoeffs9_f32[0], &testInput_f32[0]},
-                     {5, 31, 64, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {32, 14, 10, &testCoeffs14_f32[0], &testInput_f32[0]},
-                     {32, 31, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {2, 1, 160, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {32, 1, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {32, 7, 10, &testCoeffs7_f32[0], &testInput_f32[0]},
-                     {64, 7, 5, &testCoeffs7_f32[0], &testInput_f32[0]},
-                     {64, 9, 5, &testCoeffs9_f32[0], &testInput_f32[0]},
-                     {64, 3, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {64, 1, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     };
-static test_config CONFIG_PERF[] = {
-                     {32, 3, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {32, 1, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {64, 3, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     {64, 1, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
-                     };
+static test_config CONFIG[] =
+{
+    {2, 31, 160, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {32, 9, 10, &testCoeffs9_f32[0], &testInput_f32[0]},
+    {5, 31, 64, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {32, 9, 10, &testCoeffs9_f32[0], &testInput_f32[0]},
+    {5, 31, 64, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {32, 14, 10, &testCoeffs14_f32[0], &testInput_f32[0]},
+    {32, 31, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {2, 1, 160, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {32, 1, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {32, 7, 10, &testCoeffs7_f32[0], &testInput_f32[0]},
+    {64, 7, 5, &testCoeffs7_f32[0], &testInput_f32[0]},
+    {64, 9, 5, &testCoeffs9_f32[0], &testInput_f32[0]},
+    {64, 3, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {64, 1, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
+};
+static test_config CONFIG_PERF[] =
+{
+    {32, 3, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {32, 1, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {64, 3, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
+    {64, 1, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
+};
 
 #define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
@@ -222,23 +229,23 @@ void test_fir_lattice_case0()
     NE10_DST_ALLOC (out_neon, guarded_out_neon, TEST_LENGTH_SAMPLES);
 
     /* init state memory */
-    NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_NUMTAPS+MAX_BLOCKSIZE);
-    NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_NUMTAPS+MAX_BLOCKSIZE);
+    NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_NUMTAPS + MAX_BLOCKSIZE);
+    NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_NUMTAPS + MAX_BLOCKSIZE);
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
         config = &CONFIG[loop];
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_lattice_init_float(&SC, config->numTaps, config->coeffsF32, fir_state_c);
-        status_neon = ne10_fir_lattice_init_float(&SN, config->numTaps, config->coeffsF32, fir_state_neon);
+        status_c = ne10_fir_lattice_init_float (&SC, config->numTaps, config->coeffsF32, fir_state_c);
+        status_neon = ne10_fir_lattice_init_float (&SN, config->numTaps, config->coeffsF32, fir_state_neon);
 
-        if (((status_c==NE10_ERR) || (status_neon==NE10_ERR)))
+        if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
-            fprintf(stdout, "initialization error\n");
+            fprintf (stdout, "initialization error\n");
         }
         /* copy input to input buffer */
-        for(i=0; i < TEST_LENGTH_SAMPLES; i++)
+        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -249,30 +256,30 @@ void test_fir_lattice_case0()
 
         for (block = 0; block < config->numFrames; block++)
         {
-            ne10_fir_lattice_float_c(&SC, in_c + (block*config->blockSize), out_c + (block * config->blockSize), config->blockSize);
+            ne10_fir_lattice_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize), config->blockSize);
         }
         for (block = 0; block < config->numFrames; block++)
         {
-            ne10_fir_lattice_float_neon(&SN, in_neon + (block*config->blockSize), out_neon + (block * config->blockSize), config->blockSize);
+            ne10_fir_lattice_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), config->blockSize);
         }
 
         CHECK_ARRAY_GUARD (out_c, TEST_LENGTH_SAMPLES);
         CHECK_ARRAY_GUARD (out_neon, TEST_LENGTH_SAMPLES);
 
         //conformance test 1: compare snr
-        snr = CAL_SNR_FLOAT32(out_c, out_neon, TEST_LENGTH_SAMPLES);
-        assert_false((snr < SNR_THRESHOLD));
+        snr = CAL_SNR_FLOAT32 (out_c, out_neon, TEST_LENGTH_SAMPLES);
+        assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
 #if defined (DEBUG_TRACE)
-        printf("--------------------config %d\n", loop);
-        printf("snr %f\n", snr);
+        printf ("--------------------config %d\n", loop);
+        printf ("snr %f\n", snr);
 #endif
         for (pos = 0; pos < TEST_LENGTH_SAMPLES; pos++)
         {
 #if defined (DEBUG_TRACE)
-            printf("pos %d \n", pos);
-            printf("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos],*(unsigned int*)&out_c[pos], out_neon[pos], *(unsigned int*)&out_neon[pos]);
+            printf ("pos %d \n", pos);
+            printf ("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos], * (ne10_uint32_t*) &out_c[pos], out_neon[pos], * (ne10_uint32_t*) &out_neon[pos]);
 #endif
             assert_float_vec_equal (&out_c[pos], &out_neon[pos], ERROR_MARGIN_SMALL, 1);
         }
@@ -287,43 +294,51 @@ void test_fir_lattice_case0()
         config = &CONFIG_PERF[loop];
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_lattice_init_float(&SC, config->numTaps, config->coeffsF32, fir_state_c);
-        status_neon = ne10_fir_lattice_init_float(&SN, config->numTaps, config->coeffsF32, fir_state_neon);
+        status_c = ne10_fir_lattice_init_float (&SC, config->numTaps, config->coeffsF32, fir_state_c);
+        status_neon = ne10_fir_lattice_init_float (&SN, config->numTaps, config->coeffsF32, fir_state_neon);
 
-        if (((status_c==NE10_ERR) || (status_neon==NE10_ERR)))
+        if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
-            fprintf(stdout, "initialization error\n");
+            fprintf (stdout, "initialization error\n");
         }
 
         /* copy input to input buffer */
-        for(i=0; i < TEST_LENGTH_SAMPLES; i++)
+        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
         }
 
-        GET_TIME (time_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (block = 0; block < config->numFrames; block++)
                 {
-                    for (block = 0; block < config->numFrames; block++)
-                    {
-                        ne10_fir_lattice_float_c(&SC, in_c + (block*config->blockSize), out_c + (block * config->blockSize), config->blockSize);
-                    }
+                    ne10_fir_lattice_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize), config->blockSize);
                 }
+            }
+        }
         );
 
-        GET_TIME (time_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (block = 0; block < config->numFrames; block++)
                 {
-                    for (block = 0; block < config->numFrames; block++)
-                    {
-                        ne10_fir_lattice_float_neon(&SN, in_neon + (block*config->blockSize), out_neon + (block * config->blockSize), config->blockSize);
-                    }
+                    ne10_fir_lattice_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), config->blockSize);
                 }
+            }
+        }
         );
 
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%20d,%4d%20lld%20lld%19.2f%%%18.2f:1\n", config->blockSize, config->numTaps, time_c, time_neon, time_savings, time_speedup);
     }
 #endif

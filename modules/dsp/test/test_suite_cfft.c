@@ -54,7 +54,7 @@
 
 static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 {
-      -0.432565,    0.864397,    -1.665584,    0.094203,    0.125332,    -0.851909,    0.287676,    0.873504,
+    -0.432565,    0.864397,    -1.665584,    0.094203,    0.125332,    -0.851909,    0.287676,    0.873504,
     -1.146471,    -0.438039,    1.190915,    -0.429661,    1.189164,    -1.102729,    -0.037633,    0.396247,
     0.327292,    -0.964925,    0.174639,    0.168449,    -0.186709,    -1.965359,    0.725791,    -0.744302,
     -0.588317,    -0.552307,    2.183186,    -0.819726,    -0.136396,    1.109142,    0.113931,    -0.614946,
@@ -318,24 +318,26 @@ static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 
 typedef struct
 {
-  ne10_uint32_t fftSize;
-  ne10_uint32_t ifftFlag;
-  ne10_uint32_t doBitReverse;
-  ne10_float32_t *inputF32;
+    ne10_uint32_t fftSize;
+    ne10_uint32_t ifftFlag;
+    ne10_uint32_t doBitReverse;
+    ne10_float32_t *inputF32;
 } test_config_cfft;
 
-static test_config_cfft CONFIG_CFFT[] = {
-            {1024, 0, 1, &testInput_f32[0]},
-            {256, 0, 1, &testInput_f32[0]},
-            {64, 0, 1, &testInput_f32[0]},
-            {16, 0, 1, &testInput_f32[0]},
-            };
-static test_config_cfft CONFIG_CFFT_PERF[] = {
-            {1024, 0, 1, &testInput_f32[0]},
-            {256, 0, 1, &testInput_f32[0]},
-            {64, 0, 1, &testInput_f32[0]},
-            {16, 0, 1, &testInput_f32[0]},
-            };
+static test_config_cfft CONFIG_CFFT[] =
+{
+    {1024, 0, 1, &testInput_f32[0]},
+    {256, 0, 1, &testInput_f32[0]},
+    {64, 0, 1, &testInput_f32[0]},
+    {16, 0, 1, &testInput_f32[0]},
+};
+static test_config_cfft CONFIG_CFFT_PERF[] =
+{
+    {1024, 0, 1, &testInput_f32[0]},
+    {256, 0, 1, &testInput_f32[0]},
+    {64, 0, 1, &testInput_f32[0]},
+    {16, 0, 1, &testInput_f32[0]},
+};
 
 #define CFFT_NUM_TESTS (sizeof(CONFIG_CFFT) / sizeof(CONFIG_CFFT[0]) )
 #define CFFT_NUM_PERF_TESTS (sizeof(CONFIG_CFFT_PERF) / sizeof(CONFIG_CFFT_PERF[0]) )
@@ -391,15 +393,15 @@ void test_cfft_case0()
         config = &CONFIG_CFFT[loop];
 
         /* Initialize the CFFT/CIFFT module */
-        status = ne10_cfft_radix4_init_float(&S, config->fftSize, config->ifftFlag);
+        status = ne10_cfft_radix4_init_float (&S, config->fftSize, config->ifftFlag);
 
         if (status == NE10_ERR)
         {
-            printf("fft init error!\n");
+            printf ("fft init error!\n");
         }
 
         /* copy input to input buffer and clear the output buffer */
-        for(i=0; i < 2*config->fftSize; i++)
+        for (i = 0; i < 2 * config->fftSize; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -409,33 +411,33 @@ void test_cfft_case0()
         GUARD_ARRAY (out_c, config->fftSize * 2);
         GUARD_ARRAY (out_neon, config->fftSize * 2);
 
-        ne10_radix4_butterfly_float_c(out_c, in_c, S.fft_len, S.p_twiddle);
-        ne10_radix4_butterfly_float_neon(out_neon, in_neon, S.fft_len, S.p_twiddle);
+        ne10_radix4_butterfly_float_c (out_c, in_c, S.fft_len, S.p_twiddle);
+        ne10_radix4_butterfly_float_neon (out_neon, in_neon, S.fft_len, S.p_twiddle);
 
         CHECK_ARRAY_GUARD (out_c, config->fftSize * 2);
         CHECK_ARRAY_GUARD (out_neon, config->fftSize * 2);
 
         //conformance test 1: compare snr
-        snr = CAL_SNR_FLOAT32(out_c, out_neon, 2*config->fftSize);
-        assert_false((snr < SNR_THRESHOLD));
+        snr = CAL_SNR_FLOAT32 (out_c, out_neon, 2 * config->fftSize);
+        assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
 #if defined (DEBUG_TRACE)
-        printf("--------------------config %d\n", loop);
-        printf("fftSize: %d ifftFlag: %d\n", config->fftSize, config->ifftFlag);
+        printf ("--------------------config %d\n", loop);
+        printf ("fftSize: %d ifftFlag: %d\n", config->fftSize, config->ifftFlag);
 #endif
-        for (pos = 0; pos < config->fftSize*2; pos++)
+        for (pos = 0; pos < config->fftSize * 2; pos++)
         {
 #if defined (DEBUG_TRACE)
-            printf("pos %d \n", pos);
-            printf("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos],*(unsigned int*)&out_c[pos], out_neon[pos], *(unsigned int*)&out_neon[pos]);
+            printf ("pos %d \n", pos);
+            printf ("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos], * (ne10_uint32_t*) &out_c[pos], out_neon[pos], * (ne10_uint32_t*) &out_neon[pos]);
 #endif
             assert_float_vec_equal (&out_c[pos], &out_neon[pos], ERROR_MARGIN_LARGE, 1);
         }
 
         /* IFFT test */
         /* copy input to input buffer and clear the output buffer */
-        for(i=0; i < 2*config->fftSize; i++)
+        for (i = 0; i < 2 * config->fftSize; i++)
         {
             in_c[i] = out_c[i];
             in_neon[i] = out_neon[i];
@@ -444,27 +446,27 @@ void test_cfft_case0()
         GUARD_ARRAY (out_c, config->fftSize * 2);
         GUARD_ARRAY (out_neon, config->fftSize * 2);
 
-        ne10_radix4_butterfly_inverse_float_c(out_c, in_c, S.fft_len, S.p_twiddle, S.one_by_fft_len);
-        ne10_radix4_butterfly_inverse_float_neon(out_neon, in_neon, S.fft_len, S.p_twiddle, S.one_by_fft_len);
+        ne10_radix4_butterfly_inverse_float_c (out_c, in_c, S.fft_len, S.p_twiddle, S.one_by_fft_len);
+        ne10_radix4_butterfly_inverse_float_neon (out_neon, in_neon, S.fft_len, S.p_twiddle, S.one_by_fft_len);
 
         CHECK_ARRAY_GUARD (out_c, config->fftSize * 2);
         CHECK_ARRAY_GUARD (out_neon, config->fftSize * 2);
 
         //conformance test 1: compare snr
-        snr = CAL_SNR_FLOAT32(out_c, out_neon, 2*config->fftSize);
-        assert_false((snr < SNR_THRESHOLD));
+        snr = CAL_SNR_FLOAT32 (out_c, out_neon, 2 * config->fftSize);
+        assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
 #if defined (DEBUG_TRACE)
-        printf("--------------------config %d\n", loop);
-        printf("fftSize: %d ifftFlag: %d\n", config->fftSize, config->ifftFlag);
-        printf("snr: %f\n", snr);
+        printf ("--------------------config %d\n", loop);
+        printf ("fftSize: %d ifftFlag: %d\n", config->fftSize, config->ifftFlag);
+        printf ("snr: %f\n", snr);
 #endif
-        for (pos = 0; pos < config->fftSize*2; pos++)
+        for (pos = 0; pos < config->fftSize * 2; pos++)
         {
 #if defined (DEBUG_TRACE)
-            printf("pos %d \n", pos);
-            printf("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos],*(unsigned int*)&out_c[pos], out_neon[pos], *(unsigned int*)&out_neon[pos]);
+            printf ("pos %d \n", pos);
+            printf ("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos], * (ne10_uint32_t*) &out_c[pos], out_neon[pos], * (ne10_uint32_t*) &out_neon[pos]);
 #endif
             assert_float_vec_equal (&out_c[pos], &out_neon[pos], ERROR_MARGIN_LARGE, 1);
         }
@@ -478,109 +480,141 @@ void test_cfft_case0()
         config = &CONFIG_CFFT_PERF[loop];
 
         /* Initialize the CFFT/CIFFT module */
-        status = ne10_cfft_radix4_init_float(&S, config->fftSize, config->ifftFlag);
+        status = ne10_cfft_radix4_init_float (&S, config->fftSize, config->ifftFlag);
 
         if (status == NE10_ERR)
         {
-            printf("fft init error!\n");
+            printf ("fft init error!\n");
         }
 
         /* FFT test */
-        GET_TIME (time_overhead_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_c[i] = testInput_f32[i];
-                    }
+                    in_c[i] = testInput_f32[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_c[i] = testInput_f32[i];
-                    }
-                    ne10_radix4_butterfly_float_c(out_c, in_c, S.fft_len, S.p_twiddle);
+                    in_c[i] = testInput_f32[i];
                 }
+                ne10_radix4_butterfly_float_c (out_c, in_c, S.fft_len, S.p_twiddle);
+            }
+        }
         );
 
-        GET_TIME (time_overhead_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_neon[i] = testInput_f32[i];
-                    }
+                    in_neon[i] = testInput_f32[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2* config->fftSize; i++)
-                    {
-                       in_neon[i] = testInput_f32[i];
-                    }
-                    ne10_radix4_butterfly_float_neon(out_neon, in_neon, S.fft_len, S.p_twiddle);
+                    in_neon[i] = testInput_f32[i];
                 }
+                ne10_radix4_butterfly_float_neon (out_neon, in_neon, S.fft_len, S.p_twiddle);
+            }
+        }
         );
 
         time_c = time_c - time_overhead_c;
         time_neon = time_neon - time_overhead_neon;
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "CFFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", S.fft_len, time_c, time_neon, time_savings, time_speedup);
 
         /* IFFT test */
-        GET_TIME (time_overhead_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_c[i] = out_c[i];
-                    }
+                    in_c[i] = out_c[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_c[i] = out_c[i];
-                    }
-                    ne10_radix4_butterfly_inverse_float_c(out_c, in_c, S.fft_len, S.p_twiddle, S.one_by_fft_len);
+                    in_c[i] = out_c[i];
                 }
+                ne10_radix4_butterfly_inverse_float_c (out_c, in_c, S.fft_len, S.p_twiddle, S.one_by_fft_len);
+            }
+        }
         );
 
-        GET_TIME (time_overhead_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_neon[i] = out_neon[i];
-                    }
+                    in_neon[i] = out_neon[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2* config->fftSize; i++)
-                    {
-                       in_neon[i] = out_neon[i];
-                    }
-                    ne10_radix4_butterfly_inverse_float_neon(out_neon, in_neon, S.fft_len, S.p_twiddle, S.one_by_fft_len);
+                    in_neon[i] = out_neon[i];
                 }
+                ne10_radix4_butterfly_inverse_float_neon (out_neon, in_neon, S.fft_len, S.p_twiddle, S.one_by_fft_len);
+            }
+        }
         );
 
         time_c = time_c - time_overhead_c;
         time_neon = time_neon - time_overhead_neon;
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "CIFFT%20d%20lld%20lld%19.2f%%%18.2f:1\n", S.fft_len, time_c, time_neon, time_savings, time_speedup);
     }
 #endif

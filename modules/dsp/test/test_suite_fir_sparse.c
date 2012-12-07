@@ -81,14 +81,16 @@ static ne10_float32_t time_savings = 0.0f;
 ** Coefficients for 5-tap filter  for F32
 ** ------------------------------------------------------------------- */
 
-static ne10_float32_t testCoeffs5_f32[5] = {
+static ne10_float32_t testCoeffs5_f32[5] =
+{
     1.749140,    0.132598,    0.325228,    -0.793809,    0.314924
 };
 
 /* ----------------------------------------------------------------------
 ** Coefficients for 32-tap filter for F32
 ** ------------------------------------------------------------------- */
-static ne10_float32_t testCoeffs32_f32[32] = {
+static ne10_float32_t testCoeffs32_f32[32] =
+{
     1.749140,    0.132598,    0.325228,    -0.793809,    0.314924,    -0.527270,    0.932267,    1.164664,
     -2.045669,    -0.644373,    1.741066,    0.486768,    1.048829,    1.488575,    1.270501,    -1.856124,
     2.134321,    1.435847,    -0.917302,    -1.106077,    0.810571,    0.698543,    -0.401583,    1.268751,
@@ -98,18 +100,20 @@ static ne10_float32_t testCoeffs32_f32[32] = {
 /* ----------------------------------------------------------------------
 ** Delay offsets for 5-tap Sparse filter for F32
 ** ------------------------------------------------------------------- */
-static ne10_int32_t tapDelay5_f32[5] =  {
+static ne10_int32_t tapDelay5_f32[5] =
+{
     95,    23,    61,    49,    89
 };
 
 /* ----------------------------------------------------------------------
 ** Delay offsets for 32-tap Sparse filter for F32
 ** ------------------------------------------------------------------- */
-static ne10_int32_t tapDelay32_f32[32] =  {
-95,    23,    61,    49,    89,    76,    46,    2,
-82,    44,    62,    79,    92,    74,    18,    41,
-94,    92,    41,    89,    6,     35,    81,    1,
-14,    20,    20,    60,    27,    20,    2,     75
+static ne10_int32_t tapDelay32_f32[32] =
+{
+    95,    23,    61,    49,    89,    76,    46,    2,
+    82,    44,    62,    79,    92,    74,    18,    41,
+    94,    92,    41,    89,    6,     35,    81,    1,
+    14,    20,    20,    60,    27,    20,    2,     75
 };
 
 /* ----------------------------------------------------------------------
@@ -165,29 +169,31 @@ static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 ** ------------------------------------------------------------------- */
 typedef struct
 {
-  ne10_uint32_t blockSize;
-  ne10_uint32_t numTaps;
-  ne10_uint32_t numFrames;
-  ne10_uint32_t maxDelay;
-  ne10_int32_t *tapDelay;
-  ne10_float32_t *coeffsF32;
-  ne10_float32_t *inputF32;
+    ne10_uint32_t blockSize;
+    ne10_uint32_t numTaps;
+    ne10_uint32_t numFrames;
+    ne10_uint32_t maxDelay;
+    ne10_int32_t *tapDelay;
+    ne10_float32_t *coeffsF32;
+    ne10_float32_t *inputF32;
 } test_config;
 
 /* All Test configurations, 100% Code Coverage */
-static test_config CONFIG[] = {
-                     {0, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     {2, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     //{2, 0, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     {64, 5, 5, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     {5, 5, 64, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     //{64, 32, 5, 100, &tapDelay32_f32[0], &testCoeffs32_f32[0], &testInput_f32[0]}
-                     };
-static test_config CONFIG_PERF[] = {
-                     {2, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     {64, 5, 5, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     {5, 5, 64, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
-                     };
+static test_config CONFIG[] =
+{
+    {0, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+    {2, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+    //{2, 0, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+    {64, 5, 5, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+    {5, 5, 64, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+    //{64, 32, 5, 100, &tapDelay32_f32[0], &testCoeffs32_f32[0], &testInput_f32[0]}
+};
+static test_config CONFIG_PERF[] =
+{
+    {2, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+    {64, 5, 5, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+    {5, 5, 64, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
+};
 
 #define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
@@ -215,12 +221,12 @@ void test_fir_sparse_case0()
     NE10_SRC_ALLOC (in_neon, guarded_in_neon, TEST_LENGTH_SAMPLES); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
-    NE10_DST_ALLOC (out_c, guarded_out_c, MAX_DELAY+TEST_LENGTH_SAMPLES);
-    NE10_DST_ALLOC (out_neon, guarded_out_neon, MAX_DELAY+TEST_LENGTH_SAMPLES);
+    NE10_DST_ALLOC (out_c, guarded_out_c, MAX_DELAY + TEST_LENGTH_SAMPLES);
+    NE10_DST_ALLOC (out_neon, guarded_out_neon, MAX_DELAY + TEST_LENGTH_SAMPLES);
 
     /* init state memory */
-    NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_DELAY+MAX_BLOCKSIZE);
-    NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_DELAY+MAX_BLOCKSIZE);
+    NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_DELAY + MAX_BLOCKSIZE);
+    NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_DELAY + MAX_BLOCKSIZE);
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
     for (loop = 0; loop < NUM_TESTS; loop++)
@@ -228,16 +234,16 @@ void test_fir_sparse_case0()
         config = &CONFIG[loop];
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_sparse_init_float(&SC, config->numTaps, config->coeffsF32, fir_state_c, config->tapDelay, config->maxDelay, config->blockSize);
-        status_neon = ne10_fir_sparse_init_float(&SN, config->numTaps, config->coeffsF32, fir_state_neon, config->tapDelay, config->maxDelay, config->blockSize);
+        status_c = ne10_fir_sparse_init_float (&SC, config->numTaps, config->coeffsF32, fir_state_c, config->tapDelay, config->maxDelay, config->blockSize);
+        status_neon = ne10_fir_sparse_init_float (&SN, config->numTaps, config->coeffsF32, fir_state_neon, config->tapDelay, config->maxDelay, config->blockSize);
 
-        if (((status_c==NE10_ERR) || (status_neon==NE10_ERR)))
+        if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
-            fprintf(stdout, "initialization error\n");
+            fprintf (stdout, "initialization error\n");
         }
 
         /* copy input to input buffer */
-        for(i=0; i < TEST_LENGTH_SAMPLES; i++)
+        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -250,30 +256,30 @@ void test_fir_sparse_case0()
 
         for (block = 0; block < config->numFrames; block++)
         {
-            ne10_fir_sparse_float_c(&SC, in_c + (block*config->blockSize), out_c + (block * config->blockSize), scratch_c, config->blockSize);
+            ne10_fir_sparse_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize), scratch_c, config->blockSize);
         }
         for (block = 0; block < config->numFrames; block++)
         {
-            ne10_fir_sparse_float_neon(&SN, in_neon + (block*config->blockSize), out_neon + (block * config->blockSize), scratch_neon, config->blockSize);
+            ne10_fir_sparse_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), scratch_neon, config->blockSize);
         }
 
         CHECK_ARRAY_GUARD (out_c, TEST_LENGTH_SAMPLES);
         CHECK_ARRAY_GUARD (out_neon, TEST_LENGTH_SAMPLES);
 
         //conformance test 1: compare snr
-        snr = CAL_SNR_FLOAT32(out_c, out_neon, TEST_LENGTH_SAMPLES);
-        assert_false((snr < SNR_THRESHOLD));
+        snr = CAL_SNR_FLOAT32 (out_c, out_neon, TEST_LENGTH_SAMPLES);
+        assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
 #if defined (DEBUG_TRACE)
-        printf("--------------------config %d\n", loop);
-        printf("snr %f\n", snr);
+        printf ("--------------------config %d\n", loop);
+        printf ("snr %f\n", snr);
 #endif
         for (pos = 0; pos < TEST_LENGTH_SAMPLES; pos++)
         {
 #if defined (DEBUG_TRACE)
-            printf("pos %d \n", pos);
-            printf("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos],*(unsigned int*)&out_c[pos], out_neon[pos], *(unsigned int*)&out_neon[pos]);
+            printf ("pos %d \n", pos);
+            printf ("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos], * (ne10_uint32_t*) &out_c[pos], out_neon[pos], * (ne10_uint32_t*) &out_neon[pos]);
 #endif
             assert_float_vec_equal (&out_c[pos], &out_neon[pos], ERROR_MARGIN_SMALL, 1);
         }
@@ -288,43 +294,51 @@ void test_fir_sparse_case0()
         config = &CONFIG_PERF[loop];
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_sparse_init_float(&SC, config->numTaps, config->coeffsF32, fir_state_c, config->tapDelay, config->maxDelay, config->blockSize);
-        status_neon = ne10_fir_sparse_init_float(&SN, config->numTaps, config->coeffsF32, fir_state_neon, config->tapDelay, config->maxDelay, config->blockSize);
+        status_c = ne10_fir_sparse_init_float (&SC, config->numTaps, config->coeffsF32, fir_state_c, config->tapDelay, config->maxDelay, config->blockSize);
+        status_neon = ne10_fir_sparse_init_float (&SN, config->numTaps, config->coeffsF32, fir_state_neon, config->tapDelay, config->maxDelay, config->blockSize);
 
-        if (((status_c==NE10_ERR) || (status_neon==NE10_ERR)))
+        if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
-            fprintf(stdout, "initialization error\n");
+            fprintf (stdout, "initialization error\n");
         }
 
         /* copy input to input buffer */
-        for(i=0; i < TEST_LENGTH_SAMPLES; i++)
+        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
         }
 
-        GET_TIME (time_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (block = 0; block < config->numFrames; block++)
                 {
-                    for (block = 0; block < config->numFrames; block++)
-                    {
-                        ne10_fir_sparse_float_c(&SC, in_c + (block*config->blockSize), out_c + (block * config->blockSize), scratch_c, config->blockSize);
-                    }
+                    ne10_fir_sparse_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize), scratch_c, config->blockSize);
                 }
+            }
+        }
         );
 
-        GET_TIME (time_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (block = 0; block < config->numFrames; block++)
                 {
-                    for (block = 0; block < config->numFrames; block++)
-                    {
-                        ne10_fir_sparse_float_neon(&SN, in_neon + (block*config->blockSize), out_neon + (block * config->blockSize), scratch_neon, config->blockSize);
-                    }
+                    ne10_fir_sparse_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), scratch_neon, config->blockSize);
                 }
+            }
+        }
         );
 
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%20d,%4d%20lld%20lld%19.2f%%%18.2f:1\n", config->blockSize, config->numTaps, time_c, time_neon, time_savings, time_speedup);
     }
 #endif

@@ -53,7 +53,7 @@
 
 static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 {
-      -0.432565,    -1.665584,    0.125332,    0.287676,    -1.146471,    1.190915,    1.189164,    -0.037633,
+    -0.432565,    -1.665584,    0.125332,    0.287676,    -1.146471,    1.190915,    1.189164,    -0.037633,
     0.327292,    0.174639,    -0.186709,    0.725791,    -0.588317,    2.183186,    -0.136396,    0.113931,
     1.066768,    0.059281,    -0.095648,    -0.832349,    0.294411,    -1.336182,    0.714325,    1.623562,
     -0.691776,    0.857997,    1.254001,    -1.593730,    -1.440964,    0.571148,    -0.399886,    0.689997,
@@ -317,20 +317,22 @@ ne10_float32_t tmp_buffer[TEST_LENGTH_SAMPLES];
 
 typedef struct
 {
-  ne10_uint32_t fftSize;
-  ne10_uint32_t ifftFlag;
-  ne10_uint32_t doBitReverse;
-  ne10_float32_t *inputF32;
-}test_config_rfft;
+    ne10_uint32_t fftSize;
+    ne10_uint32_t ifftFlag;
+    ne10_uint32_t doBitReverse;
+    ne10_float32_t *inputF32;
+} test_config_rfft;
 
-static test_config_rfft CONFIG_RFFT[] = {
-            {128, 0, 1, &testInput_f32[0]},
-            {512, 0, 1, &testInput_f32[0]},
-            };
-static test_config_rfft CONFIG_RFFT_PERF[] = {
-            {128, 0, 1, &testInput_f32[0]},
-            {512, 0, 1, &testInput_f32[0]},
-            };
+static test_config_rfft CONFIG_RFFT[] =
+{
+    {128, 0, 1, &testInput_f32[0]},
+    {512, 0, 1, &testInput_f32[0]},
+};
+static test_config_rfft CONFIG_RFFT_PERF[] =
+{
+    {128, 0, 1, &testInput_f32[0]},
+    {512, 0, 1, &testInput_f32[0]},
+};
 
 #define RFFT_NUM_TESTS (sizeof(CONFIG_RFFT) / sizeof(CONFIG_RFFT[0]) )
 #define RFFT_NUM_PERF_TESTS (sizeof(CONFIG_RFFT_PERF) / sizeof(CONFIG_RFFT_PERF[0]) )
@@ -387,92 +389,92 @@ void test_rfft_case0()
         config = &CONFIG_RFFT[loop];
 
         /* Initialize the RFFT/RIFFT module */
-        status = ne10_rfft_init_float(&S, &S_CFFT, config->fftSize, config->ifftFlag);
+        status = ne10_rfft_init_float (&S, &S_CFFT, config->fftSize, config->ifftFlag);
 
         if (status == NE10_ERR)
         {
-            printf("fft init error!\n");
+            printf ("fft init error!\n");
         }
 
         /* copy input to input buffer and clear the output buffer */
-        for(i=0; i < config->fftSize; i++)
+        for (i = 0; i < config->fftSize; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
         }
 
         /* FFT test */
-        GUARD_ARRAY (out_c, config->fftSize*2);
-        GUARD_ARRAY (out_neon, config->fftSize*2);
+        GUARD_ARRAY (out_c, config->fftSize * 2);
+        GUARD_ARRAY (out_neon, config->fftSize * 2);
 
-        ne10_rfft_float_c(&S, in_c, out_c, tmp_buffer);
-        ne10_rfft_float_neon(&S, in_neon, out_neon, tmp_buffer);
+        ne10_rfft_float_c (&S, in_c, out_c, tmp_buffer);
+        ne10_rfft_float_neon (&S, in_neon, out_neon, tmp_buffer);
 
 
-        CHECK_ARRAY_GUARD (out_c, config->fftSize*2);
-        CHECK_ARRAY_GUARD (out_neon, config->fftSize*2);
+        CHECK_ARRAY_GUARD (out_c, config->fftSize * 2);
+        CHECK_ARRAY_GUARD (out_neon, config->fftSize * 2);
 
         //conformance test 1: compare snr
-        snr = CAL_SNR_FLOAT32(out_c, out_neon, config->fftSize);
-        assert_false((snr < SNR_THRESHOLD));
+        snr = CAL_SNR_FLOAT32 (out_c, out_neon, config->fftSize * 2);
+        assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
 #if defined (DEBUG_TRACE)
-        printf("-----------RFFT------------\n");
-        printf("--------------------config %d\n", loop);
-        printf("fftSize: %d\n", config->fftSize);
-        printf("snr: %f\n", snr);
+        printf ("-----------RFFT------------\n");
+        printf ("--------------------config %d\n", loop);
+        printf ("fftSize: %d\n", config->fftSize);
+        printf ("snr: %f\n", snr);
 #endif
-        for (pos = 0; pos < config->fftSize; pos++)
+        for (pos = 0; pos < config->fftSize * 2; pos++)
         {
 #if defined (DEBUG_TRACE)
-            printf("pos %d \n", pos);
-            printf("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos],*(unsigned int*)&out_c[pos], out_neon[pos], *(unsigned int*)&out_neon[pos]);
+            printf ("pos %d \n", pos);
+            printf ("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos], * (ne10_uint32_t*) &out_c[pos], out_neon[pos], * (ne10_uint32_t*) &out_neon[pos]);
 #endif
             assert_float_vec_equal (&out_c[pos], &out_neon[pos], ERROR_MARGIN_LARGE, 1);
         }
 
         /* IFFT test */
         /* Initialize the RFFT/RIFFT module */
-        status = ne10_rfft_init_float(&S, &S_CFFT, config->fftSize, 1);
+        status = ne10_rfft_init_float (&S, &S_CFFT, config->fftSize, 1);
 
         if (status == NE10_ERR)
         {
-            printf("fft init error!\n");
+            printf ("fft init error!\n");
         }
 
         /* copy input to input buffer and clear the output buffer */
-        for(i=0; i < config->fftSize; i++)
+        for (i = 0; i < config->fftSize * 2; i++)
         {
             in_c[i] = out_c[i];
             in_neon[i] = out_neon[i];
         }
 
-        GUARD_ARRAY (out_c, config->fftSize*2);
-        GUARD_ARRAY (out_neon, config->fftSize*2);
+        GUARD_ARRAY (out_c, config->fftSize * 2);
+        GUARD_ARRAY (out_neon, config->fftSize * 2);
 
-        ne10_rfft_float_c(&S, in_c, out_c, tmp_buffer);
-        ne10_rfft_float_neon(&S, in_neon, out_neon, tmp_buffer);
+        ne10_rfft_float_c (&S, in_c, out_c, tmp_buffer);
+        ne10_rfft_float_neon (&S, in_neon, out_neon, tmp_buffer);
 
-        CHECK_ARRAY_GUARD (out_c, config->fftSize*2);
-        CHECK_ARRAY_GUARD (out_neon, config->fftSize*2);
+        CHECK_ARRAY_GUARD (out_c, config->fftSize * 2);
+        CHECK_ARRAY_GUARD (out_neon, config->fftSize * 2);
 
         //conformance test 1: compare snr
-        snr = CAL_SNR_FLOAT32(out_c, out_neon, config->fftSize);
-        assert_false((snr < SNR_THRESHOLD));
+        snr = CAL_SNR_FLOAT32 (out_c, out_neon, config->fftSize);
+        assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
 #if defined (DEBUG_TRACE)
-        printf("-----------RIFFT------------\n");
-        printf("--------------------config %d\n", loop);
-        printf("fftSize: %d\n", config->fftSize);
-        printf("snr: %f\n", snr);
+        printf ("-----------RIFFT------------\n");
+        printf ("--------------------config %d\n", loop);
+        printf ("fftSize: %d\n", config->fftSize);
+        printf ("snr: %f\n", snr);
 #endif
         for (pos = 0; pos < config->fftSize; pos++)
         {
 #if defined (DEBUG_TRACE)
-            printf("pos %d \n", pos);
-            printf("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos],*(unsigned int*)&out_c[pos], out_neon[pos], *(unsigned int*)&out_neon[pos]);
+            printf ("pos %d \n", pos);
+            printf ("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos], * (ne10_uint32_t*) &out_c[pos], out_neon[pos], * (ne10_uint32_t*) &out_neon[pos]);
 #endif
             assert_float_vec_equal (&out_c[pos], &out_neon[pos], ERROR_MARGIN_LARGE, 1);
         }
@@ -486,115 +488,147 @@ void test_rfft_case0()
         config = &CONFIG_RFFT_PERF[loop];
 
         /* Initialize the RFFT/RIFFT module */
-        status = ne10_rfft_init_float(&S, &S_CFFT, config->fftSize, config->ifftFlag);
+        status = ne10_rfft_init_float (&S, &S_CFFT, config->fftSize, config->ifftFlag);
 
         if (status == NE10_ERR)
         {
-            printf("fft init error!\n");
+            printf ("fft init error!\n");
         }
 
         /* FFT test */
         /* Initialize the RFFT/RIFFT module */
-        status = ne10_rfft_init_float(&S, &S_CFFT, config->fftSize, config->ifftFlag);
+        status = ne10_rfft_init_float (&S, &S_CFFT, config->fftSize, config->ifftFlag);
 
-        GET_TIME (time_overhead_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < config->fftSize; i++)
                 {
-                    for(i=0; i < config->fftSize; i++)
-                    {
-                       in_c[i] = testInput_f32[i];
-                    }
+                    in_c[i] = testInput_f32[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < config->fftSize; i++)
                 {
-                    for(i=0; i < config->fftSize; i++)
-                    {
-                       in_c[i] = testInput_f32[i];
-                    }
-                    ne10_rfft_float_c(&S, in_c, out_c, tmp_buffer);
+                    in_c[i] = testInput_f32[i];
                 }
+                ne10_rfft_float_c (&S, in_c, out_c, tmp_buffer);
+            }
+        }
         );
 
-        GET_TIME (time_overhead_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_neon[i] = testInput_f32[i];
-                    }
+                    in_neon[i] = testInput_f32[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < config->fftSize; i++)
                 {
-                    for(i=0; i < 2* config->fftSize; i++)
-                    {
-                       in_neon[i] = testInput_f32[i];
-                    }
-                    ne10_rfft_float_neon(&S, in_neon, out_neon, tmp_buffer);
+                    in_neon[i] = testInput_f32[i];
                 }
+                ne10_rfft_float_neon (&S, in_neon, out_neon, tmp_buffer);
+            }
+        }
         );
 
         time_c = time_c - time_overhead_c;
         time_neon = time_neon - time_overhead_neon;
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "RFFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", config->fftSize, time_c, time_neon, time_savings, time_speedup);
 
         /* IFFT test */
         /* Initialize the RFFT/RIFFT module */
-        status = ne10_rfft_init_float(&S, &S_CFFT, config->fftSize, 1);
+        status = ne10_rfft_init_float (&S, &S_CFFT, config->fftSize, 1);
 
-        GET_TIME (time_overhead_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_c[i] = out_c[i];
-                    }
+                    in_c[i] = out_c[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_c[i] = out_c[i];
-                    }
-                    ne10_rfft_float_c(&S, in_c, out_c, tmp_buffer);
+                    in_c[i] = out_c[i];
                 }
+                ne10_rfft_float_c (&S, in_c, out_c, tmp_buffer);
+            }
+        }
         );
 
-        GET_TIME (time_overhead_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_overhead_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2*config->fftSize; i++)
-                    {
-                       in_neon[i] = out_neon[i];
-                    }
+                    in_neon[i] = out_neon[i];
                 }
+            }
+        }
         );
 
-        GET_TIME (time_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (i = 0; i < 2 * config->fftSize; i++)
                 {
-                    for(i=0; i < 2* config->fftSize; i++)
-                    {
-                       in_neon[i] = out_neon[i];
-                    }
-                    ne10_rfft_float_neon(&S, in_neon, out_neon, tmp_buffer);
+                    in_neon[i] = out_neon[i];
                 }
+                ne10_rfft_float_neon (&S, in_neon, out_neon, tmp_buffer);
+            }
+        }
         );
 
         time_c = time_c - time_overhead_c;
         time_neon = time_neon - time_overhead_neon;
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "RIFFT%20d%20lld%20lld%19.2f%%%18.2f:1\n", config->fftSize, time_c, time_neon, time_savings, time_speedup);
     }
 #endif

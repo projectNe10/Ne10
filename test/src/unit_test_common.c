@@ -176,27 +176,27 @@ ne10_int32_t CHECK_ARRAY_GUARD (ne10_float32_t* array, ne10_uint32_t array_lengt
 }
 /**
  * @brief  Caluclation of SNR
- * @param  ne10_float32_t* 	Pointer to the reference buffer
- * @param  ne10_float32_t*	Pointer to the test buffer
- * @param  ne10_uint32_t	total number of samples
- * @return ne10_float32_t	SNR
+ * @param  ne10_float32_t*  Pointer to the reference buffer
+ * @param  ne10_float32_t*  Pointer to the test buffer
+ * @param  ne10_uint32_t    total number of samples
+ * @return ne10_float32_t   SNR
  * The function Caluclates signal to noise ratio for the reference output
  * and test output
  */
 
-ne10_float32_t CAL_SNR_FLOAT32(ne10_float32_t *pRef, ne10_float32_t *pTest, ne10_uint32_t buffSize)
+ne10_float32_t CAL_SNR_FLOAT32 (ne10_float32_t *pRef, ne10_float32_t *pTest, ne10_uint32_t buffSize)
 {
-  ne10_float32_t EnergySignal = 0.0, EnergyError = 0.0;
-  ne10_uint32_t i;
-  ne10_float32_t SNR;
+    ne10_float32_t EnergySignal = 0.0, EnergyError = 0.0;
+    ne10_uint32_t i;
+    ne10_float32_t SNR;
 
-  for (i = 0; i < buffSize; i++)
+    for (i = 0; i < buffSize; i++)
     {
-      EnergySignal += pRef[i] * pRef[i];
-      EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
+        EnergySignal += pRef[i] * pRef[i];
+        EnergyError += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
     }
-  SNR = 10 * log10 (EnergySignal / EnergyError);
-  return (SNR);
+    SNR = 10 * log10 (EnergySignal / EnergyError);
+    return (SNR);
 
 }
 

@@ -163,8 +163,8 @@ void test_abs_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -264,8 +264,8 @@ void test_addc_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -366,8 +366,8 @@ void test_add_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -462,8 +462,8 @@ void test_cross_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -564,8 +564,8 @@ void test_divc_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -666,8 +666,8 @@ void test_div_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -766,8 +766,8 @@ void test_dot_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -862,8 +862,8 @@ void test_len_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -967,8 +967,8 @@ void test_mlac_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thecst, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1074,8 +1074,8 @@ void test_mla_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1177,8 +1177,8 @@ void test_mulc_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1279,8 +1279,8 @@ void test_mul_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1375,8 +1375,8 @@ void test_normalize_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1476,8 +1476,8 @@ void test_rsbc_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1575,8 +1575,8 @@ void test_setc_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1676,8 +1676,8 @@ void test_subc_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1778,8 +1778,8 @@ void test_sub_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1878,8 +1878,8 @@ void test_addmat_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -1974,8 +1974,8 @@ void test_detmat_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -2058,8 +2058,8 @@ void test_identitymat_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_2args[2 * func_loop + 1] (perftest_thedst_neon, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -2152,8 +2152,8 @@ void test_invmat_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -2251,8 +2251,8 @@ void test_mulmat_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -2351,8 +2351,8 @@ void test_submat_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -2447,8 +2447,8 @@ void test_transmat_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
@@ -2549,8 +2549,8 @@ void test_mulcmatvec_case0()
         GET_TIME (time_neon,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst, perftest_thesrc1, loop);
                  );
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 

@@ -77,16 +77,18 @@ static ne10_float32_t time_savings = 0.0f;
 ** Coefficients for 3-tap filter  for F32
 ** ------------------------------------------------------------------- */
 
-static ne10_float32_t testCoeffs3_f32[3] = {
-	-0.085191,	0.009420,	0.086440
+static ne10_float32_t testCoeffs3_f32[3] =
+{
+    -0.085191,  0.009420,   0.086440
 };
 
 /* ----------------------------------------------------------------------
 ** Coefficients for 7-tap filter for F32
 ** ------------------------------------------------------------------- */
 
-static ne10_float32_t testCoeffs7_f32[7] = {
-	-0.110273,	-0.042966,	-0.043804,	0.087350,	-0.085191,	0.009420,	0.086440
+static ne10_float32_t testCoeffs7_f32[7] =
+{
+    -0.110273,  -0.042966,  -0.043804,  0.087350,   -0.085191,  0.009420,   0.086440
 };
 
 /* ----------------------------------------------------------------------
@@ -98,11 +100,12 @@ static ne10_float32_t testCoeffs1_f32 = 0.086440;
 /* ----------------------------------------------------------------------
 ** Coefficients for 32-tap filter for F32
 ** ------------------------------------------------------------------- */
-static ne10_float32_t testCoeffs32_f32[32] = {
-0.068186,	0.064344,	-0.162450,	0.057015,	0.029743,	0.010066,	0.047792,	0.021273,
--0.096447,	-0.211652,	-0.086613,	0.057501,	-0.187605,	-0.167199,	-0.026983,	-0.025464,
--0.061495,	0.110914,	-0.081973,	-0.055231,	-0.074430,	-0.196536,	0.016845,	-0.096493,
-0.039625,	-0.110273,	-0.042966,	-0.043804,	0.087350,	-0.085191,	0.009420,	0.086440
+static ne10_float32_t testCoeffs32_f32[32] =
+{
+    0.068186,   0.064344,   -0.162450,  0.057015,   0.029743,   0.010066,   0.047792,   0.021273,
+    -0.096447,  -0.211652,  -0.086613,  0.057501,   -0.187605,  -0.167199,  -0.026983,  -0.025464,
+    -0.061495,  0.110914,   -0.081973,  -0.055231,  -0.074430,  -0.196536,  0.016845,   -0.096493,
+    0.039625,   -0.110273,  -0.042966,  -0.043804,  0.087350,   -0.085191,  0.009420,   0.086440
 };
 /* ----------------------------------------------------------------------
 ** Test input data for F32
@@ -111,46 +114,46 @@ static ne10_float32_t testCoeffs32_f32[32] = {
 
 static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 {
--0.432565,	-1.665584,	0.125332,	0.287676,	-1.146471,	1.190915,	1.189164,	-0.037633,
-0.327292,	0.174639,	-0.186709,	0.725791,	-0.588317,	2.183186,	-0.136396,	0.113931,
-1.066768,	0.059281,	-0.095648,	-0.832349,	0.294411,	-1.336182,	0.714325,	1.623562,
--0.691776,	0.857997,	1.254001,	-1.593730,	-1.440964,	0.571148,	-0.399886,	0.689997,
-0.815622,	0.711908,	1.290250,	0.668601,	1.190838,	-1.202457,	-0.019790,	-0.156717,
--1.604086,	0.257304,	-1.056473,	1.415141,	-0.805090,	0.528743,	0.219321,	-0.921902,
--2.170674,	-0.059188,	-1.010634,	0.614463,	0.507741,	1.692430,	0.591283,	-0.643595,
-0.380337,	-1.009116,	-0.019511,	-0.048221,	0.000043,	-0.317859,	1.095004,	-1.873990,
-0.428183,	0.895638,	0.730957,	0.577857,	0.040314,	0.677089,	0.568900,	-0.255645,
--0.377469,	-0.295887,	-1.475135,	-0.234004,	0.118445,	0.314809,	1.443508,	-0.350975,
-0.623234,	0.799049,	0.940890,	-0.992092,	0.212035,	0.237882,	-1.007763,	-0.742045,
-1.082295,	-0.131500,	0.389880,	0.087987,	-0.635465,	-0.559573,	0.443653,	-0.949904,
-0.781182,	0.568961,	-0.821714,	-0.265607,	-1.187777,	-2.202321,	0.986337,	-0.518635,
-0.327368,	0.234057,	0.021466,	-1.003944,	-0.947146,	-0.374429,	-1.185886,	-1.055903,
-1.472480,	0.055744,	-1.217317,	-0.041227,	-1.128344,	-1.349278,	-0.261102,	0.953465,
-0.128644,	0.656468,	-1.167819,	-0.460605,	-0.262440,	-1.213152,	-1.319437,	0.931218,
-0.011245,	-0.645146,	0.805729,	0.231626,	-0.989760,	1.339586,	0.289502,	1.478917,
-1.138028,	-0.684139,	-1.291936,	-0.072926,	-0.330599,	-0.843628,	0.497770,	1.488490,
--0.546476,	-0.846758,	-0.246337,	0.663024,	-0.854197,	-1.201315,	-0.119869,	-0.065294,
-0.485296,	-0.595491,	-0.149668,	-0.434752,	-0.079330,	1.535152,	-0.606483,	-1.347363,
-0.469383,	-0.903567,	0.035880,	-0.627531,	0.535398,	0.552884,	-0.203690,	-2.054325,
-0.132561,	1.592941,	1.018412,	-1.580402,	-0.078662,	-0.681657,	-1.024553,	-1.234353,
-0.288807,	-0.429303,	0.055801,	-0.367874,	-0.464973,	0.370961,	0.728283,	2.112160,
--1.357298,	-1.022610,	1.037834,	-0.389800,	-1.381266,	0.315543,	1.553243,	0.707894,
-1.957385,	0.504542,	1.864529,	-0.339812,	-1.139779,	-0.211123,	1.190245,	-1.116209,
-0.635274,	-0.601412,	0.551185,	-1.099840,	0.085991,	-2.004563,	-0.493088,	0.462048,
--0.321005,	1.236556,	-0.631280,	-2.325211,	-1.231637,	1.055648,	-0.113224,	0.379224,
-0.944200,	-2.120427,	-0.644679,	-0.704302,	-1.018137,	-0.182082,	1.521013,	-0.038439,
-1.227448,	-0.696205,	0.007524,	-0.782893,	0.586939,	-0.251207,	0.480136,	0.668155,
--0.078321,	0.889173,	2.309287,	0.524639,	-0.011787,	0.913141,	0.055941,	-1.107070,
-0.485498,	-0.005005,	-0.276218,	1.276452,	1.863401,	-0.522559,	0.103424,	-0.807649,
-0.680439,	-2.364590,	0.990115,	0.218899,	0.261662,	1.213444,	-0.274667,	-0.133134,
--1.270500,	-1.663606,	-0.703554,	0.280880,	-0.541209,	-1.333531,	1.072686,	-0.712085,
--0.011286,	-0.000817,	-0.249436,	0.396575,	-0.264013,	-1.664011,	-1.028975,	0.243095,
--1.256590,	-0.347183,	-0.941372,	-1.174560,	-1.021142,	-0.401667,	0.173666,	-0.116118,
-1.064119,	-0.245386,	-1.517539,	0.009734,	0.071373,	0.316536,	0.499826,	1.278084,
--0.547816,	0.260808,	-0.013177,	-0.580264,	2.136308,	-0.257617,	-1.409528,	1.770101,
-0.325546,	-1.119040,	0.620350,	1.269782,	-0.896043,	0.135175,	-0.139040,	-1.163395,
-1.183720,	-0.015430,	0.536219,	-0.716429,	-0.655559,	0.314363,	0.106814,	1.848216,
--0.275106,	2.212554,	1.508526,	-1.945079,	-1.680543,	-0.573534,	-0.185817,	0.008934
+    -0.432565,  -1.665584,  0.125332,   0.287676,   -1.146471,  1.190915,   1.189164,   -0.037633,
+    0.327292,   0.174639,   -0.186709,  0.725791,   -0.588317,  2.183186,   -0.136396,  0.113931,
+    1.066768,   0.059281,   -0.095648,  -0.832349,  0.294411,   -1.336182,  0.714325,   1.623562,
+    -0.691776,  0.857997,   1.254001,   -1.593730,  -1.440964,  0.571148,   -0.399886,  0.689997,
+    0.815622,   0.711908,   1.290250,   0.668601,   1.190838,   -1.202457,  -0.019790,  -0.156717,
+    -1.604086,  0.257304,   -1.056473,  1.415141,   -0.805090,  0.528743,   0.219321,   -0.921902,
+    -2.170674,  -0.059188,  -1.010634,  0.614463,   0.507741,   1.692430,   0.591283,   -0.643595,
+    0.380337,   -1.009116,  -0.019511,  -0.048221,  0.000043,   -0.317859,  1.095004,   -1.873990,
+    0.428183,   0.895638,   0.730957,   0.577857,   0.040314,   0.677089,   0.568900,   -0.255645,
+    -0.377469,  -0.295887,  -1.475135,  -0.234004,  0.118445,   0.314809,   1.443508,   -0.350975,
+    0.623234,   0.799049,   0.940890,   -0.992092,  0.212035,   0.237882,   -1.007763,  -0.742045,
+    1.082295,   -0.131500,  0.389880,   0.087987,   -0.635465,  -0.559573,  0.443653,   -0.949904,
+    0.781182,   0.568961,   -0.821714,  -0.265607,  -1.187777,  -2.202321,  0.986337,   -0.518635,
+    0.327368,   0.234057,   0.021466,   -1.003944,  -0.947146,  -0.374429,  -1.185886,  -1.055903,
+    1.472480,   0.055744,   -1.217317,  -0.041227,  -1.128344,  -1.349278,  -0.261102,  0.953465,
+    0.128644,   0.656468,   -1.167819,  -0.460605,  -0.262440,  -1.213152,  -1.319437,  0.931218,
+    0.011245,   -0.645146,  0.805729,   0.231626,   -0.989760,  1.339586,   0.289502,   1.478917,
+    1.138028,   -0.684139,  -1.291936,  -0.072926,  -0.330599,  -0.843628,  0.497770,   1.488490,
+    -0.546476,  -0.846758,  -0.246337,  0.663024,   -0.854197,  -1.201315,  -0.119869,  -0.065294,
+    0.485296,   -0.595491,  -0.149668,  -0.434752,  -0.079330,  1.535152,   -0.606483,  -1.347363,
+    0.469383,   -0.903567,  0.035880,   -0.627531,  0.535398,   0.552884,   -0.203690,  -2.054325,
+    0.132561,   1.592941,   1.018412,   -1.580402,  -0.078662,  -0.681657,  -1.024553,  -1.234353,
+    0.288807,   -0.429303,  0.055801,   -0.367874,  -0.464973,  0.370961,   0.728283,   2.112160,
+    -1.357298,  -1.022610,  1.037834,   -0.389800,  -1.381266,  0.315543,   1.553243,   0.707894,
+    1.957385,   0.504542,   1.864529,   -0.339812,  -1.139779,  -0.211123,  1.190245,   -1.116209,
+    0.635274,   -0.601412,  0.551185,   -1.099840,  0.085991,   -2.004563,  -0.493088,  0.462048,
+    -0.321005,  1.236556,   -0.631280,  -2.325211,  -1.231637,  1.055648,   -0.113224,  0.379224,
+    0.944200,   -2.120427,  -0.644679,  -0.704302,  -1.018137,  -0.182082,  1.521013,   -0.038439,
+    1.227448,   -0.696205,  0.007524,   -0.782893,  0.586939,   -0.251207,  0.480136,   0.668155,
+    -0.078321,  0.889173,   2.309287,   0.524639,   -0.011787,  0.913141,   0.055941,   -1.107070,
+    0.485498,   -0.005005,  -0.276218,  1.276452,   1.863401,   -0.522559,  0.103424,   -0.807649,
+    0.680439,   -2.364590,  0.990115,   0.218899,   0.261662,   1.213444,   -0.274667,  -0.133134,
+    -1.270500,  -1.663606,  -0.703554,  0.280880,   -0.541209,  -1.333531,  1.072686,   -0.712085,
+    -0.011286,  -0.000817,  -0.249436,  0.396575,   -0.264013,  -1.664011,  -1.028975,  0.243095,
+    -1.256590,  -0.347183,  -0.941372,  -1.174560,  -1.021142,  -0.401667,  0.173666,   -0.116118,
+    1.064119,   -0.245386,  -1.517539,  0.009734,   0.071373,   0.316536,   0.499826,   1.278084,
+    -0.547816,  0.260808,   -0.013177,  -0.580264,  2.136308,   -0.257617,  -1.409528,  1.770101,
+    0.325546,   -1.119040,  0.620350,   1.269782,   -0.896043,  0.135175,   -0.139040,  -1.163395,
+    1.183720,   -0.015430,  0.536219,   -0.716429,  -0.655559,  0.314363,   0.106814,   1.848216,
+    -0.275106,  2.212554,   1.508526,   -1.945079,  -1.680543,  -0.573534,  -0.185817,  0.008934
 };
 
 /* ----------------------------------------------------------------------
@@ -158,31 +161,32 @@ static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES] =
 ** ------------------------------------------------------------------- */
 typedef struct
 {
-  ne10_uint32_t blockSize;
-  ne10_uint32_t numTaps;
-  ne10_uint32_t D;
-  ne10_uint32_t numFrames;
-  ne10_float32_t *coeffsF32;
-  ne10_float32_t *inputF32;
+    ne10_uint32_t blockSize;
+    ne10_uint32_t numTaps;
+    ne10_uint32_t D;
+    ne10_uint32_t numFrames;
+    ne10_float32_t *coeffsF32;
+    ne10_float32_t *inputF32;
 } test_config;
 
 /* All Test configurations, 100% Code Coverage */
 static test_config CONFIG[] = {{0, 1, 2, 80, &testCoeffs1_f32, &testInput_f32[0]},
-            //{0, 1, 0, 80, &testCoeffs1_f32, &testInput_f32[0]},
-            {4, 1, 2, 80, &testCoeffs1_f32, &testInput_f32[0]},
-            {4, 1, 3, 80, &testCoeffs1_f32, &testInput_f32[0]},
-            //{64, 32, 4, 5, &testCoeffs32_f32[0], &testInput_f32[0]},
-            //{5, 3, 1, 64, &testCoeffs3_f32[0], &testInput_f32[0]},
-            {2, 7, 2, 160, &testCoeffs7_f32[0], &testInput_f32[0]},
-            {64, 7, 2, 5, &testCoeffs7_f32[0], &testInput_f32[0]},
-            {64, 32, 4, 5, &testCoeffs32_f32[0], &testInput_f32[0]},
-            {32, 32, 4, 10, &testCoeffs32_f32[0], &testInput_f32[0]}
-            };
-static test_config CONFIG_PERF[] = {
-            {64, 7, 2, 5, &testCoeffs7_f32[0], &testInput_f32[0]},
-            {64, 32, 4, 5, &testCoeffs32_f32[0], &testInput_f32[0]},
-            {32, 32, 4, 10, &testCoeffs32_f32[0], &testInput_f32[0]}
-            };
+    //{0, 1, 0, 80, &testCoeffs1_f32, &testInput_f32[0]},
+    {4, 1, 2, 80, &testCoeffs1_f32, &testInput_f32[0]},
+    {4, 1, 3, 80, &testCoeffs1_f32, &testInput_f32[0]},
+    //{64, 32, 4, 5, &testCoeffs32_f32[0], &testInput_f32[0]},
+    //{5, 3, 1, 64, &testCoeffs3_f32[0], &testInput_f32[0]},
+    {2, 7, 2, 160, &testCoeffs7_f32[0], &testInput_f32[0]},
+    {64, 7, 2, 5, &testCoeffs7_f32[0], &testInput_f32[0]},
+    {64, 32, 4, 5, &testCoeffs32_f32[0], &testInput_f32[0]},
+    {32, 32, 4, 10, &testCoeffs32_f32[0], &testInput_f32[0]}
+};
+static test_config CONFIG_PERF[] =
+{
+    {64, 7, 2, 5, &testCoeffs7_f32[0], &testInput_f32[0]},
+    {64, 32, 4, 5, &testCoeffs32_f32[0], &testInput_f32[0]},
+    {32, 32, 4, 10, &testCoeffs32_f32[0], &testInput_f32[0]}
+};
 
 #define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
@@ -215,8 +219,8 @@ void test_fir_decimate_case0()
     NE10_DST_ALLOC (out_neon, guarded_out_neon, TEST_LENGTH_SAMPLES);
 
     /* init state memory */
-    NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_NUMTAPS+MAX_BLOCKSIZE);
-    NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_NUMTAPS+MAX_BLOCKSIZE);
+    NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_NUMTAPS + MAX_BLOCKSIZE);
+    NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_NUMTAPS + MAX_BLOCKSIZE);
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
     for (loop = 0; loop < NUM_TESTS; loop++)
@@ -225,23 +229,23 @@ void test_fir_decimate_case0()
         length = config->numFrames * config->blockSize / config->D;
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_decimate_init_float(&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
-        status_neon = ne10_fir_decimate_init_float(&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
+        status_c = ne10_fir_decimate_init_float (&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
+        status_neon = ne10_fir_decimate_init_float (&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
 
-        if (((status_c==NE10_ERR) || (status_neon==NE10_ERR)))
+        if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
             if (config->D == 3)
             {
-                fprintf(stdout, "length of input data is wrong!\n");
+                fprintf (stdout, "length of input data is wrong!\n");
                 continue;
             }
             else
             {
-                fprintf(stdout, "initialization error\n");
+                fprintf (stdout, "initialization error\n");
             }
         }
         /* copy input to input buffer */
-        for(i=0; i < TEST_LENGTH_SAMPLES; i++)
+        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -252,30 +256,30 @@ void test_fir_decimate_case0()
 
         for (block = 0; block < config->numFrames; block++)
         {
-            ne10_fir_decimate_float_c(&SC, in_c + (block*config->blockSize), out_c + (block * config->blockSize/config->D), config->blockSize);
+            ne10_fir_decimate_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize / config->D), config->blockSize);
         }
         for (block = 0; block < config->numFrames; block++)
         {
-            ne10_fir_decimate_float_neon(&SN, in_neon + (block*config->blockSize), out_neon + (block * config->blockSize/config->D), config->blockSize);
+            ne10_fir_decimate_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize / config->D), config->blockSize);
         }
 
         CHECK_ARRAY_GUARD (out_c, length);
         CHECK_ARRAY_GUARD (out_neon, length);
 
         //conformance test 1: compare snr
-        snr = CAL_SNR_FLOAT32(out_c, out_neon, length);
-        assert_false((snr < SNR_THRESHOLD));
+        snr = CAL_SNR_FLOAT32 (out_c, out_neon, length);
+        assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
 #if defined (DEBUG_TRACE)
-        printf("--------------------config %d\n", loop);
-        printf("snr %f\n", snr);
+        printf ("--------------------config %d\n", loop);
+        printf ("snr %f\n", snr);
 #endif
         for (pos = 0; pos < length; pos++)
         {
 #if defined (DEBUG_TRACE)
-            printf("pos %d \n", pos);
-            printf("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos],*(unsigned int*)&out_c[pos], out_neon[pos], *(unsigned int*)&out_neon[pos]);
+            printf ("pos %d \n", pos);
+            printf ("c %f (0x%04X) neon %f (0x%04X)\n", out_c[pos], * (ne10_uint32_t*) &out_c[pos], out_neon[pos], * (ne10_uint32_t*) &out_neon[pos]);
 #endif
             assert_float_vec_equal (&out_c[pos], &out_neon[pos], ERROR_MARGIN_LARGE, 1);
         }
@@ -290,51 +294,59 @@ void test_fir_decimate_case0()
         length = config->numFrames * config->blockSize / config->D;
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_decimate_init_float(&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
-        status_neon = ne10_fir_decimate_init_float(&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
+        status_c = ne10_fir_decimate_init_float (&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
+        status_neon = ne10_fir_decimate_init_float (&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
 
-        if (((status_c==NE10_ERR) || (status_neon==NE10_ERR)))
+        if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
             if (config->D == 3)
             {
-                fprintf(stdout, "length of input data is wrong!\n");
+                fprintf (stdout, "length of input data is wrong!\n");
                 continue;
             }
             else
             {
-                fprintf(stdout, "initialization error\n");
+                fprintf (stdout, "initialization error\n");
             }
         }
 
         /* copy input to input buffer */
-        for(i=0; i < TEST_LENGTH_SAMPLES; i++)
+        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
         }
 
-        GET_TIME (time_c,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_c,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (block = 0; block < config->numFrames; block++)
                 {
-                    for (block = 0; block < config->numFrames; block++)
-                    {
-                        ne10_fir_decimate_float_c(&SC, in_c + (block*config->blockSize), out_c + (block * config->blockSize/config->D), config->blockSize);
-                    }
+                    ne10_fir_decimate_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize / config->D), config->blockSize);
                 }
+            }
+        }
         );
 
-        GET_TIME (time_neon,
-                for (k = 0; k < TEST_COUNT; k++)
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (k = 0; k < TEST_COUNT; k++)
+            {
+                for (block = 0; block < config->numFrames; block++)
                 {
-                    for (block = 0; block < config->numFrames; block++)
-                    {
-                        ne10_fir_decimate_float_neon(&SN, in_neon + (block*config->blockSize), out_neon + (block * config->blockSize/config->D), config->blockSize);
-                    }
+                    ne10_fir_decimate_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize / config->D), config->blockSize);
                 }
+            }
+        }
         );
 
-        time_speedup = (ne10_float32_t)time_c / time_neon;
-        time_savings = (((ne10_float32_t)(time_c-time_neon)) / time_c) * 100;
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         fprintf (stdout, "%20d,%4d%20lld%20lld%19.2f%%%18.2f:1\n", config->blockSize, config->numTaps, time_c, time_neon, time_savings, time_speedup);
     }
 #endif
