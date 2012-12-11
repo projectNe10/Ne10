@@ -21,4 +21,4 @@ THE SOFTWARE.
 NOTES:
 the following files are licensed under this license:
 ./include/seatest.h
-./src/seatest.c 
+./src/seatest.c
