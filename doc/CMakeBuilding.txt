@@ -75,4 +75,24 @@ When you run NE10_test_dynamic on the target, you might meet the error:
 You can run the following command:
     export LD_LIBRARY_PATH=$NE10PATH/build/modules
 
+---------------------------UNIT TEST------------------------------
+
+The unit test framework of Ne10 is based on seatest(http://code.google.com/p/seatest/).
+But I also made some modifications to be more suitable for Ne10.
+
+The unit test consists of smoke test, regression test and performance test.
+If you want to do the test, you just need to add the following options when you compile the library.
+
+smoke test       ---------->> -DNE10_BUILD_UNIT_TEST=on -DNE10_SMOKE_TEST=on
+regression test  ---------->> -DNE10_BUILD_UNIT_TEST=on -DNE10_REGRESSION_TEST=on
+performance test ---------->> -DNE10_BUILD_UNIT_TEST=on -DNE10_PERFORMANCE_TEST=on
+
+example:
+run the following commands.
+    mkdir build && cd build
+    cmake -DNE10_BUILD_UNIT_TEST=on -DNE10_SMOKE_TEST=on ..
+    make
+
+Then the corresponding test program will be generated in the directory ./test/
+
 --------------------------------END--------------------------------------
