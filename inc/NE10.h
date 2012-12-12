@@ -29,6 +29,33 @@
  * NE10 Library : inc/NE10.h
  */
 
+/**
+   \mainpage Ne10 Software Library
+   *
+   *
+   * <b>Introduction</b>
+   *
+   * Ne10 is a library of the most commonly used functions that have been heavily
+   * optimized for ARM-based CPUs with NEON. These functions provide a consistent
+   * well tested behavior that can be easily incorporated into applications enabling
+   * developers to get the most out of the ARM V7/NEON without arduous assembly coding.
+   * Ne10 is usable as a 'drop and go' pre-built library or as a set of modular functions
+   * that can be incorporated in a more modular "pick and mix" form where binary size might
+   * be an issue.
+   *
+   * The Ne10 components are:
+   *
+   * - math functions
+   * - DSP functions
+   * - Physics functions
+   * - Image Processing functions
+   * - Others
+   *
+   *
+   * <b>License</b>
+   *
+   * The Ne10 is provided free of charge by ARM Limited and licensed under New BSD license.
+   */
 
 #ifndef NE10_H
 #define NE10_H
