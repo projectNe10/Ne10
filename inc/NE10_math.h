@@ -29,11 +29,6 @@
  * NE10 Library : inc/NE10_math.h
  */
 
-/*! \file NE10_math.h
-    \brief All NE10 math routines declarations.
-
-    The routines that are provided by this library are all declared in this header file.
- */
 
 #include <NE10_types.h>
 

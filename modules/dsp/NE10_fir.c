@@ -32,7 +32,7 @@
 #include "NE10_types.h"
 
 /**
- * @ingroup groupFilters
+ * @ingroup groupDSPs
  */
 
 /**

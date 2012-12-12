@@ -32,7 +32,7 @@
 #include "NE10_types.h"
 
 /**
- * @ingroup groupFilters
+ * @ingroup groupDSPs
  */
 
 /**
@@ -90,8 +90,6 @@
  * Set the values in the state buffer to zeros and then manually initialize the instance structure as follows:
  * <pre>
  *arm_iir_lattice_instance_f32 S = {numStages, pState, pkCoeffs, pvCoeffs};
- *arm_iir_lattice_instance_q31 S = {numStages, pState, pkCoeffs, pvCoeffs};
- *arm_iir_lattice_instance_q15 S = {numStages, pState, pkCoeffs, pvCoeffs};
  * </pre>
  * \par
  * where <code>numStages</code> is the number of stages in the filter; <code>pState</code> points to the state buffer array;

@@ -33,7 +33,7 @@
    \mainpage Ne10 Software Library
    *
    *
-   * <b>Introduction</b>
+   *\par Introduction
    *
    * Ne10 is a library of the most commonly used functions that have been heavily
    * optimized for ARM-based CPUs with NEON. These functions provide a consistent
@@ -45,17 +45,40 @@
    *
    * The Ne10 components are:
    *
-   * - math functions
-   * - DSP functions
+   * - @link groupMaths Math Functions@endlink
+   * - @link groupDSPs Signal Processing Functions@endlink
    * - Physics functions
    * - Image Processing functions
    * - Others
+   *\par
+   *\image html ne10_library.png "Ne10 Library Description"
    *
-   *
-   * <b>License</b>
+   *\par License
    *
    * The Ne10 is provided free of charge by ARM Limited and licensed under New BSD license.
    */
+
+
+/**
+ * @defgroup groupMaths Math Functions
+ *
+ *\par Introduction
+ *
+ * This set of functions provide vector/matrix algebra functions that include
+ * add, sub, multiply, div and so on. Currently, only the float (single precision)
+ * data type is supported.
+ */
+
+/**
+ * @defgroup groupDSPs Signal Processing Functions
+ *
+ *\par Introduction
+ *
+ * This set of functions provide some commonly used functions in signal processing,
+ * such as complex/real FFT/IFFT, FIR and IIR. Currently, only the float (single precision)
+ * data type is supported.
+ */
+
 
 #ifndef NE10_H
 #define NE10_H
