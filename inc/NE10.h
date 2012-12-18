@@ -78,7 +78,7 @@
    *
    *\par Modules Description
    * Ne10 has a modular structure, which means that the package includes several shared or static libraries.
-   * Currently, the following modules are available:
+   * Currently, the following modules are available or in plan:
    *
    * - @link groupMaths Math Functions@endlink
    * - @link groupDSPs Signal Processing Functions@endlink
@@ -86,9 +86,23 @@
    * - Image Processing functions
    * - Others
    *
+   *\par Usage
+   *
+   * Ne10 library provides directly and indirectly function call. you could check the @link groupSamples sample code@endlink for details
+   *
+   *\par Build
+   *
+   * See CMakeBuilding.txt file in the "doc" folder
+   *
+   *\par Code formatter
+   *
+   * See Formatter.txt file in the "doc" folder
+   *
    *\par License
    *
-   * The Ne10 is provided free of charge by ARM Limited and licensed under New BSD License (http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29).
+   * The Ne10 is provided free of charge by ARM Limited and licensed under both New BSD License
+   * (http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29) and Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+   * You could also check the LICENSE file in "doc" directory
    */
 
 

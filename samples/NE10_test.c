@@ -39,6 +39,9 @@
 
 /**
  * @brief This test code shows you how to call Ne10 functions with auto detecting NEON hardware
+ * @param[in]  none
+ * @param[in]  none
+ * @return none.
  */
 void test_add1 (void)
 {
@@ -58,6 +61,9 @@ void test_add1 (void)
 
 /**
  * @brief This test code shows you how to call Ne10 functions directly
+ * @param[in]  none
+ * @param[in]  none
+ * @return none.
  */
 void test_add2 (void)
 {
@@ -75,8 +81,12 @@ void test_add2 (void)
     ne10_addc_float_c (thedst1 , thesrc, thecst, 5);
     ne10_addc_float_neon (thedst2 , thesrc, thecst, 5);
 }
+
 /**
- * @} end of groupSamples
+ * @brief main function
+ * @param[in]  none
+ * @param[in]  none
+ * @return none.
  */
 void main()
 {
@@ -91,4 +101,6 @@ void main()
     test_add1();
     test_add2();
 }
-
+/**
+ * @} end of groupSamples
+ */
