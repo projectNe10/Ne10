@@ -24,12 +24,60 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "NE10.h"
-#include "NE10_init.h"
 
-// This test code shows you how you can statically embed NE10 in your code
+/**
+ * @ingroup groupSamples
+ */
+/**
+ * @addtogroup groupSamples
+ * @{
+ */
 
+/**
+ * @brief This test code shows you how to call Ne10 functions with auto detecting NEON hardware
+ */
+void test_add1 (void)
+{
+    int i;
+    ne10_float32_t thesrc[5];
+    ne10_float32_t thecst;
+    ne10_float32_t thedst[5];
+
+    for (i = 0; i < 5; i++)
+    {
+        thesrc[i] = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+    }
+    thecst = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+
+    ne10_addc_float (thedst , thesrc, thecst, 5);
+}
+
+/**
+ * @brief This test code shows you how to call Ne10 functions directly
+ */
+void test_add2 (void)
+{
+    int i;
+    ne10_float32_t thesrc[5];
+    ne10_float32_t thecst;
+    ne10_float32_t thedst1[5];
+    ne10_float32_t thedst2[5];
+    for (i = 0; i < 5; i++)
+    {
+        thesrc[i] = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+    }
+    thecst = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+
+    ne10_addc_float_c (thedst1 , thesrc, thecst, 5);
+    ne10_addc_float_neon (thedst2 , thesrc, thecst, 5);
+}
+/**
+ * @} end of groupSamples
+ */
 void main()
 {
     ne10_result_t status;
@@ -40,5 +88,7 @@ void main()
         printf ("NE10 init failed.\n");
 
     printf ("NE10 has been initialized.\n");
+    test_add1();
+    test_add2();
 }
 

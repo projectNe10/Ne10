@@ -38,8 +38,9 @@
 /**
  * @defgroup IIR_Lattice Infinite Impulse Response (IIR) Lattice Filters
  *
+ * \par
  * This set of functions implements lattice filters
- * for Q15, Q31 and floating-point data types.  Lattice filters are used in a
+ * for and floating-point data types.  Lattice filters are used in a
  * variety of adaptive filter applications.  The filter structure has feedforward and
  * feedback components and the net impulse response is infinite length.
  * The functions operate on blocks
@@ -306,10 +307,4 @@ void ne10_iir_lattice_float_c (const ne10_iir_lattice_instance_f32_t * S,
     }
 
 }
-
-
-
-
-/**
- * @} end of IIR_Lattice group
- */
+/** @} */ //end of IIR_Lattice group

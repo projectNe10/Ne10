@@ -32,6 +32,84 @@
 #include "NE10_types.h"
 
 /**
+ * @ingroup groupDSPs
+ */
+
+/**
+ * @defgroup RFFT_RIFFT Real FFT
+ *
+ * \par
+ * Complex FFT/IFFT typically assumes complex input and output. However many applications use real valued data in time domain.
+ * Real FFT/IFFT efficiently process real valued sequences with the advantage of requirement of low memory and with less complexity.
+ *
+ * \par
+ * This set of functions implements Real Fast Fourier Transforms(RFFT) and Real Inverse Fast Fourier Transform(RIFFT)
+ * for floating-point data types.
+ *
+ *
+ * \par Algorithm:
+ *
+ * <b>Real Fast Fourier Transform:</b>
+ * \par
+ * Real FFT of N-point is calculated using CFFT of N/2-point and Split RFFT process as shown below figure.
+ * \par
+ * \image html RFFT.gif "Real Fast Fourier Transform"
+ * \par
+ * The RFFT functions operate on blocks of input and output data and each call to the function processes
+ * <code>fftLenR</code> samples through the transform.  <code>pSrc</code>  points to input array containing <code>fftLenR</code> values.
+ * <code>pDst</code>  points to output array containing <code>2*fftLenR</code> values. \n
+ * Input for real FFT is in the order of
+ * <pre>{real[0], real[1], real[2], real[3], ..}</pre>
+ * Output for real FFT is complex and are in the order of
+ * <pre>{real(0), imag(0), real(1), imag(1), ...}</pre>
+ *
+ * <b>Real Inverse Fast Fourier Transform:</b>
+ * \par
+ * Real IFFT of N-point is calculated using Split RIFFT process and CFFT of N/2-point as shown below figure.
+ * \par
+ * \image html RIFFT.gif "Real Inverse Fast Fourier Transform"
+ * \par
+ * The RIFFT functions operate on blocks of input and output data and each call to the function processes
+ * <code>2*fftLenR</code> samples through the transform.  <code>pSrc</code>  points to input array containing <code>2*fftLenR</code> values.
+ * <code>pDst</code>  points to output array containing <code>fftLenR</code> values. \n
+ * Input for real IFFT is complex and are in the order of
+ * <pre>{real(0), imag(0), real(1), imag(1), ...}</pre>
+ *  Output for real IFFT is real and in the order of
+ * <pre>{real[0], real[1], real[2], real[3], ..}</pre>
+ *
+ * \par Lengths supported by the transform:
+ * \par
+ * Real FFT/IFFT supports the lengths [128, 512, 2048], as it internally uses CFFT/CIFFT.
+ *
+ * \par Instance Structure
+ * A separate instance structure must be defined for each Instance but the twiddle factors can be reused.
+ * There are separate instance structure declarations for each of the 3 supported data types.
+ *
+ * \par Initialization Functions
+ * There is also an associated initialization function for each data type.
+ * The initialization function performs the following operations:
+ * - Sets the values of the internal structure fields.
+ * - Initializes twiddle factor tables.
+ * - Initializes CFFT data structure fields.
+ * \par
+ * Use of the initialization function is optional.
+ * However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
+ * To place an instance structure into a const data section, the instance structure must be manually initialized.
+ * Manually initialize the instance structure as follows:
+ * <pre>
+ *ne10_rfft_instance_f32_t S = {fft_len_real, fft_len_by2, ifft_flag_r, bit_reverse_flag_r, twid_coef_r_modifier, p_twiddle_A_real, p_twiddle_B_real, p_cfft};
+ * </pre>
+ * where <code>fft_len_real</code> length of RFFT/RIFFT; <code>fft_len_by2</code> length of CFFT/CIFFT.
+ * <code>ifft_flag_r</code> Flag for selection of RFFT or RIFFT(Set ifftFlagR to calculate RIFFT otherwise calculates RFFT);
+ * <code>bit_reverse_flag_r</code> Flag for selection of output order(Set bitReverseFlagR to output in normal order otherwise output in bit reversed order);
+ * <code>twid_coef_r_modifier</code> modifier for twiddle factor table which supports 128, 512, 2048 RFFT lengths with same table;
+ * <code>p_twiddle_A_real</code>points to A array of twiddle coefficients; <code>p_twiddle_B_real</code>points to B array of twiddle coefficients;
+ * <code>p_cfft</code> points to the CFFT Instance structure. The CFFT structure also needs to be initialized, refer to arm_cfft_radix4_f32() for details regarding
+ * static initialization of cfft structure.
+ *
+ */
+
+/**
  * @brief  Core Real FFT process
  * @param[in]   *pSrc                points to the Input buffer
  * @param[in]   N                    length of Real FFT
@@ -164,17 +242,21 @@ static void ne10_split_rifft_float_c(
 }
 
 /**
+ * @addtogroup RFFT_RIFFT
+ * @{
+ */
+
+/**
  * @brief  Real FFT process
- * @param  *S is an instance for the structure
- * @param  *pSrc points to the input buffer
+ * @param[in]  *S is an instance for the structure
+ * @param[in]  *pSrc point to the input buffer (out-of-place: it's also a tmp buffer, so the input buffer is destroyed)
+ * @param[out]  *pDst point to the output buffer (out-of-place)
+ * @param[in]  *pTemp point to the temp buffer (used for intermedia buffer)
  * @return none.
  * The function implements a Real FFT/ Real IFFT depending
  * on the direction flag
  * Can support FFT lengths of 128, 512, 2048
  *
- * <b>Approximate Cycle Calculation for M4: </b>
- *
- * <code>C0 + C1 * fftLen </code>
  */
 void ne10_rfft_float_c(
                      const ne10_rfft_instance_f32_t * S,
@@ -204,4 +286,6 @@ void ne10_rfft_float_c(
 
 }
 
-
+/**
+ * @} end of RFFT_RIFFT group
+ */

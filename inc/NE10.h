@@ -30,12 +30,12 @@
  */
 
 /**
-   \mainpage Ne10 Software Library
+   \mainpage Welcome to Ne10 Documentation!
    *
    *
    *\par Introduction
    *
-   * Ne10 is a library of the most commonly used functions that have been heavily
+   * Ne10 (http://projectne10.github.com/Ne10/) is a library of the most commonly used functions that have been heavily
    * optimized for ARM-based CPUs with NEON. These functions provide a consistent
    * well tested behavior that can be easily incorporated into applications enabling
    * developers to get the most out of the ARM V7/NEON without arduous assembly coding.
@@ -43,26 +43,58 @@
    * that can be incorporated in a more modular "pick and mix" form where binary size might
    * be an issue.
    *
-   * The Ne10 components are:
+   * The following figure illustrates the basic concepts of "What's Ne10"
+   *\image html ne10_library.png "Ne10 Library Description"
+   *
+   *\par Top-Level Overview
+   * When you checkout Ne10, you will notice a number of directories. These directories are as follows:
+   * <pre>
+   * ├── android
+   * │   └── Android reference files
+   * ├── build
+   * │   └── directory for build-related files
+   * ├── common
+   * │   └── directory for common header, table and macro definition files
+   * ├── doc
+   * │   └── directory for documentations
+   * ├── inc
+   * │   └── directory for functions'heaeder files
+   * ├── modules
+   * │   ├── dsp
+   * │   │   ├── @link groupDSPs dsp module@endlink that provides a set of signal processing functions, such as complex/real FFT/IFFT, FIR and IIR
+   * │   │   └── test
+   * │   │       └──  directory for test files
+   * │   ├── math
+   * │   │   ├── @link groupMaths math module@endlink that provides a set of vector/matrix algebra functions
+   * │   │   └── test
+   * │   │       └──  directory for test files
+   * ├── samples
+   * │   └── @link groupSamples sample code@endlink
+   * ├── test
+   * │   ├── directory for test framework
+   * ├── tools
+   * │   ├── directory for tools such as Cformatter, doxygen, etc
+   * </pre>
+   *
+   *\par Modules Description
+   * Ne10 has a modular structure, which means that the package includes several shared or static libraries.
+   * Currently, the following modules are available:
    *
    * - @link groupMaths Math Functions@endlink
    * - @link groupDSPs Signal Processing Functions@endlink
    * - Physics functions
    * - Image Processing functions
    * - Others
-   *\par
-   *\image html ne10_library.png "Ne10 Library Description"
    *
    *\par License
    *
-   * The Ne10 is provided free of charge by ARM Limited and licensed under New BSD license.
+   * The Ne10 is provided free of charge by ARM Limited and licensed under New BSD License (http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29).
    */
 
 
 /**
  * @defgroup groupMaths Math Functions
  *
- *\par Introduction
  *
  * This set of functions provide vector/matrix algebra functions that include
  * add, sub, multiply, div and so on. Currently, only the float (single precision)
@@ -72,11 +104,16 @@
 /**
  * @defgroup groupDSPs Signal Processing Functions
  *
- *\par Introduction
  *
  * This set of functions provide some commonly used functions in signal processing,
  * such as complex/real FFT/IFFT, FIR and IIR. Currently, only the float (single precision)
  * data type is supported.
+ */
+/**
+ * @defgroup groupSamples Sample Functions
+ *
+ *
+ * This set of functions provide some sample functions.
  */
 
 
