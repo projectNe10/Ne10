@@ -101,7 +101,7 @@
    *\par License
    *
    * The Ne10 is provided free of charge by ARM Limited and licensed under both New BSD License
-   * (http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29) and Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
+   * (http://opensource.org/licenses/BSD-3-Clause) and Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
    * You could also check the LICENSE file in "doc" directory
    */
 
