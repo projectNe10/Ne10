@@ -30,17 +30,141 @@
  */
 
 #include "NE10_types.h"
+/**
+ * @ingroup groupDSPs
+ */
+
+/**
+ * @defgroup CFFT_CIFFT Complex FFT
+ *
+ * \par
+ * Complex Fast Fourier Transform(CFFT) and Complex Inverse Fast Fourier Transform(CIFFT) is an efficient algorithm to compute Discrete Fourier Transform(DFT) and Inverse Discrete Fourier Transform(IDFT).
+ * Computational complexity of CFFT reduces drastically when compared to DFT.
+ * \par
+ * This set of functions implements CFFT/CIFFT
+ * for floating-point data types.  The functions operate on out-of-place buffer which use different buffer for input and output.
+ * Complex input is stored in input buffer in an interleaved fashion.
+ *
+ * \par
+ * The functions operate on blocks of input and output data and each call to the function processes
+ * <code>2*fftLen</code> samples through the transform.  <code>pSrc</code>  points to input arrays containing <code>2*fftLen</code> values.
+ * \par
+ * The <code>pDst</code> points to the array of output buffer of size <code>2*fftLen</code> and inputs and outputs are stored in an interleaved fashion as shown below.
+ * <pre> {real[0], imag[0], real[1], imag[1],..} </pre>
+ *
+ * \par Lengths supported by the transform:
+ * \par
+ * Internally, the functions utilize a radix-4 decimation in frequency(DIF) algorithm
+ * and the size of the FFT supported are of the lengths [16, 64, 256, 1024].
+ *
+ *
+ * \par Algorithm:
+ *
+ * <b>Complex Fast Fourier Transform:</b>
+ * \par
+ * Input real and imaginary data:
+ * <pre>
+ * x(n) = xa + j * ya
+ * x(n+N/4 ) = xb + j * yb
+ * x(n+N/2 ) = xc + j * yc
+ * x(n+3N 4) = xd + j * yd
+ * </pre>
+ * where N is length of FFT
+ * \par
+ * Output real and imaginary data:
+ * <pre>
+ * X(4r) = xa'+ j * ya'
+ * X(4r+1) = xb'+ j * yb'
+ * X(4r+2) = xc'+ j * yc'
+ * X(4r+3) = xd'+ j * yd'
+ * </pre>
+ * \par
+ * Twiddle factors for radix-4 FFT:
+ * <pre>
+ * Wn = co1 + j * (- si1)
+ * W2n = co2 + j * (- si2)
+ * W3n = co3 + j * (- si3)
+ * </pre>
+ *
+ * \par
+ * \image html CFFT.gif "Radix-4 Decimation-in Frequency Complex Fast Fourier Transform"
+ *
+ * \par
+ * Output from Radix-4 CFFT Results in Digit reversal order. Interchange middle two branches of every butterfly results in Bit reversed output.
+ * \par
+ * <b> Butterfly CFFT equations:</b>
+ * <pre>
+ * xa' = xa + xb + xc + xd
+ * ya' = ya + yb + yc + yd
+ * xc' = (xa+yb-xc-yd)* co1 + (ya-xb-yc+xd)* (si1)
+ * yc' = (ya-xb-yc+xd)* co1 - (xa+yb-xc-yd)* (si1)
+ * xb' = (xa-xb+xc-xd)* co2 + (ya-yb+yc-yd)* (si2)
+ * yb' = (ya-yb+yc-yd)* co2 - (xa-xb+xc-xd)* (si2)
+ * xd' = (xa-yb-xc+yd)* co3 + (ya+xb-yc-xd)* (si3)
+ * yd' = (ya+xb-yc-xd)* co3 - (xa-yb-xc+yd)* (si3)
+ * </pre>
+ *
+ *
+ * <b>Complex Inverse Fast Fourier Transform:</b>
+ * \par
+ * CIFFT uses same twiddle factor table as CFFT with modifications in the design equation as shown below.
+ *
+ * \par
+ * <b> Modified Butterfly CIFFT equations:</b>
+ * <pre>
+ * xa' = xa + xb + xc + xd
+ * ya' = ya + yb + yc + yd
+ * xc' = (xa-yb-xc+yd)* co1 - (ya+xb-yc-xd)* (si1)
+ * yc' = (ya+xb-yc-xd)* co1 + (xa-yb-xc+yd)* (si1)
+ * xb' = (xa-xb+xc-xd)* co2 - (ya-yb+yc-yd)* (si2)
+ * yb' = (ya-yb+yc-yd)* co2 + (xa-xb+xc-xd)* (si2)
+ * xd' = (xa+yb-xc-yd)* co3 - (ya-xb-yc+xd)* (si3)
+ * yd' = (ya-xb-yc+xd)* co3 + (xa+yb-xc-yd)* (si3)
+ * </pre>
+ *
+ * \par Instance Structure
+ * A separate instance structure must be defined for each Instance but the twiddle factors and bit reversal tables can be reused.
+ * There are separate instance structure declarations for each of the 3 supported data types.
+ *
+ * \par Initialization Functions
+ * There is also an associated initialization function for each data type.
+ * The initialization function performs the following operations:
+ * - Sets the values of the internal structure fields.
+ * - Initializes twiddle factor table and bit reversal table pointers
+ * \par
+ * Use of the initialization function is optional.
+ * However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
+ * To place an instance structure into a const data section, the instance structure must be manually initialized.
+ * Manually initialize the instance structure as follows:
+ * <pre>
+ *ne10_cfft_radix4_instance_f32_t = {fft_len, ifft_flag, bit_reverse_flag, p_twiddle, p_bit_rev_table, twid_coef_modifier, bit_rev_factor, one_by_fft_len};
+ * </pre>
+ * \par
+ * where <code>fftLen</code> length of CFFT/CIFFT; <code>ifft_flag</code> Flag for selection of CFFT or CIFFT(Set ifft_flag to calculate CIFFT otherwise calculates CFFT);
+ * <code>bit_reverse_flag</code> Flag for selection of output order(Set bitReverseFlag to output in normal order otherwise output in bit reversed order);
+ * <code>p_twiddle</code>points to array of twiddle coefficients; <code>pBitRevTable</code> points to the array of bit reversal table.
+ * <code>p_bit_rev_table</code> modifier for bit reversal table which supports all FFT lengths with same table.
+ * <code>twid_coef_modifier</code> modifier for twiddle factor table which supports all FFT lengths with same table;
+ * <code>one_by_fft_len</code> value of 1/fftLen to calculate CIFFT;
+ *
+ */
 
 
-/*
-; * @brief  Core radix-4 FFT of floating-point data.
-; * @param[out]  *pDst
-; * @param[in]  *pSrc             points to the In-place buffer
-; * @param[in]  N                 length of FFT
-; * @param[in]  *pCoef            points to the twiddle factors
-; * @retureq none.
-; * The function implements a Radix-4 Complex FFT
-; */
+/**
+ * @addtogroup CFFT_CIFFT
+ * @{
+ */
+
+/**
+ * @brief Core radix-4 FFT of floating-point data.
+ * @param[out]  *pDst            point to the output buffer (out-of-place)
+ * @param[in]  *pSrc             point to the input buffer (out-of-place: the pSrc is used for intermedia buffer, so the input buffer is destroyed)
+ * @param[in]  N                 length of FFT
+ * @param[in]  *pCoef            point to the twiddle factors
+ * @return none.
+ * The function implements a Radix-4 Complex FFT
+ * Can support FFT lengths of 16, 64, 256, 1024
+ */
 
 void ne10_radix4_butterfly_float_c(
                      ne10_float32_t *pDst,
@@ -256,15 +380,16 @@ void ne10_radix4_butterfly_float_c(
     }
 }
 
-/*
-; * @brief  Core radix-4 IFFT of floating-point data.
-; * @param[out]  *pDst
-; * @param[in]  *pSrc             points to the In-place buffer
-; * @param[in]  N                 length of FFT
-; * @param[in]  *pCoef            points to the twiddle factors
-; * @retureq none.
-; * The function implements a Radix-4 Complex IFFT
-; */
+
+/**
+ * @brief Core radix-4 IFFT of floating-point data.
+ * @param[out]  *pDst            point to the output buffer (out-of-place)
+ * @param[in]  *pSrc             point to the input buffer (out-of-place: the pSrc is used for intermedia buffer, so the input buffer is destroyed)
+ * @param[in]  N                 length of FFT
+ * @param[in]  *pCoef            point to the twiddle factors
+ * @return none.
+ * The function implements a Radix-4 Complex IFFT
+ */
 
 void ne10_radix4_butterfly_inverse_float_c(
                      ne10_float32_t *pDst,
@@ -587,3 +712,7 @@ void ne10_radix4_butterfly_inverse_float_c(
     }
 }
 
+
+/**
+ * @} end of CFFT_CIFFT group
+ */

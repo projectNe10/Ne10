@@ -459,17 +459,21 @@ static void ne10_split_rifft_float_neon(
 }
 
 /**
+ * @addtogroup RFFT_RIFFT
+ * @{
+ */
+
+/**
  * @brief  Real FFT process
- * @param  *S is an instance for the structure
- * @param  *pSrc points to the input buffer
+ * @param[in]  *S is an instance for the structure
+ * @param[in]  *pSrc point to the input buffer (out-of-place: it's also a tmp buffer, so the input buffer is destroyed)
+ * @param[out]  *pDst point to the output buffer (out-of-place)
+ * @param[in]  *pTemp point to the temp buffer (used for intermedia buffer)
  * @return none.
  * The function implements a Real FFT/ Real IFFT depending
  * on the direction flag
  * Can support FFT lengths of 128, 512, 2048
  *
- * <b>Approximate Cycle Calculation for M4: </b>
- *
- * <code>C0 + C1 * fftLen </code>
  */
 void ne10_rfft_float_neon(
                      const ne10_rfft_instance_f32_t * S,
@@ -498,5 +502,7 @@ void ne10_rfft_float_neon(
     }
 
 }
-
+/**
+ * @} end of RFFT_RIFFT group
+ */
 

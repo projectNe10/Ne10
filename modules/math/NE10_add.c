@@ -34,6 +34,7 @@
 
 #include <assert.h>
 
+
 ne10_result_t ne10_add_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count)
 {
     NE10_X_OPERATION_FLOAT_C
