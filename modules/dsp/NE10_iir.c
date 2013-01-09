@@ -32,14 +32,15 @@
 #include "NE10_types.h"
 
 /**
- * @ingroup groupFilters
+ * @ingroup groupDSPs
  */
 
 /**
  * @defgroup IIR_Lattice Infinite Impulse Response (IIR) Lattice Filters
  *
+ * \par
  * This set of functions implements lattice filters
- * for Q15, Q31 and floating-point data types.  Lattice filters are used in a
+ * for and floating-point data types.  Lattice filters are used in a
  * variety of adaptive filter applications.  The filter structure has feedforward and
  * feedback components and the net impulse response is infinite length.
  * The functions operate on blocks
@@ -90,8 +91,6 @@
  * Set the values in the state buffer to zeros and then manually initialize the instance structure as follows:
  * <pre>
  *arm_iir_lattice_instance_f32 S = {numStages, pState, pkCoeffs, pvCoeffs};
- *arm_iir_lattice_instance_q31 S = {numStages, pState, pkCoeffs, pvCoeffs};
- *arm_iir_lattice_instance_q15 S = {numStages, pState, pkCoeffs, pvCoeffs};
  * </pre>
  * \par
  * where <code>numStages</code> is the number of stages in the filter; <code>pState</code> points to the state buffer array;
@@ -308,10 +307,4 @@ void ne10_iir_lattice_float_c (const ne10_iir_lattice_instance_f32_t * S,
     }
 
 }
-
-
-
-
-/**
- * @} end of IIR_Lattice group
- */
+/** @} */ //end of IIR_Lattice group

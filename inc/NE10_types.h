@@ -62,43 +62,56 @@ typedef float                   ne10_float32_t;
 typedef double                  ne10_float64_t;
 typedef int                     ne10_result_t;     // resulting [error-]code
 
+/**
+ * @brief a 2-tuple of ne10_float32_t values.
+ */
 typedef struct
 {
-        ne10_float32_t x;
-        ne10_float32_t y;
-} ne10_vec2f_t; // a 2-tuple of ne10_float32_t values
+    ne10_float32_t x;
+    ne10_float32_t y;
+} ne10_vec2f_t;
 
+/**
+ * @brief a 3-tuple of ne10_float32_t values.
+ */
 typedef struct
 {
-        ne10_float32_t x;
-        ne10_float32_t y;
-        ne10_float32_t z;
-} ne10_vec3f_t; // a 3-tuple of ne10_float32_t values
+    ne10_float32_t x;
+    ne10_float32_t y;
+    ne10_float32_t z;
+} ne10_vec3f_t;
 
+/**
+ * @brief a 4-tuple of ne10_float32_t values.
+ */
 typedef struct
 {
-        ne10_float32_t x;
-        ne10_float32_t y;
-        ne10_float32_t z;
-        ne10_float32_t w;
-} ne10_vec4f_t; // a 4-tuple of ne10_float32_t values
+    ne10_float32_t x;
+    ne10_float32_t y;
+    ne10_float32_t z;
+    ne10_float32_t w;
+} ne10_vec4f_t;
 
 /////////////////////////////////////////////////////////
 // definitions for matrix
 /////////////////////////////////////////////////////////
 
-typedef struct { ne10_float32_t r1; ne10_float32_t r2; } __attribute__((packed)) ne10_mat_row2f;
+typedef struct
+{
+    ne10_float32_t r1;
+    ne10_float32_t r2;
+} __attribute__ ( (packed)) ne10_mat_row2f;
 
 typedef struct
 {
-        ne10_mat_row2f c1;
-        ne10_mat_row2f c2;
+    ne10_mat_row2f c1;
+    ne10_mat_row2f c2;
 
-} __attribute__((packed)) ne10_mat2x2f_t;     // a 2x2 matrix
+} __attribute__ ( (packed)) ne10_mat2x2f_t;   // a 2x2 matrix
 
-static inline void createColumnMajorMatrix2x2( ne10_mat2x2f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m12, ne10_float32_t m22)
+static inline void createColumnMajorMatrix2x2 (ne10_mat2x2f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m12, ne10_float32_t m22)
 {
-   assert( NULL != outMat );
+    assert (NULL != outMat);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
@@ -107,21 +120,26 @@ static inline void createColumnMajorMatrix2x2( ne10_mat2x2f_t * outMat, ne10_flo
 }
 
 
-typedef struct { ne10_float32_t r1; ne10_float32_t r2; ne10_float32_t r3; } __attribute__((packed)) ne10_mat_row3f;
+typedef struct
+{
+    ne10_float32_t r1;
+    ne10_float32_t r2;
+    ne10_float32_t r3;
+} __attribute__ ( (packed)) ne10_mat_row3f;
 
 typedef struct
 {
-        ne10_mat_row3f c1;
-        ne10_mat_row3f c2;
-        ne10_mat_row3f c3;
+    ne10_mat_row3f c1;
+    ne10_mat_row3f c2;
+    ne10_mat_row3f c3;
 
-} __attribute__((packed)) ne10_mat3x3f_t;     // a 3x3 matrix
+} __attribute__ ( (packed)) ne10_mat3x3f_t;   // a 3x3 matrix
 
-static inline void createColumnMajorMatrix3x3( ne10_mat3x3f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31,
-                                                                       ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32,
-                                                                       ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33)
+static inline void createColumnMajorMatrix3x3 (ne10_mat3x3f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31,
+        ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32,
+        ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33)
 {
-    assert( NULL != outMat );
+    assert (NULL != outMat);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
@@ -137,23 +155,29 @@ static inline void createColumnMajorMatrix3x3( ne10_mat3x3f_t * outMat, ne10_flo
 }
 
 
-typedef struct { ne10_float32_t r1; ne10_float32_t r2; ne10_float32_t r3; ne10_float32_t r4; } __attribute__((packed)) ne10_mat_row4f;
+typedef struct
+{
+    ne10_float32_t r1;
+    ne10_float32_t r2;
+    ne10_float32_t r3;
+    ne10_float32_t r4;
+} __attribute__ ( (packed)) ne10_mat_row4f;
 
 typedef struct
 {
-        ne10_mat_row4f c1;
-        ne10_mat_row4f c2;
-        ne10_mat_row4f c3;
-        ne10_mat_row4f c4;
+    ne10_mat_row4f c1;
+    ne10_mat_row4f c2;
+    ne10_mat_row4f c3;
+    ne10_mat_row4f c4;
 
-} __attribute__((packed)) ne10_mat4x4f_t;     // a 4x4 matrix
+} __attribute__ ( (packed)) ne10_mat4x4f_t;   // a 4x4 matrix
 
-static inline void createColumnMajorMatrix4x4( ne10_mat4x4f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31, ne10_float32_t m41,
-                                                                       ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32, ne10_float32_t m42,
-                                                                       ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33, ne10_float32_t m43,
-                                                                       ne10_float32_t m14, ne10_float32_t m24, ne10_float32_t m34, ne10_float32_t m44)
+static inline void createColumnMajorMatrix4x4 (ne10_mat4x4f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m31, ne10_float32_t m41,
+        ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32, ne10_float32_t m42,
+        ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33, ne10_float32_t m43,
+        ne10_float32_t m14, ne10_float32_t m24, ne10_float32_t m34, ne10_float32_t m44)
 {
-    assert( NULL != outMat );
+    assert (NULL != outMat);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
@@ -189,7 +213,7 @@ typedef struct
     ne10_uint8_t ifft_flag;                          /**< Flag for selection of CFFT/ICFFT */
     ne10_uint8_t bit_reverse_flag;                   /**< Flag for selection of bitreversal or not */
     ne10_float32_t *p_twiddle;                       /**< Points to the twiddle factors array. The array is of length 2 * MaxFFTSize. */
-    ne10_uint16_t *p_bit_rev_table;                  /**< Points to the bit reversal array. The array is of size	MaxFFTSize/4 */
+    ne10_uint16_t *p_bit_rev_table;                  /**< Points to the bit reversal array. The array is of size    MaxFFTSize/4 */
     ne10_uint16_t twid_coef_modifier;                /**< Modifier to support different FFT sizes with same twiddle table */
     ne10_uint16_t bit_rev_factor;                    /**< Modifier to support different FFT sizes with same bit reversal table */
     ne10_float32_t one_by_fft_len;                   /**< 1/(Length of the FFT). */
@@ -214,7 +238,7 @@ typedef struct
 // definitions for fir
 /////////////////////////////////////////////////////////
 
-/*
+/**
  * @brief Instance structure for the floating-point FIR filter.
  */
 typedef struct
@@ -224,7 +248,7 @@ typedef struct
     ne10_float32_t *pCoeffs;   /**< Points to the coefficient array. The array is of length numTaps. */
 } ne10_fir_instance_f32_t;
 
-/*
+/**
  * @brief Instance structure for the floating point FIR Lattice filter.
  */
 typedef struct
@@ -234,7 +258,7 @@ typedef struct
     ne10_float32_t *pCoeffs;     /**< Points to the coefficient array. The array is of length numStages. */
 } ne10_fir_lattice_instance_f32_t;
 
-/*
+/**
  * @brief Instance structure for the floating-point FIR Decimation.
  */
 typedef struct
@@ -245,7 +269,7 @@ typedef struct
     ne10_float32_t    *pState;       /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
 } ne10_fir_decimate_instance_f32_t;
 
-/*
+/**
  * @brief Instance structure for the floating-point FIR Interpolation.
  */
 typedef struct
@@ -256,7 +280,7 @@ typedef struct
     ne10_float32_t *pState;          /**< Points to the state variable array. The array is of length numTaps+maxBlockSize-1. */
 } ne10_fir_interpolate_instance_f32_t;
 
-/*
+/**
  * @brief Instance structure for the floating-point FIR Sparse filter.
  */
 typedef struct

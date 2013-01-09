@@ -32,12 +32,13 @@
 #include "NE10_types.h"
 
 /**
- * @ingroup groupFilters
+ * @ingroup groupDSPs
  */
 
 /**
  * @defgroup FIR Finite Impulse Response (FIR) Filters
  *
+ * \par
  * This set of functions implements Finite Impulse Response (FIR) filters
  * for floating-point data types.
  * The functions operate on blocks of input and output data and each call to the function processes
@@ -351,6 +352,93 @@ void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
     }
 
 }
+/** @} */ //end of FIR group
+
+/**
+ * @ingroup groupDSPs
+ */
+
+/**
+ * @defgroup FIR_Decimate Finite Impulse Response (FIR) Decimator
+ *
+ * \par
+ * These functions combine an FIR filter together with a decimator.
+ * They are used in multirate systems for reducing the sample rate of a signal without introducing aliasing distortion.
+ * Conceptually, the functions are equivalent to the block diagram below:
+ * \image html FIRDecimator.gif "Components included in the FIR Decimator functions"
+ * When decimating by a factor of <code>M</code>, the signal should be prefiltered by a lowpass filter with a normalized
+ * cutoff frequency of <code>1/M</code> in order to prevent aliasing distortion.
+ * The user of the function is responsible for providing the filter coefficients.
+ *
+ * The FIR decimator functions provided in the CMSIS DSP Library combine the FIR filter and the decimator in an efficient manner.
+ * Instead of calculating all of the FIR filter outputs and discarding <code>M-1</code> out of every <code>M</code>, only the
+ * samples output by the decimator are computed.
+ * The functions operate on blocks of input and output data.
+ * <code>pSrc</code> points to an array of <code>blockSize</code> input values and
+ * <code>pDst</code> points to an array of <code>blockSize/M</code> output values.
+ * In order to have an integer number of output samples <code>blockSize</code>
+ * must always be a multiple of the decimation factor <code>M</code>.
+ *
+ * The library provides functions for floating-point data types.
+ *
+ * \par Algorithm:
+ * The FIR portion of the algorithm uses the standard form filter:
+ * <pre>
+ *    y[n] = b[0] * x[n] + b[1] * x[n-1] + b[2] * x[n-2] + ...+ b[numTaps-1] * x[n-numTaps+1]
+ * </pre>
+ * where, <code>b[n]</code> are the filter coefficients.
+ * \par
+ * The <code>pCoeffs</code> points to a coefficient array of size <code>numTaps</code>.
+ * Coefficients are stored in time reversed order.
+ * \par
+ * <pre>
+ *    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
+ * </pre>
+ * \par
+ * <code>pState</code> points to a state array of size <code>numTaps + blockSize - 1</code>.
+ * Samples in the state buffer are stored in the order:
+ * \par
+ * <pre>
+ *    {x[n-numTaps+1], x[n-numTaps], x[n-numTaps-1], x[n-numTaps-2]....x[0], x[1], ..., x[blockSize-1]}
+ * </pre>
+ * The state variables are updated after each block of data is processed, the coefficients are untouched.
+ *
+ * \par Instance Structure
+ * The coefficients and state variables for a filter are stored together in an instance data structure.
+ * A separate instance structure must be defined for each filter.
+ * Coefficient arrays may be shared among several instances while state variable array should be allocated separately.
+ * There are separate instance structure declarations for each of the 3 supported data types.
+ *
+ * \par Initialization Functions
+ * There is also an associated initialization function for each data type.
+ * The initialization function performs the following operations:
+ * - Sets the values of the internal structure fields.
+ * - Zeros out the values in the state buffer.
+ * - Checks to make sure that the size of the input is a multiple of the decimation factor.
+ *
+ * \par
+ * Use of the initialization function is optional.
+ * However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
+ * To place an instance structure into a const data section, the instance structure must be manually initialized.
+ * The code below statically initializes each of the 3 different data type filter instance structures
+ * <pre>
+ *ne10_fir_decimate_instance_f32_t S = {M, numTaps, pCoeffs, pState};
+ * </pre>
+ * where <code>M</code> is the decimation factor; <code>numTaps</code> is the number of filter coefficients in the filter;
+ * <code>pCoeffs</code> is the address of the coefficient buffer;
+ * <code>pState</code> is the address of the state buffer.
+ * Be sure to set the values in the state buffer to zeros when doing static initialization.
+ *
+ * \par Fixed-Point Behavior
+ * Care must be taken when using the fixed-point versions of the FIR decimate filter functions.
+ * In particular, the overflow and saturation behavior of the accumulator used in each function must be considered.
+ * Refer to the function specific documentation below for usage guidelines.
+ */
+
+/**
+ * @addtogroup FIR_Decimate
+ * @{
+ */
 
 /**
    * @brief Processing function for the floating-point FIR decimator.
@@ -515,6 +603,102 @@ void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
     }
 
 }
+/** @} */ //end of FIR_Decimate group
+
+
+/**
+ * @ingroup groupDSPs
+ */
+
+/**
+ * @defgroup FIR_Interpolate Finite Impulse Response (FIR) Interpolator
+ *
+ * \par
+ * These functions combine an upsampler (zero stuffer) and an FIR filter.
+ * They are used in multirate systems for increasing the sample rate of a signal without introducing high frequency images.
+ * Conceptually, the functions are equivalent to the block diagram below:
+ * \image html FIRInterpolator.gif "Components included in the FIR Interpolator functions"
+ * After upsampling by a factor of <code>L</code>, the signal should be filtered by a lowpass filter with a normalized
+ * cutoff frequency of <code>1/L</code> in order to eliminate high frequency copies of the spectrum.
+ * The user of the function is responsible for providing the filter coefficients.
+ *
+ * The FIR interpolator functions provided in the CMSIS DSP Library combine the upsampler and FIR filter in an efficient manner.
+ * The upsampler inserts <code>L-1</code> zeros between each sample.
+ * Instead of multiplying by these zero values, the FIR filter is designed to skip them.
+ * This leads to an efficient implementation without any wasted effort.
+ * The functions operate on blocks of input and output data.
+ * <code>pSrc</code> points to an array of <code>blockSize</code> input values and
+ * <code>pDst</code> points to an array of <code>blockSize*L</code> output values.
+ *
+ * The library provides functions for floating-point data types.
+ *
+ * \par Algorithm:
+ * The functions use a polyphase filter structure:
+ * <pre>
+ *    y[n] = b[0] * x[n] + b[L]   * x[n-1] + ... + b[L*(phaseLength-1)] * x[n-phaseLength+1]
+ *    y[n+1] = b[1] * x[n] + b[L+1] * x[n-1] + ... + b[L*(phaseLength-1)+1] * x[n-phaseLength+1]
+ *    ...
+ *    y[n+(L-1)] = b[L-1] * x[n] + b[2*L-1] * x[n-1] + ....+ b[L*(phaseLength-1)+(L-1)] * x[n-phaseLength+1]
+ * </pre>
+ * This approach is more efficient than straightforward upsample-then-filter algorithms.
+ * With this method the computation is reduced by a factor of <code>1/L</code> when compared to using a standard FIR filter.
+ * \par
+ * <code>pCoeffs</code> points to a coefficient array of size <code>numTaps</code>.
+ * <code>numTaps</code> must be a multiple of the interpolation factor <code>L</code> and this is checked by the
+ * initialization functions.
+ * Internally, the function divides the FIR filter's impulse response into shorter filters of length
+ * <code>phaseLength=numTaps/L</code>.
+ * Coefficients are stored in time reversed order.
+ * \par
+ * <pre>
+ *    {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
+ * </pre>
+ * \par
+ * <code>pState</code> points to a state array of size <code>blockSize + phaseLength - 1</code>.
+ * Samples in the state buffer are stored in the order:
+ * \par
+ * <pre>
+ *    {x[n-phaseLength+1], x[n-phaseLength], x[n-phaseLength-1], x[n-phaseLength-2]....x[0], x[1], ..., x[blockSize-1]}
+ * </pre>
+ * The state variables are updated after each block of data is processed, the coefficients are untouched.
+ *
+ * \par Instance Structure
+ * The coefficients and state variables for a filter are stored together in an instance data structure.
+ * A separate instance structure must be defined for each filter.
+ * Coefficient arrays may be shared among several instances while state variable array should be allocated separately.
+ * There are separate instance structure declarations for each of the 3 supported data types.
+ *
+ * \par Initialization Functions
+ * There is also an associated initialization function for each data type.
+ * The initialization function performs the following operations:
+ * - Sets the values of the internal structure fields.
+ * - Zeros out the values in the state buffer.
+ * - Checks to make sure that the length of the filter is a multiple of the interpolation factor.
+ *
+ * \par
+ * Use of the initialization function is optional.
+ * However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
+ * To place an instance structure into a const data section, the instance structure must be manually initialized.
+ * The code below statically initializes each of the 3 different data type filter instance structures
+ * <pre>
+ * ne10_fir_interpolate_instance_f32_t S = {L, phaseLength, pCoeffs, pState};
+ * </pre>
+ * where <code>L</code> is the interpolation factor; <code>phaseLength=numTaps/L</code> is the
+ * length of each of the shorter FIR filters used internally,
+ * <code>pCoeffs</code> is the address of the coefficient buffer;
+ * <code>pState</code> is the address of the state buffer.
+ * Be sure to set the values in the state buffer to zeros when doing static initialization.
+ *
+ * \par Fixed-Point Behavior
+ * Care must be taken when using the fixed-point versions of the FIR interpolate filter functions.
+ * In particular, the overflow and saturation behavior of the accumulator used in each function must be considered.
+ * Refer to the function specific documentation below for usage guidelines.
+ */
+
+/**
+ * @addtogroup FIR_Interpolate
+ * @{
+ */
 
 /**
  * @brief Processing function for the floating-point FIR interpolator.
@@ -698,6 +882,83 @@ void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S
     }
 
 }
+/** @} */ //end of FIR_interpolate group
+
+
+/**
+ * @ingroup groupDSPs
+ */
+
+/**
+ * @defgroup FIR_Lattice Finite Impulse Response (FIR) Lattice Filters
+ *
+ * \par
+ * This set of functions implements Finite Impulse Response (FIR) lattice filters
+ * for floating-point data types.  Lattice filters are used in a
+ * variety of adaptive filter applications.  The filter structure is feedforward and
+ * the net impulse response is finite length.
+ * The functions operate on blocks
+ * of input and output data and each call to the function processes
+ * <code>blockSize</code> samples through the filter.  <code>pSrc</code> and
+ * <code>pDst</code> point to input and output arrays containing <code>blockSize</code> values.
+ *
+ * \par Algorithm:
+ * \image html FIRLattice.gif "Finite Impulse Response Lattice filter"
+ * The following difference equation is implemented:
+ * <pre>
+ *    f0[n] = g0[n] = x[n]
+ *    fm[n] = fm-1[n] + km * gm-1[n-1] for m = 1, 2, ...M
+ *    gm[n] = km * fm-1[n] + gm-1[n-1] for m = 1, 2, ...M
+ *    y[n] = fM[n]
+ * </pre>
+ * \par
+ * <code>pCoeffs</code> points to tha array of reflection coefficients of size <code>numStages</code>.
+ * Reflection Coefficients are stored in the following order.
+ * \par
+ * <pre>
+ *    {k1, k2, ..., kM}
+ * </pre>
+ * where M is number of stages
+ * \par
+ * <code>pState</code> points to a state array of size <code>numStages</code>.
+ * The state variables (g values) hold previous inputs and are stored in the following order.
+ * <pre>
+ *    {g0[n], g1[n], g2[n] ...gM-1[n]}
+ * </pre>
+ * The state variables are updated after each block of data is processed; the coefficients are untouched.
+ * \par Instance Structure
+ * The coefficients and state variables for a filter are stored together in an instance data structure.
+ * A separate instance structure must be defined for each filter.
+ * Coefficient arrays may be shared among several instances while state variable arrays cannot be shared.
+ * There are separate instance structure declarations for each of the 3 supported data types.
+ *
+ * \par Initialization Functions
+ * There is also an associated initialization function for each data type.
+ * The initialization function performs the following operations:
+ * - Sets the values of the internal structure fields.
+ * - Zeros out the values in the state buffer.
+ *
+ * \par
+ * Use of the initialization function is optional.
+ * However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
+ * To place an instance structure into a const data section, the instance structure must be manually initialized.
+ * Set the values in the state buffer to zeros and then manually initialize the instance structure as follows:
+ * <pre>
+ *ne10_iir_lattice_instance_f32_t S = {numStages, pState, pCoeffs};
+ * </pre>
+ * \par
+ * where <code>numStages</code> is the number of stages in the filter; <code>pState</code> is the address of the state buffer;
+ * <code>pCoeffs</code> is the address of the coefficient buffer.
+ * \par Fixed-Point Behavior
+ * Care must be taken when using the fixed-point versions of the FIR Lattice filter functions.
+ * In particular, the overflow and saturation behavior of the accumulator used in each function must be considered.
+ * Refer to the function specific documentation below for usage guidelines.
+ */
+
+/**
+ * @addtogroup FIR_Lattice
+ * @{
+ */
 
 /**
    * @brief Processing function for the floating-point FIR lattice filter.
@@ -1004,10 +1265,11 @@ void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
     }
 
 }
-/**
-   * @brief floating-point Circular write function.
-   */
+/** @} */ //end of FIR_Lattice group
 
+/**
+ * @brief floating-point Circular write function.
+ */
 static void ne10_circular_write_float (ne10_int32_t * circBuffer,
     ne10_int32_t L,
     ne10_uint16_t * writeOffset,
@@ -1102,6 +1364,67 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
     *readOffset = rOffset;
 }
 
+/**
+ * @ingroup groupDSPs
+ */
+
+/**
+ * @defgroup FIR_Sparse Finite Impulse Response (FIR) Sparse Filters
+ *
+ * \par
+ * This group of functions implements sparse FIR filters.
+ * Sparse FIR filters are equivalent to standard FIR filters except that most of the coefficients are equal to zero.
+ * Sparse filters are used for simulating reflections in communications and audio applications.
+ *
+ * There are separate functions for floating-point data types.
+ * The functions operate on blocks  of input and output data and each call to the function processes
+ * <code>blockSize</code> samples through the filter.  <code>pSrc</code> and
+ * <code>pDst</code> points to input and output arrays respectively containing <code>blockSize</code> values.
+ *
+ * \par Algorithm:
+ * The sparse filter instant structure contains an array of tap indices <code>pTapDelay</code> which specifies the locations of the non-zero coefficients.
+ * This is in addition to the coefficient array <code>b</code>.
+ * The implementation essentially skips the multiplications by zero and leads to an efficient realization.
+ * <pre>
+ *     y[n] = b[0] * x[n-pTapDelay[0]] + b[1] * x[n-pTapDelay[1]] + b[2] * x[n-pTapDelay[2]] + ...+ b[numTaps-1] * x[n-pTapDelay[numTaps-1]]
+ * </pre>
+ * \par
+ * \image html FIRSparse.gif "Sparse FIR filter.  b[n] represents the filter coefficients"
+ * \par
+ * <code>pCoeffs</code> points to a coefficient array of size <code>numTaps</code>;
+ * <code>pTapDelay</code> points to an array of nonzero indices and is also of size <code>numTaps</code>;
+ * <code>pState</code> points to a state array of size <code>maxDelay + blockSize</code>, where
+ * <code>maxDelay</code> is the largest offset value that is ever used in the <code>pTapDelay</code> array.
+ * Some of the processing functions also require temporary working buffers.
+ *
+ * \par Instance Structure
+ * The coefficients and state variables for a filter are stored together in an instance data structure.
+ * A separate instance structure must be defined for each filter.
+ * Coefficient and offset arrays may be shared among several instances while state variable arrays cannot be shared.
+ * There are separate instance structure declarations for each of the 4 supported data types.
+ *
+ * \par Initialization Functions
+ * There is also an associated initialization function for each data type.
+ * The initialization function performs the following operations:
+ * - Sets the values of the internal structure fields.
+ * - Zeros out the values in the state buffer.
+ *
+ * \par
+ * Use of the initialization function is optional.
+ * However, if the initialization function is used, then the instance structure cannot be placed into a const data section.
+ * To place an instance structure into a const data section, the instance structure must be manually initialized.
+ * Set the values in the state buffer to zeros before static initialization.
+ * The code below statically initializes each of the 4 different data type filter instance structures
+ * <pre>
+ *ne10_fir_sparse_instance_f32_t S = {numTaps, 0, pState, pCoeffs, maxDelay, pTapDelay};
+ * </pre>
+ *
+ */
+
+/**
+ * @addtogroup FIR_Sparse
+ * @{
+ */
 
 /**
  * @brief Processing function for the floating-point sparse FIR filter.
@@ -1277,8 +1600,5 @@ void ne10_fir_sparse_float_c (ne10_fir_sparse_instance_f32_t * S,
     }
 
 }
+/** @} */ //end of FIR_sparse group
 
-
-/**
- * @} end of FIR group
- */
