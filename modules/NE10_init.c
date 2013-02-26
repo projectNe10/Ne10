@@ -84,5 +84,14 @@ ne10_result_t ne10_init()
     }
 #endif
 
+#if defined (NE10_ENABLE_IMGPROC)
+    status = ne10_init_imgproc (is_NEON_available);
+    if (status != NE10_OK)
+    {
+        fprintf(stderr, "ERROR: init imgproc failed\n");
+        return NE10_ERR;
+    }
+#endif
+
     return NE10_OK;
 }

@@ -217,14 +217,14 @@ extern "C" {
     /** @} */ //end of FIR group
 
     /**
-     * @addtogroup FIR_decimate
+     * @addtogroup FIR_Decimate
      * @{
      */
     extern void ne10_fir_decimate_float_neon (const ne10_fir_decimate_instance_f32_t * S,
             ne10_float32_t *pSrc,
             ne10_float32_t *pDst,
             ne10_uint32_t blockSize);
-    /** @} */ //end of FIR_decimate group
+    /** @} */ //end of FIR_Decimate group
 
     /**
      * @addtogroup FIR_Interpolate

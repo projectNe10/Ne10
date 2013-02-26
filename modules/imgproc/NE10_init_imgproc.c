@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2013 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -25,25 +25,38 @@
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * NE10 Library : common/NE10_mask_table.h
- */
+#include <stdio.h>
 
-#include "NE10_types.h"
-#ifndef _ARM_MASK_TABLE_H
-#define _ARM_MASK_TABLE_H
+#include "NE10_imgproc.h"
 
-#define Q_MASK_TABLE_SIZE        20
-#define D_MASK_TABLE_SIZE        6
-#define DIV_LOOKUP_TABLE_SIZE    255
+ne10_result_t ne10_init_imgproc (ne10_int32_t is_NEON_available)
+{
+    if (NE10_OK == is_NEON_available)
+    {
+        ne10_vresize = ne10_vresize_neon;
+        ne10_hresize_4channels = ne10_hresize_4channels_neon;
+    }
+    else
+    {
+        ;
+    }
+    return NE10_OK;
+}
 
-/* mask table for dsp module */
-extern const ne10_uint32_t ne10_qMaskTable32[Q_MASK_TABLE_SIZE];
-extern const ne10_uint32_t ne10_dMaskTable32[D_MASK_TABLE_SIZE];
-extern const ne10_uint32_t ne10_divLookUpTable[DIV_LOOKUP_TABLE_SIZE];
+// These are actual definitions of our function pointers that are declared in inc/NE10_imgproc.h
+void (*ne10_vresize) (const ne10_int32_t** src,
+                      ne10_uint8_t* dst,
+                      const ne10_int16_t* beta,
+                      ne10_int32_t width);
+void (*ne10_hresize_4channels) (const ne10_uint8_t** src,
+                                ne10_int32_t** dst,
+                                ne10_int32_t count,
+                                const ne10_int32_t* xofs,
+                                const ne10_int16_t* alpha,
+                                ne10_int32_t swidth,
+                                ne10_int32_t dwidth,
+                                ne10_int32_t cn,
+                                ne10_int32_t xmin,
+                                ne10_int32_t xmax);
 
-/* mask table for imgproc module */
-#define VRESIZE_MASK_TABLE_SIZE    7
-extern const ne10_uint64_t ne10_vresize_mask_residual_table[VRESIZE_MASK_TABLE_SIZE];
-#endif
 
