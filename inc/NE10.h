@@ -82,6 +82,7 @@
    *
    * - @link groupMaths Math Functions@endlink
    * - @link groupDSPs Signal Processing Functions@endlink
+   * - @link groupIMGPROCs Image Processing Functions@endlink
    * - Physics functions
    * - Image Processing functions
    * - Others
@@ -123,6 +124,15 @@
  * such as complex/real FFT/IFFT, FIR and IIR. Currently, only the float (single precision)
  * data type is supported.
  */
+
+/**
+ * @defgroup groupIMGPROCs Image Processing Functions
+ *
+ *
+ * This set of functions provide some commonly used functions in image processing,
+ * such as image scale, image rotate.
+ */
+
 /**
  * @defgroup groupSamples Sample Functions
  *
@@ -142,6 +152,7 @@ extern "C" {
 #include "NE10_init.h"
 #include "NE10_math.h"
 #include "NE10_dsp.h"
+#include "NE10_imgproc.h"
 
 #ifdef __cplusplus
 }
