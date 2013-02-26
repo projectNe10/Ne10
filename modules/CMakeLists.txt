@@ -171,11 +171,45 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_init_dsp.c
     )
 
-    # Add math files
+    # Add dsp files
     set(NE10_INIT_SRCS ${NE10_INIT_SRCS} ${NE10_DSP_INIT_SRCS})
     set(NE10_C_SRCS ${NE10_C_SRCS} ${NE10_DSP_C_SRCS})
     set(NE10_INTRINSIC_SRCS ${NE10_INTRINSIC_SRCS} ${NE10_DSP_INTRINSIC_SRCS})
     set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_DSP_NEON_SRCS})
+endif()
+
+if(NE10_ENABLE_IMGPROC)
+    #enable NE10_init_imgproc
+    add_definitions(-DNE10_ENABLE_IMGPROC)
+    # Add image processing C files.
+    set(NE10_IMGPROC_C_SRCS
+        ${PROJECT_SOURCE_DIR}/common/NE10_mask_table.c
+    )
+
+    # Add image processing NEON files.
+    set(NE10_IMGPROC_NEON_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.s
+    )
+
+    # Tell CMake these files need to go to the C compiler
+    set(FLAGS "-mfpu=neon -Wa,-I${PROJECT_SOURCE_DIR}/inc -Wa,-I${PROJECT_SOURCE_DIR}/common" )
+    foreach(neon_file ${NE10_IMGPROC_NEON_SRCS})
+        set_property (SOURCE ${neon_file} PROPERTY LANGUAGE C)
+        set_source_files_properties(
+            ${neon_file} PROPERTIES COMPILE_FLAGS
+            ${FLAGS}
+        )
+    endforeach(neon_file)
+
+    # Add image processing init files.
+    set(NE10_IMGPROC_INIT_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_init_imgproc.c
+    )
+
+    # Add image processing files
+    set(NE10_INIT_SRCS ${NE10_INIT_SRCS} ${NE10_IMGPROC_INIT_SRCS})
+    set(NE10_C_SRCS ${NE10_C_SRCS} ${NE10_IMGPROC_C_SRCS})
+    set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_IMGPROC_NEON_SRCS})
 endif()
 
 include_directories (
