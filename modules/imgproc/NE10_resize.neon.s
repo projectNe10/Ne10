@@ -262,6 +262,7 @@ sx               .req   r8
 tmp              .req   r12
 pTmp0            .req   r9
 pTmp1            .req   r10
+count            .req   r2
 
 
 /*NEON variale Declaration*/
@@ -281,6 +282,11 @@ dS1_4567         .dn   d17
 qDst0_0123       .qn   q9
 qDst1_0123       .qn   q10
 
+
+                     subs        tmp, count, #1
+                     beq         HResize4Count1
+HResize4Count2:
+
                      ldr         pS0, [pSrc], #4
                      ldr         pS1, [pSrc]
                      ldr         pD0, [pDst], #4
@@ -296,7 +302,7 @@ qDst1_0123       .qn   q10
                      sub         dwidth, dwidth, xmax    /* calculate the residual */
 
                      subs        xmax, xmax, #4
-                     blt         HResize4ResidualLoop
+                     blt         HResize4ResidualLoop2
 
                      ldr         sx, [pXofs], #16     /* for 4 channels only, xofs is changed based on channels */
                      add         pTmp0, pS0, sx     /* find the address of starting element */
@@ -305,7 +311,7 @@ qDst1_0123       .qn   q10
                      vld1.8      {dS0_01234567}, [pTmp0]
                      vld1.8      {dS1_01234567}, [pTmp1]
 
-HResize4MainLoop:
+HResize4MainLoop2:
 
                      vmovl.u8    qS0_01234567, dS0_01234567
                      vmovl.u8    qS1_01234567, dS1_01234567
@@ -326,11 +332,12 @@ HResize4MainLoop:
                      vld1.8      {dS1_01234567}, [pTmp1]
 
                      subs        xmax, xmax, #4
-                     bge         HResize4MainLoop
+                     bge         HResize4MainLoop2
 
-                     cbz         dwidth, HResize4End
+                     cmp         dwidth, #0
+                     beq         HResize4End
 
-HResize4ResidualLoop:
+HResize4ResidualLoop2:
 
                      vmovl.u8    qS0_01234567, dS0_01234567
                      vmovl.u8    qS1_01234567, dS1_01234567
@@ -348,7 +355,64 @@ HResize4ResidualLoop:
                      vld1.8      {dS1_01234567}, [pTmp1]
 
                      subs        dwidth, dwidth, #4
-                     bgt         HResize4ResidualLoop
+                     bgt         HResize4ResidualLoop2
+
+                     b           HResize4End
+
+HResize4Count1:
+
+                     ldr         pS0, [pSrc], #4
+                     ldr         pD0, [pDst], #4
+
+                     mov         tmp, INTER_RESIZE_COEF_SCALE
+                     vdup.16     dCoeff, tmp
+
+                     mov         pXofs, pIn3
+                     ldr         pAlpha, [sp, #32]
+                     ldr         dwidth, [sp, #40]
+                     ldr         xmax, [sp, #52]
+                     sub         dwidth, dwidth, xmax    /* calculate the residual */
+
+                     subs        xmax, xmax, #4
+                     blt         HResize4ResidualLoop1
+
+                     ldr         sx, [pXofs], #16     /* for 4 channels only, xofs is changed based on channels */
+                     add         pTmp0, pS0, sx     /* find the address of starting element */
+                     vld2.16     {dAlpha_0, dAlpha_1}, [pAlpha]! /* alpha is repeated based on channels */
+                     vld1.8      {dS0_01234567}, [pTmp0]
+
+HResize4MainLoop1:
+
+                     vmovl.u8    qS0_01234567, dS0_01234567
+
+                     vmull.u16   qDst0_0123, dS0_0123, dAlpha_0
+                     vmlal.u16   qDst0_0123, dS0_4567, dAlpha_1
+
+                     vst1.32     {qDst0_0123}, [pD0]!
+
+                     ldr         sx, [pXofs], #16     /* for 4 channels only, xofs is changed based on channels */
+                     add         pTmp0, pS0, sx     /* find the address of starting element */
+                     vld2.16     {dAlpha_0, dAlpha_1}, [pAlpha]! /* alpha is repeated based on channels */
+                     vld1.8      {dS0_01234567}, [pTmp0]
+
+                     subs        xmax, xmax, #4
+                     bge         HResize4MainLoop1
+
+                     cbz         dwidth, HResize4End
+
+HResize4ResidualLoop1:
+
+                     vmovl.u8    qS0_01234567, dS0_01234567
+                     vmull.u16   qDst0_0123, dS0_0123, dCoeff
+
+                     vst1.32     {qDst0_0123}, [pD0]!
+
+                     ldr         sx, [pXofs], #16     /* for 4 channels only, xofs is changed based on channels */
+                     add         pTmp0, pS0, sx     /* find the address of starting element */
+                     vld1.8      {dS0_01234567}, [pTmp0]
+
+                     subs        dwidth, dwidth, #4
+                     bgt         HResize4ResidualLoop1
 
 HResize4End:
                      /*Return From Function*/
