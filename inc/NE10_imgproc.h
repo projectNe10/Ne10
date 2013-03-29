@@ -60,7 +60,6 @@ extern "C" {
                                            ne10_int32_t cn,
                                            ne10_int32_t xmin,
                                            ne10_int32_t xmax);
-
     /* NEON version*/
     extern void ne10_vresize_neon (const ne10_int32_t** src,
                                    ne10_uint8_t* dst,
@@ -76,6 +75,24 @@ extern "C" {
             ne10_int32_t cn,
             ne10_int32_t xmin,
             ne10_int32_t xmax);
+
+    /* image rotate functions*/
+    /* function pointers*/
+    extern void (*ne10_img_rotate_get_quad_rangle_subpix) (unsigned char* dst,
+            const unsigned char* src,
+            int swidth,
+            int sheight,
+            int dwidth,
+            int dheight,
+            float* matrix);
+    /* NEON version*/
+    extern void ne10_img_rotate_get_quad_rangle_subpix_neon (unsigned char* dst,
+            const unsigned char* src,
+            int swidth,
+            int sheight,
+            int dwidth,
+            int dheight,
+            float* matrix);
 
 #ifdef __cplusplus
 }

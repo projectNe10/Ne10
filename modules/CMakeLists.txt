@@ -189,6 +189,7 @@ if(NE10_ENABLE_IMGPROC)
     # Add image processing NEON files.
     set(NE10_IMGPROC_NEON_SRCS
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
     )
 
     # Tell CMake these files need to go to the C compiler
