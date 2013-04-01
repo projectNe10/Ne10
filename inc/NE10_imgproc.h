@@ -78,21 +78,21 @@ extern "C" {
 
     /* image rotate functions*/
     /* function pointers*/
-    extern void (*ne10_img_rotate_get_quad_rangle_subpix) (unsigned char* dst,
-            const unsigned char* src,
-            int swidth,
-            int sheight,
-            int dwidth,
-            int dheight,
-            float* matrix);
+    extern void (*ne10_img_rotate_get_quad_rangle_subpix) (ne10_uint8_t* dst,
+            const ne10_uint8_t* src,
+            ne10_int32_t swidth,
+            ne10_int32_t sheight,
+            ne10_int32_t dwidth,
+            ne10_int32_t dheight,
+            ne10_float32_t* matrix);
     /* NEON version*/
-    extern void ne10_img_rotate_get_quad_rangle_subpix_neon (unsigned char* dst,
-            const unsigned char* src,
-            int swidth,
-            int sheight,
-            int dwidth,
-            int dheight,
-            float* matrix);
+    extern void ne10_img_rotate_get_quad_rangle_subpix_neon (ne10_uint8_t* dst,
+            const ne10_uint8_t* src,
+            ne10_int32_t swidth,
+            ne10_int32_t sheight,
+            ne10_int32_t dwidth,
+            ne10_int32_t dheight,
+            ne10_float32_t* matrix);
 
 #ifdef __cplusplus
 }

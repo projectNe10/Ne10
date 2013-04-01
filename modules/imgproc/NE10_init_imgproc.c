@@ -60,10 +60,10 @@ void (*ne10_hresize_4channels) (const ne10_uint8_t** src,
                                 ne10_int32_t xmin,
                                 ne10_int32_t xmax);
 
-void (*ne10_img_rotate_get_quad_rangle_subpix) (unsigned char* dst,
-        const unsigned char* src,
-        int swidth,
-        int sheight,
-        int dwidth,
-        int dheight,
-        float* matrix);
+void (*ne10_img_rotate_get_quad_rangle_subpix) (ne10_uint8_t* dst,
+        const ne10_uint8_t* src,
+        ne10_int32_t swidth,
+        ne10_int32_t sheight,
+        ne10_int32_t dwidth,
+        ne10_int32_t dheight,
+        ne10_float32_t* matrix);
