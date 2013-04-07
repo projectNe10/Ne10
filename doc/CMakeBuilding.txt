@@ -37,6 +37,7 @@ First download and install cmake from cmake.org.
 In Ubuntu, you can install cmake by "sudo apt-get install cmake"
 
 ---------------------------NATIVE-COMPILING------------------------------
+=Unix platforms=:
 For Unix platforms, say the following on a terminal: (Replace $NE10PATH with the directory where this file is located.)
     cd $NE10PATH
     mkdir build && cd build
@@ -45,11 +46,15 @@ For Unix platforms, say the following on a terminal: (Replace $NE10PATH with the
 Then the libNE10.a is placed in ./modules/ and a sample program "NE10_test_static" is placed in ./samples/. you can run it.
 You might want to add -DNE10_BUILD_SHARED=ON to the cmake call to generate the dynamic library and test program "NE10_test_dynamic".
 
+=Android platforms=:
+it's not common do native compiling on android, Ne10 also doesn't support it.
+
 ---------------------------CROSS-COMPILING------------------------------
-For cross-compiling, the process is in the following:
+=Unix platforms=:
+For cross-compiling for unix platforms, the process is in the following:
     cd $NE10PATH
 
-Open the config.cmake and change the compiler toolchain to yourself.My toolchain is Linaro GCC 4.6.
+Open the GNUlinux_config.cmake and change the compiler toolchain to yourself.My toolchain is Linaro GCC 4.6.
 In Ubuntu 11.10 you can install it by "sudo apt-get install gcc-arm-linux-gnueabi".
     set( CMAKE_C_COMPILER arm-linux-gnueabi-gcc )
     set( CMAKE_CXX_COMPILER arm-linux-gnueabi-g++ )
@@ -63,7 +68,7 @@ In Ubuntu 11.10 you can install it by "sudo apt-get install gcc-arm-linux-gnueab
 
 Now you can use the following commands to generate makefile.
     mkdir build && cd build
-    cmake -DCMAKE_TOOLCHAIN_FILE=../config.cmake ..
+    cmake -DCMAKE_TOOLCHAIN_FILE=../GNUlinux_config.cmake ..
     make
 
 Then the libNE10.a is placed in ./modules/ and a sample program "NE10_test_static" is placed in ./samples/. you can copy these to the target and run it.
@@ -74,6 +79,18 @@ When you run NE10_test_dynamic on the target, you might meet the error:
     "NE10_test_dynamic: error while loading shared libraries: libNE10_shared.so.10: cannot open shared object file: No such file or directory"
 You can run the following command:
     export LD_LIBRARY_PATH=$NE10PATH/build/modules
+
+=Android platforms=:
+For cross-compiling for android, the note to Unix platforms also applies and before cross-compiling, you must have the android NDK installed. And then:
+   cd $NE10PATH
+   export ANDROID_NDK=/absolute/path/of/android-ndk
+   mkdir build && cd build
+   cmake -DCMAKE_TOOLCHAIN_FILE=path/of/android_config.cmake ..
+   make
+
+There are also two other environment variable:
+   ANDROID_API_LEVEL: used to specify android api level, default value is: 14
+   ARM_ANDROID_TOOLCHAIN_VERSION: used be specify gcc version, default is: 4.6, gcc version must be >=4.6
 
 ---------------------------UNIT TEST------------------------------
 

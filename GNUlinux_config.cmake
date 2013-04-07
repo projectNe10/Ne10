@@ -1,5 +1,5 @@
 #
-#  Copyright 2011-12 ARM Limited
+#  Copyright 2013 ARM Limited
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -25,13 +25,12 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-set( CMAKE_C_COMPILER arm-linux-gnueabi-gcc )
-set( CMAKE_CXX_COMPILER arm-linux-gnueabi-g++ )
-set( CMAKE_ASM_COMPILER arm-linux-gnueabi-as )
+set(GNULINUX_PLATFORM ON)
+set(CMAKE_C_COMPILER arm-linux-gnueabi-gcc)
+set(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
+set(CMAKE_ASM_COMPILER arm-linux-gnueabi-as)
 
 find_program(CMAKE_AR NAMES "arm-linux-gnueabi-ar")
 mark_as_advanced(CMAKE_AR)
-
 find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabi-ranlib")
 mark_as_advanced(CMAKE_RANLIB)
-
