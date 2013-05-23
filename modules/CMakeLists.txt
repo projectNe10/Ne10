@@ -240,6 +240,8 @@ if(NE10_BUILD_SHARED)
         ${NE10_INIT_SRCS}
     )
 
+    target_link_libraries(NE10_shared m)
+
     set_target_properties(NE10_shared PROPERTIES
         OUTPUT_NAME "NE10"
         CLEAN_DIRECT_OUTPUT 1
@@ -258,6 +260,8 @@ if(NE10_BUILD_SHARED)
         CLEAN_DIRECT_OUTPUT 1
         VERSION ${NE10_VERSION}
     )
+
+    target_link_libraries(NE10_test m)
 
 endif()
 

@@ -34,13 +34,18 @@ option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 
 #unit test options
 option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
-if (NE10_BUILD_UNIT_TEST)
+if(NE10_BUILD_UNIT_TEST)
     #decide the test is smoke, regression or performance test, only one of three options is ON!
     option(NE10_SMOKE_TEST "Run smoke test" OFF)
     option(NE10_REGRESSION_TEST "Run regression test" OFF)
     option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
 
     option(NE10_DEBUG_TRACE "Print debug trace" OFF)
+endif()
+
+#check if proper platform is set.
+if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM))
+    message(FATAL_ERROR "No platform is defined! see CMakeBuilding.txt under doc for details.")
 endif()
 
 #select functionalities to be compiled
@@ -51,10 +56,19 @@ option(NE10_ENABLE_IMGPROC "Build image processing functionalities to NE10" ON)
 set(NE10_VERSION 10)
 
 # set complile flags for ARM.
-set( CMAKE_C_FLAGS "-O2 -mthumb-interwork -march=armv7-a -mcpu=cortex-a9 -mfpu=vfp3" )
-
-set( CMAKE_ASM_FLAGS "-mthumb-interwork -march=armv7-a -mcpu=cortex-a9 -mfpu=neon" )
-
+if(ANDROID_PLATFORM)
+    set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
+    set(CMAKE_ASM_FLAGS "-mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
+    message("loaded toolchain:
+    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-gcc
+    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-g++
+    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-as
+    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ar
+    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ranlib")
+elseif(GNULINUX_PLATFORM)
+    set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3")
+    set(CMAKE_ASM_FLAGS "-mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+endif()
 # The NE10 library.
 add_subdirectory(modules)
 
