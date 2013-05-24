@@ -62,12 +62,20 @@ if(NE10_ENABLE_MATH)
 
     if(NE10_BUILD_STATIC)
         add_executable(NE10_math_unit_test_static ${NE10_TEST_MATH_SRCS} ${NE10_TEST_COMMON_SRCS})
-        target_link_libraries (
-            NE10_math_unit_test_static
-            NE10
-            m
-            rt
-        )
+        if(ANDROID_PLATFORM)
+            target_link_libraries (
+                NE10_math_unit_test_static
+                NE10
+                m
+            )
+        elseif(GNULINUX_PLATFORM)
+            target_link_libraries (
+                NE10_math_unit_test_static
+                NE10
+                m
+                rt
+            )
+        endif()
         if(NE10_SMOKE_TEST)
             set_target_properties(NE10_math_unit_test_static PROPERTIES
                 OUTPUT_NAME "NE10_math_unit_test_smoke"
@@ -81,7 +89,6 @@ if(NE10_ENABLE_MATH)
                 OUTPUT_NAME "NE10_math_unit_test_performance"
             )
         endif()
-
     endif()
 endif()
 
@@ -101,12 +108,20 @@ if(NE10_ENABLE_DSP)
 
     if(NE10_BUILD_STATIC)
         add_executable(NE10_dsp_unit_test_static ${NE10_TEST_DSP_SRCS} ${NE10_TEST_COMMON_SRCS})
-        target_link_libraries (
-            NE10_dsp_unit_test_static
-            NE10
-            m
-            rt
-        )
+        if(ANDROID_PLATFORM)
+            target_link_libraries (
+                NE10_dsp_unit_test_static
+                NE10
+                m
+            )
+        elseif(GNULINUX_PLATFORM)
+            target_link_libraries (
+                NE10_dsp_unit_test_static
+                NE10
+                m
+                rt
+            )
+        endif()
         if(NE10_SMOKE_TEST)
             set_target_properties(NE10_dsp_unit_test_static PROPERTIES
                 OUTPUT_NAME "NE10_dsp_unit_test_smoke"

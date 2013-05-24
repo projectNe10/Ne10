@@ -4,7 +4,7 @@ See http://projectne10.github.com/Ne10/
 
 Build
 =====
-See CMakeBuilding.txt file in the "doc" folder
+See CMakeBuilding.txt file in the "doc" folder, CMakeBuilding.txt also includes doc for android support.
 
 documentation
 =============
