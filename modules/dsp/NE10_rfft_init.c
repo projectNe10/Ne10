@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -26,6 +26,7 @@
  */
 
 #include "NE10_types.h"
+#include "NE10_dsp.h"
 
 /*
 * @brief  Twiddle factors Table

@@ -1,5 +1,5 @@
 @
-@  Copyright 2011-12 ARM Limited
+@  Copyright 2011-13 ARM Limited
 @  All rights reserved.
 @
 @  Redistribution and use in source and binary forms, with or without
@@ -63,10 +63,10 @@ ne10_identitymat_2x2f_neon:
         and               r2, r1, #3          @ r2 = count % 4;
         sub               r1, r1, r2          @ count = count - r1; This is what's left to be processed after this loop
 
-        vmov.f32              d2, 0.0
-        vmov.f32              d3, 0.0
-        vmov.f32              d0, 1.0
-        vmov.f32              d1, 1.0
+        vmov.f32              d2, #0.0
+        vmov.f32              d3, #0.0
+        vmov.f32              d0, #1.0
+        vmov.f32              d1, #1.0
 
 
         vmov              q3, q0
@@ -132,10 +132,10 @@ ne10_identitymat_3x3f_neon:
         and               r2, r1, #3          @ r1 = count % 4;
         sub               r1, r1, r2          @ count = count - r1; This is what's left to be processed after this loop
 
-        vmov.f32              d2, 0.0
-        vmov.f32              d3, 0.0
-        vmov.f32              d0, 1.0
-        vmov.f32              d1, 1.0
+        vmov.f32              d2, #0.0
+        vmov.f32              d3, #0.0
+        vmov.f32              d0, #1.0
+        vmov.f32              d1, #1.0
 
         vmov              q8 , q1
         vmov              q9 , q1
@@ -216,10 +216,10 @@ ne10_identitymat_4x4f_neon:
         and               r2, r1, #3          @ r2 = count % 4;
         sub               r1, r1, r2          @ count = count - r2; This is what's left to be processed after this loop
 
-        vmov.f32              d2, 0.0
-        vmov.f32              d3, 0.0
-        vmov.f32              d0, 1.0
-        vmov.f32              d1, 1.0
+        vmov.f32              d2, #0.0
+        vmov.f32              d3, #0.0
+        vmov.f32              d0, #1.0
+        vmov.f32              d1, #1.0
 
         vmov              q8 , q1
         vmov              q9 , q1

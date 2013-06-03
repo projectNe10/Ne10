@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -328,6 +328,7 @@ static test_config_rfft CONFIG_RFFT[] =
     {128, 0, 1, &testInput_f32[0]},
     {512, 0, 1, &testInput_f32[0]},
 };
+
 static test_config_rfft CONFIG_RFFT_PERF[] =
 {
     {128, 0, 1, &testInput_f32[0]},
@@ -561,7 +562,7 @@ void test_rfft_case0()
         time_neon = time_neon - time_overhead_neon;
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "RFFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", config->fftSize, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "RFFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", config->fftSize, time_c, time_neon, time_savings, time_speedup);
 
         /* IFFT test */
         /* Initialize the RFFT/RIFFT module */
@@ -629,7 +630,7 @@ void test_rfft_case0()
         time_neon = time_neon - time_overhead_neon;
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "RIFFT%20d%20lld%20lld%19.2f%%%18.2f:1\n", config->fftSize, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "RIFFT%20d%20lld%20lld%19.2f%%%18.2f:1\n", config->fftSize, time_c, time_neon, time_savings, time_speedup);
     }
 #endif
 

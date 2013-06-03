@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -165,7 +165,7 @@ void test_abs_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -266,7 +266,7 @@ void test_addc_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -368,7 +368,7 @@ void test_add_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -464,7 +464,7 @@ void test_cross_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -566,7 +566,7 @@ void test_divc_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -668,7 +668,7 @@ void test_div_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -768,7 +768,7 @@ void test_dot_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -864,7 +864,7 @@ void test_len_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -969,7 +969,7 @@ void test_mlac_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_acc);
@@ -1076,7 +1076,7 @@ void test_mla_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_acc);
@@ -1179,7 +1179,7 @@ void test_mulc_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -1281,7 +1281,7 @@ void test_mul_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -1377,7 +1377,7 @@ void test_normalize_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -1478,7 +1478,7 @@ void test_rsbc_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -1577,7 +1577,7 @@ void test_setc_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_cst);
@@ -1678,7 +1678,7 @@ void test_subc_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -1780,7 +1780,7 @@ void test_sub_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -1880,7 +1880,7 @@ void test_addmat_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -1976,7 +1976,7 @@ void test_detmat_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -2060,7 +2060,7 @@ void test_identitymat_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_dst_c);
@@ -2154,7 +2154,7 @@ void test_invmat_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -2253,7 +2253,7 @@ void test_mulmat_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -2353,7 +2353,7 @@ void test_submat_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -2449,7 +2449,7 @@ void test_transmat_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);
@@ -2551,7 +2551,7 @@ void test_mulcmatvec_case0()
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
     }
 
     free (perftest_guarded_src1);

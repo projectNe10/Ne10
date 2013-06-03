@@ -64,7 +64,8 @@ extern "C" {
     extern void ne10_vresize_neon (const ne10_int32_t** src,
                                    ne10_uint8_t* dst,
                                    const ne10_int16_t* beta,
-                                   ne10_int32_t width);
+                                   ne10_int32_t width)
+        asm ("ne10_vresize_neon");
     extern void ne10_hresize_4channels_neon (const ne10_uint8_t** src,
             ne10_int32_t** dst,
             ne10_int32_t count,
@@ -74,7 +75,7 @@ extern "C" {
             ne10_int32_t dwidth,
             ne10_int32_t cn,
             ne10_int32_t xmin,
-            ne10_int32_t xmax);
+            ne10_int32_t xmax) asm ("ne10_hresize_4channels_neon");
 
     /* image rotate functions*/
     /* function pointers*/
@@ -92,7 +93,8 @@ extern "C" {
             ne10_int32_t sheight,
             ne10_int32_t dwidth,
             ne10_int32_t dheight,
-            ne10_float32_t* matrix);
+            ne10_float32_t* matrix)
+        asm ("ne10_img_rotate_get_quad_rangle_subpix_neon");
 
 #ifdef __cplusplus
 }

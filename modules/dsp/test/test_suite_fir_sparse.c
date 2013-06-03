@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -339,7 +339,7 @@ void test_fir_sparse_case0()
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%20d,%4d%20lld%20lld%19.2f%%%18.2f:1\n", config->blockSize, config->numTaps, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%20d,%4d%20lld%20lld%19.2f%%%18.2f:1\n", config->numTaps, time_c, time_neon, time_savings, time_speedup);
     }
 #endif
 

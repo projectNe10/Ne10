@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -26,6 +26,7 @@
  */
 
 #include "NE10_types.h"
+#include "NE10_math.h"
 
 ne10_result_t ne10_submat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count)
 {

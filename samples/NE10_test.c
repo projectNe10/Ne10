@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -88,7 +88,7 @@ void test_add2 (void)
  * @param[in]  none
  * @return none.
  */
-void main()
+int main()
 {
     ne10_result_t status;
     printf ("Going to initialze NE10...\n");

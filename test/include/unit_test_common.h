@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -131,5 +131,16 @@ extern int EQUALS_FLOAT( ne10_float32_t fa, ne10_float32_t fb , ne10_uint32_t er
 extern int GUARD_ARRAY( ne10_float32_t* array, ne10_uint32_t array_length );
 extern int CHECK_ARRAY_GUARD( ne10_float32_t* array, ne10_uint32_t array_length );
 extern ne10_float32_t CAL_SNR_FLOAT32(ne10_float32_t *pRef, ne10_float32_t *pTest, ne10_uint32_t buffSize);
+
+extern char ne10_log_buffer[];
+extern char *ne10_log_buffer_ptr;
+extern void ne10_log(const char *func_name,
+                     const char *format_str,
+                     ne10_int32_t n,
+                     ne10_int32_t time_c,
+                     ne10_int32_t time_neon,
+                     ne10_float32_t time_savings,
+                     ne10_float32_t time_speedup);
+
 #endif // __UNIT_TEST_COMMON
 

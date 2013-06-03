@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -200,3 +200,22 @@ ne10_float32_t CAL_SNR_FLOAT32 (ne10_float32_t *pRef, ne10_float32_t *pTest, ne1
 
 }
 
+char ne10_log_buffer[1000];
+char *ne10_log_buffer_ptr;
+
+void ne10_log(const char *func_name,
+              const char *format_str,
+              ne10_int32_t n,
+              ne10_int32_t time_c,
+              ne10_int32_t time_neon,
+              ne10_float32_t time_savings,
+              ne10_float32_t time_speedup)
+{
+    int byte_count = 0;
+
+    byte_count = sprintf(ne10_log_buffer_ptr,
+                         "{ \"name\" : \"%s %d\", \"time_c\" : %d, "
+                         "\"time_neon\" : %d },",
+                         func_name, n, time_c, time_neon);
+    ne10_log_buffer_ptr += byte_count;
+}

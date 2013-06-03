@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -191,6 +191,7 @@ static test_config CONFIG[] =
     {64, 3, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
     {64, 1, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
 };
+
 static test_config CONFIG_PERF[] =
 {
     {32, 3, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
@@ -339,7 +340,7 @@ void test_fir_lattice_case0()
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "%20d,%4d%20lld%20lld%19.2f%%%18.2f:1\n", config->blockSize, config->numTaps, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "%20d,%4d%20lld%20lld%19.2f%%%18.2f:1\n", config->numTaps, time_c, time_neon, time_savings, time_speedup);
     }
 #endif
 

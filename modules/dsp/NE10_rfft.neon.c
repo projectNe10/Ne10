@@ -32,7 +32,7 @@
 
 #include "NE10_types.h"
 #include "NE10_mask_table.h"
-
+#include "NE10_dsp.h"
 /**
  * @brief  Core Real FFT process
  * @param[in]   *pSrc                points to the Input buffer

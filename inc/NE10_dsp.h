@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -96,13 +96,15 @@ extern "C" {
     extern void ne10_radix4_butterfly_float_neon (ne10_float32_t *pDst,
             ne10_float32_t *pSrc,
             ne10_uint16_t N,
-            ne10_float32_t *pCoef);
+            ne10_float32_t *pCoef)
+    asm ("ne10_radix4_butterfly_float_neon");
 
     extern void ne10_radix4_butterfly_inverse_float_neon (ne10_float32_t *pDst,
             ne10_float32_t *pSrc,
             ne10_uint16_t N,
             ne10_float32_t *pCoef,
-            ne10_float32_t onebyN);
+            ne10_float32_t onebyN)
+    asm ("ne10_radix4_butterfly_inverse_float_neon");
     /** @} */ //end of CFFT_CIFFT group
 
 
@@ -110,7 +112,6 @@ extern "C" {
                                       ne10_float32_t * pSrc,
                                       ne10_float32_t * pDst,
                                       ne10_float32_t * pTemp);
-
 
     /* fir functions*/
 
@@ -213,7 +214,8 @@ extern "C" {
     extern void ne10_fir_float_neon (const ne10_fir_instance_f32_t * S,
                                      ne10_float32_t * pSrc,
                                      ne10_float32_t * pDst,
-                                     ne10_uint32_t blockSize);
+                                     ne10_uint32_t blockSize)
+    asm ("ne10_fir_float_neon");
     /** @} */ //end of FIR group
 
     /**
@@ -223,8 +225,8 @@ extern "C" {
     extern void ne10_fir_decimate_float_neon (const ne10_fir_decimate_instance_f32_t * S,
             ne10_float32_t *pSrc,
             ne10_float32_t *pDst,
-            ne10_uint32_t blockSize);
-    /** @} */ //end of FIR_Decimate group
+            ne10_uint32_t blockSize) asm ("ne10_fir_decimate_float_neon");
+    /** @} */ //end of FIR_decimate group
 
     /**
      * @addtogroup FIR_Interpolate
@@ -233,7 +235,7 @@ extern "C" {
     extern void ne10_fir_interpolate_float_neon (const ne10_fir_interpolate_instance_f32_t * S,
             ne10_float32_t *pSrc,
             ne10_float32_t *pDst,
-            ne10_uint32_t blockSize);
+            ne10_uint32_t blockSize) asm ("ne10_fir_interpolate_float_neon");
     /** @} */ //end of FIR_interpolate group
 
     /**
@@ -243,7 +245,7 @@ extern "C" {
     extern void ne10_fir_lattice_float_neon (const ne10_fir_lattice_instance_f32_t * S,
             ne10_float32_t * pSrc,
             ne10_float32_t * pDst,
-            ne10_uint32_t blockSize);
+            ne10_uint32_t blockSize) asm ("ne10_fir_lattice_float_neon");
     /** @} */ //end of FIR_Lattice group
 
     /**
@@ -254,7 +256,8 @@ extern "C" {
                                             ne10_float32_t * pSrc,
                                             ne10_float32_t * pDst,
                                             ne10_float32_t * pScratch,
-                                            ne10_uint32_t blockSize);
+                                            ne10_uint32_t blockSize)
+    asm ("ne10_fir_sparse_float_neon");
     /** @} */ //end of FIR_sparse group
 
 
@@ -290,7 +293,7 @@ extern "C" {
     extern void ne10_iir_lattice_float_neon (const ne10_iir_lattice_instance_f32_t * S,
             ne10_float32_t * pSrc,
             ne10_float32_t * pDst,
-            ne10_uint32_t blockSize);
+            ne10_uint32_t blockSize) asm ("ne10_iir_lattice_float_neon");
     /** @} */ //end of IIR_Lattice group
 #ifdef __cplusplus
 }

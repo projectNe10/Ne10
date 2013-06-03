@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -49,7 +49,7 @@ void my_suite_teardown (void)
     //printf("I'm done after every single test in the suite\r\n");
 }
 
-int main (ne10_int32_t argc, ne10_int8_t** argv)
+int main (ne10_int32_t argc, char** argv)
 {
     suite_setup (my_suite_setup);
     suite_teardown (my_suite_teardown);

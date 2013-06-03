@@ -12,16 +12,16 @@ int seatest_is_string_equal_i(const char* s1, const char* s2)
 #include <time.h>
 long long GetTickCount() //{ return 0;}
 {
-#if 1
-    struct timespec tv;
-    clock_gettime(CLOCK_MONOTONIC, &tv);
-    return (long long)tv.tv_sec*1000000 + tv.tv_nsec/1000;
-
-#else
+//#ifndef __MACH__
+//    struct timespec tv;
+//    clock_gettime(CLOCK_MONOTONIC, &tv);
+//    return (long long)tv.tv_sec*1000000 + tv.tv_nsec/1000;
+//
+//#else
     struct timeval tv;
     gettimeofday(&tv, NULL);
     return (long long)(tv.tv_sec*1000000 + tv.tv_usec);
-#endif
+//#endif
 }
 void _getch( void ) { }
 int seatest_is_string_equal_i(const char* s1, const char* s2)

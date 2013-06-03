@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -27,6 +27,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 
 #include "NE10.h"
 
@@ -42,14 +43,22 @@ ne10_result_t ne10_HasNEON()
 
 ne10_result_t ne10_init()
 {
+    ne10_result_t status = NE10_ERR;
+#ifndef __MACH__
     FILE*   infofile = NULL;               // To open the file /proc/cpuinfo
     ne10_int8_t    cpuinfo[CPUINFO_BUFFER_SIZE];  // The buffer to read in the string
     ne10_uint32_t  bytes = 0;                     // Numbers of bytes read from the file
     ne10_int32_t     i = 0;                         // Temporary loop counter
-    ne10_result_t status = NE10_ERR;
 
     memset (cpuinfo, 0, CPUINFO_BUFFER_SIZE);
     infofile = fopen ("/proc/cpuinfo", "r");
+
+    if (!infofile)
+    {
+        fprintf(stderr, "ERROR: couldn't read file \"/proc/cpuinfo\".\n");
+        return NE10_ERR;
+    }
+
     bytes    = fread (cpuinfo, 1, sizeof (cpuinfo), infofile);
     fclose (infofile);
 
@@ -61,10 +70,13 @@ ne10_result_t ne10_init()
 
     while ('\0' != cpuinfo[i]) cpuinfo[i++] = (ne10_int8_t) tolower (cpuinfo[i]);
 
-    if (0 != strstr (cpuinfo, "neon"))
+    if (0 != strstr ( (const char *)cpuinfo, "neon"))
     {
         is_NEON_available = NE10_OK;
     }
+#else  //__MACH__
+    is_NEON_available = NE10_OK;
+#endif //__MACH__
 
 #if defined (NE10_ENABLE_MATH)
     status = ne10_init_math (is_NEON_available);

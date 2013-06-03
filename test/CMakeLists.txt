@@ -1,5 +1,5 @@
 #
-#  Copyright 2011-12 ARM Limited
+#  Copyright 2011-13 ARM Limited
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -62,7 +62,7 @@ if(NE10_ENABLE_MATH)
 
     if(NE10_BUILD_STATIC)
         add_executable(NE10_math_unit_test_static ${NE10_TEST_MATH_SRCS} ${NE10_TEST_COMMON_SRCS})
-        if(ANDROID_PLATFORM)
+        if(ANDROID_PLATFORM OR IOS_PLATFORM)
             target_link_libraries (
                 NE10_math_unit_test_static
                 NE10
@@ -76,6 +76,7 @@ if(NE10_ENABLE_MATH)
                 rt
             )
         endif()
+
         if(NE10_SMOKE_TEST)
             set_target_properties(NE10_math_unit_test_static PROPERTIES
                 OUTPUT_NAME "NE10_math_unit_test_smoke"
@@ -105,10 +106,10 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_sparse.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_iir.c
     )
-
+    #TODO add dynamic version of test
     if(NE10_BUILD_STATIC)
         add_executable(NE10_dsp_unit_test_static ${NE10_TEST_DSP_SRCS} ${NE10_TEST_COMMON_SRCS})
-        if(ANDROID_PLATFORM)
+        if(ANDROID_PLATFORM OR IOS_PLATFORM)
             target_link_libraries (
                 NE10_dsp_unit_test_static
                 NE10

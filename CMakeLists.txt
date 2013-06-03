@@ -1,5 +1,5 @@
 #
-#  Copyright 2011-12 ARM Limited
+#  Copyright 2011-13 ARM Limited
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -33,18 +33,18 @@ option(NE10_BUILD_STATIC "Build NE10 static libraries" ON)
 option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 
 #unit test options
-option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
-if(NE10_BUILD_UNIT_TEST)
+option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" ON)
+if (NE10_BUILD_UNIT_TEST)
     #decide the test is smoke, regression or performance test, only one of three options is ON!
     option(NE10_SMOKE_TEST "Run smoke test" OFF)
     option(NE10_REGRESSION_TEST "Run regression test" OFF)
-    option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
+    option(NE10_PERFORMANCE_TEST "Run performance test" ON)
 
     option(NE10_DEBUG_TRACE "Print debug trace" OFF)
 endif()
 
 #check if proper platform is set.
-if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM))
+if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM) AND (NOT IOS_PLATFORM))
     message(FATAL_ERROR "No platform is defined! see CMakeBuilding.txt under doc for details.")
 endif()
 
@@ -68,7 +68,11 @@ if(ANDROID_PLATFORM)
 elseif(GNULINUX_PLATFORM)
     set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "-mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+elseif(IOS_PLATFORM)
+    set(CMAKE_C_FLAGS "-O2 -arch armv7 -arch armv7s -mfpu=vfp3")
+    set(CMAKE_ASM_FLAGS "-arch armv7 -arch armv7s -mfpu=neon")
 endif()
+
 # The NE10 library.
 add_subdirectory(modules)
 
@@ -79,4 +83,3 @@ endif()
 if(NE10_BUILD_UNIT_TEST)
     add_subdirectory(test)
 endif()
-

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -72,7 +72,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_addc_float) (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
-    extern ne10_result_t ne10_addc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
+    extern ne10_result_t ne10_addc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count) asm ("ne10_addc_float_neon");
     extern ne10_result_t ne10_addc_float_asm (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     /**
      * Adds a constant 2D vector to all of the vectors in an input array and stores the results in an output array.
@@ -84,7 +84,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_addc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-    extern ne10_result_t ne10_addc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+    extern ne10_result_t ne10_addc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec2f_neon");
     extern ne10_result_t ne10_addc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
      * Adds a constant 3D vector to all of the vectors in an input array and stores the results in an output array.
@@ -96,7 +96,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_addc_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
-    extern ne10_result_t ne10_addc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
+    extern ne10_result_t ne10_addc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec3f_neon");
     extern ne10_result_t ne10_addc_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     /**
      * Adds a constant 4D vector to all of the vectors in an input array and stores the results in an output array.
@@ -108,7 +108,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_addc_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
-    extern ne10_result_t ne10_addc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
+    extern ne10_result_t ne10_addc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec4f_neon");
     extern ne10_result_t ne10_addc_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
 
@@ -122,7 +122,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_add_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_add_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_add_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_add_float_neon");
     extern ne10_result_t ne10_add_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
      * Vector addition of two 2D vectors.
@@ -134,7 +134,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_add_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_add_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_add_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec2f_neon");
     extern ne10_result_t ne10_add_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
      * Vector addition of two 3D vectors.
@@ -146,7 +146,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_add_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_add_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_add_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec3f_neon");
     extern ne10_result_t ne10_add_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
      * Vector addition of two 4D vectors.
@@ -158,7 +158,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_add_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_add_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_add_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec4f_neon");
     extern ne10_result_t ne10_add_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Vector Add group
 
@@ -292,7 +292,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_sub_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_sub_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_sub_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_sub_float_neon");
     extern ne10_result_t ne10_sub_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
      * Vector subtraction of two 2D vectors.
@@ -304,7 +304,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_sub_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_sub_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_sub_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec2f_neon");
     extern ne10_result_t ne10_sub_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
      * Vector subtraction of two 3D vectors.
@@ -316,7 +316,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_sub_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_sub_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_sub_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec3f_neon");
     extern ne10_result_t ne10_sub_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
      * Vector subtraction of two 4D vectors.
@@ -328,7 +328,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_sub_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_sub_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_sub_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec4f_neon");
     extern ne10_result_t ne10_sub_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Vector Sub group
 
@@ -490,7 +490,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-    extern ne10_result_t ne10_mulc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+  extern ne10_result_t ne10_mulc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
      * Multiplies the components of 3D vectors in an input array by the components of a constant 3D vector and stores the results in an output array.
@@ -527,7 +527,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mul_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mul_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_mul_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_mul_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_mul_float_neon");
     extern ne10_result_t ne10_mul_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
      * Multiplies the components of a 2D vector with the corresponding components of another.
@@ -539,7 +539,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vmul_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vmul_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vmul_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec2f_neon");
     extern ne10_result_t ne10_vmul_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
      * Multiplies the components of a 3D vector with the corresponding components of another.
@@ -551,7 +551,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vmul_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vmul_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vmul_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec3f_neon");
     extern ne10_result_t ne10_vmul_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
      * Multiplies the components of a 4D vector with the corresponding components of another.
@@ -563,7 +563,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vmul_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vmul_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vmul_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec4f_neon");
     extern ne10_result_t ne10_vmul_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Vector Multiply group
 
@@ -651,7 +651,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mla_float) (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mla_float_c (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_mla_float_neon (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_mla_float_neon (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_mla_float_neon");
     extern ne10_result_t ne10_mla_float_asm (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
      * Performs a multiply and accumulate operation on the components of a 2D vector with the corresponding components of another.
@@ -663,7 +663,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vmla_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vmla_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vmla_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec2f_neon");
     extern ne10_result_t ne10_vmla_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
      * Performs a multiply and accumulate operation on the components of a 3D vector with the corresponding components of another.
@@ -675,7 +675,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vmla_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vmla_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vmla_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec3f_neon");
     extern ne10_result_t ne10_vmla_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
      * Performs a multiply and accumulate operation on the components of a 4D vector with the corresponding components of another.
@@ -687,7 +687,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vmla_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vmla_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vmla_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec4f_neon");
     extern ne10_result_t ne10_vmla_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Vector Multiply-Accumulator group
 
@@ -717,7 +717,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mulmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_mulmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_mulmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count) asm ("ne10_mulmat_4x4f_neon");
     extern ne10_result_t ne10_mulmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
 
     /**
@@ -730,7 +730,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_mulmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_mulmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count) asm ("ne10_mulmat_3x3f_neon");
     extern ne10_result_t ne10_mulmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
 
     /**
@@ -743,7 +743,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mulmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_mulmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_mulmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count) asm ("ne10_mulmat_2x2f_neon");
     extern ne10_result_t ne10_mulmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Matrix Multiply group
 
@@ -772,7 +772,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulcmatvec_cm4x4f_v4f) (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_c (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_neon (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_neon (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm4x4f_v4f_neon");
     extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_asm (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
     /**
      * Matrix multiplication of 3x3 matrix and 3D vector.
@@ -784,7 +784,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulcmatvec_cm3x3f_v3f) (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_c (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_neon (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_neon (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm3x3f_v3f_neon");
     extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_asm (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
      * Matrix multiplication of 2x2 matrix and 2D vector.
@@ -796,7 +796,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulcmatvec_cm2x2f_v2f) (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_c (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_neon (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_neon (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm2x2f_v2f_neon");
     extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_asm (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
 
     /** @} */ //end of Matrix Vector Multiply group
@@ -875,7 +875,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_div_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_div_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_div_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_div_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_div_float_neon");
     extern ne10_result_t ne10_div_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
      * Divides the components of a 2D vector with the corresponding components of another.
@@ -887,7 +887,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vdiv_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vdiv_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vdiv_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec2f_neon");
     extern ne10_result_t ne10_vdiv_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
      * Divides the components of a 3D vector with the corresponding components of another.
@@ -899,7 +899,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vdiv_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vdiv_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vdiv_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec3f_neon");
     extern ne10_result_t ne10_vdiv_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
      * Divides the components of a 4D vector with the corresponding components of another.
@@ -911,7 +911,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_vdiv_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_vdiv_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_vdiv_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec4f_neon");
     extern ne10_result_t ne10_vdiv_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Vector Div group
 
@@ -941,7 +941,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_divmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_divmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_divmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_4x4f_neon");
     extern ne10_result_t ne10_divmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     /**
      * Divides the components of a 3x3 matrix with the corresponding components of another.
@@ -953,7 +953,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_divmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_divmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_divmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_3x3f_neon");
     extern ne10_result_t ne10_divmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     /**
      * Divides the components of a 2x2 matrix with the corresponding components of another.
@@ -965,7 +965,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_divmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_divmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_divmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_2x2f_neon");
     extern ne10_result_t ne10_divmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Matrix Div group
 
@@ -1055,7 +1055,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_len_vec2f) (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec2f_c (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_len_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_len_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_len_vec2f_neon");
     extern ne10_result_t ne10_len_vec2f_asm (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /**
      * Returns length of 3D vectors in corresponding elements of the output array.
@@ -1066,7 +1066,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_len_vec3f) (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec3f_c (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_len_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_len_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_len_vec3f_neon");
     extern ne10_result_t ne10_len_vec3f_asm (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
      * Returns length of 4D vectors in corresponding elements of the output array.
@@ -1077,7 +1077,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_len_vec4f) (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec4f_c (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_len_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_len_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_len_vec4f_neon");
     extern ne10_result_t ne10_len_vec4f_asm (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** @} */ //end of Vector Len group
 
@@ -1106,7 +1106,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_normalize_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_normalize_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_normalize_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec2f_neon");
     extern ne10_result_t ne10_normalize_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /**
      * Normalizes 3D vectors of the input array and stores them in the corresponding elements of the output array.
@@ -1117,7 +1117,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_normalize_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_normalize_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_normalize_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec3f_neon");
     extern ne10_result_t ne10_normalize_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
      * Normalizes 4D vectors of the input array and stores them in the corresponding elements of the output array.
@@ -1128,7 +1128,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_normalize_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_normalize_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_normalize_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec4f_neon");
     extern ne10_result_t ne10_normalize_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** @} */ //end of Vector Normalize group
 
@@ -1158,7 +1158,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_abs_float) (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_float_c (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count) asm("ne10_abs_float_neon");
     extern ne10_result_t ne10_abs_float_asm (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     /**
      * Generates a 2D vector from the absolute values of each of the components of an input vector.
@@ -1169,7 +1169,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_abs_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_abs_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_abs_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec2f_neon");
     extern ne10_result_t ne10_abs_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /**
      * Generates a 3D vector from the absolute values of each of the components of an input vector.
@@ -1180,7 +1180,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_abs_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_abs_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_abs_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec3f_neon");
     extern ne10_result_t ne10_abs_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
      * Generates a 4D vector from the absolute values of each of the components of an input vector.
@@ -1191,7 +1191,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_abs_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_abs_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_abs_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec4f_neon");
     extern ne10_result_t ne10_abs_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     /** @} */ //end of Vector Abs group
 
@@ -1220,7 +1220,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_dot_vec2f) (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec2f_c (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_dot_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_dot_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec2f_neon");
     extern ne10_result_t ne10_dot_vec2f_asm (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
      * Dot product of two 3D vectors.
@@ -1232,7 +1232,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_dot_vec3f) (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec3f_c (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_dot_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_dot_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec3f_neon");
     extern ne10_result_t ne10_dot_vec3f_asm (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
      * Dot product of two 4D vectors.
@@ -1244,7 +1244,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_dot_vec4f) (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec4f_c (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_dot_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_dot_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec4f_neon");
     extern ne10_result_t ne10_dot_vec4f_asm (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Vector Dot group
 
@@ -1275,7 +1275,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_cross_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_cross_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    extern ne10_result_t ne10_cross_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
+    extern ne10_result_t ne10_cross_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_cross_vec3f_neon");
     extern ne10_result_t ne10_cross_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /** @} */ //end of Vector Cross group
 
@@ -1304,7 +1304,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_detmat_4x4f) (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_4x4f_c (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_detmat_4x4f_neon (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_detmat_4x4f_neon (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_detmat_4x4f_neon");
     extern ne10_result_t ne10_detmat_4x4f_asm (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /**
      * Calculate the determinant of a 3x3 matrix.
@@ -1315,7 +1315,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_detmat_3x3f) (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_3x3f_c (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_detmat_3x3f_neon (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_detmat_3x3f_neon (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_detmat_3x3f_neon");
     extern ne10_result_t ne10_detmat_3x3f_asm (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /**
      * Calculate the determinant of a 2x2 matrix.
@@ -1326,7 +1326,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_detmat_2x2f) (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_2x2f_c (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_detmat_2x2f_neon (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_detmat_2x2f_neon (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) asm ("ne10_detmat_2x2f_neon");
     extern ne10_result_t ne10_detmat_2x2f_asm (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** @} */ //end of Matrix Determinant group
 
@@ -1354,7 +1354,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_invmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_invmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_invmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_invmat_4x4f_neon");
     extern ne10_result_t ne10_invmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /**
      * Calculate the invertible matrix of a 3x3 matrix.
@@ -1365,7 +1365,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_invmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_invmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_invmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_invmat_3x3f_neon");
     extern ne10_result_t ne10_invmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /**
      * Calculate the invertible matrix of a 2x2 matrix.
@@ -1376,7 +1376,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_invmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_invmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_invmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) asm ("ne10_invmat_2x2f_neon");
     extern ne10_result_t ne10_invmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** @} */ //end of Matrix Invertible group
 
@@ -1404,7 +1404,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_transmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_transmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_transmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_transmat_4x4f_neon");
     extern ne10_result_t ne10_transmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /**
      * Calculate the transpose matrix of a 4x4 matrix.
@@ -1415,7 +1415,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_transmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_transmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_transmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_transmat_3x3f_neon");
     extern ne10_result_t ne10_transmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /**
      * Calculate the transpose matrix of a 3x3 matrix.
@@ -1426,7 +1426,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_transmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_transmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
+    extern ne10_result_t ne10_transmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) asm ("ne10_transmat_2x2f_neon");
     extern ne10_result_t ne10_trans_mat2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     /** @} */ //end of Matrix Transpose group
 
@@ -1453,7 +1453,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_identitymat_4x4f) (ne10_mat4x4f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_4x4f_c (ne10_mat4x4f_t * dst, ne10_uint32_t count);
-    extern ne10_result_t ne10_identitymat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_uint32_t count);
+    extern ne10_result_t ne10_identitymat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_4x4f_neon");
     extern ne10_result_t ne10_identitymat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_uint32_t count);
     /**
      * Set the identity matrix of a 3x3 matrix.
@@ -1463,7 +1463,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_identitymat_3x3f) (ne10_mat3x3f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_3x3f_c (ne10_mat3x3f_t * dst, ne10_uint32_t count);
-    extern ne10_result_t ne10_identitymat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_uint32_t count);
+    extern ne10_result_t ne10_identitymat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_3x3f_neon");
     extern ne10_result_t ne10_identitymat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_uint32_t count);
     /**
      * Set the identity matrix of a 2x2 matrix.
@@ -1473,7 +1473,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_identitymat_2x2f) (ne10_mat2x2f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_2x2f_c (ne10_mat2x2f_t * dst, ne10_uint32_t count);
-    extern ne10_result_t ne10_identitymat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_uint32_t count);
+    extern ne10_result_t ne10_identitymat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_2x2f_neon");
     extern ne10_result_t ne10_identity_mat2x2f_asm (ne10_mat2x2f_t * dst, ne10_uint32_t count);
     /** @} */ //end of Matrix Identity group
 

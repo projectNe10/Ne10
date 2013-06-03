@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -258,8 +258,8 @@
 #define NE10_DstSrcCst_SECONDLOOP_VEC3F_NEON(loopCode) { \
       float32x2x3_t n_tmp_src = FLOAT32_2x3( \
         0.0f, 0.0f, 0.0f , 0.0f, 0.0f , 0.0f); \
-      float32x2x3_t n_tmp_cst = FLOAT32_2x3( \
-        cst->x, 0, cst->y, 0, cst->z, 0); \
+      float32x2x3_t n_tmp_cst = { (const float32x2_t){cst->x, 0}, \
+             (const float32x2_t){cst->y, 0}, (const float32x2_t){cst->z, 0} }; \
       n_tmp_src = vld3_lane_f32 ( (float32_t*)src, n_tmp_src, 0); \
       loopCode; /* exceptional cases where the count isn't a multiple of 3 */ \
       vst3_lane_f32( (float32_t*)dst, n_tmp_src, 0); \
@@ -407,13 +407,11 @@
         0.0f, 0.0f, \
         0.0f, 0.0f  \
       ); \
-      float32x2x3_t n_tmp_cst = FLOAT32_2x3( \
-         cst->x, 0, \
-         cst->y, 0, \
-         cst->z, 0 \
-      ); \
-      n_tmp_acc = vld3_lane_f32 ( (float32_t*)acc, n_tmp_acc, 0); \
-      n_tmp_src = vld3_lane_f32 ( (float32_t*)src, n_tmp_src, 0); \
+      float32x2x3_t n_tmp_cst = { (const float32x2_t){cst->x, 0}, \
+                                  (const float32x2_t){cst->y, 0}, \
+                                  (const float32x2_t){cst->z, 0} };     \
+      n_tmp_acc = vld3_lane_f32 ( (float32_t*)acc, n_tmp_acc, 0);       \
+      n_tmp_src = vld3_lane_f32 ( (float32_t*)src, n_tmp_src, 0);       \
       loopCode; /* exceptional cases where the count isn't a multiple of 3 */ \
       vst3_lane_f32( (float32_t*)dst, n_tmp_src, 0); \
       acc++; \
@@ -519,11 +517,8 @@
   }
 
 #define NE10_DstCst_SECONDLOOP_VEC3F_NEON(loopCode) { \
-      float32x2x3_t n_tmp_cst = FLOAT32_2x3( \
-        cst->x, 0, \
-        cst->y, 0, \
-        cst->z, 0 \
-      ); \
+      float32x2x3_t n_tmp_cst = { (const float32x2_t){cst->x, 0}, \
+      (const float32x2_t){cst->y, 0}, (const float32x2_t){cst->z, 0} }; \
       loopCode; /* exceptional cases where the count isn't a multiple of 3 */ \
       vst3_lane_f32( (float32_t*)dst, n_tmp_cst, 0); \
       dst++; \

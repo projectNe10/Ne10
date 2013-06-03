@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -91,6 +91,14 @@ For cross-compiling for android, the note to Unix platforms also applies and bef
 There are also two other environment variable:
    ANDROID_API_LEVEL: used to specify android api level, default value is: 14
    ARM_ANDROID_TOOLCHAIN_VERSION: used be specify gcc version, default is: 4.6, gcc version must be >=4.6
+
+=iOS platforms=:
+For cross-compiling for iOS, the note to Unix platforms also applies and before cross-compiling, you must have the Xcode installed. Our assembly code is written for GNU as(gas) initially, the assembler for iOS platform doesn't support it very well. However we get our code worked under Apple LLVM version 4.2 (clang-425.0.28) (based on LLVM 3.2svn) now, other toolchain(such as llvm-gcc) may not work. After Xcode installed, you should set the IOS_DEVELOPER_PATH environment variable to your Xcode path, if you haven't changed the default install path, it should be "/Applications/Xcode.app/Contents/Developer". As follow:
+   cd $NE10PATH
+   export IOS_DEVELOPER_PATH=/absolute/path/of/ios/developer/path
+   mkdir build && cd build
+   cmake -DCMAKE_TOOLCHAIN_FILE=/path/of/ios_config.cmake ..
+   make
 
 ---------------------------UNIT TEST------------------------------
 

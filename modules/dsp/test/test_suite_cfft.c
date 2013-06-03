@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-13 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,7 @@
 
 #include "NE10_dsp.h"
 #include "seatest.h"
-
+#include "unit_test_common.h"
 
 /* ----------------------------------------------------------------------
 ** Global defines
@@ -550,7 +550,7 @@ void test_cfft_case0()
         time_neon = time_neon - time_overhead_neon;
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "CFFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", S.fft_len, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "CFFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", S.fft_len, time_c, time_neon, time_savings, time_speedup);
 
         /* IFFT test */
         GET_TIME
@@ -615,7 +615,7 @@ void test_cfft_case0()
         time_neon = time_neon - time_overhead_neon;
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        fprintf (stdout, "CIFFT%20d%20lld%20lld%19.2f%%%18.2f:1\n", S.fft_len, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "CIFFT%20d%20lld%20lld%19.2f%%%18.2f:1\n", S.fft_len, time_c, time_neon, time_savings, time_speedup);
     }
 #endif
 
