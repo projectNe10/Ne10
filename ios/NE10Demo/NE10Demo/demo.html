@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+   Copyright 2013 ARM Limited
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+     * Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+     * Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+     * Neither the name of ARM Limited nor the
+       names of its contributors may be used to endorse or promote products
+       derived from this software without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
+   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+   DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+   DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Ne10 Benchmark</title>
+        <style type="text/css" media="screen">
+            body {
+                background-color: gray;
+                color: white;
+                font-family:'Lucida Grande', Verdana, Arial;
+                font-size: 12px;
+                background-image: -webkit-gradient(radial, 50% 500, 1, 50% 500, 400, from(rgba(255, 255, 255, 0.3)), to(rgba(255, 255, 255, 0)));
+                background-repeat: no-repeat;
+            }
+            #title {
+                width: 100%;
+                color: yellow;
+                font-size: 24px;
+                text-shadow: 5px 5px 5px #FF0000;
+            }
+            #progress {
+                width: 100%;
+                color: white;
+                font-size: 20px;
+                position: fixed;
+                z-index: 1;
+                top: 8%;
+                left: 50%;
+            }
+            #progress_full {
+                width: 100%;
+                color: white;
+                font-size: 20px;
+                position: fixed;
+                z-index: 1;
+                top: 8%;
+                left: 59%;
+            }
+            #content {
+                width: 100%;
+            }
+            .block {
+                background-color: dodgerblue;
+                margin-top: 16px;
+                padding-bottom: 16px;
+                border-radius: 8px;
+            }
+            .bar {
+                text-align: right;
+                text-align: right;
+                height: 24px;
+                padding-right: 8px;
+            }
+
+        </style>
+        <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.min.js""></script>
+        <script src="main.js"></script>
+    </head>
+
+    <body onload="javascript:start();">
+<!--
+    <div id="debug_message">
+    </div>
+-->
+             <h3 id="progress"></h3><h3 id="progress_full">/  114</h3>
+        <div id="head">
+            <h4 id="title">Ne10 Benchmark</h4>
+        </div>
+        <div id="content">
+        </div>
+    </body>
+
+</html>

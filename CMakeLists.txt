@@ -83,3 +83,7 @@ endif()
 if(NE10_BUILD_UNIT_TEST)
     add_subdirectory(test)
 endif()
+
+if(IOS_PLATFORM AND IOS_DEMO)
+    add_subdirectory(ios)
+endif()
