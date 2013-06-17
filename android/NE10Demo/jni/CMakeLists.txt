@@ -25,8 +25,8 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# we run performance test in iOS Demo
-add_definitions(-DPERFORMANCE_TEST)
+# we run performance test in Android Demo
+    add_definitions(-DPERFORMANCE_TEST)
 
 include_directories (
     ${PROJECT_SOURCE_DIR}/inc
@@ -58,7 +58,11 @@ set(NE10_TEST_DSP_SRCS
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_iir.c
 )
 
-add_library(NE10_test_demo STATIC ${NE10_TEST_MATH_SRCS} ${NE10_TEST_COMMON_SRCS} ${NE10_TEST_DSP_SRCS})
+add_library(NE10_test_demo SHARED
+    ${NE10_TEST_MATH_SRCS}
+    ${NE10_TEST_COMMON_SRCS}
+    ${NE10_TEST_DSP_SRCS}
+    NE10_test_demo.c)
 
 #add the static NE10 to target
 target_link_libraries(NE10_test_demo
@@ -66,6 +70,6 @@ target_link_libraries(NE10_test_demo
     m
 )
 
-#install NE10_test_demo library to iOS demo directory.
+#install NE10_test_demo library to android demo apk library directory.
 install(TARGETS NE10_test_demo
-    DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/NE10Demo/libs/)
+    DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../libs/armeabi/)

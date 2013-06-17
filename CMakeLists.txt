@@ -65,6 +65,9 @@ if(ANDROID_PLATFORM)
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-as
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ar
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ranlib")
+    if(ANDROID_DEMO)
+      add_subdirectory(android/NE10Demo/jni)
+    endif()
 elseif(GNULINUX_PLATFORM)
     set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "-mthumb-interwork -march=armv7-a -mfloat-abi=softfp -mfpu=neon")

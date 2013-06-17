@@ -37,16 +37,16 @@ First download and install cmake from cmake.org.
 In Ubuntu, you can install cmake by "sudo apt-get install cmake"
 
 ---------------------------NATIVE-COMPILING------------------------------
-=Unix platforms=:
+=Unix platforms=
 For Unix platforms, say the following on a terminal: (Replace $NE10PATH with the directory where this file is located.)
     cd $NE10PATH
     mkdir build && cd build
-    cmake ..
+    cmake -DGNULINUX_PLATFORM=ON ..
     make
 Then the libNE10.a is placed in ./modules/ and a sample program "NE10_test_static" is placed in ./samples/. you can run it.
 You might want to add -DNE10_BUILD_SHARED=ON to the cmake call to generate the dynamic library and test program "NE10_test_dynamic".
 
-=Android platforms=:
+=Android platforms=
 it's not common do native compiling on android, Ne10 also doesn't support it.
 
 ---------------------------CROSS-COMPILING------------------------------
@@ -92,13 +92,16 @@ There are also two other environment variable:
    ANDROID_API_LEVEL: used to specify android api level, default value is: 14
    ARM_ANDROID_TOOLCHAIN_VERSION: used be specify gcc version, default is: 4.6, gcc version must be >=4.6
 
-=iOS platforms=:
+=iOS platforms=
 For cross-compiling for iOS, the note to Unix platforms also applies and before cross-compiling, you must have the Xcode installed. Our assembly code is written for GNU as(gas) initially, the assembler for iOS platform doesn't support it very well. However we get our code worked under Apple LLVM version 4.2 (clang-425.0.28) (based on LLVM 3.2svn) now, other toolchain(such as llvm-gcc) may not work. After Xcode installed, you should set the IOS_DEVELOPER_PATH environment variable to your Xcode path, if you haven't changed the default install path, it should be "/Applications/Xcode.app/Contents/Developer". As follow:
    cd $NE10PATH
    export IOS_DEVELOPER_PATH=/absolute/path/of/ios/developer/path
    mkdir build && cd build
    cmake -DCMAKE_TOOLCHAIN_FILE=/path/of/ios_config.cmake ..
    make
+
+=Ne10 demo=
+There are 2 demos include Ne10, one for Android and one for iOS. Both demos need Ne10 library and it's native side interface library installed, to do that, after build NE10, you should run "make install" in the same directory. And please also note that your devices should be have access to internet to run the demo.
 
 ---------------------------UNIT TEST------------------------------
 
