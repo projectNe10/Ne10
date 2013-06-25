@@ -212,10 +212,18 @@ void ne10_log(const char *func_name,
               ne10_float32_t time_speedup)
 {
     int byte_count = 0;
-
     byte_count = sprintf(ne10_log_buffer_ptr,
                          "{ \"name\" : \"%s %d\", \"time_c\" : %d, "
                          "\"time_neon\" : %d },",
                          func_name, n, time_c, time_neon);
     ne10_log_buffer_ptr += byte_count;
+
+    /* print the result, which is needed by command line performance test. */
+    fprintf (stdout,
+             "%25d%20d%20d%19.2f%%%18.2f:1\n",
+             n,
+             time_c,
+             time_neon,
+             time_savings,
+             time_speedup);
 }

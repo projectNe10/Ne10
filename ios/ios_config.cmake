@@ -38,7 +38,14 @@
 #   default.
 
 set(IOS_PLATFORM ON)
-set(IOS_DEMO ON)
+
+if(IOS_PLATFORM)
+  set(IOS_DEMO ON)
+endif()
+
+if(IOS_DEMO)
+  add_definitions(-DNE10_IOS_DEMO)
+endif()
 
 if(NOT DEFINED ENV{IOS_DEVELOPER_PATH})
     set(ENV{IOS_DEVELOPER_PATH} "/Applications/Xcode.app/Contents/Developer")

@@ -33,12 +33,12 @@ option(NE10_BUILD_STATIC "Build NE10 static libraries" ON)
 option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 
 #unit test options
-option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" ON)
+option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
 if (NE10_BUILD_UNIT_TEST)
     #decide the test is smoke, regression or performance test, only one of three options is ON!
     option(NE10_SMOKE_TEST "Run smoke test" OFF)
     option(NE10_REGRESSION_TEST "Run regression test" OFF)
-    option(NE10_PERFORMANCE_TEST "Run performance test" ON)
+    option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
 
     option(NE10_DEBUG_TRACE "Print debug trace" OFF)
 endif()
@@ -74,6 +74,9 @@ elseif(GNULINUX_PLATFORM)
 elseif(IOS_PLATFORM)
     set(CMAKE_C_FLAGS "-O2 -arch armv7 -arch armv7s -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "-arch armv7 -arch armv7s -mfpu=neon")
+    if(IOS_DEMO)
+        add_subdirectory(ios)
+    endif()
 endif()
 
 # The NE10 library.
@@ -85,8 +88,4 @@ endif()
 
 if(NE10_BUILD_UNIT_TEST)
     add_subdirectory(test)
-endif()
-
-if(IOS_PLATFORM AND IOS_DEMO)
-    add_subdirectory(ios)
 endif()

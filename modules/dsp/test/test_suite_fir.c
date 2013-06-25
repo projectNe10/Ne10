@@ -341,9 +341,16 @@ void test_fir()
 ** end of fir test
 ** ------------------------------------------------------------------- */
 
+static void my_test_setup (void)
+{
+    ne10_log_buffer_ptr = ne10_log_buffer;
+}
+
 void test_fixture_fir (void)
 {
     test_fixture_start();               // starts a fixture
+
+    fixture_setup (my_test_setup);
 
     run_test (test_fir);       // run tests
 

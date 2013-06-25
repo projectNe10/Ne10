@@ -26,7 +26,7 @@
 #
 
 # we run performance test in Android Demo
-    add_definitions(-DPERFORMANCE_TEST)
+add_definitions(-DPERFORMANCE_TEST)
 
 include_directories (
     ${PROJECT_SOURCE_DIR}/inc

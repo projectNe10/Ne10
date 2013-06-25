@@ -365,9 +365,16 @@ void test_fir_decimate()
     test_fir_decimate_case0();
 }
 
+static void my_test_setup (void)
+{
+    ne10_log_buffer_ptr = ne10_log_buffer;
+}
+
 void test_fixture_fir_decimate (void)
 {
     test_fixture_start();               // starts a fixture
+
+    fixture_setup (my_test_setup);
 
     run_test (test_fir_decimate);       // run tests
 

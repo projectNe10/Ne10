@@ -2688,9 +2688,10 @@ void test_transmat()
     test_transmat_case0();
 }
 
-void my_test_setup (void)
+static void my_test_setup (void)
 {
     //printf("------%-30s start\r\n", __FUNCTION__);
+    ne10_log_buffer_ptr = ne10_log_buffer;
 }
 
 void my_test_teardown (void)
