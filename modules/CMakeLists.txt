@@ -231,6 +231,14 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.s
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
     )
+    # Add image intrinsic NEON files.
+    set(NE10_IMGPROC_INTRINSIC_SRCS
+    #    ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.c
+    )
+    # Tell CMake these files need to be compiled with "-mfpu=neon"
+    foreach(intrinsic_file ${NE10_IMGPROC_INTRINSIC_SRCS})
+        set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+    endforeach(intrinsic_file)
     # Add image processing init files.
     set(NE10_IMGPROC_INIT_SRCS
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_init_imgproc.c
@@ -245,6 +253,7 @@ endif(IOS_PLATFORM)
     # Add image processing files
     set(NE10_INIT_SRCS ${NE10_INIT_SRCS} ${NE10_IMGPROC_INIT_SRCS})
     set(NE10_C_SRCS ${NE10_C_SRCS} ${NE10_IMGPROC_C_SRCS})
+    set(NE10_INTRINSIC_SRCS ${NE10_INTRINSIC_SRCS} ${NE10_IMGPROC_INTRINSIC_SRCS})
     if(IOS_PLATFORM)
       set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_IMGPROC_IOS_NEON_SRCS})
     else(IOS_PLATFORM)
