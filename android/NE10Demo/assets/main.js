@@ -27,10 +27,10 @@
 
 // settings
 // for color names, reference to http://www.w3schools.com/html/html_colornames.asp
-//var blockColor = "dodgerblue";
-var barColors = ["green", "blue", "brown", "red", "cyan"];
+var barColors = ["green", "blue", "brown", "red", "cyan", "black"];
 
 var case_count = 0;
+var acceleration_rate = 0;
 
 // Add and show for a feature block
 // argv[1:] be the bars
@@ -57,19 +57,36 @@ function addShowBarBlock(title) {
         eBar.css("background-color", barColors[i - 1]);
         eBar.css("box-shadow", "5px 5px 15px " + barColors[i - 1]);
         eBar.html(arguments[i]);
-        //eBar.html("
         eBar.appendTo(eBlock);
     }
 
     eBlock.appendTo($("#content"));
 }
 
+//add result of benchmark
+function add_result(acceleration_rate, case_count) {
+   var sum_acc_rate = acceleration_rate / case_count;
+   var sum_acc_rate_display = Math.floor(sum_acc_rate * 100);
+
+   //result bar for Ne10
+   $("#result_bar_ne10").html("Ne10 version  " + sum_acc_rate_display + "%");
+   $("#result_bar_ne10").css("visibility", "visible");
+
+   //result bar for C
+   $("#result_bar_c").css("height", 100/sum_acc_rate + "%");
+   $("#result_bar_c").html("C version  " + "100%");
+}
+
 function run_cases()
 {
     var testResultStr = MyJavaClass.NE10RunTest();
+    var progress = 0;
+    var progress_display = 0;
 
-    if (testResultStr == null)
+    if (testResultStr == null) {
+        add_result(acceleration_rate, case_count);
         return;
+    }
 
     var testResult = JSON.parse(testResultStr);
     for (i = 0; i < testResult.length; ++i) {
@@ -79,27 +96,19 @@ function run_cases()
         addShowBarBlock(testResult[i].name,
                         testResult[i].time_c,
                         testResult[i].time_neon);
+        acceleration_rate = acceleration_rate +
+            testResult[i].time_c / testResult[i].time_neon;
     }
-    $("#progress").html(case_count);
+
+    progress = case_count/117*100;
+    progress_display = Math.floor(progress);
+    var font_height = $("#progress_bar_in").height()*0.7;
+    $("#progress_bar_in").css("width", progress + "%");
+    $("#progress_bar_in").css("font-size",font_height + "px");
+    $("#progress_bar_in").html(progress_display + "%");
     setTimeout("run_cases()", 10);
 }
 
 function start() {
-    var el;
-
-    el = $("<div/>");
-    el.css("width", "150px");
-    el.css("height", "24px");
-    el.css("background-color", barColors[0]);
-    el.html("C version(us)");
-    el.appendTo("#head");
-
-    el = $("<div/>");
-    el.css("width", "150px");
-    el.css("height", "24px");
-    el.css("background-color", barColors[1]);
-    el.html("NEON version(us)");
-    el.appendTo("#head");
-
     setTimeout("run_cases()", 10);
 }

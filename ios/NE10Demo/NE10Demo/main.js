@@ -28,9 +28,10 @@
 // <settings
 // for color names, reference to
 // http://www.w3schools.com/html/html_colornames.asp
-var barColors = ["green", "blue", "brown", "red", "cyan"];
+var barColors = ["green", "blue", "brown", "red", "cyan", "balck"];
 
-var caseCount = 0;
+var case_count = 0;
+var acceleration_rate = 0;
 
 function debug_log(message){
     document.getElementById('debug_message').innerHTML += message + "<br>";
@@ -68,24 +69,57 @@ function addShowBarBlock(title) {
     eBlock.appendTo($("#content"));
 }
 
+//add result of benchmark
+function add_result(acceleration_rate, case_count) {
+    var sum_acc_rate = acceleration_rate / case_count;
+    var sum_acc_rate_display = Math.floor(sum_acc_rate * 100);
+
+    //result bar for Ne10
+    $("#result_bar_ne10").html("Ne10 version  " + sum_acc_rate_display + "%");
+    $("#result_bar_ne10").css("visibility", "visible");
+
+    //result bar for C
+    $("#result_bar_c").css("height", 100/sum_acc_rate + "%");
+    $("#result_bar_c").html("C version  " + "100%");
+}
+
 //this function is called by objective-c code
 //see more details at:
 //http://tetontech.wordpress.com/2008/08/14/
 //calling-objective-c-from-javascript-in-an-iphone-uiwebview/
 function returnFromObjectivec(ne10TestResultStr)
 {
+    var progress = 0;
+    var progress_display = 0;
+
     if (ne10TestResultStr) {
         //parse json data from string
         var testResult = eval( '(' + ne10TestResultStr + ')' );
         for (i = 0; i < testResult.length; ++i) {
-            ++caseCount;
-            testResult[i].name = caseCount.toString() + " "
-                                + testResult[i].name;
+            ++case_count;
+            testResult[i].name = case_count.toString() + " "
+            + testResult[i].name;
             addShowBarBlock(testResult[i].name,
                             testResult[i].time_c,
                             testResult[i].time_neon);
+            acceleration_rate = acceleration_rate +
+            testResult[i].time_c / testResult[i].time_neon;
         }
-        $("#progress").html(caseCount);
+
+        progress = case_count/117*100;
+        progress_display = Math.floor(progress);
+        var font_height = $("#progress_bar_in").height()*0.7;
+
+        $("#progress_bar_in").css("width", progress + "%");
+        $("#progress_bar_in").css("font-size",font_height + "px");
+        $("#progress_bar_in").html(progress_display + "%");
+
+        //TODO
+        //Currently, 117 is number of total test cases.
+        //due to the limit of current test framework, we can't
+        //get the number of all test cases at compiling time.
+        if( case_count == 117 )
+            add_result(acceleration_rate, case_count);
     }
 }
 
@@ -97,21 +131,5 @@ function run_cases()
 }
 
 function start() {
-    var el;
-
-    el = $("<div/>");
-    el.css("width", "150px");
-    el.css("height", "24px");
-    el.css("background-color", barColors[0]);
-    el.html("C version(us)");
-    el.appendTo("#head");
-
-    el = $("<div/>");
-    el.css("width", "150px");
-    el.css("height", "24px");
-    el.css("background-color", barColors[1]);
-    el.html("NEON version(us)");
-    el.appendTo("#head");
-
     setTimeout("run_cases()", 10);
 }

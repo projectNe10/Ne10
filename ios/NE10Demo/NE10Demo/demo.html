@@ -38,30 +38,13 @@
                 font-size: 12px;
                 background-image: -webkit-gradient(radial, 50% 500, 1, 50% 500, 400, from(rgba(255, 255, 255, 0.3)), to(rgba(255, 255, 255, 0)));
                 background-repeat: no-repeat;
+                padding: 0px;
             }
             #title {
                 width: 100%;
                 color: yellow;
                 font-size: 24px;
                 text-shadow: 5px 5px 5px #FF0000;
-            }
-            #progress {
-                width: 100%;
-                color: white;
-                font-size: 20px;
-                position: fixed;
-                z-index: 1;
-                top: 8%;
-                left: 50%;
-            }
-            #progress_full {
-                width: 100%;
-                color: white;
-                font-size: 20px;
-                position: fixed;
-                z-index: 1;
-                top: 8%;
-                left: 59%;
             }
             #content {
                 width: 100%;
@@ -71,30 +54,87 @@
                 margin-top: 16px;
                 padding-bottom: 16px;
                 border-radius: 8px;
+                width: 80%;
+            }
+            #result_block {
+                position:fixed;
+                top: 15%;
+                bottom: 15%;
+                right: 1%;
+                width: 18%;
             }
             .bar {
                 text-align: right;
-                text-align: right;
                 height: 24px;
-                padding-right: 8px;
+                padding-right: 10px;
             }
-
+            #headbar_c {
+                width: 150px;
+                height: 24px;
+                background-color: green;
+            }
+            #headbar_neon {
+                width: 150px;
+                height: 24px;
+                background-color: blue;
+            }
+            #result_bar_ne10 {
+                background-color: blue;
+                width: 40%;
+                left: 0%;
+                height:100%;
+                visibility: hidden;
+                position:absolute;
+            }
+            #result_bar_c {
+                background-color: green;
+                width: 40%;
+                right: 0%;
+                bottom: 0%;
+                position:absolute;
+            }
+            #progress_bar_out {
+                border-color: dodgerblue;
+                border-width: 2px;
+                border-style: solid;
+                border-radius: 5px;
+                height:20%
+            }
+            #progress_bar_in {
+                height:100%;
+                width:0%;
+                background-color: rgb(26, 171, 184);
+            }
         </style>
-        <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.min.js""></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="main.js"></script>
     </head>
 
     <body onload="javascript:start();">
-<!--
-    <div id="debug_message">
-    </div>
--->
-             <h3 id="progress"></h3><h3 id="progress_full">/  114</h3>
-        <div id="head">
+      <div id="result_block">
+        <div id="progress_block" style="height:15%; ">
+          <div id="progress_bar_out">
+            <div id="progress_bar_in">
+            </div>
+          </div>
+        </div>
+        <div id="compare_bar_block" style="height:70%; position:relative">
+          <div id='result_bar_ne10'>
+            </div>
+          <div id='result_bar_c'>
+            </div>
+        </div>
+        <div id="average_block" style=" height:15%">
+          <h3 id="average">Average (larger is better)</h3>
+        </div>
+      </div>
+      <div id="head">
             <h4 id="title">Ne10 Benchmark</h4>
-        </div>
-        <div id="content">
-        </div>
+            <div id="headbar_c">C version (us)</div>
+            <div id="headbar_neon">Ne10 version (us)</div>
+      </div>
+      <div id="content">
+      </div>
     </body>
 
 </html>
