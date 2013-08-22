@@ -66,7 +66,11 @@ if(DEFINED ENV{ANDROID_NDK})
     #NDK_SYSROOT_PATH is used in compiler's '--sysroot' flags
     set(NDK_SYSROOT_PATH "$ENV{ANDROID_NDK}/platforms/android-${ANDROID_API_LEVEL}/arch-arm/")
 
-    set(ANDROID_TOOLCHAIN_PATH "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-${ARM_ANDROID_TOOLCHAIN_VERSION}/prebuilt/linux-x86_64/bin")
+    if(APPLE)
+	set(ANDROID_TOOLCHAIN_PATH "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-${ARM_ANDROID_TOOLCHAIN_VERSION}/prebuilt/darwin-x86_64/bin")
+    else()
+        set(ANDROID_TOOLCHAIN_PATH "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-${ARM_ANDROID_TOOLCHAIN_VERSION}/prebuilt/linux-x86_64/bin")
+    endif()
 
     #change toolchain name according to your configuration
     set(CMAKE_C_COMPILER ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-gcc)
