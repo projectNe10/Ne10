@@ -44,14 +44,14 @@
          */
 
         .align   4
-        .global   ne10_vresize_neon
+        .global   ne10_img_vresize_linear_neon
         .thumb
-        .extern ne10_vresize_mask_residual_table/* mask of store data */
+        .extern ne10_img_vresize_linear_mask_residual_table/* mask of store data */
         .thumb_func
         .equ         BITS,        0x16        /* INTER_RESIZE_COEF_BITS*2 */
         .equ         DELTA,       0x200000    /* 1 << (INTER_RESIZE_COEF_BITS*2 - 1) */
 
-ne10_vresize_neon:
+ne10_img_vresize_linear_neon:
                      push    {r4-r6,lr}
 
 /*ARM Registers*/
@@ -105,13 +105,13 @@ dDst_01234567    .dn   d21
                      mov         tmp, #255
                      vdup.32     qMax, tmp
 
+                     vld1.s32    {qS0_0123, qS0_4567}, [pS0]!
+                     vld1.s32    {qS1_0123, qS1_4567}, [pS1]!
+
                      subs        width, width, #8
                      blt         VResizeResidualLoop
 
-                     vld1.s32    {qS0_0123, qS0_4567}, [pS0]!
-                     vld1.s32    {qS1_0123, qS1_4567}, [pS1]!
 VResizeMainLoop:
-
                      vmul.s32    qTmp_0123, qS0_0123, dBeta0
                      vmul.s32    qTmp_4567, qS0_4567, dBeta0
                      vmla.s32    qTmp_0123, qS1_0123, dBeta1
@@ -139,17 +139,15 @@ VResizeMainLoop:
                      vld1.s32    {qS1_0123, qS1_4567}, [pS1]!
                      bge         VResizeMainLoop
 
+VResizeResidualLoop:
                      adds        width, width, #8
                      beq         VResizeEnd
 
                      sub         width, width, #1
                      ldr         pMask, =ne10_vresize_mask_residual_table
-                     sub         width, width, #1
                      add         pMask, pMask, width, lsl #3
                      vld1.64     {dMask}, [pMask]
                      vld1.64     {dDst_01234567}, [pDst]
-
-VResizeResidualLoop:
 
                      vmul.s32    qTmp_0123, qS0_0123, dBeta0
                      vmul.s32    qTmp_4567, qS0_4567, dBeta0
@@ -171,7 +169,7 @@ VResizeResidualLoop:
                      vmovn.I32    dTmp_4567, qTmp_4567
                      vmovn.I16    dTmp_01234567, qTmp_01234567
                      vbsl         dMask, dTmp_01234567, dDst_01234567
-                     vst1.8       {dTmp_01234567}, [pDst]
+                     vst1.8       {dMask}, [pDst]
 VResizeEnd:
                      /*Return From Function*/
                      pop     {r4-r6,pc}
@@ -231,12 +229,12 @@ VResizeEnd:
          */
 
         .align   4
-        .global   ne10_hresize_4channels_neon
+        .global   ne10_img_hresize_4channels_linear_neon
         .thumb
         .thumb_func
         .equ         INTER_RESIZE_COEF_SCALE,        0x800  /* 1 << INTER_RESIZE_COEF_BITS */
 
-ne10_hresize_4channels_neon:
+ne10_img_hresize_4channels_linear_neon:
                      push    {r4-r10,lr}
 
 /*ARM Registers*/
@@ -284,9 +282,9 @@ qDst1_0123       .qn   q10
 
 
                      subs        tmp, count, #1
-                     beq         HResize4Count1
-HResize4Count2:
+                     beq         ne10_img_hresize_4channels_linear_count_1
 
+ne10_img_hresize_4channels_linear_count_2:
                      ldr         pS0, [pSrc], #4
                      ldr         pS1, [pSrc]
                      ldr         pD0, [pDst], #4
@@ -301,9 +299,6 @@ HResize4Count2:
                      ldr         xmax, [sp, #52]
                      sub         dwidth, dwidth, xmax    /* calculate the residual */
 
-                     subs        xmax, xmax, #4
-                     blt         HResize4ResidualLoop2
-
                      ldr         sx, [pXofs], #16     /* for 4 channels only, xofs is changed based on channels */
                      add         pTmp0, pS0, sx     /* find the address of starting element */
                      add         pTmp1, pS1, sx
@@ -311,8 +306,10 @@ HResize4Count2:
                      vld1.8      {dS0_01234567}, [pTmp0]
                      vld1.8      {dS1_01234567}, [pTmp1]
 
-HResize4MainLoop2:
+                     subs        xmax, xmax, #4
+                     blt         ne10_img_hresize_4channels_linear_count_2_dwidth_loop
 
+ne10_img_hresize_4channels_linear_count_2_xmax_loop:
                      vmovl.u8    qS0_01234567, dS0_01234567
                      vmovl.u8    qS1_01234567, dS1_01234567
 
@@ -332,12 +329,12 @@ HResize4MainLoop2:
                      vld1.8      {dS1_01234567}, [pTmp1]
 
                      subs        xmax, xmax, #4
-                     bge         HResize4MainLoop2
+                     bge         ne10_img_hresize_4channels_linear_count_2_xmax_loop
 
                      cmp         dwidth, #0
-                     beq         HResize4End
+                     beq         ne10_img_hresize_4channels_linear_end
 
-HResize4ResidualLoop2:
+ne10_img_hresize_4channels_linear_count_2_dwidth_loop:
 
                      vmovl.u8    qS0_01234567, dS0_01234567
                      vmovl.u8    qS1_01234567, dS1_01234567
@@ -355,11 +352,11 @@ HResize4ResidualLoop2:
                      vld1.8      {dS1_01234567}, [pTmp1]
 
                      subs        dwidth, dwidth, #4
-                     bgt         HResize4ResidualLoop2
+                     bgt         ne10_img_hresize_4channels_linear_count_2_dwidth_loop
 
-                     b           HResize4End
+                     b           ne10_img_hresize_4channels_linear_end
 
-HResize4Count1:
+ne10_img_hresize_4channels_linear_count_1:
 
                      ldr         pS0, [pSrc], #4
                      ldr         pD0, [pDst], #4
@@ -373,16 +370,15 @@ HResize4Count1:
                      ldr         xmax, [sp, #52]
                      sub         dwidth, dwidth, xmax    /* calculate the residual */
 
-                     subs        xmax, xmax, #4
-                     blt         HResize4ResidualLoop1
-
                      ldr         sx, [pXofs], #16     /* for 4 channels only, xofs is changed based on channels */
                      add         pTmp0, pS0, sx     /* find the address of starting element */
                      vld2.16     {dAlpha_0, dAlpha_1}, [pAlpha]! /* alpha is repeated based on channels */
                      vld1.8      {dS0_01234567}, [pTmp0]
 
-HResize4MainLoop1:
+                     subs        xmax, xmax, #4
+                     blt         ne10_img_hresize_4channels_linear_count_1_dwidth_loop
 
+ne10_img_hresize_4channels_linear_count_1_xmax_loop:
                      vmovl.u8    qS0_01234567, dS0_01234567
 
                      vmull.u16   qDst0_0123, dS0_0123, dAlpha_0
@@ -396,11 +392,11 @@ HResize4MainLoop1:
                      vld1.8      {dS0_01234567}, [pTmp0]
 
                      subs        xmax, xmax, #4
-                     bge         HResize4MainLoop1
+                     bge         ne10_img_hresize_4channels_linear_count_1_xmax_loop
 
-                     cbz         dwidth, HResize4End
+                     cbz         dwidth, ne10_img_hresize_4channels_linear_end
 
-HResize4ResidualLoop1:
+ne10_img_hresize_4channels_linear_count_1_dwidth_loop:
 
                      vmovl.u8    qS0_01234567, dS0_01234567
                      vmull.u16   qDst0_0123, dS0_0123, dCoeff
@@ -412,9 +408,9 @@ HResize4ResidualLoop1:
                      vld1.8      {dS0_01234567}, [pTmp0]
 
                      subs        dwidth, dwidth, #4
-                     bgt         HResize4ResidualLoop1
+                     bgt         ne10_img_hresize_4channels_linear_count_1_dwidth_loop
 
-HResize4End:
+ne10_img_hresize_4channels_linear_end:
                      /*Return From Function*/
                      pop     {r4-r10,pc}
 

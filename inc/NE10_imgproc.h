@@ -46,55 +46,57 @@ extern "C" {
     /* image resize functions*/
 
     /* function pointers*/
-    extern void (*ne10_vresize) (const ne10_int32_t** src,
-                                 ne10_uint8_t* dst,
-                                 const ne10_int16_t* beta,
-                                 ne10_int32_t width);
-    extern void (*ne10_hresize_4channels) (const ne10_uint8_t** src,
-                                           ne10_int32_t** dst,
-                                           ne10_int32_t count,
-                                           const ne10_int32_t* xofs,
-                                           const ne10_int16_t* alpha,
-                                           ne10_int32_t swidth,
-                                           ne10_int32_t dwidth,
-                                           ne10_int32_t cn,
-                                           ne10_int32_t xmin,
-                                           ne10_int32_t xmax);
+    extern void (*ne10_img_resize_bilinear_rgba) (ne10_uint8_t* dst,
+            ne10_uint32_t dst_width,
+            ne10_uint32_t dst_height,
+            ne10_uint8_t* src,
+            ne10_uint32_t src_width,
+            ne10_uint32_t src_height,
+            ne10_uint32_t src_stride);
+    /* C version*/
+    extern void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
+            ne10_uint32_t dst_width,
+            ne10_uint32_t dst_height,
+            ne10_uint8_t* src,
+            ne10_uint32_t src_width,
+            ne10_uint32_t src_height,
+            ne10_uint32_t src_stride);
     /* NEON version*/
-    extern void ne10_vresize_neon (const ne10_int32_t** src,
-                                   ne10_uint8_t* dst,
-                                   const ne10_int16_t* beta,
-                                   ne10_int32_t width)
-        asm ("ne10_vresize_neon");
-    extern void ne10_hresize_4channels_neon (const ne10_uint8_t** src,
-            ne10_int32_t** dst,
-            ne10_int32_t count,
-            const ne10_int32_t* xofs,
-            const ne10_int16_t* alpha,
-            ne10_int32_t swidth,
-            ne10_int32_t dwidth,
-            ne10_int32_t cn,
-            ne10_int32_t xmin,
-            ne10_int32_t xmax) asm ("ne10_hresize_4channels_neon");
+    extern void ne10_img_resize_bilinear_rgba_neon (ne10_uint8_t* dst,
+            ne10_uint32_t dst_width,
+            ne10_uint32_t dst_height,
+            ne10_uint8_t* src,
+            ne10_uint32_t src_width,
+            ne10_uint32_t src_height,
+            ne10_uint32_t src_stride)
+    asm ("ne10_img_resize_bilinear_rgba_neon");
 
     /* image rotate functions*/
     /* function pointers*/
-    extern void (*ne10_img_rotate_get_quad_rangle_subpix) (ne10_uint8_t* dst,
-            const ne10_uint8_t* src,
-            ne10_int32_t swidth,
-            ne10_int32_t sheight,
-            ne10_int32_t dwidth,
-            ne10_int32_t dheight,
-            ne10_float32_t* matrix);
+    extern void (*ne10_img_rotate_rgba) (ne10_uint8_t* dst,
+                                         ne10_uint32_t* dst_width,
+                                         ne10_uint32_t* dst_height,
+                                         ne10_uint8_t* src,
+                                         ne10_uint32_t src_width,
+                                         ne10_uint32_t src_height,
+                                         ne10_int32_t angle);
+    /* C version*/
+    extern void ne10_img_rotate_rgba_c (ne10_uint8_t* dst,
+                                        ne10_uint32_t* dst_width,
+                                        ne10_uint32_t* dst_height,
+                                        ne10_uint8_t* src,
+                                        ne10_uint32_t src_width,
+                                        ne10_uint32_t src_height,
+                                        ne10_int32_t angle);
     /* NEON version*/
-    extern void ne10_img_rotate_get_quad_rangle_subpix_neon (ne10_uint8_t* dst,
-            const ne10_uint8_t* src,
-            ne10_int32_t swidth,
-            ne10_int32_t sheight,
-            ne10_int32_t dwidth,
-            ne10_int32_t dheight,
-            ne10_float32_t* matrix)
-        asm ("ne10_img_rotate_get_quad_rangle_subpix_neon");
+    extern void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
+                                           ne10_uint32_t* dst_width,
+                                           ne10_uint32_t* dst_height,
+                                           ne10_uint8_t* src,
+                                           ne10_uint32_t src_width,
+                                           ne10_uint32_t src_height,
+                                           ne10_int32_t angle)
+    asm ("ne10_img_rotate_rgba_neon");
 
 #ifdef __cplusplus
 }

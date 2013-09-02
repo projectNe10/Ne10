@@ -200,6 +200,31 @@ ne10_float32_t CAL_SNR_FLOAT32 (ne10_float32_t *pRef, ne10_float32_t *pTest, ne1
 
 }
 
+/**
+ * @brief  Caluclation of PSNR
+ * @param  ne10_uint8_t*  Pointer to the reference buffer
+ * @param  ne10_uint8_t*  Pointer to the test buffer
+ * @param  ne10_uint32_t    total number of samples
+ * @return ne10_float32_t   PSNR
+ * The function Caluclates peak signal to noise ratio for the reference output
+ * and test output
+ */
+
+ne10_float32_t CAL_PSNR_UINT8 (ne10_uint8_t *pRef, ne10_uint8_t *pTest, ne10_uint32_t buffSize)
+{
+    ne10_float64_t mse = 0.0, max = 255.0;
+    ne10_uint32_t i;
+    ne10_float32_t PSNR;
+
+    for (i = 0; i < buffSize; i++)
+    {
+        mse += (pRef[i] - pTest[i]) * (pRef[i] - pTest[i]);
+    }
+    mse /= buffSize;
+    PSNR = 10 * log10 (max*max / mse);
+    return (PSNR);
+
+}
 char ne10_log_buffer[1000];
 char *ne10_log_buffer_ptr;
 

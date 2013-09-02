@@ -83,6 +83,7 @@
 #define ERROR_MARGIN_SMALL 0x0A
 #define ERROR_MARGIN_LARGE 0xFF
 #define SNR_THRESHOLD 50.0f
+#define PSNR_THRESHOLD 30.0f
 
 // What's the acceptable number of warnings in a test
 #define ACCEPTABLE_WARNS 12
@@ -131,6 +132,7 @@ extern int EQUALS_FLOAT( ne10_float32_t fa, ne10_float32_t fb , ne10_uint32_t er
 extern int GUARD_ARRAY( ne10_float32_t* array, ne10_uint32_t array_length );
 extern int CHECK_ARRAY_GUARD( ne10_float32_t* array, ne10_uint32_t array_length );
 extern ne10_float32_t CAL_SNR_FLOAT32(ne10_float32_t *pRef, ne10_float32_t *pTest, ne10_uint32_t buffSize);
+extern ne10_float32_t CAL_PSNR_UINT8 (ne10_uint8_t *pRef, ne10_uint8_t *pTest, ne10_uint32_t buffSize);
 
 extern char ne10_log_buffer[];
 extern char *ne10_log_buffer_ptr;

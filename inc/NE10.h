@@ -64,6 +64,10 @@
    * │   │   ├── @link groupDSPs dsp module@endlink that provides a set of signal processing functions, such as complex/real FFT/IFFT, FIR and IIR
    * │   │   └── test
    * │   │       └──  directory for test files
+   * │   ├── imgproc
+   * │   │   ├── @link groupIMGPROCs imgproc module@endlink that provides a set of image processing functions, such as image resize, image rotate
+   * │   │   └── test
+   * │   │       └──  directory for test files
    * │   ├── math
    * │   │   ├── @link groupMaths math module@endlink that provides a set of vector/matrix algebra functions
    * │   │   └── test
@@ -148,7 +152,13 @@
 extern "C" {
 #endif
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <string.h>
+
 #include "NE10_types.h"
+#include "NE10_macros.h"
 #include "NE10_init.h"
 #include "NE10_math.h"
 #include "NE10_dsp.h"

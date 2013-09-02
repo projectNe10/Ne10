@@ -46,11 +46,11 @@
          */
 
         .align   4
-        .global   ne10_img_rotate_get_quad_rangle_subpix_neon
+        .global   ne10_img_rotate_get_quad_rangle_subpix_rgba_neon
         .thumb
         .thumb_func
 
-ne10_img_rotate_get_quad_rangle_subpix_neon:
+ne10_img_rotate_get_quad_rangle_subpix_rgba_neon:
 
 /*ARM Registers*/
 /* long-term variable */

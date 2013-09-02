@@ -33,37 +33,29 @@ ne10_result_t ne10_init_imgproc (ne10_int32_t is_NEON_available)
 {
     if (NE10_OK == is_NEON_available)
     {
-        ne10_vresize = ne10_vresize_neon;
-        ne10_hresize_4channels = ne10_hresize_4channels_neon;
-        ne10_img_rotate_get_quad_rangle_subpix = ne10_img_rotate_get_quad_rangle_subpix_neon;
+        ne10_img_resize_bilinear_rgba = ne10_img_resize_bilinear_rgba_neon;
+        ne10_img_rotate_rgba = ne10_img_rotate_rgba_neon;
     }
     else
     {
-        ;
+        ne10_img_resize_bilinear_rgba = ne10_img_resize_bilinear_rgba_c;
+        ne10_img_rotate_rgba = ne10_img_rotate_rgba_c;
     }
     return NE10_OK;
 }
 
 // These are actual definitions of our function pointers that are declared in inc/NE10_imgproc.h
-void (*ne10_vresize) (const ne10_int32_t** src,
-                      ne10_uint8_t* dst,
-                      const ne10_int16_t* beta,
-                      ne10_int32_t width);
-void (*ne10_hresize_4channels) (const ne10_uint8_t** src,
-                                ne10_int32_t** dst,
-                                ne10_int32_t count,
-                                const ne10_int32_t* xofs,
-                                const ne10_int16_t* alpha,
-                                ne10_int32_t swidth,
-                                ne10_int32_t dwidth,
-                                ne10_int32_t cn,
-                                ne10_int32_t xmin,
-                                ne10_int32_t xmax);
-
-void (*ne10_img_rotate_get_quad_rangle_subpix) (ne10_uint8_t* dst,
-        const ne10_uint8_t* src,
-        ne10_int32_t swidth,
-        ne10_int32_t sheight,
-        ne10_int32_t dwidth,
-        ne10_int32_t dheight,
-        ne10_float32_t* matrix);
+void (*ne10_img_resize_bilinear_rgba) (ne10_uint8_t* dst,
+                                       ne10_uint32_t dst_width,
+                                       ne10_uint32_t dst_height,
+                                       ne10_uint8_t* src,
+                                       ne10_uint32_t src_width,
+                                       ne10_uint32_t src_height,
+                                       ne10_uint32_t src_stride);
+void (*ne10_img_rotate_rgba) (ne10_uint8_t* dst,
+                              ne10_uint32_t* dst_width,
+                              ne10_uint32_t* dst_height,
+                              ne10_uint8_t* src,
+                              ne10_uint32_t src_width,
+                              ne10_uint32_t src_height,
+                              ne10_int32_t angle);

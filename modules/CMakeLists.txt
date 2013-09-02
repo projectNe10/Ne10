@@ -224,6 +224,8 @@ if(NE10_ENABLE_IMGPROC)
     # Add image processing C files.
     set(NE10_IMGPROC_C_SRCS
         ${PROJECT_SOURCE_DIR}/common/NE10_mask_table.c
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.c
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.c
     )
 
     # Add image processing NEON files.

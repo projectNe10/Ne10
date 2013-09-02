@@ -140,3 +140,45 @@ if(NE10_ENABLE_DSP)
     endif()
 endif()
 
+
+if(NE10_ENABLE_IMGPROC)
+    # Define imgproc test files.
+    set(NE10_TEST_IMGPROC_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_main.c
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_suite_resize.c
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_suite_rotate.c
+    )
+
+    if(NE10_BUILD_STATIC)
+        add_executable(NE10_imgproc_unit_test_static ${NE10_TEST_IMGPROC_SRCS} ${NE10_TEST_COMMON_SRCS})
+        if(ANDROID_PLATFORM OR IOS_PLATFORM)
+            target_link_libraries (
+                NE10_imgproc_unit_test_static
+                NE10
+                m
+            )
+        elseif(GNULINUX_PLATFORM)
+            target_link_libraries (
+                NE10_imgproc_unit_test_static
+                NE10
+                m
+                rt
+            )
+        endif()
+
+        if(NE10_SMOKE_TEST)
+            set_target_properties(NE10_imgproc_unit_test_static PROPERTIES
+                OUTPUT_NAME "NE10_imgproc_unit_test_smoke"
+            )
+        elseif (NE10_REGRESSION_TEST)
+            set_target_properties(NE10_imgproc_unit_test_static PROPERTIES
+                OUTPUT_NAME "NE10_imgproc_unit_test_regression"
+            )
+        elseif (NE10_PERFORMANCE_TEST)
+            set_target_properties(NE10_imgproc_unit_test_static PROPERTIES
+                OUTPUT_NAME "NE10_imgproc_unit_test_performance"
+            )
+        endif()
+    endif()
+endif()
+

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012-13 ARM Limited
+ *  Copyright 2013 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -26,27 +26,34 @@
  */
 
 /*
- * NE10 Library : common/NE10_mask_table.h
+ * NE10 Library : test_main.c
  */
 
-#include "NE10_types.h"
-#ifndef _ARM_MASK_TABLE_H
-#define _ARM_MASK_TABLE_H
+#include "seatest.h"
 
-#define Q_MASK_TABLE_SIZE        20
-#define D_MASK_TABLE_SIZE        6
-#define DIV_LOOKUP_TABLE_SIZE    255
+void test_fixture_resize (void);
+void test_fixture_rotate (void);
 
-/* mask table for dsp module */
-extern const ne10_uint32_t ne10_qMaskTable32[Q_MASK_TABLE_SIZE] asm ("ne10_qMaskTable32");
-extern const ne10_uint32_t ne10_dMaskTable32[D_MASK_TABLE_SIZE] asm ("ne10_dMaskTable32");
-extern const ne10_uint32_t ne10_divLookUpTable[DIV_LOOKUP_TABLE_SIZE] \
-asm ("ne10_divLookUpTable");
+void all_tests (void)
+{
+    test_fixture_resize();
+    test_fixture_rotate();
+}
 
-/* mask table for imgproc module */
-#define NE10_VRESIZE_LINEAR_MASK_TABLE_SIZE    7
-extern const ne10_uint64_t ne10_img_vresize_linear_mask_residual_table[NE10_VRESIZE_LINEAR_MASK_TABLE_SIZE] \
-asm ("ne10_vresize_mask_residual_table");
 
-#endif
+void my_suite_setup (void)
+{
+    //printf("I'm done before every single test in the suite\r\n");
+}
 
+void my_suite_teardown (void)
+{
+    //printf("I'm done after every single test in the suite\r\n");
+}
+
+int main (ne10_int32_t argc, char** argv)
+{
+    suite_setup (my_suite_setup);
+    suite_teardown (my_suite_teardown);
+    return run_tests (all_tests);
+}

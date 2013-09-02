@@ -68,7 +68,7 @@ const ne10_uint32_t ne10_divLookUpTable[DIV_LOOKUP_TABLE_SIZE]=
     272,271,270,269,267,266,265,264,263,262,261,260,259,258,257
     };
 
-const ne10_uint64_t ne10_vresize_mask_residual_table[VRESIZE_MASK_TABLE_SIZE] =
+const ne10_uint64_t ne10_img_vresize_linear_mask_residual_table[NE10_VRESIZE_LINEAR_MASK_TABLE_SIZE] =
 {
     0x00000000000000FF, 0x000000000000FFFF,
     0x0000000000FFFFFF, 0x00000000FFFFFFFF,
