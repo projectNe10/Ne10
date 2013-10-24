@@ -100,8 +100,10 @@ For cross-compiling for iOS, the note to Unix platforms also applies and before 
    cmake -DCMAKE_TOOLCHAIN_FILE=/path/of/ios_config.cmake ..
    make
 
+Note for cmake step: if cmake warns: ignoring CMAKE_OSX_SYSROOT value and that directory does not exist, you should check your SDKs directory. And if necessary, you can specify this path in ios_config.cmake. That is changing the variable CMAKE_IOS_SDK_PATH to your configuration.
+
 =Ne10 demo=
-There are 2 demos include Ne10, one for Android and one for iOS. Both demos need Ne10 library and it's native side interface library installed, to do that, after build NE10, you should run "make install" in the same directory. And please also note that your devices should be have access to internet to run the demo.
+There are 2 demos include Ne10, one for Android and one for iOS. Both demos need Ne10 library and it's native side interface library installed, to do that, after build NE10, you should run "make install" in the same directory. And after that, you can import or open the project file in android SDK or Xcode as usually. And please also note that your devices should be have access to internet to run the demo.
 
 ---------------------------UNIT TEST------------------------------
 

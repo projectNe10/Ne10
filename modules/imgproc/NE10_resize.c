@@ -411,8 +411,9 @@ extern void ne10_img_hresize_4channels_linear_neon (const ne10_uint8_t** src,
         ne10_int32_t dwidth,
         ne10_int32_t cn,
         ne10_int32_t xmin,
-        ne10_int32_t xmax);
-extern void ne10_img_vresize_linear_neon (const ne10_int32_t** src, ne10_uint8_t* dst, const ne10_int16_t* beta, ne10_int32_t width);
+        ne10_int32_t xmax)
+    asm("ne10_img_hresize_4channels_linear_neon");
+extern void ne10_img_vresize_linear_neon (const ne10_int32_t** src, ne10_uint8_t* dst, const ne10_int16_t* beta, ne10_int32_t width) asm("ne10_img_vresize_linear_neon");
 
 static void ne10_img_resize_generic_linear_neon (ne10_uint8_t* src,
         ne10_uint8_t* dst,

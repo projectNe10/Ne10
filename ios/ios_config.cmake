@@ -71,7 +71,7 @@ set(CMAKE_C_COMPILER_WORKS TRUE)
 set(CMAKE_ASM_COMPILER TRUE)
 
 set(CMAKE_IOS_SDK_PATH
-  "$ENV{IOS_DEVELOPER_PATH}/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/")
+  "$ENV{IOS_DEVELOPER_PATH}/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/")
 
 set(CMAKE_OSX_SYSROOT ${CMAKE_IOS_SDK_PATH})
 set(CMAKE_FIND_ROOT_PATH ${CMAKE_IOS_SDK_PATH})

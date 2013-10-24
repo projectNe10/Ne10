@@ -260,13 +260,14 @@ void ne10_img_rotate_rgba_c (ne10_uint8_t* dst,
 }
 
 
-extern void  ne10_img_rotate_get_quad_rangle_subpix_rgba_neon (ne10_uint8_t *dst,
+extern void ne10_img_rotate_get_quad_rangle_subpix_rgba_neon (ne10_uint8_t *dst,
         ne10_uint8_t *src,
         ne10_int32_t srcw,
         ne10_int32_t srch,
         ne10_int32_t dstw,
         ne10_int32_t dsth,
-        ne10_float32_t *matrix);
+        ne10_float32_t *matrix)
+    asm("ne10_img_rotate_get_quad_rangle_subpix_rgba_neon");
 
 /**
  * @brief image rotate of 8-bit data.

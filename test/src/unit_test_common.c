@@ -225,7 +225,7 @@ ne10_float32_t CAL_PSNR_UINT8 (ne10_uint8_t *pRef, ne10_uint8_t *pTest, ne10_uin
     return (PSNR);
 
 }
-char ne10_log_buffer[1000];
+char ne10_log_buffer[5000];
 char *ne10_log_buffer_ptr;
 
 void ne10_log(const char *func_name,
