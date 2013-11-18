@@ -51,6 +51,12 @@ if(ANDROID_DEMO)
     add_definitions(-DNE10_ANDROID_DEMO)
 endif()
 
+if( CMAKE_SIZEOF_VOID_P EQUAL 8)
+  set( HOST_ARCH "x86_64" )
+else()
+  set( HOST_ARCH "x86" )
+endif()
+
 if(DEFINED ENV{ANDROID_NDK})
     if(NOT DEFINED ENV{ANDROID_API_LEVEL})
         set(ANDROID_API_LEVEL 14)
@@ -67,9 +73,9 @@ if(DEFINED ENV{ANDROID_NDK})
     set(NDK_SYSROOT_PATH "$ENV{ANDROID_NDK}/platforms/android-${ANDROID_API_LEVEL}/arch-arm/")
 
     if(APPLE)
-	set(ANDROID_TOOLCHAIN_PATH "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-${ARM_ANDROID_TOOLCHAIN_VERSION}/prebuilt/darwin-x86_64/bin")
+      set(ANDROID_TOOLCHAIN_PATH "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-${ARM_ANDROID_TOOLCHAIN_VERSION}/prebuilt/darwin-${HOST_ARCH}/bin")
     else()
-        set(ANDROID_TOOLCHAIN_PATH "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-${ARM_ANDROID_TOOLCHAIN_VERSION}/prebuilt/linux-x86_64/bin")
+      set(ANDROID_TOOLCHAIN_PATH "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-${ARM_ANDROID_TOOLCHAIN_VERSION}/prebuilt/linux-${HOST_ARCH}/bin")
     endif()
 
     #change toolchain name according to your configuration
