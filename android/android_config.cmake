@@ -51,9 +51,9 @@ if(ANDROID_DEMO)
     add_definitions(-DNE10_ANDROID_DEMO)
 endif()
 
-if( CMAKE_SIZEOF_VOID_P EQUAL 8)
-  set( HOST_ARCH "x86_64" )
-else()
+execute_process(COMMAND uname -m OUTPUT_VARIABLE HOST_ARCH)
+
+if(NOT (HOST_ARCH STREQUAL "x86_64"))
   set( HOST_ARCH "x86" )
 endif()
 
