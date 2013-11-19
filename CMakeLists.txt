@@ -58,7 +58,12 @@ endif()
 #select functionalities to be compiled
 option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
 option(NE10_ENABLE_DSP "Build dsp functionalities to NE10" ON)
-option(NE10_ENABLE_IMGPROC "Build image processing functionalities to NE10" ON)
+if(IS_ARM)
+  option(NE10_ENABLE_IMGPROC "Build image processing functionalities to NE10" ON)
+else()
+  # These functions use NEON specific functions.
+  option(NE10_ENABLE_IMGPROC "Build image processing functionalities to NE10" OFF)
+endif()
 
 set(NE10_VERSION 10)
 

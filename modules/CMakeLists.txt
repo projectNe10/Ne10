@@ -268,10 +268,6 @@ include_directories (
     ${PROJECT_SOURCE_DIR}/common
 )
 
-if (NOT GNULINUX_X86_PLATFORM)
-  set(IS_ARM ON)
-endif()
-
 if (IS_ARM)
   set(NE10_PLATFORM_SPECIFIC_SRCS ${NE10_INTRINSIC_SRCS} ${NE10_NEON_SRCS})
 else()

@@ -31,6 +31,7 @@
 
 ne10_result_t ne10_init_math (int is_NEON_available)
 {
+#if IS_ARM
     if (NE10_OK == is_NEON_available)
     {
         ne10_addc_float = ne10_addc_float_neon;
@@ -123,6 +124,7 @@ ne10_result_t ne10_init_math (int is_NEON_available)
         ne10_identitymat_2x2f = ne10_identitymat_2x2f_neon;
     }
     else
+#endif // IS_ARM
     {
         ne10_addc_float = ne10_addc_float_c;
         ne10_addc_vec2f = ne10_addc_vec2f_c;
