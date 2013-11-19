@@ -52,6 +52,7 @@ if(ANDROID_DEMO)
 endif()
 
 execute_process(COMMAND uname -m OUTPUT_VARIABLE HOST_ARCH)
+STRING(REGEX REPLACE "\n" "" HOST_ARCH ${HOST_ARCH})
 
 if(NOT (HOST_ARCH STREQUAL "x86_64"))
   set( HOST_ARCH "x86" )
