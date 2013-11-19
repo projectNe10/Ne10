@@ -43,8 +43,15 @@ if (NE10_BUILD_UNIT_TEST)
     option(NE10_DEBUG_TRACE "Print debug trace" OFF)
 endif()
 
+if (NOT GNULINUX_X86_PLATFORM)
+  set(IS_ARM ON)
+endif()
+
 #check if proper platform is set.
-if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM) AND (NOT IOS_PLATFORM))
+if((NOT ANDROID_PLATFORM) AND
+   (NOT GNULINUX_PLATFORM) AND
+   (NOT GNULINUX_X86_PLATFORM) AND
+   (NOT IOS_PLATFORM))
     message(FATAL_ERROR "No platform is defined! see CMakeBuilding.txt under doc for details.")
 endif()
 
@@ -71,6 +78,9 @@ if(ANDROID_PLATFORM)
 elseif(GNULINUX_PLATFORM)
     set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+elseif(GNULINUX_X86_PLATFORM)
+    set(CMAKE_C_FLAGS "-O2")
+    set(CMAKE_ASM_FLAGS "")
 elseif(IOS_PLATFORM)
     set(CMAKE_C_FLAGS "-O2 -arch armv7 -arch armv7s -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "-arch armv7 -arch armv7s -mfpu=neon")

@@ -268,11 +268,20 @@ include_directories (
     ${PROJECT_SOURCE_DIR}/common
 )
 
+if (NOT GNULINUX_X86_PLATFORM)
+  set(IS_ARM ON)
+endif()
+
+if (IS_ARM)
+  set(NE10_PLATFORM_SPECIFIC_SRCS ${NE10_INTRINSIC_SRCS} ${NE10_NEON_SRCS})
+else()
+  set(NE10_PLATFORM_SPECIFIC_SRCS )
+endif()
+
 if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
     add_library( NE10 STATIC
         ${NE10_C_SRCS}
-        ${NE10_INTRINSIC_SRCS}
-        ${NE10_NEON_SRCS}
+        ${NE10_PLATFORM_SPECIFIC_SRCS}
         ${NE10_INIT_SRCS}
     )
     set_target_properties(NE10 PROPERTIES
@@ -290,8 +299,7 @@ if(NE10_BUILD_SHARED)
 
     add_library( NE10_shared SHARED
         ${NE10_C_SRCS}
-        ${NE10_INTRINSIC_SRCS}
-        ${NE10_NEON_SRCS}
+        ${NE10_PLATFORM_SPECIFIC_SRCS}
         ${NE10_INIT_SRCS}
     )
 
@@ -305,8 +313,7 @@ if(NE10_BUILD_SHARED)
 
     add_library( NE10_test SHARED
         ${NE10_C_SRCS}
-        ${NE10_INTRINSIC_SRCS}
-        ${NE10_NEON_SRCS}
+        ${NE10_PLATFORM_SPECIFIC_SRCS}
         ${NE10_INIT_SRCS}
     )
 
