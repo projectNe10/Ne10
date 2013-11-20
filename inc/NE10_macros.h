@@ -36,6 +36,16 @@
 #ifndef NE10_MACROS_H
 #define NE10_MACROS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/////////////////////////////////////////////////////////
+// constant values that are used across the library
+/////////////////////////////////////////////////////////
+
+#define NE10_PI (ne10_float32_t)(3.1415926535897932384626433832795)
+
 /////////////////////////////////////////////////////////
 // some external macro definitions to be exposed to the users
 /////////////////////////////////////////////////////////
@@ -51,7 +61,26 @@
 /////////////////////////////////////////////////////////
 #define NE10_F2I16_MAX         32767
 #define NE10_F2I16_SHIFT       15
+#define NE10_F2I16_SAMPPROD    ne10_int32_t
 #define NE10_F2I16_OP(x)       (ne10_int16_t)((x)*NE10_F2I16_MAX + 0.5f)
-#define NE10_F2I16_SROUND(x)   (((x)+(1<<(NE10_F2I16_SHIFT-1)))>>NE10_F2I16_SHIFT)
+#define NE10_F2I16_SROUND(x)   (ne10_int16_t)((((x)<<1)+(1<<NE10_F2I16_SHIFT))>>16)
+#define NE10_F2I16_SMUL(a,b)   ((NE10_F2I16_SAMPPROD)(a)*(b))
+#define NE10_F2I16_FIXDIV(c,div) \
+    do {    ((c).r) = NE10_F2I16_SROUND( NE10_F2I16_SMUL( ((c).r), NE10_F2I16_MAX/div) );  \
+        ((c).i) = NE10_F2I16_SROUND( NE10_F2I16_SMUL( ((c).i), NE10_F2I16_MAX/div) ); }while (0)
+
+#define NE10_F2I32_MAX         2147483647
+#define NE10_F2I32_SHIFT       31
+#define NE10_F2I32_SAMPPROD    ne10_int64_t
+#define NE10_F2I32_OP(x)       (ne10_int32_t)((x)*NE10_F2I32_MAX + 0.5f)
+#define NE10_F2I32_SROUND(x)   (ne10_int32_t) ((x)>>NE10_F2I32_SHIFT)
+#define NE10_F2I32_SMUL(a,b)    ((NE10_F2I32_SAMPPROD)(a)*(b))
+#define NE10_F2I32_FIXDIV(c,div) \
+    do {    ((c).r) = ( ( ((c).r)/div) );  \
+        ((c).i) = ( ( ((c).i)/div) ); }while (0)
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

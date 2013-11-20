@@ -99,6 +99,9 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_main.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_cfft.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_rfft.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_float32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_int32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_int16.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_decimate.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_interpolate.c

@@ -174,6 +174,46 @@ ne10_int32_t CHECK_ARRAY_GUARD (ne10_float32_t* array, ne10_uint32_t array_lengt
 
     return 1;
 }
+
+
+ne10_uint8_t ARRAY_GUARD_SIG_UINT8[ARRAY_GUARD_LEN] = { 0x12, 0x34, 0x56, 0x78 };
+// this function adds a ARRAY_GUARD_LEN signature to the begining and the end of an array, minimum acceptable size for the array is 2*ARRAY_GUARD_LEN.
+ne10_int32_t GUARD_ARRAY_UINT8 (ne10_uint8_t* array, ne10_uint32_t array_length)
+{
+    ne10_uint8_t* the_array = array - ARRAY_GUARD_LEN;
+    memcpy (the_array, ARRAY_GUARD_SIG_UINT8, sizeof (ARRAY_GUARD_SIG_UINT8));
+    the_array = array + array_length;
+    memcpy (the_array, ARRAY_GUARD_SIG_UINT8, sizeof (ARRAY_GUARD_SIG_UINT8));
+    return 1;
+}
+
+// this function returns TRUE if the signature matches the ARRAY_GUARD_SIGguard and returns FALSE otherwise
+ne10_int32_t CHECK_ARRAY_GUARD_UINT8 (ne10_uint8_t* array, ne10_uint32_t array_length)
+{
+    ne10_uint8_t* the_array = array - ARRAY_GUARD_LEN;
+    ne10_int32_t i;
+    for (i = 0; i < ARRAY_GUARD_LEN; i++)
+    {
+        if (the_array[i] != ARRAY_GUARD_SIG_UINT8[i])
+        {
+            fprintf (stderr, " ERROR: prefix array guard signature is wrong. \n");
+            return 0; // Match not found, return FALSE
+        }
+    }
+
+    the_array = array + array_length;
+    for (i = 0; i < ARRAY_GUARD_LEN; i++)
+    {
+        if (the_array[i] != ARRAY_GUARD_SIG_UINT8[i])
+        {
+            fprintf (stderr, " ERROR: suffix array guard signature is wrong. \n");
+            return 0; // Match not found, return FALSE
+        }
+    }
+
+    return 1;
+}
+
 /**
  * @brief  Caluclation of SNR
  * @param  ne10_float32_t*  Pointer to the reference buffer

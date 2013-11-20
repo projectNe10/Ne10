@@ -173,6 +173,9 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft_init.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_init.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir_init.c
@@ -183,6 +186,9 @@ if(NE10_ENABLE_DSP)
     # Add dsp intrinsic NEON files.
     set(NE10_DSP_INTRINSIC_SRCS
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
     )
 
     # Tell CMake these files need to be compiled with "-mfpu=neon"
@@ -193,6 +199,9 @@ if(NE10_ENABLE_DSP)
     # Add dsp NEON files.
     set(NE10_DSP_NEON_SRCS
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_cfft.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.s
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.s
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
     )

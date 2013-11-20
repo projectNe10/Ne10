@@ -37,6 +37,18 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
         ne10_radix4_butterfly_inverse_float = ne10_radix4_butterfly_inverse_float_neon;
         ne10_rfft_float = ne10_rfft_float_neon;
 
+        ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_neon;
+        ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_neon;
+        ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_neon;
+
+        ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_neon;
+        ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_neon;
+        ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_neon;
+
+        ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_neon;
+        ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_neon;
+        ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_neon;
+
         ne10_fir_float = ne10_fir_float_neon;
         ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
         ne10_fir_interpolate_float = ne10_fir_interpolate_float_neon;
@@ -51,6 +63,18 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
         ne10_radix4_butterfly_inverse_float = ne10_radix4_butterfly_inverse_float_c;
         ne10_rfft_float = ne10_rfft_float_c;
 
+        ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_c;
+        ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_c;
+        ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_c;
+
+        ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_c;
+        ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_c;
+        ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_c;
+
+        ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_c;
+        ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_c;
+        ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_c;
+
         ne10_fir_float = ne10_fir_float_c;
         ne10_fir_decimate_float = ne10_fir_decimate_float_c;
         ne10_fir_interpolate_float = ne10_fir_interpolate_float_c;
@@ -63,53 +87,116 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
 }
 
 // These are actual definitions of our function pointers that are declared in inc/NE10_dsp.h
-void (*ne10_radix4_butterfly_float)(ne10_float32_t *pDst,
-                     ne10_float32_t *pSrc,
-                     ne10_uint16_t N,
-                     ne10_float32_t *pCoef);
+void (*ne10_radix4_butterfly_float) (ne10_float32_t *pDst,
+                                     ne10_float32_t *pSrc,
+                                     ne10_uint16_t N,
+                                     ne10_float32_t *pCoef);
 
-void (*ne10_radix4_butterfly_inverse_float)(ne10_float32_t *pDst,
-                     ne10_float32_t *pSrc,
-                     ne10_uint16_t N,
-                     ne10_float32_t *pCoef,
-                     ne10_float32_t onebyN);
+void (*ne10_radix4_butterfly_inverse_float) (ne10_float32_t *pDst,
+        ne10_float32_t *pSrc,
+        ne10_uint16_t N,
+        ne10_float32_t *pCoef,
+        ne10_float32_t onebyN);
 
-void (*ne10_rfft_float)(const ne10_rfft_instance_f32_t * S,
-                     ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst,
-                     ne10_float32_t * pTemp);
+void (*ne10_rfft_float) (const ne10_rfft_instance_f32_t * S,
+                         ne10_float32_t * pSrc,
+                         ne10_float32_t * pDst,
+                         ne10_float32_t * pTemp);
 
-void (*ne10_fir_float)(const ne10_fir_instance_f32_t * S,
-                     ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst,
-                     ne10_uint32_t blockSize);
+void (*ne10_fft_c2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
+                                 ne10_fft_cpx_float32_t *fin,
+                                 ne10_fft_cpx_float32_t *twiddles,
+                                 ne10_int32_t *factors,
+                                 ne10_int32_t nfft,
+                                 ne10_int32_t inverse_fft);
 
-void (*ne10_fir_decimate_float)(
-                     const ne10_fir_decimate_instance_f32_t * S,
-                     ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst,
-                     ne10_uint32_t blockSize);
+void (*ne10_fft_c2c_1d_int32) (ne10_fft_cpx_int32_t *fout,
+                               ne10_fft_cpx_int32_t *fin,
+                               ne10_fft_cpx_int32_t *twiddles,
+                               ne10_int32_t *factors,
+                               ne10_int32_t nfft,
+                               ne10_int32_t inverse_fft);
 
-void (*ne10_fir_interpolate_float)(
-                     const ne10_fir_interpolate_instance_f32_t * S,
-                     ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst,
-                     ne10_uint32_t blockSize);
+void (*ne10_fft_c2c_1d_int16) (ne10_fft_cpx_int16_t *fout,
+                               ne10_fft_cpx_int16_t *fin,
+                               ne10_fft_cpx_int16_t *twiddles,
+                               ne10_int32_t *factors,
+                               ne10_int32_t nfft,
+                               ne10_int32_t inverse_fft);
 
-void (*ne10_fir_lattice_float)(
-                     const ne10_fir_lattice_instance_f32_t * S,
-                     ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst,
-                     ne10_uint32_t blockSize);
+void (*ne10_fft_r2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
+                                 ne10_float32_t *fin,
+                                 ne10_fft_cpx_float32_t *twiddles,
+                                 ne10_fft_cpx_float32_t *super_twiddles,
+                                 ne10_int32_t *factors,
+                                 ne10_int32_t nfft);
 
-void (*ne10_fir_sparse_float)(
-                     ne10_fir_sparse_instance_f32_t * S,
-                     ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst,
-                     ne10_float32_t * pScratchIn,
-                     ne10_uint32_t blockSize);
+void (*ne10_fft_c2r_1d_float32) (ne10_float32_t *fout,
+                                 ne10_fft_cpx_float32_t *fin,
+                                 ne10_fft_cpx_float32_t *twiddles,
+                                 ne10_fft_cpx_float32_t *super_twiddles,
+                                 ne10_int32_t *factors,
+                                 ne10_int32_t nfft);
 
-void (*ne10_iir_lattice_float)(const ne10_iir_lattice_instance_f32_t * S,
-                     ne10_float32_t * pSrc,
-                     ne10_float32_t * pDst,
-                     ne10_uint32_t blockSize);
+void (*ne10_fft_r2c_1d_int32) (ne10_fft_cpx_int32_t *fout,
+                               ne10_int32_t *fin,
+                               ne10_fft_cpx_int32_t *twiddles,
+                               ne10_fft_cpx_int32_t *super_twiddles,
+                               ne10_int32_t *factors,
+                               ne10_int32_t nfft);
+
+void (*ne10_fft_c2r_1d_int32) (ne10_int32_t *fout,
+                               ne10_fft_cpx_int32_t *fin,
+                               ne10_fft_cpx_int32_t *twiddles,
+                               ne10_fft_cpx_int32_t *super_twiddles,
+                               ne10_int32_t *factors,
+                               ne10_int32_t nfft);
+
+void (*ne10_fft_r2c_1d_int16) (ne10_fft_cpx_int16_t *fout,
+                               ne10_int16_t *fin,
+                               ne10_fft_cpx_int16_t *twiddles,
+                               ne10_fft_cpx_int16_t *super_twiddles,
+                               ne10_int32_t *factors,
+                               ne10_int32_t nfft);
+
+void (*ne10_fft_c2r_1d_int16) (ne10_int16_t *fout,
+                               ne10_fft_cpx_int16_t *fin,
+                               ne10_fft_cpx_int16_t *twiddles,
+                               ne10_fft_cpx_int16_t *super_twiddles,
+                               ne10_int32_t *factors,
+                               ne10_int32_t nfft);
+
+void (*ne10_fir_float) (const ne10_fir_instance_f32_t * S,
+                        ne10_float32_t * pSrc,
+                        ne10_float32_t * pDst,
+                        ne10_uint32_t blockSize);
+
+void (*ne10_fir_decimate_float) (
+    const ne10_fir_decimate_instance_f32_t * S,
+    ne10_float32_t * pSrc,
+    ne10_float32_t * pDst,
+    ne10_uint32_t blockSize);
+
+void (*ne10_fir_interpolate_float) (
+    const ne10_fir_interpolate_instance_f32_t * S,
+    ne10_float32_t * pSrc,
+    ne10_float32_t * pDst,
+    ne10_uint32_t blockSize);
+
+void (*ne10_fir_lattice_float) (
+    const ne10_fir_lattice_instance_f32_t * S,
+    ne10_float32_t * pSrc,
+    ne10_float32_t * pDst,
+    ne10_uint32_t blockSize);
+
+void (*ne10_fir_sparse_float) (
+    ne10_fir_sparse_instance_f32_t * S,
+    ne10_float32_t * pSrc,
+    ne10_float32_t * pDst,
+    ne10_float32_t * pScratchIn,
+    ne10_uint32_t blockSize);
+
+void (*ne10_iir_lattice_float) (const ne10_iir_lattice_instance_f32_t * S,
+                                ne10_float32_t * pSrc,
+                                ne10_float32_t * pDst,
+                                ne10_uint32_t blockSize);

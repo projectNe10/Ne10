@@ -37,6 +37,8 @@
 #define NE10_TYPES_H
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include <string.h>
 #include <assert.h>
 
@@ -45,7 +47,6 @@
 /////////////////////////////////////////////////////////
 #define NE10_OK 0
 #define NE10_ERR -1
-#define NE10_PI (3.1415926535897932384626433832795)
 
 /////////////////////////////////////////////////////////
 // some external definitions to be exposed to the users
@@ -204,6 +205,97 @@ static inline void createColumnMajorMatrix4x4 (ne10_mat4x4f_t * outMat, ne10_flo
 /////////////////////////////////////////////////////////
 // definitions for fft
 /////////////////////////////////////////////////////////
+
+/**
+ * @brief structure for the floating point FFT function.
+ */
+#define NE10_MAXFACTORS             32
+typedef struct
+{
+    ne10_float32_t r;
+    ne10_float32_t i;
+} ne10_fft_cpx_float32_t;
+
+struct ne10_fft_state_float32_t
+{
+    ne10_int32_t nfft;
+    ne10_int32_t inverse;
+    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_fft_cpx_float32_t twiddles[1];
+};
+
+typedef struct ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;
+
+struct ne10_fft_r2c_state_float32_t
+{
+    ne10_int32_t nfft;
+    ne10_int32_t inverse;
+    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_fft_cpx_float32_t *twiddles;
+    ne10_fft_cpx_float32_t *super_twiddles;
+};
+
+typedef struct ne10_fft_r2c_state_float32_t* ne10_fft_r2c_cfg_float32_t;
+
+/**
+ * @brief structure for the 16 bits fixed point FFT function.
+ */
+typedef struct
+{
+    ne10_int16_t r;
+    ne10_int16_t i;
+} ne10_fft_cpx_int16_t;
+
+struct ne10_fft_state_int16_t
+{
+    ne10_int32_t nfft;
+    ne10_int32_t inverse;
+    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_fft_cpx_int16_t twiddles[1];
+};
+
+typedef struct ne10_fft_state_int16_t* ne10_fft_cfg_int16_t;
+
+struct ne10_fft_r2c_state_int16_t
+{
+    ne10_int32_t nfft;
+    ne10_int32_t inverse;
+    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_fft_cpx_int16_t *twiddles;
+    ne10_fft_cpx_int16_t *super_twiddles;
+};
+
+typedef struct ne10_fft_r2c_state_int16_t* ne10_fft_r2c_cfg_int16_t;
+
+/**
+ * @brief structure for the 32 bits fixed point FFT function.
+ */
+typedef struct
+{
+    ne10_int32_t r;
+    ne10_int32_t i;
+} ne10_fft_cpx_int32_t;
+
+struct ne10_fft_state_int32_t
+{
+    ne10_int32_t nfft;
+    ne10_int32_t inverse;
+    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_fft_cpx_int32_t twiddles[1];
+};
+
+typedef struct ne10_fft_state_int32_t* ne10_fft_cfg_int32_t;
+
+struct ne10_fft_r2c_state_int32_t
+{
+    ne10_int32_t nfft;
+    ne10_int32_t inverse;
+    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_fft_cpx_int32_t *twiddles;
+    ne10_fft_cpx_int32_t *super_twiddles;
+};
+
+typedef struct ne10_fft_r2c_state_int32_t* ne10_fft_r2c_cfg_int32_t;
 
 /**
  * @brief Instance structure for the floating point CFFT/CIFFT function.
