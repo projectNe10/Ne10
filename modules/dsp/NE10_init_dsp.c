@@ -31,6 +31,7 @@
 
 ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
 {
+#if IS_ARM
     if (NE10_OK == is_NEON_available)
     {
         ne10_radix4_butterfly_float = ne10_radix4_butterfly_float_neon;
@@ -58,6 +59,7 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
         ne10_iir_lattice_float = ne10_iir_lattice_float_neon;
     }
     else
+#endif // if IS_ARM
     {
         ne10_radix4_butterfly_float = ne10_radix4_butterfly_float_c;
         ne10_radix4_butterfly_inverse_float = ne10_radix4_butterfly_inverse_float_c;
