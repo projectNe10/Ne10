@@ -1,5 +1,5 @@
 #
-#  Copyright 2011-13 ARM Limited
+#  Copyright 2011-14 ARM Limited
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -150,6 +150,7 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_main.c
         ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_suite_resize.c
         ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_suite_rotate.c
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_suite_boxfilter.c
     )
 
     if(NE10_BUILD_STATIC)

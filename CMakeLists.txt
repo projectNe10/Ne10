@@ -38,7 +38,9 @@ option(NE10_ARM_HARD_FLOAT "Build NE10 for hard float abi" OFF)
 #unit test options
 option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
 if (NE10_BUILD_UNIT_TEST)
-    #decide the test is smoke, regression or performance test, only one of three options is ON!
+    #decide the test is smoke, regression or performance test, only one of
+    #three options can be ON! And if you want to run performance test, you
+    #should build the releave version, see the BUILD_DEBUG below.
     option(NE10_SMOKE_TEST "Run smoke test" OFF)
     option(NE10_REGRESSION_TEST "Run regression test" OFF)
     option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
@@ -59,14 +61,21 @@ option(NE10_ENABLE_PHYSICS "Build physics functionalities to NE10" ON)
 
 set(NE10_VERSION 10)
 
-# set complile flags for ARM.
+if(BUILD_DEBUG)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -Wall -g -DDEBUG")
+    message("-- Building type: DEBUG")
+else(BUILD_DEBUG)
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -DNDEBUG")
+    message("-- Building type: RELEASE")
+endif(BUILD_DEBUG)
+
 if(ANDROID_PLATFORM)
     if(NE10_ARM_HARD_FLOAT)
-        set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
-        set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
+        set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
     else(NE10_ARM_HARD_FLOAT)
-        set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
-        set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
+        set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
     endif(NE10_ARM_HARD_FLOAT)
     message("loaded toolchain:
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-gcc
@@ -74,12 +83,12 @@ if(ANDROID_PLATFORM)
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-as
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ar
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ranlib")
-    if(ANDROID_DEMO)
+    if(ANDROID_PLATFORM AND ANDROID_DEMO)
       add_subdirectory(android/NE10Demo/jni)
     endif()
 elseif(GNULINUX_PLATFORM)
-    set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfpu=vfp3")
-    set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfpu=neon")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=vfp3")
+    set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=neon")
 elseif(IOS_PLATFORM)
     #set minimal target ios version.If not provided this option, Xcode
     #5.0.2 would generate code for iOS 7.0, which would lead runtime
@@ -87,8 +96,9 @@ elseif(IOS_PLATFORM)
     if(NOT MIN_IOS_VER)
       set(MIN_IOS_VER "5.0")
     endif()
-    set(CMAKE_C_FLAGS "-O2 -arch armv7 -arch armv7s -mfpu=vfp3 -miphoneos-version-min=" ${MIN_IOS_VER})
-    set(CMAKE_ASM_FLAGS "-arch armv7 -arch armv7s -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -arch armv7 -arch armv7s -mfpu=vfp3 -miphoneos-version-min=" ${MIN_IOS_VER})
+    set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -arch armv7 -arch armv7s -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
+    message("-- CFLAGS: ${CMAKE_C_FLAGS}")
 
     string(REPLACE ";" "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
     string(REPLACE ";" "" CMAKE_ASM_FLAGS ${CMAKE_ASM_FLAGS})
@@ -100,7 +110,7 @@ endif()
 # The NE10 library.
 add_subdirectory(modules)
 
-if(NE10_BUILD_EXAMPLES)
+if(NE10_BUILD_EXAMPLES AND NE10_ENABLE_MATH)
     add_subdirectory(samples)
 endif()
 

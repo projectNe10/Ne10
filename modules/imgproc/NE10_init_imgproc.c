@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 ARM Limited
+ *  Copyright 2013-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -35,11 +35,13 @@ ne10_result_t ne10_init_imgproc (ne10_int32_t is_NEON_available)
     {
         ne10_img_resize_bilinear_rgba = ne10_img_resize_bilinear_rgba_neon;
         ne10_img_rotate_rgba = ne10_img_rotate_rgba_neon;
+        ne10_img_boxfilter_rgba8888 = ne10_img_boxfilter_rgba8888_neon;
     }
     else
     {
         ne10_img_resize_bilinear_rgba = ne10_img_resize_bilinear_rgba_c;
         ne10_img_rotate_rgba = ne10_img_rotate_rgba_c;
+        ne10_img_boxfilter_rgba8888 = ne10_img_boxfilter_rgba8888_c;
     }
     return NE10_OK;
 }
@@ -59,3 +61,9 @@ void (*ne10_img_rotate_rgba) (ne10_uint8_t* dst,
                               ne10_uint32_t src_width,
                               ne10_uint32_t src_height,
                               ne10_int32_t angle);
+void (*ne10_img_boxfilter_rgba8888) (const ne10_uint8_t *src,
+                                     ne10_uint8_t *dst,
+                                     ne10_size_t src_size,
+                                     ne10_int32_t src_stride,
+                                     ne10_int32_t dst_stride,
+                                     ne10_size_t kernel_size);

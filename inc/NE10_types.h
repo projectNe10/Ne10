@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -396,5 +396,28 @@ typedef struct
     ne10_float32_t *pkCoeffs;    /**< Points to the reflection coefficient array. The array is of length numStages. */
     ne10_float32_t *pvCoeffs;    /**< Points to the ladder coefficient array. The array is of length numStages+1. */
 } ne10_iir_lattice_instance_f32_t;
+
+/////////////////////////////////////////////////////////
+// definitions for imgproc module
+/////////////////////////////////////////////////////////
+
+/**
+ * @brief Structure for point in image
+ */
+typedef struct {
+    ne10_uint32_t x;
+    ne10_uint32_t y;
+} ne10_point_t;
+
+typedef struct {
+    ne10_uint32_t x;
+    ne10_uint32_t y;
+} ne10_size_t;
+
+typedef enum {
+    UBUNTU_COMMAND_LINE,
+    ANDROID_DEMO,
+    IOS_DEMO
+} ne10_print_target_t;
 
 #endif

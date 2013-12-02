@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 ARM Limited
+ *  Copyright 2013-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -39,12 +39,13 @@
 extern "C" {
 #endif
 
+    ne10_result_t ne10_init_imgproc (ne10_int32_t is_NEON_available);
+
 ///////////////////////////
 // function prototypes:
 ///////////////////////////
 
     /* image resize functions*/
-
     /* function pointers*/
     extern void (*ne10_img_resize_bilinear_rgba) (ne10_uint8_t* dst,
             ne10_uint32_t dst_width,
@@ -97,6 +98,29 @@ extern "C" {
                                            ne10_uint32_t src_height,
                                            ne10_int32_t angle)
     asm ("ne10_img_rotate_rgba_neon");
+
+    /* image boxfilter functions */
+    /* function pointers */
+    extern void (*ne10_img_boxfilter_rgba8888) (const ne10_uint8_t *src,
+                                                ne10_uint8_t *dst,
+                                                ne10_size_t src_size,
+                                                ne10_int32_t src_stride,
+                                                ne10_int32_t dst_stride,
+                                                ne10_size_t kernel_size);
+    /* C version*/
+    extern void ne10_img_boxfilter_rgba8888_c (const ne10_uint8_t *src,
+                                               ne10_uint8_t *dst,
+                                               ne10_size_t src_size,
+                                               ne10_int32_t src_stride,
+                                               ne10_int32_t dst_stride,
+                                               ne10_size_t kernel_size);
+    /* NEON version*/
+    extern void ne10_img_boxfilter_rgba8888_neon (const ne10_uint8_t *src,
+                                                  ne10_uint8_t *dst,
+                                                  ne10_size_t src_size,
+                                                  ne10_int32_t src_stride,
+                                                  ne10_int32_t dst_stride,
+                                                  ne10_size_t kernel_size);
 
 #ifdef __cplusplus
 }

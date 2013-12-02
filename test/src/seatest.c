@@ -9,18 +9,19 @@ int seatest_is_string_equal_i(const char* s1, const char* s2)
 }
 
 #else
-#include <time.h>
-long long GetTickCount() //{ return 0;}
+#include <sys/time.h>
+
+long int GetTickCount()
 {
 //#ifndef __MACH__
 //    struct timespec tv;
 //    clock_gettime(CLOCK_MONOTONIC, &tv);
-//    return (long long)tv.tv_sec*1000000 + tv.tv_nsec/1000;
+//    return tv.tv_sec*1000000 + tv.tv_nsec/1000;
 //
 //#else
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    return (long long)(tv.tv_sec*1000000 + tv.tv_usec);
+    return tv.tv_sec*1000000 + tv.tv_usec;
 //#endif
 }
 void _getch( void ) { }
@@ -33,7 +34,6 @@ int seatest_is_string_equal_i(const char* s1, const char* s2)
 #ifdef SEATEST_INTERNAL_TESTS
 static int sea_test_last_passed = 0;
 #endif
-
 
 typedef enum
 {

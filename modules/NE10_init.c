@@ -68,7 +68,11 @@ ne10_result_t ne10_init()
         return NE10_ERR;
     }
 
-    while ('\0' != cpuinfo[i]) cpuinfo[i++] = (ne10_int8_t) tolower (cpuinfo[i]);
+    while ('\0' != cpuinfo[i])
+    {
+        cpuinfo[i] = (ne10_int8_t) tolower (cpuinfo[i]);
+        ++i;
+    }
 
     if (0 != strstr ( (const char *)cpuinfo, "neon"))
     {

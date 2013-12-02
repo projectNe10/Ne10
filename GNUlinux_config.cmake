@@ -26,11 +26,11 @@
 #
 
 set(GNULINUX_PLATFORM ON)
-set(CMAKE_C_COMPILER arm-linux-gnueabi-gcc)
-set(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
-set(CMAKE_ASM_COMPILER arm-linux-gnueabi-as)
+set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
+set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)
 
-find_program(CMAKE_AR NAMES "arm-linux-gnueabi-ar")
+find_program(CMAKE_AR NAMES "arm-linux-gnueabihf-ar")
 mark_as_advanced(CMAKE_AR)
-find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabi-ranlib")
+find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabihf-ranlib")
 mark_as_advanced(CMAKE_RANLIB)

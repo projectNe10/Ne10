@@ -43,7 +43,7 @@ For Unix platforms, say the following on a terminal: (Replace $NE10PATH with the
     mkdir build && cd build
     cmake -DGNULINUX_PLATFORM=ON ..
     make
-Then the libNE10.a is placed in ./modules/ and a sample program "NE10_test_static" is placed in ./samples/. you can run it.
+Then the libNE10.a is placed in ./modules/ and a sample program "NE10_test_static" is placed in ./samples/. you can run it. And default building will build release version, if you want to build debug version, you can add -DDEBUG=ON option to cmake.
 You might want to add -DNE10_BUILD_SHARED=ON to the cmake call to generate the dynamic library and test program "NE10_test_dynamic".
 
 =Android platforms=
@@ -55,15 +55,15 @@ For cross-compiling for unix platforms, the process is in the following:
     cd $NE10PATH
 
 Open the GNUlinux_config.cmake and change the compiler toolchain to yourself.My toolchain is Linaro GCC 4.6.
-In Ubuntu 11.10 you can install it by "sudo apt-get install gcc-arm-linux-gnueabi".
-    set( CMAKE_C_COMPILER arm-linux-gnueabi-gcc )
-    set( CMAKE_CXX_COMPILER arm-linux-gnueabi-g++ )
-    set( CMAKE_ASM_COMPILER arm-linux-gnueabi-as )
+In Ubuntu 12.10 you can install it by "sudo apt-get install gcc-arm-linux-gnueabihf".
+    set( CMAKE_C_COMPILER arm-linux-gnueabihf-gcc )
+    set( CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++ )
+    set( CMAKE_ASM_COMPILER arm-linux-gnueabihf-as )
 
-    find_program(CMAKE_AR NAMES "arm-linux-gnueabi-ar")
+    find_program(CMAKE_AR NAMES "arm-linux-gnueabihf-ar")
     mark_as_advanced(CMAKE_AR)
 
-    find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabi-ranlib")
+    find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabihf-ranlib")
     mark_as_advanced(CMAKE_RANLIB)
 
 Now you can use the following commands to generate makefile.
@@ -71,14 +71,19 @@ Now you can use the following commands to generate makefile.
     cmake -DCMAKE_TOOLCHAIN_FILE=../GNUlinux_config.cmake ..
     make
 
+For system uses soft float point, you should modify the add following option to CMAKE_C_FLAGS and CMAKE_ASM_FLAGS for GNULINUX_PLATFORM in the root CMakeLists.txt:
+    -mfloat-abi=softfp -mfpu=neon
+
 Then the libNE10.a is placed in ./modules/ and a sample program "NE10_test_static" is placed in ./samples/. you can copy these to the target and run it.
 You might want to add -DNE10_BUILD_SHARED=ON to the cmake call to generate the dynamic library and test program "NE10_test_dynamic".
 
 Note:
-When you run NE10_test_dynamic on the target, you might meet the error:
-    "NE10_test_dynamic: error while loading shared libraries: libNE10_shared.so.10: cannot open shared object file: No such file or directory"
-You can run the following command:
+- When you run NE10_test_dynamic on the target, you might meet the error:
+    "NE10_test_dynamic: error while loading shared libraries: libNE10_shared.so.10: cannot open shared object file:  No such file or directory"
+  You can run the following command:
     export LD_LIBRARY_PATH=$NE10PATH/build/modules
+
+- default building will build release version, if you want to build debug version, you can add -DDEBUG=ON option to cmake.
 
 =Android platforms=:
 For cross-compiling for android, the note to Unix platforms also applies and before cross-compiling, you must have the android NDK installed. And then:
@@ -91,6 +96,8 @@ For cross-compiling for android, the note to Unix platforms also applies and bef
 There are also two other environment variable:
    ANDROID_API_LEVEL: used to specify android api level, default value is: 14
    ARM_ANDROID_TOOLCHAIN_VERSION: used be specify gcc version, default is: 4.6, gcc version must be >=4.6
+
+And default building will build release version, if you want to build debug version, you can add -DDEBUG=ON option to cmake.
 
 =iOS platforms=
 For cross-compiling for iOS, the note to Unix platforms also applies and before cross-compiling, you must have the Xcode installed. Our assembly code is written for GNU as(gas) initially, the assembler for iOS platform doesn't support it very well. However we get our code worked under Apple LLVM version 4.2 (clang-425.0.28) (based on LLVM 3.2svn) now, other toolchain(such as llvm-gcc) may not work. After Xcode installed, you should set the IOS_DEVELOPER_PATH environment variable to your Xcode path, if you haven't changed the default install path, it should be "/Applications/Xcode.app/Contents/Developer". As follow:

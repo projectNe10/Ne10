@@ -43,7 +43,8 @@ void seatest_setup( void );
 void seatest_teardown( void );
 void seatest_suite_teardown( void );
 void seatest_suite_setup( void );
-
+void test_fixture_boxfilter (void);
+long int GetTickCount( void );
 /*
 Assert Macros
 */

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012-13 ARM Limited
+ *  Copyright 2012-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -29,6 +29,8 @@
  * NE10 Library : test/src/unit_test_common.c
  */
 
+#include<time.h>
+#include<unistd.h>
 #include "unit_test_common.h"
 
 void FILL_FLOAT_ARRAY (ne10_float32_t *arr, ne10_uint32_t count)
@@ -291,4 +293,116 @@ void ne10_log(const char *func_name,
              time_neon,
              time_savings,
              time_speedup);
+}
+
+/* this function should handle all performance result output. ne10_log
+ * should be replaced by this function.
+ * info parameter contains the misc information, which is in below format:
+ * key1:value1\nkey2:value2\nkey3:value3
+ */
+void ne10_performance_print(ne10_print_target_t target,
+                            long int neon_ticks,
+                            long int c_ticks,
+                            char *info)
+{
+    double f = (double)c_ticks / neon_ticks;
+    switch (target) {
+    case UBUNTU_COMMAND_LINE:
+        printf("\n%s\nneon(ms): %.2f c(ms): %.2f(ms) speedup: %.2f",
+               info,
+               neon_ticks / 1000.0,
+               c_ticks / 1000.0,
+               f);
+        break;
+    case ANDROID_DEMO:
+        break;
+    case IOS_DEMO:
+        break;
+    }
+}
+
+void diff(const ne10_uint8_t *mat1,
+          const ne10_uint8_t *mat2,
+          ne10_int32_t  *dst,
+          ne10_uint32_t dst_stride,
+          ne10_uint32_t width,
+          ne10_uint32_t height,
+          ne10_uint32_t src_stride,
+          ne10_uint32_t channel)
+{
+    assert(mat1 != 0 && mat2 != 0 && dst != 0);
+
+    int i, j, k;
+
+    for(k = 0; k < channel; k++)
+    {
+        for(j = 0; j < height; j++)
+        {
+            const ne10_uint8_t *row1 = mat1 + j * src_stride;
+            const ne10_uint8_t *row2 = mat2 + j * src_stride;
+            ne10_int32_t *row_dst = dst + j * dst_stride / sizeof(ne10_int32_t);
+            for(i = 0; i < width; i++)
+            {
+                *(row_dst + i * channel + k) =
+                    (ne10_int32_t) (*(row1 + i * channel + k)) -
+                    *(row2 + i * channel + k);
+            }
+        }
+    }
+}
+
+/* check how many point is not in [-2, 2] */
+int diff_count(const ne10_int32_t *mat,
+               ne10_int32_t width,
+               ne10_int32_t height,
+               ne10_int32_t stride,
+               ne10_int32_t channel)
+{
+    assert(mat != 0);
+
+    int i, j, k;
+    int count = 0;
+    for(j = 0; j < height; j++)
+    {
+        const ne10_int32_t *row = mat + j * stride / sizeof(ne10_int32_t);
+        for(i = 0; i < width; i++)
+        {
+            for(k = 0; k < channel; k++)
+            {
+                const ne10_int32_t val = *(row + i * channel + k);
+                if (val != -1 && val != 0 && val != -2 && val != 1 && val != 2)
+                {
+                    ++count;
+                }
+            }
+        }
+    }
+
+    return count;
+}
+
+void progress_bar(float progress)
+{
+    assert(progress <= 1);
+
+    static float progress_prev = 0;
+    if (progress != progress_prev)
+    {
+        int bar_width = 70;
+
+        printf("[");
+        int pos = bar_width * progress;
+        int i;
+        for (i = 0; i < bar_width; ++i) {
+            if (i < pos)
+                printf("=");
+            else if (i == pos)
+                printf(">");
+            else
+                printf(" ");
+        }
+        printf("] %d%%\r", (int)(progress * 100.0));
+        fflush(stdout);
+        progress_prev = progress;
+    }
 }

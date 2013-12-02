@@ -118,6 +118,7 @@
         code \
         (time) = GetTickCount() - (time);\
     }
+
 typedef ne10_result_t (*ne10_func_5args_t) (void * dst, void * acc, void * src1, void * src2, ne10_uint32_t count);
 typedef ne10_result_t (*ne10_func_4args_t) (void * dst, void * src1, void * src2, ne10_uint32_t count);
 typedef ne10_result_t (*ne10_func_3args_t) (void * dst, void * src, ne10_uint32_t count);
@@ -125,7 +126,6 @@ typedef ne10_result_t (*ne10_func_2args_t) (void * dst, ne10_uint32_t count);
 typedef ne10_result_t (*ne10_func_5args_cst_t) (void * dst, void * acc, void * src, ne10_float32_t cst, ne10_uint32_t count);
 typedef ne10_result_t (*ne10_func_4args_cst_t) (void * dst, void * src, const ne10_float32_t cst, ne10_uint32_t count);
 typedef ne10_result_t (*ne10_func_3args_cst_t) (void * dst, const ne10_float32_t cst, ne10_uint32_t count);
-
 
 extern void FILL_FLOAT_ARRAY( ne10_float32_t *arr, ne10_uint32_t count );
 extern void FILL_FLOAT_ARRAY_LIMIT( ne10_float32_t *arr, ne10_uint32_t count );
@@ -149,6 +149,23 @@ extern void ne10_log(const char *func_name,
                      ne10_int32_t time_neon,
                      ne10_float32_t time_savings,
                      ne10_float32_t time_speedup);
+extern void ne10_performance_print(ne10_print_target_t target,
+                                   long int neon_ticks,
+                                   long int c_ticks,
+                                   char *info);
+extern void diff(const ne10_uint8_t *mat1,
+                 const ne10_uint8_t *mat2,
+                 ne10_int32_t  *dst,
+                 ne10_uint32_t dst_stride,
+                 ne10_uint32_t width,
+                 ne10_uint32_t height,
+                 ne10_uint32_t src_stride,
+                 ne10_uint32_t channel);
+extern int diff_count(const ne10_int32_t *mat,
+                      ne10_int32_t width,
+                      ne10_int32_t height,
+                      ne10_int32_t stride,
+                      ne10_int32_t channel);
 
 #endif // __UNIT_TEST_COMMON
 
