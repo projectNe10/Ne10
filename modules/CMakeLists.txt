@@ -25,6 +25,9 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+if(NE10_ARM_HARD_FLOAT)
+    add_definitions(-DNE10_ENABLE_HF)
+endif()
 # Define files.
 set(NE10_INIT_SRCS ${PROJECT_SOURCE_DIR}/modules/NE10_init.c)
 set(NE10_C_SRCS )
@@ -34,7 +37,7 @@ set(NE10_NEON_SRCS )
 #Tell CMake these files need to go to the C compiler
 function(set_file_to_c files)
   set(FLAGS
-    "-mfpu=neon -Wa,-I${PROJECT_SOURCE_DIR}/inc -Wa,-I${PROJECT_SOURCE_DIR}/common -Wa,-I${PROJECT_SOURCE_DIR}/modules/math" )
+    "-x assembler-with-cpp -mfpu=neon -Wa,-I${PROJECT_SOURCE_DIR}/inc -Wa,-I${PROJECT_SOURCE_DIR}/common -Wa,-I${PROJECT_SOURCE_DIR}/modules/math" )
   foreach(file ${${files}})
     set_property (SOURCE ${file} PROPERTY LANGUAGE C)
     set_source_files_properties(

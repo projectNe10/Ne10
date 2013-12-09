@@ -41,7 +41,9 @@ ne10_func_2args_t ftbl_2args[MAX_FUNC_COUNT];
 ne10_func_3args_t ftbl_3args[MAX_FUNC_COUNT];
 ne10_func_4args_t ftbl_4args[MAX_FUNC_COUNT];
 ne10_func_5args_t ftbl_5args[MAX_FUNC_COUNT];
-
+ne10_func_3args_cst_t ftbl_3args_cst[MAX_FUNC_COUNT];
+ne10_func_4args_cst_t ftbl_4args_cst[MAX_FUNC_COUNT];
+ne10_func_5args_cst_t ftbl_5args_cst[MAX_FUNC_COUNT];
 
 //input and output
 static ne10_float32_t * guarded_acc = NULL;
@@ -190,8 +192,9 @@ void test_addc_case0()
 
     /* init function table */
     memset (ftbl_4args, 0, sizeof (ftbl_4args));
-    ftbl_4args[ 0] = (ne10_func_4args_t) ne10_addc_float_c;
-    ftbl_4args[ 1] = (ne10_func_4args_t) ne10_addc_float_neon;
+    memset (ftbl_4args_cst, 0, sizeof (ftbl_4args_cst));
+    ftbl_4args_cst[ 0] = (ne10_func_4args_cst_t) ne10_addc_float_c;
+    ftbl_4args_cst[ 1] = (ne10_func_4args_cst_t) ne10_addc_float_neon;
     ftbl_4args[ 2] = (ne10_func_4args_t) ne10_addc_vec2f_c;
     ftbl_4args[ 3] = (ne10_func_4args_t) ne10_addc_vec2f_neon;
     ftbl_4args[ 4] = (ne10_func_4args_t) ne10_addc_vec3f_c;
@@ -219,8 +222,17 @@ void test_addc_case0()
             GUARD_ARRAY (thedst_c, loop * vec_size);
             GUARD_ARRAY (thedst_neon, loop * vec_size);
 
-            ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
-            ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            if (func_loop == 0)
+            {
+                ftbl_4args_cst[2 * func_loop] (thedst_c, thesrc1, thecst[0], loop);
+                ftbl_4args_cst[2 * func_loop + 1] (thedst_neon, thesrc1, thecst[0], loop);
+            }
+            else
+            {
+                ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
+                ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            }
+
 
             CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
             CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
@@ -256,7 +268,19 @@ void test_addc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (func_loop = 0; func_loop < 1; func_loop++)
+    {
+        GET_TIME (time_c,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        GET_TIME (time_neon,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+    }
+    for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
@@ -490,8 +514,9 @@ void test_divc_case0()
 
     /* init function table */
     memset (ftbl_4args, 0, sizeof (ftbl_4args));
-    ftbl_4args[ 0] = (ne10_func_4args_t) ne10_divc_float_c;
-    ftbl_4args[ 1] = (ne10_func_4args_t) ne10_divc_float_neon;
+    memset (ftbl_4args_cst, 0, sizeof (ftbl_4args_cst));
+    ftbl_4args_cst[ 0] = (ne10_func_4args_cst_t) ne10_divc_float_c;
+    ftbl_4args_cst[ 1] = (ne10_func_4args_cst_t) ne10_divc_float_neon;
     ftbl_4args[ 2] = (ne10_func_4args_t) ne10_divc_vec2f_c;
     ftbl_4args[ 3] = (ne10_func_4args_t) ne10_divc_vec2f_neon;
     ftbl_4args[ 4] = (ne10_func_4args_t) ne10_divc_vec3f_c;
@@ -519,8 +544,16 @@ void test_divc_case0()
             GUARD_ARRAY (thedst_c, loop * vec_size);
             GUARD_ARRAY (thedst_neon, loop * vec_size);
 
-            ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
-            ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            if (func_loop == 0)
+            {
+                ftbl_4args_cst[2 * func_loop] (thedst_c, thesrc1, thecst[0], loop);
+                ftbl_4args_cst[2 * func_loop + 1] (thedst_neon, thesrc1, thecst[0], loop);
+            }
+            else
+            {
+                ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
+                ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            }
 
             CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
             CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
@@ -556,7 +589,19 @@ void test_divc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (func_loop = 0; func_loop < 1; func_loop++)
+    {
+        GET_TIME (time_c,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        GET_TIME (time_neon,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+    }
+    for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
@@ -889,8 +934,9 @@ void test_mlac_case0()
 
     /* init function table */
     memset (ftbl_5args, 0, sizeof (ftbl_5args));
-    ftbl_5args[ 0] = (ne10_func_5args_t) ne10_mlac_float_c;
-    ftbl_5args[ 1] = (ne10_func_5args_t) ne10_mlac_float_neon;
+    memset (ftbl_5args_cst, 0, sizeof (ftbl_5args_cst));
+    ftbl_5args_cst[ 0] = (ne10_func_5args_cst_t) ne10_mlac_float_c;
+    ftbl_5args_cst[ 1] = (ne10_func_5args_cst_t) ne10_mlac_float_neon;
     ftbl_5args[ 2] = (ne10_func_5args_t) ne10_mlac_vec2f_c;
     ftbl_5args[ 3] = (ne10_func_5args_t) ne10_mlac_vec2f_neon;
     ftbl_5args[ 4] = (ne10_func_5args_t) ne10_mlac_vec3f_c;
@@ -919,8 +965,16 @@ void test_mlac_case0()
             GUARD_ARRAY (thedst_c, loop * vec_size);
             GUARD_ARRAY (thedst_neon, loop * vec_size);
 
-            ftbl_5args[2 * func_loop] (thedst_c, theacc, thesrc1, thecst, loop);
-            ftbl_5args[2 * func_loop + 1] (thedst_neon, theacc, thesrc1, thecst, loop);
+            if (func_loop == 0)
+            {
+                ftbl_5args_cst[2 * func_loop] (thedst_c, theacc, thesrc1, thecst[0], loop);
+                ftbl_5args_cst[2 * func_loop + 1] (thedst_neon, theacc, thesrc1, thecst[0], loop);
+            }
+            else
+            {
+                ftbl_5args[2 * func_loop] (thedst_c, theacc, thesrc1, thecst, loop);
+                ftbl_5args[2 * func_loop + 1] (thedst_neon, theacc, thesrc1, thecst, loop);
+            }
 
             CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
             CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
@@ -959,7 +1013,19 @@ void test_mlac_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (func_loop = 0; func_loop < 1; func_loop++)
+    {
+        GET_TIME (time_c,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args_cst[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        GET_TIME (time_neon,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+    }
+    for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thecst, loop);
@@ -1103,8 +1169,9 @@ void test_mulc_case0()
 
     /* init function table */
     memset (ftbl_4args, 0, sizeof (ftbl_4args));
-    ftbl_4args[ 0] = (ne10_func_4args_t) ne10_mulc_float_c;
-    ftbl_4args[ 1] = (ne10_func_4args_t) ne10_mulc_float_neon;
+    memset (ftbl_4args_cst, 0, sizeof (ftbl_4args_cst));
+    ftbl_4args_cst[ 0] = (ne10_func_4args_cst_t) ne10_mulc_float_c;
+    ftbl_4args_cst[ 1] = (ne10_func_4args_cst_t) ne10_mulc_float_neon;
     ftbl_4args[ 2] = (ne10_func_4args_t) ne10_mulc_vec2f_c;
     ftbl_4args[ 3] = (ne10_func_4args_t) ne10_mulc_vec2f_neon;
     ftbl_4args[ 4] = (ne10_func_4args_t) ne10_mulc_vec3f_c;
@@ -1132,8 +1199,16 @@ void test_mulc_case0()
             GUARD_ARRAY (thedst_c, loop * vec_size);
             GUARD_ARRAY (thedst_neon, loop * vec_size);
 
-            ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
-            ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            if (func_loop == 0)
+            {
+                ftbl_4args_cst[2 * func_loop] (thedst_c, thesrc1, thecst[0], loop);
+                ftbl_4args_cst[2 * func_loop + 1] (thedst_neon, thesrc1, thecst[0], loop);
+            }
+            else
+            {
+                ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
+                ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            }
 
             CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
             CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
@@ -1169,7 +1244,19 @@ void test_mulc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (func_loop = 0; func_loop < 1; func_loop++)
+    {
+        GET_TIME (time_c,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        GET_TIME (time_neon,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+    }
+    for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
@@ -1402,8 +1489,9 @@ void test_rsbc_case0()
 
     /* init function table */
     memset (ftbl_4args, 0, sizeof (ftbl_4args));
-    ftbl_4args[ 0] = (ne10_func_4args_t) ne10_rsbc_float_c;
-    ftbl_4args[ 1] = (ne10_func_4args_t) ne10_rsbc_float_neon;
+    memset (ftbl_4args_cst, 0, sizeof (ftbl_4args_cst));
+    ftbl_4args_cst[ 0] = (ne10_func_4args_cst_t) ne10_rsbc_float_c;
+    ftbl_4args_cst[ 1] = (ne10_func_4args_cst_t) ne10_rsbc_float_neon;
     ftbl_4args[ 2] = (ne10_func_4args_t) ne10_rsbc_vec2f_c;
     ftbl_4args[ 3] = (ne10_func_4args_t) ne10_rsbc_vec2f_neon;
     ftbl_4args[ 4] = (ne10_func_4args_t) ne10_rsbc_vec3f_c;
@@ -1431,8 +1519,16 @@ void test_rsbc_case0()
             GUARD_ARRAY (thedst_c, loop * vec_size);
             GUARD_ARRAY (thedst_neon, loop * vec_size);
 
-            ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
-            ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            if (func_loop == 0)
+            {
+                ftbl_4args_cst[2 * func_loop] (thedst_c, thesrc1, thecst[0], loop);
+                ftbl_4args_cst[2 * func_loop + 1] (thedst_neon, thesrc1, thecst[0], loop);
+            }
+            else
+            {
+                ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
+                ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            }
 
             CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
             CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
@@ -1468,7 +1564,19 @@ void test_rsbc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (func_loop = 0; func_loop < 1; func_loop++)
+    {
+        GET_TIME (time_c,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        GET_TIME (time_neon,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+    }
+    for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
@@ -1504,8 +1612,9 @@ void test_setc_case0()
 
     /* init function table */
     memset (ftbl_3args, 0, sizeof (ftbl_3args));
-    ftbl_3args[ 0] = (ne10_func_3args_t) ne10_setc_float_c;
-    ftbl_3args[ 1] = (ne10_func_3args_t) ne10_setc_float_neon;
+    memset (ftbl_3args_cst, 0, sizeof (ftbl_3args_cst));
+    ftbl_3args_cst[ 0] = (ne10_func_3args_cst_t) ne10_setc_float_c;
+    ftbl_3args_cst[ 1] = (ne10_func_3args_cst_t) ne10_setc_float_neon;
     ftbl_3args[ 2] = (ne10_func_3args_t) ne10_setc_vec2f_c;
     ftbl_3args[ 3] = (ne10_func_3args_t) ne10_setc_vec2f_neon;
     ftbl_3args[ 4] = (ne10_func_3args_t) ne10_setc_vec3f_c;
@@ -1532,8 +1641,16 @@ void test_setc_case0()
             GUARD_ARRAY (thedst_c, loop * vec_size);
             GUARD_ARRAY (thedst_neon, loop * vec_size);
 
-            ftbl_3args[2 * func_loop] (thedst_c, thecst, loop);
-            ftbl_3args[2 * func_loop + 1] (thedst_neon, thecst, loop);
+            if (func_loop == 0)
+            {
+                ftbl_3args_cst[2 * func_loop] (thedst_c, thecst[0], loop);
+                ftbl_3args_cst[2 * func_loop + 1] (thedst_neon, thecst[0], loop);
+            }
+            else
+            {
+                ftbl_3args[2 * func_loop] (thedst_c, thecst, loop);
+                ftbl_3args[2 * func_loop + 1] (thedst_neon, thecst, loop);
+            }
 
             CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
             CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
@@ -1567,7 +1684,19 @@ void test_setc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (func_loop = 0; func_loop < 1; func_loop++)
+    {
+        GET_TIME (time_c,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args_cst[2 * func_loop] (perftest_thedst_c, perftest_thecst[0], loop);
+                 );
+        GET_TIME (time_neon,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst[0], loop);
+                 );
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+    }
+    for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thecst, loop);
@@ -1602,8 +1731,9 @@ void test_subc_case0()
 
     /* init function table */
     memset (ftbl_4args, 0, sizeof (ftbl_4args));
-    ftbl_4args[ 0] = (ne10_func_4args_t) ne10_subc_float_c;
-    ftbl_4args[ 1] = (ne10_func_4args_t) ne10_subc_float_neon;
+    memset (ftbl_4args_cst, 0, sizeof (ftbl_4args_cst));
+    ftbl_4args_cst[ 0] = (ne10_func_4args_cst_t) ne10_subc_float_c;
+    ftbl_4args_cst[ 1] = (ne10_func_4args_cst_t) ne10_subc_float_neon;
     ftbl_4args[ 2] = (ne10_func_4args_t) ne10_subc_vec2f_c;
     ftbl_4args[ 3] = (ne10_func_4args_t) ne10_subc_vec2f_neon;
     ftbl_4args[ 4] = (ne10_func_4args_t) ne10_subc_vec3f_c;
@@ -1631,8 +1761,16 @@ void test_subc_case0()
             GUARD_ARRAY (thedst_c, loop * vec_size);
             GUARD_ARRAY (thedst_neon, loop * vec_size);
 
-            ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
-            ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            if (func_loop == 0)
+            {
+                ftbl_4args_cst[2 * func_loop] (thedst_c, thesrc1, thecst[0], loop);
+                ftbl_4args_cst[2 * func_loop + 1] (thedst_neon, thesrc1, thecst[0], loop);
+            }
+            else
+            {
+                ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thecst, loop);
+                ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
+            }
 
             CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
             CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
@@ -1668,7 +1806,19 @@ void test_subc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (func_loop = 0; func_loop < 1; func_loop++)
+    {
+        GET_TIME (time_c,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        GET_TIME (time_neon,
+                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                 );
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "%25d%20lld%20lld%19.2f%%%18.2f:1\n", func_loop + 1, time_c, time_neon, time_savings, time_speedup);
+    }
+    for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
                   for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);

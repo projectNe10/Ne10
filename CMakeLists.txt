@@ -32,6 +32,9 @@ option(NE10_BUILD_SHARED "Build NE10 shared libraries" OFF)
 option(NE10_BUILD_STATIC "Build NE10 static libraries" ON)
 option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 
+#hard float abi
+option(NE10_ARM_HARD_FLOAT "Build NE10 for hard float abi" OFF)
+
 #unit test options
 option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
 if (NE10_BUILD_UNIT_TEST)
@@ -57,8 +60,13 @@ set(NE10_VERSION 10)
 
 # set complile flags for ARM.
 if(ANDROID_PLATFORM)
-    set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
-    set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
+    if(NE10_ARM_HARD_FLOAT)
+        set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
+        set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
+    else(NE10_ARM_HARD_FLOAT)
+        set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
+        set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
+    endif(NE10_ARM_HARD_FLOAT)
     message("loaded toolchain:
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-gcc
     ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-g++
@@ -69,8 +77,8 @@ if(ANDROID_PLATFORM)
       add_subdirectory(android/NE10Demo/jni)
     endif()
 elseif(GNULINUX_PLATFORM)
-    set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3")
-    set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon")
+    set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfpu=vfp3")
+    set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfpu=neon")
 elseif(IOS_PLATFORM)
     set(CMAKE_C_FLAGS "-O2 -arch armv7 -arch armv7s -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "-arch armv7 -arch armv7s -mfpu=neon")

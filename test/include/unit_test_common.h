@@ -122,6 +122,9 @@ typedef ne10_result_t (*ne10_func_5args_t) (void * dst, void * acc, void * src1,
 typedef ne10_result_t (*ne10_func_4args_t) (void * dst, void * src1, void * src2, ne10_uint32_t count);
 typedef ne10_result_t (*ne10_func_3args_t) (void * dst, void * src, ne10_uint32_t count);
 typedef ne10_result_t (*ne10_func_2args_t) (void * dst, ne10_uint32_t count);
+typedef ne10_result_t (*ne10_func_5args_cst_t) (void * dst, void * acc, void * src, ne10_float32_t cst, ne10_uint32_t count);
+typedef ne10_result_t (*ne10_func_4args_cst_t) (void * dst, void * src, const ne10_float32_t cst, ne10_uint32_t count);
+typedef ne10_result_t (*ne10_func_3args_cst_t) (void * dst, const ne10_float32_t cst, ne10_uint32_t count);
 
 
 extern void FILL_FLOAT_ARRAY( ne10_float32_t *arr, ne10_uint32_t count );

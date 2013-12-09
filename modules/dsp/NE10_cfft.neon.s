@@ -342,7 +342,9 @@ ne10_radix4_butterfly_inverse_float_neon:
 
         PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
         VPUSH   {d8-d15}
-
+#if defined (NE10_ENABLE_HF)
+        VPUSH   {s0,s1}
+#endif
         qInp1   .qn Q0.F32
         qInp2   .qn Q1.F32
         qInp3   .qn Q2.F32
@@ -658,7 +660,11 @@ ifftLastStageSetLoop:
         VSUB    qInp8,qIm2,qRe4
 
         @/* multiply onebyN */
+#if defined (NE10_ENABLE_HF)
+        LDR           grpCount,[sp,#0]          @revert the original value
+#else
         LDR           grpCount,[sp,#104]          @revert the original value
+#endif
         VDUP.f32      q8,grpCount
 
         VMUL    qInp1,qInp1,qRe1
@@ -721,6 +727,9 @@ ifftCopyLoop:
 
 ifftEnd:
         @/* Retureq From Function*/
+#if defined (NE10_ENABLE_HF)
+        VPOP    {s0,s1}
+#endif
         VPOP    {d8-d15}
         POP     {r4-r12,pc}
 

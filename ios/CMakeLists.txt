@@ -56,6 +56,9 @@ set(NE10_TEST_DSP_SRCS
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_lattice.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_sparse.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_iir.c
+    ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_float32.c
+    ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_int16.c
+    ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_int32.c
 )
 
 add_library(NE10_test_demo STATIC ${NE10_TEST_MATH_SRCS} ${NE10_TEST_COMMON_SRCS} ${NE10_TEST_DSP_SRCS})
