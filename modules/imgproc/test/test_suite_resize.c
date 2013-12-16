@@ -41,7 +41,8 @@
 /* ----------------------------------------------------------------------
 ** Global defines
 ** ------------------------------------------------------------------- */
-#define MEM_SIZE        256//1024
+#define MEM_SIZE 128
+
 #define TEST_COUNT 5000
 
 
@@ -83,7 +84,29 @@ void test_resize_conformance_case()
     {
         in_c[i] = in_neon[i] = (rand() & 0xff);
     }
+#if defined(SMOKE_TEST)
+    for (h = 96; h < MEM_SIZE; h++)
+    {
+        for (w = 96; w < MEM_SIZE; w++)
+        {
+            srcw = h;
+            srch = h;
+            dstw = w;
+            dsth = w;
 
+            printf ("srcw X srch = %d X %d \n", srcw, srch);
+            printf ("dstw X dsth = %d X %d \n", dstw, dsth);
+
+            ne10_img_resize_bilinear_rgba_c (out_c, dstw, dsth, in_c, srcw, srch, srcw);
+            ne10_img_resize_bilinear_rgba_neon (out_neon, dstw, dsth, in_neon, srcw, srch, srcw);
+
+            PSNR = CAL_PSNR_UINT8 (out_c, out_neon, dstw * dsth * channels);
+            assert_false ( (PSNR < PSNR_THRESHOLD));
+        }
+    }
+#endif
+
+#if defined(REGRESSION_TEST)
     for (h = 1; h < MEM_SIZE; h++)
     {
         for (w = 1; w < MEM_SIZE; w++)
@@ -103,6 +126,8 @@ void test_resize_conformance_case()
             assert_false ( (PSNR < PSNR_THRESHOLD));
         }
     }
+#endif
+
     NE10_FREE (in_c);
     NE10_FREE (in_neon);
     NE10_FREE (out_c);
@@ -166,7 +191,7 @@ void test_resize_performance_case()
             );
             //printf ("time c %lld \n", time_c);
             //printf ("time neon %lld \n", time_neon);
-            ne10_log (__FUNCTION__, "IMAGERESIZE%20d%20lld%20lld%19.2f%%%18.2f:1\n", (h*MEM_SIZE+w), time_c, time_neon, 0, 0);
+            ne10_log (__FUNCTION__, "IMAGERESIZE%20d%20lld%20lld%19.2f%%%18.2f:1\n", (h * MEM_SIZE + w), time_c, time_neon, 0, 0);
 
         }
     }

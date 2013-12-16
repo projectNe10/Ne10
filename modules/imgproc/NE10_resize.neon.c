@@ -35,9 +35,9 @@
 #define BITS (INTER_RESIZE_COEF_BITS*2)
 #define DELTA (1 << (INTER_RESIZE_COEF_BITS*2 - 1))
 
-void ne10_hresize_4channels_neon (const unsigned char** src, int** dst, int count,
-                                  const int* xofs, const short* alpha,
-                                  int swidth, int dwidth, int cn, int xmin, int xmax)
+void ne10_img_hresize_4channels_linear_neon (const unsigned char** src, int** dst, int count,
+        const int* xofs, const short* alpha,
+        int swidth, int dwidth, int cn, int xmin, int xmax)
 {
     int dx, k;
     int dx0 = 0;
@@ -142,7 +142,7 @@ void ne10_hresize_4channels_neon (const unsigned char** src, int** dst, int coun
 }
 
 
-void ne10_vresize_neon (const int** src, unsigned char* dst, const short* beta, int width)
+void ne10_img_vresize_linear_neon (const int** src, unsigned char* dst, const short* beta, int width)
 {
     const int *S0 = src[0], *S1 = src[1];
 
@@ -196,7 +196,7 @@ void ne10_vresize_neon (const int** src, unsigned char* dst, const short* beta, 
     if (x < width)
     {
         uint8x8_t dMask;
-        dMask = vld1_u8 ( (uint8_t *) (&ne10_vresize_mask_residual_table[ (width - x - 1)]));
+        dMask = vld1_u8 ( (uint8_t *) (&ne10_img_vresize_linear_mask_residual_table[ (width - x - 1)]));
         dDst_01234567 = vld1_u8 (&dst[x]);
 
         qS0_0123 = vld1q_s32 (&S0[x]);

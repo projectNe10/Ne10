@@ -80,8 +80,17 @@ elseif(GNULINUX_PLATFORM)
     set(CMAKE_C_FLAGS "-O2 -mthumb-interwork -mthumb -march=armv7-a -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "-mthumb-interwork -mthumb -march=armv7-a -mfpu=neon")
 elseif(IOS_PLATFORM)
-    set(CMAKE_C_FLAGS "-O2 -arch armv7 -arch armv7s -mfpu=vfp3")
-    set(CMAKE_ASM_FLAGS "-arch armv7 -arch armv7s -mfpu=neon")
+    #set minimal target ios version.If not provided this option, Xcode
+    #5.0.2 would generate code for iOS 7.0, which would lead runtime
+    #error when run on device with earlier iOS version.
+    if(NOT MIN_IOS_VER)
+      set(MIN_IOS_VER "5.0")
+    endif()
+    set(CMAKE_C_FLAGS "-O2 -arch armv7 -arch armv7s -mfpu=vfp3 -miphoneos-version-min=" ${MIN_IOS_VER})
+    set(CMAKE_ASM_FLAGS "-arch armv7 -arch armv7s -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
+
+    string(REPLACE ";" "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
+    string(REPLACE ";" "" CMAKE_ASM_FLAGS ${CMAKE_ASM_FLAGS})
     if(IOS_DEMO)
         add_subdirectory(ios)
     endif()

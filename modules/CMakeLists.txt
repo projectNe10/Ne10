@@ -242,12 +242,11 @@ if(NE10_ENABLE_IMGPROC)
 
     # Add image processing NEON files.
     set(NE10_IMGPROC_NEON_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.s
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
     )
     # Add image intrinsic NEON files.
     set(NE10_IMGPROC_INTRINSIC_SRCS
-    #    ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.c
+        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.c
     )
     # Tell CMake these files need to be compiled with "-mfpu=neon"
     foreach(intrinsic_file ${NE10_IMGPROC_INTRINSIC_SRCS})

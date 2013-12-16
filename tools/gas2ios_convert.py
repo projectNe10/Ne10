@@ -76,6 +76,46 @@ def parse_alias(inlines):
 
     return line_result2
 
+''' parse .qn .dn .req directive for arm assembly
+    input is string list.
+    this is for fft module's new format: in the new format,
+    all aliases are defined at the begin of files and all functions
+    share one set of defines.
+'''
+def parse_alias_fft(inlines):
+    #the value name doesn't include .F32 suffix, but include [0], such as d0[0]
+    alias_exp = re.compile(r" *"
+                        r"(?P<alias>[_a-zA-Z0-9]+)"
+                        " +\.(req|qn|dn) +"
+                        r"(?P<value>[a-zA-Z0-9\[\]]+)"
+                           )
+    aliases = {}
+    for line in inlines:
+        result = alias_exp.search(line)
+        if result != None:
+            alias = result.group('alias')
+            value = result.group('value')
+            aliases[alias] = value
+    #print aliases
+
+    #replace alias
+    line_result1 = []
+    for line in inlines:
+        for alias in aliases:
+            alias_str = "\\b"+alias+"\\b"
+            alias_exp = re.compile(alias_str)
+            line = alias_exp.sub(aliases[alias], line)
+        line_result1.append(line)
+
+    #remove .qn .dn .req line
+    line_result2 = []
+    alias_exp = re.compile(r"\.(qn|dn|req|unreq)")
+    for line in line_result1:
+        if not alias_exp.search(line):
+            line_result2.append(line)
+
+    return line_result2
+
 '''add .F32 to some instructions for Clang's as doesn't support register with
  datatype, such as VADD Q0.F32, Q1.F32, Q2.F32'''
 def add_f32(inlines):
@@ -255,6 +295,9 @@ def add_Llabel(inlines):
     return result_lines
 
 def main ():
+    fft_file_names = ['NE10_fft_float32.neon.s',
+                      'NE10_fft_int16.neon.s',
+                      'NE10_fft_int32.neon.s']
     if len(sys.argv) < 3:
         print "Usage: convert.py <input file> <output file>"
         return
@@ -267,7 +310,11 @@ def main ():
             lines.append(line)
         infile.close()
 
-        result = parse_alias(lines)
+        #the fft file processing is hard coded.
+        if os.path.basename(infilename) in fft_file_names:
+            result = parse_alias_fft(lines)
+        else:
+            result = parse_alias(lines)
         result = add_f32(result)
         result = remove_end(result)
         result = add_Llabel(result)
