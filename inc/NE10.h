@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-12 ARM Limited
+ *  Copyright 2011-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -72,6 +72,10 @@
    * │   │   ├── @link groupMaths math module@endlink that provides a set of vector/matrix algebra functions
    * │   │   └── test
    * │   │       └──  directory for test files
+   * │   ├── physics
+   * │   │   ├── @link groupPhysics physics module@endlink that provides a set of collision detection functions
+   * │   │   └── test
+   * │   │       └──  directory for test files
    * ├── samples
    * │   └── @link groupSamples sample code@endlink
    * ├── test
@@ -87,8 +91,7 @@
    * - @link groupMaths Math Functions@endlink
    * - @link groupDSPs Signal Processing Functions@endlink
    * - @link groupIMGPROCs Image Processing Functions@endlink
-   * - Physics functions
-   * - Image Processing functions
+   * - @link groupPhysics Physics Functions@endlink
    * - Others
    *
    *\par Usage
@@ -138,6 +141,14 @@
  */
 
 /**
+ * @defgroup groupPhysics Physics Functions
+ *
+ *
+ * This set of functions provide some APIs used for collision detection,
+ * such as compute AABB, caculate relative velocity and apply contact impulse.
+ */
+
+/**
  * @defgroup groupSamples Sample Functions
  *
  *
@@ -163,6 +174,7 @@ extern "C" {
 #include "NE10_math.h"
 #include "NE10_dsp.h"
 #include "NE10_imgproc.h"
+#include "NE10_physics.h"
 
 #ifdef __cplusplus
 }

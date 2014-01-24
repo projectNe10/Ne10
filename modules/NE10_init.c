@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-13 ARM Limited
+ *  Copyright 2011-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -98,6 +98,15 @@ ne10_result_t ne10_init()
 
 #if defined (NE10_ENABLE_IMGPROC)
     status = ne10_init_imgproc (is_NEON_available);
+    if (status != NE10_OK)
+    {
+        fprintf(stderr, "ERROR: init imgproc failed\n");
+        return NE10_ERR;
+    }
+#endif
+
+#if defined (NE10_ENABLE_PHYSICS)
+    status = ne10_init_physics (is_NEON_available);
     if (status != NE10_OK)
     {
         fprintf(stderr, "ERROR: init imgproc failed\n");

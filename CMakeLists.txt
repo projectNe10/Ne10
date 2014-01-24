@@ -1,5 +1,5 @@
 #
-#  Copyright 2011-13 ARM Limited
+#  Copyright 2011-14 ARM Limited
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -55,6 +55,7 @@ endif()
 option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
 option(NE10_ENABLE_DSP "Build dsp functionalities to NE10" ON)
 option(NE10_ENABLE_IMGPROC "Build image processing functionalities to NE10" ON)
+option(NE10_ENABLE_PHYSICS "Build physics functionalities to NE10" ON)
 
 set(NE10_VERSION 10)
 

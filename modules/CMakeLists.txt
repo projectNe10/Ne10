@@ -1,5 +1,5 @@
 #
-#  Copyright 2011-13 ARM Limited
+#  Copyright 2011-14 ARM Limited
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -273,6 +273,48 @@ endif(IOS_PLATFORM)
       set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_IMGPROC_NEON_SRCS})
     endif(IOS_PLATFORM)
 endif(NE10_ENABLE_IMGPROC)
+
+if(NE10_ENABLE_PHYSICS)
+    #enable NE10_init_physics
+    add_definitions(-DNE10_ENABLE_PHYSICS)
+    # Add physics C files.
+    set(NE10_PHYSICS_C_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.c
+    )
+
+    # Add physics NEON files.
+    set(NE10_PHYSICS_NEON_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.s
+    )
+    # Add physics NEON files.
+    set(NE10_PHYSICS_INTRINSIC_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.c
+    )
+    # Tell CMake these files need to be compiled with "-mfpu=neon"
+    foreach(intrinsic_file ${NE10_PHYSICS_INTRINSIC_SRCS})
+        set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+    endforeach(intrinsic_file)
+    # Add physics init files.
+    set(NE10_PHYSICS_INIT_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/physics/NE10_init_physics.c
+    )
+
+if(IOS_PLATFORM)
+    convert_gas(NE10_PHYSICS_NEON_SRCS NE10_PHYSICS_IOS_NEON_SRCS)
+    set_file_to_c(NE10_PHYSICS_IOS_NEON_SRCS)
+else(IOS_PLATFORM)
+    set_file_to_c(NE10_PHYSICS_NEON_SRCS)
+endif(IOS_PLATFORM)
+    # Add physics files
+    set(NE10_INIT_SRCS ${NE10_INIT_SRCS} ${NE10_PHYSICS_INIT_SRCS})
+    set(NE10_C_SRCS ${NE10_C_SRCS} ${NE10_PHYSICS_C_SRCS})
+    set(NE10_INTRINSIC_SRCS ${NE10_INTRINSIC_SRCS} ${NE10_PHYSICS_INTRINSIC_SRCS})
+    if(IOS_PLATFORM)
+      set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_PHYSICS_IOS_NEON_SRCS})
+    else(IOS_PLATFORM)
+      set(NE10_NEON_SRCS ${NE10_NEON_SRCS} ${NE10_PHYSICS_NEON_SRCS})
+    endif(IOS_PLATFORM)
+endif(NE10_ENABLE_PHYSICS)
 
 include_directories (
     ${PROJECT_SOURCE_DIR}/inc

@@ -1,16 +1,23 @@
 Ne10 Library
 =============
-See http://projectne10.github.com/Ne10/
+Mainpage: http://projectne10.org/
+
+ReleaseNote
+===========
+See ReleaseNote.txt file in the "doc" folder.
 
 Build
 =====
-See CMakeBuilding.txt file in the "doc" folder, CMakeBuilding.txt also includes doc for android support.
+See BuildingNe10.txt file in the "doc" folder. Currently Ne10 library could be used on Linux, Android and iOS platform.
 
 documentation
 =============
+1. native documents
 Run the command "doxygen doxygen.cfg" under ./doc/doxygen.
 Then the detailed documentations (.html) will be placed in ./doc/doxygen/documentation.
 You could open the "index.html" to start.
+2. online documents
+http://projectne10.github.io/Ne10/doc/
 
 Code formatter
 ==============
