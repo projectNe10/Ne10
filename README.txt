@@ -23,3 +23,8 @@ Code formatter
 ==============
 See Formatter.txt file in the "doc" folder
 
+Call for use cases
+==================
+Find ProjectNe10 useful?  You can help us justify more project engineering resources. Please email us your uses! 
+Want us to help cross promote your product using Ne10 at developer events? We’re looking for use cases we can demonstrate ProjectNe10 with at conferences and meetups.
+matthew.dupuy@arm.com 
