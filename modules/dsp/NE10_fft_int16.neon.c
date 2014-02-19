@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 ARM Limited
+ *  Copyright 2013-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -52,39 +52,20 @@
  *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_int16.c
  */
 
-void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
+void ne10_fft_c2c_1d_int16_scaled_neon (ne10_fft_cpx_int16_t *fout,
                                  ne10_fft_cpx_int16_t *fin,
                                  ne10_fft_cpx_int16_t *twiddles,
                                  ne10_int32_t *factors,
                                  ne10_int32_t nfft,
                                  ne10_int32_t inverse_fft)
 {
-    if (fin == fout)
-    {
-        /* NOTE: for an in-place FFT algorithm. It just performs an out-of-place FFT into a temp buffer */
-        ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * nfft);
+    // copy the data from input to output and bit reversal
+    ne10_data_bitreversal_int16 (fout, fin, 1, &factors[2]);
 
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_int16 (tmpbuf_, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_int16_neon (tmpbuf_, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_int16_neon (tmpbuf_, factors, twiddles);
-
-        memcpy (fout, tmpbuf_, sizeof (ne10_fft_cpx_int16_t) *nfft);
-        NE10_FREE (tmpbuf_);
-    }
+    if (inverse_fft)
+        ne10_mixed_radix_butterfly_inverse_int16_neon (fout, factors, twiddles);
     else
-    {
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_int16 (fout, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_int16_neon (fout, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_int16_neon (fout, factors, twiddles);
-    }
+        ne10_mixed_radix_butterfly_int16_neon (fout, factors, twiddles);
 }
 
 /**
@@ -109,7 +90,7 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
+void ne10_fft_r2c_1d_int16_scaled_neon (ne10_fft_cpx_int16_t *fout,
                                  ne10_int16_t *fin,
                                  ne10_fft_cpx_int16_t *twiddles,
                                  ne10_fft_cpx_int16_t *super_twiddles,
@@ -143,7 +124,7 @@ void ne10_fft_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_c2r_1d_int16_neon (ne10_int16_t *fout,
+void ne10_fft_c2r_1d_int16_scaled_neon (ne10_int16_t *fout,
                                  ne10_fft_cpx_int16_t *fin,
                                  ne10_fft_cpx_int16_t *twiddles,
                                  ne10_fft_cpx_int16_t *super_twiddles,

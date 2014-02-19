@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012 ARM Limited
+ *  Copyright 2012-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -38,16 +38,17 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
         ne10_rfft_float = ne10_rfft_float_neon;
 
         ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_neon;
-        ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_neon;
-        ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_neon;
+        ne10_fft_c2c_1d_int32_unscaled = ne10_fft_c2c_1d_int32_unscaled_neon;
+        ne10_fft_c2c_1d_int32_scaled = ne10_fft_c2c_1d_int32_scaled_neon;
+        ne10_fft_c2c_1d_int16_scaled = ne10_fft_c2c_1d_int16_scaled_neon;
 
         ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_neon;
-        ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_neon;
-        ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_neon;
+        ne10_fft_r2c_1d_int32_scaled = ne10_fft_r2c_1d_int32_scaled_neon;
+        ne10_fft_r2c_1d_int16_scaled = ne10_fft_r2c_1d_int16_scaled_neon;
 
         ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_neon;
-        ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_neon;
-        ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_neon;
+        ne10_fft_c2r_1d_int32_scaled = ne10_fft_c2r_1d_int32_scaled_neon;
+        ne10_fft_c2r_1d_int16_scaled = ne10_fft_c2r_1d_int16_scaled_neon;
 
         ne10_fir_float = ne10_fir_float_neon;
         ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
@@ -64,16 +65,17 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
         ne10_rfft_float = ne10_rfft_float_c;
 
         ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_c;
-        ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_c;
-        ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_c;
+        ne10_fft_c2c_1d_int32_unscaled = ne10_fft_c2c_1d_int32_unscaled_c;
+        ne10_fft_c2c_1d_int32_scaled = ne10_fft_c2c_1d_int32_scaled_c;
+        ne10_fft_c2c_1d_int16_scaled = ne10_fft_c2c_1d_int16_scaled_c;
 
         ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_c;
-        ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_c;
-        ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_c;
+        ne10_fft_r2c_1d_int32_scaled = ne10_fft_r2c_1d_int32_scaled_c;
+        ne10_fft_r2c_1d_int16_scaled = ne10_fft_r2c_1d_int16_scaled_c;
 
         ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_c;
-        ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_c;
-        ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_c;
+        ne10_fft_c2r_1d_int32_scaled = ne10_fft_c2r_1d_int32_scaled_c;
+        ne10_fft_c2r_1d_int16_scaled = ne10_fft_c2r_1d_int16_scaled_c;
 
         ne10_fir_float = ne10_fir_float_c;
         ne10_fir_decimate_float = ne10_fir_decimate_float_c;
@@ -110,14 +112,20 @@ void (*ne10_fft_c2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
                                  ne10_int32_t nfft,
                                  ne10_int32_t inverse_fft);
 
-void (*ne10_fft_c2c_1d_int32) (ne10_fft_cpx_int32_t *fout,
+void (*ne10_fft_c2c_1d_int32_unscaled) (ne10_fft_cpx_int32_t *fout,
+                               ne10_fft_cpx_int32_t *fin,
+                               ne10_fft_cpx_int32_t *twiddles,
+                               ne10_int32_t *factors,
+                               ne10_int32_t nfft,
+                               ne10_int32_t inverse_fft);
+void (*ne10_fft_c2c_1d_int32_scaled) (ne10_fft_cpx_int32_t *fout,
                                ne10_fft_cpx_int32_t *fin,
                                ne10_fft_cpx_int32_t *twiddles,
                                ne10_int32_t *factors,
                                ne10_int32_t nfft,
                                ne10_int32_t inverse_fft);
 
-void (*ne10_fft_c2c_1d_int16) (ne10_fft_cpx_int16_t *fout,
+void (*ne10_fft_c2c_1d_int16_scaled) (ne10_fft_cpx_int16_t *fout,
                                ne10_fft_cpx_int16_t *fin,
                                ne10_fft_cpx_int16_t *twiddles,
                                ne10_int32_t *factors,
@@ -138,28 +146,28 @@ void (*ne10_fft_c2r_1d_float32) (ne10_float32_t *fout,
                                  ne10_int32_t *factors,
                                  ne10_int32_t nfft);
 
-void (*ne10_fft_r2c_1d_int32) (ne10_fft_cpx_int32_t *fout,
+void (*ne10_fft_r2c_1d_int32_scaled) (ne10_fft_cpx_int32_t *fout,
                                ne10_int32_t *fin,
                                ne10_fft_cpx_int32_t *twiddles,
                                ne10_fft_cpx_int32_t *super_twiddles,
                                ne10_int32_t *factors,
                                ne10_int32_t nfft);
 
-void (*ne10_fft_c2r_1d_int32) (ne10_int32_t *fout,
+void (*ne10_fft_c2r_1d_int32_scaled) (ne10_int32_t *fout,
                                ne10_fft_cpx_int32_t *fin,
                                ne10_fft_cpx_int32_t *twiddles,
                                ne10_fft_cpx_int32_t *super_twiddles,
                                ne10_int32_t *factors,
                                ne10_int32_t nfft);
 
-void (*ne10_fft_r2c_1d_int16) (ne10_fft_cpx_int16_t *fout,
+void (*ne10_fft_r2c_1d_int16_scaled) (ne10_fft_cpx_int16_t *fout,
                                ne10_int16_t *fin,
                                ne10_fft_cpx_int16_t *twiddles,
                                ne10_fft_cpx_int16_t *super_twiddles,
                                ne10_int32_t *factors,
                                ne10_int32_t nfft);
 
-void (*ne10_fft_c2r_1d_int16) (ne10_int16_t *fout,
+void (*ne10_fft_c2r_1d_int16_scaled) (ne10_int16_t *fout,
                                ne10_fft_cpx_int16_t *fin,
                                ne10_fft_cpx_int16_t *twiddles,
                                ne10_fft_cpx_int16_t *super_twiddles,

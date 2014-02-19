@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 ARM Limited
+ *  Copyright 2013-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -298,6 +298,39 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
 
 }
 
+/* factors buffer:
+ * 0: stage number
+ * 1: stride for the first stage
+ * others: factors */
+static ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
+{
+    ne10_int32_t p = 4;
+    ne10_int32_t i = 1;
+    ne10_int32_t stage_num = 0;
+    ne10_int32_t stride_max = n;
+
+    /* factor out powers of 4, powers of 2 */
+    do
+    {
+        if ( (n % p) == 2)
+            p = 2;
+        else if (n % p)
+        {
+            return NE10_ERR;
+        }
+
+        n /= p;
+        facbuf[2 * i] = p;
+        facbuf[2 * i + 1] = n;
+        i++;
+        stage_num++;
+    }
+    while (n > 1);
+    facbuf[0] = stage_num;
+    facbuf[1] = stride_max / p;
+    return NE10_OK;
+}
+
 void ne10_data_bitreversal_int16 (ne10_fft_cpx_int16_t * Fout,
                                   const ne10_fft_cpx_int16_t * f,
                                   ne10_int32_t fstride,
@@ -490,39 +523,20 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
  * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
  *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_c2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
+void ne10_fft_c2c_1d_int16_scaled_c (ne10_fft_cpx_int16_t *fout,
                               ne10_fft_cpx_int16_t *fin,
                               ne10_fft_cpx_int16_t *twiddles,
                               ne10_int32_t *factors,
                               ne10_int32_t nfft,
                               ne10_int32_t inverse_fft)
 {
-    if (fin == fout)
-    {
-        /* NOTE: for an in-place FFT algorithm. It just performs an out-of-place FFT into a temp buffer */
-        ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * nfft);
+    // copy the data from input to output and bit reversal
+    ne10_data_bitreversal_int16 (fout, fin, 1, &factors[2]);
 
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_int16 (tmpbuf_, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_int16_c (tmpbuf_, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_int16_c (tmpbuf_, factors, twiddles);
-
-        memcpy (fout, tmpbuf_, sizeof (ne10_fft_cpx_int16_t) *nfft);
-        NE10_FREE (tmpbuf_);
-    }
+    if (inverse_fft)
+        ne10_mixed_radix_butterfly_inverse_int16_c (fout, factors, twiddles);
     else
-    {
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_int16 (fout, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_int16_c (fout, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_int16_c (fout, factors, twiddles);
-    }
+        ne10_mixed_radix_butterfly_int16_c (fout, factors, twiddles);
 }
 /**
  * @}
@@ -626,7 +640,7 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
+void ne10_fft_r2c_1d_int16_scaled_c (ne10_fft_cpx_int16_t *fout,
                               ne10_int16_t *fin,
                               ne10_fft_cpx_int16_t *twiddles,
                               ne10_fft_cpx_int16_t *super_twiddles,
@@ -660,7 +674,7 @@ void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_c2r_1d_int16_c (ne10_int16_t *fout,
+void ne10_fft_c2r_1d_int16_scaled_c (ne10_int16_t *fout,
                               ne10_fft_cpx_int16_t *fin,
                               ne10_fft_cpx_int16_t *twiddles,
                               ne10_fft_cpx_int16_t *super_twiddles,

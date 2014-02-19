@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012-13 ARM Limited
+ *  Copyright 2012-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -82,7 +82,7 @@
 // What's the acceptable error between the integer representations of two ne10_float32_t values
 #define ERROR_MARGIN_SMALL 0x0A
 #define ERROR_MARGIN_LARGE 0xFF
-#define SNR_THRESHOLD 100.0f
+#define SNR_THRESHOLD 50.0f
 #define SNR_THRESHOLD_INT16 35.0f
 #define PSNR_THRESHOLD 30.0f
 

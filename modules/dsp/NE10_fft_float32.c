@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 ARM Limited
+ *  Copyright 2013-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -278,7 +278,7 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
  * 0: stage number
  * 1: stride for the first stage
  * others: factors */
-ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
+static ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
 {
     ne10_int32_t p = 4;
     ne10_int32_t i = 1;
@@ -560,32 +560,13 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                 ne10_int32_t nfft,
                                 ne10_int32_t inverse_fft)
 {
-    if (fin == fout)
-    {
-        /* NOTE: for an in-place FFT algorithm. It just performs an out-of-place FFT into a temp buffer */
-        ne10_fft_cpx_float32_t * tmpbuf_ = (ne10_fft_cpx_float32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_float32_t) * nfft);
+    // copy the data from input to output and bit reversal
+    ne10_data_bitreversal_float32 (fout, fin, 1, &factors[2]);
 
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_float32 (tmpbuf_, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_float32_c (tmpbuf_, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_float32_c (tmpbuf_, factors, twiddles);
-
-        memcpy (fout, tmpbuf_, sizeof (ne10_fft_cpx_float32_t) *nfft);
-        NE10_FREE (tmpbuf_);
-    }
+    if (inverse_fft)
+        ne10_mixed_radix_butterfly_inverse_float32_c (fout, factors, twiddles);
     else
-    {
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_float32 (fout, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_float32_c (fout, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_float32_c (fout, factors, twiddles);
-    }
+        ne10_mixed_radix_butterfly_float32_c (fout, factors, twiddles);
 }
 /**
  * @}
@@ -771,10 +752,7 @@ void ne10_fft_r2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
     /* malloc a temp buffer for cfft */
     ne10_fft_cpx_float32_t * tmpbuf_ = (ne10_fft_cpx_float32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_float32_t) * ncfft);
 
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_float32 (tmpbuf_, (ne10_fft_cpx_float32_t*) fin, 1, &factors[2]);
-    ne10_mixed_radix_butterfly_float32_c (tmpbuf_, factors, twiddles);
-
+    ne10_fft_c2c_1d_float32_c (tmpbuf_, (ne10_fft_cpx_float32_t*) fin, twiddles, factors, ncfft, 0);
     ne10_fft_split_r2c_1d_float32 (fout, tmpbuf_, super_twiddles, ncfft);
 
     NE10_FREE (tmpbuf_);
@@ -806,10 +784,7 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
     ne10_fft_cpx_float32_t * tmpbuf_ = (ne10_fft_cpx_float32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_float32_t) * ncfft);
 
     ne10_fft_split_c2r_1d_float32 (tmpbuf_, fin, super_twiddles, ncfft);
-
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_float32 ( (ne10_fft_cpx_float32_t*) fout, tmpbuf_, 1, &factors[2]);
-    ne10_mixed_radix_butterfly_inverse_float32_c ( (ne10_fft_cpx_float32_t*) fout, factors, twiddles);
+    ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) fout, tmpbuf_, twiddles, factors, ncfft, 1);
 
     NE10_FREE (tmpbuf_);
 }

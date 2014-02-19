@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013 ARM Limited
+ *  Copyright 2013-14 ARM Limited
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -48,8 +48,212 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_macros.h"
 #include "NE10_fft.h"
 
+static inline ne10_butterfly2_int32_c (ne10_fft_cpx_int32_t * in)
+{
+    ne10_fft_cpx_int32_t tmp;
 
-static void ne10_mixed_radix_butterfly_int32_c (ne10_fft_cpx_int32_t * Fout,
+    tmp.r = in[1].r;
+    tmp.i = in[1].i;
+    in[1].r = in[0].r - tmp.r;
+    in[1].i = in[0].i - tmp.i;
+    in[0].r = in[0].r + tmp.r;
+    in[0].i = in[0].i + tmp.i;
+}
+
+static inline ne10_butterfly4_int32_c (ne10_fft_cpx_int32_t * in)
+{
+    ne10_fft_cpx_int32_t scratch[6];
+
+    scratch[2].r = in[0].r - in[2].r;
+    scratch[2].i = in[0].i - in[2].i;
+    in[0].r += in[2].r;
+    in[0].i += in[2].i;
+
+    scratch[0].r = in[1].r + in[3].r;
+    scratch[0].i = in[1].i + in[3].i;
+    scratch[1].r = in[1].r - in[3].r;
+    scratch[1].i = in[1].i - in[3].i;
+
+    in[2].r = in[0].r - scratch[0].r;
+    in[2].i = in[0].i - scratch[0].i;
+    in[0].r += scratch[0].r;
+    in[0].i += scratch[0].i;
+
+    in[1].r = scratch[2].r + scratch[1].i;
+    in[1].i = scratch[2].i - scratch[1].r;
+    in[3].r = scratch[2].r - scratch[1].i;
+    in[3].i = scratch[2].i + scratch[1].r;
+}
+
+static inline ne10_butterfly4_inverse_int32_c (ne10_fft_cpx_int32_t * in)
+{
+    ne10_fft_cpx_int32_t scratch[6];
+
+    scratch[2].r = in[0].r - in[2].r;
+    scratch[2].i = in[0].i - in[2].i;
+    in[0].r += in[2].r;
+    in[0].i += in[2].i;
+
+    scratch[0].r = in[1].r + in[3].r;
+    scratch[0].i = in[1].i + in[3].i;
+    scratch[1].r = in[1].r - in[3].r;
+    scratch[1].i = in[1].i - in[3].i;
+
+    in[2].r = in[0].r - scratch[0].r;
+    in[2].i = in[0].i - scratch[0].i;
+    in[0].r += scratch[0].r;
+    in[0].i += scratch[0].i;
+
+    in[1].r = scratch[2].r - scratch[1].i;
+    in[1].i = scratch[2].i + scratch[1].r;
+    in[3].r = scratch[2].r + scratch[1].i;
+    in[3].i = scratch[2].i - scratch[1].r;
+}
+
+static inline ne10_radix4_butterfly_int32_c (ne10_fft_cpx_int32_t * in,
+        ne10_fft_cpx_int32_t *tw,
+        ne10_int32_t stride)
+{
+    ne10_fft_cpx_int32_t scratch[6];
+    ne10_fft_cpx_int32_t *tw1, *tw2, *tw3;
+
+    tw1 = tw;
+    tw2 = tw + stride;
+    tw3 = tw + stride * 2;
+
+    scratch[0].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].r * tw1->r) >> 32))
+                     - ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].i * tw1->i) >> 32))) << 1;
+    scratch[0].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].r * tw1->i) >> 32))
+                     + ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].i * tw1->r) >> 32))) << 1;
+    scratch[1].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].r * tw2->r) >> 32))
+                     - ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].i * tw2->i) >> 32))) << 1;
+    scratch[1].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].r * tw2->i) >> 32))
+                     + ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].i * tw2->r) >> 32))) << 1;
+    scratch[2].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].r * tw3->r) >> 32))
+                     - ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].i * tw3->i) >> 32))) << 1;
+    scratch[2].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].r * tw3->i) >> 32))
+                     + ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].i * tw3->r) >> 32))) << 1;
+
+
+    scratch[5].r = in->r - scratch[1].r;
+    scratch[5].i = in->i - scratch[1].i;
+    in->r += scratch[1].r;
+    in->i += scratch[1].i;
+
+    scratch[3].r = scratch[0].r + scratch[2].r;
+    scratch[3].i = scratch[0].i + scratch[2].i;
+    scratch[4].r = scratch[0].r - scratch[2].r;
+    scratch[4].i = scratch[0].i - scratch[2].i;
+
+    in[stride * 2].r = in->r - scratch[3].r;
+    in[stride * 2].i = in->i - scratch[3].i;
+    in->r += scratch[3].r;
+    in->i += scratch[3].i;
+
+    in[stride].r = scratch[5].r + scratch[4].i;
+    in[stride].i = scratch[5].i - scratch[4].r;
+    in[stride * 3].r = scratch[5].r - scratch[4].i;
+    in[stride * 3].i = scratch[5].i + scratch[4].r;
+}
+static inline ne10_radix4_butterfly_inverse_int32_c (ne10_fft_cpx_int32_t * in,
+        ne10_fft_cpx_int32_t *tw,
+        ne10_int32_t stride)
+{
+    ne10_fft_cpx_int32_t scratch[6];
+    ne10_fft_cpx_int32_t *tw1, *tw2, *tw3;
+
+    tw1 = tw;
+    tw2 = tw + stride;
+    tw3 = tw + stride * 2;
+
+    scratch[0].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].r * tw1->r) >> 32))
+                     + ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].i * tw1->i) >> 32))) << 1;
+    scratch[0].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].i * tw1->r) >> 32))
+                     - ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride].r * tw1->i) >> 32))) << 1;
+    scratch[1].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].r * tw2->r) >> 32))
+                     + ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].i * tw2->i) >> 32))) << 1;
+    scratch[1].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].i * tw2->r) >> 32))
+                     - ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 2].r * tw2->i) >> 32))) << 1;
+    scratch[2].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].r * tw3->r) >> 32))
+                     + ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].i * tw3->i) >> 32))) << 1;
+    scratch[2].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].i * tw3->r) >> 32))
+                     - ( (ne10_int32_t) ( ( (ne10_int64_t) in[stride * 3].r * tw3->i) >> 32))) << 1;
+
+
+    scratch[5].r = in->r - scratch[1].r;
+    scratch[5].i = in->i - scratch[1].i;
+    in->r += scratch[1].r;
+    in->i += scratch[1].i;
+
+    scratch[3].r = scratch[0].r + scratch[2].r;
+    scratch[3].i = scratch[0].i + scratch[2].i;
+    scratch[4].r = scratch[0].r - scratch[2].r;
+    scratch[4].i = scratch[0].i - scratch[2].i;
+
+    in[stride * 2].r = in->r - scratch[3].r;
+    in[stride * 2].i = in->i - scratch[3].i;
+    in->r += scratch[3].r;
+    in->i += scratch[3].i;
+
+    in[stride].r = scratch[5].r - scratch[4].i;
+    in[stride].i = scratch[5].i + scratch[4].r;
+    in[stride * 3].r = scratch[5].r + scratch[4].i;
+    in[stride * 3].i = scratch[5].i - scratch[4].r;
+}
+
+static void ne10_mixed_radix_butterfly_int32_unscaled_c (ne10_fft_cpx_int32_t * Fout,
+        ne10_int32_t * factors,
+        ne10_fft_cpx_int32_t * twiddles)
+
+{
+    ne10_int32_t i, j;
+    ne10_int32_t stage_count;
+    ne10_int32_t fstride;
+    ne10_int32_t mstride;
+    ne10_fft_cpx_int32_t *tw;
+    ne10_fft_cpx_int32_t * F;
+
+    // the first stage
+    stage_count = factors[0];
+    fstride = factors[1];
+    if (factors[2 * stage_count] == 2) // length of FFT is 2^n (n is odd)
+    {
+        //fstride is nfft>>1
+        for (i = 0; i < fstride; i++)
+            ne10_butterfly2_int32_c (&Fout[2 * i]);
+    }
+    else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
+    {
+        //fstride is nfft>>2
+        for (i = 0; i < fstride; i++)
+            ne10_butterfly4_int32_c (&Fout[4 * i]);
+    }
+    stage_count--;
+
+    // other stages
+    mstride = factors[2 * stage_count + 1];
+    for (; stage_count > 0; stage_count--)
+    {
+        fstride = fstride >> 2;
+        for (i = 0; i < fstride; i++)
+        {
+            F = &Fout[i * mstride * 4];
+            tw = twiddles;
+            for (j = 0; j < mstride; j++)
+            {
+                ne10_radix4_butterfly_int32_c (&F[0], tw, mstride);
+
+                tw++;
+                F++;
+            }
+        }
+        twiddles += mstride * 3;
+        mstride <<= 2;
+    }
+
+}
+
+static void ne10_mixed_radix_butterfly_inverse_int32_unscaled_c (ne10_fft_cpx_int32_t * Fout,
         ne10_int32_t * factors,
         ne10_fft_cpx_int32_t * twiddles)
 
@@ -69,17 +273,63 @@ static void ne10_mixed_radix_butterfly_int32_c (ne10_fft_cpx_int32_t * Fout,
     fstride = factors[1];
     if (factors[2 * stage_count] == 2) // length of FFT is 2^n (n is odd)
     {
+        //fstride is nfft>>1;
+        for (i = 0; i < fstride; i++)
+            ne10_butterfly2_int32_c (&Fout[2 * i]);
+    }
+    else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
+    {
+        //fstride is nfft>>2
+        for (i = 0; i < fstride; i++)
+            ne10_butterfly4_inverse_int32_c (&Fout[4 * i]);
+    }
+    stage_count--;
+
+    // other stages
+    mstride = factors[2 * stage_count + 1];
+    for (; stage_count > 0; stage_count--)
+    {
+        fstride = fstride >> 2;
+        for (i = 0; i < fstride; i++)
+        {
+            F = &Fout[i * mstride * 4];
+            tw = twiddles;
+            for (j = 0; j < mstride; j++)
+            {
+                ne10_radix4_butterfly_inverse_int32_c (&F[0], tw, mstride);
+
+                tw++;
+                F++;
+            }
+        }
+        twiddles += mstride * 3;
+        mstride <<= 2;
+    }
+}
+
+static void ne10_mixed_radix_butterfly_int32_scaled_c (ne10_fft_cpx_int32_t * Fout,
+        ne10_int32_t * factors,
+        ne10_fft_cpx_int32_t * twiddles)
+
+{
+    ne10_int32_t i, j;
+    ne10_int32_t stage_count;
+    ne10_int32_t fstride;
+    ne10_int32_t mstride;
+    ne10_fft_cpx_int32_t *tw;
+    ne10_fft_cpx_int32_t * F;
+
+    // the first stage
+    stage_count = factors[0];
+    fstride = factors[1];
+    if (factors[2 * stage_count] == 2) // length of FFT is 2^n (n is odd)
+    {
         //fstride is nfft>>1
         for (i = 0; i < fstride; i++)
         {
             NE10_F2I32_FIXDIV (Fout[2 * i], 2);
             NE10_F2I32_FIXDIV (Fout[2 * i + 1], 2);
-            tmp.r = Fout[2 * i + 1].r;
-            tmp.i = Fout[2 * i + 1].i;
-            Fout[2 * i + 1].r = Fout[2 * i].r - tmp.r;
-            Fout[2 * i + 1].i = Fout[2 * i].i - tmp.i;
-            Fout[2 * i].r = Fout[2 * i].r + tmp.r;
-            Fout[2 * i].i = Fout[2 * i].i + tmp.i;
+            ne10_butterfly2_int32_c (&Fout[2 * i]);
         }
     }
     else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
@@ -91,93 +341,39 @@ static void ne10_mixed_radix_butterfly_int32_c (ne10_fft_cpx_int32_t * Fout,
             NE10_F2I32_FIXDIV (Fout[4 * i + 1], 4);
             NE10_F2I32_FIXDIV (Fout[4 * i + 2], 4);
             NE10_F2I32_FIXDIV (Fout[4 * i + 3], 4);
-            scratch[2].r = Fout[4 * i].r - Fout[4 * i + 2].r;
-            scratch[2].i = Fout[4 * i].i - Fout[4 * i + 2].i;
-
-            Fout[4 * i].r += Fout[4 * i + 2].r;
-            Fout[4 * i].i += Fout[4 * i + 2].i;
-
-            scratch[0].r = Fout[4 * i + 1].r + Fout[4 * i + 3].r;
-            scratch[0].i = Fout[4 * i + 1].i + Fout[4 * i + 3].i;
-
-            scratch[1].r = Fout[4 * i + 1].r - Fout[4 * i + 3].r;
-            scratch[1].i = Fout[4 * i + 1].i - Fout[4 * i + 3].i;
-            Fout[4 * i + 2].r = Fout[4 * i].r - scratch[0].r;
-            Fout[4 * i + 2].i = Fout[4 * i].i - scratch[0].i;
-
-            Fout[4 * i].r += scratch[0].r;
-            Fout[4 * i].i += scratch[0].i;
-
-            Fout[4 * i + 1].r = scratch[2].r + scratch[1].i;
-            Fout[4 * i + 1].i = scratch[2].i - scratch[1].r;
-            Fout[4 * i + 3].r = scratch[2].r - scratch[1].i;
-            Fout[4 * i + 3].i = scratch[2].i + scratch[1].r;
+            ne10_butterfly4_int32_c (&Fout[4 * i]);
         }
     }
     stage_count--;
 
     // other stages
     mstride = factors[2 * stage_count + 1];
-    tw = twiddles;
     for (; stage_count > 0; stage_count--)
     {
         fstride = fstride >> 2;
         for (i = 0; i < fstride; i++)
         {
             F = &Fout[i * mstride * 4];
-            tw1 = tw;
-            tw2 = tw + mstride;
-            tw3 = tw + mstride * 2;
+            tw = twiddles;
             for (j = 0; j < mstride; j++)
             {
                 NE10_F2I32_FIXDIV (F[0], 4);
                 NE10_F2I32_FIXDIV (F[mstride], 4);
                 NE10_F2I32_FIXDIV (F[mstride * 2], 4);
                 NE10_F2I32_FIXDIV (F[mstride * 3], 4);
-                scratch[0].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].r * tw1->r) >> 32)) - ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].i * tw1->i) >> 32))) << 1;
-                scratch[0].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].r * tw1->i) >> 32)) + ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].i * tw1->r) >> 32))) << 1;
-                scratch[1].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].r * tw2->r) >> 32)) - ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].i * tw2->i) >> 32))) << 1;
-                scratch[1].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].r * tw2->i) >> 32)) + ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].i * tw2->r) >> 32))) << 1;
-                scratch[2].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].r * tw3->r) >> 32)) - ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].i * tw3->i) >> 32))) << 1;
-                scratch[2].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].r * tw3->i) >> 32)) + ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].i * tw3->r) >> 32))) << 1;
+                ne10_radix4_butterfly_int32_c (&F[0], tw, mstride);
 
-                //C_SUB( scratch[5] , *F, scratch[1] );
-                scratch[5].r = F->r - scratch[1].r;
-                scratch[5].i = F->i - scratch[1].i;
-                //C_ADDTO(*F, scratch[1]);
-                F->r += scratch[1].r;
-                F->i += scratch[1].i;
-                //C_ADD( scratch[3] , scratch[0] , scratch[2] );
-                scratch[3].r = scratch[0].r + scratch[2].r;
-                scratch[3].i = scratch[0].i + scratch[2].i;
-                //C_SUB( scratch[4] , scratch[0] , scratch[2] );
-                //C_SUB( F[m2], *F, scratch[3] );
-                scratch[4].r = scratch[0].r - scratch[2].r;
-                scratch[4].i = scratch[0].i - scratch[2].i;
-                F[mstride * 2].r = F->r - scratch[3].r;
-                F[mstride * 2].i = F->i - scratch[3].i;
-                //C_ADDTO( *F , scratch[3] );
-                F->r += scratch[3].r;
-                F->i += scratch[3].i;
-
-                F[mstride].r = scratch[5].r + scratch[4].i;
-                F[mstride].i = scratch[5].i - scratch[4].r;
-                F[mstride * 3].r = scratch[5].r - scratch[4].i;
-                F[mstride * 3].i = scratch[5].i + scratch[4].r;
-
-                tw1++;
-                tw2++;
-                tw3++;
+                tw++;
                 F++;
             }
         }
-        tw += mstride * 3;
+        twiddles += mstride * 3;
         mstride <<= 2;
     }
 
 }
 
-static void ne10_mixed_radix_butterfly_inverse_int32_c (ne10_fft_cpx_int32_t * Fout,
+static void ne10_mixed_radix_butterfly_inverse_int32_scaled_c (ne10_fft_cpx_int32_t * Fout,
         ne10_int32_t * factors,
         ne10_fft_cpx_int32_t * twiddles)
 
@@ -202,12 +398,7 @@ static void ne10_mixed_radix_butterfly_inverse_int32_c (ne10_fft_cpx_int32_t * F
         {
             NE10_F2I32_FIXDIV (Fout[2 * i], 2);
             NE10_F2I32_FIXDIV (Fout[2 * i + 1], 2);
-            tmp.r = Fout[2 * i + 1].r;
-            tmp.i = Fout[2 * i + 1].i;
-            Fout[2 * i + 1].r = Fout[2 * i].r - tmp.r;
-            Fout[2 * i + 1].i = Fout[2 * i].i - tmp.i;
-            Fout[2 * i].r = Fout[2 * i].r + tmp.r;
-            Fout[2 * i].i = Fout[2 * i].i + tmp.i;
+            ne10_butterfly2_int32_c (&Fout[2 * i]);
         }
     }
     else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
@@ -219,90 +410,68 @@ static void ne10_mixed_radix_butterfly_inverse_int32_c (ne10_fft_cpx_int32_t * F
             NE10_F2I32_FIXDIV (Fout[4 * i + 1], 4);
             NE10_F2I32_FIXDIV (Fout[4 * i + 2], 4);
             NE10_F2I32_FIXDIV (Fout[4 * i + 3], 4);
-            scratch[2].r = Fout[4 * i].r - Fout[4 * i + 2].r;
-            scratch[2].i = Fout[4 * i].i - Fout[4 * i + 2].i;
-
-            Fout[4 * i].r += Fout[4 * i + 2].r;
-            Fout[4 * i].i += Fout[4 * i + 2].i;
-
-            scratch[0].r = Fout[4 * i + 1].r + Fout[4 * i + 3].r;
-            scratch[0].i = Fout[4 * i + 1].i + Fout[4 * i + 3].i;
-
-            scratch[1].r = Fout[4 * i + 1].r - Fout[4 * i + 3].r;
-            scratch[1].i = Fout[4 * i + 1].i - Fout[4 * i + 3].i;
-            Fout[4 * i + 2].r = Fout[4 * i].r - scratch[0].r;
-            Fout[4 * i + 2].i = Fout[4 * i].i - scratch[0].i;
-
-            Fout[4 * i].r += scratch[0].r;
-            Fout[4 * i].i += scratch[0].i;
-
-            Fout[4 * i + 1].r = scratch[2].r - scratch[1].i;
-            Fout[4 * i + 1].i = scratch[2].i + scratch[1].r;
-            Fout[4 * i + 3].r = scratch[2].r + scratch[1].i;
-            Fout[4 * i + 3].i = scratch[2].i - scratch[1].r;
+            ne10_butterfly4_inverse_int32_c (&Fout[4 * i]);
         }
     }
     stage_count--;
 
     // other stages
     mstride = factors[2 * stage_count + 1];
-    tw = twiddles;
     for (; stage_count > 0; stage_count--)
     {
         fstride = fstride >> 2;
         for (i = 0; i < fstride; i++)
         {
             F = &Fout[i * mstride * 4];
-            tw1 = tw;
-            tw2 = tw + mstride;
-            tw3 = tw + mstride * 2;
+            tw = twiddles;
             for (j = 0; j < mstride; j++)
             {
                 NE10_F2I32_FIXDIV (F[0], 4);
                 NE10_F2I32_FIXDIV (F[mstride], 4);
                 NE10_F2I32_FIXDIV (F[mstride * 2], 4);
                 NE10_F2I32_FIXDIV (F[mstride * 3], 4);
-                scratch[0].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].r * tw1->r) >> 32)) + ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].i * tw1->i) >> 32))) << 1;
-                scratch[0].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].i * tw1->r) >> 32)) - ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride].r * tw1->i) >> 32))) << 1;
-                scratch[1].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].r * tw2->r) >> 32)) + ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].i * tw2->i) >> 32))) << 1;
-                scratch[1].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].i * tw2->r) >> 32)) - ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 2].r * tw2->i) >> 32))) << 1;
-                scratch[2].r = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].r * tw3->r) >> 32)) + ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].i * tw3->i) >> 32))) << 1;
-                scratch[2].i = ( ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].i * tw3->r) >> 32)) - ( (ne10_int32_t) ( ( (ne10_int64_t) F[mstride * 3].r * tw3->i) >> 32))) << 1;
+                ne10_radix4_butterfly_inverse_int32_c (&F[0], tw, mstride);
 
-                //C_SUB( scratch[5] , *F, scratch[1] );
-                scratch[5].r = F->r - scratch[1].r;
-                scratch[5].i = F->i - scratch[1].i;
-                //C_ADDTO(*F, scratch[1]);
-                F->r += scratch[1].r;
-                F->i += scratch[1].i;
-                //C_ADD( scratch[3] , scratch[0] , scratch[2] );
-                scratch[3].r = scratch[0].r + scratch[2].r;
-                scratch[3].i = scratch[0].i + scratch[2].i;
-                //C_SUB( scratch[4] , scratch[0] , scratch[2] );
-                //C_SUB( F[m2], *F, scratch[3] );
-                scratch[4].r = scratch[0].r - scratch[2].r;
-                scratch[4].i = scratch[0].i - scratch[2].i;
-                F[mstride * 2].r = F->r - scratch[3].r;
-                F[mstride * 2].i = F->i - scratch[3].i;
-                //C_ADDTO( *F , scratch[3] );
-                F->r += scratch[3].r;
-                F->i += scratch[3].i;
-
-                F[mstride].r = scratch[5].r - scratch[4].i;
-                F[mstride].i = scratch[5].i + scratch[4].r;
-                F[mstride * 3].r = scratch[5].r + scratch[4].i;
-                F[mstride * 3].i = scratch[5].i - scratch[4].r;
-
-                tw1++;
-                tw2++;
-                tw3++;
+                tw++;
                 F++;
             }
         }
-        tw += mstride * 3;
+        twiddles += mstride * 3;
         mstride <<= 2;
     }
+}
 
+/* factors buffer:
+ * 0: stage number
+ * 1: stride for the first stage
+ * others: factors */
+static ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
+{
+    ne10_int32_t p = 4;
+    ne10_int32_t i = 1;
+    ne10_int32_t stage_num = 0;
+    ne10_int32_t stride_max = n;
+
+    /* factor out powers of 4, powers of 2 */
+    do
+    {
+        if ( (n % p) == 2)
+            p = 2;
+        else if (n % p)
+        {
+            return NE10_ERR;
+        }
+
+        n /= p;
+        facbuf[2 * i] = p;
+        facbuf[2 * i + 1] = n;
+        i++;
+        stage_num++;
+    }
+    while (n > 1);
+    facbuf[0] = stage_num;
+    facbuf[1] = stride_max / p;
+    return NE10_OK;
 }
 
 void ne10_data_bitreversal_int32 (ne10_fft_cpx_int32_t * Fout,
@@ -413,6 +582,7 @@ void ne10_fft_split_c2r_1d_int32 (ne10_fft_cpx_int32_t *dst,
     }
 }
 
+
 /**
  * @addtogroup C2C_FFT_IFFT
  * @{
@@ -496,41 +666,35 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32 (ne10_int32_t nfft)
  * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
  *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_int32.c
  */
-void ne10_fft_c2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
-                              ne10_fft_cpx_int32_t *fin,
-                              ne10_fft_cpx_int32_t *twiddles,
-                              ne10_int32_t *factors,
-                              ne10_int32_t nfft,
-                              ne10_int32_t inverse_fft)
+void ne10_fft_c2c_1d_int32_unscaled_c (ne10_fft_cpx_int32_t *fout,
+                                       ne10_fft_cpx_int32_t *fin,
+                                       ne10_fft_cpx_int32_t *twiddles,
+                                       ne10_int32_t *factors,
+                                       ne10_int32_t nfft,
+                                       ne10_int32_t inverse_fft)
 {
-    if (fin == fout)
-    {
-        /* NOTE: for an in-place FFT algorithm. It just performs an out-of-place FFT into a temp buffer */
-        ne10_fft_cpx_int32_t * tmpbuf_ = (ne10_fft_cpx_int32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int32_t) * nfft);
-
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_int32 (tmpbuf_, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_int32_c (tmpbuf_, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_int32_c (tmpbuf_, factors, twiddles);
-
-        memcpy (fout, tmpbuf_, sizeof (ne10_fft_cpx_int32_t) *nfft);
-        NE10_FREE (tmpbuf_);
-    }
+    // copy the data from input to output and bit reversal
+    ne10_data_bitreversal_int32 (fout, fin, 1, &factors[2]);
+    if (inverse_fft)
+        ne10_mixed_radix_butterfly_inverse_int32_unscaled_c (fout, factors, twiddles);
     else
-    {
-        // copy the data from input to output and bit reversal
-        ne10_data_bitreversal_int32 (fout, fin, 1, &factors[2]);
-
-        if (inverse_fft)
-            ne10_mixed_radix_butterfly_inverse_int32_c (fout, factors, twiddles);
-        else
-            ne10_mixed_radix_butterfly_int32_c (fout, factors, twiddles);
-    }
+        ne10_mixed_radix_butterfly_int32_unscaled_c (fout, factors, twiddles);
 }
 
+void ne10_fft_c2c_1d_int32_scaled_c (ne10_fft_cpx_int32_t *fout,
+                                     ne10_fft_cpx_int32_t *fin,
+                                     ne10_fft_cpx_int32_t *twiddles,
+                                     ne10_int32_t *factors,
+                                     ne10_int32_t nfft,
+                                     ne10_int32_t inverse_fft)
+{
+    // copy the data from input to output and bit reversal
+    ne10_data_bitreversal_int32 (fout, fin, 1, &factors[2]);
+    if (inverse_fft)
+        ne10_mixed_radix_butterfly_inverse_int32_scaled_c (fout, factors, twiddles);
+    else
+        ne10_mixed_radix_butterfly_int32_scaled_c (fout, factors, twiddles);
+}
 /**
  * @}
  */ //end of C2C_FFT_IFFT group
@@ -633,22 +797,19 @@ ne10_fft_r2c_cfg_int32_t ne10_fft_alloc_r2c_int32 (ne10_int32_t nfft)
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int32.c
  */
-void ne10_fft_r2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
-                              ne10_int32_t *fin,
-                              ne10_fft_cpx_int32_t *twiddles,
-                              ne10_fft_cpx_int32_t *super_twiddles,
-                              ne10_int32_t *factors,
-                              ne10_int32_t nfft)
+void ne10_fft_r2c_1d_int32_scaled_c (ne10_fft_cpx_int32_t *fout,
+                                     ne10_int32_t *fin,
+                                     ne10_fft_cpx_int32_t *twiddles,
+                                     ne10_fft_cpx_int32_t *super_twiddles,
+                                     ne10_int32_t *factors,
+                                     ne10_int32_t nfft)
 {
     ne10_int32_t ncfft = nfft >> 1;
 
     /* malloc a temp buffer for cfft */
     ne10_fft_cpx_int32_t * tmpbuf_ = (ne10_fft_cpx_int32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int32_t) * ncfft);
 
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_int32 (tmpbuf_, (ne10_fft_cpx_int32_t*) fin, 1, &factors[2]);
-    ne10_mixed_radix_butterfly_int32_c (tmpbuf_, factors, twiddles);
-
+    ne10_fft_c2c_1d_int32_scaled_c (tmpbuf_, (ne10_fft_cpx_int32_t*) fin, twiddles, factors, ncfft, 0);
     ne10_fft_split_r2c_1d_int32 (fout, tmpbuf_, super_twiddles, ncfft);
 
     NE10_FREE (tmpbuf_);
@@ -667,12 +828,12 @@ void ne10_fft_r2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int32.c
  */
-void ne10_fft_c2r_1d_int32_c (ne10_int32_t *fout,
-                              ne10_fft_cpx_int32_t *fin,
-                              ne10_fft_cpx_int32_t *twiddles,
-                              ne10_fft_cpx_int32_t *super_twiddles,
-                              ne10_int32_t *factors,
-                              ne10_int32_t nfft)
+void ne10_fft_c2r_1d_int32_scaled_c (ne10_int32_t *fout,
+                                     ne10_fft_cpx_int32_t *fin,
+                                     ne10_fft_cpx_int32_t *twiddles,
+                                     ne10_fft_cpx_int32_t *super_twiddles,
+                                     ne10_int32_t *factors,
+                                     ne10_int32_t nfft)
 {
     ne10_int32_t ncfft = nfft >> 1;
 
@@ -680,10 +841,7 @@ void ne10_fft_c2r_1d_int32_c (ne10_int32_t *fout,
     ne10_fft_cpx_int32_t * tmpbuf_ = (ne10_fft_cpx_int32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int32_t) * ncfft);
 
     ne10_fft_split_c2r_1d_int32 (tmpbuf_, fin, super_twiddles, ncfft);
-
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_int32 ( (ne10_fft_cpx_int32_t*) fout, tmpbuf_, 1, &factors[2]);
-    ne10_mixed_radix_butterfly_inverse_int32_c ( (ne10_fft_cpx_int32_t*) fout, factors, twiddles);
+    ne10_fft_c2c_1d_int32_scaled_c ( (ne10_fft_cpx_int32_t*) fout, tmpbuf_, twiddles, factors, ncfft, 1);
 
     NE10_FREE (tmpbuf_);
 }
