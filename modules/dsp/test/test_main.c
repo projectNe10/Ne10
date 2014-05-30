@@ -31,14 +31,12 @@
 
 #include "seatest.h"
 
-void test_fixture_cfft (void);
-void test_fixture_rfft (void);
-void test_fixture_fft_c2c_1d_float32(void);
-void test_fixture_fft_c2c_1d_int32(void);
-void test_fixture_fft_c2c_1d_int16(void);
-void test_fixture_fft_r2c_1d_float32(void);
-void test_fixture_fft_r2c_1d_int32(void);
-void test_fixture_fft_r2c_1d_int16(void);
+void test_fixture_fft_c2c_1d_float32 (void);
+void test_fixture_fft_c2c_1d_int32 (void);
+void test_fixture_fft_c2c_1d_int16 (void);
+void test_fixture_fft_r2c_1d_float32 (void);
+void test_fixture_fft_r2c_1d_int32 (void);
+void test_fixture_fft_r2c_1d_int16 (void);
 void test_fixture_fir (void);
 void test_fixture_fir_decimate (void);
 void test_fixture_fir_interpolate (void);
@@ -48,8 +46,6 @@ void test_fixture_iir_lattice (void);
 
 void all_tests (void)
 {
-    test_fixture_cfft();
-    test_fixture_rfft();
     test_fixture_fft_c2c_1d_float32();
     test_fixture_fft_c2c_1d_int32();
     test_fixture_fft_c2c_1d_int16();

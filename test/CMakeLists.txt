@@ -97,8 +97,6 @@ if(NE10_ENABLE_DSP)
     # Define dsp test files.
     set(NE10_TEST_DSP_SRCS
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_main.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_cfft.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_rfft.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_float32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_int32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fft_int16.c

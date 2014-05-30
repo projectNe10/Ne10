@@ -46,22 +46,6 @@ extern "C" {
     /* fft functions*/
 
     /* function pointers*/
-    extern void (*ne10_radix4_butterfly_float) (ne10_float32_t *pDst,
-            ne10_float32_t *pSrc,
-            ne10_uint16_t N,
-            ne10_float32_t *pCoef);
-
-    extern void (*ne10_radix4_butterfly_inverse_float) (ne10_float32_t *pDst,
-            ne10_float32_t *pSrc,
-            ne10_uint16_t N,
-            ne10_float32_t *pCoef,
-            ne10_float32_t onebyN);
-
-    extern void (*ne10_rfft_float) (const ne10_rfft_instance_f32_t * S,
-                                    ne10_float32_t * pSrc,
-                                    ne10_float32_t * pDst,
-                                    ne10_float32_t * pTemp);
-
     extern void (*ne10_fft_c2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
                                             ne10_fft_cpx_float32_t *fin,
                                             ne10_fft_cpx_float32_t *twiddles,
@@ -150,22 +134,6 @@ extern "C" {
     extern ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft);
 
     /* C version*/
-    extern void ne10_radix4_butterfly_float_c (ne10_float32_t *pDst,
-            ne10_float32_t *pSrc,
-            ne10_uint16_t N,
-            ne10_float32_t *pCoef);
-
-    extern void ne10_radix4_butterfly_inverse_float_c (ne10_float32_t *pDst,
-            ne10_float32_t *pSrc,
-            ne10_uint16_t N,
-            ne10_float32_t *pCoef,
-            ne10_float32_t onebyN);
-
-    extern void ne10_rfft_float_c (const ne10_rfft_instance_f32_t * S,
-                                   ne10_float32_t * pSrc,
-                                   ne10_float32_t * pDst,
-                                   ne10_float32_t * pTemp);
-
     extern void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                            ne10_fft_cpx_float32_t *fin,
                                            ne10_fft_cpx_float32_t *twiddles,
@@ -237,25 +205,6 @@ extern "C" {
 
 
     /* NEON version*/
-    /**
-     * @addtogroup CFFT_CIFFT
-     * @{
-     */
-    extern void ne10_radix4_butterfly_float_neon (ne10_float32_t *pDst,
-            ne10_float32_t *pSrc,
-            ne10_uint16_t N,
-            ne10_float32_t *pCoef)
-    asm ("ne10_radix4_butterfly_float_neon");
-
-    extern void ne10_radix4_butterfly_inverse_float_neon (ne10_float32_t *pDst,
-            ne10_float32_t *pSrc,
-            ne10_uint16_t N,
-            ne10_float32_t *pCoef,
-            ne10_float32_t onebyN)
-    asm ("ne10_radix4_butterfly_inverse_float_neon");
-    /** @} */ //end of CFFT_CIFFT group
-
-
     extern void ne10_rfft_float_neon (const ne10_rfft_instance_f32_t * S,
                                       ne10_float32_t * pSrc,
                                       ne10_float32_t * pDst,

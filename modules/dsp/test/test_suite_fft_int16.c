@@ -119,9 +119,9 @@ void test_fft_c2c_1d_int16_conformance()
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
 
         ne10_fft_c2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
-                                  cfg->twiddles, cfg->factors, fftSize, 0);
+                                         cfg->twiddles, cfg->factors, fftSize, 0);
         ne10_fft_c2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
-                                     cfg->twiddles, cfg->factors, fftSize, 0);
+                                            cfg->twiddles, cfg->factors, fftSize, 0);
 
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
@@ -143,9 +143,9 @@ void test_fft_c2c_1d_int16_conformance()
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
 
         ne10_fft_c2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
-                                  cfg->twiddles, cfg->factors, fftSize, 1);
+                                         cfg->twiddles, cfg->factors, fftSize, 1);
         ne10_fft_c2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
-                                     cfg->twiddles, cfg->factors, fftSize, 1);
+                                            cfg->twiddles, cfg->factors, fftSize, 1);
 
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
@@ -205,7 +205,7 @@ void test_fft_c2c_1d_int16_performance()
         memcpy (in_c, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
         memcpy (in_neon, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
         cfg = ne10_fft_alloc_c2c_int16 (fftSize);
-        test_loop = TEST_COUNT/fftSize;
+        test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
         (
@@ -397,7 +397,7 @@ void test_fft_r2c_1d_int16_performance()
         memcpy (in_c, testInput_i16, fftSize * sizeof (ne10_int16_t));
         memcpy (in_neon, testInput_i16, fftSize * sizeof (ne10_int16_t));
         cfg = ne10_fft_alloc_r2c_int16 (fftSize);
-        test_loop = TEST_COUNT/fftSize;
+        test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
         (

@@ -49,229 +49,796 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_fft.h"
 
 static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t * Fout,
+        ne10_fft_cpx_float32_t   * Fin,
         ne10_int32_t * factors,
         ne10_fft_cpx_float32_t * twiddles)
 {
-    ne10_int32_t i, j, mstride;
+    ne10_int32_t fstride, mstride, N;
+    ne10_int32_t fstride1;
+    ne10_int32_t f_count, m_count;
     ne10_int32_t stage_count;
-    ne10_int32_t fstride;
 
-    ne10_fft_cpx_float32_t tmp;
-    ne10_fft_cpx_float32_t scratch[6];
-    ne10_fft_cpx_float32_t *tw, *tw1, *tw2, *tw3;
-    ne10_fft_cpx_float32_t * F;
+    ne10_fft_cpx_float32_t   scratch_in[8];
+    ne10_fft_cpx_float32_t   scratch_out[8];
+    ne10_fft_cpx_float32_t   scratch[16];
+    ne10_fft_cpx_float32_t   scratch_tw[6];
 
+    ne10_fft_cpx_float32_t   *Fin1, *Fin2, *Fout1, *Fout2;
+    ne10_fft_cpx_float32_t   *Fout_ls = Fout;
+    ne10_fft_cpx_float32_t   *Ftmp;
+    ne10_fft_cpx_float32_t   *tw, *tw1, *tw2;
+    const ne10_float32_t TW_81 = 0.70710678;
+    const ne10_float32_t TW_81N = -0.70710678;
 
-    // the first stage
+    // init fstride, mstride, N
     stage_count = factors[0];
     fstride = factors[1];
-    if (factors[2 * stage_count] == 2) // length of FFT is 2^n (n is odd)
+    mstride = factors[ (stage_count << 1) - 1 ];
+    N = factors[ stage_count << 1 ]; // radix
+
+    // the first stage
+    Fin1 = Fin;
+    Fout1 = Fout;
+    if (N == 2)   // length of FFT is 2^n (n is odd)
     {
-        //fstride is nfft>>1
-        for (i = 0; i < fstride; i++)
+        // radix 8
+        N = fstride >> 1; // 1/4 of length of FFT
+        tw = twiddles;
+        fstride1 = fstride >> 2;
+
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride1; f_count ++)
         {
-            tmp.r = Fout[2 * i + 1].r;
-            tmp.i = Fout[2 * i + 1].i;
-            Fout[2 * i + 1].r = Fout[2 * i].r - tmp.r;
-            Fout[2 * i + 1].i = Fout[2 * i].i - tmp.i;
-            Fout[2 * i].r = Fout[2 * i].r + tmp.r;
-            Fout[2 * i].i = Fout[2 * i].i + tmp.i;
-        }
+            Fout1 = & Fout[ f_count * 8 ];
+            // load
+            scratch_tw[0] = tw[0];
+            scratch_tw[2] = tw[2];
+            scratch_tw[4] = tw[4];
+            scratch_tw[1] = tw[1];
+            scratch_tw[3] = tw[3];
+            scratch_tw[5] = tw[5];
+
+            scratch_in[0].r = Fin1[0].r + Fin1[0 + fstride].r;
+            scratch_in[0].i = Fin1[0].i + Fin1[0 + fstride].i;
+            scratch_in[1].r = Fin1[0].r - Fin1[0 + fstride].r;
+            scratch_in[1].i = Fin1[0].i - Fin1[0 + fstride].i;
+            scratch_in[2].r = Fin1[fstride1].r + Fin1[fstride1 + fstride].r;
+            scratch_in[2].i = Fin1[fstride1].i + Fin1[fstride1 + fstride].i;
+            scratch_in[3].r = Fin1[fstride1].r - Fin1[fstride1 + fstride].r;
+            scratch_in[3].i = Fin1[fstride1].i - Fin1[fstride1 + fstride].i;
+            scratch_in[4].r = Fin1[fstride1 * 2].r + Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[4].i = Fin1[fstride1 * 2].i + Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[5].r = Fin1[fstride1 * 2].r - Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[5].i = Fin1[fstride1 * 2].i - Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[6].r = Fin1[fstride1 * 3].r + Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[6].i = Fin1[fstride1 * 3].i + Fin1[fstride1 * 3 + fstride].i;
+            scratch_in[7].r = Fin1[fstride1 * 3].r - Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[7].i = Fin1[fstride1 * 3].i - Fin1[fstride1 * 3 + fstride].i;
+
+            // radix 4 butterfly without twiddles
+            scratch[0] = scratch_in[0];
+            scratch[1] = scratch_in[1];
+
+            scratch[2] = scratch_in[2];
+            scratch[3].r = (scratch_in[3].r + scratch_in[3].i) * TW_81;
+            scratch[3].i = (scratch_in[3].i - scratch_in[3].r) * TW_81;
+
+            scratch[4] = scratch_in[4];
+            scratch[5].r = scratch_in[5].i;
+            scratch[5].i = -scratch_in[5].r;
+
+            scratch[6].r = scratch_in[6].r;
+            scratch[6].i = scratch_in[6].i;
+            scratch[7].r = (scratch_in[7].r - scratch_in[7].i) * TW_81N;
+            scratch[7].i = (scratch_in[7].i + scratch_in[7].r) * TW_81N;
+
+            // radix 2 butterfly
+            scratch[8].r = scratch[0].r + scratch[4].r;
+            scratch[8].i = scratch[0].i + scratch[4].i;
+            scratch[9].r = scratch[1].r + scratch[5].r;
+            scratch[9].i = scratch[1].i + scratch[5].i;
+
+            scratch[10].r = scratch[0].r - scratch[4].r;
+            scratch[10].i = scratch[0].i - scratch[4].i;
+            scratch[11].r = scratch[1].r - scratch[5].r;
+            scratch[11].i = scratch[1].i - scratch[5].i;
+
+            // radix 2 butterfly
+            scratch[12].r = scratch[2].r + scratch[6].r;
+            scratch[12].i = scratch[2].i + scratch[6].i;
+            scratch[13].r = scratch[3].r + scratch[7].r;
+            scratch[13].i = scratch[3].i + scratch[7].i;
+
+            scratch[14].r = scratch[2].r - scratch[6].r;
+            scratch[14].i = scratch[2].i - scratch[6].i;
+            scratch[15].r = scratch[3].r - scratch[7].r;
+            scratch[15].i = scratch[3].i - scratch[7].i;
+
+            // third result
+            scratch_out[4].r = scratch[8].r - scratch[12].r;
+            scratch_out[4].i = scratch[8].i - scratch[12].i;
+            scratch_out[5].r = scratch[9].r - scratch[13].r;
+            scratch_out[5].i = scratch[9].i - scratch[13].i;
+
+            // first result
+            scratch_out[0].r = scratch[8].r + scratch[12].r;
+            scratch_out[0].i = scratch[8].i + scratch[12].i;
+            scratch_out[1].r = scratch[9].r + scratch[13].r;
+            scratch_out[1].i = scratch[9].i + scratch[13].i;
+
+            // second result
+            scratch_out[2].r = scratch[10].r + scratch[14].i;
+            scratch_out[2].i = scratch[10].i - scratch[14].r;
+            scratch_out[3].r = scratch[11].r + scratch[15].i;
+            scratch_out[3].i = scratch[11].i - scratch[15].r;
+
+            // forth result
+            scratch_out[6].r = scratch[10].r - scratch[14].i;
+            scratch_out[6].i = scratch[10].i + scratch[14].r;
+            scratch_out[7].r = scratch[11].r - scratch[15].i;
+            scratch_out[7].i = scratch[11].i + scratch[15].r;
+
+            // store
+            Fout1[0] = scratch_out[0];
+            Fout1[1] = scratch_out[1];
+            Fout1[2] = scratch_out[2];
+            Fout1[3] = scratch_out[3];
+            Fout1[4] = scratch_out[4];
+            Fout1[5] = scratch_out[5];
+            Fout1[6] = scratch_out[6];
+            Fout1[7] = scratch_out[7];
+
+            Fin1 += 1;
+        } // f_count
+        tw += 6;
+        mstride <<= 2;
+        fstride >>= 4;
+        stage_count -= 2;
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
     }
-    else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
+    else if (N == 4)   // length of FFT is 2^n (n is even)
     {
         //fstride is nfft>>2
-        for (i = 0; i < fstride; i++)
+        for (f_count = fstride; f_count ; f_count --)
         {
-            scratch[2].r = Fout[4 * i].r - Fout[4 * i + 2].r;
-            scratch[2].i = Fout[4 * i].i - Fout[4 * i + 2].i;
+            // load
+            scratch_in[0] = *Fin1;
+            Fin2 = Fin1 + fstride;
+            scratch_in[1] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[2] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[3] = *Fin2;
 
-            Fout[4 * i].r += Fout[4 * i + 2].r;
-            Fout[4 * i].i += Fout[4 * i + 2].i;
+            // radix 4 butterfly without twiddles
 
-            scratch[0].r = Fout[4 * i + 1].r + Fout[4 * i + 3].r;
-            scratch[0].i = Fout[4 * i + 1].i + Fout[4 * i + 3].i;
+            // radix 2 butterfly
+            scratch[0].r = scratch_in[0].r + scratch_in[2].r;
+            scratch[0].i = scratch_in[0].i + scratch_in[2].i;
 
-            scratch[1].r = Fout[4 * i + 1].r - Fout[4 * i + 3].r;
-            scratch[1].i = Fout[4 * i + 1].i - Fout[4 * i + 3].i;
-            Fout[4 * i + 2].r = Fout[4 * i].r - scratch[0].r;
-            Fout[4 * i + 2].i = Fout[4 * i].i - scratch[0].i;
+            scratch[1].r = scratch_in[0].r - scratch_in[2].r;
+            scratch[1].i = scratch_in[0].i - scratch_in[2].i;
 
-            Fout[4 * i].r += scratch[0].r;
-            Fout[4 * i].i += scratch[0].i;
+            // radix 2 butterfly
+            scratch[2].r = scratch_in[1].r + scratch_in[3].r;
+            scratch[2].i = scratch_in[1].i + scratch_in[3].i;
 
-            Fout[4 * i + 1].r = scratch[2].r + scratch[1].i;
-            Fout[4 * i + 1].i = scratch[2].i - scratch[1].r;
-            Fout[4 * i + 3].r = scratch[2].r - scratch[1].i;
-            Fout[4 * i + 3].i = scratch[2].i + scratch[1].r;
-        }
+            scratch[3].r = scratch_in[1].r - scratch_in[3].r;
+            scratch[3].i = scratch_in[1].i - scratch_in[3].i;
+
+            // third result
+            scratch_out[2].r = scratch[0].r - scratch[2].r;
+            scratch_out[2].i = scratch[0].i - scratch[2].i;
+
+            // first result
+            scratch_out[0].r = scratch[0].r + scratch[2].r;
+            scratch_out[0].i = scratch[0].i + scratch[2].i;
+
+            // second result
+            scratch_out[1].r = scratch[1].r + scratch[3].i;
+            scratch_out[1].i = scratch[1].i - scratch[3].r;
+
+            // forth result
+            scratch_out[3].r = scratch[1].r - scratch[3].i;
+            scratch_out[3].i = scratch[1].i + scratch[3].r;
+
+            // store
+            * Fout1 ++ = scratch_out[0];
+            * Fout1 ++ = scratch_out[1];
+            * Fout1 ++ = scratch_out[2];
+            * Fout1 ++ = scratch_out[3];
+
+            Fin1++;
+        } // f_count
+
+        N = fstride; // 1/4 of length of FFT
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+
+        // update address for other stages
+        stage_count--;
+        tw = twiddles;
+        fstride >>= 2;
+        // end of first stage
     }
-    stage_count--;
 
-    // other stages
-    mstride = factors[2 * stage_count + 1];
-    tw = twiddles;
-    for (; stage_count > 0; stage_count--)
+
+    // others but the last one
+    for (; stage_count > 1 ; stage_count--)
     {
-        fstride = fstride >> 2;
-        for (i = 0; i < fstride; i++)
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride; f_count ++)
         {
-            F = &Fout[i * mstride * 4];
+            Fout1 = & Fout[ f_count * mstride << 2 ];
             tw1 = tw;
-            tw2 = tw + mstride;
-            tw3 = tw + mstride * 2;
-            for (j = 0; j < mstride; j++)
+            for (m_count = mstride; m_count ; m_count --)
             {
-                scratch[0].r = F[mstride].r * tw1->r - F[mstride].i * tw1->i;
-                scratch[0].i = F[mstride].r * tw1->i + F[mstride].i * tw1->r;
-                scratch[1].r = F[mstride * 2].r * tw2->r - F[mstride * 2].i * tw2->i;
-                scratch[1].i = F[mstride * 2].r * tw2->i + F[mstride * 2].i * tw2->r;
-                scratch[2].r = F[mstride * 3].r * tw3->r - F[mstride * 3].i * tw3->i;
-                scratch[2].i = F[mstride * 3].r * tw3->i + F[mstride * 3].i * tw3->r;
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
 
-                scratch[5].r = F->r - scratch[1].r;
-                scratch[5].i = F->i - scratch[1].i;
-                F->r += scratch[1].r;
-                F->i += scratch[1].i;
+                // radix 4 butterfly with twiddles
 
-                scratch[3].r = scratch[0].r + scratch[2].r;
-                scratch[3].i = scratch[0].i + scratch[2].i;
-                scratch[4].r = scratch[0].r - scratch[2].r;
-                scratch[4].i = scratch[0].i - scratch[2].i;
+                scratch[0] = scratch_in[0];
+                scratch[1].r = scratch_in[1].r * scratch_tw[0].r - scratch_in[1].i * scratch_tw[0].i;
+                scratch[1].i = scratch_in[1].i * scratch_tw[0].r + scratch_in[1].r * scratch_tw[0].i;
 
-                F[mstride * 2].r = F->r - scratch[3].r;
-                F[mstride * 2].i = F->i - scratch[3].i;
-                F->r += scratch[3].r;
-                F->i += scratch[3].i;
+                scratch[2].r = scratch_in[2].r * scratch_tw[1].r - scratch_in[2].i * scratch_tw[1].i;
+                scratch[2].i = scratch_in[2].i * scratch_tw[1].r + scratch_in[2].r * scratch_tw[1].i;
 
-                F[mstride].r = scratch[5].r + scratch[4].i;
-                F[mstride].i = scratch[5].i - scratch[4].r;
-                F[mstride * 3].r = scratch[5].r - scratch[4].i;
-                F[mstride * 3].i = scratch[5].i + scratch[4].r;
+                scratch[3].r = scratch_in[3].r * scratch_tw[2].r - scratch_in[3].i * scratch_tw[2].i;
+                scratch[3].i = scratch_in[3].i * scratch_tw[2].r + scratch_in[3].r * scratch_tw[2].i;
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r + scratch[7].i;
+                scratch_out[1].i = scratch[5].i - scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r - scratch[7].i;
+                scratch_out[3].i = scratch[5].i + scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + mstride;
+                *Fout2 = scratch_out[1];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[2];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[3];
 
                 tw1++;
-                tw2++;
-                tw3++;
-                F++;
-            }
-        }
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
         tw += mstride * 3;
         mstride <<= 2;
-    }
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+        fstride >>= 2;
+    } // stage_count
 
+    // the last one
+    if (stage_count)
+    {
+        Fin1 = Fin;
+        // if stage count is even, output to the input array
+        Fout1 = Fout_ls;
+
+        for (f_count = 0; f_count < fstride; f_count ++)
+        {
+            tw1 = tw;
+            for (m_count = mstride; m_count ; m_count --)
+            {
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
+
+                // radix 4 butterfly with twiddles
+
+                scratch[0] = scratch_in[0];
+                scratch[1].r = scratch_in[1].r * scratch_tw[0].r - scratch_in[1].i * scratch_tw[0].i;
+                scratch[1].i = scratch_in[1].i * scratch_tw[0].r + scratch_in[1].r * scratch_tw[0].i;
+
+                scratch[2].r = scratch_in[2].r * scratch_tw[1].r - scratch_in[2].i * scratch_tw[1].i;
+                scratch[2].i = scratch_in[2].i * scratch_tw[1].r + scratch_in[2].r * scratch_tw[1].i;
+
+                scratch[3].r = scratch_in[3].r * scratch_tw[2].r - scratch_in[3].i * scratch_tw[2].i;
+                scratch[3].i = scratch_in[3].i * scratch_tw[2].r + scratch_in[3].r * scratch_tw[2].i;
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r + scratch[7].i;
+                scratch_out[1].i = scratch[5].i - scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r - scratch[7].i;
+                scratch_out[3].i = scratch[5].i + scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + N;
+                *Fout2 = scratch_out[1];
+                Fout2 += N;
+                *Fout2 = scratch_out[2];
+                Fout2 += N;
+                *Fout2 = scratch_out[3];
+
+                tw1 ++;
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
+    } // last stage
 }
 
 static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t * Fout,
+        ne10_fft_cpx_float32_t   * Fin,
         ne10_int32_t * factors,
         ne10_fft_cpx_float32_t * twiddles)
-
 {
-    ne10_int32_t i, j, mstride;
+    ne10_int32_t fstride, mstride, N;
+    ne10_int32_t fstride1;
+    ne10_int32_t f_count, m_count;
     ne10_int32_t stage_count;
-    ne10_int32_t fstride;
 
-    ne10_fft_cpx_float32_t tmp;
-    ne10_fft_cpx_float32_t scratch[6];
-    ne10_fft_cpx_float32_t *tw, *tw1, *tw2, *tw3;
-    ne10_fft_cpx_float32_t * F;
+    ne10_fft_cpx_float32_t   scratch_in[8];
+    ne10_fft_cpx_float32_t   scratch_out[8];
+    ne10_fft_cpx_float32_t   scratch[16];
+    ne10_fft_cpx_float32_t   scratch_tw[6];
 
+    ne10_fft_cpx_float32_t   *Fin1, *Fin2, *Fout1, *Fout2;
+    ne10_fft_cpx_float32_t   *Fout_ls = Fout;
+    ne10_fft_cpx_float32_t   *Ftmp;
+    ne10_fft_cpx_float32_t   *tw, *tw1, *tw2;
+    const ne10_float32_t TW_81 = 0.70710678;
+    const ne10_float32_t TW_81N = -0.70710678;
 
-    // the first stage
+    // init fstride, mstride, N
     stage_count = factors[0];
     fstride = factors[1];
-    if (factors[2 * stage_count] == 2) // length of FFT is 2^n (n is odd)
+    mstride = factors[ (stage_count << 1) - 1 ];
+    N = factors[ stage_count << 1 ]; // radix
+
+    // the first stage
+    Fin1 = Fin;
+    Fout1 = Fout;
+    if (N == 2)   // length of FFT is 2^n (n is odd)
     {
-        //fstride is nfft>>1;
-        for (i = 0; i < fstride; i++)
+        // radix 8
+        N = fstride >> 1; // 1/4 of length of FFT
+        tw = twiddles;
+        fstride1 = fstride >> 2;
+
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride1; f_count ++)
         {
-            tmp.r = Fout[2 * i + 1].r;
-            tmp.i = Fout[2 * i + 1].i;
-            Fout[2 * i + 1].r = Fout[2 * i].r - tmp.r;
-            Fout[2 * i + 1].i = Fout[2 * i].i - tmp.i;
-            Fout[2 * i].r = Fout[2 * i].r + tmp.r;
-            Fout[2 * i].i = Fout[2 * i].i + tmp.i;
-        }
+            Fout1 = & Fout[ f_count * 8 ];
+            // load
+            scratch_tw[0] = tw[0];
+            scratch_tw[2] = tw[2];
+            scratch_tw[4] = tw[4];
+            scratch_tw[1] = tw[1];
+            scratch_tw[3] = tw[3];
+            scratch_tw[5] = tw[5];
+
+            scratch_in[0].r = Fin1[0].r + Fin1[0 + fstride].r;
+            scratch_in[0].i = Fin1[0].i + Fin1[0 + fstride].i;
+            scratch_in[1].r = Fin1[0].r - Fin1[0 + fstride].r;
+            scratch_in[1].i = Fin1[0].i - Fin1[0 + fstride].i;
+            scratch_in[2].r = Fin1[fstride1].r + Fin1[fstride1 + fstride].r;
+            scratch_in[2].i = Fin1[fstride1].i + Fin1[fstride1 + fstride].i;
+            scratch_in[3].r = Fin1[fstride1].r - Fin1[fstride1 + fstride].r;
+            scratch_in[3].i = Fin1[fstride1].i - Fin1[fstride1 + fstride].i;
+            scratch_in[4].r = Fin1[fstride1 * 2].r + Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[4].i = Fin1[fstride1 * 2].i + Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[5].r = Fin1[fstride1 * 2].r - Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[5].i = Fin1[fstride1 * 2].i - Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[6].r = Fin1[fstride1 * 3].r + Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[6].i = Fin1[fstride1 * 3].i + Fin1[fstride1 * 3 + fstride].i;
+            scratch_in[7].r = Fin1[fstride1 * 3].r - Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[7].i = Fin1[fstride1 * 3].i - Fin1[fstride1 * 3 + fstride].i;
+
+            // radix 4 butterfly with twiddles
+
+            scratch[0] = scratch_in[0];
+            scratch[1] = scratch_in[1];
+
+            scratch[2] = scratch_in[2];
+            scratch[3].r = (scratch_in[3].r - scratch_in[3].i) * TW_81;
+            scratch[3].i = (scratch_in[3].i + scratch_in[3].r) * TW_81;
+
+            scratch[4] = scratch_in[4];
+            scratch[5].r = -scratch_in[5].i;
+            scratch[5].i = scratch_in[5].r;
+
+            scratch[6].r = scratch_in[6].r;
+            scratch[6].i = scratch_in[6].i;
+            scratch[7].r = (scratch_in[7].r + scratch_in[7].i) * TW_81N;
+            scratch[7].i = (scratch_in[7].i - scratch_in[7].r) * TW_81N;
+
+            // radix 2 butterfly
+            scratch[8].r = scratch[0].r + scratch[4].r;
+            scratch[8].i = scratch[0].i + scratch[4].i;
+            scratch[9].r = scratch[1].r + scratch[5].r;
+            scratch[9].i = scratch[1].i + scratch[5].i;
+
+            scratch[10].r = scratch[0].r - scratch[4].r;
+            scratch[10].i = scratch[0].i - scratch[4].i;
+            scratch[11].r = scratch[1].r - scratch[5].r;
+            scratch[11].i = scratch[1].i - scratch[5].i;
+
+            // radix 2 butterfly
+            scratch[12].r = scratch[2].r + scratch[6].r;
+            scratch[12].i = scratch[2].i + scratch[6].i;
+            scratch[13].r = scratch[3].r + scratch[7].r;
+            scratch[13].i = scratch[3].i + scratch[7].i;
+
+            scratch[14].r = scratch[2].r - scratch[6].r;
+            scratch[14].i = scratch[2].i - scratch[6].i;
+            scratch[15].r = scratch[3].r - scratch[7].r;
+            scratch[15].i = scratch[3].i - scratch[7].i;
+
+            // third result
+            scratch_out[4].r = scratch[8].r - scratch[12].r;
+            scratch_out[4].i = scratch[8].i - scratch[12].i;
+            scratch_out[5].r = scratch[9].r - scratch[13].r;
+            scratch_out[5].i = scratch[9].i - scratch[13].i;
+
+            // first result
+            scratch_out[0].r = scratch[8].r + scratch[12].r;
+            scratch_out[0].i = scratch[8].i + scratch[12].i;
+            scratch_out[1].r = scratch[9].r + scratch[13].r;
+            scratch_out[1].i = scratch[9].i + scratch[13].i;
+
+            // second result
+            scratch_out[2].r = scratch[10].r - scratch[14].i;
+            scratch_out[2].i = scratch[10].i + scratch[14].r;
+            scratch_out[3].r = scratch[11].r - scratch[15].i;
+            scratch_out[3].i = scratch[11].i + scratch[15].r;
+
+            // forth result
+            scratch_out[6].r = scratch[10].r + scratch[14].i;
+            scratch_out[6].i = scratch[10].i - scratch[14].r;
+            scratch_out[7].r = scratch[11].r + scratch[15].i;
+            scratch_out[7].i = scratch[11].i - scratch[15].r;
+
+            // store
+            Fout1[0] = scratch_out[0];
+            Fout1[1] = scratch_out[1];
+            Fout1[2] = scratch_out[2];
+            Fout1[3] = scratch_out[3];
+            Fout1[4] = scratch_out[4];
+            Fout1[5] = scratch_out[5];
+            Fout1[6] = scratch_out[6];
+            Fout1[7] = scratch_out[7];
+
+            Fin1 += 1;
+        } // f_count
+        tw += 6;
+        mstride <<= 2;
+        fstride >>= 4;
+        stage_count -= 2;
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
     }
-    else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
+    else if (N == 4)   // length of FFT is 2^n (n is even)
     {
         //fstride is nfft>>2
-        for (i = 0; i < fstride; i++)
+        for (f_count = fstride; f_count ; f_count --)
         {
-            scratch[2].r = Fout[4 * i].r - Fout[4 * i + 2].r;
-            scratch[2].i = Fout[4 * i].i - Fout[4 * i + 2].i;
+            // load
+            scratch_in[0] = *Fin1;
+            Fin2 = Fin1 + fstride;
+            scratch_in[1] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[2] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[3] = *Fin2;
 
-            Fout[4 * i].r += Fout[4 * i + 2].r;
-            Fout[4 * i].i += Fout[4 * i + 2].i;
+            // radix 4 butterfly without twiddles
 
-            scratch[0].r = Fout[4 * i + 1].r + Fout[4 * i + 3].r;
-            scratch[0].i = Fout[4 * i + 1].i + Fout[4 * i + 3].i;
+            // radix 2 butterfly
+            scratch[0].r = scratch_in[0].r + scratch_in[2].r;
+            scratch[0].i = scratch_in[0].i + scratch_in[2].i;
 
-            scratch[1].r = Fout[4 * i + 1].r - Fout[4 * i + 3].r;
-            scratch[1].i = Fout[4 * i + 1].i - Fout[4 * i + 3].i;
-            Fout[4 * i + 2].r = Fout[4 * i].r - scratch[0].r;
-            Fout[4 * i + 2].i = Fout[4 * i].i - scratch[0].i;
+            scratch[1].r = scratch_in[0].r - scratch_in[2].r;
+            scratch[1].i = scratch_in[0].i - scratch_in[2].i;
 
-            Fout[4 * i].r += scratch[0].r;
-            Fout[4 * i].i += scratch[0].i;
+            // radix 2 butterfly
+            scratch[2].r = scratch_in[1].r + scratch_in[3].r;
+            scratch[2].i = scratch_in[1].i + scratch_in[3].i;
 
-            Fout[4 * i + 1].r = scratch[2].r - scratch[1].i;
-            Fout[4 * i + 1].i = scratch[2].i + scratch[1].r;
-            Fout[4 * i + 3].r = scratch[2].r + scratch[1].i;
-            Fout[4 * i + 3].i = scratch[2].i - scratch[1].r;
-        }
+            scratch[3].r = scratch_in[1].r - scratch_in[3].r;
+            scratch[3].i = scratch_in[1].i - scratch_in[3].i;
+
+            // third result
+            scratch_out[2].r = scratch[0].r - scratch[2].r;
+            scratch_out[2].i = scratch[0].i - scratch[2].i;
+
+            // first result
+            scratch_out[0].r = scratch[0].r + scratch[2].r;
+            scratch_out[0].i = scratch[0].i + scratch[2].i;
+
+            // second result
+            scratch_out[1].r = scratch[1].r - scratch[3].i;
+            scratch_out[1].i = scratch[1].i + scratch[3].r;
+
+            // forth result
+            scratch_out[3].r = scratch[1].r + scratch[3].i;
+            scratch_out[3].i = scratch[1].i - scratch[3].r;
+
+            // store
+            * Fout1 ++ = scratch_out[0];
+            * Fout1 ++ = scratch_out[1];
+            * Fout1 ++ = scratch_out[2];
+            * Fout1 ++ = scratch_out[3];
+
+            Fin1++;
+        } // f_count
+
+        N = fstride; // 1/4 of length of FFT
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+
+        // update address for other stages
+        stage_count--;
+        tw = twiddles;
+        fstride >>= 2;
+        // end of first stage
     }
-    stage_count--;
 
-    // other stages
-    mstride = factors[2 * stage_count + 1];
-    tw = twiddles;
-    for (; stage_count > 0; stage_count--)
+
+    // others but the last one
+    for (; stage_count > 1 ; stage_count--)
     {
-        fstride = fstride >> 2;
-        for (i = 0; i < fstride; i++)
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride; f_count ++)
         {
-            F = &Fout[i * mstride * 4];
+            Fout1 = & Fout[ f_count * mstride << 2 ];
             tw1 = tw;
-            tw2 = tw + mstride;
-            tw3 = tw + mstride * 2;
-            for (j = 0; j < mstride; j++)
+            for (m_count = mstride; m_count ; m_count --)
             {
-                scratch[0].r = F[mstride].r * tw1->r + F[mstride].i * tw1->i;
-                scratch[0].i = F[mstride].i * tw1->r - F[mstride].r * tw1->i;
-                scratch[1].r = F[mstride * 2].r * tw2->r + F[mstride * 2].i * tw2->i;
-                scratch[1].i = F[mstride * 2].i * tw2->r - F[mstride * 2].r * tw2->i;
-                scratch[2].r = F[mstride * 3].r * tw3->r + F[mstride * 3].i * tw3->i;
-                scratch[2].i = F[mstride * 3].i * tw3->r - F[mstride * 3].r * tw3->i;
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
 
-                scratch[5].r = F->r - scratch[1].r;
-                scratch[5].i = F->i - scratch[1].i;
-                F->r += scratch[1].r;
-                F->i += scratch[1].i;
+                // radix 4 butterfly with twiddles
 
-                scratch[3].r = scratch[0].r + scratch[2].r;
-                scratch[3].i = scratch[0].i + scratch[2].i;
-                scratch[4].r = scratch[0].r - scratch[2].r;
-                scratch[4].i = scratch[0].i - scratch[2].i;
+                scratch[0] = scratch_in[0];
+                scratch[1].r = scratch_in[1].r * scratch_tw[0].r + scratch_in[1].i * scratch_tw[0].i;
+                scratch[1].i = scratch_in[1].i * scratch_tw[0].r - scratch_in[1].r * scratch_tw[0].i;
 
-                F[mstride * 2].r = F->r - scratch[3].r;
-                F[mstride * 2].i = F->i - scratch[3].i;
-                F->r += scratch[3].r;
-                F->i += scratch[3].i;
+                scratch[2].r = scratch_in[2].r * scratch_tw[1].r + scratch_in[2].i * scratch_tw[1].i;
+                scratch[2].i = scratch_in[2].i * scratch_tw[1].r - scratch_in[2].r * scratch_tw[1].i;
 
-                F[mstride].r = scratch[5].r - scratch[4].i;
-                F[mstride].i = scratch[5].i + scratch[4].r;
-                F[mstride * 3].r = scratch[5].r + scratch[4].i;
-                F[mstride * 3].i = scratch[5].i - scratch[4].r;
+                scratch[3].r = scratch_in[3].r * scratch_tw[2].r + scratch_in[3].i * scratch_tw[2].i;
+                scratch[3].i = scratch_in[3].i * scratch_tw[2].r - scratch_in[3].r * scratch_tw[2].i;
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r - scratch[7].i;
+                scratch_out[1].i = scratch[5].i + scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r + scratch[7].i;
+                scratch_out[3].i = scratch[5].i - scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + mstride;
+                *Fout2 = scratch_out[1];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[2];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[3];
 
                 tw1++;
-                tw2++;
-                tw3++;
-                F++;
-            }
-        }
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
         tw += mstride * 3;
         mstride <<= 2;
-    }
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+        fstride >>= 2;
+    } // stage_count
+
+    // the last one
+    if (stage_count)
+    {
+        Fin1 = Fin;
+        // if stage count is even, output to the input array
+        Fout1 = Fout_ls;
+
+        for (f_count = 0; f_count < fstride; f_count ++)
+        {
+            tw1 = tw;
+            for (m_count = mstride; m_count ; m_count --)
+            {
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
+
+                // radix 4 butterfly with twiddles
+
+                scratch[0] = scratch_in[0];
+                scratch[1].r = scratch_in[1].r * scratch_tw[0].r + scratch_in[1].i * scratch_tw[0].i;
+                scratch[1].i = scratch_in[1].i * scratch_tw[0].r - scratch_in[1].r * scratch_tw[0].i;
+
+                scratch[2].r = scratch_in[2].r * scratch_tw[1].r + scratch_in[2].i * scratch_tw[1].i;
+                scratch[2].i = scratch_in[2].i * scratch_tw[1].r - scratch_in[2].r * scratch_tw[1].i;
+
+                scratch[3].r = scratch_in[3].r * scratch_tw[2].r + scratch_in[3].i * scratch_tw[2].i;
+                scratch[3].i = scratch_in[3].i * scratch_tw[2].r - scratch_in[3].r * scratch_tw[2].i;
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r - scratch[7].i;
+                scratch_out[1].i = scratch[5].i + scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r + scratch[7].i;
+                scratch_out[3].i = scratch[5].i - scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + N;
+                *Fout2 = scratch_out[1];
+                Fout2 += N;
+                *Fout2 = scratch_out[2];
+                Fout2 += N;
+                *Fout2 = scratch_out[3];
+
+                tw1 ++;
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
+    } // last stage
 }
 
 /* factors buffer:
@@ -307,34 +874,6 @@ static ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
     return NE10_OK;
 }
 
-void ne10_data_bitreversal_float32 (ne10_fft_cpx_float32_t * Fout,
-                                    const ne10_fft_cpx_float32_t * f,
-                                    ne10_int32_t fstride,
-                                    ne10_int32_t * factors)
-{
-    const ne10_int32_t p = *factors++; /* the radix  */
-    const ne10_int32_t m = *factors++; /* stage's fft length/p */
-    const ne10_fft_cpx_float32_t * Fout_end = Fout + p * m;
-    if (m == 1)
-    {
-        do
-        {
-            *Fout = *f;
-            f += fstride;
-        }
-        while (++Fout != Fout_end);
-    }
-    else
-    {
-        do
-        {
-            ne10_data_bitreversal_float32 (Fout, f, fstride * p, factors);
-            f += fstride;
-        }
-        while ( (Fout += m) != Fout_end);
-    }
-
-}
 
 void ne10_fft_split_r2c_1d_float32 (ne10_fft_cpx_float32_t *dst,
                                     const ne10_fft_cpx_float32_t *src,
@@ -560,14 +1099,13 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                 ne10_int32_t nfft,
                                 ne10_int32_t inverse_fft)
 {
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_float32 (fout, fin, 1, &factors[2]);
 
     if (inverse_fft)
-        ne10_mixed_radix_butterfly_inverse_float32_c (fout, factors, twiddles);
+        ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, factors, twiddles);
     else
-        ne10_mixed_radix_butterfly_float32_c (fout, factors, twiddles);
+        ne10_mixed_radix_butterfly_float32_c (fout, fin, factors, twiddles);
 }
+
 /**
  * @}
  */ //end of C2C_FFT_IFFT group

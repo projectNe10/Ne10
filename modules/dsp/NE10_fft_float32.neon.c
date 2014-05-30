@@ -136,10 +136,10 @@ static inline void ne10_fft8_forward_float32 (ne10_fft_cpx_float32_t * Fout,
     Fout[6].r = t0_r - t3_i;
     Fout[6].i = t0_i + t3_r;
 
-    t4_r =  (s3_r + s3_i) * TW_81;
-    t4_i = -(s3_r - s3_i) * TW_81;
-    t5_r =  (s7_r - s7_i) * TW_81;
-    t5_i =  (s7_r + s7_i) * TW_81;
+    t4_r = (s3_r + s3_i) * TW_81;
+    t4_i = - (s3_r - s3_i) * TW_81;
+    t5_r = (s7_r - s7_i) * TW_81;
+    t5_i = (s7_r + s7_i) * TW_81;
 
     t0_r = s1_r - s5_i;
     t0_i = s1_i + s5_r;
@@ -205,7 +205,7 @@ static inline void ne10_fft8_backward_float32 (ne10_fft_cpx_float32_t * Fout,
     t4_r = (s3_r - s3_i) * TW_81;
     t4_i = (s3_r + s3_i) * TW_81;
     t5_r = (s7_r + s7_i) * TW_81;
-    t5_i = -(s7_r - s7_i) * TW_81;
+    t5_i = - (s7_r - s7_i) * TW_81;
 
     t0_r = s1_r + s5_i;
     t0_i = s1_i - s5_r;
@@ -224,404 +224,6 @@ static inline void ne10_fft8_backward_float32 (ne10_fft_cpx_float32_t * Fout,
     Fout[7].r = t0_r + t3_i;
     Fout[7].i = t0_i - t3_r;
 }
-
-static inline ne10_data_bitreversal_butterfly4_forward_float32 (ne10_fft_cpx_float32_t * out,
-        ne10_fft_cpx_float32_t * in,
-        ne10_int32_t fstride,
-        ne10_int32_t stride1)
-{
-    ne10_float32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i;
-    t2_r = in[0].r - in[fstride * 2].r;
-    t2_i = in[0].i - in[fstride * 2].i;
-    t3_r = in[0].r + in[fstride * 2].r;
-    t3_i = in[0].i + in[fstride * 2].i;
-    t0_r = in[fstride].r + in[fstride * 3].r;
-    t0_i = in[fstride].i + in[fstride * 3].i;
-    t1_r = in[fstride].r - in[fstride * 3].r;
-    t1_i = in[fstride].i - in[fstride * 3].i;
-    out[2].r = t3_r - t0_r;
-    out[2].i = t3_i - t0_i;
-    out[0].r = t3_r + t0_r;
-    out[0].i = t3_i + t0_i;
-    out[1].r = t2_r + t1_i;
-    out[1].i = t2_i - t1_r;
-    out[3].r = t2_r - t1_i;
-    out[3].i = t2_i + t1_r;
-}
-
-static inline ne10_data_bitreversal_butterfly4_backward_float32 (ne10_fft_cpx_float32_t * out,
-        ne10_fft_cpx_float32_t * in,
-        ne10_int32_t fstride,
-        ne10_int32_t stride1)
-{
-    ne10_float32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i;
-    t2_r = in[0].r - in[fstride * 2].r;
-    t2_i = in[0].i - in[fstride * 2].i;
-    t3_r = in[0].r + in[fstride * 2].r;
-    t3_i = in[0].i + in[fstride * 2].i;
-    t0_r = in[fstride].r + in[fstride * 3].r;
-    t0_i = in[fstride].i + in[fstride * 3].i;
-    t1_r = in[fstride].r - in[fstride * 3].r;
-    t1_i = in[fstride].i - in[fstride * 3].i;
-    out[2].r = t3_r - t0_r;
-    out[2].i = t3_i - t0_i;
-    out[0].r = t3_r + t0_r;
-    out[0].i = t3_i + t0_i;
-    out[1].r = t2_r - t1_i;
-    out[1].i = t2_i + t1_r;
-    out[3].r = t2_r + t1_i;
-    out[3].i = t2_i - t1_r;
-}
-
-#define  ne10_data_bitreversal64_butterfly4_float32(inverse) \
-static void ne10_data_bitreversal64_butterfly4_##inverse##_float32 (ne10_fft_cpx_float32_t * Fout, \
-        ne10_fft_cpx_float32_t * Fin) \
-{ \
-    ne10_int32_t i, p; \
-    ne10_int32_t fstride; \
-    ne10_int32_t stride1; \
-    ne10_int32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i; \
-    ne10_fft_cpx_float32_t * F; \
-    ne10_fft_cpx_float32_t * in; \
-    fstride = 16; \
-    F = Fout; \
-    in = Fin; \
-    stride1 = fstride >> 2; \
-    for (i = 0; i < 4; i++) \
-    { \
-        in = &Fin[i]; \
-        for (p = 0; p < 4; p++) \
-        { \
-            ne10_data_bitreversal_butterfly4_##inverse##_float32 (F, in, fstride, stride1); \
-            in += stride1; \
-            F += 4; \
-        } \
-    } \
-}
-
-#define  ne10_data_bitreversal256_butterfly4_float32(inverse) \
-static void ne10_data_bitreversal256_butterfly4_##inverse##_float32 (ne10_fft_cpx_float32_t * Fout, \
-        ne10_fft_cpx_float32_t * Fin) \
-{ \
-    ne10_int32_t i, j, p; \
-    ne10_int32_t fstride; \
-    ne10_int32_t stride1; \
-    ne10_int32_t stride2; \
-    ne10_int32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i; \
-    ne10_fft_cpx_float32_t * F; \
-    ne10_fft_cpx_float32_t * in; \
-    fstride = 64; \
-    F = Fout; \
-    in = Fin; \
-    stride1 = fstride >> 2; \
-    stride2 = stride1 >> 2; \
-    for (j = 0; j < 4; j++) \
-    { \
-        for (i = 0; i < 4; i++) \
-        { \
-            in = &Fin[j + i * stride2]; \
-            for (p = 0; p < 4; p++) \
-            { \
-                ne10_data_bitreversal_butterfly4_##inverse##_float32 (F, in, fstride, stride1); \
-                in += stride1; \
-                F += 4; \
-            } \
-        } \
-    } \
-}
-
-#define  ne10_data_bitreversal1024_butterfly4_float32(inverse) \
-static void ne10_data_bitreversal1024_butterfly4_##inverse##_float32 (ne10_fft_cpx_float32_t * Fout, \
-        ne10_fft_cpx_float32_t * Fin) \
-{ \
-    ne10_int32_t i, j, k, p; \
-    ne10_int32_t fstride; \
-    ne10_int32_t stride1; \
-    ne10_int32_t stride2; \
-    ne10_int32_t stride3; \
-    ne10_int32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i; \
-    ne10_fft_cpx_float32_t * F; \
-    ne10_fft_cpx_float32_t * in; \
-    fstride = 256; \
-    F = Fout; \
-    in = Fin; \
-    stride1 = fstride >> 2; \
-    stride2 = stride1 >> 2; \
-    stride3 = stride2 >> 2; \
-    for (k = 0; k < 4; k++) \
-    { \
-        for (j = 0; j < 4; j++) \
-        { \
-            for (i = 0; i < 4; i++) \
-            { \
-                in = &Fin[k + j * stride3 + i * stride2]; \
-                for (p = 0; p < 4; p++) \
-                { \
-                    ne10_data_bitreversal_butterfly4_##inverse##_float32 (F, in, fstride, stride1); \
-                    in += stride1; \
-                    F += 4; \
-                } \
-            } \
-        } \
-    } \
-}
-
-#define  ne10_data_bitreversal4096_butterfly4_float32(inverse) \
-static void ne10_data_bitreversal4096_butterfly4_##inverse##_float32 (ne10_fft_cpx_float32_t * Fout, \
-        ne10_fft_cpx_float32_t * Fin) \
-{ \
-    ne10_int32_t i, j, k, l, p; \
-    ne10_int32_t fstride; \
-    ne10_int32_t stride1; \
-    ne10_int32_t stride2; \
-    ne10_int32_t stride3; \
-    ne10_int32_t stride4; \
-    ne10_int32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i; \
-    ne10_fft_cpx_float32_t * F; \
-    ne10_fft_cpx_float32_t * in; \
-    fstride = 1024; \
-    F = Fout; \
-    in = Fin; \
-    stride1 = fstride >> 2; \
-    stride2 = stride1 >> 2; \
-    stride3 = stride2 >> 2; \
-    stride4 = stride3 >> 2; \
-    for (l = 0; l < 4; l++) \
-    { \
-        for (k = 0; k < 4; k++) \
-        { \
-            for (j = 0; j < 4; j++) \
-            { \
-                for (i = 0; i < 4; i++) \
-                { \
-                    in = &Fin[l + k*stride4 + j * stride3 + i * stride2]; \
-                    for (p = 0; p < 4; p++) \
-                    { \
-                        ne10_data_bitreversal_butterfly4_##inverse##_float32 (F, in, fstride, stride1); \
-                        in += stride1; \
-                        F += 4; \
-                    } \
-                } \
-            } \
-        } \
-    } \
-}
-
-#define  ne10_butterfly_length_even_power2_float32_neon(inverse) \
-static void ne10_butterfly_##inverse##_length_even_power2_float32_neon (ne10_fft_cpx_float32_t * Fout, \
-        ne10_fft_cpx_float32_t * Fin, \
-        ne10_int32_t * factors, \
-        ne10_fft_cpx_float32_t * twiddles) \
-{ \
-    ne10_int32_t fstride = factors[1]; \
-    if (fstride == 16) \
-        ne10_data_bitreversal64_butterfly4_##inverse##_float32 (Fout, Fin); \
-    else if (fstride == 64) \
-        ne10_data_bitreversal256_butterfly4_##inverse##_float32 (Fout, Fin); \
-    else if (fstride == 256) \
-        ne10_data_bitreversal1024_butterfly4_##inverse##_float32 (Fout, Fin); \
-    else if (fstride == 1024) \
-        ne10_data_bitreversal4096_butterfly4_##inverse##_float32 (Fout, Fin); \
-    ne10_radix4_butterfly_##inverse##_float32_neon (Fout, factors, twiddles);\
-}
-
-ne10_data_bitreversal64_butterfly4_float32 (forward)
-ne10_data_bitreversal64_butterfly4_float32 (backward)
-ne10_data_bitreversal256_butterfly4_float32 (forward)
-ne10_data_bitreversal256_butterfly4_float32 (backward)
-ne10_data_bitreversal1024_butterfly4_float32 (forward)
-ne10_data_bitreversal1024_butterfly4_float32 (backward)
-ne10_data_bitreversal4096_butterfly4_float32 (forward)
-ne10_data_bitreversal4096_butterfly4_float32 (backward)
-
-ne10_butterfly_length_even_power2_float32_neon (forward)
-ne10_butterfly_length_even_power2_float32_neon (backward)
-
-static inline ne10_data_bitreversal_butterfly2_float32_neon (ne10_fft_cpx_float32_t * out,
-        ne10_fft_cpx_float32_t * in,
-        ne10_int32_t fstride,
-        ne10_int32_t stride1)
-{
-    float32x2_t d_in0_0, d_in0_1;
-    float32x2_t d_in1_0, d_in1_1;
-    float32x2_t d_in2_0, d_in2_1;
-    float32x2_t d_in3_0, d_in3_1;
-    float32x4_t q_in01_0, q_in01_1, q_in23_0, q_in23_1;
-    float32x4_t q_out01_0, q_out01_1, q_out23_0, q_out23_1;
-    /* load loop */
-    d_in0_0 = vld1_f32 ( (float32_t*) (&in[0]));
-    d_in0_1 = vld1_f32 ( (float32_t*) (&in[fstride]));
-    d_in1_0 = vld1_f32 ( (float32_t*) (&in[stride1]));
-    d_in1_1 = vld1_f32 ( (float32_t*) (&in[stride1 + fstride]));
-    d_in2_0 = vld1_f32 ( (float32_t*) (&in[stride1 * 2]));
-    d_in2_1 = vld1_f32 ( (float32_t*) (&in[stride1 * 2 + fstride]));
-    d_in3_0 = vld1_f32 ( (float32_t*) (&in[stride1 * 3]));
-    d_in3_1 = vld1_f32 ( (float32_t*) (&in[stride1 * 3 + fstride]));
-    /* calculate loop */
-    q_in01_0 = vcombine_f32 (d_in0_0, d_in1_0);
-    q_in01_1 = vcombine_f32 (d_in0_1, d_in1_1);
-    q_in23_0 = vcombine_f32 (d_in2_0, d_in3_0);
-    q_in23_1 = vcombine_f32 (d_in2_1, d_in3_1);
-    q_out01_0 = vaddq_f32 (q_in01_0, q_in01_1);
-    q_out01_1 = vsubq_f32 (q_in01_0, q_in01_1);
-    q_out23_0 = vaddq_f32 (q_in23_0, q_in23_1);
-    q_out23_1 = vsubq_f32 (q_in23_0, q_in23_1);
-    /* store loop */
-    vst1q_f32 ( (float32_t*) (&out[0]), vcombine_f32 (vget_low_f32 (q_out01_0), vget_low_f32 (q_out01_1)));
-    vst1q_f32 ( (float32_t*) (&out[2]), vcombine_f32 (vget_high_f32 (q_out01_0), vget_high_f32 (q_out01_1)));
-    vst1q_f32 ( (float32_t*) (&out[4]), vcombine_f32 (vget_low_f32 (q_out23_0), vget_low_f32 (q_out23_1)));
-    vst1q_f32 ( (float32_t*) (&out[6]), vcombine_f32 (vget_high_f32 (q_out23_0), vget_high_f32 (q_out23_1)));
-}
-
-static void ne10_data_bitreversal32_float32_neon (ne10_fft_cpx_float32_t * Fout,
-        ne10_fft_cpx_float32_t * Fin)
-{
-    ne10_int32_t i;
-    ne10_int32_t fstride;
-
-    ne10_fft_cpx_float32_t * F;
-    ne10_fft_cpx_float32_t * in;
-    ne10_int32_t stride1;
-    ne10_int32_t stride2;
-
-    // get the input, resort, calculate the first stage
-    fstride = 16;
-
-    F = Fout;
-    in = Fin;
-    stride1 = fstride >> 2;
-    stride2 = stride1 >> 2;
-    for (i = 0; i < 4; i++)
-    {
-        ne10_data_bitreversal_butterfly2_float32_neon (F, in, fstride, stride1);
-        F += 8;
-        in += stride2;
-    }
-}
-
-static void ne10_data_bitreversal128_float32_neon (ne10_fft_cpx_float32_t * Fout,
-        ne10_fft_cpx_float32_t * Fin)
-{
-    ne10_int32_t i, j;
-    ne10_int32_t fstride;
-    ne10_int32_t stride1;
-    ne10_int32_t stride2;
-
-    ne10_fft_cpx_float32_t * F;
-    ne10_fft_cpx_float32_t * in;
-
-    // get the input, resort, calculate the first stage
-    fstride = 64;
-    F = Fout;
-    stride1 = fstride >> 2;
-    stride2 = stride1 >> 2;
-    for (j = 0; j < 4; j++)
-    {
-        in = &Fin[j];
-        for (i = 0; i < 4; i++)
-        {
-            ne10_data_bitreversal_butterfly2_float32_neon (F, in, fstride, stride1);
-            F += 8;
-            in += stride2;
-        }
-    }
-}
-
-
-static void ne10_data_bitreversal512_float32_neon (ne10_fft_cpx_float32_t * Fout,
-        ne10_fft_cpx_float32_t * Fin)
-{
-    ne10_int32_t i, j, k;
-    ne10_int32_t fstride;
-    ne10_int32_t stride1;
-    ne10_int32_t stride2;
-    ne10_int32_t stride3;
-
-    ne10_fft_cpx_float32_t * F;
-    ne10_fft_cpx_float32_t * in;
-
-    // get the input, resort, calculate the first stage
-    fstride = 256;
-
-    F = Fout;
-    stride1 = fstride >> 2;
-    stride2 = stride1 >> 2;
-    stride3 = stride2 >> 2;
-    for (k = 0; k < 4; k++)
-    {
-        for (j = 0; j < 4; j++)
-        {
-            in = &Fin[k + j * stride3];
-            for (i = 0; i < 4; i++)
-            {
-                ne10_data_bitreversal_butterfly2_float32_neon (F, in, fstride, stride1);
-                F += 8;
-                in += stride2;
-            }
-        }
-    }
-}
-static void ne10_data_bitreversal2048_float32_neon (ne10_fft_cpx_float32_t * Fout,
-        ne10_fft_cpx_float32_t * Fin)
-{
-    ne10_int32_t i, j, k, l;
-    ne10_int32_t fstride;
-    ne10_int32_t stride1;
-    ne10_int32_t stride2;
-    ne10_int32_t stride3;
-    ne10_int32_t stride4;
-
-    ne10_fft_cpx_float32_t * F;
-    ne10_fft_cpx_float32_t * in;
-
-    // get the input, resort, calculate the first stage
-    fstride = 1024;
-
-    F = Fout;
-    stride1 = fstride >> 2;
-    stride2 = stride1 >> 2;
-    stride3 = stride2 >> 2;
-    stride4 = stride3 >> 2;
-    for (l = 0; l < 4; l++)
-    {
-        for (k = 0; k < 4; k++)
-        {
-            for (j = 0; j < 4; j++)
-            {
-                in = &Fin[l + k * stride4 + j * stride3];
-                for (i = 0; i < 4; i++)
-                {
-                    ne10_data_bitreversal_butterfly2_float32_neon (F, in, fstride, stride1);
-                    F += 8;
-                    in += stride2;
-                }
-            }
-        }
-    }
-}
-
-
-#define  ne10_butterfly_length_odd_power2_float32_neon(inverse) \
-static void ne10_butterfly_##inverse##_length_odd_power2_float32_neon (ne10_fft_cpx_float32_t * Fout, \
-        ne10_fft_cpx_float32_t * Fin, \
-        ne10_int32_t * factors, \
-        ne10_fft_cpx_float32_t * twiddles) \
-{ \
-    ne10_int32_t fstride = factors[1]; \
-    ne10_int32_t i; \
-    if (fstride == 16) \
-        ne10_data_bitreversal32_float32_neon (Fout, Fin); \
-    else if (fstride == 64) \
-        ne10_data_bitreversal128_float32_neon (Fout, Fin); \
-    else if (fstride == 256) \
-        ne10_data_bitreversal512_float32_neon (Fout, Fin); \
-    else if (fstride == 1024) \
-        ne10_data_bitreversal2048_float32_neon (Fout, Fin); \
-    ne10_radix2_butterfly_##inverse##_float32_neon (Fout, factors, twiddles); \
-}
-
-ne10_butterfly_length_odd_power2_float32_neon (forward)
-ne10_butterfly_length_odd_power2_float32_neon (backward)
 
 static void ne10_fft16_forward_float32_neon (ne10_fft_cpx_float32_t * Fout,
         ne10_fft_cpx_float32_t * Fin,
@@ -857,46 +459,6 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
     vst2q_f32 (p_dst3, q2_out_cdef);
 }
 
-static void ne10_mixed_radix_butterfly_forward_float32_neon (ne10_fft_cpx_float32_t * Fout,
-        ne10_int32_t * factors,
-        ne10_fft_cpx_float32_t * twiddles)
-{
-    ne10_int32_t stage_count;
-
-    // the first stage
-    stage_count = factors[0];
-    if (factors[2 * stage_count] == 2)
-    {
-        //radix 2/4, FFT length is 2^n (n is odd)
-        ne10_mixed_radix_butterfly_length_odd_power2_float32_neon (Fout, factors, twiddles);
-    }
-    else if (factors[2 * stage_count] == 4)
-    {
-        //radix 4, FFT length is 2^n (n is even)
-        ne10_mixed_radix_butterfly_length_even_power2_float32_neon (Fout, factors, twiddles);
-    }
-}
-
-static void ne10_mixed_radix_butterfly_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
-        ne10_int32_t * factors,
-        ne10_fft_cpx_float32_t * twiddles)
-{
-    ne10_int32_t stage_count;
-
-    stage_count = factors[0];
-    if (factors[2 * stage_count] == 2)
-    {
-        //radix 2/4, FFT length is 2^n (n is odd)
-        ne10_mixed_radix_butterfly_inverse_length_odd_power2_float32_neon (Fout, factors, twiddles);
-    }
-    else if (factors[2 * stage_count] == 4)
-    {
-        //radix 4, FFT length is 2^n (n is even)
-        ne10_mixed_radix_butterfly_inverse_length_even_power2_float32_neon (Fout, factors, twiddles);
-    }
-}
-
-
 void ne10_fft_split_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
         const ne10_fft_cpx_float32_t *src,
         ne10_fft_cpx_float32_t *twiddles,
@@ -1104,6 +666,7 @@ void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
  * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
  *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_float32.c
  */
+
 void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_fft_cpx_float32_t *fin,
                                    ne10_fft_cpx_float32_t *twiddles,
@@ -1124,21 +687,8 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
         case 16:
             ne10_fft16_backward_float32_neon (fout, fin, twiddles);
             break;
-        case 32:
-        case 128:
-        case 512:
-        case 2048:
-            ne10_butterfly_backward_length_odd_power2_float32_neon (fout, fin, factors, twiddles);
-            break;
-        case 64:
-        case 256:
-        case 1024:
-        case 4096:
-            ne10_butterfly_backward_length_even_power2_float32_neon (fout, fin, factors, twiddles);
-            break;
         default:
-            ne10_data_bitreversal_float32 (fout, fin, 1, &factors[2]);
-            ne10_mixed_radix_butterfly_backward_float32_neon (fout, factors, twiddles);
+            ne10_mixed_radix_fft_backward_float32_neon (fout, fin, factors, twiddles);
             break;
         }
     }
@@ -1155,21 +705,8 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
         case 16:
             ne10_fft16_forward_float32_neon (fout, fin, twiddles);
             break;
-        case 32:
-        case 128:
-        case 512:
-        case 2048:
-            ne10_butterfly_forward_length_odd_power2_float32_neon (fout, fin, factors, twiddles);
-            break;
-        case 64:
-        case 256:
-        case 1024:
-        case 4096:
-            ne10_butterfly_forward_length_even_power2_float32_neon (fout, fin, factors, twiddles);
-            break;
         default:
-            ne10_data_bitreversal_float32 (fout, fin, 1, &factors[2]);
-            ne10_mixed_radix_butterfly_forward_float32_neon (fout, factors, twiddles);
+            ne10_mixed_radix_fft_forward_float32_neon (fout, fin, factors, twiddles);
             break;
         }
     }

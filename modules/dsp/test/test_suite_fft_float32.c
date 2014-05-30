@@ -44,11 +44,11 @@
 ** ------------------------------------------------------------------- */
 
 /* Max FFT Length and double buffer for real and imag */
-#define TEST_LENGTH_SAMPLES (16384)
+#define TEST_LENGTH_SAMPLES (32768)
 #define MIN_LENGTH_SAMPLES_CPX (4)
 #define MIN_LENGTH_SAMPLES_REAL (MIN_LENGTH_SAMPLES_CPX*2)
 
-#define TEST_COUNT 250000
+#define TEST_COUNT 10000000
 
 /* ----------------------------------------------------------------------
 ** Test input data for F32
@@ -62,18 +62,26 @@ static ne10_float32_t testInput_f32[TEST_LENGTH_SAMPLES * 2];
 ** ------------------------------------------------------------------- */
 
 //input and output
-static ne10_float32_t * in = NULL;
 static ne10_float32_t * guarded_in_c = NULL;
 static ne10_float32_t * guarded_in_neon = NULL;
 static ne10_float32_t * in_c = NULL;
 static ne10_float32_t * in_neon = NULL;
+static ne10_float32_t * in_c2 = NULL;
+static ne10_float32_t * in_neon2 = NULL;
+static ne10_float32_t * guarded_in_c2 = NULL;
+static ne10_float32_t * guarded_in_neon2 = NULL;
 
 static ne10_float32_t * guarded_out_c = NULL;
 static ne10_float32_t * guarded_out_neon = NULL;
 static ne10_float32_t * out_c = NULL;
 static ne10_float32_t * out_neon = NULL;
+static ne10_float32_t * guarded_out_c2 = NULL;
+static ne10_float32_t * guarded_out_neon2 = NULL;
+static ne10_float32_t * out_c2 = NULL;
+static ne10_float32_t * out_neon2 = NULL;
 
 static ne10_float32_t snr = 0.0f;
+static ne10_float32_t snr2 = 0.0f;
 
 static ne10_int64_t time_c = 0;
 static ne10_int64_t time_neon = 0;
@@ -81,6 +89,8 @@ static ne10_int64_t time_overhead_c = 0;
 static ne10_int64_t time_overhead_neon = 0;
 static ne10_float32_t time_speedup = 0.0f;
 static ne10_float32_t time_savings = 0.0f;
+static ne10_int64_t time_c2 = 0;
+static ne10_int64_t time_neon2 = 0;
 
 void test_fft_c2c_1d_float32_conformance()
 {
@@ -190,7 +200,7 @@ void test_fft_c2c_1d_float32_performance()
         memcpy (in_c, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         cfg = ne10_fft_alloc_c2c_float32 (fftSize);
-        test_loop = TEST_COUNT/fftSize;
+        test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
         (
@@ -365,7 +375,7 @@ void test_fft_r2c_1d_float32_performance()
         memcpy (in_c, testInput_f32, fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, fftSize * sizeof (ne10_float32_t));
         cfg = ne10_fft_alloc_r2c_float32 (fftSize);
-        test_loop = TEST_COUNT/fftSize;
+        test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
         (
