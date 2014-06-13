@@ -53,26 +53,6 @@ extern "C" {
                                             ne10_int32_t nfft,
                                             ne10_int32_t inverse_fft);
 
-    extern void (*ne10_fft_c2c_1d_int32_unscaled) (ne10_fft_cpx_int32_t *fout,
-                                          ne10_fft_cpx_int32_t *fin,
-                                          ne10_fft_cpx_int32_t *twiddles,
-                                          ne10_int32_t *factors,
-                                          ne10_int32_t nfft,
-                                          ne10_int32_t inverse_fft);
-    extern void (*ne10_fft_c2c_1d_int32_scaled) (ne10_fft_cpx_int32_t *fout,
-                                          ne10_fft_cpx_int32_t *fin,
-                                          ne10_fft_cpx_int32_t *twiddles,
-                                          ne10_int32_t *factors,
-                                          ne10_int32_t nfft,
-                                          ne10_int32_t inverse_fft);
-
-    extern void (*ne10_fft_c2c_1d_int16_scaled) (ne10_fft_cpx_int16_t *fout,
-                                          ne10_fft_cpx_int16_t *fin,
-                                          ne10_fft_cpx_int16_t *twiddles,
-                                          ne10_int32_t *factors,
-                                          ne10_int32_t nfft,
-                                          ne10_int32_t inverse_fft);
-
     extern void (*ne10_fft_r2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
                                             ne10_float32_t *fin,
                                             ne10_fft_cpx_float32_t *twiddles,
@@ -87,44 +67,55 @@ extern "C" {
                                             ne10_int32_t *factors,
                                             ne10_int32_t nfft);
 
-    extern void (*ne10_fft_r2c_1d_int32_scaled) (ne10_fft_cpx_int32_t *fout,
+    extern void (*ne10_fft_c2c_1d_int32) (ne10_fft_cpx_int32_t *fout,
+                                          ne10_fft_cpx_int32_t *fin,
+                                          ne10_fft_cpx_int32_t *twiddles,
+                                          ne10_int32_t *factors,
+                                          ne10_int32_t nfft,
+                                          ne10_int32_t inverse_fft,
+                                          ne10_int32_t scaled_flag);
+
+    extern void (*ne10_fft_r2c_1d_int32) (ne10_fft_cpx_int32_t *fout,
                                           ne10_int32_t *fin,
                                           ne10_fft_cpx_int32_t *twiddles,
                                           ne10_fft_cpx_int32_t *super_twiddles,
                                           ne10_int32_t *factors,
-                                          ne10_int32_t nfft);
+                                          ne10_int32_t nfft,
+                                          ne10_int32_t scaled_flag);
 
-    extern void (*ne10_fft_c2r_1d_int32_scaled) (ne10_int32_t *fout,
+    extern void (*ne10_fft_c2r_1d_int32) (ne10_int32_t *fout,
                                           ne10_fft_cpx_int32_t *fin,
                                           ne10_fft_cpx_int32_t *twiddles,
                                           ne10_fft_cpx_int32_t *super_twiddles,
                                           ne10_int32_t *factors,
-                                          ne10_int32_t nfft);
+                                          ne10_int32_t nfft,
+                                          ne10_int32_t scaled_flag);
 
-    extern void (*ne10_fft_r2c_1d_int16_scaled) (ne10_fft_cpx_int16_t *fout,
+    extern void (*ne10_fft_c2c_1d_int16) (ne10_fft_cpx_int16_t *fout,
+                                          ne10_fft_cpx_int16_t *fin,
+                                          ne10_fft_cpx_int16_t *twiddles,
+                                          ne10_int32_t *factors,
+                                          ne10_int32_t nfft,
+                                          ne10_int32_t inverse_fft,
+                                          ne10_int32_t scaled_flag);
+
+    extern void (*ne10_fft_r2c_1d_int16) (ne10_fft_cpx_int16_t *fout,
                                           ne10_int16_t *fin,
                                           ne10_fft_cpx_int16_t *twiddles,
                                           ne10_fft_cpx_int16_t *super_twiddles,
                                           ne10_int32_t *factors,
-                                          ne10_int32_t nfft);
+                                          ne10_int32_t nfft,
+                                          ne10_int32_t scaled_flag);
 
-    extern void (*ne10_fft_c2r_1d_int16_scaled) (ne10_int16_t *fout,
+    extern void (*ne10_fft_c2r_1d_int16) (ne10_int16_t *fout,
                                           ne10_fft_cpx_int16_t *fin,
                                           ne10_fft_cpx_int16_t *twiddles,
                                           ne10_fft_cpx_int16_t *super_twiddles,
                                           ne10_int32_t *factors,
-                                          ne10_int32_t nfft);
+                                          ne10_int32_t nfft,
+                                          ne10_int32_t scaled_flag);
 
     /* init functions*/
-    extern ne10_result_t ne10_cfft_radix4_init_float (ne10_cfft_radix4_instance_f32_t * S,
-            ne10_uint16_t fftLen,
-            ne10_uint8_t ifftFlag);
-
-    extern ne10_result_t ne10_rfft_init_float (ne10_rfft_instance_f32_t * S,
-            ne10_cfft_radix4_instance_f32_t * S_CFFT,
-            ne10_uint32_t fftLen,
-            ne10_uint32_t ifftFlagR);
-
     extern ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft);
     extern ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32 (ne10_int32_t nfft);
     extern ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft);
@@ -141,26 +132,6 @@ extern "C" {
                                            ne10_int32_t nfft,
                                            ne10_int32_t inverse_fft);
 
-    extern void ne10_fft_c2c_1d_int32_unscaled_c (ne10_fft_cpx_int32_t *fout,
-                                         ne10_fft_cpx_int32_t *fin,
-                                         ne10_fft_cpx_int32_t *twiddles,
-                                         ne10_int32_t *factors,
-                                         ne10_int32_t nfft,
-                                         ne10_int32_t inverse_fft);
-    extern void ne10_fft_c2c_1d_int32_scaled_c (ne10_fft_cpx_int32_t *fout,
-                                         ne10_fft_cpx_int32_t *fin,
-                                         ne10_fft_cpx_int32_t *twiddles,
-                                         ne10_int32_t *factors,
-                                         ne10_int32_t nfft,
-                                         ne10_int32_t inverse_fft);
-
-    extern void ne10_fft_c2c_1d_int16_scaled_c (ne10_fft_cpx_int16_t *fout,
-                                         ne10_fft_cpx_int16_t *fin,
-                                         ne10_fft_cpx_int16_t *twiddles,
-                                         ne10_int32_t *factors,
-                                         ne10_int32_t nfft,
-                                         ne10_int32_t inverse_fft);
-
     extern void ne10_fft_r2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                            ne10_float32_t *fin,
                                            ne10_fft_cpx_float32_t *twiddles,
@@ -175,67 +146,62 @@ extern "C" {
                                            ne10_int32_t *factors,
                                            ne10_int32_t nfft);
 
-    extern void ne10_fft_r2c_1d_int32_scaled_c (ne10_fft_cpx_int32_t *fout,
+    extern void ne10_fft_c2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
+                                         ne10_fft_cpx_int32_t *fin,
+                                         ne10_fft_cpx_int32_t *twiddles,
+                                         ne10_int32_t *factors,
+                                         ne10_int32_t nfft,
+                                         ne10_int32_t inverse_fft,
+                                         ne10_int32_t scaled_flag);
+
+    extern void ne10_fft_r2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
                                          ne10_int32_t *fin,
                                          ne10_fft_cpx_int32_t *twiddles,
                                          ne10_fft_cpx_int32_t *super_twiddles,
                                          ne10_int32_t *factors,
-                                         ne10_int32_t nfft);
+                                         ne10_int32_t nfft,
+                                         ne10_int32_t scaled_flag);
 
-    extern void ne10_fft_c2r_1d_int32_scaled_c (ne10_int32_t *fout,
+    extern void ne10_fft_c2r_1d_int32_c (ne10_int32_t *fout,
                                          ne10_fft_cpx_int32_t *fin,
                                          ne10_fft_cpx_int32_t *twiddles,
                                          ne10_fft_cpx_int32_t *super_twiddles,
                                          ne10_int32_t *factors,
-                                         ne10_int32_t nfft);
+                                         ne10_int32_t nfft,
+                                         ne10_int32_t scaled_flag);
 
-    extern void ne10_fft_r2c_1d_int16_scaled_c (ne10_fft_cpx_int16_t *fout,
+    extern void ne10_fft_c2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
+                                         ne10_fft_cpx_int16_t *fin,
+                                         ne10_fft_cpx_int16_t *twiddles,
+                                         ne10_int32_t *factors,
+                                         ne10_int32_t nfft,
+                                         ne10_int32_t inverse_fft,
+                                         ne10_int32_t scaled_flag);
+
+    extern void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
                                          ne10_int16_t *fin,
                                          ne10_fft_cpx_int16_t *twiddles,
                                          ne10_fft_cpx_int16_t *super_twiddles,
                                          ne10_int32_t *factors,
-                                         ne10_int32_t nfft);
+                                         ne10_int32_t nfft,
+                                         ne10_int32_t scaled_flag);
 
-    extern void ne10_fft_c2r_1d_int16_scaled_c (ne10_int16_t *fout,
+    extern void ne10_fft_c2r_1d_int16_c (ne10_int16_t *fout,
                                          ne10_fft_cpx_int16_t *fin,
                                          ne10_fft_cpx_int16_t *twiddles,
                                          ne10_fft_cpx_int16_t *super_twiddles,
                                          ne10_int32_t *factors,
-                                         ne10_int32_t nfft);
+                                         ne10_int32_t nfft,
+                                         ne10_int32_t scaled_flag);
 
 
     /* NEON version*/
-    extern void ne10_rfft_float_neon (const ne10_rfft_instance_f32_t * S,
-                                      ne10_float32_t * pSrc,
-                                      ne10_float32_t * pDst,
-                                      ne10_float32_t * pTemp);
-
     extern void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
             ne10_fft_cpx_float32_t *fin,
             ne10_fft_cpx_float32_t *twiddles,
             ne10_int32_t *factors,
             ne10_int32_t nfft,
             ne10_int32_t inverse_fft);
-
-    extern void ne10_fft_c2c_1d_int32_unscaled_neon (ne10_fft_cpx_int32_t *fout,
-                                            ne10_fft_cpx_int32_t *fin,
-                                            ne10_fft_cpx_int32_t *twiddles,
-                                            ne10_int32_t *factors,
-                                            ne10_int32_t nfft,
-                                            ne10_int32_t inverse_fft);
-    extern void ne10_fft_c2c_1d_int32_scaled_neon (ne10_fft_cpx_int32_t *fout,
-                                            ne10_fft_cpx_int32_t *fin,
-                                            ne10_fft_cpx_int32_t *twiddles,
-                                            ne10_int32_t *factors,
-                                            ne10_int32_t nfft,
-                                            ne10_int32_t inverse_fft);
-
-    extern void ne10_fft_c2c_1d_int16_scaled_neon (ne10_fft_cpx_int16_t *fout,
-                                            ne10_fft_cpx_int16_t *fin,
-                                            ne10_fft_cpx_int16_t *twiddles,
-                                            ne10_int32_t *factors,
-                                            ne10_int32_t nfft,
-                                            ne10_int32_t inverse_fft);
 
     extern void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
             ne10_float32_t *fin,
@@ -251,33 +217,53 @@ extern "C" {
             ne10_int32_t *factors,
             ne10_int32_t nfft);
 
-    extern void ne10_fft_r2c_1d_int32_scaled_neon (ne10_fft_cpx_int32_t *fout,
+    extern void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
+                                            ne10_fft_cpx_int32_t *fin,
+                                            ne10_fft_cpx_int32_t *twiddles,
+                                            ne10_int32_t *factors,
+                                            ne10_int32_t nfft,
+                                            ne10_int32_t inverse_fft,
+                                            ne10_int32_t scaled_flag);
+
+    extern void ne10_fft_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
                                             ne10_int32_t *fin,
                                             ne10_fft_cpx_int32_t *twiddles,
                                             ne10_fft_cpx_int32_t *super_twiddles,
                                             ne10_int32_t *factors,
-                                            ne10_int32_t nfft);
+                                            ne10_int32_t nfft,
+                                            ne10_int32_t scaled_flag);
 
-    extern void ne10_fft_c2r_1d_int32_scaled_neon (ne10_int32_t *fout,
+    extern void ne10_fft_c2r_1d_int32_neon (ne10_int32_t *fout,
                                             ne10_fft_cpx_int32_t *fin,
                                             ne10_fft_cpx_int32_t *twiddles,
                                             ne10_fft_cpx_int32_t *super_twiddles,
                                             ne10_int32_t *factors,
-                                            ne10_int32_t nfft);
+                                            ne10_int32_t nfft,
+                                            ne10_int32_t scaled_flag);
 
-    extern void ne10_fft_r2c_1d_int16_scaled_neon (ne10_fft_cpx_int16_t *fout,
+    extern void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
+                                            ne10_fft_cpx_int16_t *fin,
+                                            ne10_fft_cpx_int16_t *twiddles,
+                                            ne10_int32_t *factors,
+                                            ne10_int32_t nfft,
+                                            ne10_int32_t inverse_fft,
+                                            ne10_int32_t scaled_flag);
+
+    extern void ne10_fft_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
                                             ne10_int16_t *fin,
                                             ne10_fft_cpx_int16_t *twiddles,
                                             ne10_fft_cpx_int16_t *super_twiddles,
                                             ne10_int32_t *factors,
-                                            ne10_int32_t nfft);
+                                            ne10_int32_t nfft,
+                                            ne10_int32_t scaled_flag);
 
-    extern void ne10_fft_c2r_1d_int16_scaled_neon (ne10_int16_t *fout,
+    extern void ne10_fft_c2r_1d_int16_neon (ne10_int16_t *fout,
                                             ne10_fft_cpx_int16_t *fin,
                                             ne10_fft_cpx_int16_t *twiddles,
                                             ne10_fft_cpx_int16_t *super_twiddles,
                                             ne10_int32_t *factors,
-                                            ne10_int32_t nfft);
+                                            ne10_int32_t nfft,
+                                            ne10_int32_t scaled_flag);
 
     /* fir functions*/
 
@@ -462,6 +448,18 @@ extern "C" {
             ne10_uint32_t blockSize) asm ("ne10_iir_lattice_float_neon");
     /** @} */ //end of IIR_Lattice group
 
+    extern void ne10_fft_c2c_1d_float32_c2 (ne10_fft_cpx_float32_t *fout,
+                                            ne10_fft_cpx_float32_t *fin,
+                                            ne10_fft_cpx_float32_t *twiddles,
+                                            ne10_int32_t *factors,
+                                            ne10_int32_t nfft,
+                                            ne10_int32_t inverse_fft);
+    extern void ne10_fft_c2c_1d_float32_neon2 (ne10_fft_cpx_float32_t *fout,
+            ne10_fft_cpx_float32_t *fin,
+            ne10_fft_cpx_float32_t *twiddles,
+            ne10_int32_t *factors,
+            ne10_int32_t nfft,
+            ne10_int32_t inverse_fft);
 #ifdef __cplusplus
 }
 #endif

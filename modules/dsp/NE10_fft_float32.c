@@ -875,10 +875,10 @@ static ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
 }
 
 
-void ne10_fft_split_r2c_1d_float32 (ne10_fft_cpx_float32_t *dst,
-                                    const ne10_fft_cpx_float32_t *src,
-                                    ne10_fft_cpx_float32_t *twiddles,
-                                    ne10_int32_t ncfft)
+static void ne10_fft_split_r2c_1d_float32 (ne10_fft_cpx_float32_t *dst,
+        const ne10_fft_cpx_float32_t *src,
+        ne10_fft_cpx_float32_t *twiddles,
+        ne10_int32_t ncfft)
 {
     ne10_int32_t k;
     ne10_fft_cpx_float32_t fpnk, fpk, f1k, f2k, tw, tdc;
@@ -912,10 +912,10 @@ void ne10_fft_split_r2c_1d_float32 (ne10_fft_cpx_float32_t *dst,
     }
 }
 
-void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
-                                    const ne10_fft_cpx_float32_t *src,
-                                    ne10_fft_cpx_float32_t *twiddles,
-                                    ne10_int32_t ncfft)
+static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
+        const ne10_fft_cpx_float32_t *src,
+        ne10_fft_cpx_float32_t *twiddles,
+        ne10_int32_t ncfft)
 {
 
     ne10_int32_t k;

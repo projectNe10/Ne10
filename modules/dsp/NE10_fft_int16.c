@@ -50,253 +50,877 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 
 static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
+        ne10_fft_cpx_int16_t   * Fin,
         ne10_int32_t * factors,
-        ne10_fft_cpx_int16_t * twiddles)
-
+        ne10_fft_cpx_int16_t * twiddles,
+        ne10_int32_t scaled_flag)
 {
-    ne10_int32_t i, j, mstride;
+    ne10_int32_t fstride, mstride, N;
+    ne10_int32_t fstride1;
+    ne10_int32_t f_count, m_count;
     ne10_int32_t stage_count;
-    ne10_int32_t fstride;
 
-    ne10_fft_cpx_int16_t tmp;
-    ne10_fft_cpx_int16_t scratch[6];
-    ne10_fft_cpx_int16_t *tw, *tw1, *tw2, *tw3;
-    ne10_fft_cpx_int16_t * F;
+    ne10_fft_cpx_int16_t   scratch_in[8];
+    ne10_fft_cpx_int16_t   scratch_out[8];
+    ne10_fft_cpx_int16_t   scratch[16];
+    ne10_fft_cpx_int16_t   scratch_tw[6];
+
+    ne10_fft_cpx_int16_t   *Fin1, *Fin2, *Fout1, *Fout2;
+    ne10_fft_cpx_int16_t   *Fout_ls = Fout;
+    ne10_fft_cpx_int16_t   *Ftmp;
+    ne10_fft_cpx_int16_t   *tw, *tw1, *tw2;
+    const ne10_int32_t TW_81 = 23169;
+    const ne10_int32_t TW_81N = -23169;
 
 
-    // the first stage
+
+    // init fstride, mstride, N
     stage_count = factors[0];
     fstride = factors[1];
-    if (factors[2 * stage_count] == 2) // length of FFT is 2^n (n is odd)
+    mstride = factors[ (stage_count << 1) - 1 ];
+    N = factors[ stage_count << 1 ]; // radix
+
+    // the first stage
+    Fin1 = Fin;
+    Fout1 = Fout;
+    if (N == 2)   // length of FFT is 2^n (n is odd)
     {
-        //fstride is nfft>>1
-        for (i = 0; i < fstride; i++)
+        // radix 8
+        N = fstride >> 1; // 1/4 of length of FFT
+        tw = twiddles;
+        fstride1 = fstride >> 2;
+
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride1; f_count ++)
         {
-            NE10_F2I16_FIXDIV (Fout[2 * i], 2);
-            NE10_F2I16_FIXDIV (Fout[2 * i + 1], 2);
-            tmp.r = Fout[2 * i + 1].r;
-            tmp.i = Fout[2 * i + 1].i;
-            Fout[2 * i + 1].r = Fout[2 * i].r - tmp.r;
-            Fout[2 * i + 1].i = Fout[2 * i].i - tmp.i;
-            Fout[2 * i].r = Fout[2 * i].r + tmp.r;
-            Fout[2 * i].i = Fout[2 * i].i + tmp.i;
-        }
+            Fout1 = & Fout[ f_count * 8 ];
+            // load
+            if (scaled_flag == 1)
+            {
+                NE10_F2I16_FIXDIV (Fin1[0], 8);
+                NE10_F2I16_FIXDIV (Fin1[0 + fstride], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 + fstride], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 2], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 2 + fstride], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 3], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 3 + fstride], 8);
+            }
+            scratch_in[0].r = Fin1[0].r + Fin1[0 + fstride].r;
+            scratch_in[0].i = Fin1[0].i + Fin1[0 + fstride].i;
+            scratch_in[1].r = Fin1[0].r - Fin1[0 + fstride].r;
+            scratch_in[1].i = Fin1[0].i - Fin1[0 + fstride].i;
+            scratch_in[2].r = Fin1[fstride1].r + Fin1[fstride1 + fstride].r;
+            scratch_in[2].i = Fin1[fstride1].i + Fin1[fstride1 + fstride].i;
+            scratch_in[3].r = Fin1[fstride1].r - Fin1[fstride1 + fstride].r;
+            scratch_in[3].i = Fin1[fstride1].i - Fin1[fstride1 + fstride].i;
+            scratch_in[4].r = Fin1[fstride1 * 2].r + Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[4].i = Fin1[fstride1 * 2].i + Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[5].r = Fin1[fstride1 * 2].r - Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[5].i = Fin1[fstride1 * 2].i - Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[6].r = Fin1[fstride1 * 3].r + Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[6].i = Fin1[fstride1 * 3].i + Fin1[fstride1 * 3 + fstride].i;
+            scratch_in[7].r = Fin1[fstride1 * 3].r - Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[7].i = Fin1[fstride1 * 3].i - Fin1[fstride1 * 3 + fstride].i;
+
+            // radix 4 butterfly without twiddles
+            scratch[0] = scratch_in[0];
+            scratch[1] = scratch_in[1];
+
+            scratch[2] = scratch_in[2];
+            scratch[3].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[3].r + scratch_in[3].i) * TW_81) >> NE10_F2I16_SHIFT);
+            scratch[3].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[3].i - scratch_in[3].r) * TW_81) >> NE10_F2I16_SHIFT);
+
+            scratch[4] = scratch_in[4];
+            scratch[5].r = scratch_in[5].i;
+            scratch[5].i = -scratch_in[5].r;
+
+            scratch[6].r = scratch_in[6].r;
+            scratch[6].i = scratch_in[6].i;
+            scratch[7].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[7].r - scratch_in[7].i) * TW_81N) >> NE10_F2I16_SHIFT);
+            scratch[7].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[7].i + scratch_in[7].r) * TW_81N) >> NE10_F2I16_SHIFT);
+
+            // radix 2 butterfly
+            scratch[8].r = scratch[0].r + scratch[4].r;
+            scratch[8].i = scratch[0].i + scratch[4].i;
+            scratch[9].r = scratch[1].r + scratch[5].r;
+            scratch[9].i = scratch[1].i + scratch[5].i;
+
+            scratch[10].r = scratch[0].r - scratch[4].r;
+            scratch[10].i = scratch[0].i - scratch[4].i;
+            scratch[11].r = scratch[1].r - scratch[5].r;
+            scratch[11].i = scratch[1].i - scratch[5].i;
+
+            // radix 2 butterfly
+            scratch[12].r = scratch[2].r + scratch[6].r;
+            scratch[12].i = scratch[2].i + scratch[6].i;
+            scratch[13].r = scratch[3].r + scratch[7].r;
+            scratch[13].i = scratch[3].i + scratch[7].i;
+
+            scratch[14].r = scratch[2].r - scratch[6].r;
+            scratch[14].i = scratch[2].i - scratch[6].i;
+            scratch[15].r = scratch[3].r - scratch[7].r;
+            scratch[15].i = scratch[3].i - scratch[7].i;
+
+            // third result
+            scratch_out[4].r = scratch[8].r - scratch[12].r;
+            scratch_out[4].i = scratch[8].i - scratch[12].i;
+            scratch_out[5].r = scratch[9].r - scratch[13].r;
+            scratch_out[5].i = scratch[9].i - scratch[13].i;
+
+            // first result
+            scratch_out[0].r = scratch[8].r + scratch[12].r;
+            scratch_out[0].i = scratch[8].i + scratch[12].i;
+            scratch_out[1].r = scratch[9].r + scratch[13].r;
+            scratch_out[1].i = scratch[9].i + scratch[13].i;
+
+            // second result
+            scratch_out[2].r = scratch[10].r + scratch[14].i;
+            scratch_out[2].i = scratch[10].i - scratch[14].r;
+            scratch_out[3].r = scratch[11].r + scratch[15].i;
+            scratch_out[3].i = scratch[11].i - scratch[15].r;
+
+            // forth result
+            scratch_out[6].r = scratch[10].r - scratch[14].i;
+            scratch_out[6].i = scratch[10].i + scratch[14].r;
+            scratch_out[7].r = scratch[11].r - scratch[15].i;
+            scratch_out[7].i = scratch[11].i + scratch[15].r;
+
+            // store
+            Fout1[0] = scratch_out[0];
+            Fout1[1] = scratch_out[1];
+            Fout1[2] = scratch_out[2];
+            Fout1[3] = scratch_out[3];
+            Fout1[4] = scratch_out[4];
+            Fout1[5] = scratch_out[5];
+            Fout1[6] = scratch_out[6];
+            Fout1[7] = scratch_out[7];
+
+            Fin1 += 1;
+        } // f_count
+        tw += 6;
+        mstride <<= 2;
+        fstride >>= 4;
+        stage_count -= 2;
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
     }
-    else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
+    else if (N == 4)   // length of FFT is 2^n (n is even)
     {
         //fstride is nfft>>2
-        for (i = 0; i < fstride; i++)
+        for (f_count = fstride; f_count ; f_count --)
         {
-            NE10_F2I16_FIXDIV (Fout[4 * i], 4);
-            NE10_F2I16_FIXDIV (Fout[4 * i + 1], 4);
-            NE10_F2I16_FIXDIV (Fout[4 * i + 2], 4);
-            NE10_F2I16_FIXDIV (Fout[4 * i + 3], 4);
-            scratch[2].r = Fout[4 * i].r - Fout[4 * i + 2].r;
-            scratch[2].i = Fout[4 * i].i - Fout[4 * i + 2].i;
+            // load
+            scratch_in[0] = *Fin1;
+            Fin2 = Fin1 + fstride;
+            scratch_in[1] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[2] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[3] = *Fin2;
 
-            Fout[4 * i].r += Fout[4 * i + 2].r;
-            Fout[4 * i].i += Fout[4 * i + 2].i;
-
-            scratch[0].r = Fout[4 * i + 1].r + Fout[4 * i + 3].r;
-            scratch[0].i = Fout[4 * i + 1].i + Fout[4 * i + 3].i;
-
-            scratch[1].r = Fout[4 * i + 1].r - Fout[4 * i + 3].r;
-            scratch[1].i = Fout[4 * i + 1].i - Fout[4 * i + 3].i;
-            Fout[4 * i + 2].r = Fout[4 * i].r - scratch[0].r;
-            Fout[4 * i + 2].i = Fout[4 * i].i - scratch[0].i;
-
-            Fout[4 * i].r += scratch[0].r;
-            Fout[4 * i].i += scratch[0].i;
-
-            Fout[4 * i + 1].r = scratch[2].r + scratch[1].i;
-            Fout[4 * i + 1].i = scratch[2].i - scratch[1].r;
-            Fout[4 * i + 3].r = scratch[2].r - scratch[1].i;
-            Fout[4 * i + 3].i = scratch[2].i + scratch[1].r;
-        }
-    }
-    stage_count--;
-
-    // other stages
-    mstride = factors[2 * stage_count + 1];
-    tw = twiddles;
-    for (; stage_count > 0; stage_count--)
-    {
-        fstride = fstride >> 2;
-        for (i = 0; i < fstride; i++)
-        {
-            F = &Fout[i * mstride * 4];
-            tw1 = tw;
-            tw2 = tw + mstride;
-            tw3 = tw + mstride * 2;
-            for (j = 0; j < mstride; j++)
+            // radix 4 butterfly without twiddles
+            if (scaled_flag == 1)
             {
-                NE10_F2I16_FIXDIV (F[0], 4);
-                NE10_F2I16_FIXDIV (F[mstride], 4);
-                NE10_F2I16_FIXDIV (F[mstride * 2], 4);
-                NE10_F2I16_FIXDIV (F[mstride * 3], 4);
+                NE10_F2I16_FIXDIV (scratch_in[0], 4);
+                NE10_F2I16_FIXDIV (scratch_in[1], 4);
+                NE10_F2I16_FIXDIV (scratch_in[2], 4);
+                NE10_F2I16_FIXDIV (scratch_in[3], 4);
+            }
 
-                scratch[0].r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride].r * tw1->r - (NE10_F2I16_SAMPPROD) F[mstride].i * tw1->i);
-                scratch[0].i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride].r * tw1->i + (NE10_F2I16_SAMPPROD) F[mstride].i * tw1->r);
-                scratch[1].r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 2].r * tw2->r - (NE10_F2I16_SAMPPROD) F[mstride * 2].i * tw2->i);
-                scratch[1].i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 2].r * tw2->i + (NE10_F2I16_SAMPPROD) F[mstride * 2].i * tw2->r);
-                scratch[2].r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 3].r * tw3->r - (NE10_F2I16_SAMPPROD) F[mstride * 3].i * tw3->i);
-                scratch[2].i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 3].r * tw3->i + (NE10_F2I16_SAMPPROD) F[mstride * 3].i * tw3->r);
+            // radix 2 butterfly
+            scratch[0].r = scratch_in[0].r + scratch_in[2].r;
+            scratch[0].i = scratch_in[0].i + scratch_in[2].i;
 
-                scratch[5].r = F->r - scratch[1].r;
-                scratch[5].i = F->i - scratch[1].i;
-                F->r += scratch[1].r;
-                F->i += scratch[1].i;
+            scratch[1].r = scratch_in[0].r - scratch_in[2].r;
+            scratch[1].i = scratch_in[0].i - scratch_in[2].i;
 
-                scratch[3].r = scratch[0].r + scratch[2].r;
-                scratch[3].i = scratch[0].i + scratch[2].i;
-                scratch[4].r = scratch[0].r - scratch[2].r;
-                scratch[4].i = scratch[0].i - scratch[2].i;
+            // radix 2 butterfly
+            scratch[2].r = scratch_in[1].r + scratch_in[3].r;
+            scratch[2].i = scratch_in[1].i + scratch_in[3].i;
 
-                F[mstride * 2].r = F->r - scratch[3].r;
-                F[mstride * 2].i = F->i - scratch[3].i;
-                F->r += scratch[3].r;
-                F->i += scratch[3].i;
+            scratch[3].r = scratch_in[1].r - scratch_in[3].r;
+            scratch[3].i = scratch_in[1].i - scratch_in[3].i;
 
-                F[mstride].r = scratch[5].r + scratch[4].i;
-                F[mstride].i = scratch[5].i - scratch[4].r;
-                F[mstride * 3].r = scratch[5].r - scratch[4].i;
-                F[mstride * 3].i = scratch[5].i + scratch[4].r;
+            // third result
+            scratch_out[2].r = scratch[0].r - scratch[2].r;
+            scratch_out[2].i = scratch[0].i - scratch[2].i;
+
+            // first result
+            scratch_out[0].r = scratch[0].r + scratch[2].r;
+            scratch_out[0].i = scratch[0].i + scratch[2].i;
+
+            // second result
+            scratch_out[1].r = scratch[1].r + scratch[3].i;
+            scratch_out[1].i = scratch[1].i - scratch[3].r;
+
+            // forth result
+            scratch_out[3].r = scratch[1].r - scratch[3].i;
+            scratch_out[3].i = scratch[1].i + scratch[3].r;
+
+            // store
+            * Fout1 ++ = scratch_out[0];
+            * Fout1 ++ = scratch_out[1];
+            * Fout1 ++ = scratch_out[2];
+            * Fout1 ++ = scratch_out[3];
+
+            Fin1++;
+        } // f_count
+
+        N = fstride; // 1/4 of length of FFT
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+
+        // update address for other stages
+        stage_count--;
+        tw = twiddles;
+        fstride >>= 2;
+        // end of first stage
+    }
+
+
+    // others but the last one
+    for (; stage_count > 1 ; stage_count--)
+    {
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride; f_count ++)
+        {
+            Fout1 = & Fout[ f_count * mstride << 2 ];
+            tw1 = tw;
+            for (m_count = mstride; m_count ; m_count --)
+            {
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
+                if (scaled_flag == 1)
+                {
+                    NE10_F2I16_FIXDIV (scratch_in[0], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[1], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[2], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[3], 4);
+                }
+
+                // radix 4 butterfly with twiddles
+
+                scratch[0] = scratch_in[0];
+                scratch[1].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+                scratch[1].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+
+                scratch[2].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+                scratch[2].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+
+                scratch[3].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+                scratch[3].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r + scratch[7].i;
+                scratch_out[1].i = scratch[5].i - scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r - scratch[7].i;
+                scratch_out[3].i = scratch[5].i + scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + mstride;
+                *Fout2 = scratch_out[1];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[2];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[3];
 
                 tw1++;
-                tw2++;
-                tw3++;
-                F++;
-            }
-        }
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
         tw += mstride * 3;
         mstride <<= 2;
-    }
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+        fstride >>= 2;
+    } // stage_count
 
+    // the last one
+    if (stage_count)
+    {
+        Fin1 = Fin;
+        // if stage count is even, output to the input array
+        Fout1 = Fout_ls;
+
+        for (f_count = 0; f_count < fstride; f_count ++)
+        {
+            tw1 = tw;
+            for (m_count = mstride; m_count ; m_count --)
+            {
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
+                if (scaled_flag == 1)
+                {
+                    NE10_F2I16_FIXDIV (scratch_in[0], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[1], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[2], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[3], 4);
+                }
+
+                // radix 4 butterfly with twiddles
+
+                scratch[0] = scratch_in[0];
+                scratch[1].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+                scratch[1].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+
+                scratch[2].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+                scratch[2].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+
+                scratch[3].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+                scratch[3].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r + scratch[7].i;
+                scratch_out[1].i = scratch[5].i - scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r - scratch[7].i;
+                scratch_out[3].i = scratch[5].i + scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + N;
+                *Fout2 = scratch_out[1];
+                Fout2 += N;
+                *Fout2 = scratch_out[2];
+                Fout2 += N;
+                *Fout2 = scratch_out[3];
+
+                tw1 ++;
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
+    } // last stage
 }
 
 static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * Fout,
+        ne10_fft_cpx_int16_t   * Fin,
         ne10_int32_t * factors,
-        ne10_fft_cpx_int16_t * twiddles)
-
+        ne10_fft_cpx_int16_t * twiddles,
+        ne10_int32_t scaled_flag)
 {
-    ne10_int32_t i, j, mstride;
+    ne10_int32_t fstride, mstride, N;
+    ne10_int32_t fstride1;
+    ne10_int32_t f_count, m_count;
     ne10_int32_t stage_count;
-    ne10_int32_t fstride;
 
-    ne10_fft_cpx_int16_t tmp;
-    ne10_fft_cpx_int16_t scratch[6];
-    ne10_fft_cpx_int16_t *tw, *tw1, *tw2, *tw3;
-    ne10_fft_cpx_int16_t * F;
+    ne10_fft_cpx_int16_t   scratch_in[8];
+    ne10_fft_cpx_int16_t   scratch_out[8];
+    ne10_fft_cpx_int16_t   scratch[16];
+    ne10_fft_cpx_int16_t   scratch_tw[6];
 
+    ne10_fft_cpx_int16_t   *Fin1, *Fin2, *Fout1, *Fout2;
+    ne10_fft_cpx_int16_t   *Fout_ls = Fout;
+    ne10_fft_cpx_int16_t   *Ftmp;
+    ne10_fft_cpx_int16_t   *tw, *tw1, *tw2;
+    const ne10_int32_t TW_81 = 23169;
+    const ne10_int32_t TW_81N = -23169;
 
-    // the first stage
+    // init fstride, mstride, N
     stage_count = factors[0];
     fstride = factors[1];
-    if (factors[2 * stage_count] == 2) // length of FFT is 2^n (n is odd)
+    mstride = factors[ (stage_count << 1) - 1 ];
+    N = factors[ stage_count << 1 ]; // radix
+
+    // the first stage
+    Fin1 = Fin;
+    Fout1 = Fout;
+    if (N == 2)   // length of FFT is 2^n (n is odd)
     {
-        //fstride is nfft>>1;
-        for (i = 0; i < fstride; i++)
+        // radix 8
+        N = fstride >> 1; // 1/4 of length of FFT
+        tw = twiddles;
+        fstride1 = fstride >> 2;
+
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride1; f_count ++)
         {
-            NE10_F2I16_FIXDIV (Fout[2 * i], 2);
-            NE10_F2I16_FIXDIV (Fout[2 * i + 1], 2);
-            tmp.r = Fout[2 * i + 1].r;
-            tmp.i = Fout[2 * i + 1].i;
-            Fout[2 * i + 1].r = Fout[2 * i].r - tmp.r;
-            Fout[2 * i + 1].i = Fout[2 * i].i - tmp.i;
-            Fout[2 * i].r = Fout[2 * i].r + tmp.r;
-            Fout[2 * i].i = Fout[2 * i].i + tmp.i;
-        }
+            Fout1 = & Fout[ f_count * 8 ];
+            // load
+            if (scaled_flag == 1)
+            {
+                NE10_F2I16_FIXDIV (Fin1[0], 8);
+                NE10_F2I16_FIXDIV (Fin1[0 + fstride], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 + fstride], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 2], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 2 + fstride], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 3], 8);
+                NE10_F2I16_FIXDIV (Fin1[fstride1 * 3 + fstride], 8);
+            }
+
+            scratch_in[0].r = Fin1[0].r + Fin1[0 + fstride].r;
+            scratch_in[0].i = Fin1[0].i + Fin1[0 + fstride].i;
+            scratch_in[1].r = Fin1[0].r - Fin1[0 + fstride].r;
+            scratch_in[1].i = Fin1[0].i - Fin1[0 + fstride].i;
+            scratch_in[2].r = Fin1[fstride1].r + Fin1[fstride1 + fstride].r;
+            scratch_in[2].i = Fin1[fstride1].i + Fin1[fstride1 + fstride].i;
+            scratch_in[3].r = Fin1[fstride1].r - Fin1[fstride1 + fstride].r;
+            scratch_in[3].i = Fin1[fstride1].i - Fin1[fstride1 + fstride].i;
+            scratch_in[4].r = Fin1[fstride1 * 2].r + Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[4].i = Fin1[fstride1 * 2].i + Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[5].r = Fin1[fstride1 * 2].r - Fin1[fstride1 * 2 + fstride].r;
+            scratch_in[5].i = Fin1[fstride1 * 2].i - Fin1[fstride1 * 2 + fstride].i;
+            scratch_in[6].r = Fin1[fstride1 * 3].r + Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[6].i = Fin1[fstride1 * 3].i + Fin1[fstride1 * 3 + fstride].i;
+            scratch_in[7].r = Fin1[fstride1 * 3].r - Fin1[fstride1 * 3 + fstride].r;
+            scratch_in[7].i = Fin1[fstride1 * 3].i - Fin1[fstride1 * 3 + fstride].i;
+
+            // radix 4 butterfly with twiddles
+
+            scratch[0] = scratch_in[0];
+            scratch[1] = scratch_in[1];
+
+            scratch[2] = scratch_in[2];
+            scratch[3].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[3].r - scratch_in[3].i) * TW_81) >> NE10_F2I16_SHIFT);
+            scratch[3].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[3].i + scratch_in[3].r) * TW_81) >> NE10_F2I16_SHIFT);
+
+            scratch[4] = scratch_in[4];
+            scratch[5].r = -scratch_in[5].i;
+            scratch[5].i = scratch_in[5].r;
+
+            scratch[6].r = scratch_in[6].r;
+            scratch[6].i = scratch_in[6].i;
+            scratch[7].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[7].r + scratch_in[7].i) * TW_81N) >> NE10_F2I16_SHIFT);
+            scratch[7].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (scratch_in[7].i - scratch_in[7].r) * TW_81N) >> NE10_F2I16_SHIFT);
+
+            // radix 2 butterfly
+            scratch[8].r = scratch[0].r + scratch[4].r;
+            scratch[8].i = scratch[0].i + scratch[4].i;
+            scratch[9].r = scratch[1].r + scratch[5].r;
+            scratch[9].i = scratch[1].i + scratch[5].i;
+
+            scratch[10].r = scratch[0].r - scratch[4].r;
+            scratch[10].i = scratch[0].i - scratch[4].i;
+            scratch[11].r = scratch[1].r - scratch[5].r;
+            scratch[11].i = scratch[1].i - scratch[5].i;
+
+            // radix 2 butterfly
+            scratch[12].r = scratch[2].r + scratch[6].r;
+            scratch[12].i = scratch[2].i + scratch[6].i;
+            scratch[13].r = scratch[3].r + scratch[7].r;
+            scratch[13].i = scratch[3].i + scratch[7].i;
+
+            scratch[14].r = scratch[2].r - scratch[6].r;
+            scratch[14].i = scratch[2].i - scratch[6].i;
+            scratch[15].r = scratch[3].r - scratch[7].r;
+            scratch[15].i = scratch[3].i - scratch[7].i;
+
+            // third result
+            scratch_out[4].r = scratch[8].r - scratch[12].r;
+            scratch_out[4].i = scratch[8].i - scratch[12].i;
+            scratch_out[5].r = scratch[9].r - scratch[13].r;
+            scratch_out[5].i = scratch[9].i - scratch[13].i;
+
+            // first result
+            scratch_out[0].r = scratch[8].r + scratch[12].r;
+            scratch_out[0].i = scratch[8].i + scratch[12].i;
+            scratch_out[1].r = scratch[9].r + scratch[13].r;
+            scratch_out[1].i = scratch[9].i + scratch[13].i;
+
+            // second result
+            scratch_out[2].r = scratch[10].r - scratch[14].i;
+            scratch_out[2].i = scratch[10].i + scratch[14].r;
+            scratch_out[3].r = scratch[11].r - scratch[15].i;
+            scratch_out[3].i = scratch[11].i + scratch[15].r;
+
+            // forth result
+            scratch_out[6].r = scratch[10].r + scratch[14].i;
+            scratch_out[6].i = scratch[10].i - scratch[14].r;
+            scratch_out[7].r = scratch[11].r + scratch[15].i;
+            scratch_out[7].i = scratch[11].i - scratch[15].r;
+
+            // store
+            Fout1[0] = scratch_out[0];
+            Fout1[1] = scratch_out[1];
+            Fout1[2] = scratch_out[2];
+            Fout1[3] = scratch_out[3];
+            Fout1[4] = scratch_out[4];
+            Fout1[5] = scratch_out[5];
+            Fout1[6] = scratch_out[6];
+            Fout1[7] = scratch_out[7];
+
+            Fin1 += 1;
+        } // f_count
+        tw += 6;
+        mstride <<= 2;
+        fstride >>= 4;
+        stage_count -= 2;
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
     }
-    else if (factors[2 * stage_count] == 4) // length of FFT is 2^n (n is even)
+    else if (N == 4)   // length of FFT is 2^n (n is even)
     {
         //fstride is nfft>>2
-        for (i = 0; i < fstride; i++)
+        for (f_count = fstride; f_count ; f_count --)
         {
-            NE10_F2I16_FIXDIV (Fout[4 * i], 4);
-            NE10_F2I16_FIXDIV (Fout[4 * i + 1], 4);
-            NE10_F2I16_FIXDIV (Fout[4 * i + 2], 4);
-            NE10_F2I16_FIXDIV (Fout[4 * i + 3], 4);
-            scratch[2].r = Fout[4 * i].r - Fout[4 * i + 2].r;
-            scratch[2].i = Fout[4 * i].i - Fout[4 * i + 2].i;
+            // load
+            scratch_in[0] = *Fin1;
+            Fin2 = Fin1 + fstride;
+            scratch_in[1] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[2] = *Fin2;
+            Fin2 = Fin2 + fstride;
+            scratch_in[3] = *Fin2;
 
-            Fout[4 * i].r += Fout[4 * i + 2].r;
-            Fout[4 * i].i += Fout[4 * i + 2].i;
-
-            scratch[0].r = Fout[4 * i + 1].r + Fout[4 * i + 3].r;
-            scratch[0].i = Fout[4 * i + 1].i + Fout[4 * i + 3].i;
-
-            scratch[1].r = Fout[4 * i + 1].r - Fout[4 * i + 3].r;
-            scratch[1].i = Fout[4 * i + 1].i - Fout[4 * i + 3].i;
-            Fout[4 * i + 2].r = Fout[4 * i].r - scratch[0].r;
-            Fout[4 * i + 2].i = Fout[4 * i].i - scratch[0].i;
-
-            Fout[4 * i].r += scratch[0].r;
-            Fout[4 * i].i += scratch[0].i;
-
-            Fout[4 * i + 1].r = scratch[2].r - scratch[1].i;
-            Fout[4 * i + 1].i = scratch[2].i + scratch[1].r;
-            Fout[4 * i + 3].r = scratch[2].r + scratch[1].i;
-            Fout[4 * i + 3].i = scratch[2].i - scratch[1].r;
-        }
-    }
-    stage_count--;
-
-    // other stages
-    mstride = factors[2 * stage_count + 1];
-    tw = twiddles;
-    for (; stage_count > 0; stage_count--)
-    {
-        fstride = fstride >> 2;
-        for (i = 0; i < fstride; i++)
-        {
-            F = &Fout[i * mstride * 4];
-            tw1 = tw;
-            tw2 = tw + mstride;
-            tw3 = tw + mstride * 2;
-            for (j = 0; j < mstride; j++)
+            // radix 4 butterfly without twiddles
+            if (scaled_flag == 1)
             {
-                NE10_F2I16_FIXDIV (F[0], 4);
-                NE10_F2I16_FIXDIV (F[mstride], 4);
-                NE10_F2I16_FIXDIV (F[mstride * 2], 4);
-                NE10_F2I16_FIXDIV (F[mstride * 3], 4);
-                scratch[0].r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride].r * tw1->r + (NE10_F2I16_SAMPPROD) F[mstride].i * tw1->i);
-                scratch[0].i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride].i * tw1->r - (NE10_F2I16_SAMPPROD) F[mstride].r * tw1->i);
-                scratch[1].r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 2].r * tw2->r + (NE10_F2I16_SAMPPROD) F[mstride * 2].i * tw2->i);
-                scratch[1].i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 2].i * tw2->r - (NE10_F2I16_SAMPPROD) F[mstride * 2].r * tw2->i);
-                scratch[2].r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 3].r * tw3->r + (NE10_F2I16_SAMPPROD) F[mstride * 3].i * tw3->i);
-                scratch[2].i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) F[mstride * 3].i * tw3->r - (NE10_F2I16_SAMPPROD) F[mstride * 3].r * tw3->i);
+                NE10_F2I16_FIXDIV (scratch_in[0], 4);
+                NE10_F2I16_FIXDIV (scratch_in[1], 4);
+                NE10_F2I16_FIXDIV (scratch_in[2], 4);
+                NE10_F2I16_FIXDIV (scratch_in[3], 4);
+            }
 
-                scratch[5].r = F->r - scratch[1].r;
-                scratch[5].i = F->i - scratch[1].i;
-                F->r += scratch[1].r;
-                F->i += scratch[1].i;
+            // radix 2 butterfly
+            scratch[0].r = scratch_in[0].r + scratch_in[2].r;
+            scratch[0].i = scratch_in[0].i + scratch_in[2].i;
 
-                scratch[3].r = scratch[0].r + scratch[2].r;
-                scratch[3].i = scratch[0].i + scratch[2].i;
-                scratch[4].r = scratch[0].r - scratch[2].r;
-                scratch[4].i = scratch[0].i - scratch[2].i;
+            scratch[1].r = scratch_in[0].r - scratch_in[2].r;
+            scratch[1].i = scratch_in[0].i - scratch_in[2].i;
 
-                F[mstride * 2].r = F->r - scratch[3].r;
-                F[mstride * 2].i = F->i - scratch[3].i;
-                F->r += scratch[3].r;
-                F->i += scratch[3].i;
+            // radix 2 butterfly
+            scratch[2].r = scratch_in[1].r + scratch_in[3].r;
+            scratch[2].i = scratch_in[1].i + scratch_in[3].i;
 
-                F[mstride].r = scratch[5].r - scratch[4].i;
-                F[mstride].i = scratch[5].i + scratch[4].r;
-                F[mstride * 3].r = scratch[5].r + scratch[4].i;
-                F[mstride * 3].i = scratch[5].i - scratch[4].r;
+            scratch[3].r = scratch_in[1].r - scratch_in[3].r;
+            scratch[3].i = scratch_in[1].i - scratch_in[3].i;
+
+            // third result
+            scratch_out[2].r = scratch[0].r - scratch[2].r;
+            scratch_out[2].i = scratch[0].i - scratch[2].i;
+
+            // first result
+            scratch_out[0].r = scratch[0].r + scratch[2].r;
+            scratch_out[0].i = scratch[0].i + scratch[2].i;
+
+            // second result
+            scratch_out[1].r = scratch[1].r - scratch[3].i;
+            scratch_out[1].i = scratch[1].i + scratch[3].r;
+
+            // forth result
+            scratch_out[3].r = scratch[1].r + scratch[3].i;
+            scratch_out[3].i = scratch[1].i - scratch[3].r;
+
+            // store
+            * Fout1 ++ = scratch_out[0];
+            * Fout1 ++ = scratch_out[1];
+            * Fout1 ++ = scratch_out[2];
+            * Fout1 ++ = scratch_out[3];
+
+            Fin1++;
+        } // f_count
+
+        N = fstride; // 1/4 of length of FFT
+
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+
+        // update address for other stages
+        stage_count--;
+        tw = twiddles;
+        fstride >>= 2;
+        // end of first stage
+    }
+
+
+    // others but the last one
+    for (; stage_count > 1 ; stage_count--)
+    {
+        Fin1 = Fin;
+        for (f_count = 0; f_count < fstride; f_count ++)
+        {
+            Fout1 = & Fout[ f_count * mstride << 2 ];
+            tw1 = tw;
+            for (m_count = mstride; m_count ; m_count --)
+            {
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
+                if (scaled_flag == 1)
+                {
+                    NE10_F2I16_FIXDIV (scratch_in[0], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[1], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[2], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[3], 4);
+                }
+
+                // radix 4 butterfly with twiddles
+
+                scratch[0] = scratch_in[0];
+                scratch[1].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+                scratch[1].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+
+                scratch[2].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+                scratch[2].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+
+                scratch[3].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+                scratch[3].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r - scratch[7].i;
+                scratch_out[1].i = scratch[5].i + scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r + scratch[7].i;
+                scratch_out[3].i = scratch[5].i - scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + mstride;
+                *Fout2 = scratch_out[1];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[2];
+                Fout2 += mstride;
+                *Fout2 = scratch_out[3];
 
                 tw1++;
-                tw2++;
-                tw3++;
-                F++;
-            }
-        }
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
         tw += mstride * 3;
         mstride <<= 2;
-    }
+        // swap
+        Ftmp = Fin;
+        Fin = Fout;
+        Fout = Ftmp;
+        fstride >>= 2;
+    } // stage_count
 
+    // the last one
+    if (stage_count)
+    {
+        Fin1 = Fin;
+        // if stage count is even, output to the input array
+        Fout1 = Fout_ls;
+
+        for (f_count = 0; f_count < fstride; f_count ++)
+        {
+            tw1 = tw;
+            for (m_count = mstride; m_count ; m_count --)
+            {
+                // load
+                scratch_tw[0] = *tw1;
+                tw2 = tw1 + mstride;
+                scratch_tw[1] = *tw2;
+                tw2 += mstride;
+                scratch_tw[2] = *tw2;
+                scratch_in[0] = * Fin1;
+                Fin2 = Fin1 + N;
+                scratch_in[1] = * Fin2;
+                Fin2 += N;
+                scratch_in[2] = * Fin2;
+                Fin2 += N;
+                scratch_in[3] = * Fin2;
+                if (scaled_flag == 1)
+                {
+                    NE10_F2I16_FIXDIV (scratch_in[0], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[1], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[2], 4);
+                    NE10_F2I16_FIXDIV (scratch_in[3], 4);
+                }
+
+                // radix 4 butterfly with twiddles
+
+                scratch[0] = scratch_in[0];
+                scratch[1].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+                scratch[1].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[1].i * scratch_tw[0].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[1].r * scratch_tw[0].i) >> NE10_F2I16_SHIFT);
+
+                scratch[2].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+                scratch[2].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[2].i * scratch_tw[1].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[2].r * scratch_tw[1].i) >> NE10_F2I16_SHIFT);
+
+                scratch[3].r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].r
+                                                  + (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+                scratch[3].i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) scratch_in[3].i * scratch_tw[2].r
+                                                  - (NE10_F2I16_SAMPPROD) scratch_in[3].r * scratch_tw[2].i) >> NE10_F2I16_SHIFT);
+
+                // radix 2 butterfly
+                scratch[4].r = scratch[0].r + scratch[2].r;
+                scratch[4].i = scratch[0].i + scratch[2].i;
+
+                scratch[5].r = scratch[0].r - scratch[2].r;
+                scratch[5].i = scratch[0].i - scratch[2].i;
+
+                // radix 2 butterfly
+                scratch[6].r = scratch[1].r + scratch[3].r;
+                scratch[6].i = scratch[1].i + scratch[3].i;
+
+                scratch[7].r = scratch[1].r - scratch[3].r;
+                scratch[7].i = scratch[1].i - scratch[3].i;
+
+                // third result
+                scratch_out[2].r = scratch[4].r - scratch[6].r;
+                scratch_out[2].i = scratch[4].i - scratch[6].i;
+
+                // first result
+                scratch_out[0].r = scratch[4].r + scratch[6].r;
+                scratch_out[0].i = scratch[4].i + scratch[6].i;
+
+                // second result
+                scratch_out[1].r = scratch[5].r - scratch[7].i;
+                scratch_out[1].i = scratch[5].i + scratch[7].r;
+
+                // forth result
+                scratch_out[3].r = scratch[5].r + scratch[7].i;
+                scratch_out[3].i = scratch[5].i - scratch[7].r;
+
+                // store
+                *Fout1 = scratch_out[0];
+                Fout2 = Fout1 + N;
+                *Fout2 = scratch_out[1];
+                Fout2 += N;
+                *Fout2 = scratch_out[2];
+                Fout2 += N;
+                *Fout2 = scratch_out[3];
+
+                tw1 ++;
+                Fin1 ++;
+                Fout1 ++;
+            } // m_count
+        } // f_count
+    } // last stage
 }
+
 
 /* factors buffer:
  * 0: stage number
@@ -331,46 +955,20 @@ static ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
     return NE10_OK;
 }
 
-void ne10_data_bitreversal_int16 (ne10_fft_cpx_int16_t * Fout,
-                                  const ne10_fft_cpx_int16_t * f,
-                                  ne10_int32_t fstride,
-                                  ne10_int32_t * factors)
-{
-    const ne10_int32_t p = *factors++; /* the radix  */
-    const ne10_int32_t m = *factors++; /* stage's fft length/p */
-    const ne10_fft_cpx_int16_t * Fout_end = Fout + p * m;
-    if (m == 1)
-    {
-        do
-        {
-            *Fout = *f;
-            f += fstride;
-        }
-        while (++Fout != Fout_end);
-    }
-    else
-    {
-        do
-        {
-            ne10_data_bitreversal_int16 (Fout, f, fstride * p, factors);
-            f += fstride;
-        }
-        while ( (Fout += m) != Fout_end);
-    }
-
-}
-
-void ne10_fft_split_r2c_1d_int16 (ne10_fft_cpx_int16_t *dst,
-                                  const ne10_fft_cpx_int16_t *src,
-                                  ne10_fft_cpx_int16_t *twiddles,
-                                  ne10_int32_t ncfft)
+static void ne10_fft_split_r2c_1d_int16 (ne10_fft_cpx_int16_t *dst,
+        const ne10_fft_cpx_int16_t *src,
+        ne10_fft_cpx_int16_t *twiddles,
+        ne10_int32_t ncfft,
+        ne10_int32_t scaled_flag)
 {
     ne10_int32_t k;
     ne10_fft_cpx_int16_t fpnk, fpk, f1k, f2k, tw, tdc;
 
     tdc.r = src[0].r;
     tdc.i = src[0].i;
-    NE10_F2I16_FIXDIV (tdc, 2);
+
+    if (scaled_flag)
+        NE10_F2I16_FIXDIV (tdc, 2);
 
     dst[0].r = tdc.r + tdc.i;
     dst[ncfft].r = tdc.r - tdc.i;
@@ -381,8 +979,11 @@ void ne10_fft_split_r2c_1d_int16 (ne10_fft_cpx_int16_t *dst,
         fpk    = src[k];
         fpnk.r =   src[ncfft - k].r;
         fpnk.i = - src[ncfft - k].i;
-        NE10_F2I16_FIXDIV (fpk, 2);
-        NE10_F2I16_FIXDIV (fpnk, 2);
+        if (scaled_flag)
+        {
+            NE10_F2I16_FIXDIV (fpk, 2);
+            NE10_F2I16_FIXDIV (fpnk, 2);
+        }
 
         f1k.r = fpk.r + fpnk.r;
         f1k.i = fpk.i + fpnk.i;
@@ -390,8 +991,10 @@ void ne10_fft_split_r2c_1d_int16 (ne10_fft_cpx_int16_t *dst,
         f2k.r = fpk.r - fpnk.r;
         f2k.i = fpk.i - fpnk.i;
 
-        tw.r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) f2k.r * (twiddles[k - 1]).r - (NE10_F2I16_SAMPPROD) f2k.i * (twiddles[k - 1]).i);
-        tw.i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) f2k.r * (twiddles[k - 1]).i + (NE10_F2I16_SAMPPROD) f2k.i * (twiddles[k - 1]).r);
+        tw.r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) f2k.r * (twiddles[k - 1]).r
+                                  - (NE10_F2I16_SAMPPROD) f2k.i * (twiddles[k - 1]).i) >> NE10_F2I16_SHIFT);
+        tw.i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) f2k.r * (twiddles[k - 1]).i
+                                  + (NE10_F2I16_SAMPPROD) f2k.i * (twiddles[k - 1]).r) >> NE10_F2I16_SHIFT);
 
         dst[k].r = (f1k.r + tw.r) >> 1;
         dst[k].i = (f1k.i + tw.i) >> 1;
@@ -400,10 +1003,11 @@ void ne10_fft_split_r2c_1d_int16 (ne10_fft_cpx_int16_t *dst,
     }
 }
 
-void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
-                                  const ne10_fft_cpx_int16_t *src,
-                                  ne10_fft_cpx_int16_t *twiddles,
-                                  ne10_int32_t ncfft)
+static void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
+        const ne10_fft_cpx_int16_t *src,
+        ne10_fft_cpx_int16_t *twiddles,
+        ne10_int32_t ncfft,
+        ne10_int32_t scaled_flag)
 {
 
     ne10_int32_t k;
@@ -412,15 +1016,20 @@ void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
 
     dst[0].r = src[0].r + src[ncfft].r;
     dst[0].i = src[0].r - src[ncfft].r;
-    NE10_F2I16_FIXDIV (dst[0], 2);
+
+    if (scaled_flag)
+        NE10_F2I16_FIXDIV (dst[0], 2);
 
     for (k = 1; k <= ncfft / 2; k++)
     {
         fk = src[k];
         fnkc.r = src[ncfft - k].r;
         fnkc.i = -src[ncfft - k].i;
-        NE10_F2I16_FIXDIV (fk, 2);
-        NE10_F2I16_FIXDIV (fnkc, 2);
+        if (scaled_flag)
+        {
+            NE10_F2I16_FIXDIV (fk, 2);
+            NE10_F2I16_FIXDIV (fnkc, 2);
+        }
 
         fek.r = fk.r + fnkc.r;
         fek.i = fk.i + fnkc.i;
@@ -428,8 +1037,10 @@ void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
         tmp.r = fk.r - fnkc.r;
         tmp.i = fk.i - fnkc.i;
 
-        fok.r = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) tmp.r * (twiddles[k - 1]).r + (NE10_F2I16_SAMPPROD) tmp.i * (twiddles[k - 1]).i);
-        fok.i = NE10_F2I16_SROUND ( (NE10_F2I16_SAMPPROD) tmp.i * (twiddles[k - 1]).r - (NE10_F2I16_SAMPPROD) tmp.r * (twiddles[k - 1]).i);
+        fok.r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) tmp.r * (twiddles[k - 1]).r
+                                   + (NE10_F2I16_SAMPPROD) tmp.i * (twiddles[k - 1]).i) >> NE10_F2I16_SHIFT);
+        fok.i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) tmp.i * (twiddles[k - 1]).r
+                                   - (NE10_F2I16_SAMPPROD) tmp.r * (twiddles[k - 1]).i) >> NE10_F2I16_SHIFT);
 
         dst[k].r = fek.r + fok.r;
         dst[k].i = fek.i + fok.i;
@@ -518,26 +1129,29 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
  * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
  * @param[in]   nfft             length of FFT
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
+ * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
  * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 1, 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
  *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_c2c_1d_int16_scaled_c (ne10_fft_cpx_int16_t *fout,
+void ne10_fft_c2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
                               ne10_fft_cpx_int16_t *fin,
                               ne10_fft_cpx_int16_t *twiddles,
                               ne10_int32_t *factors,
                               ne10_int32_t nfft,
-                              ne10_int32_t inverse_fft)
+                              ne10_int32_t inverse_fft,
+                              ne10_int32_t scaled_flag)
 {
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_int16 (fout, fin, 1, &factors[2]);
-
     if (inverse_fft)
-        ne10_mixed_radix_butterfly_inverse_int16_c (fout, factors, twiddles);
+        ne10_mixed_radix_butterfly_inverse_int16_c (fout, fin, factors, twiddles, scaled_flag);
     else
-        ne10_mixed_radix_butterfly_int16_c (fout, factors, twiddles);
+        ne10_mixed_radix_butterfly_int16_c (fout, fin, factors, twiddles, scaled_flag);
 }
+
+
+
+
 /**
  * @}
  */ //end of C2C_FFT_IFFT group
@@ -635,28 +1249,28 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
  * @param[in]   *super_twiddles  point to the twiddle buffer for data split
  * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
  * @param[in]   nfft             length of FFT
+ * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_r2c_1d_int16_scaled_c (ne10_fft_cpx_int16_t *fout,
+void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
                               ne10_int16_t *fin,
                               ne10_fft_cpx_int16_t *twiddles,
                               ne10_fft_cpx_int16_t *super_twiddles,
                               ne10_int32_t *factors,
-                              ne10_int32_t nfft)
+                              ne10_int32_t nfft,
+                              ne10_int32_t scaled_flag)
 {
     ne10_int32_t ncfft = nfft >> 1;
 
     /* malloc a temp buffer for cfft */
     ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * ncfft);
 
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_int16 (tmpbuf_, (ne10_fft_cpx_int16_t*) fin, 1, &factors[2]);
-    ne10_mixed_radix_butterfly_int16_c (tmpbuf_, factors, twiddles);
+    ne10_fft_c2c_1d_int16_c (tmpbuf_, (ne10_fft_cpx_int16_t*) fin, twiddles, factors, ncfft, 0, scaled_flag);
 
-    ne10_fft_split_r2c_1d_int16 (fout, tmpbuf_, super_twiddles, ncfft);
+    ne10_fft_split_r2c_1d_int16 (fout, tmpbuf_, super_twiddles, ncfft, scaled_flag);
 
     NE10_FREE (tmpbuf_);
 }
@@ -669,28 +1283,28 @@ void ne10_fft_r2c_1d_int16_scaled_c (ne10_fft_cpx_int16_t *fout,
  * @param[in]   *super_twiddles  point to the twiddle buffer for data split
  * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
  * @param[in]   nfft             length of FFT
+ * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
-void ne10_fft_c2r_1d_int16_scaled_c (ne10_int16_t *fout,
+void ne10_fft_c2r_1d_int16_c (ne10_int16_t *fout,
                               ne10_fft_cpx_int16_t *fin,
                               ne10_fft_cpx_int16_t *twiddles,
                               ne10_fft_cpx_int16_t *super_twiddles,
                               ne10_int32_t *factors,
-                              ne10_int32_t nfft)
+                              ne10_int32_t nfft,
+                              ne10_int32_t scaled_flag)
 {
     ne10_int32_t ncfft = nfft >> 1;
 
     /* malloc a temp buffer for split */
     ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * ncfft);
 
-    ne10_fft_split_c2r_1d_int16 (tmpbuf_, fin, super_twiddles, ncfft);
+    ne10_fft_split_c2r_1d_int16 (tmpbuf_, fin, super_twiddles, ncfft, scaled_flag);
 
-    // copy the data from input to output and bit reversal
-    ne10_data_bitreversal_int16 ( (ne10_fft_cpx_int16_t*) fout, tmpbuf_, 1, &factors[2]);
-    ne10_mixed_radix_butterfly_inverse_int16_c ( (ne10_fft_cpx_int16_t*) fout, factors, twiddles);
+    ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) fout, tmpbuf_, twiddles, factors, ncfft, 1, scaled_flag);
 
     NE10_FREE (tmpbuf_);
 }

@@ -44,9 +44,11 @@
 ** ------------------------------------------------------------------- */
 
 /* Max FFT Length and double buffer for real and imag */
-#define TEST_LENGTH_SAMPLES (16384)
-#define MIN_LENGTH_SAMPLES_CPX (2)
+#define TEST_LENGTH_SAMPLES (32768)
+#define MIN_LENGTH_SAMPLES_CPX (4)
 #define MIN_LENGTH_SAMPLES_REAL (MIN_LENGTH_SAMPLES_CPX*2)
+
+#define SNR_THRESHOLD_INT16 15.0f
 
 #define TEST_COUNT 250000
 
@@ -55,8 +57,8 @@
 ** ------------------------------------------------------------------- */
 
 //input and output
-static ne10_int16_t testInput_i16[TEST_LENGTH_SAMPLES * 2];
-static ne10_int16_t * in = NULL;
+static ne10_int32_t testInput_i16_unscaled[TEST_LENGTH_SAMPLES * 2];
+static ne10_int32_t testInput_i16_scaled[TEST_LENGTH_SAMPLES * 2];
 static ne10_int16_t * guarded_in_c = NULL;
 static ne10_int16_t * guarded_in_neon = NULL;
 static ne10_int16_t * in_c = NULL;
@@ -104,24 +106,25 @@ void test_fft_c2c_1d_int16_conformance()
 
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
-        testInput_i16[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
+        testInput_i16_unscaled[i] = (ne10_int32_t) (drand48() * 1024) - 512;
+        testInput_i16_scaled[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
     }
     for (fftSize = MIN_LENGTH_SAMPLES_CPX; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
-
-        /* FFT test */
-        memcpy (in_c, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
-        memcpy (in_neon, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
         cfg = ne10_fft_alloc_c2c_int16 (fftSize);
+
+        /* unscaled FFT test */
+        memcpy (in_c, testInput_i16_unscaled, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_unscaled, 2 * fftSize * sizeof (ne10_int16_t));
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
 
-        ne10_fft_c2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
-                                         cfg->twiddles, cfg->factors, fftSize, 0);
-        ne10_fft_c2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
-                                            cfg->twiddles, cfg->factors, fftSize, 0);
+        ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
+                                         cfg->twiddles, cfg->factors, fftSize, 0, 0);
+        ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
+                                            cfg->twiddles, cfg->factors, fftSize, 0, 0);
 
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
@@ -136,16 +139,64 @@ void test_fft_c2c_1d_int16_conformance()
         assert_false ( (snr < SNR_THRESHOLD_INT16));
 
         /* IFFT test */
-        memcpy (in_c, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
-        memcpy (in_neon, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_c, testInput_i16_unscaled, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_unscaled, 2 * fftSize * sizeof (ne10_int16_t));
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
 
-        ne10_fft_c2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
-                                         cfg->twiddles, cfg->factors, fftSize, 1);
-        ne10_fft_c2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
-                                            cfg->twiddles, cfg->factors, fftSize, 1);
+        ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
+                                         cfg->twiddles, cfg->factors, fftSize, 1, 0);
+        ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
+                                            cfg->twiddles, cfg->factors, fftSize, 1, 0);
+
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
+
+        //conformance test
+        for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
+        {
+            out_c_tmp[i] = (ne10_float32_t) out_c[i];
+            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+        }
+        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
+        assert_false ( (snr < SNR_THRESHOLD_INT16));
+
+        /* scaled FFT test */
+        memcpy (in_c, testInput_i16_scaled, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_scaled, 2 * fftSize * sizeof (ne10_int16_t));
+
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
+
+        ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
+                                         cfg->twiddles, cfg->factors, fftSize, 0, 1);
+        ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
+                                            cfg->twiddles, cfg->factors, fftSize, 0, 1);
+
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
+
+        //conformance test
+        for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
+        {
+            out_c_tmp[i] = (ne10_float32_t) out_c[i];
+            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+        }
+        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
+        assert_false ( (snr < SNR_THRESHOLD_INT16));
+
+        /* IFFT test */
+        memcpy (in_c, testInput_i16_scaled, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_scaled, 2 * fftSize * sizeof (ne10_int16_t));
+
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
+
+        ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c,
+                                         cfg->twiddles, cfg->factors, fftSize, 1, 1);
+        ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon,
+                                            cfg->twiddles, cfg->factors, fftSize, 1, 1);
 
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int16_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int16_t));
@@ -195,24 +246,25 @@ void test_fft_c2c_1d_int16_performance()
 
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
-        testInput_i16[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
+        testInput_i16_unscaled[i] = (ne10_int16_t) (drand48() * 1024) - 512;
+        testInput_i16_scaled[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
     }
     for (fftSize = MIN_LENGTH_SAMPLES_CPX; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
-
-        /* FFT test */
-        memcpy (in_c, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
-        memcpy (in_neon, testInput_i16, 2 * fftSize * sizeof (ne10_int16_t));
         cfg = ne10_fft_alloc_c2c_int16 (fftSize);
         test_loop = TEST_COUNT / fftSize;
+
+        /* unscaled FFT test */
+        memcpy (in_c, testInput_i16_unscaled, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_unscaled, 2 * fftSize * sizeof (ne10_int16_t));
 
         GET_TIME
         (
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->factors, fftSize, 0);
+                ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->factors, fftSize, 0, 0);
         }
         );
         GET_TIME
@@ -220,13 +272,13 @@ void test_fft_c2c_1d_int16_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->factors, fftSize, 0);
+                ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->factors, fftSize, 0, 0);
         }
         );
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        ne10_log (__FUNCTION__, "Int16 FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "Int16 unscaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
 
         /* IFFT test */
         memcpy (in_c, out_c, 2 * fftSize * sizeof (ne10_int16_t));
@@ -237,7 +289,7 @@ void test_fft_c2c_1d_int16_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->factors, fftSize, 1);
+                ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->factors, fftSize, 1, 0);
         }
         );
         GET_TIME
@@ -245,13 +297,62 @@ void test_fft_c2c_1d_int16_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->factors, fftSize, 1);
+                ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->factors, fftSize, 1, 0);
         }
         );
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        ne10_log (__FUNCTION__, "Int16 FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "Int16 unscaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+        /* scaled FFT test */
+        memcpy (in_c, testInput_i16_scaled, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_scaled, 2 * fftSize * sizeof (ne10_int16_t));
+
+        GET_TIME
+        (
+            time_c,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->factors, fftSize, 0, 1);
+        }
+        );
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->factors, fftSize, 0, 1);
+        }
+        );
+
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "Int16 scaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+
+        /* IFFT test */
+        memcpy (in_c, out_c, 2 * fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, out_c, 2 * fftSize * sizeof (ne10_int16_t));
+
+        GET_TIME
+        (
+            time_c,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->factors, fftSize, 1, 1);
+        }
+        );
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->factors, fftSize, 1, 1);
+        }
+        );
+
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "Int16 scaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
 
         NE10_FREE (cfg);
     }
@@ -290,22 +391,23 @@ void test_fft_r2c_1d_int16_conformance()
 
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
-        testInput_i16[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
+        testInput_i16_unscaled[i] = (ne10_int16_t) (drand48() * 1024) - 512;
+        testInput_i16_scaled[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
     }
     for (fftSize = MIN_LENGTH_SAMPLES_REAL; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
-        fprintf (stdout, "FFT size %d\n", fftSize);
-
-        /* FFT test */
-        memcpy (in_c, testInput_i16, fftSize * sizeof (ne10_int16_t));
-        memcpy (in_neon, testInput_i16, fftSize * sizeof (ne10_int16_t));
+        fprintf (stdout, "RFFT size %d\n", fftSize);
         cfg = ne10_fft_alloc_r2c_int16 (fftSize);
+
+        /* unscaled FFT test */
+        memcpy (in_c, testInput_i16_unscaled, fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_unscaled, fftSize * sizeof (ne10_int16_t));
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
 
-        ne10_fft_r2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
-        ne10_fft_r2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
+        ne10_fft_r2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
+        ne10_fft_r2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
 
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
@@ -322,22 +424,76 @@ void test_fft_r2c_1d_int16_conformance()
         /* IFFT test */
         for (i = 1; i < (fftSize / 2); i++)
         {
-            in_c[2 * i] = testInput_i16[2 * i];
-            in_c[2 * i + 1] = testInput_i16[2 * i + 1];
+            in_c[2 * i] = testInput_i16_unscaled[2 * i];
+            in_c[2 * i + 1] = testInput_i16_unscaled[2 * i + 1];
             in_c[2 * (fftSize - i)] = in_c[2 * i];
             in_c[2 * (fftSize - i) + 1] = -in_c[2 * i + 1];
         }
-        in_c[0] = testInput_i16[0];
+        in_c[0] = testInput_i16_unscaled[0];
         in_c[1] = 0;
-        in_c[fftSize] = testInput_i16[1];
+        in_c[fftSize] = testInput_i16_unscaled[1];
         in_c[fftSize + 1] = 0;
         memcpy (in_neon, in_c, fftSize * 2 * sizeof (ne10_int16_t));
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int16_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int16_t));
 
-        ne10_fft_c2r_1d_int16_scaled_c (out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
-        ne10_fft_c2r_1d_int16_scaled_neon (out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
+        ne10_fft_c2r_1d_int16_c (out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
+        ne10_fft_c2r_1d_int16_neon (out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
+
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int16_t));
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int16_t));
+
+        //conformance test
+        for (i = 0; i < fftSize; i++)
+        {
+            out_c_tmp[i] = (ne10_float32_t) out_c[i];
+            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+        }
+        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize);
+        assert_false ( (snr < SNR_THRESHOLD_INT16));
+
+        /* scaled FFT test */
+        memcpy (in_c, testInput_i16_scaled, fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_scaled, fftSize * sizeof (ne10_int16_t));
+
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
+
+        ne10_fft_r2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
+        ne10_fft_r2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
+
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
+        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int16_t));
+
+        //conformance test
+        for (i = 0; i < (fftSize / 2 + 1) * 2; i++)
+        {
+            out_c_tmp[i] = (ne10_float32_t) out_c[i];
+            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+        }
+        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, (fftSize / 2 + 1) * 2);
+        assert_false ( (snr < SNR_THRESHOLD_INT16));
+
+        /* IFFT test */
+        for (i = 1; i < (fftSize / 2); i++)
+        {
+            in_c[2 * i] = testInput_i16_scaled[2 * i];
+            in_c[2 * i + 1] = testInput_i16_scaled[2 * i + 1];
+            in_c[2 * (fftSize - i)] = in_c[2 * i];
+            in_c[2 * (fftSize - i) + 1] = -in_c[2 * i + 1];
+        }
+        in_c[0] = testInput_i16_scaled[0];
+        in_c[1] = 0;
+        in_c[fftSize] = testInput_i16_scaled[1];
+        in_c[fftSize + 1] = 0;
+        memcpy (in_neon, in_c, fftSize * 2 * sizeof (ne10_int16_t));
+
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int16_t));
+        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int16_t));
+
+        ne10_fft_c2r_1d_int16_c (out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
+        ne10_fft_c2r_1d_int16_neon (out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
 
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int16_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int16_t));
@@ -387,24 +543,25 @@ void test_fft_r2c_1d_int16_performance()
 
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
-        testInput_i16[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
+        testInput_i16_unscaled[i] = (ne10_int16_t) (drand48() * 1024) - 512;
+        testInput_i16_scaled[i] = (ne10_int16_t) (drand48() * NE10_F2I16_MAX) - NE10_F2I16_MAX / 2;
     }
     for (fftSize = MIN_LENGTH_SAMPLES_REAL; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
-
-        /* FFT test */
-        memcpy (in_c, testInput_i16, fftSize * sizeof (ne10_int16_t));
-        memcpy (in_neon, testInput_i16, fftSize * sizeof (ne10_int16_t));
         cfg = ne10_fft_alloc_r2c_int16 (fftSize);
         test_loop = TEST_COUNT / fftSize;
+
+        /* unscaled FFT test */
+        memcpy (in_c, testInput_i16_unscaled , fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_unscaled , fftSize * sizeof (ne10_int16_t));
 
         GET_TIME
         (
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_r2c_1d_int16_scaled_c ( (ne10_fft_cpx_int16_t*) out_c, in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
+                ne10_fft_r2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
         }
         );
         GET_TIME
@@ -412,25 +569,25 @@ void test_fft_r2c_1d_int16_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_r2c_1d_int16_scaled_neon ( (ne10_fft_cpx_int16_t*) out_neon, in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
+                ne10_fft_r2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
         }
         );
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        ne10_log (__FUNCTION__, "Int16 FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "Int16 unscaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
 
         /* IFFT test */
         for (i = 1; i < (fftSize / 2); i++)
         {
-            in_c[2 * i] = testInput_i16[2 * i];
-            in_c[2 * i + 1] = testInput_i16[2 * i + 1];
+            in_c[2 * i] = testInput_i16_unscaled[2 * i];
+            in_c[2 * i + 1] = testInput_i16_unscaled[2 * i + 1];
             in_c[2 * (fftSize - i)] = in_c[2 * i];
             in_c[2 * (fftSize - i) + 1] = -in_c[2 * i + 1];
         }
-        in_c[0] = testInput_i16[0];
+        in_c[0] = testInput_i16_unscaled[0];
         in_c[1] = 0;
-        in_c[fftSize] = testInput_i16[1];
+        in_c[fftSize] = testInput_i16_unscaled[1];
         in_c[fftSize + 1] = 0;
         memcpy (in_neon, in_c, fftSize * 2 * sizeof (ne10_int16_t));
 
@@ -439,7 +596,7 @@ void test_fft_r2c_1d_int16_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2r_1d_int16_scaled_c (out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
+                ne10_fft_c2r_1d_int16_c (out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
         }
         );
         GET_TIME
@@ -447,13 +604,73 @@ void test_fft_r2c_1d_int16_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2r_1d_int16_scaled_neon (out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize);
+                ne10_fft_c2r_1d_int16_neon (out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 0);
         }
         );
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
-        ne10_log (__FUNCTION__, "Int16 FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+        ne10_log (__FUNCTION__, "Int16 unscaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+
+        /* scaled FFT test */
+        memcpy (in_c, testInput_i16_scaled , fftSize * sizeof (ne10_int16_t));
+        memcpy (in_neon, testInput_i16_scaled , fftSize * sizeof (ne10_int16_t));
+
+        GET_TIME
+        (
+            time_c,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_r2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) out_c, in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
+        }
+        );
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_r2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) out_neon, in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
+        }
+        );
+
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "Int16 scaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
+
+        /* IFFT test */
+        for (i = 1; i < (fftSize / 2); i++)
+        {
+            in_c[2 * i] = testInput_i16_scaled[2 * i];
+            in_c[2 * i + 1] = testInput_i16_scaled[2 * i + 1];
+            in_c[2 * (fftSize - i)] = in_c[2 * i];
+            in_c[2 * (fftSize - i) + 1] = -in_c[2 * i + 1];
+        }
+        in_c[0] = testInput_i16_scaled[0];
+        in_c[1] = 0;
+        in_c[fftSize] = testInput_i16_scaled[1];
+        in_c[fftSize + 1] = 0;
+        memcpy (in_neon, in_c, fftSize * 2 * sizeof (ne10_int16_t));
+
+        GET_TIME
+        (
+            time_c,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_c2r_1d_int16_c (out_c, (ne10_fft_cpx_int16_t*) in_c, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
+        }
+        );
+        GET_TIME
+        (
+            time_neon,
+        {
+            for (i = 0; i < test_loop; i++)
+                ne10_fft_c2r_1d_int16_neon (out_neon, (ne10_fft_cpx_int16_t*) in_neon, cfg->twiddles, cfg->super_twiddles, cfg->factors, fftSize, 1);
+        }
+        );
+
+        time_speedup = (ne10_float32_t) time_c / time_neon;
+        time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
+        ne10_log (__FUNCTION__, "Int16 scaled FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
 
         NE10_FREE (cfg);
     }

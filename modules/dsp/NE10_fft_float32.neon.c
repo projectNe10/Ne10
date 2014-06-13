@@ -99,7 +99,6 @@ static inline void ne10_fft8_forward_float32 (ne10_fft_cpx_float32_t * Fout,
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i, s3_r, s3_i, s4_r, s4_i, s5_r, s5_i, s6_r, s6_i, s7_r, s7_i;
     ne10_float32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i;
-    ne10_fft_cpx_float32_t * F;
     const ne10_float32_t TW_81 = 0.70710678;
 
     s0_r = Fin[0].r + Fin[4].r;
@@ -165,7 +164,6 @@ static inline void ne10_fft8_backward_float32 (ne10_fft_cpx_float32_t * Fout,
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i, s3_r, s3_i, s4_r, s4_i, s5_r, s5_i, s6_r, s6_i, s7_r, s7_i;
     ne10_float32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i;
-    ne10_fft_cpx_float32_t * F;
     const ne10_float32_t TW_81 = 0.70710678;
 
     s0_r = Fin[0].r + Fin[4].r;
@@ -274,7 +272,6 @@ static void ne10_fft16_forward_float32_neon (ne10_fft_cpx_float32_t * Fout,
     float32x4_t q_in_r0123, q_in_r4567, q_in_r89ab, q_in_rcdef;
     float32x4_t q_in_i0123, q_in_i4567, q_in_i89ab, q_in_icdef;
     float32x4x2_t q2_tw1, q2_tw2, q2_tw3;
-    float32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3, q_tmp4, q_tmp5;
     float32x4x2_t q2_out_0123, q2_out_4567, q2_out_89ab, q2_out_cdef;
     tw1 = twiddles;
     tw2 = twiddles + 4;
@@ -346,7 +343,6 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
         ne10_fft_cpx_float32_t * Fin,
         ne10_fft_cpx_float32_t * twiddles)
 {
-    ne10_float32_t i, j;
     ne10_fft_cpx_float32_t *tw1, *tw2, *tw3;
 
     // the first stage
@@ -392,7 +388,6 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
     float32x4_t q_in_r0123, q_in_r4567, q_in_r89ab, q_in_rcdef;
     float32x4_t q_in_i0123, q_in_i4567, q_in_i89ab, q_in_icdef;
     float32x4x2_t q2_tw1, q2_tw2, q2_tw3;
-    float32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3, q_tmp4, q_tmp5;
     float32x4x2_t q2_out_0123, q2_out_4567, q2_out_89ab, q2_out_cdef;
     tw1 = twiddles;
     tw2 = twiddles + 4;
@@ -459,7 +454,7 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
     vst2q_f32 (p_dst3, q2_out_cdef);
 }
 
-void ne10_fft_split_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
+static void ne10_fft_split_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
         const ne10_fft_cpx_float32_t *src,
         ne10_fft_cpx_float32_t *twiddles,
         ne10_int32_t ncfft)
@@ -557,7 +552,7 @@ void ne10_fft_split_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
     }
 }
 
-void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
+static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
         const ne10_fft_cpx_float32_t *src,
         ne10_fft_cpx_float32_t *twiddles,
         ne10_int32_t ncfft)
@@ -569,9 +564,8 @@ void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
     float32x4x2_t q2_fk, q2_fnkc, q2_tw, q2_dst, q2_dst2;
     float32x4_t q_fnkc_r, q_fnkc_i;
     float32x4_t q_fek_r, q_fek_i, q_fok_r, q_fok_i;
-    float32x4_t q_tw_r, q_tw_i;
     float32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3;
-    float32x4_t q_dst_r, q_dst_i, q_dst2_r, q_dst2_i;
+    float32x4_t q_dst2_r, q_dst2_i;
     float32_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
     dst[0].r = src[0].r + src[ncfft].r;

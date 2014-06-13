@@ -83,7 +83,6 @@
 #define ERROR_MARGIN_SMALL 0x0A
 #define ERROR_MARGIN_LARGE 0xFF
 #define SNR_THRESHOLD 50.0f
-#define SNR_THRESHOLD_INT16 35.0f
 #define PSNR_THRESHOLD 30.0f
 
 // What's the acceptable number of warnings in a test

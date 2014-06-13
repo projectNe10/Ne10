@@ -66,31 +66,18 @@ static ne10_float32_t * guarded_in_c = NULL;
 static ne10_float32_t * guarded_in_neon = NULL;
 static ne10_float32_t * in_c = NULL;
 static ne10_float32_t * in_neon = NULL;
-static ne10_float32_t * in_c2 = NULL;
-static ne10_float32_t * in_neon2 = NULL;
-static ne10_float32_t * guarded_in_c2 = NULL;
-static ne10_float32_t * guarded_in_neon2 = NULL;
 
 static ne10_float32_t * guarded_out_c = NULL;
 static ne10_float32_t * guarded_out_neon = NULL;
 static ne10_float32_t * out_c = NULL;
 static ne10_float32_t * out_neon = NULL;
-static ne10_float32_t * guarded_out_c2 = NULL;
-static ne10_float32_t * guarded_out_neon2 = NULL;
-static ne10_float32_t * out_c2 = NULL;
-static ne10_float32_t * out_neon2 = NULL;
 
 static ne10_float32_t snr = 0.0f;
-static ne10_float32_t snr2 = 0.0f;
 
 static ne10_int64_t time_c = 0;
 static ne10_int64_t time_neon = 0;
-static ne10_int64_t time_overhead_c = 0;
-static ne10_int64_t time_overhead_neon = 0;
 static ne10_float32_t time_speedup = 0.0f;
 static ne10_float32_t time_savings = 0.0f;
-static ne10_int64_t time_c2 = 0;
-static ne10_int64_t time_neon2 = 0;
 
 void test_fft_c2c_1d_float32_conformance()
 {
@@ -137,6 +124,7 @@ void test_fft_c2c_1d_float32_conformance()
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize * 2);
+        //printf("FFT snr %f\n", snr);
         assert_false ( (snr < SNR_THRESHOLD));
 
         /* IFFT test */
@@ -154,6 +142,7 @@ void test_fft_c2c_1d_float32_conformance()
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize * 2);
+        //printf("IFFT snr %f\n", snr);
         assert_false ( (snr < SNR_THRESHOLD));
 
         NE10_FREE (cfg);

@@ -119,9 +119,9 @@
  */
 
 void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
-    ne10_float32_t * pSrc,
-    ne10_float32_t * pDst,
-    ne10_uint32_t blockSize)
+                       ne10_float32_t * pSrc,
+                       ne10_float32_t * pDst,
+                       ne10_uint32_t blockSize)
 {
 
     ne10_float32_t *pState = S->pState;                 /* State pointer */
@@ -450,9 +450,9 @@ void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
    */
 
 void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
-    ne10_float32_t * pSrc,
-    ne10_float32_t * pDst,
-    ne10_uint32_t blockSize)
+                                ne10_float32_t * pSrc,
+                                ne10_float32_t * pDst,
+                                ne10_uint32_t blockSize)
 {
     ne10_float32_t *pState = S->pState;                 /* State pointer */
     ne10_float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
@@ -710,9 +710,9 @@ void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
  */
 
 void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S,
-    ne10_float32_t * pSrc,
-    ne10_float32_t * pDst,
-    ne10_uint32_t blockSize)
+                                   ne10_float32_t * pSrc,
+                                   ne10_float32_t * pDst,
+                                   ne10_uint32_t blockSize)
 {
     ne10_float32_t *pState = S->pState;                 /* State pointer */
     ne10_float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
@@ -970,9 +970,9 @@ void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S
    */
 
 void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
-    ne10_float32_t * pSrc,
-    ne10_float32_t * pDst,
-    ne10_uint32_t blockSize)
+                               ne10_float32_t * pSrc,
+                               ne10_float32_t * pDst,
+                               ne10_uint32_t blockSize)
 {
     ne10_float32_t *pState;                             /* State pointer */
     ne10_float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
@@ -1271,12 +1271,12 @@ void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
  * @brief floating-point Circular write function.
  */
 static void ne10_circular_write_float (ne10_int32_t * circBuffer,
-    ne10_int32_t L,
-    ne10_uint16_t * writeOffset,
-    ne10_int32_t bufferInc,
-    const ne10_int32_t * src,
-    ne10_int32_t srcInc,
-    ne10_uint32_t blockSize)
+                                       ne10_int32_t L,
+                                       ne10_uint16_t * writeOffset,
+                                       ne10_int32_t bufferInc,
+                                       const ne10_int32_t * src,
+                                       ne10_int32_t srcInc,
+                                       ne10_uint32_t blockSize)
 {
     ne10_uint32_t i = 0u;
     ne10_int32_t wOffset;
@@ -1315,14 +1315,14 @@ static void ne10_circular_write_float (ne10_int32_t * circBuffer,
  * @brief floating-point Circular Read function.
  */
 static void ne10_circular_read_float (ne10_int32_t * circBuffer,
-    ne10_int32_t L,
-    ne10_int32_t * readOffset,
-    ne10_int32_t bufferInc,
-    ne10_int32_t * dst,
-    ne10_int32_t * dst_base,
-    ne10_int32_t dst_length,
-    ne10_int32_t dstInc,
-    ne10_uint32_t blockSize)
+                                      ne10_int32_t L,
+                                      ne10_int32_t * readOffset,
+                                      ne10_int32_t bufferInc,
+                                      ne10_int32_t * dst,
+                                      ne10_int32_t * dst_base,
+                                      ne10_int32_t dst_length,
+                                      ne10_int32_t dstInc,
+                                      ne10_uint32_t blockSize)
 {
     ne10_uint32_t i = 0u;
     ne10_int32_t rOffset, dst_end;
@@ -1437,10 +1437,10 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
  */
 
 void ne10_fir_sparse_float_c (ne10_fir_sparse_instance_f32_t * S,
-    ne10_float32_t * pSrc,
-    ne10_float32_t * pDst,
-    ne10_float32_t * pScratchIn,
-    ne10_uint32_t blockSize)
+                              ne10_float32_t * pSrc,
+                              ne10_float32_t * pDst,
+                              ne10_float32_t * pScratchIn,
+                              ne10_uint32_t blockSize)
 {
 
     ne10_float32_t *pState = S->pState;                 /* State pointer */

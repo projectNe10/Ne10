@@ -35,749 +35,492 @@
         /* Registers define*/
         /*ARM Registers*/
         p_fout          .req   r0
-        p_factors       .req   r1
-        p_twiddles      .req   r2
-        p_fin           .req   r3
-        p_fout0         .req   r4
-        p_fout1         .req   r5
-        p_fout2         .req   r6
-        p_fout3         .req   r7
-        stage_count     .req   r8
-        fstride         .req   r9
-        mstride         .req   r10
-        count           .req   r1
-        count_f         .req   r1
-        count_m         .req   r12
-        p_tw1           .req   r3
-        p_tw2           .req   r11
-        p_tw3           .req   r14
-        radix           .req   r5
-        tmp0            .req   r12
+        p_fin           .req   r1
+        p_factors       .req   r2
+        p_twiddles      .req   r3
+        stage_count     .req   r4
+        fstride         .req   r5
+        mstride         .req   r6
+
+        radix           .req   r12
+        p_fin0          .req   r7
+        p_fin1          .req   r8
+        p_fin2          .req   r9
+        p_fin3          .req   r10
+        p_tmp           .req   r11
+        count           .req   r2
+        fstride1        .req   r2
+        fstep           .req   r7
+
+        p_out_ls        .req   r14
+        nstep           .req   r2
+        mstep           .req   r7
+        count_f         .req   r8
+        count_m         .req   r9
+        p_tw1           .req   r10
+        p_in1           .req   r11
+        p_out1          .req   r12
+        tmp0            .req   r9
 
         /*NEON variale Declaration for the first stage*/
-        d_in0           .dn   d0
-        d_in1           .dn   d1
-        q_in01          .qn   q0
-        d_in2           .dn   d2
-        d_in3           .dn   d3
-        q_in23          .qn   q1
-        d_out0          .dn   d4
-        d_out1          .dn   d5
-        d_out2          .dn   d6
-        d_out3          .dn   d7
-
-        d_in0_r01       .dn   d0
-        d_in0_i01       .dn   d2
-        d_in1_r01       .dn   d4
-        d_in1_i01       .dn   d6
-        d_in0_r23       .dn   d1
-        d_in0_i23       .dn   d3
-        d_in1_r23       .dn   d5
-        d_in1_i23       .dn   d7
-        q_in0_r0123     .qn   q0
-        q_in0_i0123     .qn   q1
-        q_in1_r0123     .qn   q2
-        q_in1_i0123     .qn   q3
-        d_out0_r01      .dn   d16
-        d_out0_i01      .dn   d18
-        d_out1_r01      .dn   d20
-        d_out1_i01      .dn   d22
-        d_out0_r23      .dn   d17
-        d_out0_i23      .dn   d19
-        d_out1_r23      .dn   d21
-        d_out1_i23      .dn   d23
-        q_out0_r0123    .qn   q8
-        q_out0_i0123    .qn   q9
-        q_out1_r0123    .qn   q10
-        q_out1_i0123    .qn   q11
-
-        d_in0_0         .dn   d0
-        d_in1_0         .dn   d1
-        d_in2_0         .dn   d2
-        d_in3_0         .dn   d3
-        d_in0_1         .dn   d4
-        d_in1_1         .dn   d5
-        d_in2_1         .dn   d6
-        d_in3_1         .dn   d7
         q_in0_01        .qn   q0
-        q_in1_01        .qn   q2
-        q_in2_01        .qn   q1
+        q_in1_01        .qn   q1
+        q_in2_01        .qn   q2
         q_in3_01        .qn   q3
-        d_out0_0        .dn   d16
-        d_out1_0        .dn   d17
-        d_out2_0        .dn   d18
-        d_out3_0        .dn   d19
-        d_out0_1        .dn   d20
-        d_out1_1        .dn   d21
-        d_out2_1        .dn   d22
-        d_out3_1        .dn   d23
-        q_out0_01       .qn   q8
-        q_out1_01       .qn   q10
-        q_out2_01       .qn   q9
-        q_out3_01       .qn   q11
-        d_s0            .dn   d24
-        q_s0_01         .qn   q12
-        d_s1            .dn   d26
-        q_s1_01         .qn   q13
-        d_s2            .dn   d28
-        q_s2_01         .qn   q14
+        q_s0_2          .qn   q4
+        q_s1_2          .qn   q5
+        q_s2_2          .qn   q6
+        q_s3_2          .qn   q7
+        d_s1_r2         .dn   d10
+        d_s1_i2         .dn   d11
+        d_s3_r2         .dn   d14
+        d_s3_i2         .dn   d15
+        q_out0_2        .qn   q8
+        q_out1_2        .qn   q9
+        q_out2_2        .qn   q10
+        q_out3_2        .qn   q11
+        d_out1_r15      .dn   d18
+        d_out1_i15      .dn   d19
+        d_out3_r37      .dn   d22
+        d_out3_i37      .dn   d23
 
-        /*NEON variale Declaration for mstride ge2 loop */
-        q_fin0_r        .qn   q4
-        q_fin0_i        .qn   q5
-        q_fin1_r        .qn   q0
-        q_fin1_i        .qn   q1
-        d_fin1_rl       .dn   d0
-        d_fin1_rh       .dn   d1
-        d_fin1_il       .dn   d2
-        d_fin1_ih       .dn   d3
-        q_tw1_r         .qn   q2
-        q_tw1_i         .qn   q3
-        d_tw1_rl        .dn   d4
-        d_tw1_rh        .dn   d5
-        d_tw1_il        .dn   d6
-        d_tw1_ih        .dn   d7
-        q_fin2_r        .qn   q8
-        q_fin2_i        .qn   q9
-        d_fin2_rl       .dn   d16
-        d_fin2_rh       .dn   d17
-        d_fin2_il       .dn   d18
-        d_fin2_ih       .dn   d19
-        q_tw2_r         .qn   q10
-        q_tw2_i         .qn   q11
-        d_tw2_rl        .dn   d20
-        d_tw2_rh        .dn   d21
-        d_tw2_il        .dn   d22
-        d_tw2_ih        .dn   d23
-        q_fin3_r        .qn   q0
-        q_fin3_i        .qn   q1
-        d_fin3_rl       .dn   d0
-        d_fin3_rh       .dn   d1
-        d_fin3_il       .dn   d2
-        d_fin3_ih       .dn   d3
-        q_tw3_r         .qn   q2
-        q_tw3_i         .qn   q3
-        d_tw3_rl        .dn   d4
-        d_tw3_rh        .dn   d5
-        d_tw3_il        .dn   d6
-        d_tw3_ih        .dn   d7
-        q_s0_r          .qn   q12
-        q_s0_i          .qn   q13
-        d_s0_rl         .dn   d24
-        d_s0_rh         .dn   d25
-        d_s0_il         .dn   d26
-        d_s0_ih         .dn   d27
-        q_s1_r          .qn   q14
-        q_s1_i          .qn   q15
-        d_s1_rl         .dn   d28
-        d_s1_rh         .dn   d29
-        d_s1_il         .dn   d30
-        d_s1_ih         .dn   d31
-        q_s2_r          .qn   q8
-        q_s2_i          .qn   q9
-        q_s2_rh         .qn   q10
-        q_s2_ih         .qn   q11
-        d_s2_rl         .dn   d16
-        d_s2_rh         .dn   d17
-        d_s2_il         .dn   d18
-        d_s2_ih         .dn   d19
-        q_s5_r          .qn   q0
-        q_s5_i          .qn   q1
-        q_s4_r          .qn   q2
-        q_s4_i          .qn   q3
-        q_s3_r          .qn   q14
-        q_s3_i          .qn   q15
-        q_fout0_r       .qn   q10
-        q_fout0_i       .qn   q11
-        q_fout2_r       .qn   q12
-        q_fout2_i       .qn   q13
-        q_fout1_r       .qn   q8
-        q_fout1_i       .qn   q9
-        q_fout3_r       .qn   q14
-        q_fout3_i       .qn   q15
+        d_in0_r         .dn   d0
+        d_in0_i         .dn   d1
+        d_in1_r         .dn   d2
+        d_in1_i         .dn   d3
+        d_in2_r         .dn   d4
+        d_in2_i         .dn   d5
+        d_in3_r         .dn   d6
+        d_in3_i         .dn   d7
+        d_in4_r         .dn   d8
+        d_in4_i         .dn   d9
+        d_in5_r         .dn   d10
+        d_in5_i         .dn   d11
+        d_in6_r         .dn   d12
+        d_in6_i         .dn   d13
+        d_in7_r         .dn   d14
+        d_in7_i         .dn   d15
+        q_in0           .qn   q0
+        q_in1           .qn   q1
+        q_in2           .qn   q2
+        q_in3           .qn   q3
+        q_in4           .qn   q4
+        q_in5           .qn   q5
+        q_in6           .qn   q6
+        q_in7           .qn   q7
+        q_sin0          .qn   q8
+        q_sin1          .qn   q9
+        q_sin2          .qn   q10
+        q_sin3          .qn   q11
+        q_sin4          .qn   q12
+        q_sin5          .qn   q13
+        q_sin6          .qn   q14
+        q_sin7          .qn   q15
+        d_sin3_r        .dn   d22
+        d_sin3_i        .dn   d23
+        d_sin5_r        .dn   d26
+        d_sin5_i        .dn   d27
+        d_sin7_r        .dn   d30
+        d_sin7_i        .dn   d31
 
-        /*NEON variale Declaration for mstride 2 loop */
+        d_tw_twn        .dn   d0
+        d_s3_r          .dn   d2
+        d_s3_i          .dn   d3
+        d_s7_r          .dn   d4
+        d_s7_i          .dn   d5
+        q_s3            .qn   q1
+        q_s7            .qn   q2
+        q_s8            .qn   q11
+        q_s9            .qn   q15
+        q_s10           .qn   q3
+        q_s11           .qn   q4
+        q_s12           .qn   q5
+        q_s13           .qn   q6
+        q_s14           .qn   q7
+        q_s15           .qn   q0
+        q_out0          .qn   q1
+        q_out1          .qn   q2
+        q_out2          .qn   q8
+        q_out3          .qn   q9
+        q_out4          .qn   q10
+        q_out5          .qn   q12
+        q_out6          .qn   q13
+        q_out7          .qn   q14
+        d_s10_r         .dn   d6
+        d_s10_i         .dn   d7
+        d_s11_r         .dn   d8
+        d_s11_i         .dn   d9
+        d_s14_r         .dn   d14
+        d_s14_i         .dn   d15
+        d_s15_r         .dn   d0
+        d_s15_i         .dn   d1
+        d_out2_r        .dn   d16
+        d_out2_i        .dn   d17
+        d_out3_r        .dn   d18
+        d_out3_i        .dn   d19
+        d_out6_r        .dn   d26
+        d_out6_i        .dn   d27
+        d_out7_r        .dn   d28
+        d_out7_i        .dn   d29
+
+
+        /*NEON variale Declaration for mstride loop */
         d_fin0_r        .dn   d0
         d_fin0_i        .dn   d1
-        q_fin0          .qn   q0
         d_fin1_r        .dn   d2
         d_fin1_i        .dn   d3
+        d_fin2_r        .dn   d4
+        d_fin2_i        .dn   d5
+        d_fin3_r        .dn   d6
+        d_fin3_i        .dn   d7
+        d_tw0_r         .dn   d8
+        d_tw0_i         .dn   d9
+        d_tw1_r         .dn   d10
+        d_tw1_i         .dn   d11
+        d_tw2_r         .dn   d12
+        d_tw2_i         .dn   d13
+        q_fin0          .qn   q0
         q_fin1          .qn   q1
-        d_tw1_r         .dn   d4
-        d_tw1_i         .dn   d5
-        d_fin2_r        .dn   d6
-        d_fin2_i        .dn   d7
-        q_fin2          .qn   q3
-        d_tw2_r         .dn   d16
-        d_tw2_i         .dn   d17
-        d_fin3_r        .dn   d18
-        d_fin3_i        .dn   d19
-        q_fin3          .qn   q9
-        d_tw3_r         .dn   d0
-        d_tw3_i         .dn   d1
-        d_s0_r          .dn   d22
-        d_s0_i          .dn   d23
-        d_s1_r          .dn   d24
-        d_s1_i          .dn   d25
-        d_s2_r          .dn   d26
-        d_s2_i          .dn   d27
-        d_s5_r          .dn   d28
-        d_s5_i          .dn   d29
-        d_s4_r          .dn   d30
-        d_s4_i          .dn   d31
-        d_s3_r          .dn   d16
-        d_s3_i          .dn   d17
-        d_fout0_r       .dn   d0
-        d_fout0_i       .dn   d1
-        d_fout2_r       .dn   d2
-        d_fout2_i       .dn   d3
-        d_fout1_r       .dn   d4
-        d_fout1_i       .dn   d5
-        d_fout3_r       .dn   d6
-        d_fout3_i       .dn   d7
+        q_fin2          .qn   q2
+        q_fin3          .qn   q3
+        q_scr0          .qn   q15
+        q_scr1_r        .qn   q7
+        q_scr1_i        .qn   q8
+        q_scr2_r        .qn   q9
+        q_scr2_i        .qn   q10
+        q_scr3_r        .qn   q11
+        q_scr3_i        .qn   q12
+        q_scr1          .qn   q7
+        q_scr2          .qn   q8
+        q_scr3          .qn   q9
+        q_scr4          .qn   q10
+        q_scr5          .qn   q11
+        q_scr6          .qn   q12
+        q_scr7          .qn   q13
+        d_scr1_r        .dn   d14
+        d_scr1_i        .dn   d15
+        d_scr2_r        .dn   d16
+        d_scr2_i        .dn   d17
+        d_scr3_r        .dn   d18
+        d_scr3_i        .dn   d19
+        d_scr5_r        .dn   d22
+        d_scr5_i        .dn   d23
+        d_scr7_r        .dn   d26
+        d_scr7_i        .dn   d27
+        q_fout0         .qn   q7
+        q_fout2         .qn   q8
+        d_fout0_r       .dn   d14
+        d_fout0_i       .dn   d15
+        d_fout1_r       .dn   d28
+        d_fout1_i       .dn   d29
+        d_fout2_r       .dn   d16
+        d_fout2_i       .dn   d17
+        d_fout3_r       .dn   d30
+        d_fout3_i       .dn   d31
 
-        d_tmp0          .dn   d30
-        d_tmp1          .dn   d31
-        q_tmp           .qn   q15
-        d_tmp2_0        .dn   d28
-        d_tmp2_1        .dn   d29
-        q_tmp2          .qn   q14
-        d_tmp3_0        .dn   d20
-        d_tmp3_1        .dn   d21
-        q_tmp3          .qn   q10
+        .macro BUTTERFLY4X2_WITHOUT_TWIDDLES scaled_flag, inverse
 
-        /*NEON variale Declaration for mstride 2 loop */
-        d_tw1_r01       .dn   d16
-        d_tw2_r01       .dn   d17
-        d_tw1_i01       .dn   d18
-        d_tw2_i01       .dn   d19
-        d_tw3_r01       .dn   d20
-        d_tw3_i01       .dn   d21
-        q_fin0_r0123    .qn   q0
-        q_fin0_i0123    .qn   q1
-        q_fin01_r01     .qn   q0
-        q_fin01_i01     .qn   q1
-        q_fin23_r01     .qn   q2
-        q_fin23_i01     .qn   q3
-        q_fin01_r23     .qn   q11
-        q_fin01_i23     .qn   q12
-        q_fin23_r23     .qn   q13
-        q_fin23_i23     .qn   q14
-        d_fin0_r01      .dn   d0
-        d_fin1_r01      .dn   d1
-        d_fin0_i01      .dn   d2
-        d_fin1_i01      .dn   d3
-        d_fin2_r01      .dn   d4
-        d_fin3_r01      .dn   d5
-        d_fin2_i01      .dn   d6
-        d_fin3_i01      .dn   d7
-        d_fin0_r23      .dn   d22
-        d_fin1_r23      .dn   d23
-        d_fin0_i23      .dn   d24
-        d_fin1_i23      .dn   d25
-        d_fin2_r23      .dn   d26
-        d_fin3_r23      .dn   d27
-        d_fin2_i23      .dn   d28
-        d_fin3_i23      .dn   d29
-        q_s0_r0123      .qn   q13
-        q_s0_i0123      .qn   q14
-        d_s0_r01        .dn   d26
-        d_s0_r23        .dn   d27
-        d_s0_i01        .dn   d28
-        d_s0_i23        .dn   d29
-        q_s1_r0123      .qn   q2
-        q_s1_i0123      .qn   q3
-        d_s1_r01        .dn   d4
-        d_s1_r23        .dn   d5
-        d_s1_i01        .dn   d6
-        d_s1_i23        .dn   d7
-        q_s2_r0123      .qn   q15
-        q_s2_i0123      .qn   q10
-        d_s2_r01        .dn   d30
-        d_s2_r23        .dn   d31
-        d_s2_i01        .dn   d20
-        d_s2_i23        .dn   d21
-        q_s5_r0123      .qn   q11
-        q_s5_i0123      .qn   q12
-        q_s4_r0123      .qn   q4
-        q_s4_i0123      .qn   q5
-        q_s3_r0123      .qn   q6
-        q_s3_i0123      .qn   q7
-        q_fout0_r0123   .qn   q0
-        q_fout0_i0123   .qn   q1
-        q_fout2_r0123   .qn   q2
-        q_fout2_i0123   .qn   q3
-        q_fout1_r0123   .qn   q13
-        q_fout1_i0123   .qn   q14
-        q_fout3_r0123   .qn   q6
-        q_fout3_i0123   .qn   q7
-        d_fout0_r01     .dn   d0
-        d_fout1_r01     .dn   d1
-        d_fout0_i01     .dn   d2
-        d_fout1_i01     .dn   d3
-        d_fout2_r01     .dn   d4
-        d_fout3_r01     .dn   d5
-        d_fout2_i01     .dn   d6
-        d_fout3_i01     .dn   d7
-        d_fout0_r23     .dn   d26
-        d_fout1_r23     .dn   d27
-        d_fout0_i23     .dn   d28
-        d_fout1_i23     .dn   d29
-        d_fout2_r23     .dn   d12
-        d_fout3_r23     .dn   d13
-        d_fout2_i23     .dn   d14
-        d_fout3_i23     .dn   d15
+        /* radix 4 butterfly without twiddles */
+        .ifeqs "\scaled_flag", "TRUE"
+        /* scaled_flag is true*/
+        vhadd.s32        q_s0_2, q_in0_01, q_in2_01
+        vhsub.s32        q_s1_2, q_in0_01, q_in2_01
+        vld2.32         {q_in0_01}, [p_fin0:64]!
+        vld2.32         {q_in2_01}, [p_fin2:64]!
+        vhadd.s32        q_s2_2, q_in1_01, q_in3_01
+        vhsub.s32        q_s3_2, q_in1_01, q_in3_01
+        vld2.32         {q_in1_01}, [p_fin1:64]!
+        vld2.32         {q_in3_01}, [p_fin3:64]!
 
-        .macro RADIX2_BUTTERFLY2_P4 scaled
-        vld4.32         {d_in0_r01, d_in0_i01, d_in1_r01, d_in1_i01}, [p_fin]!
-        vld4.32         {d_in0_r23, d_in0_i23, d_in1_r23, d_in1_i23}, [p_fin]!
+        vhsub.s32        q_out2_2, q_s0_2, q_s2_2
+        vhadd.s32        q_out0_2, q_s0_2, q_s2_2
 
-        .if \scaled
-        vshr.s32        q_in0_r0123, q_in0_r0123, #1
-        vshr.s32        q_in0_i0123, q_in0_i0123, #1
-        vshr.s32        q_in1_r0123, q_in1_r0123, #1
-        vshr.s32        q_in1_i0123, q_in1_i0123, #1
+        .ifeqs "\inverse", "TRUE"
+        vhsub.s32        d_out1_r15, d_s1_r2, d_s3_i2
+        vhadd.s32        d_out1_i15, d_s1_i2, d_s3_r2
+        vhadd.s32        d_out3_r37, d_s1_r2, d_s3_i2
+        vhsub.s32        d_out3_i37, d_s1_i2, d_s3_r2
+        .else
+        vhadd.s32        d_out1_r15, d_s1_r2, d_s3_i2
+        vhsub.s32        d_out1_i15, d_s1_i2, d_s3_r2
+        vhsub.s32        d_out3_r37, d_s1_r2, d_s3_i2
+        vhadd.s32        d_out3_i37, d_s1_i2, d_s3_r2
         .endif
 
-        vqsub.s32       q_out1_r0123, q_in0_r0123, q_in1_r0123
-        vqsub.s32       q_out1_i0123, q_in0_i0123, q_in1_i0123
-        vqadd.s32       q_out0_r0123, q_in0_r0123, q_in1_r0123
-        vqadd.s32       q_out0_i0123, q_in0_i0123, q_in1_i0123
-        vst4.32         {d_out0_r01, d_out0_i01, d_out1_r01, d_out1_i01}, [p_fout0]!
-        vst4.32         {d_out0_r23, d_out0_i23, d_out1_r23, d_out1_i23}, [p_fout0]!
+        .else
+        /* scaled_flag is false*/
+
+        vadd.s32        q_s0_2, q_in0_01, q_in2_01
+        vsub.s32        q_s1_2, q_in0_01, q_in2_01
+        vld2.32         {q_in0_01}, [p_fin0:64]!
+        vld2.32         {q_in2_01}, [p_fin2:64]!
+        vadd.s32        q_s2_2, q_in1_01, q_in3_01
+        vsub.s32        q_s3_2, q_in1_01, q_in3_01
+        vld2.32         {q_in1_01}, [p_fin1:64]!
+        vld2.32         {q_in3_01}, [p_fin3:64]!
+
+        vsub.s32        q_out2_2, q_s0_2, q_s2_2
+        vadd.s32        q_out0_2, q_s0_2, q_s2_2
+
+        .ifeqs "\inverse", "TRUE"
+        vsub.s32        d_out1_r15, d_s1_r2, d_s3_i2
+        vadd.s32        d_out1_i15, d_s1_i2, d_s3_r2
+        vadd.s32        d_out3_r37, d_s1_r2, d_s3_i2
+        vsub.s32        d_out3_i37, d_s1_i2, d_s3_r2
+        .else
+        vadd.s32        d_out1_r15, d_s1_r2, d_s3_i2
+        vsub.s32        d_out1_i15, d_s1_i2, d_s3_r2
+        vsub.s32        d_out3_r37, d_s1_r2, d_s3_i2
+        vadd.s32        d_out3_i37, d_s1_i2, d_s3_r2
+        .endif
+
+        .endif
+
+        vtrn.32         q_out0_2, q_out1_2
+        vtrn.32         q_out2_2, q_out3_2
+        vst2.32         {q_out0_2}, [p_tmp]!
+        vst2.32         {q_out2_2}, [p_tmp]!
+        vst2.32         {q_out1_2}, [p_tmp]!
+        vst2.32         {q_out3_2}, [p_tmp]!
         .endm
 
-        .macro RADIX4_BUTTERFLY4_P4 scaled
-        vld1.32         {d_in0_0, d_in1_0, d_in2_0, d_in3_0}, [p_fin]!
-        vld1.32         {d_in0_1, d_in1_1, d_in2_1, d_in3_1}, [p_fin]!
-        vswp            d_in1_0, d_in0_1
-        vswp            d_in3_0, d_in2_1
-        .if \scaled
-        vshr.s32        q_in0_01, q_in0_01, #2
-        vshr.s32        q_in1_01, q_in1_01, #2
-        vshr.s32        q_in2_01, q_in2_01, #2
-        vshr.s32        q_in3_01, q_in3_01, #2
+        .macro BUTTERFLY4X2_WITH_TWIDDLES scaled_flag, inverse
+
+        sub             p_in1, p_in1, nstep, lsl #2
+        add             p_in1, p_in1, #16
+        sub             p_tw1, p_tw1, mstep, lsl #1
+        add             p_tw1, p_tw1, #16
+
+        vmov            q_scr0, q_fin0
+
+        vmull.s32       q_scr1_r, d_fin1_r, d_tw0_r
+        vmull.s32       q_scr1_i, d_fin1_i, d_tw0_r
+        vmull.s32       q_scr2_r, d_fin2_r, d_tw1_r
+        vmull.s32       q_scr2_i, d_fin2_i, d_tw1_r
+        vmull.s32       q_scr3_r, d_fin3_r, d_tw2_r
+        vmull.s32       q_scr3_i, d_fin3_i, d_tw2_r
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+
+        .ifeqs "\inverse", "TRUE"
+        vmlal.s32       q_scr1_r, d_fin1_i, d_tw0_i
+        vmlsl.s32       q_scr1_i, d_fin1_r, d_tw0_i
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vmlal.s32       q_scr2_r, d_fin2_i, d_tw1_i
+        vmlsl.s32       q_scr2_i, d_fin2_r, d_tw1_i
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vmlal.s32       q_scr3_r, d_fin3_i, d_tw2_i
+        vmlsl.s32       q_scr3_i, d_fin3_r, d_tw2_i
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
+        .else
+        vmlsl.s32       q_scr1_r, d_fin1_i, d_tw0_i
+        vmlal.s32       q_scr1_i, d_fin1_r, d_tw0_i
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vmlsl.s32       q_scr2_r, d_fin2_i, d_tw1_i
+        vmlal.s32       q_scr2_i, d_fin2_r, d_tw1_i
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vmlsl.s32       q_scr3_r, d_fin3_i, d_tw2_i
+        vmlal.s32       q_scr3_i, d_fin3_r, d_tw2_i
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
         .endif
 
-        vqsub.s32       q_s2_01, q_in0_01, q_in2_01
-        vqadd.s32       q_out0_01, q_in0_01, q_in2_01
-        vqadd.s32       q_s0_01, q_in1_01, q_in3_01
-        vqsub.s32       q_s1_01, q_in1_01, q_in3_01
-        vqsub.s32       q_out2_01, q_out0_01, q_s0_01
-        vrev64.32       q_s1_01, q_s1_01
-        vqadd.s32       q_out0_01, q_out0_01, q_s0_01
-        vqadd.s32       q_out1_01, q_s2_01, q_s1_01
-        vqsub.s32       q_out3_01, q_s2_01, q_s1_01
-        vrev64.32       q_tmp, q_out1_01
-        vrev64.32       q_tmp2, q_out3_01
-        vtrn.32         q_out3_01, q_tmp
-        vtrn.32         q_out1_01, q_tmp2
-        vswp            d_out1_0, d_out0_1
-        vswp            d_out3_0, d_out2_1
-        vst1.32         {d_out0_0, d_out1_0, d_out2_0, d_out3_0}, [p_fout0]!
-        vst1.32         {d_out0_1, d_out1_1, d_out2_1, d_out3_1}, [p_fout0]!
+        vrshrn.i64      d_scr1_r, q_scr1_r, #31
+        vrshrn.i64      d_scr1_i, q_scr1_i, #31
+        vrshrn.i64      d_scr2_r, q_scr2_r, #31
+        vrshrn.i64      d_scr2_i, q_scr2_i, #31
+        vrshrn.i64      d_scr3_r, q_scr3_r, #31
+        vrshrn.i64      d_scr3_i, q_scr3_i, #31
+
+        .ifeqs  "\scaled_flag", "TRUE"
+
+        vhadd.s32        q_scr4, q_scr0, q_scr2
+        vhsub.s32        q_scr5, q_scr0, q_scr2
+        vhadd.s32        q_scr6, q_scr1, q_scr3
+        vhsub.s32        q_scr7, q_scr1, q_scr3
+
+        vhadd.s32        q_fout0, q_scr4, q_scr6
+        vhsub.s32        q_fout2, q_scr4, q_scr6
+
+        .ifeqs "\inverse", "TRUE"
+        vhsub.s32        d_fout1_r, d_scr5_r, d_scr7_i
+        vhadd.s32        d_fout1_i, d_scr5_i, d_scr7_r
+        vhadd.s32        d_fout3_r, d_scr5_r, d_scr7_i
+        vhsub.s32        d_fout3_i, d_scr5_i, d_scr7_r
+        .else
+        vhadd.s32        d_fout1_r, d_scr5_r, d_scr7_i
+        vhsub.s32        d_fout1_i, d_scr5_i, d_scr7_r
+        vhsub.s32        d_fout3_r, d_scr5_r, d_scr7_i
+        vhadd.s32        d_fout3_i, d_scr5_i, d_scr7_r
+        .endif
+
+        .else
+
+        vadd.s32        q_scr4, q_scr0, q_scr2
+        vsub.s32        q_scr5, q_scr0, q_scr2
+        vadd.s32        q_scr6, q_scr1, q_scr3
+        vsub.s32        q_scr7, q_scr1, q_scr3
+
+        vadd.s32        q_fout0, q_scr4, q_scr6
+        vsub.s32        q_fout2, q_scr4, q_scr6
+
+        .ifeqs "\inverse", "TRUE"
+        vsub.s32        d_fout1_r, d_scr5_r, d_scr7_i
+        vadd.s32        d_fout1_i, d_scr5_i, d_scr7_r
+        vadd.s32        d_fout3_r, d_scr5_r, d_scr7_i
+        vsub.s32        d_fout3_i, d_scr5_i, d_scr7_r
+        .else
+        vadd.s32        d_fout1_r, d_scr5_r, d_scr7_i
+        vsub.s32        d_fout1_i, d_scr5_i, d_scr7_r
+        vsub.s32        d_fout3_r, d_scr5_r, d_scr7_i
+        vadd.s32        d_fout3_i, d_scr5_i, d_scr7_r
+        .endif
+
+        .endif
+
+        vst2.32         {d_fout0_r, d_fout0_i}, [p_out1], mstep
+        vst2.32         {d_fout1_r, d_fout1_i}, [p_out1], mstep
+        vst2.32         {d_fout2_r, d_fout2_i}, [p_out1], mstep
+        vst2.32         {d_fout3_r, d_fout3_i}, [p_out1], mstep
+        sub             p_out1, p_out1, mstep, lsl #2
+        add             p_out1, p_out1, #16
+
         .endm
 
-        .macro RADIX4_BUTTERFLY4_INVERSE_P4 scaled
-        vld1.32         {d_in0_0, d_in1_0, d_in2_0, d_in3_0}, [p_fin]!
-        vld1.32         {d_in0_1, d_in1_1, d_in2_1, d_in3_1}, [p_fin]!
-        vswp            d_in1_0, d_in0_1
-        vswp            d_in3_0, d_in2_1
-        .if \scaled
-        vshr.s32        q_in0_01, q_in0_01, #2
-        vshr.s32        q_in1_01, q_in1_01, #2
-        vshr.s32        q_in2_01, q_in2_01, #2
-        vshr.s32        q_in3_01, q_in3_01, #2
+
+        .macro BUTTERFLY8X2_WITHOUT_TWIDDLES scaled_flag, inverse
+        /**
+         *   q_in0: Fin1[0]
+         *   q_in1: Fin1[0 + fstride]
+         *   q_in2: Fin1[fstride1]
+         *   q_in3: Fin1[fstride1 + fstride]
+         *   q_in4: Fin1[fstride1*2]
+         *   q_in5: Fin1[fstride1*2 + fstride]
+         *   q_in6: Fin1[fstride1*3]
+         *   q_in7: Fin1[fstride1*3 + fstride]
+         *
+         */
+
+        ldr             tmp0, =TW_81_32
+        vld2.32         {d_in0_r, d_in0_i}, [p_in1:64], fstep
+        vld2.32         {d_in2_r, d_in2_i}, [p_in1:64], fstep
+        vld2.32         {d_in4_r, d_in4_i}, [p_in1:64], fstep
+        vld2.32         {d_in6_r, d_in6_i}, [p_in1:64], fstep
+        vld2.32         {d_in1_r, d_in1_i}, [p_in1:64], fstep
+        vld2.32         {d_in3_r, d_in3_i}, [p_in1:64], fstep
+        vld2.32         {d_in5_r, d_in5_i}, [p_in1:64], fstep
+        vld2.32         {d_in7_r, d_in7_i}, [p_in1:64], fstep
+
+        .ifeqs "\scaled_flag", "TRUE"
+        vshr.s32        q_in0, q_in0, 3
+        vshr.s32        q_in2, q_in2, 3
+        vshr.s32        q_in4, q_in4, 3
+        vshr.s32        q_in6, q_in6, 3
+        vshr.s32        q_in1, q_in1, 3
+        vshr.s32        q_in3, q_in3, 3
+        vshr.s32        q_in5, q_in5, 3
+        vshr.s32        q_in7, q_in7, 3
         .endif
 
-        vqsub.s32       q_s2_01, q_in0_01, q_in2_01
-        vqadd.s32       q_out0_01, q_in0_01, q_in2_01
-        vqadd.s32       q_s0_01, q_in1_01, q_in3_01
-        vqsub.s32       q_s1_01, q_in1_01, q_in3_01
-        vqsub.s32       q_out2_01, q_out0_01, q_s0_01
-        vrev64.32       q_s1_01, q_s1_01
-        vqadd.s32       q_out0_01, q_out0_01, q_s0_01
-        vqsub.s32       q_out1_01, q_s2_01, q_s1_01
-        vqadd.s32       q_out3_01, q_s2_01, q_s1_01
-        vrev64.32       q_tmp, q_out1_01
-        vrev64.32       q_tmp2, q_out3_01
-        vtrn.32         q_out3_01, q_tmp
-        vtrn.32         q_out1_01, q_tmp2
-        vswp            d_out1_0, d_out0_1
-        vswp            d_out3_0, d_out2_1
-        vst1.32         {d_out0_0, d_out1_0, d_out2_0, d_out3_0}, [p_fout0]!
-        vst1.32         {d_out0_1, d_out1_1, d_out2_1, d_out3_1}, [p_fout0]!
+        // radix 4 butterfly without twiddles
+        vadd.s32        q_sin0, q_in0, q_in1
+        vsub.s32        q_sin1, q_in0, q_in1
+        vld1.32         {d_tw_twn}, [tmp0]
+        vadd.s32        q_sin2, q_in2, q_in3
+        vsub.s32        q_sin3, q_in2, q_in3
+        vadd.s32        q_sin4, q_in4, q_in5
+        vsub.s32        q_sin5, q_in4, q_in5
+        vadd.s32        q_sin6, q_in6, q_in7
+        vsub.s32        q_sin7, q_in6, q_in7
+
+        .ifeqs "\inverse", "TRUE"
+        vneg.s32        d_sin5_i, d_sin5_i
+        vsub.s32        d_s3_r, d_sin3_r, d_sin3_i
+        vadd.s32        d_s3_i, d_sin3_i, d_sin3_r
+        vadd.s32        d_s7_r, d_sin7_r, d_sin7_i
+        vsub.s32        d_s7_i, d_sin7_i, d_sin7_r
+        .else
+        vneg.s32        d_sin5_r, d_sin5_r
+        vadd.s32        d_s3_r, d_sin3_r, d_sin3_i
+        vsub.s32        d_s3_i, d_sin3_i, d_sin3_r
+        vsub.s32        d_s7_r, d_sin7_r, d_sin7_i
+        vadd.s32        d_s7_i, d_sin7_i, d_sin7_r
+        .endif
+        vswp            d_sin5_r, d_sin5_i
+
+        vqdmulh.s32     q_s3, q_s3, d_tw_twn[0]
+        vqdmulh.s32     q_s7, q_s7, d_tw_twn[1]
+
+        // radix 2 butterfly
+        vadd.s32        q_s8, q_sin0, q_sin4
+        vadd.s32        q_s9, q_sin1, q_sin5
+        vsub.s32        q_s10, q_sin0, q_sin4
+        vsub.s32        q_s11, q_sin1, q_sin5
+
+        // radix 2 butterfly
+        vadd.s32        q_s12, q_sin2, q_sin6
+        vadd.s32        q_s13, q_s3, q_s7
+        vsub.s32        q_s14, q_sin2, q_sin6
+        vsub.s32        q_s15, q_s3, q_s7
+
+        vsub.s32        q_out4, q_s8, q_s12
+        vsub.s32        q_out5, q_s9, q_s13
+        vadd.s32        q_out0, q_s8, q_s12
+        vadd.s32        q_out1, q_s9, q_s13
+
+        .ifeqs "\inverse", "TRUE"
+        vsub.s32        d_out2_r, d_s10_r, d_s14_i
+        vadd.s32        d_out2_i, d_s10_i, d_s14_r
+        vsub.s32        d_out3_r, d_s11_r, d_s15_i
+        vadd.s32        d_out3_i, d_s11_i, d_s15_r
+        vadd.s32        d_out6_r, d_s10_r, d_s14_i
+        vsub.s32        d_out6_i, d_s10_i, d_s14_r
+        vadd.s32        d_out7_r, d_s11_r, d_s15_i
+        vsub.s32        d_out7_i, d_s11_i, d_s15_r
+        .else
+        vadd.s32        d_out2_r, d_s10_r, d_s14_i
+        vsub.s32        d_out2_i, d_s10_i, d_s14_r
+        vadd.s32        d_out3_r, d_s11_r, d_s15_i
+        vsub.s32        d_out3_i, d_s11_i, d_s15_r
+        vsub.s32        d_out6_r, d_s10_r, d_s14_i
+        vadd.s32        d_out6_i, d_s10_i, d_s14_r
+        vsub.s32        d_out7_r, d_s11_r, d_s15_i
+        vadd.s32        d_out7_i, d_s11_i, d_s15_r
+        .endif
+
+        vtrn.32         q_out0, q_out1
+        vtrn.32         q_out2, q_out3
+        vtrn.32         q_out4, q_out5
+        vtrn.32         q_out6, q_out7
+
+
+        vst2.32         {q_out0}, [p_out1]!
+        vst2.32         {q_out2}, [p_out1]!
+        vst2.32         {q_out4}, [p_out1]!
+        vst2.32         {q_out6}, [p_out1]!
+        vst2.32         {q_out1}, [p_out1]!
+        vst2.32         {q_out3}, [p_out1]!
+        vst2.32         {q_out5}, [p_out1]!
+        vst2.32         {q_out7}, [p_out1]!
+
+        sub             p_in1, p_in1, fstep, lsl #3
+        add             p_in1, p_in1, #16
+
         .endm
 
-        .macro RADIX4_BUTTERFLY_P4 scaled
-        vld2.32         {q_fin1_r, q_fin1_i}, [p_fout1]
-        vld2.32         {q_tw1_r, q_tw1_i}, [p_tw1]!
-        vld2.32         {q_fin2_r, q_fin2_i}, [p_fout2]
-        vld2.32         {q_tw2_r, q_tw2_i}, [p_tw2]!
+        .global TW_81_32
+TW_81_32:
+.long 1518500249
+.long -1518500249
 
-        .if \scaled
-        vshr.s32        q_fin1_r, q_fin1_r, #2
-        vshr.s32        q_fin1_i, q_fin1_i, #2
-        vshr.s32        q_fin2_r, q_fin2_r, #2
-        vshr.s32        q_fin2_i, q_fin2_i, #2
-        .endif
-        vmull.s32        q_s0_r, d_fin1_rl, d_tw1_rl
-        vmull.s32        q_tmp, d_fin1_rh, d_tw1_rh
-        vmull.s32        q_s0_i, d_fin1_rl, d_tw1_il
-        vmull.s32        q_tmp2, d_fin1_rh, d_tw1_ih
-
-        vmull.s32        q4, d_fin2_rl, d_tw2_rl
-        vmull.s32        q5, d_fin2_rh, d_tw2_rh
-        vmull.s32        q6, d_fin2_rl, d_tw2_il
-        vmull.s32        q7, d_fin2_rh, d_tw2_ih
-
-        vmlsl.s32        q_s0_r, d_fin1_il, d_tw1_il
-        vmlsl.s32        q_tmp, d_fin1_ih, d_tw1_ih
-        vmlal.s32        q_s0_i, d_fin1_il, d_tw1_rl
-        vmlal.s32        q_tmp2, d_fin1_ih, d_tw1_rh
-
-        vmlsl.s32        q4, d_fin2_il, d_tw2_il
-        vmlsl.s32        q5, d_fin2_ih, d_tw2_ih
-        vmlal.s32        q6, d_fin2_il, d_tw2_rl
-        vmlal.s32        q7, d_fin2_ih, d_tw2_rh
-
-        vld2.32         {q_fin3_r, q_fin3_i}, [p_fout3]
-        vld2.32         {q_tw3_r, q_tw3_i}, [p_tw3]!
-        vrshrn.i64       d_s0_rl, q_s0_r, #31
-        vrshrn.i64       d_s0_rh, q_tmp, #31
-        vrshrn.i64       d_s0_il, q_s0_i, #31
-        vrshrn.i64       d_s0_ih, q_tmp2, #31
-        .if \scaled
-        vshr.s32        q_fin3_r, q_fin3_r, #2
-        vshr.s32        q_fin3_i, q_fin3_i, #2
-        .endif
-
-        vmull.s32        q_s2_r, d_fin3_rl, d_tw3_rl
-        vmull.s32        q_s2_rh, d_fin3_rh, d_tw3_rh
-        vmull.s32        q_s2_i, d_fin3_rl, d_tw3_il
-        vmull.s32        q_s2_ih, d_fin3_rh, d_tw3_ih
-
-        vrshrn.i64       d_s1_rl, q4, #31
-        vrshrn.i64       d_s1_rh, q5, #31
-        vrshrn.i64       d_s1_il, q6, #31
-        vrshrn.i64       d_s1_ih, q7, #31
-
-        vmlsl.s32        q_s2_r, d_fin3_il, d_tw3_il
-        vmlsl.s32        q_s2_rh, d_fin3_ih, d_tw3_ih
-        vmlal.s32        q_s2_i, d_fin3_il, d_tw3_rl
-        vmlal.s32        q_s2_ih, d_fin3_ih, d_tw3_rh
-
-        vld2.32         {q_fin0_r, q_fin0_i}, [p_fout0]
-        vrshrn.i64       d_s2_rl, q_s2_r, #31
-        vrshrn.i64       d_s2_rh, q_s2_rh, #31
-        vrshrn.i64       d_s2_il, q_s2_i, #31
-        vrshrn.i64       d_s2_ih, q_s2_ih, #31
-        .if \scaled
-        vshr.s32        q_fin0_r, q_fin0_r, #2
-        vshr.s32        q_fin0_i, q_fin0_i, #2
-        .endif
-
-        vsub.s32       q_s5_r, q_fin0_r, q_s1_r
-        vsub.s32       q_s5_i, q_fin0_i, q_s1_i
-        vadd.s32       q_fout0_r, q_fin0_r, q_s1_r
-        vadd.s32       q_fout0_i, q_fin0_i, q_s1_i
-
-        vadd.s32       q_s3_r, q_s0_r, q_s2_r
-        vadd.s32       q_s3_i, q_s0_i, q_s2_i
-        vsub.s32       q_s4_r, q_s0_r, q_s2_r
-        vsub.s32       q_s4_i, q_s0_i, q_s2_i
-
-        vsub.s32       q_fout2_r, q_fout0_r, q_s3_r
-        vsub.s32       q_fout2_i, q_fout0_i, q_s3_i
-        vadd.s32       q_fout0_r, q_fout0_r, q_s3_r
-        vadd.s32       q_fout0_i, q_fout0_i, q_s3_i
-        vst2.32         {q_fout2_r, q_fout2_i}, [p_fout2]!
-
-        vadd.s32       q_fout1_r, q_s5_r, q_s4_i
-        vsub.s32       q_fout1_i, q_s5_i, q_s4_r
-        vsub.s32       q_fout3_r, q_s5_r, q_s4_i
-        vadd.s32       q_fout3_i, q_s5_i, q_s4_r
-        vst2.32         {q_fout0_r, q_fout0_i}, [p_fout0]!
-        vst2.32         {q_fout1_r, q_fout1_i}, [p_fout1]!
-        vst2.32         {q_fout3_r, q_fout3_i}, [p_fout3]!
-        .endm
-
-        .macro RADIX4_BUTTERFLY_INVERSE_P4 scaled
-        vld2.32         {q_fin1_r, q_fin1_i}, [p_fout1]
-        vld2.32         {q_tw1_r, q_tw1_i}, [p_tw1]!
-        vld2.32         {q_fin2_r, q_fin2_i}, [p_fout2]
-        vld2.32         {q_tw2_r, q_tw2_i}, [p_tw2]!
-
-        .if \scaled
-        vshr.s32        q_fin1_r, q_fin1_r, #2
-        vshr.s32        q_fin1_i, q_fin1_i, #2
-        vshr.s32        q_fin2_r, q_fin2_r, #2
-        vshr.s32        q_fin2_i, q_fin2_i, #2
-        .endif
-        vmull.s32        q_s0_r, d_fin1_rl, d_tw1_rl
-        vmull.s32        q_tmp, d_fin1_rh, d_tw1_rh
-        vmull.s32        q_s0_i, d_fin1_il, d_tw1_rl
-        vmull.s32        q_tmp2, d_fin1_ih, d_tw1_rh
-
-        vmull.s32        q4, d_fin2_rl, d_tw2_rl
-        vmull.s32        q5, d_fin2_rh, d_tw2_rh
-        vmull.s32        q6, d_fin2_il, d_tw2_rl
-        vmull.s32        q7, d_fin2_ih, d_tw2_rh
-
-        vmlal.s32        q_s0_r, d_fin1_il, d_tw1_il
-        vmlal.s32        q_tmp, d_fin1_ih, d_tw1_ih
-        vmlsl.s32        q_s0_i, d_fin1_rl, d_tw1_il
-        vmlsl.s32        q_tmp2, d_fin1_rh, d_tw1_ih
-
-        vmlal.s32        q4, d_fin2_il, d_tw2_il
-        vmlal.s32        q5, d_fin2_ih, d_tw2_ih
-        vmlsl.s32        q6, d_fin2_rl, d_tw2_il
-        vmlsl.s32        q7, d_fin2_rh, d_tw2_ih
-
-        vld2.32         {q_fin3_r, q_fin3_i}, [p_fout3]
-        vld2.32         {q_tw3_r, q_tw3_i}, [p_tw3]!
-        vrshrn.i64       d_s0_rl, q_s0_r, #31
-        vrshrn.i64       d_s0_rh, q_tmp, #31
-        vrshrn.i64       d_s0_il, q_s0_i, #31
-        vrshrn.i64       d_s0_ih, q_tmp2, #31
-        .if \scaled
-        vshr.s32        q_fin3_r, q_fin3_r, #2
-        vshr.s32        q_fin3_i, q_fin3_i, #2
-        .endif
-
-        vmull.s32        q_s2_r, d_fin3_rl, d_tw3_rl
-        vmull.s32        q_s2_rh, d_fin3_rh, d_tw3_rh
-        vmull.s32        q_s2_i, d_fin3_il, d_tw3_rl
-        vmull.s32        q_s2_ih, d_fin3_ih, d_tw3_rh
-
-        vrshrn.i64       d_s1_rl, q4, #31
-        vrshrn.i64       d_s1_rh, q5, #31
-        vrshrn.i64       d_s1_il, q6, #31
-        vrshrn.i64       d_s1_ih, q7, #31
-
-        vmlal.s32        q_s2_r, d_fin3_il, d_tw3_il
-        vmlal.s32        q_s2_rh, d_fin3_ih, d_tw3_ih
-        vmlsl.s32        q_s2_i, d_fin3_rl, d_tw3_il
-        vmlsl.s32        q_s2_ih, d_fin3_rh, d_tw3_ih
-
-        vld2.32         {q_fin0_r, q_fin0_i}, [p_fout0]
-        vrshrn.i64       d_s2_rl, q_s2_r, #31
-        vrshrn.i64       d_s2_rh, q_s2_rh, #31
-        vrshrn.i64       d_s2_il, q_s2_i, #31
-        vrshrn.i64       d_s2_ih, q_s2_ih, #31
-        .if \scaled
-        vshr.s32        q_fin0_r, q_fin0_r, #2
-        vshr.s32        q_fin0_i, q_fin0_i, #2
-        .endif
-
-        vsub.s32       q_s5_r, q_fin0_r, q_s1_r
-        vsub.s32       q_s5_i, q_fin0_i, q_s1_i
-        vadd.s32       q_fout0_r, q_fin0_r, q_s1_r
-        vadd.s32       q_fout0_i, q_fin0_i, q_s1_i
-
-        vadd.s32       q_s3_r, q_s0_r, q_s2_r
-        vadd.s32       q_s3_i, q_s0_i, q_s2_i
-        vsub.s32       q_s4_r, q_s0_r, q_s2_r
-        vsub.s32       q_s4_i, q_s0_i, q_s2_i
-
-        vsub.s32       q_fout2_r, q_fout0_r, q_s3_r
-        vsub.s32       q_fout2_i, q_fout0_i, q_s3_i
-        vadd.s32       q_fout0_r, q_fout0_r, q_s3_r
-        vadd.s32       q_fout0_i, q_fout0_i, q_s3_i
-        vst2.32         {q_fout2_r, q_fout2_i}, [p_fout2]!
-
-        vsub.s32       q_fout1_r, q_s5_r, q_s4_i
-        vadd.s32       q_fout1_i, q_s5_i, q_s4_r
-        vadd.s32       q_fout3_r, q_s5_r, q_s4_i
-        vsub.s32       q_fout3_i, q_s5_i, q_s4_r
-        vst2.32         {q_fout0_r, q_fout0_i}, [p_fout0]!
-        vst2.32         {q_fout1_r, q_fout1_i}, [p_fout1]!
-        vst2.32         {q_fout3_r, q_fout3_i}, [p_fout3]!
-        .endm
-
-        .macro RADIX24_BUTTERFLY_P4 scaled
-        vld2.32         {d_tw3_r01, d_tw3_i01}, [p_tw1]
-        vld2.32         {d_fin0_r01, d_fin1_r01, d_fin0_i01, d_fin1_i01}, [p_fout0]!
-        vld2.32         {d_fin2_r01, d_fin3_r01, d_fin2_i01, d_fin3_i01}, [p_fout0], tmp0
-        vld2.32         {d_fin0_r23, d_fin1_r23, d_fin0_i23, d_fin1_i23}, [p_fout1]!
-        vld2.32         {d_fin2_r23, d_fin3_r23, d_fin2_i23, d_fin3_i23}, [p_fout1], tmp0
-        .if \scaled
-        vshr.s32        q_fin01_r01, q_fin01_r01, #2
-        vshr.s32        q_fin01_i01, q_fin01_i01, #2
-        vshr.s32        q_fin23_r01, q_fin23_r01, #2
-        vshr.s32        q_fin23_i01, q_fin23_i01, #2
-        vshr.s32        q_fin01_r23, q_fin01_r23, #2
-        vshr.s32        q_fin01_i23, q_fin01_i23, #2
-        vshr.s32        q_fin23_r23, q_fin23_r23, #2
-        vshr.s32        q_fin23_i23, q_fin23_i23, #2
-        .endif
-
-        vmull.s32       q4, d_fin3_r01, d_tw3_r01
-        vmull.s32       q6, d_fin3_r01, d_tw3_i01
-        vmull.s32       q5, d_fin3_r23, d_tw3_r01
-        vmull.s32       q7, d_fin3_r23, d_tw3_i01
-        vmlsl.s32       q4, d_fin3_i01, d_tw3_i01
-        vmlal.s32       q6, d_fin3_i01, d_tw3_r01
-        vmlsl.s32       q5, d_fin3_i23, d_tw3_i01
-        vmlal.s32       q7, d_fin3_i23, d_tw3_r01
-        vrshrn.i64      d_s2_r01, q4, #31
-        vrshrn.i64      d_s2_i01, q6, #31
-        vrshrn.i64      d_s2_r23, q5, #31
-        vrshrn.i64      d_s2_i23, q7, #31
-
-        vmull.s32       q4, d_fin2_r01, d_tw2_r01
-        vmull.s32       q5, d_fin2_r23, d_tw2_r01
-        vmull.s32       q6, d_fin2_r01, d_tw2_i01
-        vmull.s32       q7, d_fin2_r23, d_tw2_i01
-        vmlsl.s32       q4, d_fin2_i01, d_tw2_i01
-        vmlsl.s32       q5, d_fin2_i23, d_tw2_i01
-        vmlal.s32       q6, d_fin2_i01, d_tw2_r01
-        vmlal.s32       q7, d_fin2_i23, d_tw2_r01
-        vrshrn.i64      d_s1_r01, q4, #31
-        vrshrn.i64      d_s1_r23, q5, #31
-        vrshrn.i64      d_s1_i01, q6, #31
-        vrshrn.i64      d_s1_i23, q7, #31
-
-        vmull.s32       q4, d_fin1_r01, d_tw1_r01
-        vmull.s32       q5, d_fin1_r23, d_tw1_r01
-        vmull.s32       q6, d_fin1_r01, d_tw1_i01
-        vmull.s32       q7, d_fin1_r23, d_tw1_i01
-        vmlsl.s32       q4, d_fin1_i01, d_tw1_i01
-        vmlsl.s32       q5, d_fin1_i23, d_tw1_i01
-        vmlal.s32       q6, d_fin1_i01, d_tw1_r01
-        vmlal.s32       q7, d_fin1_i23, d_tw1_r01
-
-        vmov            d_fin1_r01, d_fin0_r23
-        vmov            d_fin1_i01, d_fin0_i23
-
-        vrshrn.i64      d_s0_r01, q4, #31
-        vrshrn.i64      d_s0_r23, q5, #31
-        vrshrn.i64      d_s0_i01, q6, #31
-        vrshrn.i64      d_s0_i23, q7, #31
-
-        vsub.s32        q_s5_r0123, q_fin0_r0123, q_s1_r0123
-        vsub.s32        q_s5_i0123, q_fin0_i0123, q_s1_i0123
-        vadd.s32        q_fout0_r0123, q_fin0_r0123, q_s1_r0123
-        vadd.s32        q_fout0_i0123, q_fin0_i0123, q_s1_i0123
-
-        vadd.s32        q_s3_r0123, q_s0_r0123, q_s2_r0123
-        vadd.s32        q_s3_i0123, q_s0_i0123, q_s2_i0123
-        vsub.s32        q_s4_r0123, q_s0_r0123, q_s2_r0123
-        vsub.s32        q_s4_i0123, q_s0_i0123, q_s2_i0123
-        vsub.s32        q_fout2_r0123, q_fout0_r0123, q_s3_r0123
-        vsub.s32        q_fout2_i0123, q_fout0_i0123, q_s3_i0123
-        vadd.s32        q_fout0_r0123, q_fout0_r0123, q_s3_r0123
-        vadd.s32        q_fout0_i0123, q_fout0_i0123, q_s3_i0123
-
-        vadd.s32        q_fout1_r0123, q_s5_r0123, q_s4_i0123
-        vsub.s32        q_fout1_i0123, q_s5_i0123, q_s4_r0123
-        vsub.s32        q_fout3_r0123, q_s5_r0123, q_s4_i0123
-        vadd.s32        q_fout3_i0123, q_s5_i0123, q_s4_r0123
-
-        vswp            d_fout1_r01, d_fout0_r23
-        vswp            d_fout1_i01, d_fout0_i23
-        vswp            d_fout3_r01, d_fout2_r23
-        vswp            d_fout3_i01, d_fout2_i23
-
-        vst2.32         {d_fout0_r01, d_fout1_r01, d_fout0_i01, d_fout1_i01}, [p_fout2]!
-        vst2.32         {d_fout0_r23, d_fout1_r23, d_fout0_i23, d_fout1_i23}, [p_fout3]!
-        vst2.32         {d_fout2_r01, d_fout3_r01, d_fout2_i01, d_fout3_i01}, [p_fout2], tmp0
-        vst2.32         {d_fout2_r23, d_fout3_r23, d_fout2_i23, d_fout3_i23}, [p_fout3], tmp0
-        .endm
-
-        .macro RADIX24_BUTTERFLY_INVERSE_P4 scaled
-        vld2.32         {d_tw3_r01, d_tw3_i01}, [p_tw1]
-        vld2.32         {d_fin0_r01, d_fin1_r01, d_fin0_i01, d_fin1_i01}, [p_fout0]!
-        vld2.32         {d_fin2_r01, d_fin3_r01, d_fin2_i01, d_fin3_i01}, [p_fout0], tmp0
-        vld2.32         {d_fin0_r23, d_fin1_r23, d_fin0_i23, d_fin1_i23}, [p_fout1]!
-        vld2.32         {d_fin2_r23, d_fin3_r23, d_fin2_i23, d_fin3_i23}, [p_fout1], tmp0
-        .if \scaled
-        vshr.s32        q_fin01_r01, q_fin01_r01, #2
-        vshr.s32        q_fin01_i01, q_fin01_i01, #2
-        vshr.s32        q_fin23_r01, q_fin23_r01, #2
-        vshr.s32        q_fin23_i01, q_fin23_i01, #2
-        vshr.s32        q_fin01_r23, q_fin01_r23, #2
-        vshr.s32        q_fin01_i23, q_fin01_i23, #2
-        vshr.s32        q_fin23_r23, q_fin23_r23, #2
-        vshr.s32        q_fin23_i23, q_fin23_i23, #2
-        .endif
-
-        vmull.s32       q4, d_fin3_r01, d_tw3_r01
-        vmull.s32       q6, d_fin3_i01, d_tw3_r01
-        vmull.s32       q5, d_fin3_r23, d_tw3_r01
-        vmull.s32       q7, d_fin3_i23, d_tw3_r01
-        vmlal.s32       q4, d_fin3_i01, d_tw3_i01
-        vmlsl.s32       q6, d_fin3_r01, d_tw3_i01
-        vmlal.s32       q5, d_fin3_i23, d_tw3_i01
-        vmlsl.s32       q7, d_fin3_r23, d_tw3_i01
-        vrshrn.i64      d_s2_r01, q4, #31
-        vrshrn.i64      d_s2_i01, q6, #31
-        vrshrn.i64      d_s2_r23, q5, #31
-        vrshrn.i64      d_s2_i23, q7, #31
-
-        vmull.s32       q4, d_fin2_r01, d_tw2_r01
-        vmull.s32       q5, d_fin2_r23, d_tw2_r01
-        vmull.s32       q6, d_fin2_i01, d_tw2_r01
-        vmull.s32       q7, d_fin2_i23, d_tw2_r01
-        vmlal.s32       q4, d_fin2_i01, d_tw2_i01
-        vmlal.s32       q5, d_fin2_i23, d_tw2_i01
-        vmlsl.s32       q6, d_fin2_r01, d_tw2_i01
-        vmlsl.s32       q7, d_fin2_r23, d_tw2_i01
-        vrshrn.i64      d_s1_r01, q4, #31
-        vrshrn.i64      d_s1_r23, q5, #31
-        vrshrn.i64      d_s1_i01, q6, #31
-        vrshrn.i64      d_s1_i23, q7, #31
-
-        vmull.s32       q4, d_fin1_r01, d_tw1_r01
-        vmull.s32       q5, d_fin1_r23, d_tw1_r01
-        vmull.s32       q6, d_fin1_i01, d_tw1_r01
-        vmull.s32       q7, d_fin1_i23, d_tw1_r01
-        vmlal.s32       q4, d_fin1_i01, d_tw1_i01
-        vmlal.s32       q5, d_fin1_i23, d_tw1_i01
-        vmlsl.s32       q6, d_fin1_r01, d_tw1_i01
-        vmlsl.s32       q7, d_fin1_r23, d_tw1_i01
-
-        vmov            d_fin1_r01, d_fin0_r23
-        vmov            d_fin1_i01, d_fin0_i23
-
-        vrshrn.i64      d_s0_r01, q4, #31
-        vrshrn.i64      d_s0_r23, q5, #31
-        vrshrn.i64      d_s0_i01, q6, #31
-        vrshrn.i64      d_s0_i23, q7, #31
-
-        vsub.s32        q_s5_r0123, q_fin0_r0123, q_s1_r0123
-        vsub.s32        q_s5_i0123, q_fin0_i0123, q_s1_i0123
-        vadd.s32        q_fout0_r0123, q_fin0_r0123, q_s1_r0123
-        vadd.s32        q_fout0_i0123, q_fin0_i0123, q_s1_i0123
-
-        vadd.s32        q_s3_r0123, q_s0_r0123, q_s2_r0123
-        vadd.s32        q_s3_i0123, q_s0_i0123, q_s2_i0123
-        vsub.s32        q_s4_r0123, q_s0_r0123, q_s2_r0123
-        vsub.s32        q_s4_i0123, q_s0_i0123, q_s2_i0123
-        vsub.s32        q_fout2_r0123, q_fout0_r0123, q_s3_r0123
-        vsub.s32        q_fout2_i0123, q_fout0_i0123, q_s3_i0123
-        vadd.s32        q_fout0_r0123, q_fout0_r0123, q_s3_r0123
-        vadd.s32        q_fout0_i0123, q_fout0_i0123, q_s3_i0123
-
-        vsub.s32        q_fout1_r0123, q_s5_r0123, q_s4_i0123
-        vadd.s32        q_fout1_i0123, q_s5_i0123, q_s4_r0123
-        vadd.s32        q_fout3_r0123, q_s5_r0123, q_s4_i0123
-        vsub.s32        q_fout3_i0123, q_s5_i0123, q_s4_r0123
-
-        vswp            d_fout1_r01, d_fout0_r23
-        vswp            d_fout1_i01, d_fout0_i23
-        vswp            d_fout3_r01, d_fout2_r23
-        vswp            d_fout3_i01, d_fout2_i23
-
-        vst2.32         {d_fout0_r01, d_fout1_r01, d_fout0_i01, d_fout1_i01}, [p_fout2]!
-        vst2.32         {d_fout0_r23, d_fout1_r23, d_fout0_i23, d_fout1_i23}, [p_fout3]!
-        vst2.32         {d_fout2_r01, d_fout3_r01, d_fout2_i01, d_fout3_i01}, [p_fout2], tmp0
-        vst2.32         {d_fout2_r23, d_fout3_r23, d_fout2_i23, d_fout3_i23}, [p_fout3], tmp0
-        .endm
 
         /**
          * @details
-         * This function implements the 4 butterfly
+         * This function implements the radix4/8 forward FFT
          *
          * @param[in/out] *Fout        points to input/output pointers
          * @param[in]     *factors     factors pointer:
@@ -788,12 +531,11 @@
          */
 
         .align 4
-        .global ne10_mixed_radix_butterfly_forward_int32_unscaled_neon
+        .global ne10_mixed_radix_fft_forward_int32_unscaled_neon
         .thumb
         .thumb_func
 
-ne10_mixed_radix_butterfly_forward_int32_unscaled_neon:
-
+ne10_mixed_radix_fft_forward_int32_unscaled_neon:
         push            {r4-r12,lr}
         vpush           {q4-q7}
 
@@ -803,106 +545,164 @@ ne10_mixed_radix_butterfly_forward_int32_unscaled_neon:
         ldr             radix, [p_factors]                         /* get factors[2*stage_count]--- the first radix */
         ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
 
-        /* judge the first radix is 2 or 4?  */
+        /* save the output buffer for the last stage  */
+        mov             p_out_ls, p_fout
+
+        /* ---------------the first stage---------------  */
+        /* judge the radix is 2 or 4  */
         cmp             radix, #2
-        mov             p_fin, p_fout
-        mov             p_fout0, p_fout
+        beq             .L_ne10_radix8_butterfly_unscaled_first_stage
+
+        /* ---------------first stage: radix 4  */
         mov             count, fstride
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_forward_first_stage_radix4
+        mov             p_fin0, p_fin
+        mov             p_tmp, p_fout
+        add             p_fin2, p_fin0, fstride, lsl #4   /* get the address of F[fstride*2] */
+        add             p_fin1, p_fin0, fstride, lsl #3   /* get the address of F[fstride] */
+        add             p_fin3, p_fin2, fstride, lsl #3   /* get the address of F[fstride*3] */
+        vld2.32         {q_in0_01}, [p_fin0:64]!
+        vld2.32         {q_in2_01}, [p_fin2:64]!
+        vld2.32         {q_in1_01}, [p_fin1:64]!
+        vld2.32         {q_in3_01}, [p_fin3:64]!
 
-        /* the first stage for radix2 */
-.L_ne10_unscaled_mixed_radix_butterfly_forward_first_stage_radix2:
-        /* fstride gt 1 */
-        RADIX2_BUTTERFLY2_P4 0
-
-        subs            count, count, #4
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_forward_first_stage_radix2
-
-        /* the second stage for radix2/4*/
-        /* loop of the second stages  */
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-        mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_unscaled_radix24_butterfly_forward_second_stage_fstride:
-        RADIX24_BUTTERFLY_P4 0
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_unscaled_radix24_butterfly_forward_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        /* end of the second stage for radix2/4*/
-        sub             stage_count, stage_count, #2
-        b               .L_ne10_unscaled_mixed_radix_butterfly_forward_other_stages
-
-        /* the first stage  */
-.L_ne10_unscaled_mixed_radix_butterfly_forward_first_stage_radix4:
-        /* fstride gt 1 */
-        RADIX4_BUTTERFLY4_P4 0
+.L_ne10_radix4_butterfly_unscaled_first_stage_fstride:
+        BUTTERFLY4X2_WITHOUT_TWIDDLES "FALSE", "FALSE"
 
         subs            count, count, #2
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_forward_first_stage_radix4
-        sub             stage_count, stage_count, #1
+        bgt             .L_ne10_radix4_butterfly_unscaled_first_stage_fstride
 
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
 
-        /* the other stages for radix2  */
-        /* loop of the other stages  */
-.L_ne10_unscaled_mixed_radix_butterfly_forward_other_stages:
+        /* (stage_count-2): reduce the counter for the last stage  */
+        sub             stage_count, stage_count, #2
+        lsl             nstep, fstride, #3
         lsr             fstride, fstride, #2
+
+        b               .L_ne10_butterfly_unscaled_other_stages
+        /* ---------------end of first stage: radix 4  */
+
+
+
+        /* ---------------first stage: radix 8  */
+.L_ne10_radix8_butterfly_unscaled_first_stage:
+        lsr             fstride1, fstride, #2
+        mov             p_in1, p_fin
+        mov             p_out1, p_fout
+        lsl             fstep, fstride, #1
+
+.L_ne10_radix8_butterfly_unscaled_first_stage_fstride1:
+        BUTTERFLY8X2_WITHOUT_TWIDDLES "FALSE", "FALSE"
+
+        subs            fstride1, fstride1, #2
+        bgt             .L_ne10_radix8_butterfly_unscaled_first_stage_fstride1
+
+        lsl             nstep, fstride, #2
+        sub             stage_count, stage_count, #2
+        lsr             fstride, fstride, #4
+        lsl             mstride, mstride, #2
+        add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
+
+        /* if the last stage  */
+        cmp            stage_count, #1
+        beq            .L_ne10_butterfly_unscaled_last_stages
+
+        /* (stage_count-1): reduce the counter for the last stage  */
+        sub            stage_count, stage_count, #1
+        /*--------------- end of first stage: radix 8  */
+        /* ---------------end of first stage---------------  */
+
+
+        /* ---------------other stages  except last stage---------------  */
+        /* loop of other stages  */
+.L_ne10_butterfly_unscaled_other_stages:
+        lsl             mstep, mstride, #3
+        mov             p_in1, p_fin
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
 
         /* loop of fstride  */
         mov             count_f, fstride
-.L_ne10_unscaled_mixed_radix_butterfly_forward_other_stages_fstride:
+.L_ne10_butterfly_unscaled_other_stages_fstride:
+        mov             p_tw1, p_twiddles
         sub             tmp0, fstride, count_f
         mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        add             p_out1, p_fout, tmp0, lsl #5
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
 
         /* loop of mstride  */
         mov             count_m, mstride
 
-.L_ne10_unscaled_mixed_radix_butterfly_forward_other_stages_mstride:
-        RADIX4_BUTTERFLY_P4 0
+.L_ne10_butterfly_unscaled_other_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "FALSE", "FALSE"
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_forward_other_stages_mstride
-        /* end of mstride_ge2 loop */
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_unscaled_other_stages_mstride
+        /* end of mstride loop */
 
         subs            count_f, count_f, #1
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_forward_other_stages_fstride
+        bgt             .L_ne10_butterfly_unscaled_other_stages_fstride
 
         add             p_twiddles, p_twiddles, mstride, lsl #4
         add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
         lsl             mstride, mstride, #2
+        lsr             fstride, fstride, #2
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
 
         subs            stage_count, stage_count, #1
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_forward_other_stages
+        bgt             .L_ne10_butterfly_unscaled_other_stages
+        /* ---------------end other stages  except last stage---------------  */
 
-.L_ne10_unscaled_mixed_radix_butterfly_forward_end:
+
+        /* ---------------last stage---------------  */
+.L_ne10_butterfly_unscaled_last_stages:
+        mov             p_in1, p_fin
+        mov             p_out1, p_out_ls
+        mov             p_tw1, p_twiddles
+        mov             mstep, nstep
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
+
+        /* loop of mstride  */
+        mov             count_m, mstride
+.L_ne10_butterfly_unscaled_last_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "FALSE", "FALSE"
+
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_unscaled_last_stages_mstride
+        /* end of mstride loop */
+        /* ---------------end of last stage---------------  */
+
+.L_ne10_butterfly_unscaled_end:
         /*Return From Function*/
         vpop            {q4-q7}
         pop             {r4-r12,pc}
 
+        /* end of ne10_mixed_radix_fft_forward_int32_unscaled_neon */
 
         /**
          * @details
-         * This function implements the 4 butterfly
+         * This function implements the radix4/8 backward FFT
          *
          * @param[in/out] *Fout        points to input/output pointers
          * @param[in]     *factors     factors pointer:
@@ -913,12 +713,11 @@ ne10_mixed_radix_butterfly_forward_int32_unscaled_neon:
          */
 
         .align 4
-        .global ne10_mixed_radix_butterfly_backward_int32_unscaled_neon
+        .global ne10_mixed_radix_fft_backward_int32_unscaled_neon
         .thumb
         .thumb_func
 
-ne10_mixed_radix_butterfly_backward_int32_unscaled_neon:
-
+ne10_mixed_radix_fft_backward_int32_unscaled_neon:
         push            {r4-r12,lr}
         vpush           {q4-q7}
 
@@ -928,219 +727,165 @@ ne10_mixed_radix_butterfly_backward_int32_unscaled_neon:
         ldr             radix, [p_factors]                         /* get factors[2*stage_count]--- the first radix */
         ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
 
-        /* judge the first radix is 2 or 4?  */
+        /* save the output buffer for the last stage  */
+        mov             p_out_ls, p_fout
+
+        /* ---------------the first stage---------------  */
+        /* judge the radix is 2 or 4  */
         cmp             radix, #2
-        mov             p_fin, p_fout
-        mov             p_fout0, p_fout
+        beq             .L_ne10_radix8_butterfly_inverse_unscaled_first_stage
+
+        /* ---------------first stage: radix 4  */
         mov             count, fstride
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_backward_first_stage_radix4
+        mov             p_fin0, p_fin
+        mov             p_tmp, p_fout
+        add             p_fin2, p_fin0, fstride, lsl #4   /* get the address of F[fstride*2] */
+        add             p_fin1, p_fin0, fstride, lsl #3   /* get the address of F[fstride] */
+        add             p_fin3, p_fin2, fstride, lsl #3   /* get the address of F[fstride*3] */
+        vld2.32         {q_in0_01}, [p_fin0:64]!
+        vld2.32         {q_in2_01}, [p_fin2:64]!
+        vld2.32         {q_in1_01}, [p_fin1:64]!
+        vld2.32         {q_in3_01}, [p_fin3:64]!
 
-        /* the first stage for radix2 */
-.L_ne10_unscaled_mixed_radix_butterfly_backward_first_stage_radix2:
-        /* fstride gt 1 */
-        RADIX2_BUTTERFLY2_P4 0
-
-        subs            count, count, #4
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_backward_first_stage_radix2
-
-        /* the second stage for radix2/4*/
-        /* loop of the second stages  */
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-        mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_unscaled_radix24_butterfly_backward_second_stage_fstride:
-        RADIX24_BUTTERFLY_INVERSE_P4 0
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_unscaled_radix24_butterfly_backward_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        /* end of the second stage for radix2/4*/
-        sub             stage_count, stage_count, #2
-        b               .L_ne10_unscaled_mixed_radix_butterfly_backward_other_stages
-
-        /* the first stage  */
-.L_ne10_unscaled_mixed_radix_butterfly_backward_first_stage_radix4:
-        /* fstride gt 1 */
-        RADIX4_BUTTERFLY4_INVERSE_P4 0
+.L_ne10_radix4_butterfly_inverse_unscaled_first_stage_fstride:
+        BUTTERFLY4X2_WITHOUT_TWIDDLES "FALSE", "TRUE"
 
         subs            count, count, #2
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_backward_first_stage_radix4
-        sub             stage_count, stage_count, #1
+        bgt             .L_ne10_radix4_butterfly_inverse_unscaled_first_stage_fstride
 
-        /* the other stages  */
-        /* loop of the other stages  */
-.L_ne10_unscaled_mixed_radix_butterfly_backward_other_stages:
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
+
+        /* (stage_count-2): reduce the counter for the last stage  */
+        sub             stage_count, stage_count, #2
+        lsl             nstep, fstride, #3
         lsr             fstride, fstride, #2
+
+        b               .L_ne10_butterfly_inverse_unscaled_other_stages
+        /* ---------------end of first stage: radix 4  */
+
+
+
+        /* ---------------first stage: radix 8  */
+.L_ne10_radix8_butterfly_inverse_unscaled_first_stage:
+        lsr             fstride1, fstride, #2
+        mov             p_in1, p_fin
+        mov             p_out1, p_fout
+        lsl             fstep, fstride, #1
+
+.L_ne10_radix8_butterfly_inverse_unscaled_first_stage_fstride1:
+        BUTTERFLY8X2_WITHOUT_TWIDDLES "FALSE", "TRUE"
+
+        subs            fstride1, fstride1, #2
+        bgt             .L_ne10_radix8_butterfly_inverse_unscaled_first_stage_fstride1
+
+        lsl             nstep, fstride, #2
+        sub             stage_count, stage_count, #2
+        lsr             fstride, fstride, #4
+        lsl             mstride, mstride, #2
+        add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
+
+        /* if the last stage  */
+        cmp            stage_count, #1
+        beq            .L_ne10_butterfly_inverse_unscaled_last_stages
+
+        /* (stage_count-1): reduce the counter for the last stage  */
+        sub            stage_count, stage_count, #1
+        /*--------------- end of first stage: radix 8  */
+        /* ---------------end of first stage---------------  */
+
+
+        /* ---------------other stages  except last stage---------------  */
+        /* loop of other stages  */
+.L_ne10_butterfly_inverse_unscaled_other_stages:
+        lsl             mstep, mstride, #3
+        mov             p_in1, p_fin
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
 
         /* loop of fstride  */
         mov             count_f, fstride
-.L_ne10_unscaled_mixed_radix_butterfly_backward_other_stages_fstride:
+.L_ne10_butterfly_inverse_unscaled_other_stages_fstride:
+        mov             p_tw1, p_twiddles
         sub             tmp0, fstride, count_f
         mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        add             p_out1, p_fout, tmp0, lsl #5
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
 
         /* loop of mstride  */
         mov             count_m, mstride
 
-.L_ne10_unscaled_mixed_radix_butterfly_backward_other_stages_mstride:
-        RADIX4_BUTTERFLY_INVERSE_P4 0
+.L_ne10_butterfly_inverse_unscaled_other_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "FALSE", "TRUE"
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_backward_other_stages_mstride
-        /* end of mstride_ge2 loop */
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_inverse_unscaled_other_stages_mstride
+        /* end of mstride loop */
 
         subs            count_f, count_f, #1
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_backward_other_stages_fstride
+        bgt             .L_ne10_butterfly_inverse_unscaled_other_stages_fstride
 
         add             p_twiddles, p_twiddles, mstride, lsl #4
         add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
         lsl             mstride, mstride, #2
+        lsr             fstride, fstride, #2
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
 
         subs            stage_count, stage_count, #1
-        bgt             .L_ne10_unscaled_mixed_radix_butterfly_backward_other_stages
+        bgt             .L_ne10_butterfly_inverse_unscaled_other_stages
+        /* ---------------end other stages  except last stage---------------  */
 
 
-.L_ne10_unscaled_mixed_radix_butterfly_backward_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-
-        .align 4
-        .global ne10_mixed_radix_butterfly_forward_int32_scaled_neon
-        .thumb
-        .thumb_func
-
-ne10_mixed_radix_butterfly_forward_int32_scaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             radix, [p_factors]                         /* get factors[2*stage_count]--- the first radix */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
-
-        /* judge the first radix is 2 or 4?  */
-        cmp             radix, #2
-        mov             p_fin, p_fout
-        mov             p_fout0, p_fout
-        mov             count, fstride
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_forward_first_stage_radix4
-
-        /* the first stage  */
-.L_ne10_scaled_mixed_radix_butterfly_forward_first_stage_radix2:
-        /* fstride gt 1 */
-        RADIX2_BUTTERFLY2_P4 1
-
-        subs            count, count, #4
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_forward_first_stage_radix2
-
-        /* the second stage for radix2/4*/
-        /* loop of the second stages  */
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
+        /* ---------------last stage---------------  */
+.L_ne10_butterfly_inverse_unscaled_last_stages:
+        mov             p_in1, p_fin
+        mov             p_out1, p_out_ls
         mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_scaled_radix24_butterfly_forward_second_stage_fstride:
-        RADIX24_BUTTERFLY_P4 1
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_scaled_radix24_butterfly_forward_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        /* end of the second stage for radix2/4*/
-        sub             stage_count, stage_count, #2
-        b               .L_ne10_scaled_mixed_radix_butterfly_forward_other_stages
-
-        /* the first stage  */
-.L_ne10_scaled_mixed_radix_butterfly_forward_first_stage_radix4:
-        /* fstride gt 1 */
-        RADIX4_BUTTERFLY4_P4 1
-
-        subs            count, count, #2
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_forward_first_stage_radix4
-        sub             stage_count, stage_count, #1
-
-
-        /* the other stages  */
-        /* loop of the other stages  */
-.L_ne10_scaled_mixed_radix_butterfly_forward_other_stages:
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_scaled_mixed_radix_butterfly_forward_other_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        mov             mstep, nstep
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
 
         /* loop of mstride  */
         mov             count_m, mstride
+.L_ne10_butterfly_inverse_unscaled_last_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "FALSE", "TRUE"
 
-.L_ne10_scaled_mixed_radix_butterfly_forward_other_stages_mstride:
-        RADIX4_BUTTERFLY_P4 1
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_inverse_unscaled_last_stages_mstride
+        /* end of mstride loop */
+        /* ---------------end of last stage---------------  */
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_forward_other_stages_mstride
-        /* end of mstride_ge2 loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_forward_other_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_forward_other_stages
-
-.L_ne10_scaled_mixed_radix_butterfly_forward_end:
+.L_ne10_butterfly_inverse_unscaled_end:
         /*Return From Function*/
         vpop            {q4-q7}
         pop             {r4-r12,pc}
+
+        /* end of ne10_mixed_radix_fft_backward_int32_unscaled_neon */
 
 
         /**
          * @details
-         * This function implements the 4 butterfly
+         * This function implements the radix4/8 forward FFT
          *
          * @param[in/out] *Fout        points to input/output pointers
          * @param[in]     *factors     factors pointer:
@@ -1151,12 +896,11 @@ ne10_mixed_radix_butterfly_forward_int32_scaled_neon:
          */
 
         .align 4
-        .global ne10_mixed_radix_butterfly_backward_int32_scaled_neon
+        .global ne10_mixed_radix_fft_forward_int32_scaled_neon
         .thumb
         .thumb_func
 
-ne10_mixed_radix_butterfly_backward_int32_scaled_neon:
-
+ne10_mixed_radix_fft_forward_int32_scaled_neon:
         push            {r4-r12,lr}
         vpush           {q4-q7}
 
@@ -1166,979 +910,343 @@ ne10_mixed_radix_butterfly_backward_int32_scaled_neon:
         ldr             radix, [p_factors]                         /* get factors[2*stage_count]--- the first radix */
         ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
 
-        /* judge the first radix is 2 or 4?  */
+        /* save the output buffer for the last stage  */
+        mov             p_out_ls, p_fout
+
+        /* ---------------the first stage---------------  */
+        /* judge the radix is 2 or 4  */
         cmp             radix, #2
-        mov             p_fin, p_fout
-        mov             p_fout0, p_fout
+        beq             .L_ne10_radix8_butterfly_scaled_first_stage
+
+        /* ---------------first stage: radix 4  */
         mov             count, fstride
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_backward_first_stage_radix4
+        mov             p_fin0, p_fin
+        mov             p_tmp, p_fout
+        add             p_fin2, p_fin0, fstride, lsl #4   /* get the address of F[fstride*2] */
+        add             p_fin1, p_fin0, fstride, lsl #3   /* get the address of F[fstride] */
+        add             p_fin3, p_fin2, fstride, lsl #3   /* get the address of F[fstride*3] */
+        vld2.32         {q_in0_01}, [p_fin0:64]!
+        vld2.32         {q_in2_01}, [p_fin2:64]!
+        vld2.32         {q_in1_01}, [p_fin1:64]!
+        vld2.32         {q_in3_01}, [p_fin3:64]!
 
-        /* the first stage  */
-.L_ne10_scaled_mixed_radix_butterfly_backward_first_stage_radix2:
-        /* fstride gt 1 */
-        RADIX2_BUTTERFLY2_P4 1
-
-        subs            count, count, #4
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_backward_first_stage_radix2
-
-        /* the second stage for radix2/4*/
-        /* loop of the second stages  */
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-        mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_scaled_radix24_butterfly_backward_second_stage_fstride:
-        RADIX24_BUTTERFLY_INVERSE_P4 1
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_scaled_radix24_butterfly_backward_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        /* end of the second stage for radix2/4*/
-        sub             stage_count, stage_count, #2
-        b               .L_ne10_scaled_mixed_radix_butterfly_backward_other_stages
-
-.L_ne10_scaled_mixed_radix_butterfly_backward_first_stage_radix4:
-        /* fstride gt 1 */
-        RADIX4_BUTTERFLY4_INVERSE_P4 1
+.L_ne10_radix4_butterfly_scaled_first_stage_fstride:
+        BUTTERFLY4X2_WITHOUT_TWIDDLES "TRUE", "FALSE"
 
         subs            count, count, #2
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_backward_first_stage_radix4
-        sub             stage_count, stage_count, #1
+        bgt             .L_ne10_radix4_butterfly_scaled_first_stage_fstride
 
-        /* the other stages  */
-        /* loop of the other stages  */
-.L_ne10_scaled_mixed_radix_butterfly_backward_other_stages:
-        lsr             fstride, fstride, #2
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
 
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_scaled_mixed_radix_butterfly_backward_other_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
-
-        /* loop of mstride  */
-        mov             count_m, mstride
-
-.L_ne10_scaled_mixed_radix_butterfly_backward_other_stages_mstride:
-        RADIX4_BUTTERFLY_INVERSE_P4 1
-
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_backward_other_stages_mstride
-        /* end of mstride_ge2 loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_backward_other_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_scaled_mixed_radix_butterfly_backward_other_stages
-
-
-.L_ne10_scaled_mixed_radix_butterfly_backward_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-
-
-        .align 4
-        .global ne10_radix4_butterfly_forward_int32_unscaled_neon
-        .thumb
-        .thumb_func
-
-ne10_radix4_butterfly_forward_int32_unscaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
-        sub             stage_count, stage_count, #1
-
-        /* loop of the stages  */
-.L_ne10_unscaled_radix4_butterfly_forward_stages:
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_unscaled_radix4_butterfly_forward_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
-
-        /* loop of mstride  */
-        mov             count_m, mstride
-
-.L_ne10_unscaled_radix4_butterfly_forward_stages_mstride:
-
-        RADIX4_BUTTERFLY_P4 0
-
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_unscaled_radix4_butterfly_forward_stages_mstride
-
-        /* end of mstride_loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_unscaled_radix4_butterfly_forward_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_unscaled_radix4_butterfly_forward_stages
-
-.L_ne10_unscaled_radix4_butterfly_forward_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-        .align 4
-        .global ne10_radix4_butterfly_backward_int32_unscaled_neon
-        .thumb
-        .thumb_func
-
-ne10_radix4_butterfly_backward_int32_unscaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
-        sub             stage_count, stage_count, #1
-
-        /* loop of the stages  */
-.L_ne10_unscaled_radix4_butterfly_backward_stages:
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_unscaled_radix4_butterfly_backward_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
-
-        /* loop of mstride  */
-        mov             count_m, mstride
-
-.L_ne10_unscaled_radix4_butterfly_backward_stages_mstride:
-        RADIX4_BUTTERFLY_INVERSE_P4 0
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_unscaled_radix4_butterfly_backward_stages_mstride
-
-        /* end of mstride_loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_unscaled_radix4_butterfly_backward_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_unscaled_radix4_butterfly_backward_stages
-
-
-.L_ne10_unscaled_radix4_inverse_butterfly_backward_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-        .align 4
-        .global ne10_radix2_butterfly_forward_int32_unscaled_neon
-        .thumb
-        .thumb_func
-
-ne10_radix2_butterfly_forward_int32_unscaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
+        /* (stage_count-2): reduce the counter for the last stage  */
         sub             stage_count, stage_count, #2
-
-
-        /* loop of the second stages  */
-.L_ne10_unscaled_radix2_butterfly_forwards_second_stage:
+        lsl             nstep, fstride, #3
         lsr             fstride, fstride, #2
 
-        /* loop of fstride  */
-        mov             count_f, fstride
-        mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_unscaled_radix2_butterfly_forwards_second_stage_fstride:
-        RADIX24_BUTTERFLY_P4 0
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_unscaled_radix2_butterfly_forwards_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
+        b               .L_ne10_butterfly_scaled_other_stages
+        /* ---------------end of first stage: radix 4  */
 
 
-        /* loop of the other stages  */
-.L_ne10_unscaled_radix2_butterfly_forwards_stages:
-        lsr             fstride, fstride, #2
 
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_unscaled_radix2_butterfly_forwards_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        /* ---------------first stage: radix 8  */
+.L_ne10_radix8_butterfly_scaled_first_stage:
+        lsr             fstride1, fstride, #2
+        mov             p_in1, p_fin
+        mov             p_out1, p_fout
+        lsl             fstep, fstride, #1
 
-        /* loop of mstride  */
-        mov             count_m, mstride
+.L_ne10_radix8_butterfly_scaled_first_stage_fstride1:
+        BUTTERFLY8X2_WITHOUT_TWIDDLES "TRUE", "FALSE"
 
-.L_ne10_unscaled_radix2_butterfly_forwards_stages_mstride:
-        RADIX4_BUTTERFLY_P4 0
+        subs            fstride1, fstride1, #2
+        bgt             .L_ne10_radix8_butterfly_scaled_first_stage_fstride1
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_unscaled_radix2_butterfly_forwards_stages_mstride
-
-        /* end of mstride_loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_unscaled_radix2_butterfly_forwards_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_unscaled_radix2_butterfly_forwards_stages
-
-.L_ne10_unscaled_radix2_butterfly_forwards_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-        .align 4
-        .global ne10_radix2_butterfly_backward_int32_unscaled_neon
-        .thumb
-        .thumb_func
-
-ne10_radix2_butterfly_backward_int32_unscaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
+        lsl             nstep, fstride, #2
         sub             stage_count, stage_count, #2
-
-
-        /* loop of the second stages  */
-.L_ne10_unscaled_radix2_butterfly_backward_second_stage:
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-        mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_unscaled_radix2_butterfly_backward_second_stage_fstride:
-        RADIX24_BUTTERFLY_INVERSE_P4 0
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_unscaled_radix2_butterfly_backward_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
+        lsr             fstride, fstride, #4
         lsl             mstride, mstride, #2
+        add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
+
+        /* if the last stage  */
+        cmp            stage_count, #1
+        beq            .L_ne10_butterfly_scaled_last_stages
+
+        /* (stage_count-1): reduce the counter for the last stage  */
+        sub            stage_count, stage_count, #1
+        /*--------------- end of first stage: radix 8  */
+        /* ---------------end of first stage---------------  */
 
 
-        /* loop of the other stages  */
-.L_ne10_unscaled_radix2_butterfly_backward_stages:
-        lsr             fstride, fstride, #2
+        /* ---------------other stages  except last stage---------------  */
+        /* loop of other stages  */
+.L_ne10_butterfly_scaled_other_stages:
+        lsl             mstep, mstride, #3
+        mov             p_in1, p_fin
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
 
         /* loop of fstride  */
         mov             count_f, fstride
-.L_ne10_unscaled_radix2_butterfly_backward_stages_fstride:
+.L_ne10_butterfly_scaled_other_stages_fstride:
+        mov             p_tw1, p_twiddles
         sub             tmp0, fstride, count_f
         mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        add             p_out1, p_fout, tmp0, lsl #5
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
 
         /* loop of mstride  */
         mov             count_m, mstride
 
-.L_ne10_unscaled_radix2_butterfly_backward_stages_mstride:
-        RADIX4_BUTTERFLY_INVERSE_P4 0
+.L_ne10_butterfly_scaled_other_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "TRUE", "FALSE"
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_unscaled_radix2_butterfly_backward_stages_mstride
-
-        /* end of mstride_loop */
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_scaled_other_stages_mstride
+        /* end of mstride loop */
 
         subs            count_f, count_f, #1
-        bgt             .L_ne10_unscaled_radix2_butterfly_backward_stages_fstride
+        bgt             .L_ne10_butterfly_scaled_other_stages_fstride
 
         add             p_twiddles, p_twiddles, mstride, lsl #4
         add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
         lsl             mstride, mstride, #2
+        lsr             fstride, fstride, #2
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
 
         subs            stage_count, stage_count, #1
-        bgt             .L_ne10_unscaled_radix2_butterfly_backward_stages
+        bgt             .L_ne10_butterfly_scaled_other_stages
+        /* ---------------end other stages  except last stage---------------  */
 
 
-.L_ne10_unscaled_radix2_butterfly_backward_end:
+        /* ---------------last stage---------------  */
+.L_ne10_butterfly_scaled_last_stages:
+        mov             p_in1, p_fin
+        mov             p_out1, p_out_ls
+        mov             p_tw1, p_twiddles
+        mov             mstep, nstep
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
+
+        /* loop of mstride  */
+        mov             count_m, mstride
+.L_ne10_butterfly_scaled_last_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "TRUE", "FALSE"
+
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_scaled_last_stages_mstride
+        /* end of mstride loop */
+        /* ---------------end of last stage---------------  */
+
+.L_ne10_butterfly_scaled_end:
         /*Return From Function*/
         vpop            {q4-q7}
         pop             {r4-r12,pc}
 
+        /* end of ne10_mixed_radix_fft_forward_int32_scaled_neon */
+
+        /**
+         * @details
+         * This function implements the radix4/8 backward FFT
+         *
+         * @param[in/out] *Fout        points to input/output pointers
+         * @param[in]     *factors     factors pointer:
+                                        * 0: stage number
+                                        * 1: stride for the first stage
+                                        * others: factor out powers of 4, powers of 2
+         * @param[in]     *twiddles     twiddles coeffs of FFT
+         */
+
         .align 4
-        .global ne10_radix4_butterfly_forward_int32_scaled_neon
+        .global ne10_mixed_radix_fft_backward_int32_scaled_neon
         .thumb
         .thumb_func
 
-ne10_radix4_butterfly_forward_int32_scaled_neon:
-
+ne10_mixed_radix_fft_backward_int32_scaled_neon:
         push            {r4-r12,lr}
         vpush           {q4-q7}
 
         ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
         ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
         add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
+        ldr             radix, [p_factors]                         /* get factors[2*stage_count]--- the first radix */
         ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
-        sub             stage_count, stage_count, #1
 
-        /* loop of the stages  */
-.L_ne10_scaled_radix4_butterfly_forward_stages:
-        lsr             fstride, fstride, #2
+        /* save the output buffer for the last stage  */
+        mov             p_out_ls, p_fout
 
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_scaled_radix4_butterfly_forward_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        /* ---------------the first stage---------------  */
+        /* judge the radix is 2 or 4  */
+        cmp             radix, #2
+        beq             .L_ne10_radix8_butterfly_inverse_scaled_first_stage
 
-        /* loop of mstride  */
-        mov             count_m, mstride
+        /* ---------------first stage: radix 4  */
+        mov             count, fstride
+        mov             p_fin0, p_fin
+        mov             p_tmp, p_fout
+        add             p_fin2, p_fin0, fstride, lsl #4   /* get the address of F[fstride*2] */
+        add             p_fin1, p_fin0, fstride, lsl #3   /* get the address of F[fstride] */
+        add             p_fin3, p_fin2, fstride, lsl #3   /* get the address of F[fstride*3] */
+        vld2.32         {q_in0_01}, [p_fin0:64]!
+        vld2.32         {q_in2_01}, [p_fin2:64]!
+        vld2.32         {q_in1_01}, [p_fin1:64]!
+        vld2.32         {q_in3_01}, [p_fin3:64]!
 
-.L_ne10_scaled_radix4_butterfly_forward_stages_mstride:
+.L_ne10_radix4_butterfly_inverse_scaled_first_stage_fstride:
+        BUTTERFLY4X2_WITHOUT_TWIDDLES "TRUE", "TRUE"
 
-        RADIX4_BUTTERFLY_P4 1
+        subs            count, count, #2
+        bgt             .L_ne10_radix4_butterfly_inverse_scaled_first_stage_fstride
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_scaled_radix4_butterfly_forward_stages_mstride
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
 
-        /* end of mstride_loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_scaled_radix4_butterfly_forward_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_scaled_radix4_butterfly_forward_stages
-
-.L_ne10_scaled_radix4_butterfly_forward_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-        .align 4
-        .global ne10_radix4_butterfly_backward_int32_scaled_neon
-        .thumb
-        .thumb_func
-
-ne10_radix4_butterfly_backward_int32_scaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
-        sub             stage_count, stage_count, #1
-
-        /* loop of the stages  */
-.L_ne10_scaled_radix4_butterfly_backward_stages:
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_scaled_radix4_butterfly_backward_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
-
-        /* loop of mstride  */
-        mov             count_m, mstride
-
-.L_ne10_scaled_radix4_butterfly_backward_stages_mstride:
-        RADIX4_BUTTERFLY_INVERSE_P4 1
-
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_scaled_radix4_butterfly_backward_stages_mstride
-
-        /* end of mstride_loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_scaled_radix4_butterfly_backward_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_scaled_radix4_butterfly_backward_stages
-
-
-.L_ne10_scaled_radix4_inverse_butterfly_backward_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-        .align 4
-        .global ne10_radix2_butterfly_forward_int32_scaled_neon
-        .thumb
-        .thumb_func
-
-ne10_radix2_butterfly_forward_int32_scaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
+        /* (stage_count-2): reduce the counter for the last stage  */
         sub             stage_count, stage_count, #2
-
-
-        /* loop of the second stages  */
-.L_ne10_scaled_radix2_butterfly_forwards_second_stage:
+        lsl             nstep, fstride, #3
         lsr             fstride, fstride, #2
 
-        /* loop of fstride  */
-        mov             count_f, fstride
-        mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_scaled_radix2_butterfly_forwards_second_stage_fstride:
-        RADIX24_BUTTERFLY_P4 1
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_scaled_radix2_butterfly_forwards_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
+        b               .L_ne10_butterfly_inverse_scaled_other_stages
+        /* ---------------end of first stage: radix 4  */
 
 
-        /* loop of the other stages  */
-.L_ne10_scaled_radix2_butterfly_forwards_stages:
-        lsr             fstride, fstride, #2
 
-        /* loop of fstride  */
-        mov             count_f, fstride
-.L_ne10_scaled_radix2_butterfly_forwards_stages_fstride:
-        sub             tmp0, fstride, count_f
-        mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        /* ---------------first stage: radix 8  */
+.L_ne10_radix8_butterfly_inverse_scaled_first_stage:
+        lsr             fstride1, fstride, #2
+        mov             p_in1, p_fin
+        mov             p_out1, p_fout
+        lsl             fstep, fstride, #1
 
-        /* loop of mstride  */
-        mov             count_m, mstride
+.L_ne10_radix8_butterfly_inverse_scaled_first_stage_fstride1:
+        BUTTERFLY8X2_WITHOUT_TWIDDLES "TRUE", "TRUE"
 
-.L_ne10_scaled_radix2_butterfly_forwards_stages_mstride:
-        RADIX4_BUTTERFLY_P4 1
+        subs            fstride1, fstride1, #2
+        bgt             .L_ne10_radix8_butterfly_inverse_scaled_first_stage_fstride1
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_scaled_radix2_butterfly_forwards_stages_mstride
-
-        /* end of mstride_loop */
-
-        subs            count_f, count_f, #1
-        bgt             .L_ne10_scaled_radix2_butterfly_forwards_stages_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
-        lsl             mstride, mstride, #2
-
-        subs            stage_count, stage_count, #1
-        bgt             .L_ne10_scaled_radix2_butterfly_forwards_stages
-
-.L_ne10_scaled_radix2_butterfly_forwards_end:
-        /*Return From Function*/
-        vpop            {q4-q7}
-        pop             {r4-r12,pc}
-
-        .align 4
-        .global ne10_radix2_butterfly_backward_int32_scaled_neon
-        .thumb
-        .thumb_func
-
-ne10_radix2_butterfly_backward_int32_scaled_neon:
-
-        push            {r4-r12,lr}
-        vpush           {q4-q7}
-
-        ldr             stage_count, [p_factors]   /* get factors[0]---stage_count */
-        ldr             fstride, [p_factors, #4]   /* get factors[1]---fstride */
-        add             p_factors, p_factors, stage_count, lsl #3 /* get the address of factors[2*stage_count] */
-        ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
+        lsl             nstep, fstride, #2
         sub             stage_count, stage_count, #2
-
-
-        /* loop of the second stages  */
-.L_ne10_scaled_radix2_butterfly_backward_second_stage:
-        lsr             fstride, fstride, #2
-
-        /* loop of fstride  */
-        mov             count_f, fstride
-        mov             p_tw1, p_twiddles
-        mov             p_fout0, p_fout
-        add             p_fout1, p_fout, mstride, lsl #5
-        mov             p_fout2, p_fout
-        mov             p_fout3, p_fout1
-        mov             tmp0, #96
-        vld2.32         {d_tw1_r01, d_tw2_r01, d_tw1_i01, d_tw2_i01}, [p_tw1]!
-
-.L_ne10_scaled_radix2_butterfly_backward_second_stage_fstride:
-        RADIX24_BUTTERFLY_INVERSE_P4 1
-
-        subs            count_f, count_f, #2
-        bgt             .L_ne10_scaled_radix2_butterfly_backward_second_stage_fstride
-
-        add             p_twiddles, p_twiddles, mstride, lsl #4
-        add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
+        lsr             fstride, fstride, #4
         lsl             mstride, mstride, #2
+        add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
+
+        /* if the last stage  */
+        cmp            stage_count, #1
+        beq            .L_ne10_butterfly_inverse_scaled_last_stages
+
+        /* (stage_count-1): reduce the counter for the last stage  */
+        sub            stage_count, stage_count, #1
+        /*--------------- end of first stage: radix 8  */
+        /* ---------------end of first stage---------------  */
 
 
-        /* loop of the other stages  */
-.L_ne10_scaled_radix2_butterfly_backward_stages:
-        lsr             fstride, fstride, #2
+        /* ---------------other stages  except last stage---------------  */
+        /* loop of other stages  */
+.L_ne10_butterfly_inverse_scaled_other_stages:
+        lsl             mstep, mstride, #3
+        mov             p_in1, p_fin
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
 
         /* loop of fstride  */
         mov             count_f, fstride
-.L_ne10_scaled_radix2_butterfly_backward_stages_fstride:
+.L_ne10_butterfly_inverse_scaled_other_stages_fstride:
+        mov             p_tw1, p_twiddles
         sub             tmp0, fstride, count_f
         mul             tmp0, tmp0, mstride
-        add             p_fout0, p_fout, tmp0, lsl #5
-        add             p_fout2, p_fout0, mstride, lsl #4   /* get the address of F[mstride*2] */
-        add             p_fout1, p_fout0, mstride, lsl #3   /* get the address of F[mstride] */
-        add             p_fout3, p_fout2, mstride, lsl #3   /* get the address of F[mstride*3] */
-        mov             p_tw1, p_twiddles
-        add             p_tw2, p_tw1, mstride, lsl #3       /* get the address of tw2 */
-        add             p_tw3, p_tw1, mstride, lsl #4       /* get the address of tw3 */
+        add             p_out1, p_fout, tmp0, lsl #5
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
 
         /* loop of mstride  */
         mov             count_m, mstride
 
-.L_ne10_scaled_radix2_butterfly_backward_stages_mstride:
-        RADIX4_BUTTERFLY_INVERSE_P4 1
+.L_ne10_butterfly_inverse_scaled_other_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "TRUE", "TRUE"
 
-        subs            count_m, count_m, #4
-        bgt             .L_ne10_scaled_radix2_butterfly_backward_stages_mstride
-
-        /* end of mstride_loop */
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_inverse_scaled_other_stages_mstride
+        /* end of mstride loop */
 
         subs            count_f, count_f, #1
-        bgt             .L_ne10_scaled_radix2_butterfly_backward_stages_fstride
+        bgt             .L_ne10_butterfly_inverse_scaled_other_stages_fstride
 
         add             p_twiddles, p_twiddles, mstride, lsl #4
         add             p_twiddles, p_twiddles, mstride, lsl #3 /* get the address of twiddles += mstride*3 */
         lsl             mstride, mstride, #2
+        lsr             fstride, fstride, #2
+
+        /* swap input/output buffer  */
+        mov             tmp0, p_fout
+        mov             p_fout, p_fin
+        mov             p_fin, tmp0
 
         subs            stage_count, stage_count, #1
-        bgt             .L_ne10_scaled_radix2_butterfly_backward_stages
+        bgt             .L_ne10_butterfly_inverse_scaled_other_stages
+        /* ---------------end other stages  except last stage---------------  */
 
 
-.L_ne10_scaled_radix2_butterfly_backward_end:
+        /* ---------------last stage---------------  */
+.L_ne10_butterfly_inverse_scaled_last_stages:
+        mov             p_in1, p_fin
+        mov             p_out1, p_out_ls
+        mov             p_tw1, p_twiddles
+        mov             mstep, nstep
+        vld2.32         {d_fin0_r, d_fin0_i}, [p_in1:64], nstep
+        vld2.32         {d_fin1_r, d_fin1_i}, [p_in1:64], nstep
+        vld2.32         {d_fin2_r, d_fin2_i}, [p_in1:64], nstep
+        vld2.32         {d_fin3_r, d_fin3_i}, [p_in1:64], nstep
+        vld2.32         {d_tw0_r, d_tw0_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw1_r, d_tw1_i}, [p_tw1:64], mstep
+        vld2.32         {d_tw2_r, d_tw2_i}, [p_tw1:64]
+
+        /* loop of mstride  */
+        mov             count_m, mstride
+.L_ne10_butterfly_inverse_scaled_last_stages_mstride:
+        BUTTERFLY4X2_WITH_TWIDDLES "TRUE", "TRUE"
+
+        subs            count_m, count_m, #2
+        bgt             .L_ne10_butterfly_inverse_scaled_last_stages_mstride
+        /* end of mstride loop */
+        /* ---------------end of last stage---------------  */
+
+.L_ne10_butterfly_inverse_scaled_end:
         /*Return From Function*/
         vpop            {q4-q7}
         pop             {r4-r12,pc}
 
+        /* end of ne10_mixed_radix_fft_backward_int32_scaled_neon */
 
-        /* Registers undefine*/
-        /*ARM Registers*/
-        .unreq          p_fout
-        .unreq          p_factors
-        .unreq          p_twiddles
-        .unreq          p_fin
-        .unreq          p_fout0
-        .unreq          p_fout1
-        .unreq          p_fout2
-        .unreq          p_fout3
-        .unreq          stage_count
-        .unreq          fstride
-        .unreq          mstride
-        .unreq          count
-        .unreq          count_f
-        .unreq          count_m
-        .unreq          p_tw1
-        .unreq          p_tw2
-        .unreq          p_tw3
-        .unreq          radix
-        .unreq          tmp0
-
-        /*NEON variale Declaration for the first stage*/
-        .unreq          d_in0
-        .unreq          d_in1
-        .unreq          q_in01
-        .unreq          d_in2
-        .unreq          d_in3
-        .unreq          q_in23
-        .unreq          d_out0
-        .unreq          d_out1
-        .unreq          d_out2
-        .unreq          d_out3
-
-        .unreq          d_in0_r01
-        .unreq          d_in0_i01
-        .unreq          d_in1_r01
-        .unreq          d_in1_i01
-        .unreq          d_in0_r23
-        .unreq          d_in0_i23
-        .unreq          d_in1_r23
-        .unreq          d_in1_i23
-        .unreq          q_in0_r0123
-        .unreq          q_in0_i0123
-        .unreq          q_in1_r0123
-        .unreq          q_in1_i0123
-        .unreq          d_out0_r01
-        .unreq          d_out0_i01
-        .unreq          d_out1_r01
-        .unreq          d_out1_i01
-        .unreq          d_out0_r23
-        .unreq          d_out0_i23
-        .unreq          d_out1_r23
-        .unreq          d_out1_i23
-        .unreq          q_out0_r0123
-        .unreq          q_out0_i0123
-        .unreq          q_out1_r0123
-        .unreq          q_out1_i0123
-
-        .unreq          d_in0_0
-        .unreq          d_in1_0
-        .unreq          d_in2_0
-        .unreq          d_in3_0
-        .unreq          d_in0_1
-        .unreq          d_in1_1
-        .unreq          d_in2_1
-        .unreq          d_in3_1
-        .unreq          q_in0_01
-        .unreq          q_in1_01
-        .unreq          q_in2_01
-        .unreq          q_in3_01
-        .unreq          d_out0_0
-        .unreq          d_out1_0
-        .unreq          d_out2_0
-        .unreq          d_out3_0
-        .unreq          d_out0_1
-        .unreq          d_out1_1
-        .unreq          d_out2_1
-        .unreq          d_out3_1
-        .unreq          q_out0_01
-        .unreq          q_out1_01
-        .unreq          q_out2_01
-        .unreq          q_out3_01
-        .unreq          d_s0
-        .unreq          q_s0_01
-        .unreq          d_s1
-        .unreq          q_s1_01
-        .unreq          d_s2
-        .unreq          q_s2_01
-
-        /*NEON variale Declaration for mstride ge2 loop */
-        .unreq          q_fin0_r
-        .unreq          q_fin0_i
-        .unreq          q_fin1_r
-        .unreq          q_fin1_i
-        .unreq          d_fin1_rl
-        .unreq          d_fin1_rh
-        .unreq          d_fin1_il
-        .unreq          d_fin1_ih
-        .unreq          q_tw1_r
-        .unreq          q_tw1_i
-        .unreq          d_tw1_rl
-        .unreq          d_tw1_rh
-        .unreq          d_tw1_il
-        .unreq          d_tw1_ih
-        .unreq          q_fin2_r
-        .unreq          q_fin2_i
-        .unreq          d_fin2_rl
-        .unreq          d_fin2_rh
-        .unreq          d_fin2_il
-        .unreq          d_fin2_ih
-        .unreq          q_tw2_r
-        .unreq          q_tw2_i
-        .unreq          d_tw2_rl
-        .unreq          d_tw2_rh
-        .unreq          d_tw2_il
-        .unreq          d_tw2_ih
-        .unreq          q_fin3_r
-        .unreq          q_fin3_i
-        .unreq          d_fin3_rl
-        .unreq          d_fin3_rh
-        .unreq          d_fin3_il
-        .unreq          d_fin3_ih
-        .unreq          q_tw3_r
-        .unreq          q_tw3_i
-        .unreq          d_tw3_rl
-        .unreq          d_tw3_rh
-        .unreq          d_tw3_il
-        .unreq          d_tw3_ih
-        .unreq          q_s0_r
-        .unreq          q_s0_i
-        .unreq          d_s0_rl
-        .unreq          d_s0_rh
-        .unreq          d_s0_il
-        .unreq          d_s0_ih
-        .unreq          q_s1_r
-        .unreq          q_s1_i
-        .unreq          d_s1_rl
-        .unreq          d_s1_rh
-        .unreq          d_s1_il
-        .unreq          d_s1_ih
-        .unreq          q_s2_r
-        .unreq          q_s2_i
-        .unreq          q_s2_rh
-        .unreq          q_s2_ih
-        .unreq          d_s2_rl
-        .unreq          d_s2_rh
-        .unreq          d_s2_il
-        .unreq          d_s2_ih
-        .unreq          q_s5_r
-        .unreq          q_s5_i
-        .unreq          q_s4_r
-        .unreq          q_s4_i
-        .unreq          q_s3_r
-        .unreq          q_s3_i
-        .unreq          q_fout0_r
-        .unreq          q_fout0_i
-        .unreq          q_fout2_r
-        .unreq          q_fout2_i
-        .unreq          q_fout1_r
-        .unreq          q_fout1_i
-        .unreq          q_fout3_r
-        .unreq          q_fout3_i
-
-        /*NEON variale Declaration for mstride 2 loop */
-        .unreq          d_fin0_r
-        .unreq          d_fin0_i
-        .unreq          q_fin0
-        .unreq          d_fin1_r
-        .unreq          d_fin1_i
-        .unreq          q_fin1
-        .unreq          d_tw1_r
-        .unreq          d_tw1_i
-        .unreq          d_fin2_r
-        .unreq          d_fin2_i
-        .unreq          q_fin2
-        .unreq          d_tw2_r
-        .unreq          d_tw2_i
-        .unreq          d_fin3_r
-        .unreq          d_fin3_i
-        .unreq          q_fin3
-        .unreq          d_tw3_r
-        .unreq          d_tw3_i
-        .unreq          d_s0_r
-        .unreq          d_s0_i
-        .unreq          d_s1_r
-        .unreq          d_s1_i
-        .unreq          d_s2_r
-        .unreq          d_s2_i
-        .unreq          d_s5_r
-        .unreq          d_s5_i
-        .unreq          d_s4_r
-        .unreq          d_s4_i
-        .unreq          d_s3_r
-        .unreq          d_s3_i
-        .unreq          d_fout0_r
-        .unreq          d_fout0_i
-        .unreq          d_fout2_r
-        .unreq          d_fout2_i
-        .unreq          d_fout1_r
-        .unreq          d_fout1_i
-        .unreq          d_fout3_r
-        .unreq          d_fout3_i
-
-        .unreq          d_tmp0
-        .unreq          d_tmp1
-        .unreq          q_tmp
-        .unreq          d_tmp2_0
-        .unreq          d_tmp2_1
-        .unreq          q_tmp2
-        .unreq          d_tmp3_0
-        .unreq          d_tmp3_1
-
-        /*NEON variale Declaration for mstride 2 loop */
-        .unreq          d_tw1_r01
-        .unreq          d_tw2_r01
-        .unreq          d_tw1_i01
-        .unreq          d_tw2_i01
-        .unreq          d_tw3_r01
-        .unreq          d_tw3_i01
-        .unreq          q_fin0_r0123
-        .unreq          q_fin0_i0123
-        .unreq          q_fin01_r01
-        .unreq          q_fin01_i01
-        .unreq          q_fin23_r01
-        .unreq          q_fin23_i01
-        .unreq          q_fin01_r23
-        .unreq          q_fin01_i23
-        .unreq          q_fin23_r23
-        .unreq          q_fin23_i23
-        .unreq          d_fin0_r01
-        .unreq          d_fin1_r01
-        .unreq          d_fin0_i01
-        .unreq          d_fin1_i01
-        .unreq          d_fin2_r01
-        .unreq          d_fin3_r01
-        .unreq          d_fin2_i01
-        .unreq          d_fin3_i01
-        .unreq          d_fin0_r23
-        .unreq          d_fin1_r23
-        .unreq          d_fin0_i23
-        .unreq          d_fin1_i23
-        .unreq          d_fin2_r23
-        .unreq          d_fin3_r23
-        .unreq          d_fin2_i23
-        .unreq          d_fin3_i23
-        .unreq          q_s0_r0123
-        .unreq          q_s0_i0123
-        .unreq          d_s0_r01
-        .unreq          d_s0_r23
-        .unreq          d_s0_i01
-        .unreq          d_s0_i23
-        .unreq          q_s1_r0123
-        .unreq          q_s1_i0123
-        .unreq          d_s1_r01
-        .unreq          d_s1_r23
-        .unreq          d_s1_i01
-        .unreq          d_s1_i23
-        .unreq          q_s2_r0123
-        .unreq          q_s2_i0123
-        .unreq          d_s2_r01
-        .unreq          d_s2_r23
-        .unreq          d_s2_i01
-        .unreq          d_s2_i23
-        .unreq          q_s5_r0123
-        .unreq          q_s5_i0123
-        .unreq          q_s4_r0123
-        .unreq          q_s4_i0123
-        .unreq          q_s3_r0123
-        .unreq          q_s3_i0123
-        .unreq          q_fout0_r0123
-        .unreq          q_fout0_i0123
-        .unreq          q_fout2_r0123
-        .unreq          q_fout2_i0123
-        .unreq          q_fout1_r0123
-        .unreq          q_fout1_i0123
-        .unreq          q_fout3_r0123
-        .unreq          q_fout3_i0123
-        .unreq          d_fout0_r01
-        .unreq          d_fout1_r01
-        .unreq          d_fout0_i01
-        .unreq          d_fout1_i01
-        .unreq          d_fout2_r01
-        .unreq          d_fout3_r01
-        .unreq          d_fout2_i01
-        .unreq          d_fout3_i01
-        .unreq          d_fout0_r23
-        .unreq          d_fout1_r23
-        .unreq          d_fout0_i23
-        .unreq          d_fout1_i23
-        .unreq          d_fout2_r23
-        .unreq          d_fout3_r23
-        .unreq          d_fout2_i23
-        .unreq          d_fout3_i23
 
         /* end of the file */
         .end
