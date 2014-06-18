@@ -48,3 +48,19 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+*.prefs
+
+*.so
+
+android/NE10Demo/project.properties
+
+android/NE10Demo/jni/test_funcs.h
+
+android/NE10Demo/jni/NE10_test_demo.c
+
+android/NE10Demo/project.properties
+
+android/NE10Demo/jni/test_funcs.h
+
+android/NE10Demo/jni/NE10_test_demo.c

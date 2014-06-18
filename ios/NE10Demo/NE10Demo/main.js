@@ -75,7 +75,7 @@ function add_result(acceleration_rate, case_count) {
     var sum_acc_rate_display = Math.floor(sum_acc_rate * 100);
 
     //result bar for Ne10
-    $("#result_bar_ne10").html("Ne10 version  " + sum_acc_rate_display + "%");
+    $("#result_bar_ne10").html("NEON version  " + sum_acc_rate_display + "%");
     $("#result_bar_ne10").css("visibility", "visible");
 
     //result bar for C
