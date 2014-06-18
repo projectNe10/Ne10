@@ -48,8 +48,6 @@ set(NE10_TEST_MATH_SRCS
 # Define dsp test files.
 set(NE10_TEST_DSP_SRCS
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_main.c
-    ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_cfft.c
-    ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_rfft.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_decimate.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_interpolate.c
