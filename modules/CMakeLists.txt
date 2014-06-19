@@ -187,6 +187,9 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
+        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neonintrinsic.c
+        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
+        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
     )
 
     # Tell CMake these files need to be compiled with "-mfpu=neon"

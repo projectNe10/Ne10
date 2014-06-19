@@ -57,8 +57,6 @@ extern "C" {
     void test_submat();
     void test_transmat();
 
-    void test_cfft();
-    void test_rfft();
     void test_fir();
     void test_fir_decimate();
     void test_fir_interpolate();

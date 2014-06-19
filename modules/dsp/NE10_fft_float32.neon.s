@@ -200,6 +200,8 @@
         d_scr7_i        .dn   d27
         q_fout0         .qn   q7
         q_fout2         .qn   q8
+        q_fout1         .qn   q14
+        q_fout3         .qn   q15
         d_fout0_r       .dn   d14
         d_fout0_i       .dn   d15
         d_fout1_r       .dn   d28
@@ -208,6 +210,8 @@
         d_fout2_i       .dn   d17
         d_fout3_r       .dn   d30
         d_fout3_i       .dn   d31
+        d_one_by_nfft   .dn   d14
+        q_one_by_nfft   .qn   q9
 
         .macro BUTTERFLY4X2_WITHOUT_TWIDDLES inverse
 
@@ -244,7 +248,7 @@
         vst2.32         {q_out3_2}, [p_tmp]!
         .endm
 
-        .macro BUTTERFLY4X2_WITH_TWIDDLES inverse
+        .macro BUTTERFLY4X2_WITH_TWIDDLES inverse, last_stage
 
         sub             p_in1, p_in1, nstep, lsl #2
         add             p_in1, p_in1, #16
@@ -287,6 +291,13 @@
         vadd.f32        q_scr6, q_scr1, q_scr3
         vsub.f32        q_scr7, q_scr1, q_scr3
 
+        .ifeqs "\inverse", "TRUE"
+        .ifeqs "\last_stage", "TRUE"
+        vld1.32         {d_one_by_nfft}, [sp]
+        vdup.32         q_one_by_nfft, d_one_by_nfft[0]
+        .endif
+        .endif
+
         vadd.f32        q_fout0, q_scr4, q_scr6
         vsub.f32        q_fout2, q_scr4, q_scr6
 
@@ -300,6 +311,15 @@
         vsub.f32        d_fout1_i, d_scr5_i, d_scr7_r
         vsub.f32        d_fout3_r, d_scr5_r, d_scr7_i
         vadd.f32        d_fout3_i, d_scr5_i, d_scr7_r
+        .endif
+
+        .ifeqs "\inverse", "TRUE"
+        .ifeqs "\last_stage", "TRUE"
+        vmul.f32        q_fout0, q_fout0, q_one_by_nfft
+        vmul.f32        q_fout2, q_fout2, q_one_by_nfft
+        vmul.f32        q_fout1, q_fout1, q_one_by_nfft
+        vmul.f32        q_fout3, q_fout3, q_one_by_nfft
+        .endif
         .endif
 
         vst2.32         {d_fout0_r, d_fout0_i}, [p_out1], mstep
@@ -481,9 +501,9 @@ ne10_mixed_radix_fft_forward_float32_neon:
         bgt             .L_ne10_radix4_butterfly_first_stage_fstride
 
         /* swap input/output buffer  */
-        mov             tmp0, p_fout
-        mov             p_fout, p_fin
-        mov             p_fin, tmp0
+        ldr             tmp0, [sp, #104]
+        mov             p_fin, p_fout
+        mov             p_fout, tmp0
 
         /* (stage_count-2): reduce the counter for the last stage  */
         sub             stage_count, stage_count, #2
@@ -515,9 +535,9 @@ ne10_mixed_radix_fft_forward_float32_neon:
         add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
 
         /* swap input/output buffer  */
-        mov             tmp0, p_fout
-        mov             p_fout, p_fin
-        mov             p_fin, tmp0
+        ldr             tmp0, [sp, #104]
+        mov             p_fin, p_fout
+        mov             p_fout, tmp0
 
         /* if the last stage  */
         cmp            stage_count, #1
@@ -554,7 +574,7 @@ ne10_mixed_radix_fft_forward_float32_neon:
         mov             count_m, mstride
 
 .L_ne10_butterfly_other_stages_mstride:
-        BUTTERFLY4X2_WITH_TWIDDLES "FALSE"
+        BUTTERFLY4X2_WITH_TWIDDLES "FALSE", "FALSE"
 
         subs            count_m, count_m, #2
         bgt             .L_ne10_butterfly_other_stages_mstride
@@ -595,7 +615,7 @@ ne10_mixed_radix_fft_forward_float32_neon:
         /* loop of mstride  */
         mov             count_m, mstride
 .L_ne10_butterfly_last_stages_mstride:
-        BUTTERFLY4X2_WITH_TWIDDLES "FALSE"
+        BUTTERFLY4X2_WITH_TWIDDLES "FALSE", "TRUE"
 
         subs            count_m, count_m, #2
         bgt             .L_ne10_butterfly_last_stages_mstride
@@ -636,6 +656,16 @@ ne10_mixed_radix_fft_backward_float32_neon:
         ldr             radix, [p_factors]                         /* get factors[2*stage_count]--- the first radix */
         ldr             mstride, [p_factors, #-4]                  /* get factors[2*stage_count-1]--- mstride */
 
+
+        /* calculate 1/nfft for the last stage  */
+        mul             tmp0, radix, fstride
+        vmov            s1, tmp0
+        vmov.f32        s0, #1.0
+        vcvt.f32.s32    s1, s1
+        vdiv.f32        s0, s0, s1
+        vpush           {s0, s1}
+
+
         /* save the output buffer for the last stage  */
         mov             p_out_ls, p_fout
 
@@ -663,9 +693,9 @@ ne10_mixed_radix_fft_backward_float32_neon:
         bgt             .L_ne10_radix4_butterfly_inverse_first_stage_fstride
 
         /* swap input/output buffer  */
-        mov             tmp0, p_fout
-        mov             p_fout, p_fin
-        mov             p_fin, tmp0
+        ldr             tmp0, [sp, #112]
+        mov             p_fin, p_fout
+        mov             p_fout, tmp0
 
         /* (stage_count-2): reduce the counter for the last stage  */
         sub             stage_count, stage_count, #2
@@ -697,9 +727,9 @@ ne10_mixed_radix_fft_backward_float32_neon:
         add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
 
         /* swap input/output buffer  */
-        mov             tmp0, p_fout
-        mov             p_fout, p_fin
-        mov             p_fin, tmp0
+        ldr             tmp0, [sp, #112]
+        mov             p_fin, p_fout
+        mov             p_fout, tmp0
 
         /* if the last stage  */
         cmp            stage_count, #1
@@ -736,7 +766,7 @@ ne10_mixed_radix_fft_backward_float32_neon:
         mov             count_m, mstride
 
 .L_ne10_butterfly_inverse_other_stages_mstride:
-        BUTTERFLY4X2_WITH_TWIDDLES "TRUE"
+        BUTTERFLY4X2_WITH_TWIDDLES "TRUE", "FALSE"
 
         subs            count_m, count_m, #2
         bgt             .L_ne10_butterfly_inverse_other_stages_mstride
@@ -777,7 +807,7 @@ ne10_mixed_radix_fft_backward_float32_neon:
         /* loop of mstride  */
         mov             count_m, mstride
 .L_ne10_butterfly_inverse_last_stages_mstride:
-        BUTTERFLY4X2_WITH_TWIDDLES "TRUE"
+        BUTTERFLY4X2_WITH_TWIDDLES "TRUE", "TRUE"
 
         subs            count_m, count_m, #2
         bgt             .L_ne10_butterfly_inverse_last_stages_mstride
@@ -786,6 +816,7 @@ ne10_mixed_radix_fft_backward_float32_neon:
 
 .L_ne10_butterfly_inverse_end:
         /*Return From Function*/
+        vpop            {s0, s1}
         vpop            {q4-q7}
         pop             {r4-r12,pc}
 

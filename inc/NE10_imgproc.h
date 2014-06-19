@@ -102,25 +102,25 @@ extern "C" {
     /* image boxfilter functions */
     /* function pointers */
     extern void (*ne10_img_boxfilter_rgba8888) (const ne10_uint8_t *src,
-                                                ne10_uint8_t *dst,
-                                                ne10_size_t src_size,
-                                                ne10_int32_t src_stride,
-                                                ne10_int32_t dst_stride,
-                                                ne10_size_t kernel_size);
+            ne10_uint8_t *dst,
+            ne10_size_t src_size,
+            ne10_int32_t src_stride,
+            ne10_int32_t dst_stride,
+            ne10_size_t kernel_size);
     /* C version*/
     extern void ne10_img_boxfilter_rgba8888_c (const ne10_uint8_t *src,
-                                               ne10_uint8_t *dst,
-                                               ne10_size_t src_size,
-                                               ne10_int32_t src_stride,
-                                               ne10_int32_t dst_stride,
-                                               ne10_size_t kernel_size);
+            ne10_uint8_t *dst,
+            ne10_size_t src_size,
+            ne10_int32_t src_stride,
+            ne10_int32_t dst_stride,
+            ne10_size_t kernel_size);
     /* NEON version*/
     extern void ne10_img_boxfilter_rgba8888_neon (const ne10_uint8_t *src,
-                                                  ne10_uint8_t *dst,
-                                                  ne10_size_t src_size,
-                                                  ne10_int32_t src_stride,
-                                                  ne10_int32_t dst_stride,
-                                                  ne10_size_t kernel_size);
+            ne10_uint8_t *dst,
+            ne10_size_t src_size,
+            ne10_int32_t src_stride,
+            ne10_int32_t dst_stride,
+            ne10_size_t kernel_size);
 
 #ifdef __cplusplus
 }

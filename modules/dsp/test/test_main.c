@@ -52,12 +52,12 @@ void all_tests (void)
     test_fixture_fft_r2c_1d_int32();
     test_fixture_fft_c2c_1d_int16();
     test_fixture_fft_r2c_1d_int16();
-    //test_fixture_fir();
-    //test_fixture_fir_decimate();
-    //test_fixture_fir_interpolate();
-    //test_fixture_fir_lattice();
-    //test_fixture_fir_sparse();
-    //test_fixture_iir_lattice();
+    test_fixture_fir();
+    test_fixture_fir_decimate();
+    test_fixture_fir_interpolate();
+    test_fixture_fir_lattice();
+    test_fixture_fir_sparse();
+    test_fixture_iir_lattice();
 }
 
 

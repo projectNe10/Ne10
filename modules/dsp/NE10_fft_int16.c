@@ -53,6 +53,7 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         ne10_fft_cpx_int16_t   * Fin,
         ne10_int32_t * factors,
         ne10_fft_cpx_int16_t * twiddles,
+        ne10_fft_cpx_int16_t * buffer,
         ne10_int32_t scaled_flag)
 {
     ne10_int32_t fstride, mstride, N;
@@ -204,8 +205,8 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         stage_count -= 2;
 
         // swap
-        Ftmp = Fin;
-        Fin = Fout;
+        Ftmp = buffer;
+        buffer = Fout;
         Fout = Ftmp;
     }
     else if (N == 4)   // length of FFT is 2^n (n is even)
@@ -273,8 +274,8 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         N = fstride; // 1/4 of length of FFT
 
         // swap
-        Ftmp = Fin;
-        Fin = Fout;
+        Ftmp = buffer;
+        buffer = Fout;
         Fout = Ftmp;
 
         // update address for other stages
@@ -288,7 +289,7 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
     // others but the last one
     for (; stage_count > 1 ; stage_count--)
     {
-        Fin1 = Fin;
+        Fin1 = buffer;
         for (f_count = 0; f_count < fstride; f_count ++)
         {
             Fout1 = & Fout[ f_count * mstride << 2 ];
@@ -381,8 +382,8 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         tw += mstride * 3;
         mstride <<= 2;
         // swap
-        Ftmp = Fin;
-        Fin = Fout;
+        Ftmp = buffer;
+        buffer = Fout;
         Fout = Ftmp;
         fstride >>= 2;
     } // stage_count
@@ -390,7 +391,7 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
     // the last one
     if (stage_count)
     {
-        Fin1 = Fin;
+        Fin1 = buffer;
         // if stage count is even, output to the input array
         Fout1 = Fout_ls;
 
@@ -489,12 +490,14 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
         ne10_fft_cpx_int16_t   * Fin,
         ne10_int32_t * factors,
         ne10_fft_cpx_int16_t * twiddles,
+        ne10_fft_cpx_int16_t * buffer,
         ne10_int32_t scaled_flag)
 {
     ne10_int32_t fstride, mstride, N;
     ne10_int32_t fstride1;
     ne10_int32_t f_count, m_count;
     ne10_int32_t stage_count;
+    ne10_int32_t order;
 
     ne10_fft_cpx_int16_t   scratch_in[8];
     ne10_fft_cpx_int16_t   scratch_out[8];
@@ -520,6 +523,7 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
     if (N == 2)   // length of FFT is 2^n (n is odd)
     {
         // radix 8
+        order = 2 * stage_count - 1;
         N = fstride >> 1; // 1/4 of length of FFT
         tw = twiddles;
         fstride1 = fstride >> 2;
@@ -639,14 +643,24 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
         fstride >>= 4;
         stage_count -= 2;
 
+        if (stage_count == 0)
+        {
+            for (f_count = 0; f_count < 8; f_count++)
+            {
+                Fout[f_count].r >>= order;
+                Fout[f_count].i >>= order;
+            }
+        }
+
         // swap
-        Ftmp = Fin;
-        Fin = Fout;
+        Ftmp = buffer;
+        buffer = Fout;
         Fout = Ftmp;
     }
     else if (N == 4)   // length of FFT is 2^n (n is even)
     {
         //fstride is nfft>>2
+        order = 2 * stage_count;
         for (f_count = fstride; f_count ; f_count --)
         {
             // load
@@ -707,16 +721,25 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
         } // f_count
 
         N = fstride; // 1/4 of length of FFT
-
-        // swap
-        Ftmp = Fin;
-        Fin = Fout;
-        Fout = Ftmp;
-
         // update address for other stages
         stage_count--;
         tw = twiddles;
         fstride >>= 2;
+
+        if (stage_count == 0)
+        {
+            for (f_count = 0; f_count < 4; f_count++)
+            {
+                Fout[f_count].r >>= order;
+                Fout[f_count].i >>= order;
+            }
+        }
+
+        // swap
+        Ftmp = buffer;
+        buffer = Fout;
+        Fout = Ftmp;
+
         // end of first stage
     }
 
@@ -724,7 +747,7 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
     // others but the last one
     for (; stage_count > 1 ; stage_count--)
     {
-        Fin1 = Fin;
+        Fin1 = buffer;
         for (f_count = 0; f_count < fstride; f_count ++)
         {
             Fout1 = & Fout[ f_count * mstride << 2 ];
@@ -817,8 +840,8 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
         tw += mstride * 3;
         mstride <<= 2;
         // swap
-        Ftmp = Fin;
-        Fin = Fout;
+        Ftmp = buffer;
+        buffer = Fout;
         Fout = Ftmp;
         fstride >>= 2;
     } // stage_count
@@ -826,7 +849,7 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
     // the last one
     if (stage_count)
     {
-        Fin1 = Fin;
+        Fin1 = buffer;
         // if stage count is even, output to the input array
         Fout1 = Fout_ls;
 
@@ -889,20 +912,20 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
                 scratch[7].i = scratch[1].i - scratch[3].i;
 
                 // third result
-                scratch_out[2].r = scratch[4].r - scratch[6].r;
-                scratch_out[2].i = scratch[4].i - scratch[6].i;
+                scratch_out[2].r = (scratch[4].r - scratch[6].r) >> order;
+                scratch_out[2].i = (scratch[4].i - scratch[6].i) >> order;
 
                 // first result
-                scratch_out[0].r = scratch[4].r + scratch[6].r;
-                scratch_out[0].i = scratch[4].i + scratch[6].i;
+                scratch_out[0].r = (scratch[4].r + scratch[6].r) >> order;
+                scratch_out[0].i = (scratch[4].i + scratch[6].i) >> order;
 
                 // second result
-                scratch_out[1].r = scratch[5].r - scratch[7].i;
-                scratch_out[1].i = scratch[5].i + scratch[7].r;
+                scratch_out[1].r = (scratch[5].r - scratch[7].i) >> order;
+                scratch_out[1].i = (scratch[5].i + scratch[7].r) >> order;
 
                 // forth result
-                scratch_out[3].r = scratch[5].r + scratch[7].i;
-                scratch_out[3].i = scratch[5].i - scratch[7].r;
+                scratch_out[3].r = (scratch[5].r + scratch[7].i) >> order;
+                scratch_out[3].i = (scratch[5].i - scratch[7].r) >> order;
 
                 // store
                 *Fout1 = scratch_out[0];
@@ -1064,10 +1087,14 @@ static void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
 ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
 {
     ne10_fft_cfg_int16_t st = NULL;
-    ne10_uint32_t memneeded = sizeof (struct ne10_fft_state_int16_t)
-                              + sizeof (ne10_fft_cpx_int16_t) * (nfft - 1); /* twiddle factors*/
+    ne10_uint32_t memneeded = sizeof (ne10_fft_state_int16_t)
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_int16_t) * (nfft);       /* twiddle */
 
     st = (ne10_fft_cfg_int16_t) NE10_MALLOC (memneeded);
+    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_state_int16_t));
+    st->twiddles = (ne10_fft_cpx_int16_t*) (st->factors + (NE10_MAXFACTORS * 2));
+    st->nfft = nfft;
 
     if (st)
     {
@@ -1125,9 +1152,7 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
  * @brief Mixed radix-2/4 complex FFT/IFFT of 16-bit fixed point data.
  * @param[out]  *fout            point to the output buffer (out-of-place)
  * @param[in]   *fin             point to the input buffer (out-of-place)
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
@@ -1137,16 +1162,14 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
  */
 void ne10_fft_c2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
                               ne10_fft_cpx_int16_t *fin,
-                              ne10_fft_cpx_int16_t *twiddles,
-                              ne10_int32_t *factors,
-                              ne10_int32_t nfft,
+                              ne10_fft_cfg_int16_t cfg,
                               ne10_int32_t inverse_fft,
                               ne10_int32_t scaled_flag)
 {
     if (inverse_fft)
-        ne10_mixed_radix_butterfly_inverse_int16_c (fout, fin, factors, twiddles, scaled_flag);
+        ne10_mixed_radix_butterfly_inverse_int16_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
     else
-        ne10_mixed_radix_butterfly_int16_c (fout, fin, factors, twiddles, scaled_flag);
+        ne10_mixed_radix_butterfly_int16_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
 }
 
 
@@ -1172,13 +1195,16 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
     ne10_fft_r2c_cfg_int16_t st = NULL;
     ne10_int32_t ncfft = nfft >> 1;
 
-    ne10_uint32_t memneeded = sizeof (struct ne10_fft_r2c_state_int16_t)
-                              + sizeof (ne10_fft_cpx_int16_t) * ncfft  /* twiddle*/
-                              + sizeof (ne10_fft_cpx_int16_t) * ncfft / 2; /* super twiddles*/
+    ne10_uint32_t memneeded = sizeof (ne10_fft_r2c_state_int16_t)
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_int16_t) * ncfft         /* twiddle*/
+                              + sizeof (ne10_fft_cpx_int16_t) * ncfft / 2;    /* super twiddles*/
 
     st = (ne10_fft_r2c_cfg_int16_t) NE10_MALLOC (memneeded);
-    st->twiddles = (ne10_fft_cpx_int16_t*) ( (ne10_int8_t*) st + sizeof (struct ne10_fft_r2c_state_int16_t));
+    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_r2c_state_int16_t));
+    st->twiddles = (ne10_fft_cpx_int16_t*) (st->factors + (NE10_MAXFACTORS * 2));
     st->super_twiddles = st->twiddles + ncfft;
+    st->ncfft = ncfft;
 
     if (st)
     {
@@ -1245,10 +1271,7 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
  * @brief Mixed radix-2/4 FFT (real to complex) of int16 data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *super_twiddles  point to the twiddle buffer for data split
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
@@ -1257,32 +1280,20 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
  */
 void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
                               ne10_int16_t *fin,
-                              ne10_fft_cpx_int16_t *twiddles,
-                              ne10_fft_cpx_int16_t *super_twiddles,
-                              ne10_int32_t *factors,
-                              ne10_int32_t nfft,
+                              ne10_fft_r2c_cfg_int16_t cfg,
                               ne10_int32_t scaled_flag)
 {
-    ne10_int32_t ncfft = nfft >> 1;
+    ne10_fft_cpx_int16_t * tmpbuf = cfg->buffer;
 
-    /* malloc a temp buffer for cfft */
-    ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * ncfft);
-
-    ne10_fft_c2c_1d_int16_c (tmpbuf_, (ne10_fft_cpx_int16_t*) fin, twiddles, factors, ncfft, 0, scaled_flag);
-
-    ne10_fft_split_r2c_1d_int16 (fout, tmpbuf_, super_twiddles, ncfft, scaled_flag);
-
-    NE10_FREE (tmpbuf_);
+    ne10_mixed_radix_butterfly_int16_c (tmpbuf, (ne10_fft_cpx_int16_t*) fin, cfg->factors, cfg->twiddles, fout, scaled_flag);
+    ne10_fft_split_r2c_1d_int16 (fout, tmpbuf, cfg->super_twiddles, cfg->ncfft, scaled_flag);
 }
 
 /**
  * @brief Mixed radix-2/4 IFFT (complex to real) of int16 data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *super_twiddles  point to the twiddle buffer for data split
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
@@ -1291,22 +1302,14 @@ void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
  */
 void ne10_fft_c2r_1d_int16_c (ne10_int16_t *fout,
                               ne10_fft_cpx_int16_t *fin,
-                              ne10_fft_cpx_int16_t *twiddles,
-                              ne10_fft_cpx_int16_t *super_twiddles,
-                              ne10_int32_t *factors,
-                              ne10_int32_t nfft,
+                              ne10_fft_r2c_cfg_int16_t cfg,
                               ne10_int32_t scaled_flag)
 {
-    ne10_int32_t ncfft = nfft >> 1;
+    ne10_fft_cpx_int16_t * tmpbuf1 = cfg->buffer;
+    ne10_fft_cpx_int16_t * tmpbuf2 = cfg->buffer + cfg->ncfft;
 
-    /* malloc a temp buffer for split */
-    ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * ncfft);
-
-    ne10_fft_split_c2r_1d_int16 (tmpbuf_, fin, super_twiddles, ncfft, scaled_flag);
-
-    ne10_fft_c2c_1d_int16_c ( (ne10_fft_cpx_int16_t*) fout, tmpbuf_, twiddles, factors, ncfft, 1, scaled_flag);
-
-    NE10_FREE (tmpbuf_);
+    ne10_fft_split_c2r_1d_int16 (tmpbuf1, fin, cfg->super_twiddles, cfg->ncfft, scaled_flag);
+    ne10_mixed_radix_butterfly_inverse_int16_c ( (ne10_fft_cpx_int16_t*) fout, tmpbuf1, cfg->factors, cfg->twiddles, tmpbuf2, scaled_flag);
 }
 
 /**

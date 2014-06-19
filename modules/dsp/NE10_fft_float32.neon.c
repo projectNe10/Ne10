@@ -37,7 +37,6 @@
 
 static inline void ne10_fft4_forward_float32 (ne10_fft_cpx_float32_t * Fout,
         ne10_fft_cpx_float32_t * Fin)
-
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i;
     ne10_float32_t tmp_r, tmp_i;
@@ -66,7 +65,6 @@ static inline void ne10_fft4_forward_float32 (ne10_fft_cpx_float32_t * Fout,
 
 static inline void ne10_fft4_backward_float32 (ne10_fft_cpx_float32_t * Fout,
         ne10_fft_cpx_float32_t * Fin)
-
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i;
     ne10_float32_t tmp_r, tmp_i;
@@ -82,20 +80,19 @@ static inline void ne10_fft4_backward_float32 (ne10_fft_cpx_float32_t * Fout,
 
     s1_r = Fin[1].r - Fin[3].r;
     s1_i = Fin[1].i - Fin[3].i;
-    Fout[2].r = tmp_r - s0_r;
-    Fout[2].i = tmp_i - s0_i;
-    Fout[0].r = tmp_r + s0_r;
-    Fout[0].i = tmp_i + s0_i;
+    Fout[2].r = (tmp_r - s0_r) * 0.25f;
+    Fout[2].i = (tmp_i - s0_i) * 0.25f;
+    Fout[0].r = (tmp_r + s0_r) * 0.25f;
+    Fout[0].i = (tmp_i + s0_i) * 0.25f;
 
-    Fout[1].r = s2_r - s1_i;
-    Fout[1].i = s2_i + s1_r;
-    Fout[3].r = s2_r + s1_i;
-    Fout[3].i = s2_i - s1_r;
+    Fout[1].r = (s2_r - s1_i) * 0.25f;
+    Fout[1].i = (s2_i + s1_r) * 0.25f;
+    Fout[3].r = (s2_r + s1_i) * 0.25f;
+    Fout[3].i = (s2_i - s1_r) * 0.25f;
 }
 
 static inline void ne10_fft8_forward_float32 (ne10_fft_cpx_float32_t * Fout,
         ne10_fft_cpx_float32_t * Fin)
-
 {
     ne10_float32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i, s3_r, s3_i, s4_r, s4_i, s5_r, s5_i, s6_r, s6_i, s7_r, s7_i;
     ne10_float32_t t0_r, t0_i, t1_r, t1_i, t2_r, t2_i, t3_r, t3_i, t4_r, t4_i, t5_r, t5_i;
@@ -191,14 +188,14 @@ static inline void ne10_fft8_backward_float32 (ne10_fft_cpx_float32_t * Fout,
     t2_i = s2_i + s6_i;
     t3_r = s2_r - s6_r;
     t3_i = s2_i - s6_i;
-    Fout[0].r = t1_r + t2_r;
-    Fout[0].i = t1_i + t2_i;
-    Fout[4].r = t1_r - t2_r;
-    Fout[4].i = t1_i - t2_i;
-    Fout[2].r = t0_r - t3_i;
-    Fout[2].i = t0_i + t3_r;
-    Fout[6].r = t0_r + t3_i;
-    Fout[6].i = t0_i - t3_r;
+    Fout[0].r = (t1_r + t2_r) * 0.125f;
+    Fout[0].i = (t1_i + t2_i) * 0.125f;
+    Fout[4].r = (t1_r - t2_r) * 0.125f;
+    Fout[4].i = (t1_i - t2_i) * 0.125f;
+    Fout[2].r = (t0_r - t3_i) * 0.125f;
+    Fout[2].i = (t0_i + t3_r) * 0.125f;
+    Fout[6].r = (t0_r + t3_i) * 0.125f;
+    Fout[6].i = (t0_i - t3_r) * 0.125f;
 
     t4_r = (s3_r - s3_i) * TW_81;
     t4_i = (s3_r + s3_i) * TW_81;
@@ -213,14 +210,14 @@ static inline void ne10_fft8_backward_float32 (ne10_fft_cpx_float32_t * Fout,
     t2_i = t4_i - t5_i;
     t3_r = t4_r + t5_r;
     t3_i = t4_i + t5_i;
-    Fout[1].r = t1_r + t2_r;
-    Fout[1].i = t1_i + t2_i;
-    Fout[5].r = t1_r - t2_r;
-    Fout[5].i = t1_i - t2_i;
-    Fout[3].r = t0_r - t3_i;
-    Fout[3].i = t0_i + t3_r;
-    Fout[7].r = t0_r + t3_i;
-    Fout[7].i = t0_i - t3_r;
+    Fout[1].r = (t1_r + t2_r) * 0.125f;
+    Fout[1].i = (t1_i + t2_i) * 0.125f;
+    Fout[5].r = (t1_r - t2_r) * 0.125f;
+    Fout[5].i = (t1_i - t2_i) * 0.125f;
+    Fout[3].r = (t0_r - t3_i) * 0.125f;
+    Fout[3].i = (t0_i + t3_r) * 0.125f;
+    Fout[7].r = (t0_r + t3_i) * 0.125f;
+    Fout[7].i = (t0_i - t3_r) * 0.125f;
 }
 
 static void ne10_fft16_forward_float32_neon (ne10_fft_cpx_float32_t * Fout,
@@ -389,6 +386,7 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
     float32x4_t q_in_i0123, q_in_i4567, q_in_i89ab, q_in_icdef;
     float32x4x2_t q2_tw1, q2_tw2, q2_tw3;
     float32x4x2_t q2_out_0123, q2_out_4567, q2_out_89ab, q2_out_cdef;
+    float32x4_t q_one_by_nfft;
     tw1 = twiddles;
     tw2 = twiddles + 4;
     tw3 = twiddles + 8;
@@ -438,6 +436,7 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
     q_s4_r = vsubq_f32 (q_s0_r, q_s2_r);
     q_s4_i = vsubq_f32 (q_s0_i, q_s2_i);
 
+    q_one_by_nfft = vdupq_n_f32 (0.0625f);
     q2_out_89ab.val[0] = vsubq_f32 (q2_out_0123.val[0], q_s3_r);
     q2_out_89ab.val[1] = vsubq_f32 (q2_out_0123.val[1], q_s3_i);
     q2_out_0123.val[0] = vaddq_f32 (q2_out_0123.val[0], q_s3_r);
@@ -447,6 +446,15 @@ static void ne10_fft16_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
     q2_out_4567.val[1] = vaddq_f32 (q_s5_i, q_s4_r);
     q2_out_cdef.val[0] = vaddq_f32 (q_s5_r, q_s4_i);
     q2_out_cdef.val[1] = vsubq_f32 (q_s5_i, q_s4_r);
+
+    q2_out_89ab.val[0] = vmulq_f32 (q2_out_89ab.val[0], q_one_by_nfft);
+    q2_out_89ab.val[1] = vmulq_f32 (q2_out_89ab.val[1], q_one_by_nfft);
+    q2_out_0123.val[0] = vmulq_f32 (q2_out_0123.val[0], q_one_by_nfft);
+    q2_out_0123.val[1] = vmulq_f32 (q2_out_0123.val[1], q_one_by_nfft);
+    q2_out_4567.val[0] = vmulq_f32 (q2_out_4567.val[0], q_one_by_nfft);
+    q2_out_4567.val[1] = vmulq_f32 (q2_out_4567.val[1], q_one_by_nfft);
+    q2_out_cdef.val[0] = vmulq_f32 (q2_out_cdef.val[0], q_one_by_nfft);
+    q2_out_cdef.val[1] = vmulq_f32 (q2_out_cdef.val[1], q_one_by_nfft);
 
     vst2q_f32 (p_dst0, q2_out_0123);
     vst2q_f32 (p_dst1, q2_out_4567);
@@ -651,9 +659,7 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
  * @brief Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data.
  * @param[out]  *fout            point to the output buffer (out-of-place)
  * @param[in]   *fin             point to the input buffer (out-of-place)
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @return none.
  * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 1, 2, 3, 4, 5, 6 ....etc) is supported.
@@ -663,14 +669,12 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
 
 void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_fft_cpx_float32_t *fin,
-                                   ne10_fft_cpx_float32_t *twiddles,
-                                   ne10_int32_t *factors,
-                                   ne10_int32_t nfft,
+                                   ne10_fft_cfg_float32_t cfg,
                                    ne10_int32_t inverse_fft)
 {
     if (inverse_fft)
     {
-        switch (nfft)
+        switch (cfg->nfft)
         {
         case 4:
             ne10_fft4_backward_float32 (fout, fin);
@@ -679,16 +683,16 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
             ne10_fft8_backward_float32 (fout, fin);
             break;
         case 16:
-            ne10_fft16_backward_float32_neon (fout, fin, twiddles);
+            ne10_fft16_backward_float32_neon (fout, fin, cfg->twiddles);
             break;
         default:
-            ne10_mixed_radix_fft_backward_float32_neon (fout, fin, factors, twiddles);
+            ne10_mixed_radix_fft_backward_float32_neon (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
             break;
         }
     }
     else
     {
-        switch (nfft)
+        switch (cfg->nfft)
         {
         case 4:
             ne10_fft4_forward_float32 (fout, fin);
@@ -697,10 +701,10 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
             ne10_fft8_forward_float32 (fout, fin);
             break;
         case 16:
-            ne10_fft16_forward_float32_neon (fout, fin, twiddles);
+            ne10_fft16_forward_float32_neon (fout, fin, cfg->twiddles);
             break;
         default:
-            ne10_mixed_radix_fft_forward_float32_neon (fout, fin, factors, twiddles);
+            ne10_mixed_radix_fft_forward_float32_neon (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
             break;
         }
     }
@@ -719,10 +723,7 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
  * @brief Mixed radix-2/4 FFT (real to complex) of float(32-bit) data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *super_twiddles  point to the twiddle buffer for data split
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @return none.
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
@@ -730,30 +731,26 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
  */
 void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_float32_t *fin,
-                                   ne10_fft_cpx_float32_t *twiddles,
-                                   ne10_fft_cpx_float32_t *super_twiddles,
-                                   ne10_int32_t *factors,
-                                   ne10_int32_t nfft)
+                                   ne10_fft_r2c_cfg_float32_t cfg)
 {
-    ne10_int32_t ncfft = nfft >> 1;
+    ne10_fft_cpx_float32_t * tmpbuf1 = cfg->buffer;
+    ne10_fft_cpx_float32_t * tmpbuf2 = cfg->buffer + cfg->ncfft;
+    ne10_fft_state_float32_t c2c_state;
 
-    /* malloc a temp buffer for cfft */
-    ne10_fft_cpx_float32_t * tmpbuf_ = (ne10_fft_cpx_float32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_float32_t) * ncfft);
+    c2c_state.nfft = cfg->ncfft;
+    c2c_state.factors = cfg->factors;
+    c2c_state.twiddles = cfg->twiddles;
+    c2c_state.buffer = tmpbuf2;
 
-    ne10_fft_c2c_1d_float32_neon (tmpbuf_, (ne10_fft_cpx_float32_t*) fin, twiddles, factors, ncfft, 0);
-    ne10_fft_split_r2c_1d_float32_neon (fout, tmpbuf_, super_twiddles, ncfft);
-
-    NE10_FREE (tmpbuf_);
+    ne10_fft_c2c_1d_float32_neon (tmpbuf1, (ne10_fft_cpx_float32_t*) fin, &c2c_state, 0);
+    ne10_fft_split_r2c_1d_float32_neon (fout, tmpbuf1,  cfg->super_twiddles, cfg->ncfft);
 }
 
 /**
  * @brief Mixed radix-2/4 IFFT (complex to real) of float(32-bit) data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *super_twiddles  point to the twiddle buffer for data split
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @return none.
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
@@ -761,20 +758,19 @@ void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
  */
 void ne10_fft_c2r_1d_float32_neon (ne10_float32_t *fout,
                                    ne10_fft_cpx_float32_t *fin,
-                                   ne10_fft_cpx_float32_t *twiddles,
-                                   ne10_fft_cpx_float32_t *super_twiddles,
-                                   ne10_int32_t *factors,
-                                   ne10_int32_t nfft)
+                                   ne10_fft_r2c_cfg_float32_t cfg)
 {
-    ne10_int32_t ncfft = nfft >> 1;
+    ne10_fft_cpx_float32_t * tmpbuf1 = cfg->buffer;
+    ne10_fft_cpx_float32_t * tmpbuf2 = cfg->buffer + cfg->ncfft;
+    ne10_fft_state_float32_t c2c_state;
 
-    /* malloc a temp buffer for split */
-    ne10_fft_cpx_float32_t * tmpbuf_ = (ne10_fft_cpx_float32_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_float32_t) * ncfft);
+    c2c_state.nfft = cfg->ncfft;
+    c2c_state.factors = cfg->factors;
+    c2c_state.twiddles = cfg->twiddles;
+    c2c_state.buffer = tmpbuf2;
 
-    ne10_fft_split_c2r_1d_float32_neon (tmpbuf_, fin, super_twiddles, ncfft);
-    ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) fout, tmpbuf_, twiddles, factors, ncfft, 1);
-
-    NE10_FREE (tmpbuf_);
+    ne10_fft_split_c2r_1d_float32_neon (tmpbuf1, fin, cfg->super_twiddles, cfg->ncfft);
+    ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) fout, tmpbuf1, &c2c_state, 1);
 }
 
 /**

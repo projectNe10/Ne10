@@ -216,26 +216,27 @@ typedef struct
     ne10_float32_t i;
 } ne10_fft_cpx_float32_t;
 
-struct ne10_fft_state_float32_t
+typedef struct
 {
     ne10_int32_t nfft;
-    ne10_int32_t inverse;
-    ne10_int32_t factors[2 * NE10_MAXFACTORS];
-    ne10_fft_cpx_float32_t twiddles[1];
-};
+    ne10_int32_t *factors;
+    ne10_fft_cpx_float32_t *twiddles;
+    ne10_fft_cpx_float32_t *buffer;
+} ne10_fft_state_float32_t;
 
-typedef struct ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;
+typedef ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;
 
-struct ne10_fft_r2c_state_float32_t
+typedef struct
 {
     ne10_int32_t nfft;
-    ne10_int32_t inverse;
-    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_int32_t ncfft;
+    ne10_int32_t *factors;
     ne10_fft_cpx_float32_t *twiddles;
     ne10_fft_cpx_float32_t *super_twiddles;
-};
+    ne10_fft_cpx_float32_t *buffer;
+} ne10_fft_r2c_state_float32_t;
 
-typedef struct ne10_fft_r2c_state_float32_t* ne10_fft_r2c_cfg_float32_t;
+typedef ne10_fft_r2c_state_float32_t* ne10_fft_r2c_cfg_float32_t;
 
 /**
  * @brief structure for the 16 bits fixed point FFT function.
@@ -246,26 +247,27 @@ typedef struct
     ne10_int16_t i;
 } ne10_fft_cpx_int16_t;
 
-struct ne10_fft_state_int16_t
+typedef struct
 {
     ne10_int32_t nfft;
-    ne10_int32_t inverse;
-    ne10_int32_t factors[2 * NE10_MAXFACTORS];
-    ne10_fft_cpx_int16_t twiddles[1];
-};
+    ne10_int32_t *factors;
+    ne10_fft_cpx_int16_t *twiddles;
+    ne10_fft_cpx_int16_t *buffer;
+} ne10_fft_state_int16_t;
 
-typedef struct ne10_fft_state_int16_t* ne10_fft_cfg_int16_t;
+typedef ne10_fft_state_int16_t* ne10_fft_cfg_int16_t;
 
-struct ne10_fft_r2c_state_int16_t
+typedef struct
 {
     ne10_int32_t nfft;
-    ne10_int32_t inverse;
-    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_int32_t ncfft;
+    ne10_int32_t *factors;
     ne10_fft_cpx_int16_t *twiddles;
     ne10_fft_cpx_int16_t *super_twiddles;
-};
+    ne10_fft_cpx_int16_t *buffer;
+} ne10_fft_r2c_state_int16_t;
 
-typedef struct ne10_fft_r2c_state_int16_t* ne10_fft_r2c_cfg_int16_t;
+typedef ne10_fft_r2c_state_int16_t* ne10_fft_r2c_cfg_int16_t;
 
 /**
  * @brief structure for the 32 bits fixed point FFT function.
@@ -276,26 +278,27 @@ typedef struct
     ne10_int32_t i;
 } ne10_fft_cpx_int32_t;
 
-struct ne10_fft_state_int32_t
+typedef struct
 {
     ne10_int32_t nfft;
-    ne10_int32_t inverse;
-    ne10_int32_t factors[2 * NE10_MAXFACTORS];
-    ne10_fft_cpx_int32_t twiddles[1];
-};
+    ne10_int32_t *factors;
+    ne10_fft_cpx_int32_t *twiddles;
+    ne10_fft_cpx_int32_t *buffer;
+} ne10_fft_state_int32_t;
 
-typedef struct ne10_fft_state_int32_t* ne10_fft_cfg_int32_t;
+typedef ne10_fft_state_int32_t* ne10_fft_cfg_int32_t;
 
-struct ne10_fft_r2c_state_int32_t
+typedef struct
 {
     ne10_int32_t nfft;
-    ne10_int32_t inverse;
-    ne10_int32_t factors[2 * NE10_MAXFACTORS];
+    ne10_int32_t ncfft;
+    ne10_int32_t *factors;
     ne10_fft_cpx_int32_t *twiddles;
     ne10_fft_cpx_int32_t *super_twiddles;
-};
+    ne10_fft_cpx_int32_t *buffer;
+} ne10_fft_r2c_state_int32_t;
 
-typedef struct ne10_fft_r2c_state_int32_t* ne10_fft_r2c_cfg_int32_t;
+typedef ne10_fft_r2c_state_int32_t* ne10_fft_r2c_cfg_int32_t;
 
 /////////////////////////////////////////////////////////
 // definitions for fir
@@ -374,17 +377,20 @@ typedef struct
 /**
  * @brief Structure for point in image
  */
-typedef struct {
+typedef struct
+{
     ne10_uint32_t x;
     ne10_uint32_t y;
 } ne10_point_t;
 
-typedef struct {
+typedef struct
+{
     ne10_uint32_t x;
     ne10_uint32_t y;
 } ne10_size_t;
 
-typedef enum {
+typedef enum
+{
     UBUNTU_COMMAND_LINE,
     ANDROID_DEMO,
     IOS_DEMO

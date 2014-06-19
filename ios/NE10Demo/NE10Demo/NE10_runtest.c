@@ -41,8 +41,8 @@ char* NE10RunTest(void)
                                   test_rsbc, test_setc, test_subc, test_sub,
                                   test_addmat, test_detmat, test_identitymat,
                                   test_invmat, test_mulmat, test_mulcmatvec,
-                                  test_submat, test_transmat, test_cfft,
-                                  test_rfft, test_fir, test_fir_decimate,
+                                  test_submat, test_transmat,
+                                  test_fir, test_fir_decimate,
                                   test_fir_interpolate, test_fir_lattice,
                                   test_fir_sparse, test_iir_lattice};
 

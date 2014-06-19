@@ -82,15 +82,15 @@ static inline void ne10_fft4_backward_int16_unscaled (ne10_fft_cpx_int16_t * Fou
 
     s1_r = Fin[1].r - Fin[3].r;
     s1_i = Fin[1].i - Fin[3].i;
-    Fout[2].r = tmp_r - s0_r;
-    Fout[2].i = tmp_i - s0_i;
-    Fout[0].r = tmp_r + s0_r;
-    Fout[0].i = tmp_i + s0_i;
 
-    Fout[1].r = s2_r - s1_i;
-    Fout[1].i = s2_i + s1_r;
-    Fout[3].r = s2_r + s1_i;
-    Fout[3].i = s2_i - s1_r;
+    Fout[2].r = (tmp_r - s0_r) >> 2;
+    Fout[2].i = (tmp_i - s0_i) >> 2;
+    Fout[0].r = (tmp_r + s0_r) >> 2;
+    Fout[0].i = (tmp_i + s0_i) >> 2;
+    Fout[1].r = (s2_r - s1_i) >> 2;
+    Fout[1].i = (s2_i + s1_r) >> 2;
+    Fout[3].r = (s2_r + s1_i) >> 2;
+    Fout[3].i = (s2_i - s1_r) >> 2;
 }
 static inline void ne10_fft4_forward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
         ne10_fft_cpx_int16_t * Fin)
@@ -137,15 +137,14 @@ static inline void ne10_fft4_backward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
     s1_r = (Fin[1].r - Fin[3].r) >> 2;
     s1_i = (Fin[1].i - Fin[3].i) >> 2;
 
-    Fout[2].r = tmp_r - s0_r;
-    Fout[2].i = tmp_i - s0_i;
-    Fout[0].r = tmp_r + s0_r;
-    Fout[0].i = tmp_i + s0_i;
-
-    Fout[1].r = s2_r - s1_i;
-    Fout[1].i = s2_i + s1_r;
-    Fout[3].r = s2_r + s1_i;
-    Fout[3].i = s2_i - s1_r;
+    Fout[2].r = (tmp_r - s0_r) >> 2;
+    Fout[2].i = (tmp_i - s0_i) >> 2;
+    Fout[0].r = (tmp_r + s0_r) >> 2;
+    Fout[0].i = (tmp_i + s0_i) >> 2;
+    Fout[1].r = (s2_r - s1_i) >> 2;
+    Fout[1].i = (s2_i + s1_r) >> 2;
+    Fout[3].r = (s2_r + s1_i) >> 2;
+    Fout[3].i = (s2_i - s1_r) >> 2;
 }
 static inline void ne10_fft8_forward_int16_unscaled (ne10_fft_cpx_int16_t * Fout,
         ne10_fft_cpx_int16_t * Fin)
@@ -245,14 +244,14 @@ static inline void ne10_fft8_backward_int16_unscaled (ne10_fft_cpx_int16_t * Fou
     t2_i = s2_i + s6_i;
     t3_r = s2_r - s6_r;
     t3_i = s2_i - s6_i;
-    Fout[0].r = t1_r + t2_r;
-    Fout[0].i = t1_i + t2_i;
-    Fout[4].r = t1_r - t2_r;
-    Fout[4].i = t1_i - t2_i;
-    Fout[2].r = t0_r - t3_i;
-    Fout[2].i = t0_i + t3_r;
-    Fout[6].r = t0_r + t3_i;
-    Fout[6].i = t0_i - t3_r;
+    Fout[0].r = (t1_r + t2_r) >> 3;
+    Fout[0].i = (t1_i + t2_i) >> 3;
+    Fout[4].r = (t1_r - t2_r) >> 3;
+    Fout[4].i = (t1_i - t2_i) >> 3;
+    Fout[2].r = (t0_r - t3_i) >> 3;
+    Fout[2].i = (t0_i + t3_r) >> 3;
+    Fout[6].r = (t0_r + t3_i) >> 3;
+    Fout[6].i = (t0_i - t3_r) >> 3;
 
     t4_r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (s3_r - s3_i) * TW_81) >> NE10_F2I16_SHIFT);
     t4_i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (s3_r + s3_i) * TW_81) >> NE10_F2I16_SHIFT);
@@ -267,14 +266,14 @@ static inline void ne10_fft8_backward_int16_unscaled (ne10_fft_cpx_int16_t * Fou
     t2_i = t4_i - t5_i;
     t3_r = t4_r + t5_r;
     t3_i = t4_i + t5_i;
-    Fout[1].r = t1_r + t2_r;
-    Fout[1].i = t1_i + t2_i;
-    Fout[5].r = t1_r - t2_r;
-    Fout[5].i = t1_i - t2_i;
-    Fout[3].r = t0_r - t3_i;
-    Fout[3].i = t0_i + t3_r;
-    Fout[7].r = t0_r + t3_i;
-    Fout[7].i = t0_i - t3_r;
+    Fout[1].r = (t1_r + t2_r) >> 3;
+    Fout[1].i = (t1_i + t2_i) >> 3;
+    Fout[5].r = (t1_r - t2_r) >> 3;
+    Fout[5].i = (t1_i - t2_i) >> 3;
+    Fout[3].r = (t0_r - t3_i) >> 3;
+    Fout[3].i = (t0_i + t3_r) >> 3;
+    Fout[7].r = (t0_r + t3_i) >> 3;
+    Fout[7].i = (t0_i - t3_r) >> 3;
 }
 static inline void ne10_fft8_forward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
         ne10_fft_cpx_int16_t * Fin)
@@ -374,14 +373,14 @@ static inline void ne10_fft8_backward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
     t2_i = s2_i + s6_i;
     t3_r = s2_r - s6_r;
     t3_i = s2_i - s6_i;
-    Fout[0].r = t1_r + t2_r;
-    Fout[0].i = t1_i + t2_i;
-    Fout[4].r = t1_r - t2_r;
-    Fout[4].i = t1_i - t2_i;
-    Fout[2].r = t0_r - t3_i;
-    Fout[2].i = t0_i + t3_r;
-    Fout[6].r = t0_r + t3_i;
-    Fout[6].i = t0_i - t3_r;
+    Fout[0].r = (t1_r + t2_r) >> 3;
+    Fout[0].i = (t1_i + t2_i) >> 3;
+    Fout[4].r = (t1_r - t2_r) >> 3;
+    Fout[4].i = (t1_i - t2_i) >> 3;
+    Fout[2].r = (t0_r - t3_i) >> 3;
+    Fout[2].i = (t0_i + t3_r) >> 3;
+    Fout[6].r = (t0_r + t3_i) >> 3;
+    Fout[6].i = (t0_i - t3_r) >> 3;
 
     t4_r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (s3_r - s3_i) * TW_81) >> NE10_F2I16_SHIFT);
     t4_i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (s3_r + s3_i) * TW_81) >> NE10_F2I16_SHIFT);
@@ -396,14 +395,14 @@ static inline void ne10_fft8_backward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
     t2_i = t4_i - t5_i;
     t3_r = t4_r + t5_r;
     t3_i = t4_i + t5_i;
-    Fout[1].r = t1_r + t2_r;
-    Fout[1].i = t1_i + t2_i;
-    Fout[5].r = t1_r - t2_r;
-    Fout[5].i = t1_i - t2_i;
-    Fout[3].r = t0_r - t3_i;
-    Fout[3].i = t0_i + t3_r;
-    Fout[7].r = t0_r + t3_i;
-    Fout[7].i = t0_i - t3_r;
+    Fout[1].r = (t1_r + t2_r) >> 3;
+    Fout[1].i = (t1_i + t2_i) >> 3;
+    Fout[5].r = (t1_r - t2_r) >> 3;
+    Fout[5].i = (t1_i - t2_i) >> 3;
+    Fout[3].r = (t0_r - t3_i) >> 3;
+    Fout[3].i = (t0_i + t3_r) >> 3;
+    Fout[7].r = (t0_r + t3_i) >> 3;
+    Fout[7].i = (t0_i - t3_r) >> 3;
 }
 static void ne10_fft_split_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
         const ne10_fft_cpx_int16_t *src,
@@ -734,9 +733,7 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
  * @brief Mixed radix-2/4 complex FFT/IFFT of 16-bit fixed point data.
  * @param[out]  *fout            point to the output buffer (out-of-place)
  * @param[in]   *fin             point to the input buffer (out-of-place)
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
@@ -746,9 +743,7 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
  */
 void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
                                  ne10_fft_cpx_int16_t *fin,
-                                 ne10_fft_cpx_int16_t *twiddles,
-                                 ne10_int32_t *factors,
-                                 ne10_int32_t nfft,
+                                 ne10_fft_cfg_int16_t cfg,
                                  ne10_int32_t inverse_fft,
                                  ne10_int32_t scaled_flag)
 {
@@ -756,7 +751,7 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
     {
         if (inverse_fft)
         {
-            switch (nfft)
+            switch (cfg->nfft)
             {
             case 4:
                 ne10_fft4_backward_int16_scaled (fout, fin);
@@ -765,13 +760,13 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
                 ne10_fft8_backward_int16_scaled (fout, fin);
                 break;
             default:
-                ne10_mixed_radix_fft_backward_int16_scaled_neon (fout, fin, factors, twiddles);
+                ne10_mixed_radix_fft_backward_int16_scaled_neon (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
                 break;
             }
         }
         else
         {
-            switch (nfft)
+            switch (cfg->nfft)
             {
             case 4:
                 ne10_fft4_forward_int16_scaled (fout, fin);
@@ -780,7 +775,7 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
                 ne10_fft8_forward_int16_scaled (fout, fin);
                 break;
             default:
-                ne10_mixed_radix_fft_forward_int16_scaled_neon (fout, fin, factors, twiddles);
+                ne10_mixed_radix_fft_forward_int16_scaled_neon (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
                 break;
             }
         }
@@ -789,7 +784,7 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
     {
         if (inverse_fft)
         {
-            switch (nfft)
+            switch (cfg->nfft)
             {
             case 4:
                 ne10_fft4_backward_int16_unscaled (fout, fin);
@@ -798,13 +793,13 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
                 ne10_fft8_backward_int16_unscaled (fout, fin);
                 break;
             default:
-                ne10_mixed_radix_fft_backward_int16_unscaled_neon (fout, fin, factors, twiddles);
+                ne10_mixed_radix_fft_backward_int16_unscaled_neon (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
                 break;
             }
         }
         else
         {
-            switch (nfft)
+            switch (cfg->nfft)
             {
             case 4:
                 ne10_fft4_forward_int16_unscaled (fout, fin);
@@ -813,7 +808,7 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
                 ne10_fft8_forward_int16_unscaled (fout, fin);
                 break;
             default:
-                ne10_mixed_radix_fft_forward_int16_unscaled_neon (fout, fin, factors, twiddles);
+                ne10_mixed_radix_fft_forward_int16_unscaled_neon (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
                 break;
             }
         }
@@ -833,10 +828,7 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
  * @brief Mixed radix-2/4 FFT (real to complex) of int16 data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *super_twiddles  point to the twiddle buffer for data split
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
@@ -845,32 +837,26 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
  */
 void ne10_fft_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
                                  ne10_int16_t *fin,
-                                 ne10_fft_cpx_int16_t *twiddles,
-                                 ne10_fft_cpx_int16_t *super_twiddles,
-                                 ne10_int32_t *factors,
-                                 ne10_int32_t nfft,
+                                 ne10_fft_r2c_cfg_int16_t cfg,
                                  ne10_int32_t scaled_flag)
 {
-    ne10_int32_t ncfft = nfft >> 1;
+    ne10_fft_cpx_int16_t * tmpbuf1 = cfg->buffer;
+    ne10_fft_cpx_int16_t * tmpbuf2 = cfg->buffer + cfg->ncfft;
+    ne10_fft_state_int16_t c2c_state;
 
-    /* malloc a temp buffer for cfft */
-    ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * ncfft);
+    c2c_state.nfft = cfg->ncfft;
+    c2c_state.factors = cfg->factors;
+    c2c_state.twiddles = cfg->twiddles;
+    c2c_state.buffer = tmpbuf2;
 
-    ne10_fft_c2c_1d_int16_neon (tmpbuf_, (ne10_fft_cpx_int16_t*) fin, twiddles, factors, ncfft, 0, scaled_flag);
-
-    ne10_fft_split_r2c_1d_int16_neon (fout, tmpbuf_, super_twiddles, ncfft, scaled_flag);
-
-    NE10_FREE (tmpbuf_);
+    ne10_fft_c2c_1d_int16_neon (tmpbuf1, (ne10_fft_cpx_int16_t*) fin, &c2c_state, 0, scaled_flag);
+    ne10_fft_split_r2c_1d_int16_neon (fout, tmpbuf1,  cfg->super_twiddles, cfg->ncfft, scaled_flag);
 }
-
 /**
  * @brief Mixed radix-2/4 IFFT (complex to real) of int16 data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
- * @param[in]   *twiddles        point to the twiddle buffer
- * @param[in]   *super_twiddles  point to the twiddle buffer for data split
- * @param[in]   *factors         point to factors buffer. 0: stage number, 1: stride for the first stage, others: radix and stage's fft length/radix
- * @param[in]   nfft             length of FFT
+ * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
@@ -879,24 +865,21 @@ void ne10_fft_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
  */
 void ne10_fft_c2r_1d_int16_neon (ne10_int16_t *fout,
                                  ne10_fft_cpx_int16_t *fin,
-                                 ne10_fft_cpx_int16_t *twiddles,
-                                 ne10_fft_cpx_int16_t *super_twiddles,
-                                 ne10_int32_t *factors,
-                                 ne10_int32_t nfft,
+                                 ne10_fft_r2c_cfg_int16_t cfg,
                                  ne10_int32_t scaled_flag)
 {
-    ne10_int32_t ncfft = nfft >> 1;
+    ne10_fft_cpx_int16_t * tmpbuf1 = cfg->buffer;
+    ne10_fft_cpx_int16_t * tmpbuf2 = cfg->buffer + cfg->ncfft;
+    ne10_fft_state_int16_t c2c_state;
 
-    /* malloc a temp buffer for split */
-    ne10_fft_cpx_int16_t * tmpbuf_ = (ne10_fft_cpx_int16_t*) NE10_MALLOC (sizeof (ne10_fft_cpx_int16_t) * ncfft);
+    c2c_state.nfft = cfg->ncfft;
+    c2c_state.factors = cfg->factors;
+    c2c_state.twiddles = cfg->twiddles;
+    c2c_state.buffer = tmpbuf2;
 
-    ne10_fft_split_c2r_1d_int16_neon (tmpbuf_, fin, super_twiddles, ncfft, scaled_flag);
-
-    ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) fout, tmpbuf_, twiddles, factors, ncfft, 1, scaled_flag);
-
-    NE10_FREE (tmpbuf_);
+    ne10_fft_split_c2r_1d_int16_neon (tmpbuf1, fin, cfg->super_twiddles, cfg->ncfft, scaled_flag);
+    ne10_fft_c2c_1d_int16_neon ( (ne10_fft_cpx_int16_t*) fout, tmpbuf1, &c2c_state, 1, scaled_flag);
 }
-
 /**
  * @} end of R2C_FFT_IFFT group
  */

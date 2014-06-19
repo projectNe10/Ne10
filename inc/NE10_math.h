@@ -490,7 +490,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_mulc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
-  extern ne10_result_t ne10_mulc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
+    extern ne10_result_t ne10_mulc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
      * Multiplies the components of 3D vectors in an input array by the components of a constant 3D vector and stores the results in an output array.
@@ -1158,7 +1158,7 @@ extern "C" {
      */
     extern ne10_result_t (*ne10_abs_float) (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_float_c (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
-    extern ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count) asm("ne10_abs_float_neon");
+    extern ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count) asm ("ne10_abs_float_neon");
     extern ne10_result_t ne10_abs_float_asm (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     /**
      * Generates a 2D vector from the absolute values of each of the components of an input vector.

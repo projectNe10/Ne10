@@ -49,13 +49,15 @@ extern "C" {
     extern void ne10_mixed_radix_fft_forward_float32_neon (ne10_fft_cpx_float32_t * Fout,
             ne10_fft_cpx_float32_t * Fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_float32_t * twiddles)
+            ne10_fft_cpx_float32_t * twiddles,
+            ne10_fft_cpx_float32_t * buffer)
     asm ("ne10_mixed_radix_fft_forward_float32_neon");
 
     extern void ne10_mixed_radix_fft_backward_float32_neon (ne10_fft_cpx_float32_t * Fout,
             ne10_fft_cpx_float32_t * Fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_float32_t * twiddles)
+            ne10_fft_cpx_float32_t * twiddles,
+            ne10_fft_cpx_float32_t * buffer)
     asm ("ne10_mixed_radix_fft_backward_float32_neon");
 
     /* common functions for fixed point fft */
@@ -63,44 +65,52 @@ extern "C" {
     extern void ne10_mixed_radix_fft_forward_int32_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
             ne10_fft_cpx_int32_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int32_t * twiddles)
+            ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer)
     asm ("ne10_mixed_radix_fft_forward_int32_unscaled_neon");
     extern void ne10_mixed_radix_fft_backward_int32_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
             ne10_fft_cpx_int32_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int32_t * twiddles)
+            ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer)
     asm ("ne10_mixed_radix_fft_backward_int32_unscaled_neon");
     extern void ne10_mixed_radix_fft_forward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fout,
             ne10_fft_cpx_int32_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int32_t * twiddles)
+            ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer)
     asm ("ne10_mixed_radix_fft_forward_int32_scaled_neon");
     extern void ne10_mixed_radix_fft_backward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fout,
             ne10_fft_cpx_int32_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int32_t * twiddles)
+            ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer)
     asm ("ne10_mixed_radix_fft_backward_int32_scaled_neon");
 
     /* butterfly for int 16 */
     extern void ne10_mixed_radix_fft_forward_int16_unscaled_neon (ne10_fft_cpx_int16_t * Fout,
             ne10_fft_cpx_int16_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int16_t * twiddles)
+            ne10_fft_cpx_int16_t * twiddles,
+            ne10_fft_cpx_int16_t * buffer)
     asm ("ne10_mixed_radix_fft_forward_int16_unscaled_neon");
     extern void ne10_mixed_radix_fft_backward_int16_unscaled_neon (ne10_fft_cpx_int16_t * Fout,
             ne10_fft_cpx_int16_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int16_t * twiddles)
+            ne10_fft_cpx_int16_t * twiddles,
+            ne10_fft_cpx_int16_t * buffer)
     asm ("ne10_mixed_radix_fft_backward_int16_unscaled_neon");
     extern void ne10_mixed_radix_fft_forward_int16_scaled_neon (ne10_fft_cpx_int16_t * Fout,
             ne10_fft_cpx_int16_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int16_t * twiddles)
+            ne10_fft_cpx_int16_t * twiddles,
+            ne10_fft_cpx_int16_t * buffer)
     asm ("ne10_mixed_radix_fft_forward_int16_scaled_neon");
     extern void ne10_mixed_radix_fft_backward_int16_scaled_neon (ne10_fft_cpx_int16_t * Fout,
             ne10_fft_cpx_int16_t *fin,
             ne10_int32_t * factors,
-            ne10_fft_cpx_int16_t * twiddles)
+            ne10_fft_cpx_int16_t * twiddles,
+            ne10_fft_cpx_int16_t * buffer)
     asm ("ne10_mixed_radix_fft_backward_int16_scaled_neon");
 
 
