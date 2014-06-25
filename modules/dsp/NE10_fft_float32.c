@@ -1038,15 +1038,17 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
     ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors*/
-                              + sizeof (ne10_fft_cpx_float32_t) * (nfft);     /* twiddle*/
-
+                              + sizeof (ne10_fft_cpx_float32_t) * (nfft)     /* twiddle*/
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft;       /* buffer */
     st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
-    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_state_float32_t));
-    st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
-    st->nfft = nfft;
 
     if (st)
     {
+        st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_state_float32_t));
+        st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->buffer = st->twiddles + nfft;
+        st->nfft = nfft;
+
         ne10_int32_t result = ne10_factor (nfft, st->factors);
         if (result == NE10_ERR)
         {
@@ -1218,16 +1220,19 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
     ne10_uint32_t memneeded = sizeof (ne10_fft_r2c_state_float32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
                               + sizeof (ne10_fft_cpx_float32_t) * ncfft       /* twiddle*/
-                              + sizeof (ne10_fft_cpx_float32_t) * ncfft / 2;  /* super twiddles*/
+                              + sizeof (ne10_fft_cpx_float32_t) * ncfft / 2  /* super twiddles*/
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft;       /* buffer */
 
     st = (ne10_fft_r2c_cfg_float32_t) NE10_MALLOC (memneeded);
-    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_r2c_state_float32_t));
-    st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
-    st->super_twiddles = st->twiddles + ncfft;
-    st->ncfft = ncfft;
 
     if (st)
     {
+        st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_r2c_state_float32_t));
+        st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->super_twiddles = st->twiddles + ncfft;
+        st->buffer = st->super_twiddles + ncfft / 2;
+        st->ncfft = ncfft;
+
         ne10_int32_t result = ne10_factor (ncfft, st->factors);
         if (result == NE10_ERR)
         {
