@@ -1550,12 +1550,12 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
     float32x4x2_t q2_fk, q2_fnkc, q2_tw, q2_dst, q2_dst2;
     float32x4_t q_fnkc_r, q_fnkc_i;
     float32x4_t q_fek_r, q_fek_i, q_fok_r, q_fok_i;
-    float32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3;
+    float32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3, q_val;
     float32x4_t q_dst2_r, q_dst2_i;
     float32_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
-    dst[0].r = src[0].r + src[ncfft].r;
-    dst[0].i = src[0].r - src[ncfft].r;
+    dst[0].r = (src[0].r + src[ncfft].r) * 0.5f;
+    dst[0].i = (src[0].r - src[ncfft].r) * 0.5f;
 
     if (count >= 4)
     {
@@ -1589,10 +1589,15 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
             q_fok_r = vaddq_f32 (q_fok_r, q_tmp2);
             q_fok_i = vsubq_f32 (q_fok_i, q_tmp3);
 
+            q_val = vdupq_n_f32 (0.5f);
             q_dst2_r = vsubq_f32 (q_fek_r, q_fok_r);
             q_dst2_i = vsubq_f32 (q_fok_i, q_fek_i);
             q2_dst.val[0] = vaddq_f32 (q_fek_r, q_fok_r);
             q2_dst.val[1] = vaddq_f32 (q_fek_i, q_fok_i);
+            q_dst2_r = vmulq_f32 (q_dst2_r, q_val);
+            q_dst2_i = vmulq_f32 (q_dst2_i, q_val);
+            q2_dst.val[0] = vmulq_f32 (q2_dst.val[0], q_val);
+            q2_dst.val[1] = vmulq_f32 (q2_dst.val[1], q_val);
             q_dst2_r = vrev64q_f32 (q_dst2_r);
             q_dst2_i = vrev64q_f32 (q_dst2_i);
             q2_dst2.val[0] = vcombine_f32 (vget_high_f32 (q_dst2_r), vget_low_f32 (q_dst2_r));
@@ -1619,11 +1624,11 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
             fok.r = tmp.r * twiddles[k - 1].r + tmp.i * twiddles[k - 1].i;
             fok.i = tmp.i * twiddles[k - 1].r - tmp.r * twiddles[k - 1].i;
 
-            dst[k].r = fek.r + fok.r;
-            dst[k].i = fek.i + fok.i;
+            dst[k].r = (fek.r + fok.r) * 0.5f;
+            dst[k].i = (fek.i + fok.i) * 0.5f;
 
-            dst[ncfft - k].r = fek.r - fok.r;
-            dst[ncfft - k].i = fok.i - fek.i;
+            dst[ncfft - k].r = (fek.r - fok.r) * 0.5f;
+            dst[ncfft - k].i = (fok.i - fek.i) * 0.5f;
         }
     }
 }

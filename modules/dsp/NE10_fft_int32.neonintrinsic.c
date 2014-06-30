@@ -1695,8 +1695,8 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
     int32_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
 
-    dst[0].r = src[0].r + src[ncfft].r;
-    dst[0].i = src[0].r - src[ncfft].r;
+    dst[0].r = (src[0].r + src[ncfft].r) >> 1;
+    dst[0].i = (src[0].r - src[ncfft].r) >> 1;
     if (scaled_flag)
         NE10_F2I32_FIXDIV (dst[0], 2);
     if (count >= 4)
@@ -1732,10 +1732,10 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
                 q_fok_r = vaddq_s32 (q_fok_r, q_tmp2);
                 q_fok_i = vsubq_s32 (q_fok_i, q_tmp3);
 
-                q_dst2_r = vsubq_s32 (q_fek_r, q_fok_r);
-                q_dst2_i = vsubq_s32 (q_fok_i, q_fek_i);
-                q2_dst.val[0] = vaddq_s32 (q_fek_r, q_fok_r);
-                q2_dst.val[1] = vaddq_s32 (q_fek_i, q_fok_i);
+                q_dst2_r = vhsubq_s32 (q_fek_r, q_fok_r);
+                q_dst2_i = vhsubq_s32 (q_fok_i, q_fek_i);
+                q2_dst.val[0] = vhaddq_s32 (q_fek_r, q_fok_r);
+                q2_dst.val[1] = vhaddq_s32 (q_fek_i, q_fok_i);
                 q_dst2_r = vrev64q_s32 (q_dst2_r);
                 q_dst2_i = vrev64q_s32 (q_dst2_i);
                 q2_dst2.val[0] = vcombine_s32 (vget_high_s32 (q_dst2_r), vget_low_s32 (q_dst2_r));
@@ -1777,10 +1777,10 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
                 q_fok_r = vaddq_s32 (q_fok_r, q_tmp2);
                 q_fok_i = vsubq_s32 (q_fok_i, q_tmp3);
 
-                q_dst2_r = vsubq_s32 (q_fek_r, q_fok_r);
-                q_dst2_i = vsubq_s32 (q_fok_i, q_fek_i);
-                q2_dst.val[0] = vaddq_s32 (q_fek_r, q_fok_r);
-                q2_dst.val[1] = vaddq_s32 (q_fek_i, q_fok_i);
+                q_dst2_r = vhsubq_s32 (q_fek_r, q_fok_r);
+                q_dst2_i = vhsubq_s32 (q_fok_i, q_fek_i);
+                q2_dst.val[0] = vhaddq_s32 (q_fek_r, q_fok_r);
+                q2_dst.val[1] = vhaddq_s32 (q_fek_i, q_fok_i);
                 q_dst2_r = vrev64q_s32 (q_dst2_r);
                 q_dst2_i = vrev64q_s32 (q_dst2_i);
                 q2_dst2.val[0] = vcombine_s32 (vget_high_s32 (q_dst2_r), vget_low_s32 (q_dst2_r));
@@ -1814,11 +1814,11 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
             fok.r = ( ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.r * (twiddles[k - 1]).r) >> 32)) + ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.i * (twiddles[k - 1]).i) >> 32))) << 1;
             fok.i = ( ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.i * (twiddles[k - 1]).r) >> 32)) - ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.r * (twiddles[k - 1]).i) >> 32))) << 1;
 
-            dst[k].r = fek.r + fok.r;
-            dst[k].i = fek.i + fok.i;
+            dst[k].r = (fek.r + fok.r) >> 1;
+            dst[k].i = (fek.i + fok.i) >> 1;
 
-            dst[ncfft - k].r = fek.r - fok.r;
-            dst[ncfft - k].i = fok.i - fek.i;
+            dst[ncfft - k].r = (fek.r - fok.r) >> 1;
+            dst[ncfft - k].i = (fok.i - fek.i) >> 1;
         }
     }
 }

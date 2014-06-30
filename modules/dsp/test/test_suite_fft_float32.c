@@ -72,8 +72,6 @@ static ne10_float32_t * guarded_out_neon = NULL;
 static ne10_float32_t * out_c = NULL;
 static ne10_float32_t * out_neon = NULL;
 
-static ne10_float32_t * temp = NULL;
-
 static ne10_float32_t snr = 0.0f;
 
 static ne10_int64_t time_c = 0;
@@ -102,9 +100,6 @@ void test_fft_c2c_1d_float32_conformance()
     out_c = guarded_out_c + ARRAY_GUARD_LEN;
     out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
 
-    /* init temp memory */
-    temp = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2) * sizeof (ne10_float32_t));
-
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
         testInput_f32[i] = (ne10_float32_t) (drand48() * 32768.0f - 16384.0f);
@@ -117,7 +112,11 @@ void test_fft_c2c_1d_float32_conformance()
         memcpy (in_c, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         cfg = ne10_fft_alloc_c2c_float32 (fftSize);
-        cfg->buffer = (ne10_fft_cpx_float32_t*)temp;
+        if (cfg == NULL)
+        {
+            fprintf (stdout, "======ERROR, FFT alloc fails\n");
+            return;
+        }
 
         GUARD_ARRAY (out_c, fftSize * 2);
         GUARD_ARRAY (out_neon, fftSize * 2);
@@ -156,7 +155,6 @@ void test_fft_c2c_1d_float32_conformance()
     NE10_FREE (guarded_in_neon);
     NE10_FREE (guarded_out_c);
     NE10_FREE (guarded_out_neon);
-    NE10_FREE (temp);
 }
 
 void test_fft_c2c_1d_float32_performance()
@@ -182,9 +180,6 @@ void test_fft_c2c_1d_float32_performance()
     out_c = guarded_out_c + ARRAY_GUARD_LEN;
     out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
 
-    /* init temp memory */
-    temp = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2) * sizeof (ne10_float32_t));
-
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
         testInput_f32[i] = (ne10_float32_t) drand48() * 2 ;
@@ -197,7 +192,11 @@ void test_fft_c2c_1d_float32_performance()
         memcpy (in_c, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         cfg = ne10_fft_alloc_c2c_float32 (fftSize);
-        cfg->buffer = (ne10_fft_cpx_float32_t*)temp;
+        if (cfg == NULL)
+        {
+            fprintf (stdout, "======ERROR, FFT alloc fails\n");
+            return;
+        }
         test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
@@ -253,7 +252,6 @@ void test_fft_c2c_1d_float32_performance()
     NE10_FREE (guarded_in_neon);
     NE10_FREE (guarded_out_c);
     NE10_FREE (guarded_out_neon);
-    NE10_FREE (temp);
 }
 
 void test_fft_r2c_1d_float32_conformance()
@@ -277,9 +275,6 @@ void test_fft_r2c_1d_float32_conformance()
     out_c = guarded_out_c + ARRAY_GUARD_LEN;
     out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
 
-    /* init temp memory */
-    temp = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2) * sizeof (ne10_float32_t));
-
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
         testInput_f32[i] = (ne10_float32_t) (drand48() * 32768.0f - 16384.0f);
@@ -292,7 +287,11 @@ void test_fft_r2c_1d_float32_conformance()
         memcpy (in_c, testInput_f32, fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, fftSize * sizeof (ne10_float32_t));
         cfg = ne10_fft_alloc_r2c_float32 (fftSize);
-        cfg->buffer = (ne10_fft_cpx_float32_t*)temp;
+        if (cfg == NULL)
+        {
+            fprintf (stdout, "======ERROR, FFT alloc fails\n");
+            return;
+        }
 
         GUARD_ARRAY (out_c, (fftSize / 2 + 1) * 2);
         GUARD_ARRAY (out_neon, (fftSize / 2 + 1) * 2);
@@ -341,7 +340,6 @@ void test_fft_r2c_1d_float32_conformance()
     NE10_FREE (guarded_in_neon);
     NE10_FREE (guarded_out_c);
     NE10_FREE (guarded_out_neon);
-    NE10_FREE (temp);
 }
 
 void test_fft_r2c_1d_float32_performance()
@@ -367,9 +365,6 @@ void test_fft_r2c_1d_float32_performance()
     out_c = guarded_out_c + ARRAY_GUARD_LEN;
     out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
 
-    /* init temp memory */
-    temp = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2) * sizeof (ne10_float32_t));
-
     for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
     {
         testInput_f32[i] = (ne10_float32_t) (drand48() * 32768.0f - 16384.0f);
@@ -382,7 +377,11 @@ void test_fft_r2c_1d_float32_performance()
         memcpy (in_c, testInput_f32, fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, fftSize * sizeof (ne10_float32_t));
         cfg = ne10_fft_alloc_r2c_float32 (fftSize);
-        cfg->buffer = (ne10_fft_cpx_float32_t*)temp;
+        if (cfg == NULL)
+        {
+            fprintf (stdout, "======ERROR, FFT alloc fails\n");
+            return;
+        }
         test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
@@ -448,7 +447,6 @@ void test_fft_r2c_1d_float32_performance()
     NE10_FREE (guarded_in_neon);
     NE10_FREE (guarded_out_c);
     NE10_FREE (guarded_out_neon);
-    NE10_FREE (temp);
 }
 
 static void my_test_setup (void)

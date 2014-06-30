@@ -931,8 +931,8 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
     ne10_fft_cpx_float32_t fk, fnkc, fek, fok, tmp;
 
 
-    dst[0].r = src[0].r + src[ncfft].r;
-    dst[0].i = src[0].r - src[ncfft].r;
+    dst[0].r = (src[0].r + src[ncfft].r) * 0.5f;
+    dst[0].i = (src[0].r - src[ncfft].r) * 0.5f;
 
     for (k = 1; k <= ncfft / 2; k++)
     {
@@ -949,11 +949,11 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
         fok.r = tmp.r * twiddles[k - 1].r + tmp.i * twiddles[k - 1].i;
         fok.i = tmp.i * twiddles[k - 1].r - tmp.r * twiddles[k - 1].i;
 
-        dst[k].r = fek.r + fok.r;
-        dst[k].i = fek.i + fok.i;
+        dst[k].r = (fek.r + fok.r) * 0.5f;
+        dst[k].i = (fek.i + fok.i) * 0.5f;
 
-        dst[ncfft - k].r = fek.r - fok.r;
-        dst[ncfft - k].i = fok.i - fek.i;
+        dst[ncfft - k].r = (fek.r - fok.r) * 0.5f;
+        dst[ncfft - k].i = (fok.i - fek.i) * 0.5f;
     }
 }
 
@@ -995,11 +995,9 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
  *     fftSize = 2^N; //N is 1, 2, 3, 4, 5, 6....
  *     in = (ne10_fft_cpx_float32_t*) NE10_MALLOC (fftSize * sizeof (ne10_fft_cpx_float32_t));
  *     out = (ne10_fft_cpx_float32_t*) NE10_MALLOC (fftSize * sizeof (ne10_fft_cpx_float32_t));
- *     temp = (ne10_fft_cpx_float32_t*) NE10_MALLOC (fftSize * sizeof (ne10_fft_cpx_float32_t));
  *     ne10_fft_cfg_float32_t cfg;
  *     ...
        cfg = ne10_fft_alloc_c2c_float32 (fftSize);
-       cfg->buffer = temp
  *     ...
  *     //FFT
  *     ne10_fft_c2c_1d_float32_c (out, in, cfg, 0);
@@ -1010,7 +1008,6 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
  *     NE10_FREE (in);
  *     NE10_FREE (out);
  *     NE10_FREE (cfg);
- *     NE10_FREE (temp);
  * }
  * </pre>
  *
@@ -1023,7 +1020,7 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
  *   \n This is factors buffer: 0: stage number, 1: stride for the first stage, others: factors.
  *   \n For example, 128 could be split into 4x32, 4x8, 4x2, 2x1. The stage is 4, the stride of first stage is <code>128/2 = 64</code>. So that the factor buffer is[4, 64, 4, 32, 4, 8, 4, 2, 2, 1]
  * - cfg->buffer
- *   \n This is pointer to the temp buffer for FFT calculation. This buffer is allocated by the users and the size is (fftSize * sizeof (ne10_fft_cpx_float32_t)).
+ *   \n This is pointer to the temp buffer for FFT calculation. This buffer is allocated in init function and the size is (fftSize * sizeof (ne10_fft_cpx_float32_t)).
  *
  */
 
@@ -1038,19 +1035,21 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
     ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors*/
-                              + sizeof (ne10_fft_cpx_float32_t) * (nfft);     /* twiddle*/
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft        /* twiddle*/
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft;       /* buffer*/
 
     st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
-    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_state_float32_t));
-    st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
-    st->nfft = nfft;
 
     if (st)
     {
+        st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_state_float32_t));
+        st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->buffer = st->twiddles + nfft;
+        st->nfft = nfft;
+
         ne10_int32_t result = ne10_factor (nfft, st->factors);
         if (result == NE10_ERR)
         {
-            fprintf (stdout, "======ERROR, the length of FFT isn't support\n");
             NE10_FREE (st);
             return st;
         }
@@ -1104,9 +1103,9 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
  * @param[in]   cfg              point to the config struct
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @return none.
- * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 1, 2, 3, 4, 5, 6 ....etc) is supported.
- * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
- *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_float32.c
+ * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * Otherwise, this FFT is an out-of-place algorithm.
+ * For the usage of this function, please check test/test_suite_fft_float32.c
  */
 void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                 ne10_fft_cpx_float32_t *fin,
@@ -1170,9 +1169,7 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  *     fftSize = 2^N; //N is 2, 3, 4, 5, 6....
  *     in = (ne10_float32_t*) NE10_MALLOC (fftSize * sizeof (ne10_float32_t));
  *     out = (ne10_fft_cpx_float32_t*) NE10_MALLOC (fftSize * sizeof (ne10_fft_cpx_float32_t));
- *     temp = (ne10_fft_cpx_float32_t*) NE10_MALLOC (fftSize * sizeof (ne10_fft_cpx_float32_t));
  *     ne10_fft_r2c_cfg_float32_t cfg;
- *     cfg->buffer = temp;
  *     ...
        cfg = ne10_fft_alloc_r2c_float32 (fftSize);
  *     ...
@@ -1183,7 +1180,6 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  *     ne10_fft_c2r_1d_float32_c (in, out, cfg);
  *     ...
  *     NE10_FREE (cfg);
- *     NE10_FREE (temp);
  *     NE10_FREE (in);
  *     NE10_FREE (out);
  * }
@@ -1200,7 +1196,7 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  *   \n This is factors buffer: 0: stage number, 1: stride for the first stage, others: factors.
  *   \n For example, 128 could be split into 4x32, 4x8, 4x2, 2x1. The stage is 4, the stride of first stage is <code>128/2 = 64</code>. So that the factor buffer is[4, 64, 4, 32, 4, 8, 4, 2, 2, 1]
  * - cfg->buffer
- *   \n This is pointer to the temp buffer for FFT calculation. This buffer is allocated by the users and the size is (fftSize * sizeof (ne10_fft_cpx_float32_t)).
+ *   \n This is pointer to the temp buffer for FFT calculation. This buffer is allocated in init function and the size is (fftSize * sizeof (ne10_fft_cpx_float32_t)).
  *
  */
 
@@ -1218,20 +1214,22 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
     ne10_uint32_t memneeded = sizeof (ne10_fft_r2c_state_float32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
                               + sizeof (ne10_fft_cpx_float32_t) * ncfft       /* twiddle*/
-                              + sizeof (ne10_fft_cpx_float32_t) * ncfft / 2;  /* super twiddles*/
+                              + sizeof (ne10_fft_cpx_float32_t) * (ncfft / 2) /* super twiddles*/
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft;      /* buffer*/
 
     st = (ne10_fft_r2c_cfg_float32_t) NE10_MALLOC (memneeded);
-    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_r2c_state_float32_t));
-    st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
-    st->super_twiddles = st->twiddles + ncfft;
-    st->ncfft = ncfft;
 
     if (st)
     {
+        st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_r2c_state_float32_t));
+        st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->super_twiddles = st->twiddles + ncfft;
+        st->buffer = st->super_twiddles + (ncfft / 2);
+        st->ncfft = ncfft;
+
         ne10_int32_t result = ne10_factor (ncfft, st->factors);
         if (result == NE10_ERR)
         {
-            fprintf (stdout, "======ERROR, the length of FFT isn't support\n");
             NE10_FREE (st);
             return st;
         }
@@ -1293,7 +1291,7 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @return none.
- * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_float32.c
  */
@@ -1313,7 +1311,7 @@ void ne10_fft_r2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @return none.
- * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_float32.c
  */

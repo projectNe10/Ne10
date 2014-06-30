@@ -1037,8 +1037,8 @@ static void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
     ne10_fft_cpx_int16_t fk, fnkc, fek, fok, tmp;
 
 
-    dst[0].r = src[0].r + src[ncfft].r;
-    dst[0].i = src[0].r - src[ncfft].r;
+    dst[0].r = (src[0].r + src[ncfft].r) >> 1;
+    dst[0].i = (src[0].r - src[ncfft].r) >> 1;
 
     if (scaled_flag)
         NE10_F2I16_FIXDIV (dst[0], 2);
@@ -1065,11 +1065,11 @@ static void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
         fok.i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) tmp.i * (twiddles[k - 1]).r
                                    - (NE10_F2I16_SAMPPROD) tmp.r * (twiddles[k - 1]).i) >> NE10_F2I16_SHIFT);
 
-        dst[k].r = fek.r + fok.r;
-        dst[k].i = fek.i + fok.i;
+        dst[k].r = (fek.r + fok.r) >> 1;
+        dst[k].i = (fek.i + fok.i) >> 1;
 
-        dst[ncfft - k].r = fek.r - fok.r;
-        dst[ncfft - k].i = fok.i - fek.i;
+        dst[ncfft - k].r = (fek.r - fok.r) >> 1;
+        dst[ncfft - k].i = (fok.i - fek.i) >> 1;
     }
 }
 
@@ -1089,19 +1089,21 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
     ne10_fft_cfg_int16_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_int16_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
-                              + sizeof (ne10_fft_cpx_int16_t) * (nfft);       /* twiddle */
+                              + sizeof (ne10_fft_cpx_int16_t) * (nfft)        /* twiddle */
+                              + sizeof (ne10_fft_cpx_int16_t) * nfft;         /* buffer */
 
     st = (ne10_fft_cfg_int16_t) NE10_MALLOC (memneeded);
-    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_state_int16_t));
-    st->twiddles = (ne10_fft_cpx_int16_t*) (st->factors + (NE10_MAXFACTORS * 2));
-    st->nfft = nfft;
 
     if (st)
     {
+        st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_state_int16_t));
+        st->twiddles = (ne10_fft_cpx_int16_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->buffer = st->twiddles + nfft;
+        st->nfft = nfft;
+
         ne10_int32_t result = ne10_factor (nfft, st->factors);
         if (result == NE10_ERR)
         {
-            fprintf (stdout, "======ERROR, the length of FFT isn't support\n");
             NE10_FREE (st);
             return st;
         }
@@ -1156,9 +1158,8 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
- * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 1, 2, 3, 4, 5, 6 ....etc) is supported.
- * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
- *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_int16.c
+ * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * Otherwise, this FFT is an out-of-place algorithm. For the usage of this function, please check test/test_suite_fft_int16.c
  */
 void ne10_fft_c2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
                               ne10_fft_cpx_int16_t *fin,
@@ -1198,20 +1199,22 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
     ne10_uint32_t memneeded = sizeof (ne10_fft_r2c_state_int16_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
                               + sizeof (ne10_fft_cpx_int16_t) * ncfft         /* twiddle*/
-                              + sizeof (ne10_fft_cpx_int16_t) * ncfft / 2;    /* super twiddles*/
+                              + sizeof (ne10_fft_cpx_int16_t) * ncfft / 2     /* super twiddles*/
+                              + sizeof (ne10_fft_cpx_int32_t) * nfft;         /* buffer*/
 
     st = (ne10_fft_r2c_cfg_int16_t) NE10_MALLOC (memneeded);
-    st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_r2c_state_int16_t));
-    st->twiddles = (ne10_fft_cpx_int16_t*) (st->factors + (NE10_MAXFACTORS * 2));
-    st->super_twiddles = st->twiddles + ncfft;
-    st->ncfft = ncfft;
 
     if (st)
     {
+        st->factors = (ne10_int32_t*) ( (ne10_int8_t*) st + sizeof (ne10_fft_r2c_state_int16_t));
+        st->twiddles = (ne10_fft_cpx_int16_t*) (st->factors + (NE10_MAXFACTORS * 2));
+        st->super_twiddles = st->twiddles + ncfft;
+        st->buffer = st->super_twiddles + (ncfft / 2);
+        st->ncfft = ncfft;
+
         ne10_int32_t result = ne10_factor (ncfft, st->factors);
         if (result == NE10_ERR)
         {
-            fprintf (stdout, "======ERROR, the length of FFT isn't support\n");
             NE10_FREE (st);
             return st;
         }
@@ -1274,7 +1277,7 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
  * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
- * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
@@ -1296,7 +1299,7 @@ void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
  * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
  * @return none.
- * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int16.c
  */
