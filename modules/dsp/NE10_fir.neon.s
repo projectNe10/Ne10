@@ -67,6 +67,7 @@
 
 ne10_fir_float_neon:
                     PUSH    {r4-r12,lr}    @push r12: to keep stack 8 bytes aligned
+                    VPUSH   {q4}
 @/*ARM Registers*/
 pStateStruct     .req   R0
 pSrc             .req   R1
@@ -117,9 +118,9 @@ dTemp1_0         .dn   D20.F32
 dTemp1_1         .dn   D21.F32
 qTemp2           .qn   Q11.F32
 qTemp3           .qn   Q12.F32
-qMask1           .qn   Q13.U32
-dMask1_0         .dn   D26.U32
-dMask1_1         .dn   D27.U32
+qMask1           .qn   Q4.U32
+dMask1_0         .dn   D8.U32
+dMask1_1         .dn   D9.U32
 qMaskTmp         .qn   Q14.U32
 dMaskTmp_0       .dn   D28.U32
 dMaskTmp_1       .dn   D29.U32
@@ -346,6 +347,7 @@ firEnd:
                     ADD         pStateCurnt,pStateCurnt,mask, LSL #2
 
                     @/*Return From Function*/
+                    VPOP    {q4}
                     POP     {r4-r12,pc}
 @/*ARM Registers*/
 .unreq    pStateStruct
