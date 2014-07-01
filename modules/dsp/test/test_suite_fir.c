@@ -82,6 +82,11 @@ static ne10_float32_t testCoeffs3_f32[3] =
     0.125332306474830680,    -1.665584378238097000,    -0.432564811528220680
 };
 
+static ne10_float32_t testCoeffs4_f32[4] =
+{
+    1.189164201652103100,    1.190915465642998800,    -1.146471350681463700,    0.287676420358548850
+};
+
 /* ----------------------------------------------------------------------
 ** Coefficients for 7-tap filter for F32
 ** ------------------------------------------------------------------- */
@@ -180,7 +185,10 @@ static test_config CONFIG[] =
     {5, 3, 64, &testCoeffs3_f32[0], &testInput_f32[0]},
     {2, 7, 160, &testCoeffs7_f32[0], &testInput_f32[0]},
     {4, 1, 80, &testCoeffs1_f32, &testInput_f32[0]},
-    {32, 32, 10, &testCoeffs32_f32[0], &testInput_f32[0]}
+    {32, 32, 10, &testCoeffs32_f32[0], &testInput_f32[0]},
+    {7, 4, 1, &testCoeffs4_f32[0], &testInput_f32[0]},
+    {8, 4, 1, &testCoeffs4_f32[0], &testInput_f32[0]},
+    {9, 4, 1, &testCoeffs4_f32[0], &testInput_f32[0]},
 };
 /* Test configurations for performance test */
 static test_config CONFIG_PERF[] =
