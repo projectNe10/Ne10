@@ -56,6 +56,11 @@ extern "C" {
 #define NE10_MIN(a,b) ((a)>(b)?(b):(a))
 #define NE10_MAX(a,b) ((a)<(b)?(b):(a))
 
+#define NE10_BYTE_ALIGNMENT(address, alignment) \
+    do { \
+        (address) = (((address) + ((alignment) - 1)) & ~ ((alignment) - 1)); \
+    }while (0)
+
 /////////////////////////////////////////////////////////
 // macro definitions for float to fixed point
 /////////////////////////////////////////////////////////
