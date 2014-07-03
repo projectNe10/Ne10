@@ -71,14 +71,14 @@
     Fout[3].i = s2_i + s1_r;
 
 #define FFT4_INV_LS \
-    Fout[2].r = (tmp_r - s0_r) >> 2; \
-    Fout[2].i = (tmp_i - s0_i) >> 2; \
-    Fout[0].r = (tmp_r + s0_r) >> 2; \
-    Fout[0].i = (tmp_i + s0_i) >> 2; \
-    Fout[1].r = (s2_r - s1_i) >> 2; \
-    Fout[1].i = (s2_i + s1_r) >> 2; \
-    Fout[3].r = (s2_r + s1_i) >> 2; \
-    Fout[3].i = (s2_i - s1_r) >> 2;
+    Fout[2].r = tmp_r - s0_r; \
+    Fout[2].i = tmp_i - s0_i; \
+    Fout[0].r = tmp_r + s0_r; \
+    Fout[0].i = tmp_i + s0_i; \
+    Fout[1].r = s2_r - s1_i; \
+    Fout[1].i = s2_i + s1_r; \
+    Fout[3].r = s2_r + s1_i; \
+    Fout[3].i = s2_i - s1_r;
 
 static inline void ne10_fft4_forward_int16_unscaled (ne10_fft_cpx_int16_t * Fout,
         ne10_fft_cpx_int16_t * Fin)
@@ -204,14 +204,14 @@ static inline void ne10_fft4_backward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
     t2_i = s2_i + s6_i; \
     t3_r = s2_r - s6_r; \
     t3_i = s2_i - s6_i; \
-    Fout[0].r = (t1_r + t2_r) >> 3; \
-    Fout[0].i = (t1_i + t2_i) >> 3; \
-    Fout[4].r = (t1_r - t2_r) >> 3; \
-    Fout[4].i = (t1_i - t2_i) >> 3; \
-    Fout[2].r = (t0_r - t3_i) >> 3; \
-    Fout[2].i = (t0_i + t3_r) >> 3; \
-    Fout[6].r = (t0_r + t3_i) >> 3; \
-    Fout[6].i = (t0_i - t3_r) >> 3; \
+    Fout[0].r = t1_r + t2_r; \
+    Fout[0].i = t1_i + t2_i; \
+    Fout[4].r = t1_r - t2_r; \
+    Fout[4].i = t1_i - t2_i; \
+    Fout[2].r = t0_r - t3_i; \
+    Fout[2].i = t0_i + t3_r; \
+    Fout[6].r = t0_r + t3_i; \
+    Fout[6].i = t0_i - t3_r; \
     t4_r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (s3_r - s3_i) * TW_81) >> NE10_F2I16_SHIFT); \
     t4_i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (s3_r + s3_i) * TW_81) >> NE10_F2I16_SHIFT); \
     t5_r = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) (s7_r + s7_i) * TW_81) >> NE10_F2I16_SHIFT); \
@@ -224,14 +224,14 @@ static inline void ne10_fft4_backward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
     t2_i = t4_i - t5_i; \
     t3_r = t4_r + t5_r; \
     t3_i = t4_i + t5_i; \
-    Fout[1].r = (t1_r + t2_r) >> 3; \
-    Fout[1].i = (t1_i + t2_i) >> 3; \
-    Fout[5].r = (t1_r - t2_r) >> 3; \
-    Fout[5].i = (t1_i - t2_i) >> 3; \
-    Fout[3].r = (t0_r - t3_i) >> 3; \
-    Fout[3].i = (t0_i + t3_r) >> 3; \
-    Fout[7].r = (t0_r + t3_i) >> 3; \
-    Fout[7].i = (t0_i - t3_r) >> 3;
+    Fout[1].r = t1_r + t2_r; \
+    Fout[1].i = t1_i + t2_i; \
+    Fout[5].r = t1_r - t2_r; \
+    Fout[5].i = t1_i - t2_i; \
+    Fout[3].r = t0_r - t3_i; \
+    Fout[3].i = t0_i + t3_r; \
+    Fout[7].r = t0_r + t3_i; \
+    Fout[7].i = t0_i - t3_r;
 
 static inline void ne10_fft8_forward_int16_unscaled (ne10_fft_cpx_int16_t * Fout,
         ne10_fft_cpx_int16_t * Fin)
@@ -961,84 +961,6 @@ static inline void ne10_radix4x4_with_twiddles_backward_scaled_neon (ne10_fft_cp
 }
 
 
-static inline void ne10_radix4x4_with_twiddles_ls_backward_unscaled_neon (ne10_fft_cpx_int16_t * Fout,
-        ne10_fft_cpx_int16_t * Fin,
-        ne10_fft_cpx_int16_t * tw,
-        ne10_int32_t src_stride,
-        ne10_int32_t dst_stride,
-        ne10_int32_t mstride,
-        ne10_int32_t order)
-{
-    RADIX4x4_WITH_TW_START
-    int16x4_t d_order = vdup_n_s16 (order);
-    d_order = vneg_s16 (d_order);
-
-    for (m_count = 0; m_count < mstride; m_count += 4)
-    {
-        // load
-        RADIX4x4_WITH_TW_LOAD
-        RADIX4x4_WITH_TW_S1_INV
-
-        RADIX4x4_WITH_TW_LS_02
-
-        d2_out1.val[0] = vsub_s16 (d_s5_r, d_s7_i);
-        d2_out1.val[1] = vadd_s16 (d_s5_i, d_s7_r);
-        d2_out3.val[0] = vadd_s16 (d_s5_r, d_s7_i);
-        d2_out3.val[1] = vsub_s16 (d_s5_i, d_s7_r);
-
-        d2_out2.val[0] = vrshl_s16 (d2_out2.val[0], d_order);
-        d2_out2.val[1] = vrshl_s16 (d2_out2.val[1], d_order);
-        d2_out0.val[0] = vrshl_s16 (d2_out0.val[0], d_order);
-        d2_out0.val[1] = vrshl_s16 (d2_out0.val[1], d_order);
-        d2_out1.val[0] = vrshl_s16 (d2_out1.val[0], d_order);
-        d2_out1.val[1] = vrshl_s16 (d2_out1.val[1], d_order);
-        d2_out3.val[0] = vrshl_s16 (d2_out3.val[0], d_order);
-        d2_out3.val[1] = vrshl_s16 (d2_out3.val[1], d_order);
-
-        // store
-        RADIX4x4_WITH_TW_STORE
-    }
-}
-
-static inline void ne10_radix4x4_with_twiddles_ls_backward_scaled_neon (ne10_fft_cpx_int16_t * Fout,
-        ne10_fft_cpx_int16_t * Fin,
-        ne10_fft_cpx_int16_t * tw,
-        ne10_int32_t src_stride,
-        ne10_int32_t dst_stride,
-        ne10_int32_t mstride,
-        ne10_int32_t order)
-{
-    RADIX4x4_WITH_TW_START
-    int16x4_t d_order = vdup_n_s16 (order);
-    d_order = vneg_s16 (d_order);
-
-    for (m_count = 0; m_count < mstride; m_count += 4)
-    {
-        // load
-        RADIX4x4_WITH_TW_LOAD
-        RADIX4x4_WITH_TW_S1_INV
-
-        RADIX4x4_WITH_TW_LS_02_SCALED
-
-        d2_out1.val[0] = vhsub_s16 (d_s5_r, d_s7_i);
-        d2_out1.val[1] = vhadd_s16 (d_s5_i, d_s7_r);
-        d2_out3.val[0] = vhadd_s16 (d_s5_r, d_s7_i);
-        d2_out3.val[1] = vhsub_s16 (d_s5_i, d_s7_r);
-
-        d2_out2.val[0] = vrshl_s16 (d2_out2.val[0], d_order);
-        d2_out2.val[1] = vrshl_s16 (d2_out2.val[1], d_order);
-        d2_out0.val[0] = vrshl_s16 (d2_out0.val[0], d_order);
-        d2_out0.val[1] = vrshl_s16 (d2_out0.val[1], d_order);
-        d2_out1.val[0] = vrshl_s16 (d2_out1.val[0], d_order);
-        d2_out1.val[1] = vrshl_s16 (d2_out1.val[1], d_order);
-        d2_out3.val[0] = vrshl_s16 (d2_out3.val[0], d_order);
-        d2_out3.val[1] = vrshl_s16 (d2_out3.val[1], d_order);
-
-        // store
-        RADIX4x4_WITH_TW_STORE
-    }
-}
-
 #define ne10_mixed_radix_fft_forward_int16_neon(scaled) \
 void ne10_mixed_radix_fft_forward_int16_##scaled##_neon (ne10_fft_cpx_int16_t * Fout, \
         ne10_fft_cpx_int16_t * Fin, \
@@ -1137,7 +1059,6 @@ void ne10_mixed_radix_fft_backward_int16_##scaled##_neon (ne10_fft_cpx_int16_t *
     ne10_int32_t fstride1; \
     ne10_int32_t f_count; \
     ne10_int32_t stage_count; \
-    ne10_int32_t order; \
  \
     ne10_fft_cpx_int16_t   *Fin1, *Fout1; \
     ne10_fft_cpx_int16_t   *Fout_ls = Fout; \
@@ -1155,7 +1076,6 @@ void ne10_mixed_radix_fft_backward_int16_##scaled##_neon (ne10_fft_cpx_int16_t *
     Fout1 = Fout; \
     if (N == 2) \
     { \
-        order = 2 * stage_count - 1; \
         N = fstride >> 1;\
         tw = twiddles; \
         fstride1 = fstride >> 2; \
@@ -1172,7 +1092,6 @@ void ne10_mixed_radix_fft_backward_int16_##scaled##_neon (ne10_fft_cpx_int16_t *
     } \
     else if (N == 4) \
     { \
-        order = 2 * stage_count; \
         ne10_radix4x4_without_twiddles_backward_##scaled##_neon (Fout, Fin, fstride); \
         N = fstride; \
         Ftmp = Fin; \
@@ -1209,7 +1128,7 @@ void ne10_mixed_radix_fft_backward_int16_##scaled##_neon (ne10_fft_cpx_int16_t *
         for (f_count = 0; f_count < fstride; f_count ++) \
         { \
             tw1 = tw; \
-            ne10_radix4x4_with_twiddles_ls_backward_##scaled##_neon (Fout1, Fin1, tw1, N, N, mstride, order); \
+            ne10_radix4x4_with_twiddles_backward_##scaled##_neon (Fout1, Fin1, tw1, N, N, mstride); \
             Fin1 += mstride; \
             Fout1 += mstride; \
         } \
@@ -1404,8 +1323,8 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
     int16_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
 
-    dst[0].r = (src[0].r + src[ncfft].r) >> 1;
-    dst[0].i = (src[0].r - src[ncfft].r) >> 1;
+    dst[0].r = src[0].r + src[ncfft].r;
+    dst[0].i = src[0].r - src[ncfft].r;
 
     if (scaled_flag)
         NE10_F2I16_FIXDIV (dst[0], 2);
@@ -1444,10 +1363,10 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
                 q_fok_r = vaddq_s16 (q_fok_r, q_tmp2);
                 q_fok_i = vsubq_s16 (q_fok_i, q_tmp3);
 
-                q_dst2_r = vhsubq_s16 (q_fek_r, q_fok_r);
-                q_dst2_i = vhsubq_s16 (q_fok_i, q_fek_i);
-                q2_dst.val[0] = vhaddq_s16 (q_fek_r, q_fok_r);
-                q2_dst.val[1] = vhaddq_s16 (q_fek_i, q_fok_i);
+                q_dst2_r = vsubq_s16 (q_fek_r, q_fok_r);
+                q_dst2_i = vsubq_s16 (q_fok_i, q_fek_i);
+                q2_dst.val[0] = vaddq_s16 (q_fek_r, q_fok_r);
+                q2_dst.val[1] = vaddq_s16 (q_fek_i, q_fok_i);
                 q_dst2_r = vrev32q_s16 (q_dst2_r);
                 q_dst2_i = vrev32q_s16 (q_dst2_i);
                 q_dst2_r = vreinterpretq_s16_s32 (vrev64q_s32 (vreinterpretq_s32_s16 (q_dst2_r))) ;
@@ -1493,10 +1412,10 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
                 q_fok_r = vaddq_s16 (q_fok_r, q_tmp2);
                 q_fok_i = vsubq_s16 (q_fok_i, q_tmp3);
 
-                q_dst2_r = vhsubq_s16 (q_fek_r, q_fok_r);
-                q_dst2_i = vhsubq_s16 (q_fok_i, q_fek_i);
-                q2_dst.val[0] = vhaddq_s16 (q_fek_r, q_fok_r);
-                q2_dst.val[1] = vhaddq_s16 (q_fek_i, q_fok_i);
+                q_dst2_r = vsubq_s16 (q_fek_r, q_fok_r);
+                q_dst2_i = vsubq_s16 (q_fok_i, q_fek_i);
+                q2_dst.val[0] = vaddq_s16 (q_fek_r, q_fok_r);
+                q2_dst.val[1] = vaddq_s16 (q_fek_i, q_fok_i);
                 q_dst2_r = vrev32q_s16 (q_dst2_r);
                 q_dst2_i = vrev32q_s16 (q_dst2_i);
                 q_dst2_r = vreinterpretq_s16_s32 (vrev64q_s32 (vreinterpretq_s32_s16 (q_dst2_r))) ;
@@ -1534,11 +1453,11 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
             fok.i = (ne10_int16_t) ( ( (NE10_F2I16_SAMPPROD) tmp.i * (twiddles[k - 1]).r
                                        - (NE10_F2I16_SAMPPROD) tmp.r * (twiddles[k - 1]).i) >> NE10_F2I16_SHIFT);
 
-            dst[k].r = (fek.r + fok.r) >> 1;
-            dst[k].i = (fek.i + fok.i) >> 1;
+            dst[k].r = fek.r + fok.r;
+            dst[k].i = fek.i + fok.i;
 
-            dst[ncfft - k].r = (fek.r - fok.r) >> 1;
-            dst[ncfft - k].i = (fok.i - fek.i) >> 1;
+            dst[ncfft - k].r = fek.r - fok.r;
+            dst[ncfft - k].i = fok.i - fek.i;
         }
     }
 }

@@ -1043,8 +1043,8 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
 
     if (st)
     {
-        ne10_uint32_t address = (ne10_uint32_t) st + sizeof (ne10_fft_state_float32_t);
-        NE10_BYTE_ALIGNMENT(address, NE10_FFT_BYTE_ALIGNMENT);
+        uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_float32_t);
+        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
         st->factors = (ne10_int32_t*) address;
         st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
         st->buffer = st->twiddles + nfft;
@@ -1225,8 +1225,8 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
 
     if (st)
     {
-        ne10_uint32_t address = (ne10_uint32_t) st + sizeof (ne10_fft_r2c_state_float32_t);
-        NE10_BYTE_ALIGNMENT(address, NE10_FFT_BYTE_ALIGNMENT);
+        uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_r2c_state_float32_t);
+        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
         st->factors = (ne10_int32_t*) address;
         st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
         st->super_twiddles = st->twiddles + ncfft;

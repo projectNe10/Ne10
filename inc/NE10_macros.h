@@ -51,7 +51,11 @@ extern "C" {
 /////////////////////////////////////////////////////////
 
 #define NE10_MALLOC malloc
-#define NE10_FREE free
+#define NE10_FREE(p) \
+    do { \
+        free(p); \
+        p = NULL; \
+    }while(0)
 
 #define NE10_MIN(a,b) ((a)>(b)?(b):(a))
 #define NE10_MAX(a,b) ((a)<(b)?(b):(a))

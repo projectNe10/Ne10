@@ -82,15 +82,16 @@ static inline void ne10_fft4_backward_int32_unscaled (ne10_fft_cpx_int32_t * Fou
 
     s1_r = Fin[1].r - Fin[3].r;
     s1_i = Fin[1].i - Fin[3].i;
-    Fout[2].r = (tmp_r - s0_r) >> 2;
-    Fout[2].i = (tmp_i - s0_i) >> 2;
-    Fout[0].r = (tmp_r + s0_r) >> 2;
-    Fout[0].i = (tmp_i + s0_i) >> 2;
 
-    Fout[1].r = (s2_r - s1_i) >> 2;
-    Fout[1].i = (s2_i + s1_r) >> 2;
-    Fout[3].r = (s2_r + s1_i) >> 2;
-    Fout[3].i = (s2_i - s1_r) >> 2;
+    Fout[2].r = tmp_r - s0_r;
+    Fout[2].i = tmp_i - s0_i;
+    Fout[0].r = tmp_r + s0_r;
+    Fout[0].i = tmp_i + s0_i;
+
+    Fout[1].r = s2_r - s1_i;
+    Fout[1].i = s2_i + s1_r;
+    Fout[3].r = s2_r + s1_i;
+    Fout[3].i = s2_i - s1_r;
 }
 static inline void ne10_fft4_forward_int32_scaled (ne10_fft_cpx_int32_t * Fout,
         ne10_fft_cpx_int32_t * Fin)
@@ -137,14 +138,15 @@ static inline void ne10_fft4_backward_int32_scaled (ne10_fft_cpx_int32_t * Fout,
     s1_r = (Fin[1].r - Fin[3].r) >> 2;
     s1_i = (Fin[1].i - Fin[3].i) >> 2;
 
-    Fout[2].r = (tmp_r - s0_r) >> 2;
-    Fout[2].i = (tmp_i - s0_i) >> 2;
-    Fout[0].r = (tmp_r + s0_r) >> 2;
-    Fout[0].i = (tmp_i + s0_i) >> 2;
-    Fout[1].r = (s2_r - s1_i) >> 2;
-    Fout[1].i = (s2_i + s1_r) >> 2;
-    Fout[3].r = (s2_r + s1_i) >> 2;
-    Fout[3].i = (s2_i - s1_r) >> 2;
+    Fout[2].r = tmp_r - s0_r;
+    Fout[2].i = tmp_i - s0_i;
+    Fout[0].r = tmp_r + s0_r;
+    Fout[0].i = tmp_i + s0_i;
+
+    Fout[1].r = s2_r - s1_i;
+    Fout[1].i = s2_i + s1_r;
+    Fout[3].r = s2_r + s1_i;
+    Fout[3].i = s2_i - s1_r;
 }
 static inline void ne10_fft8_forward_int32_unscaled (ne10_fft_cpx_int32_t * Fout,
         ne10_fft_cpx_int32_t * Fin)
@@ -244,14 +246,14 @@ static inline void ne10_fft8_backward_int32_unscaled (ne10_fft_cpx_int32_t * Fou
     t2_i = s2_i + s6_i;
     t3_r = s2_r - s6_r;
     t3_i = s2_i - s6_i;
-    Fout[0].r = (t1_r + t2_r) >> 3;
-    Fout[0].i = (t1_i + t2_i) >> 3;
-    Fout[4].r = (t1_r - t2_r) >> 3;
-    Fout[4].i = (t1_i - t2_i) >> 3;
-    Fout[2].r = (t0_r - t3_i) >> 3;
-    Fout[2].i = (t0_i + t3_r) >> 3;
-    Fout[6].r = (t0_r + t3_i) >> 3;
-    Fout[6].i = (t0_i - t3_r) >> 3;
+    Fout[0].r = t1_r + t2_r;
+    Fout[0].i = t1_i + t2_i;
+    Fout[4].r = t1_r - t2_r;
+    Fout[4].i = t1_i - t2_i;
+    Fout[2].r = t0_r - t3_i;
+    Fout[2].i = t0_i + t3_r;
+    Fout[6].r = t0_r + t3_i;
+    Fout[6].i = t0_i - t3_r;
 
     t4_r = (ne10_int32_t) ( ( (ne10_int64_t) (s3_r - s3_i) * TW_81) >> 31);
     t4_i = (ne10_int32_t) ( ( (ne10_int64_t) (s3_r + s3_i) * TW_81) >> 31);
@@ -266,14 +268,14 @@ static inline void ne10_fft8_backward_int32_unscaled (ne10_fft_cpx_int32_t * Fou
     t2_i = t4_i - t5_i;
     t3_r = t4_r + t5_r;
     t3_i = t4_i + t5_i;
-    Fout[1].r = (t1_r + t2_r) >> 3;
-    Fout[1].i = (t1_i + t2_i) >> 3;
-    Fout[5].r = (t1_r - t2_r) >> 3;
-    Fout[5].i = (t1_i - t2_i) >> 3;
-    Fout[3].r = (t0_r - t3_i) >> 3;
-    Fout[3].i = (t0_i + t3_r) >> 3;
-    Fout[7].r = (t0_r + t3_i) >> 3;
-    Fout[7].i = (t0_i - t3_r) >> 3;
+    Fout[1].r = t1_r + t2_r;
+    Fout[1].i = t1_i + t2_i;
+    Fout[5].r = t1_r - t2_r;
+    Fout[5].i = t1_i - t2_i;
+    Fout[3].r = t0_r - t3_i;
+    Fout[3].i = t0_i + t3_r;
+    Fout[7].r = t0_r + t3_i;
+    Fout[7].i = t0_i - t3_r;
 }
 static inline void ne10_fft8_forward_int32_scaled (ne10_fft_cpx_int32_t * Fout,
         ne10_fft_cpx_int32_t * Fin)
@@ -373,14 +375,14 @@ static inline void ne10_fft8_backward_int32_scaled (ne10_fft_cpx_int32_t * Fout,
     t2_i = s2_i + s6_i;
     t3_r = s2_r - s6_r;
     t3_i = s2_i - s6_i;
-    Fout[0].r = (t1_r + t2_r) >> 3;
-    Fout[0].i = (t1_i + t2_i) >> 3;
-    Fout[4].r = (t1_r - t2_r) >> 3;
-    Fout[4].i = (t1_i - t2_i) >> 3;
-    Fout[2].r = (t0_r - t3_i) >> 3;
-    Fout[2].i = (t0_i + t3_r) >> 3;
-    Fout[6].r = (t0_r + t3_i) >> 3;
-    Fout[6].i = (t0_i - t3_r) >> 3;
+    Fout[0].r = t1_r + t2_r;
+    Fout[0].i = t1_i + t2_i;
+    Fout[4].r = t1_r - t2_r;
+    Fout[4].i = t1_i - t2_i;
+    Fout[2].r = t0_r - t3_i;
+    Fout[2].i = t0_i + t3_r;
+    Fout[6].r = t0_r + t3_i;
+    Fout[6].i = t0_i - t3_r;
 
     t4_r = (ne10_int32_t) ( ( (ne10_int64_t) (s3_r - s3_i) * TW_81) >> 31);
     t4_i = (ne10_int32_t) ( ( (ne10_int64_t) (s3_r + s3_i) * TW_81) >> 31);
@@ -395,14 +397,14 @@ static inline void ne10_fft8_backward_int32_scaled (ne10_fft_cpx_int32_t * Fout,
     t2_i = t4_i - t5_i;
     t3_r = t4_r + t5_r;
     t3_i = t4_i + t5_i;
-    Fout[1].r = (t1_r + t2_r) >> 3;
-    Fout[1].i = (t1_i + t2_i) >> 3;
-    Fout[5].r = (t1_r - t2_r) >> 3;
-    Fout[5].i = (t1_i - t2_i) >> 3;
-    Fout[3].r = (t0_r - t3_i) >> 3;
-    Fout[3].i = (t0_i + t3_r) >> 3;
-    Fout[7].r = (t0_r + t3_i) >> 3;
-    Fout[7].i = (t0_i - t3_r) >> 3;
+    Fout[1].r = t1_r + t2_r;
+    Fout[1].i = t1_i + t2_i;
+    Fout[5].r = t1_r - t2_r;
+    Fout[5].i = t1_i - t2_i;
+    Fout[3].r = t0_r - t3_i;
+    Fout[3].i = t0_i + t3_r;
+    Fout[7].r = t0_r + t3_i;
+    Fout[7].i = t0_i - t3_r;
 }
 
 static void ne10_fft16_forward_int32_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
@@ -642,15 +644,6 @@ static void ne10_fft16_backward_int32_unscaled_neon (ne10_fft_cpx_int32_t * Fout
     q2_out_4567.val[1] = vaddq_s32 (q_s5_i, q_s4_r);
     q2_out_cdef.val[0] = vaddq_s32 (q_s5_r, q_s4_i);
     q2_out_cdef.val[1] = vsubq_s32 (q_s5_i, q_s4_r);
-
-    q2_out_89ab.val[0] = vshrq_n_s32 (q2_out_89ab.val[0], 4);
-    q2_out_89ab.val[1] = vshrq_n_s32 (q2_out_89ab.val[1], 4);
-    q2_out_0123.val[0] = vshrq_n_s32 (q2_out_0123.val[0], 4);
-    q2_out_0123.val[1] = vshrq_n_s32 (q2_out_0123.val[1], 4);
-    q2_out_4567.val[0] = vshrq_n_s32 (q2_out_4567.val[0], 4);
-    q2_out_4567.val[1] = vshrq_n_s32 (q2_out_4567.val[1], 4);
-    q2_out_cdef.val[0] = vshrq_n_s32 (q2_out_cdef.val[0], 4);
-    q2_out_cdef.val[1] = vshrq_n_s32 (q2_out_cdef.val[1], 4);
 
     vst2q_s32 (p_dst0, q2_out_0123);
     vst2q_s32 (p_dst1, q2_out_4567);
@@ -898,15 +891,6 @@ static void ne10_fft16_backward_int32_scaled_neon (ne10_fft_cpx_int32_t * Fout,
     q2_out_cdef.val[0] = vhaddq_s32 (q_s5_r, q_s4_i);
     q2_out_cdef.val[1] = vhsubq_s32 (q_s5_i, q_s4_r);
 
-    q2_out_89ab.val[0] = vshrq_n_s32 (q2_out_89ab.val[0], 4);
-    q2_out_89ab.val[1] = vshrq_n_s32 (q2_out_89ab.val[1], 4);
-    q2_out_0123.val[0] = vshrq_n_s32 (q2_out_0123.val[0], 4);
-    q2_out_0123.val[1] = vshrq_n_s32 (q2_out_0123.val[1], 4);
-    q2_out_4567.val[0] = vshrq_n_s32 (q2_out_4567.val[0], 4);
-    q2_out_4567.val[1] = vshrq_n_s32 (q2_out_4567.val[1], 4);
-    q2_out_cdef.val[0] = vshrq_n_s32 (q2_out_cdef.val[0], 4);
-    q2_out_cdef.val[1] = vshrq_n_s32 (q2_out_cdef.val[1], 4);
-
     vst2q_s32 (p_dst0, q2_out_0123);
     vst2q_s32 (p_dst1, q2_out_4567);
     vst2q_s32 (p_dst2, q2_out_89ab);
@@ -1084,8 +1068,8 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
     int32_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
 
-    dst[0].r = (src[0].r + src[ncfft].r) >> 1;
-    dst[0].i = (src[0].r - src[ncfft].r) >> 1;
+    dst[0].r = src[0].r + src[ncfft].r;
+    dst[0].i = src[0].r - src[ncfft].r;
     if (scaled_flag)
         NE10_F2I32_FIXDIV (dst[0], 2);
     if (count >= 4)
@@ -1121,10 +1105,10 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
                 q_fok_r = vaddq_s32 (q_fok_r, q_tmp2);
                 q_fok_i = vsubq_s32 (q_fok_i, q_tmp3);
 
-                q_dst2_r = vhsubq_s32 (q_fek_r, q_fok_r);
-                q_dst2_i = vhsubq_s32 (q_fok_i, q_fek_i);
-                q2_dst.val[0] = vhaddq_s32 (q_fek_r, q_fok_r);
-                q2_dst.val[1] = vhaddq_s32 (q_fek_i, q_fok_i);
+                q_dst2_r = vsubq_s32 (q_fek_r, q_fok_r);
+                q_dst2_i = vsubq_s32 (q_fok_i, q_fek_i);
+                q2_dst.val[0] = vaddq_s32 (q_fek_r, q_fok_r);
+                q2_dst.val[1] = vaddq_s32 (q_fek_i, q_fok_i);
                 q_dst2_r = vrev64q_s32 (q_dst2_r);
                 q_dst2_i = vrev64q_s32 (q_dst2_i);
                 q2_dst2.val[0] = vcombine_s32 (vget_high_s32 (q_dst2_r), vget_low_s32 (q_dst2_r));
@@ -1166,10 +1150,10 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
                 q_fok_r = vaddq_s32 (q_fok_r, q_tmp2);
                 q_fok_i = vsubq_s32 (q_fok_i, q_tmp3);
 
-                q_dst2_r = vhsubq_s32 (q_fek_r, q_fok_r);
-                q_dst2_i = vhsubq_s32 (q_fok_i, q_fek_i);
-                q2_dst.val[0] = vhaddq_s32 (q_fek_r, q_fok_r);
-                q2_dst.val[1] = vhaddq_s32 (q_fek_i, q_fok_i);
+                q_dst2_r = vsubq_s32 (q_fek_r, q_fok_r);
+                q_dst2_i = vsubq_s32 (q_fok_i, q_fek_i);
+                q2_dst.val[0] = vaddq_s32 (q_fek_r, q_fok_r);
+                q2_dst.val[1] = vaddq_s32 (q_fek_i, q_fok_i);
                 q_dst2_r = vrev64q_s32 (q_dst2_r);
                 q_dst2_i = vrev64q_s32 (q_dst2_i);
                 q2_dst2.val[0] = vcombine_s32 (vget_high_s32 (q_dst2_r), vget_low_s32 (q_dst2_r));
@@ -1203,11 +1187,11 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
             fok.r = ( ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.r * (twiddles[k - 1]).r) >> 32)) + ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.i * (twiddles[k - 1]).i) >> 32))) << 1;
             fok.i = ( ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.i * (twiddles[k - 1]).r) >> 32)) - ( (ne10_int32_t) ( ( (NE10_F2I32_SAMPPROD) tmp.r * (twiddles[k - 1]).i) >> 32))) << 1;
 
-            dst[k].r = (fek.r + fok.r) >> 1;
-            dst[k].i = (fek.i + fok.i) >> 1;
+            dst[k].r = fek.r + fok.r;
+            dst[k].i = fek.i + fok.i;
 
-            dst[ncfft - k].r = (fek.r - fok.r) >> 1;
-            dst[ncfft - k].i = (fok.i - fek.i) >> 1;
+            dst[ncfft - k].r = fek.r - fok.r;
+            dst[ncfft - k].i = fok.i - fek.i;
         }
     }
 }
