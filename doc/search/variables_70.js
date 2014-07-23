@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['p_5fbit_5frev_5ftable',['p_bit_rev_table',['../structne10__cfft__radix4__instance__f32__t.html#a52105d3f782c99434115e76343a5cbb6',1,'ne10_cfft_radix4_instance_f32_t']]],
-  ['p_5fcfft',['p_cfft',['../structne10__rfft__instance__f32__t.html#afca7ec74dac77c06f082e4b6560ca6d3',1,'ne10_rfft_instance_f32_t']]],
-  ['p_5ftwiddle',['p_twiddle',['../structne10__cfft__radix4__instance__f32__t.html#a950905a89fcdbdfa7a56e5b4da5750c6',1,'ne10_cfft_radix4_instance_f32_t']]],
-  ['p_5ftwiddle_5fa_5freal',['p_twiddle_A_real',['../structne10__rfft__instance__f32__t.html#a0930e737000428fc6bcabbe53379429d',1,'ne10_rfft_instance_f32_t']]],
-  ['p_5ftwiddle_5fb_5freal',['p_twiddle_B_real',['../structne10__rfft__instance__f32__t.html#aa4927533f313771167b97afd3fb9d103',1,'ne10_rfft_instance_f32_t']]],
   ['pcoeffs',['pCoeffs',['../structne10__fir__instance__f32__t.html#aad3f48460bd35f61409c8175623bcb0c',1,'ne10_fir_instance_f32_t::pCoeffs()'],['../structne10__fir__lattice__instance__f32__t.html#aa214a237dc2daeede1809ad2f0aeebe2',1,'ne10_fir_lattice_instance_f32_t::pCoeffs()'],['../structne10__fir__decimate__instance__f32__t.html#adc6f08a68cb09ebf19d32c4564769009',1,'ne10_fir_decimate_instance_f32_t::pCoeffs()'],['../structne10__fir__interpolate__instance__f32__t.html#a3ea8578807f26839ec53708a015cccf1',1,'ne10_fir_interpolate_instance_f32_t::pCoeffs()'],['../structne10__fir__sparse__instance__f32__t.html#a9b6050266b2818f842d5ecd532dd22aa',1,'ne10_fir_sparse_instance_f32_t::pCoeffs()']]],
   ['phaselength',['phaseLength',['../structne10__fir__interpolate__instance__f32__t.html#af085c85f66c7b0ea7d24a57172cee249',1,'ne10_fir_interpolate_instance_f32_t']]],
   ['pkcoeffs',['pkCoeffs',['../structne10__iir__lattice__instance__f32__t.html#a46966d51e0c94046d65ff815fe6a314e',1,'ne10_iir_lattice_instance_f32_t']]],
