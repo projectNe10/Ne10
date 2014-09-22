@@ -229,12 +229,24 @@ typedef ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;
 
 typedef struct
 {
-    ne10_int32_t nfft;
+    ne10_fft_cpx_float32_t *buffer;
+#if defined(__arm__)
     ne10_int32_t ncfft;
     ne10_int32_t *factors;
     ne10_fft_cpx_float32_t *twiddles;
     ne10_fft_cpx_float32_t *super_twiddles;
-    ne10_fft_cpx_float32_t *buffer;
+#elif defined( __aarch64__)
+    ne10_int32_t nfft;
+    ne10_fft_cpx_float32_t *r_twiddles;
+    ne10_int32_t *r_factors;
+    ne10_fft_cpx_float32_t *r_twiddles_backward;
+    ne10_fft_cpx_float32_t *r_twiddles_neon;
+    ne10_fft_cpx_float32_t *r_twiddles_neon_backward;
+    ne10_int32_t *r_factors_neon;
+    ne10_fft_cpx_float32_t *r_super_twiddles_neon;
+#else
+    #error("unsupported platform, current supported are arm(32) and aarch64")
+#endif
 } ne10_fft_r2c_state_float32_t;
 
 typedef ne10_fft_r2c_state_float32_t* ne10_fft_r2c_cfg_float32_t;

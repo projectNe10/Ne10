@@ -88,22 +88,6 @@ void test_fft_c2c_1d_float32_conformance()
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
-    /* init input memory */
-    guarded_in_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_in_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    in_c = guarded_in_c + ARRAY_GUARD_LEN;
-    in_neon = guarded_in_neon + ARRAY_GUARD_LEN;
-
-    /* init dst memory */
-    guarded_out_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_out_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    out_c = guarded_out_c + ARRAY_GUARD_LEN;
-    out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
-
-    for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
-    {
-        testInput_f32[i] = (ne10_float32_t) (drand48() * 32768.0f - 16384.0f);
-    }
     for (fftSize = MIN_LENGTH_SAMPLES_CPX; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
@@ -150,11 +134,6 @@ void test_fft_c2c_1d_float32_conformance()
 
         NE10_FREE (cfg);
     }
-
-    NE10_FREE (guarded_in_c);
-    NE10_FREE (guarded_in_neon);
-    NE10_FREE (guarded_out_c);
-    NE10_FREE (guarded_out_neon);
 }
 
 void test_fft_c2c_1d_float32_performance()
@@ -168,22 +147,6 @@ void test_fft_c2c_1d_float32_performance()
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
 
-    /* init input memory */
-    guarded_in_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_in_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    in_c = guarded_in_c + ARRAY_GUARD_LEN;
-    in_neon = guarded_in_neon + ARRAY_GUARD_LEN;
-
-    /* init dst memory */
-    guarded_out_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_out_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    out_c = guarded_out_c + ARRAY_GUARD_LEN;
-    out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
-
-    for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
-    {
-        testInput_f32[i] = (ne10_float32_t) drand48() * 2 ;
-    }
     for (fftSize = MIN_LENGTH_SAMPLES_CPX; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
@@ -247,11 +210,6 @@ void test_fft_c2c_1d_float32_performance()
 
         NE10_FREE (cfg);
     }
-
-    NE10_FREE (guarded_in_c);
-    NE10_FREE (guarded_in_neon);
-    NE10_FREE (guarded_out_c);
-    NE10_FREE (guarded_out_neon);
 }
 
 void test_fft_r2c_1d_float32_conformance()
@@ -263,22 +221,6 @@ void test_fft_r2c_1d_float32_conformance()
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
-    /* init input memory */
-    guarded_in_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_in_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    in_c = guarded_in_c + ARRAY_GUARD_LEN;
-    in_neon = guarded_in_neon + ARRAY_GUARD_LEN;
-
-    /* init dst memory */
-    guarded_out_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_out_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    out_c = guarded_out_c + ARRAY_GUARD_LEN;
-    out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
-
-    for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
-    {
-        testInput_f32[i] = (ne10_float32_t) (drand48() * 32768.0f - 16384.0f);
-    }
     for (fftSize = MIN_LENGTH_SAMPLES_REAL; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
@@ -335,11 +277,6 @@ void test_fft_r2c_1d_float32_conformance()
 
         NE10_FREE (cfg);
     }
-
-    NE10_FREE (guarded_in_c);
-    NE10_FREE (guarded_in_neon);
-    NE10_FREE (guarded_out_c);
-    NE10_FREE (guarded_out_neon);
 }
 
 void test_fft_r2c_1d_float32_performance()
@@ -353,22 +290,6 @@ void test_fft_r2c_1d_float32_performance()
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
 
-    /* init input memory */
-    guarded_in_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_in_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    in_c = guarded_in_c + ARRAY_GUARD_LEN;
-    in_neon = guarded_in_neon + ARRAY_GUARD_LEN;
-
-    /* init dst memory */
-    guarded_out_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    guarded_out_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
-    out_c = guarded_out_c + ARRAY_GUARD_LEN;
-    out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
-
-    for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
-    {
-        testInput_f32[i] = (ne10_float32_t) (drand48() * 32768.0f - 16384.0f);
-    }
     for (fftSize = MIN_LENGTH_SAMPLES_REAL; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
@@ -442,16 +363,37 @@ void test_fft_r2c_1d_float32_performance()
 
         NE10_FREE (cfg);
     }
-
-    NE10_FREE (guarded_in_c);
-    NE10_FREE (guarded_in_neon);
-    NE10_FREE (guarded_out_c);
-    NE10_FREE (guarded_out_neon);
 }
 
 static void my_test_setup (void)
 {
     ne10_log_buffer_ptr = ne10_log_buffer;
+    ne10_int32_t i;
+
+    /* init input memory */
+    guarded_in_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
+    guarded_in_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
+    in_c = guarded_in_c + ARRAY_GUARD_LEN;
+    in_neon = guarded_in_neon + ARRAY_GUARD_LEN;
+
+    /* init dst memory */
+    guarded_out_c = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
+    guarded_out_neon = (ne10_float32_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_float32_t));
+    out_c = guarded_out_c + ARRAY_GUARD_LEN;
+    out_neon = guarded_out_neon + ARRAY_GUARD_LEN;
+
+    for (i = 0; i < TEST_LENGTH_SAMPLES * 2; i++)
+    {
+        testInput_f32[i] = (ne10_float32_t) (drand48() * 32768.0f - 16384.0f);
+    }
+}
+
+static void my_test_teardown (void)
+{
+    NE10_FREE (guarded_in_c);
+    NE10_FREE (guarded_in_neon);
+    NE10_FREE (guarded_out_c);
+    NE10_FREE (guarded_out_neon);
 }
 
 void test_fft_c2c_1d_float32()
@@ -468,6 +410,17 @@ void test_fft_c2c_1d_float32()
 void test_fft_r2c_1d_float32()
 {
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+#if defined (__aarch64__)
+    // test for macro
+    assert_true ( is_ne10_radix8x4_r2c_neon_kernel_s1_conformed() );
+    assert_true ( is_ne10_radix8x4_r2c_neon_kernel_s2_conformed() );
+    assert_true ( is_ne10_radix4x4_r2c_neon_kernel_conformed() );
+    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_s1_conformed() );
+    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_s2_conformed() );
+    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_conformed() );
+    assert_true ( is_ne10_radix4x4_r2c_tw_mul_neon_conformed() );
+    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_last_conformed() );
+#endif
     test_fft_r2c_1d_float32_conformance();
 #endif
 
@@ -484,6 +437,8 @@ void test_fixture_fft_c2c_1d_float32 (void)
 
     run_test (test_fft_c2c_1d_float32);       // run tests
 
+    fixture_teardown(my_test_teardown);
+
     test_fixture_end();                 // ends a fixture
 }
 
@@ -494,6 +449,8 @@ void test_fixture_fft_r2c_1d_float32 (void)
     fixture_setup (my_test_setup);
 
     run_test (test_fft_r2c_1d_float32);       // run tests
+
+    fixture_teardown(my_test_teardown);
 
     test_fixture_end();                 // ends a fixture
 }

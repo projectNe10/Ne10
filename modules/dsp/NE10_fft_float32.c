@@ -850,40 +850,6 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
     } // last stage
 }
 
-/* factors buffer:
- * 0: stage number
- * 1: stride for the first stage
- * others: factors */
-static ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
-{
-    ne10_int32_t p = 4;
-    ne10_int32_t i = 1;
-    ne10_int32_t stage_num = 0;
-    ne10_int32_t stride_max = n;
-
-    /* factor out powers of 4, powers of 2 */
-    do
-    {
-        if ( (n % p) == 2)
-            p = 2;
-        else if (n % p)
-        {
-            return NE10_ERR;
-        }
-
-        n /= p;
-        facbuf[2 * i] = p;
-        facbuf[2 * i + 1] = n;
-        i++;
-        stage_num++;
-    }
-    while (n > 1);
-    facbuf[0] = stage_num;
-    facbuf[1] = stride_max / p;
-    return NE10_OK;
-}
-
-
 static void ne10_fft_split_r2c_1d_float32 (ne10_fft_cpx_float32_t *dst,
         const ne10_fft_cpx_float32_t *src,
         ne10_fft_cpx_float32_t *twiddles,
@@ -1203,6 +1169,13 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  *
  */
 
+// only for ARMv7-A and AArch32 platform.
+// For AArch64 these functions are implemented in NE10_rfft_float32.c
+#ifdef __arm__
+////////////////////////////////////////////////////
+// RFFT reference model for ARMv7-A and AArch32 neon
+////////////////////////////////////////////////////
+
 /**
  * @brief User-callable function to allocate all necessary storage space for the fft (r2c/c2r).
  * @param[in]   nfft             length of FFT
@@ -1335,3 +1308,4 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
 /**
  * @} end of R2C_FFT_IFFT group
  */
+#endif
