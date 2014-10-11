@@ -140,7 +140,16 @@ qAcc3            .qn   Q15.F32
                     @/* pStateCurnt points to the location where the new input data should be written */
                     @/*pStateCurnt = &(S->state[(numTaps - 1u)])@*/
                     SUB         mask,numTaps,#1
+#ifdef __PIC__
+                    @/* position-independent access of LDR pMask,=ne10_qMaskTable32 */
+                    LDR         pTemp,.L_PIC0_GOT_OFFSET
+                    LDR         pMask,.L_GOT_ne10_qMaskTable32
+.L_PIC0:
+                    ADD         pTemp,pTemp,pc
+                    LDR         pMask,[pTemp,pMask]
+#else
                     LDR         pMask,=ne10_qMaskTable32
+#endif
                     AND         tapCnt,numTaps,#3
                     ADD         pStateCurnt,pState,mask,LSL #2
                     AND         mask,blockSize,#3
@@ -532,10 +541,19 @@ dInp2_1          .dn   D31.F32
                     LDR         pState,[pStateStruct],#4
 
                     @//outBlockSize = blockSize / S->M
+#ifdef __PIC__
+                    @/* position-independent access of LDR pMask,=ne10_divLookUpTable */
+                    LDR         pTemp,.L_PIC1_GOT_OFFSET
+                    LDR         pMask,.L_GOT_ne10_divLookUpTable
+.L_PIC1:
+                    ADD         pTemp,pTemp,pc
+                    LDR         pMask,[pTemp,pMask]
+#else
                     LDR         pTemp,=ne10_divLookUpTable
+#endif
                     SUBS        mask,decimationFact,#1
-                    ADD         pTemp,pTemp,mask,LSL #2
-                    LDR         mask,[pTemp]
+                    ADD         pMask,pMask,mask,LSL #2
+                    LDR         mask,[pMask]
                     @//MOV         pX,#0
 
 
@@ -552,7 +570,16 @@ dInp2_1          .dn   D31.F32
 
                     @/* Copy Blocksize number of new input samples into the state buffer */
 
+#ifdef __PIC__
+                    @/* position-independent access of LDR pMask,=ne10_qMaskTable32 */
+                    LDR         pTemp,.L_PIC2_GOT_OFFSET
+                    LDR         pMask,.L_GOT_ne10_qMaskTable32
+.L_PIC2:
+                    ADD         pTemp,pTemp,pc
+                    LDR         pMask,[pTemp,pMask]
+#else
                     LDR         pMask,=ne10_qMaskTable32
+#endif
                     SUB         tapCnt,numTaps,#1
                     AND         mask,blockSize,#3
 
@@ -959,8 +986,16 @@ dMaskTemp_1       .dn   D29.U32
 
 
                     AND         phaseLen,#3
+#ifdef __PIC__
+                    @/* position-independent access of LDR pMask,=ne10_qMaskTable32 */
+                    LDR         pTemp,.L_PIC3_GOT_OFFSET
+                    LDR         pMask,.L_GOT_ne10_qMaskTable32
+.L_PIC3:
+                    ADD         pTemp,pTemp,pc
+                    LDR         pMask,[pTemp,pMask]
+#else
                     LDR         pMask,=ne10_qMaskTable32
-
+#endif
                     @/* Total number of intput samples */
                     @/*Load Mask Value*/
 
@@ -1134,7 +1169,16 @@ firInterpolateCopyData:
                     @/* Save previous phaseLen - 1 samples and get rid of other samples  */
                     @/* Points to the start of the state buffer */
                     LDRH        phaseLen,[pStateStruct,#-10]
+#ifdef __PIC__
+                    @/* position-independent access of LDR pMask,=ne10_qMaskTable32 */
+                    LDR         pTemp,.L_PIC4_GOT_OFFSET
+                    LDR         pMask,.L_GOT_ne10_qMaskTable32
+.L_PIC4:
+                    ADD         pTemp,pTemp,pc
+                    LDR         pMask,[pTemp,pMask]
+#else
                     LDR         pMask,=ne10_qMaskTable32
+#endif
                     LDR         pStateCurnt,[pStateStruct,#-4]
 
                     SUB         phaseLen,phaseLen,#1
@@ -1343,7 +1387,16 @@ Coeff            .dn   D4.F32
 
                             @// Get the Mask Values
 
+#ifdef __PIC__
+                            @/* position-independent access of LDR pMask,=ne10_qMaskTable32 */
+                            LDR         pTemp,.L_PIC5_GOT_OFFSET
+                            LDR         pMask,.L_GOT_ne10_qMaskTable32
+.L_PIC5:
+                            ADD         pTemp,pTemp,pc
+                            LDR         pMask,[pTemp,pMask]
+#else
                             LDR         pMask,=ne10_qMaskTable32
+#endif
                             SUB         numStages,#1
                             AND         mask,numStages, #3
                             AND         stageCnt,blockSize,#3
@@ -1677,6 +1730,7 @@ pTapDelay        .req   R10
 blkCnt           .req   R11
 size1            .req   R11
 temp             .req   R1
+pTemp            .req   R14
 mask             .req   R11
 pMask            .req   R11
 
@@ -1729,7 +1783,16 @@ dMaskTmp_1       .dn   D21.U32
 
                     @// Load blockSize from Stack
                     LDR         blockSize,[SP,#40]
+#ifdef __PIC__
+                    @/* position-independent access of LDR pMask,=ne10_qMaskTable32 */
+                    LDR         pTemp,.L_PIC6_GOT_OFFSET
+                    LDR         pMask,.L_GOT_ne10_qMaskTable32
+.L_PIC6:
+                    ADD         pTemp,pTemp,pc
+                    LDR         pMask,[pTemp,pMask]
+#else
                     LDR         pMask,=ne10_qMaskTable32
+#endif
                     ADD         delaySize,blockSize,maxDelay
 
                     VEOR        qZero,qZero
@@ -1958,6 +2021,7 @@ firSparseEnd:
 .unreq    blkCnt
 .unreq    size1
 .unreq    temp
+.unreq    pTemp
 .unreq    mask
 .unreq    pMask
 
@@ -1993,5 +2057,30 @@ firSparseEnd:
 .unreq    qMaskTmp
 .unreq    dMaskTmp_0
 .unreq    dMaskTmp_1
+
+#ifdef __PIC__
+@/*GOT trampoline values*/
+        .align  4
+.L_PIC0_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC0+4)
+.L_PIC1_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC1+4)
+.L_PIC2_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC2+4)
+.L_PIC3_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC3+4)
+.L_PIC4_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC4+4)
+.L_PIC5_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC5+4)
+.L_PIC6_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC6+4)
+
+.L_GOT_ne10_qMaskTable32:
+.word   ne10_qMaskTable32(GOT)
+
+.L_GOT_ne10_divLookUpTable:
+.word   ne10_divLookUpTable(GOT)
+#endif
 
         .end
