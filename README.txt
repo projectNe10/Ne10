@@ -21,6 +21,13 @@ You could open the "index.html" to start.
 2. online documents
 http://projectne10.github.io/Ne10/doc/
 
+Contributing
+=============
+See https://github.com/projectNe10/Ne10/blob/master/contributing.md
+You must fill out an industry standard contribution licensing agreements (CLA):
+http://www.arm.com/community/open-source-contributing.php
+And email it to: cla-submissions@arm.com
+
 Code formatter
 ==============
 See Formatter.txt file in the "doc" folder
