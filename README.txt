@@ -36,4 +36,6 @@ Want us to help cross promote your product using Ne10 at developer events?
 We’re looking for use cases we can demonstrate ProjectNe10 with at conferences
 and meetups.
 
-matthew.dupuy@arm.com
+steve.bannister@arm.com 
+matthew.dupuy@arm.com 
+fang.bao@arm.com 
