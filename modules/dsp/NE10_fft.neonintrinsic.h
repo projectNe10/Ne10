@@ -115,11 +115,11 @@
 const static float32x4_t Q_TW_81    = VDUPQ_N_F32(CONST_TW_81 );
 const static float32x4_t Q_TW_81N   = VDUPQ_N_F32(CONST_TW_81N);
 
-#define DIV_TW81    1.4121356f
-#define DIV_TW81N - 1.4121356f
+#define DIV_TW81   1.4142136f
+#define DIV_TW81N -1.4142136f
 
-const static float32x4_t DIV_TW81_NEON  = VDUPQ_N_F32( 1.4121356f);
-const static float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(-1.4121356f);
+const static float32x4_t DIV_TW81_NEON  = VDUPQ_N_F32(DIV_TW81);
+const static float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(DIV_TW81N);
 
 #define NE10_RADIX8x4_R2C_NEON_KERNEL_S1(Q_OUT,Q_IN) do {   \
         Q_OUT ## 0 = vaddq_f32 (Q_IN ## 0, Q_IN ## 4);      \
