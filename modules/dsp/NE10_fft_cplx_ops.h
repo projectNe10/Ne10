@@ -41,119 +41,81 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 */
 
 /*
- * NE10 Library : dsp/NE10_fft.c
+ * NE10 Library : dsp/NE10_fft_cplx_ops.h
  */
 
-#include "NE10_types.h"
-#include "NE10_macros.h"
-#include "NE10_fft.h"
+#include <NE10_types.h>
 
-/* factors buffer:
- * 0: stage number
- * 1: stride for the first stage
- * 2*(stage number+1): algorithm flag
- * others: factors */
-ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
-{
-    ne10_int32_t p;
-    ne10_int32_t i = 1;
-    ne10_int32_t stage_num = 0;
-    ne10_int32_t stride_max = n;
+#ifdef __cplusplus
+#include <algorithm>
+#endif
 
-    /* factor out powers of 4, 2, 5, 3, and other */
-    do
-    {
-        if ( (n % 4) == 0)
-            p = 4;
-        else if ( (n % 2) == 0)
-            p = 2;
-        else if ( (n % 5) == 0)
-            p = 5;
-        else if ( (n % 3) == 0)
-            p = 3;
-        else // stop factoring
-            p = n;
+#ifndef NE10_FFT_CPLX_OPS_H
+#define NE10_FFT_CPLX_OPS_H
 
-        n /= p;
-        facbuf[2 * i] = p;
-        facbuf[2 * i + 1] = n;
-        i++;
-        stage_num++;
-    }
-    while (n > 1);
-    facbuf[0] = stage_num;
-    facbuf[1] = stride_max / p;
+#ifdef __cplusplus
+#define ne10_swap_ptr(X,Y) \
+    do { \
+        std::swap((X),(Y)); \
+    } while (0)
+#else // __cplusplus
+#define ne10_swap_ptr(X,Y) \
+    do { \
+        void *ptr = (X); \
+        (X) = (Y); \
+        (Y) = ptr; \
+    } while (0)
+#endif // __cplusplus
 
-    /* set flag for algorithm */
-    if ( ((p % 2) == 0) && (stride_max >= 4) )
-    {
-        // last factor is 4 or 2
-        // and nfft >= 4
-        facbuf[2 * i] = NE10_FFT_ALG_24;
-    }
-    else
-    {
-        facbuf[2 * i] = NE10_FFT_ALG_ANY;
-    }
+// Multiply scalar X by scalar Y
+#define NE10_S_MUL(X,Y) ((X) * (Y))
 
-    if ( stride_max < 3 )
-    {
-        // not support yet
-        return NE10_ERR;
-    }
-    else
-    {
-        return NE10_OK;
-    }
-}
+#define NE10_CPX_ADD(Z,A,B) \
+    do { \
+        Z.r = A.r + B.r; \
+        Z.i = A.i + B.i; \
+    } while (0)
 
-ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_float32_t * twiddles,
-        const ne10_int32_t * factors,
-        const ne10_int32_t nfft )
-{
-    ne10_int32_t i, j, k;
-    ne10_fft_cpx_float32_t *tw;
-    ne10_int32_t stage_count = factors[0];
-    ne10_int32_t fstride = factors[1];
-    ne10_int32_t mstride;
-    ne10_int32_t cur_radix; // current radix
+#define NE10_CPX_SUB(Z,A,B) \
+    do { \
+        Z.r = A.r - B.r; \
+        Z.i = A.i - B.i; \
+    } while (0)
 
-    const ne10_float64_t pi = NE10_PI;
-    ne10_float32_t phase;
+#define NE10_CPX_ADDTO(Z,X) NE10_CPX_ADD(Z,X,Z)
 
-    // for first stage
-    i = stage_count;
-    cur_radix = factors[2 * i];
-    if (cur_radix%2) // current radix is not 4 or 2
-    {
-        for (k = 0; k < cur_radix; k++)
-        {
-            phase = -2 * pi * k / cur_radix;
-            twiddles[k].r = (ne10_float32_t) cos (phase);
-            twiddles[k].i = (ne10_float32_t) sin (phase);
-        }
-        twiddles += cur_radix;
-    }
+#define NE10_CPX_MUL_F32(Z,A,B) \
+    do { \
+        ne10_float32_t ARBR = A.r * B.r; \
+        ne10_float32_t AIBI = A.i * B.i; \
+        ne10_float32_t ARBI = A.r * B.i; \
+        ne10_float32_t AIBR = A.i * B.r; \
+        Z.r = ARBR - AIBI; \
+        Z.i = AIBR + ARBI; \
+    } while (0)
 
-    // for other stage
-    for (i = stage_count - 1; i > 0; i--)
-    {
-        cur_radix = factors[2 * i];
-        fstride /= cur_radix;
-        mstride = factors[2 * i + 1];
-        tw = twiddles;
-        for (j = 0; j < mstride; j++)
-        {
-            for (k = 1; k < cur_radix; k++ ) // phase = 1 when k = 0
-            {
-                phase = -2 * pi * fstride * k * j / nfft;
-                tw[mstride * ( k - 1 )].r = (ne10_float32_t) cos (phase);
-                tw[mstride * ( k - 1 )].i = (ne10_float32_t) sin (phase);
-            } // cur_radix
-            tw ++;
-        } // mstride
-        twiddles += mstride * (cur_radix - 1);
-    } // stage_count
+#define NE10_CPX_CONJ_MUL_F32(Z,A,B) \
+    do { \
+        ne10_float32_t ARBR = A.r * B.r; \
+        ne10_float32_t AIBI = A.i * B.i; \
+        ne10_float32_t ARBI = A.r * B.i; \
+        ne10_float32_t AIBR = A.i * B.r; \
+        Z.r = ARBR + AIBI; \
+        Z.i = AIBR - ARBI; \
+    } while (0)
 
-    return twiddles;
-}
+#define NE10_CPX_MUL_TW_F32(Z,TW) \
+    do { \
+        ne10_fft_cpx_float32_t tmp; \
+        NE10_CPX_MUL(tmp,Z,TW); \
+        Z = tmp; \
+    } while (0)
+
+#define NE10_CPX_MUL_INV_TW_F32(Z,TW) \
+    do { \
+        ne10_fft_cpx_float32_t tmp; \
+        NE10_CPX_CONJ_MUL(tmp,Z,TW); \
+        Z = tmp; \
+    } while (0)
+
+#endif // NE10_FFT_CPLX_OPS_H

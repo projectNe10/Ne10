@@ -79,8 +79,8 @@ extern void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
         scratch_in[6] = Fin_r[in_step * 3] + Fin_r[in_step * (3 + 4)];
         scratch_in[7] = Fin_r[in_step * 3] - Fin_r[in_step * (3 + 4)];
 
-        scratch_in[3] *= TW_81;
-        scratch_in[7] *= TW_81N;
+        scratch_in[3] *= TW_81_F32;
+        scratch_in[7] *= TW_81N_F32;
 
         // radix 2 butterfly
         scratch[0] =   scratch_in[0] + scratch_in[4];
@@ -134,8 +134,8 @@ extern void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
         scratch_in[6] =   Fin_r[0] + Fin_r[4] + Fin_r[4] - Fin_r[7];
         scratch_in[7] =   Fin_r[1] + Fin_r[2] - Fin_r[5] + Fin_r[6];
 
-        scratch_in[3] /= TW_81;
-        scratch_in[7] /= TW_81N;
+        scratch_in[3] /= TW_81_F32;
+        scratch_in[7] /= TW_81N_F32;
 
         Fout_r[0 * in_step] = scratch_in[0] + scratch_in[1];
         Fout_r[4 * in_step] = scratch_in[0] - scratch_in[1];
