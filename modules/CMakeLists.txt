@@ -175,6 +175,7 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/common/NE10_mask_table.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.c

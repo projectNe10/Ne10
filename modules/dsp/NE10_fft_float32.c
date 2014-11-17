@@ -1023,56 +1023,20 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
             return st;
         }
 
-        ne10_int32_t i, j;
-        ne10_int32_t *factors = st->factors;
-        ne10_fft_cpx_float32_t *twiddles = st->twiddles;
-        ne10_fft_cpx_float32_t *tw;
-        ne10_int32_t stage_count = factors[0];
-        ne10_int32_t fstride1 = factors[1];
-        ne10_int32_t fstride2 = fstride1 * 2;
-        ne10_int32_t fstride3 = fstride1 * 3;
-        ne10_int32_t m;
-
-        const ne10_float32_t pi = NE10_PI;
-        ne10_float32_t phase1;
-        ne10_float32_t phase2;
-        ne10_float32_t phase3;
-
-        for (i = stage_count - 1; i > 0; i--)
-        {
-            fstride1 >>= 2;
-            fstride2 >>= 2;
-            fstride3 >>= 2;
-            m = factors[2 * i + 1];
-            tw = twiddles;
-            for (j = 0; j < m; j++)
-            {
-                phase1 = -2 * pi * fstride1 * j / nfft;
-                phase2 = -2 * pi * fstride2 * j / nfft;
-                phase3 = -2 * pi * fstride3 * j / nfft;
-                tw->r = (ne10_float32_t) cos (phase1);
-                tw->i = (ne10_float32_t) sin (phase1);
-                (tw + m)->r = (ne10_float32_t) cos (phase2);
-                (tw + m)->i = (ne10_float32_t) sin (phase2);
-                (tw + m * 2)->r = (ne10_float32_t) cos (phase3);
-                (tw + m * 2)->i = (ne10_float32_t) sin (phase3);
-                tw++;
-            }
-            twiddles += m * 3;
-        }
+        ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, nfft);
 
     }
     return st;
 }
 
 /**
- * @brief Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data.
+ * @brief Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.
  * @param[out]  *fout            point to the output buffer (out-of-place)
  * @param[in]   *fin             point to the input buffer (out-of-place)
  * @param[in]   cfg              point to the config struct
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @return none.
- * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * The function implements a mixed radix-2/3/4/5 complex FFT/IFFT. The length of 2^N*3^M*5^K(N,M,K is 1, 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, this FFT is an out-of-place algorithm.
  * For the usage of this function, please check test/test_suite_fft_float32.c
  */
@@ -1081,11 +1045,35 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                 ne10_fft_cfg_float32_t cfg,
                                 ne10_int32_t inverse_fft)
 {
+    ne10_int32_t stage_count = cfg->factors[0];
+    ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
 
-    if (inverse_fft)
-        ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
-    else
-        ne10_mixed_radix_butterfly_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+    assert ((algorithm_flag == NE10_FFT_ALG_24)
+            || (algorithm_flag == NE10_FFT_ALG_ANY));
+
+    switch (algorithm_flag)
+    {
+    case NE10_FFT_ALG_24:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+        }
+        else
+        {
+            ne10_mixed_radix_butterfly_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+        }
+        break;
+    case NE10_FFT_ALG_ANY:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_generic_butterfly_inverse_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+        }
+        else
+        {
+            ne10_mixed_radix_generic_butterfly_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+        }
+        break;
+    }
 }
 
 /**
