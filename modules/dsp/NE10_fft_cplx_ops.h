@@ -46,26 +46,25 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 #include <NE10_types.h>
 
-#ifdef __cplusplus
-#include <algorithm>
-#endif
-
 #ifndef NE10_FFT_CPLX_OPS_H
 #define NE10_FFT_CPLX_OPS_H
 
 #ifdef __cplusplus
+template<class T>
+static inline void ne10_swap_ptr(T *&ptr_a, T *&ptr_b)
+{
+    ptr_a = (T *)((intptr_t)(ptr_a) ^ (intptr_t)(ptr_b));
+    ptr_b = (T *)((intptr_t)(ptr_a) ^ (intptr_t)(ptr_b));
+    ptr_a = (T *)((intptr_t)(ptr_a) ^ (intptr_t)(ptr_b));
+}
+#else
 #define ne10_swap_ptr(X,Y) \
     do { \
-        std::swap((X),(Y)); \
+        X = (void *)((intptr_t)(X) ^ (intptr_t)(Y)); \
+        Y = (void *)((intptr_t)(X) ^ (intptr_t)(Y)); \
+        X = (void *)((intptr_t)(X) ^ (intptr_t)(Y)); \
     } while (0)
-#else // __cplusplus
-#define ne10_swap_ptr(X,Y) \
-    do { \
-        void *ptr = (X); \
-        (X) = (Y); \
-        (Y) = ptr; \
-    } while (0)
-#endif // __cplusplus
+#endif
 
 // Multiply scalar X by scalar Y
 #define NE10_S_MUL(X,Y) ((X) * (Y))

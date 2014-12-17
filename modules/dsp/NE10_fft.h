@@ -49,9 +49,17 @@
 #define NE10_FFT_ALG_24 0
 #define NE10_FFT_ALG_ANY 1
 
+/* NE10_FACTOR_FLAGS */
+// Only factors into 2, 3, 4, 5
+#define NE10_FACTOR_DEFAULT 0
+// Factors into 2, 3, 4, 5, 8
+#define NE10_FACTOR_EIGHT   1
+
 // Comment when do not want to scale output result
 #define NE10_DSP_RFFT_SCALING
 #define NE10_DSP_CFFT_SCALING
+
+#define NE10_FFT_PARA_LEVEL 4
 
 #ifdef __cplusplus
 extern "C" {
@@ -62,7 +70,7 @@ extern "C" {
 ///////////////////////////
 
     /*common fft functions */
-    extern ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf);
+    extern ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf, ne10_int32_t ne10_factor_flags);
 
     extern ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_float32_t * twiddles,
         const ne10_int32_t * factors,
@@ -76,6 +84,18 @@ extern "C" {
             ne10_fft_cpx_float32_t * buffer);
 
     extern void ne10_mixed_radix_generic_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t * Fout,
+            const ne10_fft_cpx_float32_t * Fin,
+            const ne10_int32_t * factors,
+            const ne10_fft_cpx_float32_t * twiddles,
+            ne10_fft_cpx_float32_t * buffer);
+
+    extern void ne10_mixed_radix_generic_butterfly_float32_neon (ne10_fft_cpx_float32_t * Fout,
+            const ne10_fft_cpx_float32_t * Fin,
+            const ne10_int32_t * factors,
+            const ne10_fft_cpx_float32_t * twiddles,
+            ne10_fft_cpx_float32_t * buffer);
+
+    extern void ne10_mixed_radix_generic_butterfly_inverse_float32_neon (ne10_fft_cpx_float32_t * Fout,
             const ne10_fft_cpx_float32_t * Fin,
             const ne10_int32_t * factors,
             const ne10_fft_cpx_float32_t * twiddles,

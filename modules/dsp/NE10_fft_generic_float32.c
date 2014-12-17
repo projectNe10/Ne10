@@ -47,171 +47,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_types.h"
 #include "NE10_macros.h"
 #include "NE10_fft.h"
-
-///////////////////////////////
-// Multiply input with twiddles
-///////////////////////////////
-static inline void FFT2_MUL_TW (ne10_fft_cpx_float32_t scratch_out[2],
-        const ne10_fft_cpx_float32_t scratch_in[2],
-        const ne10_fft_cpx_float32_t scratch_tw[1])
-{
-    scratch_out[0] = scratch_in[0];
-    NE10_CPX_MUL_F32 (scratch_out[1], scratch_in[1], scratch_tw[0]);
-}
-
-static inline void FFT3_MUL_TW (ne10_fft_cpx_float32_t scratch_out[3],
-        const ne10_fft_cpx_float32_t scratch_in[3],
-        const ne10_fft_cpx_float32_t scratch_tw[2])
-{
-    FFT2_MUL_TW (scratch_out, scratch_in, scratch_tw);
-    NE10_CPX_MUL_F32 (scratch_out[2], scratch_in[2], scratch_tw[1]);
-}
-
-static inline void FFT4_MUL_TW (ne10_fft_cpx_float32_t scratch_out[4],
-        const ne10_fft_cpx_float32_t scratch_in[4],
-        const ne10_fft_cpx_float32_t scratch_tw[3])
-{
-    FFT3_MUL_TW (scratch_out, scratch_in, scratch_tw);
-    NE10_CPX_MUL_F32 (scratch_out[3], scratch_in[3], scratch_tw[2]);
-}
-
-static inline void FFT5_MUL_TW (ne10_fft_cpx_float32_t scratch_out[5],
-        const ne10_fft_cpx_float32_t scratch_in[5],
-        const ne10_fft_cpx_float32_t scratch_tw[4])
-{
-    FFT4_MUL_TW (scratch_out, scratch_in, scratch_tw);
-    NE10_CPX_MUL_F32 (scratch_out[4], scratch_in[4], scratch_tw[3]);
-}
-
-///////////////////
-// FFT Kernel
-// F: Forward
-// C: Complex
-// U: Unscaled
-//////////////////
-static inline void FFT2_FCU (ne10_fft_cpx_float32_t scratch_out[2],
-        const ne10_fft_cpx_float32_t scratch_in[2])
-{
-    NE10_CPX_ADD (scratch_out[0], scratch_in[0], scratch_in[1]);
-    NE10_CPX_SUB (scratch_out[1], scratch_in[0], scratch_in[1]);
-}
-
-static inline void FFT3_FCU (ne10_fft_cpx_float32_t Fout[3],
-        const ne10_fft_cpx_float32_t Fin[3])
-{
-    ne10_fft_cpx_float32_t scratch[4];
-    ne10_fft_cpx_float32_t scratch_in[3];
-
-    scratch_in[0] = Fin[0];
-    scratch_in[1] = Fin[1];
-    scratch_in[2] = Fin[2];
-
-    scratch[1] = scratch_in[1];
-    scratch[2] = scratch_in[2];
-
-    NE10_CPX_ADD (scratch[3], scratch[1], scratch[2]);
-    NE10_CPX_SUB (scratch[0], scratch[1], scratch[2]);
-
-    scratch_in[1].r = scratch_in[0].r - scratch[3].r * 0.5;
-    scratch_in[1].i = scratch_in[0].i - scratch[3].i * 0.5;
-
-    scratch[0].r *= -TW_3I_F32;
-    scratch[0].i *= -TW_3I_F32;
-
-    scratch_in[0].r += scratch[3].r;
-    scratch_in[0].i += scratch[3].i;
-
-    scratch_in[2].r = scratch_in[1].r + scratch[0].i;
-    scratch_in[2].i = scratch_in[1].i - scratch[0].r;
-
-    scratch_in[1].r -= scratch[0].i;
-    scratch_in[1].i += scratch[0].r;
-
-    Fout[0] = scratch_in[0];
-    Fout[1] = scratch_in[1];
-    Fout[2] = scratch_in[2];
-}
-
-static inline void FFT4_FCU (ne10_fft_cpx_float32_t scratch_out[4],
-        const ne10_fft_cpx_float32_t scratch_in[4])
-{
-    ne10_fft_cpx_float32_t scratch[4];
-
-    NE10_CPX_ADD (scratch[0], scratch_in[0], scratch_in[2]);
-    NE10_CPX_SUB (scratch[1], scratch_in[0], scratch_in[2]);
-    NE10_CPX_ADD (scratch[2], scratch_in[1], scratch_in[3]);
-    NE10_CPX_SUB (scratch[3], scratch_in[1], scratch_in[3]);
-
-    NE10_CPX_SUB (scratch_out[2], scratch[0], scratch[2]);
-    NE10_CPX_ADD (scratch_out[0], scratch[0], scratch[2]);
-
-    scratch_out[1].r = scratch[1].r + scratch[3].i;
-    scratch_out[1].i = scratch[1].i - scratch[3].r;
-    scratch_out[3].r = scratch[1].r - scratch[3].i;
-    scratch_out[3].i = scratch[1].i + scratch[3].r;
-}
-
-static inline void FFT5_FCU (ne10_fft_cpx_float32_t Fout[5],
-        const ne10_fft_cpx_float32_t Fin[5])
-{
-    ne10_fft_cpx_float32_t scratch[13], scratch_in[5];
-
-    scratch_in[0] = Fin[0];
-    scratch_in[1] = Fin[1];
-    scratch_in[2] = Fin[2];
-    scratch_in[3] = Fin[3];
-    scratch_in[4] = Fin[4];
-
-    scratch[0] = scratch_in[0];
-    scratch[1] = scratch_in[1];
-    scratch[2] = scratch_in[2];
-    scratch[3] = scratch_in[3];
-    scratch[4] = scratch_in[4];
-
-    NE10_CPX_ADD (scratch[ 7], scratch[1], scratch[4]);
-    NE10_CPX_SUB (scratch[10], scratch[1], scratch[4]);
-    NE10_CPX_ADD (scratch[ 8], scratch[2], scratch[3]);
-    NE10_CPX_SUB (scratch[ 9], scratch[2], scratch[3]);
-
-    scratch_in[0].r += scratch[7].r + scratch[8].r;
-    scratch_in[0].i += scratch[7].i + scratch[8].i;
-
-    scratch[5].r = scratch[0].r
-        + NE10_S_MUL (scratch[7].r, TW_5A_F32.r)
-        + NE10_S_MUL (scratch[8].r, TW_5B_F32.r);
-    scratch[5].i = scratch[0].i
-        + NE10_S_MUL (scratch[7].i, TW_5A_F32.r)
-        + NE10_S_MUL (scratch[8].i, TW_5B_F32.r);
-
-    scratch[6].r = NE10_S_MUL (scratch[10].i, TW_5A_F32.i)
-        + NE10_S_MUL (scratch[9].i, TW_5B_F32.i);
-    scratch[6].i = -NE10_S_MUL (scratch[10].r, TW_5A_F32.i)
-        - NE10_S_MUL (scratch[9].r, TW_5B_F32.i);
-
-    NE10_CPX_SUB (scratch_in[1], scratch[5], scratch[6]);
-    NE10_CPX_ADD (scratch_in[4], scratch[5], scratch[6]);
-
-    scratch[11].r = scratch[0].r
-        + NE10_S_MUL (scratch[7].r, TW_5B_F32.r)
-        + NE10_S_MUL (scratch[8].r, TW_5A_F32.r);
-    scratch[11].i = scratch[0].i
-        + NE10_S_MUL (scratch[7].i, TW_5B_F32.r)
-        + NE10_S_MUL (scratch[8].i, TW_5A_F32.r);
-
-    scratch[12].r = -NE10_S_MUL (scratch[10].i, TW_5B_F32.i)
-        + NE10_S_MUL (scratch[9].i, TW_5A_F32.i);
-    scratch[12].i = NE10_S_MUL (scratch[10].r, TW_5B_F32.i)
-        - NE10_S_MUL (scratch[9].r, TW_5A_F32.i);
-
-    NE10_CPX_ADD (scratch_in[2], scratch[11], scratch[12]);
-    NE10_CPX_SUB (scratch_in[3], scratch[11], scratch[12]);
-
-    Fout[0] = scratch_in[0];
-    Fout[1] = scratch_in[1];
-    Fout[2] = scratch_in[2];
-    Fout[3] = scratch_in[3];
-    Fout[4] = scratch_in[4];
-}
+#include "NE10_fft_generic_float32.h"
 
 ////////////////////////////////////
 // Following are butterfly functions
@@ -398,6 +234,102 @@ static inline void ne10_radix_4_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
         {
             twiddles -= out_step;
             Fout += (4 - 1) * out_step;
+        }
+    }
+}
+
+static inline void ne10_radix_8_butterfly_float32_c (ne10_fft_cpx_float32_t *Fout,
+        const ne10_fft_cpx_float32_t *Fin,
+        const ne10_fft_cpx_float32_t *twiddles,
+        const ne10_int32_t fstride,
+        const ne10_int32_t out_step,
+        const ne10_int32_t nfft,
+        const ne10_int32_t is_first_stage,
+        const ne10_int32_t is_inverse)
+{
+    assert (is_first_stage == 1);
+
+    ne10_fft_cpx_float32_t scratch_in[8];
+    ne10_fft_cpx_float32_t scratch_out[8];
+
+    const ne10_int32_t in_step = nfft / 8;
+    ne10_int32_t f_count;
+    ne10_int32_t m_count;
+
+    for (f_count = fstride; f_count > 0; f_count--)
+    {
+        for (m_count = out_step; m_count > 0; m_count--)
+        {
+            scratch_in[0] = Fin[0 * in_step];
+            scratch_in[1] = Fin[1 * in_step];
+            scratch_in[2] = Fin[2 * in_step];
+            scratch_in[3] = Fin[3 * in_step];
+            scratch_in[4] = Fin[4 * in_step];
+            scratch_in[5] = Fin[5 * in_step];
+            scratch_in[6] = Fin[6 * in_step];
+            scratch_in[7] = Fin[7 * in_step];
+
+            if (is_inverse)
+            {
+                scratch_in[0].i = -scratch_in[0].i;
+                scratch_in[1].i = -scratch_in[1].i;
+                scratch_in[2].i = -scratch_in[2].i;
+                scratch_in[3].i = -scratch_in[3].i;
+                scratch_in[4].i = -scratch_in[4].i;
+                scratch_in[5].i = -scratch_in[5].i;
+                scratch_in[6].i = -scratch_in[6].i;
+                scratch_in[7].i = -scratch_in[7].i;
+            }
+
+#ifdef NE10_DSP_CFFT_SCALING
+            if (is_inverse)
+            {
+                const ne10_float32_t one_by_nfft = 1.0 / nfft;
+
+                scratch_in[0].r *= one_by_nfft;
+                scratch_in[0].i *= one_by_nfft;
+                scratch_in[1].r *= one_by_nfft;
+                scratch_in[1].i *= one_by_nfft;
+                scratch_in[2].r *= one_by_nfft;
+                scratch_in[2].i *= one_by_nfft;
+                scratch_in[3].r *= one_by_nfft;
+                scratch_in[3].i *= one_by_nfft;
+                scratch_in[4].r *= one_by_nfft;
+                scratch_in[4].i *= one_by_nfft;
+                scratch_in[5].r *= one_by_nfft;
+                scratch_in[5].i *= one_by_nfft;
+                scratch_in[6].r *= one_by_nfft;
+                scratch_in[6].i *= one_by_nfft;
+                scratch_in[7].r *= one_by_nfft;
+                scratch_in[7].i *= one_by_nfft;
+            }
+#endif
+
+            FFT8_FCU (scratch_out, scratch_in);
+
+            if (is_inverse)
+            {
+                scratch_out[0].i = -scratch_out[0].i;
+                scratch_out[1].i = -scratch_out[1].i;
+                scratch_out[2].i = -scratch_out[2].i;
+                scratch_out[3].i = -scratch_out[3].i;
+                scratch_out[4].i = -scratch_out[4].i;
+                scratch_out[5].i = -scratch_out[5].i;
+                scratch_out[6].i = -scratch_out[6].i;
+                scratch_out[7].i = -scratch_out[7].i;
+            }
+
+            Fout[0*out_step] = scratch_out[0];
+            Fout[1*out_step] = scratch_out[1];
+            Fout[2*out_step] = scratch_out[2];
+            Fout[3*out_step] = scratch_out[3];
+            Fout[4*out_step] = scratch_out[4];
+            Fout[5*out_step] = scratch_out[5];
+            Fout[6*out_step] = scratch_out[6];
+            Fout[7*out_step] = scratch_out[7];
+
+            Fin++;
+            Fout += 8;
         }
     }
 }
@@ -705,6 +637,9 @@ static inline void ne10_mixed_radix_generic_butterfly_float32_impl_c (ne10_fft_c
     case 5:
         ne10_radix_5_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1, is_inverse);
         break;
+        break;
+    case 8:
+        ne10_radix_8_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1, is_inverse);
     default:
         ne10_radix_generic_butterfly_float32_c (Fout, Fin, twiddles, radix,
                 fstride, 1, is_inverse);

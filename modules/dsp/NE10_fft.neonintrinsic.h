@@ -32,25 +32,24 @@
 #ifndef NE10_FFT_NEONINTRINSIC_H
 #define NE10_FFT_NEONINTRINSIC_H
 
+#include "NE10_fft.h"
 #include <arm_neon.h>
 
 #define NE10_CPX_ADD_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = vaddq_f32( A.val[0] , B.val[0] );    \
-    Z.val[1] = vaddq_f32( A.val[1] , B.val[1] );    \
+    Z.val[0] = A.val[0] + B.val[0];    \
+    Z.val[1] = A.val[1] + B.val[1];    \
 } while (0);
 
 #define NE10_CPX_SUB_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = vsubq_f32( A.val[0] , B.val[0] );    \
-    Z.val[1] = vsubq_f32( A.val[1] , B.val[1] );    \
+    Z.val[0] = A.val[0] - B.val[0];    \
+    Z.val[1] = A.val[1] - B.val[1];    \
 } while (0);
 
 #define NE10_CPX_MUL_NEON_F32(Z,A,B) do {           \
     float32x4_t ARBR = vmulq_f32( A.val[0], B.val[0] ); \
-    float32x4_t AIBI = vmulq_f32( A.val[1], B.val[1] ); \
     float32x4_t ARBI = vmulq_f32( A.val[0], B.val[1] ); \
-    float32x4_t AIBR = vmulq_f32( A.val[1], B.val[0] ); \
-    Z.val[0] = vsubq_f32(ARBR,AIBI);                \
-    Z.val[1] = vaddq_f32(AIBR,ARBI);                \
+    Z.val[0] = vmlsq_f32(ARBR, A.val[1], B.val[1]); \
+    Z.val[1] = vmlaq_f32(ARBI, A.val[1], B.val[0]); \
 } while (0);
 
 #define NE10_CPX_MUL_INV_NEON_F32(Z,A,B) do {           \

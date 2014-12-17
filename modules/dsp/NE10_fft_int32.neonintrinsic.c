@@ -34,6 +34,7 @@
 #include "NE10_types.h"
 #include "NE10_macros.h"
 #include "NE10_fft.h"
+#include "NE10_dsp.h"
 
 #define FFT4_FS_START \
     ne10_int32_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i; \

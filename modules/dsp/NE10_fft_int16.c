@@ -1049,7 +1049,7 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
         st->buffer = st->twiddles + nfft;
         st->nfft = nfft;
 
-        ne10_int32_t result = ne10_factor (nfft, st->factors);
+        ne10_int32_t result = ne10_factor (nfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);
@@ -1163,7 +1163,7 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
         st->buffer = st->super_twiddles + (ncfft / 2);
         st->ncfft = ncfft;
 
-        ne10_int32_t result = ne10_factor (ncfft, st->factors);
+        ne10_int32_t result = ne10_factor (ncfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);

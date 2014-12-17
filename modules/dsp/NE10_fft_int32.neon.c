@@ -34,6 +34,7 @@
 #include "NE10_types.h"
 #include "NE10_macros.h"
 #include "NE10_fft.h"
+#include "NE10_dsp.h"
 
 static inline void ne10_fft4_forward_int32_unscaled (ne10_fft_cpx_int32_t * Fout,
         ne10_fft_cpx_int32_t * Fin)

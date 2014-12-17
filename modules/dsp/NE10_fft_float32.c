@@ -996,7 +996,7 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
  * @return      st               point to the FFT config memory. This memory is allocated with malloc.
  * The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff.
  */
-ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
+ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft)
 {
     ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
@@ -1007,25 +1007,45 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
 
     st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
 
-    if (st)
+    if (st == NULL)
     {
-        uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_float32_t);
-        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
-        st->factors = (ne10_int32_t*) address;
-        st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
-        st->buffer = st->twiddles + nfft;
-        st->nfft = nfft;
-
-        ne10_int32_t result = ne10_factor (nfft, st->factors);
-        if (result == NE10_ERR)
-        {
-            NE10_FREE (st);
-            return st;
-        }
-
-        ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, nfft);
-
+        return st;
     }
+
+    uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_float32_t);
+    NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+    st->factors = (ne10_int32_t*) address;
+    st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
+    st->buffer = st->twiddles + nfft;
+    st->nfft = nfft;
+
+    ne10_int32_t result = ne10_factor (nfft, st->factors, NE10_FACTOR_DEFAULT);
+    if (result == NE10_ERR)
+    {
+        NE10_FREE (st);
+        return st;
+    }
+
+    // Check if ALGORITHM FLAG is NE10_FFT_ALG_ANY.
+    {
+        ne10_int32_t stage_count    = st->factors[0];
+        ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
+
+        // Enable radix-8.
+        if (algorithm_flag == NE10_FFT_ALG_ANY)
+        {
+            result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT);
+            if (result == NE10_ERR)
+            {
+                PRINT_HIT;
+                NE10_FREE (st);
+                return st;
+            }
+        }
+    }
+
+    ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, nfft);
+
     return st;
 }
 
@@ -1194,7 +1214,7 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
         st->buffer = st->super_twiddles + (ncfft / 2);
         st->ncfft = ncfft;
 
-        ne10_int32_t result = ne10_factor (ncfft, st->factors);
+        ne10_int32_t result = ne10_factor (ncfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);

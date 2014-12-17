@@ -223,6 +223,7 @@ typedef struct
     ne10_int32_t *factors;
     ne10_fft_cpx_float32_t *twiddles;
     ne10_fft_cpx_float32_t *buffer;
+    ne10_fft_cpx_float32_t *last_twiddles;
 } ne10_fft_state_float32_t;
 
 typedef ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;

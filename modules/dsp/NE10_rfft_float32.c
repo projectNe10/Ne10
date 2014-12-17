@@ -786,13 +786,13 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
     }
 
     // factors and twiddles for rfft C
-    ne10_factor (nfft, st->r_factors);
+    ne10_factor (nfft, st->r_factors, NE10_FACTOR_DEFAULT);
 
     // backward twiddles pointers
     st->r_twiddles_backward = ne10_fft_generate_twiddles_float32 (st->r_twiddles, st->r_factors, nfft);
 
     // factors and twiddles for rfft neon
-    result = ne10_factor (nfft/4, st->r_factors_neon);
+    result = ne10_factor (nfft/4, st->r_factors_neon, NE10_FACTOR_DEFAULT);
     if (result == NE10_ERR)
     {
         return st;
