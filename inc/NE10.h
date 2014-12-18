@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-14 ARM Limited
+ *  Copyright 2011-14 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -108,7 +108,7 @@
    *
    *\par License
    *
-   * The Ne10 is provided free of charge by ARM Limited and licensed under both New BSD License
+   * The Ne10 is provided free of charge by ARM Limited and Contributors, and licensed under both New BSD License
    * (http://opensource.org/licenses/BSD-3-Clause) and Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0).
    * You could also check the LICENSE file in "doc" directory
    */
