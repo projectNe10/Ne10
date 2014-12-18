@@ -69,16 +69,25 @@ if(DEFINED NE10_LINUX_TARGET_ARCH)
     endif()
 endif()
 
+if(DEFINED NE10_IOS_TARGET_ARCH)
+    if(${NE10_IOS_TARGET_ARCH} STREQUAL "armv7")
+        set(NE10_TARGE_ARCH "armv7")
+    else()
+        set(NE10_TARGE_ARCH "aarch64")
+    endif()
+endif()
+
 message("-- Target architecture : ${NE10_TARGET_ARCH}")
 
 #select functionalities to be compiled
 if(${NE10_TARGET_ARCH} STREQUAL "armv7")
     # Math module has not been optimized for aarch64.
     option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
+    # Physics module has not been optimized for aarch64.
+    option(NE10_ENABLE_PHYSICS "Build physics functionalities to NE10" ON)
 endif()
 option(NE10_ENABLE_DSP "Build dsp functionalities to NE10" ON)
 option(NE10_ENABLE_IMGPROC "Build image processing functionalities to NE10" ON)
-option(NE10_ENABLE_PHYSICS "Build physics functionalities to NE10" ON)
 
 set(NE10_VERSION 10)
 
@@ -131,8 +140,16 @@ elseif(IOS_PLATFORM)
     if(NOT MIN_IOS_VER)
       set(MIN_IOS_VER "5.0")
     endif()
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -arch armv7 -arch armv7s -mfpu=vfp3 -miphoneos-version-min=" ${MIN_IOS_VER})
-    set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -arch armv7 -arch armv7s -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -miphoneos-version-min=" ${MIN_IOS_VER})
+    set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
+
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfpu=vfp3 -arch armv7 -arch armv7s")
+        set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -arch armv7 -arch armv7s")
+    else()
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -arch arm64")
+    endif()
+
     message("-- CFLAGS: ${CMAKE_C_FLAGS}")
 
     string(REPLACE ";" "" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})

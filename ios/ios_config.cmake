@@ -36,6 +36,8 @@
 #       export IOS_DEVELOPER_PATH=/absolute/path/of/ios/developer/path,
 #   IOS_DEVELOPER_PATH is set to /Applications/Xcode.app/Contents/Developer by
 #   default.
+#   you may specify target architecture by setting NE10_IOS_TARGET_ARCH to
+#   aarch64 or armv7. Default is armv7.
 
 set(IOS_PLATFORM ON)
 
@@ -45,6 +47,12 @@ endif()
 
 if(IOS_DEMO)
   add_definitions(-DNE10_IOS_DEMO)
+endif()
+
+if(NOT DEFINED ENV{NE10_IOS_TARGET_ARCH})
+    set(NE10_IOS_TARGET_ARCH "armv7")
+else()
+    set(NE10_IOS_TARGET_ARCH $ENV{NE10_IOS_TARGET_ARCH})
 endif()
 
 if(NOT DEFINED ENV{IOS_DEVELOPER_PATH})
@@ -70,8 +78,9 @@ set(CMAKE_CXX_COMPILER_WORKS TRUE)
 set(CMAKE_C_COMPILER_WORKS TRUE)
 set(CMAKE_ASM_COMPILER TRUE)
 
+# Require iOS SDK >= 8.1
 set(CMAKE_IOS_SDK_PATH
-  "$ENV{IOS_DEVELOPER_PATH}/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/")
+  "$ENV{IOS_DEVELOPER_PATH}/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/")
 
 set(CMAKE_OSX_SYSROOT ${CMAKE_IOS_SDK_PATH})
 set(CMAKE_FIND_ROOT_PATH ${CMAKE_IOS_SDK_PATH})
