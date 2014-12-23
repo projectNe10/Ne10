@@ -51,11 +51,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 #if defined(__aarch64__)
 
-extern void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
-                                  const ne10_fft_cpx_float32_t *Fin,
-                                  const ne10_int32_t fstride,
-                                  const ne10_int32_t mstride,
-                                  const ne10_int32_t nfft)
+void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin,
+                        const ne10_int32_t fstride,
+                        const ne10_int32_t mstride,
+                        const ne10_int32_t nfft)
 {
     const ne10_int32_t in_step = nfft >> 3;
           ne10_int32_t f_count;
@@ -106,11 +106,11 @@ extern void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
     }
 }
 
-extern void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
-                                  const ne10_fft_cpx_float32_t *Fin,
-                                  const ne10_int32_t fstride,
-                                  const ne10_int32_t mstride,
-                                  const ne10_int32_t nfft)
+void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin,
+                        const ne10_int32_t fstride,
+                        const ne10_int32_t mstride,
+                        const ne10_int32_t nfft)
 {
     const ne10_int32_t in_step = nfft >> 3;
           ne10_int32_t f_count;

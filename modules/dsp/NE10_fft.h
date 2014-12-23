@@ -168,6 +168,19 @@ extern "C" {
             ne10_fft_cpx_int16_t * buffer)
     asm ("ne10_mixed_radix_fft_backward_int16_scaled_neon");
 
+#ifdef __aarch64__
+    extern void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
+            const ne10_fft_cpx_float32_t *Fin,
+            const ne10_int32_t fstride,
+            const ne10_int32_t mstride,
+            const ne10_int32_t nfft);
+
+    extern void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
+            const ne10_fft_cpx_float32_t *Fin,
+            const ne10_int32_t fstride,
+            const ne10_int32_t mstride,
+            const ne10_int32_t nfft);
+#endif
 
 #ifdef __cplusplus
 }
