@@ -29,7 +29,7 @@
  * NE10 Library : dsp/NE10_fft_debug_macro.h
  */
 
-#include <NE10_types.h>
+#include "NE10_types.h"
 
 #ifndef NE10_FFT_DEBUG_MACRO_H
 #define NE10_FFT_DEBUG_MACRO_H

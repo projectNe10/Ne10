@@ -30,7 +30,7 @@
  */
 
 
-#include <NE10_types.h>
+#include "NE10_types.h"
 
 #ifndef NE10_MATH_H
 #define NE10_MATH_H

@@ -29,7 +29,7 @@
  * NE10 Library : dsp/NE10_fft_common_varibles.h
  */
 
-#include <NE10_types.h>
+#include "NE10_types.h"
 
 #ifndef NE10_FFT_COMMON_VARIBLES_H
 #define NE10_FFT_COMMON_VARIBLES_H

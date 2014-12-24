@@ -44,7 +44,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  * NE10 Library : dsp/NE10_fft_cplx_ops.h
  */
 
-#include <NE10_types.h>
+#include "NE10_types.h"
 
 #ifndef NE10_FFT_CPLX_OPS_H
 #define NE10_FFT_CPLX_OPS_H

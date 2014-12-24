@@ -30,7 +30,7 @@
  */
 
 
-#include <NE10_types.h>
+#include "NE10_types.h"
 
 #ifndef NE10_IMGPROC_H
 #define NE10_IMGPROC_H

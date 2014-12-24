@@ -29,7 +29,7 @@
  * NE10 Library : dsp/NE10_fft_bfly.h
  */
 
-#include <NE10_types.h>
+#include "NE10_types.h"
 #include "NE10_fft_cplx_ops.h"
 #include "NE10_fft_common_varibles.h"
 
