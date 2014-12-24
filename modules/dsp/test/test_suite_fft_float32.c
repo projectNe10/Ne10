@@ -415,17 +415,6 @@ void test_fft_c2c_1d_float32()
 void test_fft_r2c_1d_float32()
 {
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
-#if defined (__aarch64__)
-    // test for macro
-    assert_true ( is_ne10_radix8x4_r2c_neon_kernel_s1_conformed() );
-    assert_true ( is_ne10_radix8x4_r2c_neon_kernel_s2_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_neon_kernel_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_s1_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_s2_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_mul_neon_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_last_conformed() );
-#endif
     test_fft_r2c_1d_float32_conformance();
 #endif
 
