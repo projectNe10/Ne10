@@ -855,12 +855,13 @@ static void ne10_mixed_radix_generic_butterfly_float32_neon_impl (CPLX *Fout,
     }
     radix = factors[ stage_count << 1 ];
 
-    // radix of first stage, should be one of {2,3,5,4}
-    assert ((radix > 1) && (radix < 6));
-
     // other stages
     while (stage_count > 0)
     {
+
+        // radix of first stage, should be one of {2,3,5,4}
+        assert ((radix > 1) && (radix < 6));
+
         ne10_swap_ptr (buffer, Fout);
 
         fstride /= radix;
@@ -889,8 +890,6 @@ static void ne10_mixed_radix_generic_butterfly_float32_neon_impl (CPLX *Fout,
 
         stage_count--;
         radix = factors[ stage_count << 1 ];
-
-        assert ((radix > 1) && (radix < 6));
     } // while (stage_count)
 }
 
