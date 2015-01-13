@@ -33,7 +33,7 @@ option(NE10_BUILD_STATIC "Build NE10 static libraries" ON)
 option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 
 #hard float abi
-option(NE10_ARM_HARD_FLOAT "Build NE10 for hard float abi" OFF)
+option(NE10_ARM_HARD_FLOAT "Build NE10 for hard float abi" ON)
 
 #unit test options
 option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
@@ -71,19 +71,34 @@ endif(BUILD_DEBUG)
 
 if(ANDROID_PLATFORM)
     if(NE10_ARM_HARD_FLOAT)
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
-        set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=hard -Wl,--no-warn-mismatch -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
-    else(NE10_ARM_HARD_FLOAT)
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=vfp3 --sysroot=${NDK_SYSROOT_PATH}")
-        set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=softfp -mfpu=neon --sysroot=${NDK_SYSROOT_PATH}")
-    endif(NE10_ARM_HARD_FLOAT)
-    message("loaded toolchain:
-    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-gcc
-    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-g++
-    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-as
-    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ar
-    ${ANDROID_TOOLCHAIN_PATH}/arm-linux-androideabi-ranlib")
+        set(FLOAT_ABI "hard")
+    else()
+        set(FLOAT_ABI "softfp")
+    endif()
+
+    #TODO: Fine tune pic and pie flag for executable, share library and static library.
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=${NDK_SYSROOT_PATH} -pie")
+
+    # Adding cflags for armv7. Aarch64 does not need such flags.
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=${FLOAT_ABI} -mfpu=vfp3")
+        if(NE10_ARM_HARD_FLOAT)
+            # "--no-warn-mismatch" is needed for linker to suppress linker error about not all functions use VFP register to pass argument, eg.
+            #   .../arm-linux-androideabi/bin/ld: error: ..../test-float.o
+            #           uses VFP register arguments, output does not
+            # There is call convension mismatch between NDK's crt*.o and ne10's object files.
+            # crt*.o still uses softfp while ne10's object files use hard floating point.
+            # Refer $NDK/tests/device/hard-float/jni/Android.mk for more details.
+            set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,--no-warn-mismatch")
+        endif()
+    endif()
+    message("-- Loaded toolchain:
+    ${CMAKE_C_COMPILER}
+    ${CMAKE_CXX_COMPILER}
+    ${CMAKE_ASM_COMPILER}")
 elseif(GNULINUX_PLATFORM)
+    #TODO Development has been moved to android, GNULINUX_PLATFORM is not
+    # needed any more. GNULINUX_PLATFORM support needs to be removed.
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=vfp3")
     set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=neon")
 elseif(IOS_PLATFORM)
@@ -101,9 +116,9 @@ elseif(IOS_PLATFORM)
     string(REPLACE ";" "" CMAKE_ASM_FLAGS ${CMAKE_ASM_FLAGS})
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_ASM_FLAGS}")
+set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS})
 
-# The NE10 library.
+# Add NE10 library sub-directory.
 add_subdirectory(modules)
 
 if(NE10_BUILD_EXAMPLES AND NE10_ENABLE_MATH)

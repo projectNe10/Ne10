@@ -120,9 +120,11 @@ if(NE10_ENABLE_MATH)
     )
 
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_MATH_INTRINSIC_SRCS})
-    set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+      foreach(intrinsic_file ${NE10_MATH_INTRINSIC_SRCS})
+        set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+      endforeach(intrinsic_file)
+    endif()
 
     set(NE10_MATH_NEON_SRCS
         ${PROJECT_SOURCE_DIR}/modules/math/NE10_abs.neon.s
@@ -198,9 +200,11 @@ if(NE10_ENABLE_DSP)
     )
 
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+      foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
+      endforeach(intrinsic_file)
+    endif()
 
     # Add dsp NEON files.
     set(NE10_DSP_NEON_SRCS
@@ -253,9 +257,11 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_boxfilter.neon.c
     )
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_IMGPROC_INTRINSIC_SRCS})
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+      foreach(intrinsic_file ${NE10_IMGPROC_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
+      endforeach(intrinsic_file)
+    endif()
     # Add image processing init files.
     set(NE10_IMGPROC_INIT_SRCS
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_init_imgproc.c
@@ -295,9 +301,11 @@ if(NE10_ENABLE_PHYSICS)
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.c
     )
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_PHYSICS_INTRINSIC_SRCS})
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+      foreach(intrinsic_file ${NE10_PHYSICS_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
+      endforeach(intrinsic_file)
+    endif()
     # Add physics init files.
     set(NE10_PHYSICS_INIT_SRCS
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_init_physics.c
