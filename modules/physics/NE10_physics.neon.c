@@ -31,12 +31,14 @@
 
 #include "NE10_types.h"
 
+#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 extern void ne10_physics_compute_aabb_vertex4_vec2f_neon (ne10_mat2x2f_t *aabb,
         ne10_vec2f_t *vertices,
         ne10_mat2x2f_t *xf,
         ne10_vec2f_t *radius,
         ne10_uint32_t vertex_count)
 asm ("ne10_physics_compute_aabb_vertex4_vec2f_neon");
+#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 
 static inline ne10_vec2f_t ne10_mul_matvec_float (ne10_mat2x2f_t T, ne10_vec2f_t v)
 {
@@ -81,6 +83,7 @@ static inline ne10_vec2f_t max_2f (ne10_vec2f_t a, ne10_vec2f_t b)
  * The function is to compute AABB for ploygon.
  * vertex_count is the multiple of 4. To improve performance, 4 vertices are processed in one loop
  */
+#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 void ne10_physics_compute_aabb_vec2f_neon (ne10_mat2x2f_t *aabb,
         ne10_vec2f_t *vertices,
         ne10_mat2x2f_t *xf,
@@ -134,4 +137,4 @@ void ne10_physics_compute_aabb_vec2f_neon (ne10_mat2x2f_t *aabb,
         aabb->c2.r2 = upper.y + radius->y;
     }
 }
-
+#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON

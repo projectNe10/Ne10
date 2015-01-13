@@ -29,6 +29,7 @@
  * NE10 Library : physics/NE10_physics.neon.s
  */
 
+#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
         .text
         .syntax   unified
 
@@ -117,7 +118,9 @@ aabb_end:
         @ return
         pop               {r4, r5}
         bx                lr
+#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 
+#ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
         .align   4
         .global   ne10_physics_relative_v_vec2f_neon
         .thumb
@@ -198,7 +201,9 @@ relative_v_end:
         @ return
         pop               {r4, r5, r6, r7}
         bx                lr
+#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
 
+#ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
         .align   4
         .global   ne10_physics_apply_impulse_vec2f_neon
         .thumb
@@ -309,5 +314,4 @@ apply_impulse_end:
         pop               {r4, r5, r6, r7}
         bx                lr
 
-
-
+#endif // ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON

@@ -90,11 +90,15 @@ extern "C" {
      * @addtogroup COLLISION_DETECT
      * @{
      */
+#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
     extern void ne10_physics_compute_aabb_vec2f_neon (ne10_mat2x2f_t *aabb,
             ne10_vec2f_t *vertices,
             ne10_mat2x2f_t *xf,
             ne10_vec2f_t *radius,
             ne10_uint32_t vertex_count);
+#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
+
+#ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
     extern void ne10_physics_relative_v_vec2f_neon (ne10_vec2f_t *dv,
             ne10_vec3f_t *v_wa,
             ne10_vec2f_t *ra,
@@ -102,6 +106,9 @@ extern "C" {
             ne10_vec2f_t *rb,
             ne10_uint32_t count)
     asm ("ne10_physics_relative_v_vec2f_neon");
+#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
+
+#ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
     extern void ne10_physics_apply_impulse_vec2f_neon (ne10_vec3f_t *v_wa,
             ne10_vec3f_t *v_wb,
             ne10_vec2f_t *ra,
@@ -111,6 +118,7 @@ extern "C" {
             ne10_vec2f_t *p,
             ne10_uint32_t count)
     asm ("ne10_physics_apply_impulse_vec2f_neon");
+#endif // ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
     /**
      * @} end of COLLISION_DETECT group
      */

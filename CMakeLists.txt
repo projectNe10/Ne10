@@ -36,12 +36,12 @@ option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 option(NE10_ARM_HARD_FLOAT "Build NE10 for hard float abi" ON)
 
 #unit test options
-option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
+option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" ON)
 if (NE10_BUILD_UNIT_TEST)
     #decide the test is smoke, regression or performance test, only one of
     #three options can be ON! And if you want to run performance test, you
     #should build the releave version, see the BUILD_DEBUG below.
-    option(NE10_SMOKE_TEST "Run smoke test" OFF)
+    option(NE10_SMOKE_TEST "Run smoke test" ON)
     option(NE10_REGRESSION_TEST "Run regression test" OFF)
     option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
 
@@ -54,7 +54,10 @@ if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM) AND (NOT IOS_PLATFORM))
 endif()
 
 #select functionalities to be compiled
-option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
+if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+    # Math module has not been optimized for aarch64.
+    option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
+endif()
 option(NE10_ENABLE_DSP "Build dsp functionalities to NE10" ON)
 option(NE10_ENABLE_IMGPROC "Build image processing functionalities to NE10" ON)
 option(NE10_ENABLE_PHYSICS "Build physics functionalities to NE10" ON)

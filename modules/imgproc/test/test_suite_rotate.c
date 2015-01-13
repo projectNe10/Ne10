@@ -63,6 +63,7 @@ static ne10_uint8_t * out_neon = NULL;
 
 static ne10_float32_t psnr = 0.0f;
 
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 void test_rotate_conformance_case()
 {
     ne10_int32_t i;
@@ -108,6 +109,7 @@ void test_rotate_conformance_case()
     NE10_FREE (out_c);
     NE10_FREE (out_neon);
 }
+#endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 
 void test_rotate_performance_case()
 {
@@ -151,6 +153,7 @@ void test_rotate_performance_case()
         }
         );
 
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
         memset (out_neon, 0, out_size);
         GET_TIME
         (
@@ -160,6 +163,7 @@ void test_rotate_performance_case()
                 ne10_img_rotate_rgba_neon (out_neon, &dstw_neon, &dsth_neon, in_neon, srcw, srch, angle);
         }
         );
+#endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 
         //printf ("time c %lld \n", time_c);
         //printf ("time neon %lld \n", time_neon);
@@ -174,9 +178,11 @@ void test_rotate_performance_case()
 
 void test_rotate()
 {
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
     test_rotate_conformance_case();
 #endif
+#endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 
 #if defined PERFORMANCE_TEST
     test_rotate_performance_case();

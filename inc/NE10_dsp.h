@@ -296,53 +296,63 @@ extern "C" {
      * @addtogroup FIR
      * @{
      */
+#ifdef ENABLE_NE10_FIR_FLOAT_NEON
     extern void ne10_fir_float_neon (const ne10_fir_instance_f32_t * S,
                                      ne10_float32_t * pSrc,
                                      ne10_float32_t * pDst,
                                      ne10_uint32_t blockSize)
     asm ("ne10_fir_float_neon");
+#endif // ENABLE_NE10_FIR_FLOAT_NEON
     /** @} */ //end of FIR group
 
     /**
      * @addtogroup FIR_Decimate
      * @{
      */
+#ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
     extern void ne10_fir_decimate_float_neon (const ne10_fir_decimate_instance_f32_t * S,
             ne10_float32_t *pSrc,
             ne10_float32_t *pDst,
             ne10_uint32_t blockSize) asm ("ne10_fir_decimate_float_neon");
-    /** @} */ //end of FIR_decimate group
 
+    /** @} */ //end of FIR_decimate group
+#endif // ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
     /**
      * @addtogroup FIR_Interpolate
      * @{
      */
+#ifdef ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
     extern void ne10_fir_interpolate_float_neon (const ne10_fir_interpolate_instance_f32_t * S,
             ne10_float32_t *pSrc,
             ne10_float32_t *pDst,
             ne10_uint32_t blockSize) asm ("ne10_fir_interpolate_float_neon");
+#endif // ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
     /** @} */ //end of FIR_interpolate group
 
     /**
      * @addtogroup FIR_Lattice
      * @{
      */
+#ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
     extern void ne10_fir_lattice_float_neon (const ne10_fir_lattice_instance_f32_t * S,
             ne10_float32_t * pSrc,
             ne10_float32_t * pDst,
             ne10_uint32_t blockSize) asm ("ne10_fir_lattice_float_neon");
+#endif // ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
     /** @} */ //end of FIR_Lattice group
 
     /**
      * @addtogroup FIR_Sparse
      * @{
      */
+#ifdef ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
     extern void ne10_fir_sparse_float_neon (ne10_fir_sparse_instance_f32_t * S,
                                             ne10_float32_t * pSrc,
                                             ne10_float32_t * pDst,
                                             ne10_float32_t * pScratch,
                                             ne10_uint32_t blockSize)
     asm ("ne10_fir_sparse_float_neon");
+#endif // ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
     /** @} */ //end of FIR_sparse group
 
 
@@ -375,10 +385,12 @@ extern "C" {
      * @addtogroup IIR_Lattice
      * @{
      */
+#ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
     extern void ne10_iir_lattice_float_neon (const ne10_iir_lattice_instance_f32_t * S,
             ne10_float32_t * pSrc,
             ne10_float32_t * pDst,
             ne10_uint32_t blockSize) asm ("ne10_iir_lattice_float_neon");
+#endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
     /** @} */ //end of IIR_Lattice group
 
 #ifdef __cplusplus

@@ -35,6 +35,7 @@
 @ * 2. In the assembly code, we use D0-D31 registers. So VFPv3-D32 is used. In VFPv3-D16, there will be failure
 @ */
 
+#ifdef ENABLE_NE10_FIR_FLOAT_NEON
         .text
         .syntax   unified
 
@@ -409,6 +410,8 @@ firEnd:
 .unreq    qAcc2
 .unreq    qAcc3
 
+#endif
+@/* ENABLE_NE10_FIR_FLOAT_NEON */
         @/**
         @ * @details
         @ * This function operates on floating-point data types.
@@ -429,7 +432,7 @@ firEnd:
         @ * @param[out]  *pDst            points to the output buffer
         @ * @param[in]  blockSize         block size of filter
         @ */
-
+#ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
         .align   4
         .global   ne10_fir_decimate_float_neon
         .extern   ne10_qMaskTable32
@@ -843,7 +846,8 @@ firDecimateEnd:
 .unreq    dInp2_0
 .unreq    dInp2_1
 
-
+#endif
+@/* ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON */
         @/**
         @ * @details
         @ * This function operates on floating-point data types.
@@ -864,7 +868,7 @@ firDecimateEnd:
         @ * @param[out]  *pDst            points to the output buffer
         @ * @param[in]  blockSize         block size of filter
         @ */
-
+#ifdef ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
         .align   4
         .global   ne10_fir_interpolate_float_neon
         .extern   ne10_qMaskTable32
@@ -1231,7 +1235,8 @@ firInterpolateEnd:
 .unreq    dMaskTemp_0
 .unreq    dMaskTemp_1
 
-
+#endif
+@/* ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON */
         @/**
         @ * @details
         @ * This function operates on floating-point data types.
@@ -1252,7 +1257,7 @@ firInterpolateEnd:
         @ * @param[out]  *pDst            points to the output buffer
         @ * @param[in]  blockSize         block size of filter
         @ */
-
+#ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
         .align   4
         .global   ne10_fir_lattice_float_neon
         .extern   ne10_qMaskTable32
@@ -1618,7 +1623,8 @@ firLatticeEnd:
 .unreq    qTemp1
 .unreq    dTemp1_0
 .unreq    dTemp1_1
-
+#endif
+@/* ENABLE_NE10_FIR_LATTICE_FLOAT_NEON */
         @/**
         @ * @details
         @ * This function operates on floating-point data types.
@@ -1638,7 +1644,7 @@ firLatticeEnd:
         @ * @param[out]  *pScratch        points to the scratch buffer
         @ * @param[in]  blockSize         block size of filter
         @ */
-
+#ifdef ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
         .align   4
         .global   ne10_fir_sparse_float_neon
         .extern   ne10_qMaskTable32
@@ -1995,3 +2001,5 @@ firSparseEnd:
 .unreq    dMaskTmp_1
 
         .end
+#endif
+@/* ENABLE_NE10_FIR_SPARSE_FLOAT_NEON */

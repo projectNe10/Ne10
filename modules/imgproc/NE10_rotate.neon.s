@@ -29,6 +29,7 @@
  * NE10 Library : imgproc/NE10_rotate.neon.s
  */
 
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
         .text
         .syntax   unified
 
@@ -258,3 +259,4 @@ GetQuadrangleSubPixEnd:
                      pop            {r4-r12, pc}
 
        .end
+#endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON

@@ -46,13 +46,41 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
         ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_neon;
         ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_neon;
 
+#ifdef ENABLE_NE10_FIR_FLOAT_NEON
         ne10_fir_float = ne10_fir_float_neon;
-        ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
-        ne10_fir_interpolate_float = ne10_fir_interpolate_float_neon;
-        ne10_fir_lattice_float = ne10_fir_lattice_float_neon;
-        ne10_fir_sparse_float = ne10_fir_sparse_float_neon;
+#else
+        ne10_fir_float = ne10_fir_float_c;
+#endif // ENABLE_NE10_FIR_FLOAT_NEON
 
+#ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
+        ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
+#else
+        ne10_fir_decimate_float = ne10_fir_decimate_float_c;
+#endif // ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
+        ne10_fir_interpolate_float = ne10_fir_interpolate_float_neon;
+#else
+        ne10_fir_interpolate_float = ne10_fir_interpolate_float_c;
+#endif // ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
+        ne10_fir_lattice_float = ne10_fir_lattice_float_neon;
+#else
+        ne10_fir_lattice_float = ne10_fir_lattice_float_c;
+#endif // ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
+        ne10_fir_sparse_float = ne10_fir_sparse_float_neon;
+#else
+        ne10_fir_sparse_float = ne10_fir_sparse_float_c;
+#endif // ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
         ne10_iir_lattice_float = ne10_iir_lattice_float_neon;
+#else
+        ne10_iir_lattice_float = ne10_iir_lattice_float_c;
+#endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
     }
     else
     {

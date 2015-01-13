@@ -276,6 +276,7 @@ void test_iir_lattice_case0()
     NE10_DST_ALLOC (iir_state_c, guarded_iir_state_c, MAX_NUMTAPS + MAX_BLOCKSIZE);
     NE10_DST_ALLOC (iir_state_neon, guarded_iir_state_neon, MAX_NUMTAPS + MAX_BLOCKSIZE);
 
+#ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
@@ -329,6 +330,7 @@ void test_iir_lattice_case0()
 
     }
 #endif
+#endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "IIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
@@ -361,6 +363,7 @@ void test_iir_lattice_case0()
         }
         );
 
+#ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
         GET_TIME
         (
             time_neon,
@@ -374,6 +377,7 @@ void test_iir_lattice_case0()
             }
         }
         );
+#endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;

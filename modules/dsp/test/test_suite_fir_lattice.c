@@ -232,6 +232,8 @@ void test_fir_lattice_case0()
     /* init state memory */
     NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_NUMTAPS + MAX_BLOCKSIZE);
     NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_NUMTAPS + MAX_BLOCKSIZE);
+
+#ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
@@ -287,6 +289,7 @@ void test_fir_lattice_case0()
 
     }
 #endif
+#endif // ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
@@ -324,6 +327,7 @@ void test_fir_lattice_case0()
         }
         );
 
+#ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
         GET_TIME
         (
             time_neon,
@@ -337,6 +341,7 @@ void test_fir_lattice_case0()
             }
         }
         );
+#endif // ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;

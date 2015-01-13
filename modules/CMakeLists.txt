@@ -187,33 +187,46 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir_init.c
     )
 
-    # Add dsp intrinsic NEON files.
-    set(NE10_DSP_INTRINSIC_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.neonintrinsic.c
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neonintrinsic.c
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
-    )
-
     # Tell CMake these files need to be compiled with "-mfpu=neon"
     if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+        # Following definition is only available under armv7.
+        add_definitions(-DENABLE_NE10_FIR_FLOAT_NEON)
+        add_definitions(-DENABLE_NE10_FIR_DECIMATE_FLOAT_NEON)
+        add_definitions(-DENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON)
+        add_definitions(-DENABLE_NE10_FIR_LATTICE_FLOAT_NEON)
+        add_definitions(-DENABLE_NE10_FIR_SPARSE_FLOAT_NEON)
+        add_definitions(-DENABLE_NE10_IIR_LATTICE_FLOAT_NEON)
+
+        # Add dsp intrinsic NEON files.
+        set(NE10_DSP_INTRINSIC_SRCS
+           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
+           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
+           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
+           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
+           )
+
       foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
       endforeach(intrinsic_file)
-    endif()
 
-    # Add dsp NEON files.
-    set(NE10_DSP_NEON_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
-    )
+        # Add dsp NEON files.
+        set(NE10_DSP_NEON_SRCS
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.s
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.s
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.s
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
+            )
+    else()
+        # Add dsp intrinsic NEON files.
+        set(NE10_DSP_INTRINSIC_SRCS
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.neonintrinsic.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neonintrinsic.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
+        )
+    endif()
 
 if(IOS_PLATFORM)
     convert_gas(NE10_DSP_NEON_SRCS NE10_DSP_IOS_NEON_SRCS)
@@ -247,11 +260,15 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_boxfilter.c
     )
 
-    # Add image processing NEON files.
-    set(NE10_IMGPROC_NEON_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
-    )
-    # Add image intrinsic NEON files.
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+        # Following definition is only available under armv7.
+        add_definitions(-DENABLE_NE10_IMG_ROTATE_RGBA_NEON)
+        # Add image processing NEON files.
+        set(NE10_IMGPROC_NEON_SRCS
+            ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
+            )
+    endif()
+        # Add image intrinsic NEON files.
     set(NE10_IMGPROC_INTRINSIC_SRCS
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.c
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_boxfilter.neon.c
@@ -292,10 +309,17 @@ if(NE10_ENABLE_PHYSICS)
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.c
     )
 
-    # Add physics NEON files.
-    set(NE10_PHYSICS_NEON_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.s
-    )
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+        # Following definition is only available under armv7.
+        add_definitions(-DENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON)
+        add_definitions(-DENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON)
+        add_definitions(-DENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON)
+
+        # Add physics NEON files.
+        set(NE10_PHYSICS_NEON_SRCS
+            ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.s
+            )
+    endif()
     # Add physics NEON files.
     set(NE10_PHYSICS_INTRINSIC_SRCS
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.c

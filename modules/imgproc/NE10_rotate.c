@@ -259,7 +259,7 @@ void ne10_img_rotate_rgba_c (ne10_uint8_t* dst,
     ne10_img_rotate_get_quad_rangle_subpix_rgba_c (dst, src, srcw, srch, dstw, dsth, m);
 }
 
-
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 extern void ne10_img_rotate_get_quad_rangle_subpix_rgba_neon (ne10_uint8_t *dst,
         ne10_uint8_t *src,
         ne10_int32_t srcw,
@@ -315,3 +315,4 @@ void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
 /**
  * @} end of IMG_ROTATE group
  */
+#endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON

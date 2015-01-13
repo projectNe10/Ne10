@@ -35,7 +35,7 @@
 @ * 2. In the assembly code, we use D0-D31 registers. So VFPv3-D32 is used. In VFPv3-D16, there will be failure
 @ */
 
-
+#ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
         .text
         .syntax   unified
 
@@ -397,3 +397,4 @@ iirLatticeEnd:
                             POP     {r4-r12,pc}
 
         .end
+#endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
