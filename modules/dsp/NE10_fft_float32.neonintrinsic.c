@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 ARM Limited and Contributors.
+ *  Copyright 2014-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
