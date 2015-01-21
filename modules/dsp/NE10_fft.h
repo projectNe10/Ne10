@@ -76,6 +76,10 @@ extern "C" {
         const ne10_int32_t * factors,
         const ne10_int32_t nfft );
 
+    extern ne10_fft_cpx_int32_t* ne10_fft_generate_twiddles_int32 (ne10_fft_cpx_int32_t * twiddles,
+        const ne10_int32_t * factors,
+        const ne10_int32_t nfft );
+
     /*common functions for float fft */
     extern void ne10_mixed_radix_generic_butterfly_float32_c (ne10_fft_cpx_float32_t * Fout,
             const ne10_fft_cpx_float32_t * Fin,
@@ -117,6 +121,20 @@ extern "C" {
 
     /* common functions for fixed point fft */
     /* butterfly for int 32 */
+    extern void ne10_mixed_radix_generic_butterfly_int32_c (ne10_fft_cpx_int32_t * Fout,
+            const ne10_fft_cpx_int32_t * Fin,
+            const ne10_int32_t * factors,
+            const ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer,
+            const ne10_int32_t scaled_flag);
+
+    extern void ne10_mixed_radix_generic_butterfly_inverse_int32_c (ne10_fft_cpx_int32_t * Fout,
+            const ne10_fft_cpx_int32_t * Fin,
+            const ne10_int32_t * factors,
+            const ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer,
+            const ne10_int32_t scaled_flag);
+
     extern void ne10_mixed_radix_fft_forward_int32_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
             ne10_fft_cpx_int32_t *fin,
             ne10_int32_t * factors,

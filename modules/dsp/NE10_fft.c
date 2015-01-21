@@ -173,6 +173,65 @@ static void ne10_fft_generate_twiddles_line_float32 (ne10_fft_cpx_float32_t * tw
     } // mstride
 }
 
+// Twiddles matrix [mstride][radix-1]
+// First column (k == 0)is ignored because phase == 1, and
+// twiddle = (1.0, 0.0).
+static void ne10_fft_generate_twiddles_line_int32 (ne10_fft_cpx_int32_t * twiddles,
+        const ne10_int32_t mstride,
+        const ne10_int32_t fstride,
+        const ne10_int32_t radix,
+        const ne10_int32_t nfft)
+{
+    ne10_int32_t j, k;
+    ne10_float32_t phase;
+    const ne10_float64_t pi = NE10_PI;
+
+    for (j = 0; j < mstride; j++)
+    {
+        for (k = 1; k < radix; k++) // phase = 1 when k = 0
+        {
+            phase = -2 * pi * fstride * k * j / nfft;
+
+            ne10_fft_cpx_int32_t *tw = &twiddles[mstride * (k - 1) + j];
+
+            tw->r = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * cos(phase));
+            tw->i = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * sin(phase));
+        } // radix
+    } // mstride
+}
+
+ne10_fft_cpx_int32_t* ne10_fft_generate_twiddles_int32 (ne10_fft_cpx_int32_t * twiddles,
+        const ne10_int32_t * factors,
+        const ne10_int32_t nfft )
+{
+    ne10_int32_t stage_count = factors[0];
+    ne10_int32_t fstride = factors[1];
+    ne10_int32_t mstride;
+    ne10_int32_t cur_radix; // current radix
+
+    // for first stage
+    cur_radix = factors[2 * stage_count];
+    if (cur_radix % 2) // current radix is not 4 or 2
+    {
+        twiddles += 1;
+        ne10_fft_generate_twiddles_line_int32 (twiddles, 1, fstride, cur_radix, nfft);
+        twiddles += cur_radix - 1;
+    }
+    stage_count--;
+
+    // for other stage
+    for (; stage_count > 0; stage_count--)
+    {
+        cur_radix = factors[2 * stage_count];
+        fstride /= cur_radix;
+        mstride = factors[2 * stage_count + 1];
+        ne10_fft_generate_twiddles_line_int32 (twiddles, mstride, fstride, cur_radix, nfft);
+        twiddles += mstride * (cur_radix - 1);
+    } // stage_count
+
+    return twiddles;
+}
+
 ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_float32_t * twiddles,
         const ne10_int32_t * factors,
         const ne10_int32_t nfft )

@@ -1052,44 +1052,10 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32 (ne10_int32_t nfft)
             return st;
         }
 
-        ne10_int32_t i, j;
         ne10_int32_t *factors = st->factors;
         ne10_fft_cpx_int32_t *twiddles = st->twiddles;
-        ne10_fft_cpx_int32_t *tw;
-        ne10_int32_t stage_count = factors[0];
-        ne10_int32_t fstride1 = factors[1];
-        ne10_int32_t fstride2 = fstride1 * 2;
-        ne10_int32_t fstride3 = fstride1 * 3;
-        ne10_int32_t m;
 
-        const ne10_float32_t pi = NE10_PI;
-        ne10_float32_t phase1;
-        ne10_float32_t phase2;
-        ne10_float32_t phase3;
-
-        for (i = stage_count - 1; i > 0; i--)
-        {
-            fstride1 >>= 2;
-            fstride2 >>= 2;
-            fstride3 >>= 2;
-            m = factors[2 * i + 1];
-            tw = twiddles;
-            for (j = 0; j < m; j++)
-            {
-                phase1 = -2 * pi * fstride1 * j / nfft;
-                phase2 = -2 * pi * fstride2 * j / nfft;
-                phase3 = -2 * pi * fstride3 * j / nfft;
-                tw->r = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * cos (phase1));
-                tw->i = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * sin (phase1));
-                (tw + m)->r = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * cos (phase2));
-                (tw + m)->i = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * sin (phase2));
-                (tw + m * 2)->r = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * cos (phase3));
-                (tw + m * 2)->i = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * sin (phase3));
-                tw++;
-            }
-            twiddles += m * 3;
-        }
-
+        ne10_fft_generate_twiddles_int32 (twiddles, factors, nfft);
     }
     return st;
 }
@@ -1111,10 +1077,35 @@ void ne10_fft_c2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
                               ne10_int32_t inverse_fft,
                               ne10_int32_t scaled_flag)
 {
-    if (inverse_fft)
-        ne10_mixed_radix_butterfly_inverse_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
-    else
-        ne10_mixed_radix_butterfly_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+    ne10_int32_t stage_count = cfg->factors[0];
+    ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
+
+    assert ((algorithm_flag == NE10_FFT_ALG_24)
+            || (algorithm_flag == NE10_FFT_ALG_ANY));
+
+    switch (algorithm_flag)
+    {
+    case NE10_FFT_ALG_24:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_butterfly_inverse_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        else
+        {
+            ne10_mixed_radix_butterfly_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        break;
+    case NE10_FFT_ALG_ANY:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_generic_butterfly_inverse_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        else
+        {
+            ne10_mixed_radix_generic_butterfly_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        break;
+    }
 }
 
 /**

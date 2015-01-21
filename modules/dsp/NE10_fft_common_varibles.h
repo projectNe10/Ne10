@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014-15 ARM Limited
+ *  Copyright 2014-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -48,14 +48,25 @@ const static ne10_fft_cpx_float32_t TW_5A_F32 =
              0.309016994374947, //   cos (2 * pi / 5)
             -0.951056516295154  // - sin (2 * pi / 5)
         };
+const static ne10_fft_cpx_int32_t TW_5A_S32 =
+        {
+              663608942, // round (TW_5A_F32.r * 2^31)
+            -2042378317  // round (TW_5A_F32.i * 2^31)
+        };
+
 const static ne10_fft_cpx_float32_t TW_5B_F32 =
         {
             -0.809016994374947, //   cos (4 * pi / 5)
             -0.587785252292473  // - sin (4 * pi / 5)
         };
+const static ne10_fft_cpx_int32_t TW_5B_S32 =
+        {
+            -1737350766, // round (TW_5B_F32.r * 2^31)
+            -1262259218  // round (TW_5B_F32.i * 2^31)
+        };
 
 /* Twiddles used in Radix-3 FFT */
 const static ne10_float32_t TW_3I_F32  =   0.866025403784439; // sqrt (3) / 2
 const static ne10_float32_t TW_3IN_F32 = - 0.866025403784439; // - TW_3IN_F32
-
+const static ne10_int32_t TW_3I_S32 = 1859775393; // round (TW_3I_F32 * 2^31)
 #endif // NE10_FFT_COMMON_VARIBLES_H
