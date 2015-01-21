@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Project Ne10: /home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/dsp/NE10_fft.h Source File</title>
+<title>Project Ne10: /home/philwong/Ne10-gerrit/modules/dsp/NE10_fft.h Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,11 +78,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">/home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/dsp/NE10_fft.h</div>  </div>
+<div class="title">/home/philwong/Ne10-gerrit/modules/dsp/NE10_fft.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
-<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2013-14 ARM Limited</span>
+<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2013-14 ARM Limited and Contributors.</span>
 <a name="l00003"></a>00003 <span class="comment"> *  All rights reserved.</span>
 <a name="l00004"></a>00004 <span class="comment"> *</span>
 <a name="l00005"></a>00005 <span class="comment"> *  Redistribution and use in source and binary forms, with or without</span>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00016"></a>00016 <span class="comment"> *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS &quot;AS IS&quot; AND</span>
 <a name="l00017"></a>00017 <span class="comment"> *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
 <a name="l00018"></a>00018 <span class="comment"> *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
-<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY</span>
+<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY</span>
 <a name="l00020"></a>00020 <span class="comment"> *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
 <a name="l00021"></a>00021 <span class="comment"> *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
 <a name="l00022"></a>00022 <span class="comment"> *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
@@ -113,97 +113,159 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00030"></a>00030 <span class="comment"> */</span>
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;NE10_types.h&gt;</span>
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="preprocessor">#ifndef NE10_FFT_H</span>
-<a name="l00036"></a>00036 <span class="preprocessor"></span><span class="preprocessor">#define NE10_FFT_H</span>
-<a name="l00037"></a>00037 <span class="preprocessor"></span>
-<a name="l00038"></a>00038 <span class="preprocessor">#ifdef __cplusplus</span>
-<a name="l00039"></a>00039 <span class="preprocessor"></span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {
-<a name="l00040"></a>00040 <span class="preprocessor">#endif</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &quot;NE10_types.h&quot;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &quot;NE10_fft_common_varibles.h&quot;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;NE10_fft_cplx_ops.h&quot;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;NE10_fft_bfly.h&quot;</span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include &quot;NE10_fft_debug_macro.h&quot;</span>
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="preprocessor">#ifndef NE10_FFT_H</span>
+<a name="l00040"></a>00040 <span class="preprocessor"></span><span class="preprocessor">#define NE10_FFT_H</span>
 <a name="l00041"></a>00041 <span class="preprocessor"></span>
-<a name="l00043"></a>00043 <span class="comment">// internal macro define</span>
+<a name="l00043"></a>00043 <span class="comment">// Internal macro define</span>
 <a name="l00045"></a>00045 <span class="comment"></span><span class="preprocessor">#define NE10_FFT_BYTE_ALIGNMENT 8</span>
-<a name="l00046"></a>00046 <span class="preprocessor"></span>
-<a name="l00047"></a>00047 
-<a name="l00049"></a>00049 <span class="comment">// function prototypes:</span>
-<a name="l00051"></a>00051 <span class="comment"></span>
-<a name="l00052"></a>00052     <span class="comment">/*common fft functions */</span>
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054     <span class="comment">/*common functions for float fft */</span>
-<a name="l00055"></a>00055     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_float32_neon (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
-<a name="l00056"></a>00056             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
-<a name="l00057"></a>00057             ne10_int32_t * factors,
-<a name="l00058"></a>00058             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
-<a name="l00059"></a>00059             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer)
-<a name="l00060"></a>00060     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_float32_neon&quot;</span>);
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_float32_neon (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
-<a name="l00063"></a>00063             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
-<a name="l00064"></a>00064             ne10_int32_t * factors,
-<a name="l00065"></a>00065             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
-<a name="l00066"></a>00066             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer)
-<a name="l00067"></a>00067     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_float32_neon&quot;</span>);
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069     <span class="comment">/* common functions for fixed point fft */</span>
-<a name="l00070"></a>00070     <span class="comment">/* butterfly for int 32 */</span>
-<a name="l00071"></a>00071     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int32_unscaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
-<a name="l00072"></a>00072             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
-<a name="l00073"></a>00073             ne10_int32_t * factors,
-<a name="l00074"></a>00074             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
-<a name="l00075"></a>00075             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
-<a name="l00076"></a>00076     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int32_unscaled_neon&quot;</span>);
-<a name="l00077"></a>00077     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int32_unscaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
-<a name="l00078"></a>00078             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
-<a name="l00079"></a>00079             ne10_int32_t * factors,
-<a name="l00080"></a>00080             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
-<a name="l00081"></a>00081             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
-<a name="l00082"></a>00082     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int32_unscaled_neon&quot;</span>);
-<a name="l00083"></a>00083     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int32_scaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
-<a name="l00084"></a>00084             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
-<a name="l00085"></a>00085             ne10_int32_t * factors,
-<a name="l00086"></a>00086             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
-<a name="l00087"></a>00087             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
-<a name="l00088"></a>00088     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int32_scaled_neon&quot;</span>);
-<a name="l00089"></a>00089     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int32_scaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
-<a name="l00090"></a>00090             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
-<a name="l00091"></a>00091             ne10_int32_t * factors,
-<a name="l00092"></a>00092             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
-<a name="l00093"></a>00093             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
-<a name="l00094"></a>00094     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int32_scaled_neon&quot;</span>);
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096     <span class="comment">/* butterfly for int 16 */</span>
-<a name="l00097"></a>00097     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int16_unscaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
-<a name="l00098"></a>00098             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
-<a name="l00099"></a>00099             ne10_int32_t * factors,
-<a name="l00100"></a>00100             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
-<a name="l00101"></a>00101             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
-<a name="l00102"></a>00102     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int16_unscaled_neon&quot;</span>);
-<a name="l00103"></a>00103     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int16_unscaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
-<a name="l00104"></a>00104             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
-<a name="l00105"></a>00105             ne10_int32_t * factors,
-<a name="l00106"></a>00106             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
-<a name="l00107"></a>00107             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
-<a name="l00108"></a>00108     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int16_unscaled_neon&quot;</span>);
-<a name="l00109"></a>00109     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int16_scaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
-<a name="l00110"></a>00110             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
-<a name="l00111"></a>00111             ne10_int32_t * factors,
-<a name="l00112"></a>00112             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
-<a name="l00113"></a>00113             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
-<a name="l00114"></a>00114     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int16_scaled_neon&quot;</span>);
-<a name="l00115"></a>00115     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int16_scaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
-<a name="l00116"></a>00116             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
-<a name="l00117"></a>00117             ne10_int32_t * factors,
-<a name="l00118"></a>00118             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
-<a name="l00119"></a>00119             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
-<a name="l00120"></a>00120     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int16_scaled_neon&quot;</span>);
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123 <span class="preprocessor">#ifdef __cplusplus</span>
-<a name="l00124"></a>00124 <span class="preprocessor"></span>}
-<a name="l00125"></a>00125 <span class="preprocessor">#endif</span>
-<a name="l00126"></a>00126 <span class="preprocessor"></span>
-<a name="l00127"></a>00127 <span class="preprocessor">#endif</span>
+<a name="l00046"></a>00046 <span class="preprocessor"></span><span class="preprocessor">#define NE10_INLINE inline static</span>
+<a name="l00047"></a>00047 <span class="preprocessor"></span>
+<a name="l00048"></a>00048 <span class="comment">/* Algorithms used in FFT */</span>
+<a name="l00049"></a>00049 <span class="preprocessor">#define NE10_FFT_ALG_24 0</span>
+<a name="l00050"></a>00050 <span class="preprocessor"></span><span class="preprocessor">#define NE10_FFT_ALG_ANY 1</span>
+<a name="l00051"></a>00051 <span class="preprocessor"></span>
+<a name="l00052"></a>00052 <span class="comment">/* NE10_FACTOR_FLAGS */</span>
+<a name="l00053"></a>00053 <span class="comment">// Only factors into 2, 3, 4, 5</span>
+<a name="l00054"></a>00054 <span class="preprocessor">#define NE10_FACTOR_DEFAULT 0</span>
+<a name="l00055"></a>00055 <span class="preprocessor"></span><span class="comment">// Factors into 2, 3, 4, 5, 8</span>
+<a name="l00056"></a>00056 <span class="preprocessor">#define NE10_FACTOR_EIGHT   1</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span>
+<a name="l00058"></a>00058 <span class="comment">// Comment when do not want to scale output result</span>
+<a name="l00059"></a>00059 <span class="preprocessor">#define NE10_DSP_RFFT_SCALING</span>
+<a name="l00060"></a>00060 <span class="preprocessor"></span><span class="preprocessor">#define NE10_DSP_CFFT_SCALING</span>
+<a name="l00061"></a>00061 <span class="preprocessor"></span>
+<a name="l00062"></a>00062 <span class="preprocessor">#define NE10_FFT_PARA_LEVEL 4</span>
+<a name="l00063"></a>00063 <span class="preprocessor"></span>
+<a name="l00064"></a>00064 <span class="preprocessor">#ifdef __cplusplus</span>
+<a name="l00065"></a>00065 <span class="preprocessor"></span><span class="keyword">extern</span> <span class="stringliteral">&quot;C&quot;</span> {
+<a name="l00066"></a>00066 <span class="preprocessor">#endif</span>
+<a name="l00067"></a>00067 <span class="preprocessor"></span>
+<a name="l00069"></a>00069 <span class="comment">// function prototypes:</span>
+<a name="l00071"></a>00071 <span class="comment"></span>
+<a name="l00072"></a>00072     <span class="comment">/*common fft functions */</span>
+<a name="l00073"></a>00073     <span class="keyword">extern</span> ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf, ne10_int32_t ne10_factor_flags);
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075     <span class="keyword">extern</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>* ne10_fft_generate_twiddles_float32 (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
+<a name="l00076"></a>00076         <span class="keyword">const</span> ne10_int32_t * factors,
+<a name="l00077"></a>00077         <span class="keyword">const</span> ne10_int32_t nfft );
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079     <span class="comment">/*common functions for float fft */</span>
+<a name="l00080"></a>00080     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_generic_butterfly_float32_c (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
+<a name="l00081"></a>00081             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
+<a name="l00082"></a>00082             <span class="keyword">const</span> ne10_int32_t * factors,
+<a name="l00083"></a>00083             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
+<a name="l00084"></a>00084             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_generic_butterfly_inverse_float32_c (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
+<a name="l00087"></a>00087             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
+<a name="l00088"></a>00088             <span class="keyword">const</span> ne10_int32_t * factors,
+<a name="l00089"></a>00089             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
+<a name="l00090"></a>00090             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer);
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_generic_butterfly_float32_neon (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
+<a name="l00093"></a>00093             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
+<a name="l00094"></a>00094             <span class="keyword">const</span> ne10_int32_t * factors,
+<a name="l00095"></a>00095             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
+<a name="l00096"></a>00096             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer);
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_generic_butterfly_inverse_float32_neon (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
+<a name="l00099"></a>00099             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
+<a name="l00100"></a>00100             <span class="keyword">const</span> ne10_int32_t * factors,
+<a name="l00101"></a>00101             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
+<a name="l00102"></a>00102             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer);
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_float32_neon (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
+<a name="l00105"></a>00105             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
+<a name="l00106"></a>00106             ne10_int32_t * factors,
+<a name="l00107"></a>00107             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
+<a name="l00108"></a>00108             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer)
+<a name="l00109"></a>00109     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_float32_neon&quot;</span>);
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_float32_neon (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fout,
+<a name="l00112"></a>00112             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * Fin,
+<a name="l00113"></a>00113             ne10_int32_t * factors,
+<a name="l00114"></a>00114             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * twiddles,
+<a name="l00115"></a>00115             <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * buffer)
+<a name="l00116"></a>00116     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_float32_neon&quot;</span>);
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118     <span class="comment">/* common functions for fixed point fft */</span>
+<a name="l00119"></a>00119     <span class="comment">/* butterfly for int 32 */</span>
+<a name="l00120"></a>00120     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int32_unscaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
+<a name="l00121"></a>00121             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
+<a name="l00122"></a>00122             ne10_int32_t * factors,
+<a name="l00123"></a>00123             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
+<a name="l00124"></a>00124             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
+<a name="l00125"></a>00125     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int32_unscaled_neon&quot;</span>);
+<a name="l00126"></a>00126     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int32_unscaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
+<a name="l00127"></a>00127             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
+<a name="l00128"></a>00128             ne10_int32_t * factors,
+<a name="l00129"></a>00129             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
+<a name="l00130"></a>00130             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
+<a name="l00131"></a>00131     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int32_unscaled_neon&quot;</span>);
+<a name="l00132"></a>00132     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int32_scaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
+<a name="l00133"></a>00133             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
+<a name="l00134"></a>00134             ne10_int32_t * factors,
+<a name="l00135"></a>00135             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
+<a name="l00136"></a>00136             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
+<a name="l00137"></a>00137     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int32_scaled_neon&quot;</span>);
+<a name="l00138"></a>00138     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int32_scaled_neon (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * Fout,
+<a name="l00139"></a>00139             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
+<a name="l00140"></a>00140             ne10_int32_t * factors,
+<a name="l00141"></a>00141             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * twiddles,
+<a name="l00142"></a>00142             <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> * buffer)
+<a name="l00143"></a>00143     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int32_scaled_neon&quot;</span>);
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145     <span class="comment">/* butterfly for int 16 */</span>
+<a name="l00146"></a>00146     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int16_unscaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
+<a name="l00147"></a>00147             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
+<a name="l00148"></a>00148             ne10_int32_t * factors,
+<a name="l00149"></a>00149             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
+<a name="l00150"></a>00150             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
+<a name="l00151"></a>00151     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int16_unscaled_neon&quot;</span>);
+<a name="l00152"></a>00152     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int16_unscaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
+<a name="l00153"></a>00153             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
+<a name="l00154"></a>00154             ne10_int32_t * factors,
+<a name="l00155"></a>00155             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
+<a name="l00156"></a>00156             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
+<a name="l00157"></a>00157     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int16_unscaled_neon&quot;</span>);
+<a name="l00158"></a>00158     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_forward_int16_scaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
+<a name="l00159"></a>00159             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
+<a name="l00160"></a>00160             ne10_int32_t * factors,
+<a name="l00161"></a>00161             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
+<a name="l00162"></a>00162             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
+<a name="l00163"></a>00163     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_forward_int16_scaled_neon&quot;</span>);
+<a name="l00164"></a>00164     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_mixed_radix_fft_backward_int16_scaled_neon (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * Fout,
+<a name="l00165"></a>00165             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
+<a name="l00166"></a>00166             ne10_int32_t * factors,
+<a name="l00167"></a>00167             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * twiddles,
+<a name="l00168"></a>00168             <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> * buffer)
+<a name="l00169"></a>00169     <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_mixed_radix_fft_backward_int16_scaled_neon&quot;</span>);
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 <span class="preprocessor">#ifdef __aarch64__</span>
+<a name="l00172"></a>00172 <span class="preprocessor"></span>    <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_radix8_r2c_c (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *Fout,
+<a name="l00173"></a>00173             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *Fin,
+<a name="l00174"></a>00174             <span class="keyword">const</span> ne10_int32_t fstride,
+<a name="l00175"></a>00175             <span class="keyword">const</span> ne10_int32_t mstride,
+<a name="l00176"></a>00176             <span class="keyword">const</span> ne10_int32_t nfft);
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178     <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_radix8_c2r_c (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *Fout,
+<a name="l00179"></a>00179             <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *Fin,
+<a name="l00180"></a>00180             <span class="keyword">const</span> ne10_int32_t fstride,
+<a name="l00181"></a>00181             <span class="keyword">const</span> ne10_int32_t mstride,
+<a name="l00182"></a>00182             <span class="keyword">const</span> ne10_int32_t nfft);
+<a name="l00183"></a>00183 <span class="preprocessor">#endif</span>
+<a name="l00184"></a>00184 <span class="preprocessor"></span>
+<a name="l00185"></a>00185 <span class="preprocessor">#ifdef __cplusplus</span>
+<a name="l00186"></a>00186 <span class="preprocessor"></span>}
+<a name="l00187"></a>00187 <span class="preprocessor">#endif</span>
+<a name="l00188"></a>00188 <span class="preprocessor"></span>
+<a name="l00189"></a>00189 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -222,7 +284,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

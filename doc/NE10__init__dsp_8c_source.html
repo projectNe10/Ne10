@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Project Ne10: /home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/dsp/NE10_init_dsp.c Source File</title>
+<title>Project Ne10: /home/philwong/Ne10-gerrit/modules/dsp/NE10_init_dsp.c Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,11 +78,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">/home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/dsp/NE10_init_dsp.c</div>  </div>
+<div class="title">/home/philwong/Ne10-gerrit/modules/dsp/NE10_init_dsp.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
-<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2012-14 ARM Limited</span>
+<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2012-14 ARM Limited and Contributors.</span>
 <a name="l00003"></a>00003 <span class="comment"> *  All rights reserved.</span>
 <a name="l00004"></a>00004 <span class="comment"> *</span>
 <a name="l00005"></a>00005 <span class="comment"> *  Redistribution and use in source and binary forms, with or without</span>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00016"></a>00016 <span class="comment"> *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS &quot;AS IS&quot; AND</span>
 <a name="l00017"></a>00017 <span class="comment"> *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
 <a name="l00018"></a>00018 <span class="comment"> *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
-<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY</span>
+<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY</span>
 <a name="l00020"></a>00020 <span class="comment"> *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
 <a name="l00021"></a>00021 <span class="comment"> *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
 <a name="l00022"></a>00022 <span class="comment"> *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
@@ -116,132 +116,164 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00033"></a>00033 {
 <a name="l00034"></a>00034     <span class="keywordflow">if</span> (NE10_OK == is_NEON_available)
 <a name="l00035"></a>00035     {
-<a name="l00036"></a>00036         <span class="comment">//ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_neon;</span>
-<a name="l00037"></a>00037         <span class="comment">//ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_neon;</span>
-<a name="l00038"></a>00038         <span class="comment">//ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_neon;</span>
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040         <span class="comment">//ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_neon;</span>
-<a name="l00041"></a>00041         <span class="comment">//ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_neon;</span>
-<a name="l00042"></a>00042         <span class="comment">//ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_neon;</span>
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044         <span class="comment">//ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_neon;</span>
-<a name="l00045"></a>00045         <span class="comment">//ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_neon;</span>
-<a name="l00046"></a>00046         <span class="comment">//ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_neon;</span>
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048         ne10_fir_float = ne10_fir_float_neon;
-<a name="l00049"></a>00049         ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
-<a name="l00050"></a>00050         ne10_fir_interpolate_float = ne10_fir_interpolate_float_neon;
-<a name="l00051"></a>00051         ne10_fir_lattice_float = ne10_fir_lattice_float_neon;
-<a name="l00052"></a>00052         ne10_fir_sparse_float = ne10_fir_sparse_float_neon;
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054         ne10_iir_lattice_float = ne10_iir_lattice_float_neon;
-<a name="l00055"></a>00055     }
-<a name="l00056"></a>00056     <span class="keywordflow">else</span>
-<a name="l00057"></a>00057     {
-<a name="l00058"></a>00058         <span class="comment">//ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_c;</span>
-<a name="l00059"></a>00059         <span class="comment">//ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_c;</span>
-<a name="l00060"></a>00060         <span class="comment">//ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_c;</span>
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062         <span class="comment">//ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_c;</span>
-<a name="l00063"></a>00063         <span class="comment">//ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_c;</span>
-<a name="l00064"></a>00064         <span class="comment">//ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_c;</span>
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066         <span class="comment">//ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_c;</span>
-<a name="l00067"></a>00067         <span class="comment">//ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_c;</span>
-<a name="l00068"></a>00068         <span class="comment">//ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_c;</span>
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070         ne10_fir_float = <a class="code" href="group__FIR.html#ga93eac5df955fa1d9262f3753774d12c1">ne10_fir_float_c</a>;
-<a name="l00071"></a>00071         ne10_fir_decimate_float = <a class="code" href="group__FIR__Decimate.html#gaec604418277427a584b2a42937813c94" title="Processing function for the floating-point FIR decimator.">ne10_fir_decimate_float_c</a>;
-<a name="l00072"></a>00072         ne10_fir_interpolate_float = <a class="code" href="group__FIR__Interpolate.html#gac7e573959794555c8d3f78ac7bc037c4" title="Processing function for the floating-point FIR interpolator.">ne10_fir_interpolate_float_c</a>;
-<a name="l00073"></a>00073         ne10_fir_lattice_float = <a class="code" href="group__FIR__Lattice.html#gafb63cce140da772f11feaf67174de3de" title="Processing function for the floating-point FIR lattice filter.">ne10_fir_lattice_float_c</a>;
-<a name="l00074"></a>00074         ne10_fir_sparse_float = <a class="code" href="group__FIR__Sparse.html#gae495c863040e7a40569005cc256768a7" title="Processing function for the floating-point sparse FIR filter.">ne10_fir_sparse_float_c</a>;
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076         ne10_iir_lattice_float = <a class="code" href="group__IIR__Lattice.html#ga4301dded3173cae5473078a71d258376" title="Processing function for the floating-point IIR lattice filter.">ne10_iir_lattice_float_c</a>;
-<a name="l00077"></a>00077     }
-<a name="l00078"></a>00078     <span class="keywordflow">return</span> NE10_OK;
-<a name="l00079"></a>00079 }
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 <span class="comment">// These are actual definitions of our function pointers that are declared in inc/NE10_dsp.h</span>
-<a name="l00082"></a>00082 void (*ne10_fft_c2c_1d_float32) (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
-<a name="l00083"></a>00083                                  <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
-<a name="l00084"></a>00084                                  <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg,
-<a name="l00085"></a>00085                                  ne10_int32_t inverse_fft);
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087 void (*ne10_fft_r2c_1d_float32) (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
-<a name="l00088"></a>00088                                  ne10_float32_t *fin,
-<a name="l00089"></a>00089                                  <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg);
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091 void (*ne10_fft_c2r_1d_float32) (ne10_float32_t *fout,
-<a name="l00092"></a>00092                                  <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
-<a name="l00093"></a>00093                                  <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg) ;
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095 void (*ne10_fft_c2c_1d_int32) (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fout,
-<a name="l00096"></a>00096                                <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
-<a name="l00097"></a>00097                                <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a> cfg,
-<a name="l00098"></a>00098                                ne10_int32_t inverse_fft,
-<a name="l00099"></a>00099                                ne10_int32_t scaled_flag);
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102 void (*ne10_fft_r2c_1d_int32) (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fout,
-<a name="l00103"></a>00103                                ne10_int32_t *fin,
-<a name="l00104"></a>00104                                <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_cfg_int32_t</a> cfg,
-<a name="l00105"></a>00105                                ne10_int32_t scaled_flag);
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107 void (*ne10_fft_c2r_1d_int32) (ne10_int32_t *fout,
-<a name="l00108"></a>00108                                <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
-<a name="l00109"></a>00109                                <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_cfg_int32_t</a> cfg,
-<a name="l00110"></a>00110                                ne10_int32_t scaled_flag);
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112 void (*ne10_fft_c2c_1d_int16) (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fout,
-<a name="l00113"></a>00113                                <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
-<a name="l00114"></a>00114                                <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a> cfg,
-<a name="l00115"></a>00115                                ne10_int32_t inverse_fft,
-<a name="l00116"></a>00116                                ne10_int32_t scaled_flag);
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118 void (*ne10_fft_r2c_1d_int16) (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fout,
-<a name="l00119"></a>00119                                ne10_int16_t *fin,
-<a name="l00120"></a>00120                                <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_cfg_int16_t</a> cfg,
-<a name="l00121"></a>00121                                ne10_int32_t scaled_flag);
+<a name="l00036"></a>00036         ne10_fft_alloc_c2c_float32 = <a class="code" href="group__C2C__FFT__IFFT.html#ga620f02d2af16542038fef6fa403a3f0d" title="User-callable function to allocate all necessary storage space for the fft.">ne10_fft_alloc_c2c_float32_neon</a>;
+<a name="l00037"></a>00037         ne10_fft_c2c_1d_float32 = <a class="code" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e" title="Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.">ne10_fft_c2c_1d_float32_neon</a>;
+<a name="l00038"></a>00038         ne10_fft_r2c_1d_float32 = <a class="code" href="group__R2C__FFT__IFFT.html#ga48dda98722214c5134a47dc600bd9c92" title="Mixed radix-2/4 FFT (real to complex) of float(32-bit) data.">ne10_fft_r2c_1d_float32_neon</a>;
+<a name="l00039"></a>00039         ne10_fft_c2r_1d_float32 = <a class="code" href="group__R2C__FFT__IFFT.html#gaf3c09e5a2125de2465b52bb82ad0feec" title="Mixed radix-2/4 IFFT (complex to real) of float(32-bit) data.">ne10_fft_c2r_1d_float32_neon</a>;
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041         ne10_fft_c2c_1d_int32 = <a class="code" href="group__C2C__FFT__IFFT.html#gaeab558afe8239e25c5540d110af7947e" title="Mixed radix-2/4 complex FFT/IFFT of 32-bit fixed point data.">ne10_fft_c2c_1d_int32_neon</a>;
+<a name="l00042"></a>00042         ne10_fft_r2c_1d_int32 = <a class="code" href="group__R2C__FFT__IFFT.html#ga84f0e16b3751e9a15aa1914598bcf5bc" title="Mixed radix-2/4 FFT (real to complex) of int32 data.">ne10_fft_r2c_1d_int32_neon</a>;
+<a name="l00043"></a>00043         ne10_fft_c2r_1d_int32 = <a class="code" href="group__R2C__FFT__IFFT.html#ga85975579fcd7691a7a1b2237e41639cf" title="Mixed radix-2/4 IFFT (complex to real) of int32 data.">ne10_fft_c2r_1d_int32_neon</a>;
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045         ne10_fft_c2c_1d_int16 = <a class="code" href="group__C2C__FFT__IFFT.html#ga5e39e948a6968a2a5811e391bbec4705" title="Mixed radix-2/4 complex FFT/IFFT of 32-bit fixed point data.">ne10_fft_c2c_1d_int16_neon</a>;
+<a name="l00046"></a>00046         ne10_fft_c2r_1d_int16 = <a class="code" href="group__R2C__FFT__IFFT.html#gade141ce481c715afbe0d7b068f2f2da2" title="Mixed radix-2/4 IFFT (complex to real) of int16 data.">ne10_fft_c2r_1d_int16_neon</a>;
+<a name="l00047"></a>00047         ne10_fft_r2c_1d_int16 = <a class="code" href="group__R2C__FFT__IFFT.html#ga0c486c56259e24826a2003a163945ad2" title="Mixed radix-2/4 FFT (real to complex) of int16 data.">ne10_fft_r2c_1d_int16_neon</a>;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 <span class="preprocessor">#ifdef ENABLE_NE10_FIR_FLOAT_NEON</span>
+<a name="l00050"></a>00050 <span class="preprocessor"></span>        ne10_fir_float = ne10_fir_float_neon;
+<a name="l00051"></a>00051 <span class="preprocessor">#else</span>
+<a name="l00052"></a>00052 <span class="preprocessor"></span>        ne10_fir_float = <a class="code" href="group__FIR.html#ga93eac5df955fa1d9262f3753774d12c1">ne10_fir_float_c</a>;
+<a name="l00053"></a>00053 <span class="preprocessor">#endif // ENABLE_NE10_FIR_FLOAT_NEON</span>
+<a name="l00054"></a>00054 <span class="preprocessor"></span>
+<a name="l00055"></a>00055 <span class="preprocessor">#ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span>        ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
+<a name="l00057"></a>00057 <span class="preprocessor">#else</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span>        ne10_fir_decimate_float = <a class="code" href="group__FIR__Decimate.html#gaec604418277427a584b2a42937813c94" title="Processing function for the floating-point FIR decimator.">ne10_fir_decimate_float_c</a>;
+<a name="l00059"></a>00059 <span class="preprocessor">#endif // ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON</span>
+<a name="l00060"></a>00060 <span class="preprocessor"></span>
+<a name="l00061"></a>00061 <span class="preprocessor">#ifdef ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON</span>
+<a name="l00062"></a>00062 <span class="preprocessor"></span>        ne10_fir_interpolate_float = ne10_fir_interpolate_float_neon;
+<a name="l00063"></a>00063 <span class="preprocessor">#else</span>
+<a name="l00064"></a>00064 <span class="preprocessor"></span>        ne10_fir_interpolate_float = <a class="code" href="group__FIR__Interpolate.html#gac7e573959794555c8d3f78ac7bc037c4" title="Processing function for the floating-point FIR interpolator.">ne10_fir_interpolate_float_c</a>;
+<a name="l00065"></a>00065 <span class="preprocessor">#endif // ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON</span>
+<a name="l00066"></a>00066 <span class="preprocessor"></span>
+<a name="l00067"></a>00067 <span class="preprocessor">#ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>        ne10_fir_lattice_float = ne10_fir_lattice_float_neon;
+<a name="l00069"></a>00069 <span class="preprocessor">#else</span>
+<a name="l00070"></a>00070 <span class="preprocessor"></span>        ne10_fir_lattice_float = <a class="code" href="group__FIR__Lattice.html#gafb63cce140da772f11feaf67174de3de" title="Processing function for the floating-point FIR lattice filter.">ne10_fir_lattice_float_c</a>;
+<a name="l00071"></a>00071 <span class="preprocessor">#endif // ENABLE_NE10_FIR_LATTICE_FLOAT_NEON</span>
+<a name="l00072"></a>00072 <span class="preprocessor"></span>
+<a name="l00073"></a>00073 <span class="preprocessor">#ifdef ENABLE_NE10_FIR_SPARSE_FLOAT_NEON</span>
+<a name="l00074"></a>00074 <span class="preprocessor"></span>        ne10_fir_sparse_float = ne10_fir_sparse_float_neon;
+<a name="l00075"></a>00075 <span class="preprocessor">#else</span>
+<a name="l00076"></a>00076 <span class="preprocessor"></span>        ne10_fir_sparse_float = <a class="code" href="group__FIR__Sparse.html#gae495c863040e7a40569005cc256768a7" title="Processing function for the floating-point sparse FIR filter.">ne10_fir_sparse_float_c</a>;
+<a name="l00077"></a>00077 <span class="preprocessor">#endif // ENABLE_NE10_FIR_SPARSE_FLOAT_NEON</span>
+<a name="l00078"></a>00078 <span class="preprocessor"></span>
+<a name="l00079"></a>00079 <span class="preprocessor">#ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON</span>
+<a name="l00080"></a>00080 <span class="preprocessor"></span>        ne10_iir_lattice_float = ne10_iir_lattice_float_neon;
+<a name="l00081"></a>00081 <span class="preprocessor">#else</span>
+<a name="l00082"></a>00082 <span class="preprocessor"></span>        ne10_iir_lattice_float = <a class="code" href="group__FIR__Decimate.html#ga4301dded3173cae5473078a71d258376" title="Processing function for the floating-point IIR lattice filter.">ne10_iir_lattice_float_c</a>;
+<a name="l00083"></a>00083 <span class="preprocessor">#endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON</span>
+<a name="l00084"></a>00084 <span class="preprocessor"></span>    }
+<a name="l00085"></a>00085     <span class="keywordflow">else</span>
+<a name="l00086"></a>00086     {
+<a name="l00087"></a>00087         ne10_fft_alloc_c2c_float32 = <a class="code" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d" title="User-callable function to allocate all necessary storage space for the fft.">ne10_fft_alloc_c2c_float32_c</a>;
+<a name="l00088"></a>00088         ne10_fft_c2c_1d_float32 = <a class="code" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658" title="Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.">ne10_fft_c2c_1d_float32_c</a>;
+<a name="l00089"></a>00089         ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_c;
+<a name="l00090"></a>00090         ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_c;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092         ne10_fft_c2c_1d_int32 = <a class="code" href="group__C2C__FFT__IFFT.html#ga59a8b0ddb0cca0aff394d9398b361313" title="Mixed radix-2/4 complex FFT/IFFT of 32-bit fixed point data.">ne10_fft_c2c_1d_int32_c</a>;
+<a name="l00093"></a>00093         ne10_fft_r2c_1d_int32 = <a class="code" href="group__R2C__FFT__IFFT.html#ga87f297b2eb6032a20de3e1c73fb71a1a" title="Mixed radix-2/4 FFT (real to complex) of int32 data.">ne10_fft_r2c_1d_int32_c</a>;
+<a name="l00094"></a>00094         ne10_fft_c2r_1d_int32 = <a class="code" href="group__R2C__FFT__IFFT.html#gac86bd5d1cda5941ddb9722b6dbad9e7e" title="Mixed radix-2/4 IFFT (complex to real) of int32 data.">ne10_fft_c2r_1d_int32_c</a>;
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096         ne10_fft_c2c_1d_int16 = <a class="code" href="group__C2C__FFT__IFFT.html#gab46724c7178fe02e858be576e2ce74b5" title="Mixed radix-2/4 complex FFT/IFFT of 16-bit fixed point data.">ne10_fft_c2c_1d_int16_c</a>;
+<a name="l00097"></a>00097         ne10_fft_r2c_1d_int16 = <a class="code" href="group__R2C__FFT__IFFT.html#gab461dec6b7b5ec81cd9e5be4b79bf5d2" title="Mixed radix-2/4 FFT (real to complex) of int16 data.">ne10_fft_r2c_1d_int16_c</a>;
+<a name="l00098"></a>00098         ne10_fft_c2r_1d_int16 = <a class="code" href="group__R2C__FFT__IFFT.html#ga2ca3f2175fd7ef132fbc16457de670d5" title="Mixed radix-2/4 IFFT (complex to real) of int16 data.">ne10_fft_c2r_1d_int16_c</a>;
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100         ne10_fir_float = <a class="code" href="group__FIR.html#ga93eac5df955fa1d9262f3753774d12c1">ne10_fir_float_c</a>;
+<a name="l00101"></a>00101         ne10_fir_decimate_float = <a class="code" href="group__FIR__Decimate.html#gaec604418277427a584b2a42937813c94" title="Processing function for the floating-point FIR decimator.">ne10_fir_decimate_float_c</a>;
+<a name="l00102"></a>00102         ne10_fir_interpolate_float = <a class="code" href="group__FIR__Interpolate.html#gac7e573959794555c8d3f78ac7bc037c4" title="Processing function for the floating-point FIR interpolator.">ne10_fir_interpolate_float_c</a>;
+<a name="l00103"></a>00103         ne10_fir_lattice_float = <a class="code" href="group__FIR__Lattice.html#gafb63cce140da772f11feaf67174de3de" title="Processing function for the floating-point FIR lattice filter.">ne10_fir_lattice_float_c</a>;
+<a name="l00104"></a>00104         ne10_fir_sparse_float = <a class="code" href="group__FIR__Sparse.html#gae495c863040e7a40569005cc256768a7" title="Processing function for the floating-point sparse FIR filter.">ne10_fir_sparse_float_c</a>;
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106         ne10_iir_lattice_float = <a class="code" href="group__FIR__Decimate.html#ga4301dded3173cae5473078a71d258376" title="Processing function for the floating-point IIR lattice filter.">ne10_iir_lattice_float_c</a>;
+<a name="l00107"></a>00107     }
+<a name="l00108"></a>00108     <span class="keywordflow">return</span> NE10_OK;
+<a name="l00109"></a>00109 }
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111 <span class="comment">// These are actual definitions of our function pointers that are declared in inc/NE10_dsp.h</span>
+<a name="l00112"></a>00112 <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> (*ne10_fft_alloc_c2c_float32) (ne10_int32_t nfft);
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114 void (*ne10_fft_c2c_1d_float32) (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
+<a name="l00115"></a>00115                                  <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
+<a name="l00116"></a>00116                                  <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg,
+<a name="l00117"></a>00117                                  ne10_int32_t inverse_fft);
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119 void (*ne10_fft_r2c_1d_float32) (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
+<a name="l00120"></a>00120                                  ne10_float32_t *fin,
+<a name="l00121"></a>00121                                  <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg);
 <a name="l00122"></a>00122 
-<a name="l00123"></a>00123 void (*ne10_fft_c2r_1d_int16) (ne10_int16_t *fout,
-<a name="l00124"></a>00124                                <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
-<a name="l00125"></a>00125                                <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_cfg_int16_t</a> cfg,
-<a name="l00126"></a>00126                                ne10_int32_t scaled_flag);
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128 void (*ne10_fir_float) (<span class="keyword">const</span> <a class="code" href="structne10__fir__instance__f32__t.html" title="Instance structure for the floating-point FIR filter.">ne10_fir_instance_f32_t</a> * S,
-<a name="l00129"></a>00129                         ne10_float32_t * pSrc,
-<a name="l00130"></a>00130                         ne10_float32_t * pDst,
-<a name="l00131"></a>00131                         ne10_uint32_t blockSize);
+<a name="l00123"></a>00123 void (*ne10_fft_c2r_1d_float32) (ne10_float32_t *fout,
+<a name="l00124"></a>00124                                  <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
+<a name="l00125"></a>00125                                  <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg) ;
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127 void (*ne10_fft_c2c_1d_int32) (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fout,
+<a name="l00128"></a>00128                                <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
+<a name="l00129"></a>00129                                <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a> cfg,
+<a name="l00130"></a>00130                                ne10_int32_t inverse_fft,
+<a name="l00131"></a>00131                                ne10_int32_t scaled_flag);
 <a name="l00132"></a>00132 
-<a name="l00133"></a>00133 void (*ne10_fir_decimate_float) (
-<a name="l00134"></a>00134     <span class="keyword">const</span> <a class="code" href="structne10__fir__decimate__instance__f32__t.html" title="Instance structure for the floating-point FIR Decimation.">ne10_fir_decimate_instance_f32_t</a> * S,
-<a name="l00135"></a>00135     ne10_float32_t * pSrc,
-<a name="l00136"></a>00136     ne10_float32_t * pDst,
-<a name="l00137"></a>00137     ne10_uint32_t blockSize);
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134 void (*ne10_fft_r2c_1d_int32) (<a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fout,
+<a name="l00135"></a>00135                                ne10_int32_t *fin,
+<a name="l00136"></a>00136                                <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_cfg_int32_t</a> cfg,
+<a name="l00137"></a>00137                                ne10_int32_t scaled_flag);
 <a name="l00138"></a>00138 
-<a name="l00139"></a>00139 void (*ne10_fir_interpolate_float) (
-<a name="l00140"></a>00140     <span class="keyword">const</span> <a class="code" href="structne10__fir__interpolate__instance__f32__t.html" title="Instance structure for the floating-point FIR Interpolation.">ne10_fir_interpolate_instance_f32_t</a> * S,
-<a name="l00141"></a>00141     ne10_float32_t * pSrc,
-<a name="l00142"></a>00142     ne10_float32_t * pDst,
-<a name="l00143"></a>00143     ne10_uint32_t blockSize);
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145 void (*ne10_fir_lattice_float) (
-<a name="l00146"></a>00146     <span class="keyword">const</span> <a class="code" href="structne10__fir__lattice__instance__f32__t.html" title="Instance structure for the floating point FIR Lattice filter.">ne10_fir_lattice_instance_f32_t</a> * S,
-<a name="l00147"></a>00147     ne10_float32_t * pSrc,
-<a name="l00148"></a>00148     ne10_float32_t * pDst,
-<a name="l00149"></a>00149     ne10_uint32_t blockSize);
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151 void (*ne10_fir_sparse_float) (
-<a name="l00152"></a>00152     <a class="code" href="structne10__fir__sparse__instance__f32__t.html" title="Instance structure for the floating-point FIR Sparse filter.">ne10_fir_sparse_instance_f32_t</a> * S,
-<a name="l00153"></a>00153     ne10_float32_t * pSrc,
-<a name="l00154"></a>00154     ne10_float32_t * pDst,
-<a name="l00155"></a>00155     ne10_float32_t * pScratchIn,
-<a name="l00156"></a>00156     ne10_uint32_t blockSize);
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158 void (*ne10_iir_lattice_float) (<span class="keyword">const</span> <a class="code" href="structne10__iir__lattice__instance__f32__t.html" title="Instance structure for the floating point IIR Lattice filter.">ne10_iir_lattice_instance_f32_t</a> * S,
-<a name="l00159"></a>00159                                 ne10_float32_t * pSrc,
-<a name="l00160"></a>00160                                 ne10_float32_t * pDst,
-<a name="l00161"></a>00161                                 ne10_uint32_t blockSize);
+<a name="l00139"></a>00139 void (*ne10_fft_c2r_1d_int32) (ne10_int32_t *fout,
+<a name="l00140"></a>00140                                <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *fin,
+<a name="l00141"></a>00141                                <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_cfg_int32_t</a> cfg,
+<a name="l00142"></a>00142                                ne10_int32_t scaled_flag);
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144 void (*ne10_fft_c2c_1d_int16) (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fout,
+<a name="l00145"></a>00145                                <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
+<a name="l00146"></a>00146                                <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a> cfg,
+<a name="l00147"></a>00147                                ne10_int32_t inverse_fft,
+<a name="l00148"></a>00148                                ne10_int32_t scaled_flag);
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150 void (*ne10_fft_r2c_1d_int16) (<a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fout,
+<a name="l00151"></a>00151                                ne10_int16_t *fin,
+<a name="l00152"></a>00152                                <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_cfg_int16_t</a> cfg,
+<a name="l00153"></a>00153                                ne10_int32_t scaled_flag);
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155 void (*ne10_fft_c2r_1d_int16) (ne10_int16_t *fout,
+<a name="l00156"></a>00156                                <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *fin,
+<a name="l00157"></a>00157                                <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_cfg_int16_t</a> cfg,
+<a name="l00158"></a>00158                                ne10_int32_t scaled_flag);
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160 void (*ne10_fir_float) (<span class="keyword">const</span> <a class="code" href="structne10__fir__instance__f32__t.html" title="Instance structure for the floating-point FIR filter.">ne10_fir_instance_f32_t</a> * S,
+<a name="l00161"></a>00161                         ne10_float32_t * pSrc,
+<a name="l00162"></a>00162                         ne10_float32_t * pDst,
+<a name="l00163"></a>00163                         ne10_uint32_t blockSize);
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165 void (*ne10_fir_decimate_float) (
+<a name="l00166"></a>00166     <span class="keyword">const</span> <a class="code" href="structne10__fir__decimate__instance__f32__t.html" title="Instance structure for the floating-point FIR Decimation.">ne10_fir_decimate_instance_f32_t</a> * S,
+<a name="l00167"></a>00167     ne10_float32_t * pSrc,
+<a name="l00168"></a>00168     ne10_float32_t * pDst,
+<a name="l00169"></a>00169     ne10_uint32_t blockSize);
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 void (*ne10_fir_interpolate_float) (
+<a name="l00172"></a>00172     <span class="keyword">const</span> <a class="code" href="structne10__fir__interpolate__instance__f32__t.html" title="Instance structure for the floating-point FIR Interpolation.">ne10_fir_interpolate_instance_f32_t</a> * S,
+<a name="l00173"></a>00173     ne10_float32_t * pSrc,
+<a name="l00174"></a>00174     ne10_float32_t * pDst,
+<a name="l00175"></a>00175     ne10_uint32_t blockSize);
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177 void (*ne10_fir_lattice_float) (
+<a name="l00178"></a>00178     <span class="keyword">const</span> <a class="code" href="structne10__fir__lattice__instance__f32__t.html" title="Instance structure for the floating point FIR Lattice filter.">ne10_fir_lattice_instance_f32_t</a> * S,
+<a name="l00179"></a>00179     ne10_float32_t * pSrc,
+<a name="l00180"></a>00180     ne10_float32_t * pDst,
+<a name="l00181"></a>00181     ne10_uint32_t blockSize);
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183 void (*ne10_fir_sparse_float) (
+<a name="l00184"></a>00184     <a class="code" href="structne10__fir__sparse__instance__f32__t.html" title="Instance structure for the floating-point FIR Sparse filter.">ne10_fir_sparse_instance_f32_t</a> * S,
+<a name="l00185"></a>00185     ne10_float32_t * pSrc,
+<a name="l00186"></a>00186     ne10_float32_t * pDst,
+<a name="l00187"></a>00187     ne10_float32_t * pScratchIn,
+<a name="l00188"></a>00188     ne10_uint32_t blockSize);
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190 void (*ne10_iir_lattice_float) (<span class="keyword">const</span> <a class="code" href="structne10__iir__lattice__instance__f32__t.html" title="Instance structure for the floating point IIR Lattice filter.">ne10_iir_lattice_instance_f32_t</a> * S,
+<a name="l00191"></a>00191                                 ne10_float32_t * pSrc,
+<a name="l00192"></a>00192                                 ne10_float32_t * pDst,
+<a name="l00193"></a>00193                                 ne10_uint32_t blockSize);
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -260,7 +292,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -81,12 +81,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga0c6d88d8ab945b6f3738f8764a385775">ne10_fft_alloc_c2c_float32</a> (ne10_int32_t nfft)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to allocate all necessary storage space for the fft.  <a href="#ga0c6d88d8ab945b6f3738f8764a385775"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga620f02d2af16542038fef6fa403a3f0d">ne10_fft_alloc_c2c_float32_neon</a> (ne10_int32_t nfft)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to allocate all necessary storage space for the fft.  <a href="#ga620f02d2af16542038fef6fa403a3f0d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d">ne10_fft_alloc_c2c_float32_c</a> (ne10_int32_t nfft)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to allocate all necessary storage space for the fft.  <a href="#gadf681ba4e27770ed9aa097b4bc29372d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">ne10_fft_c2c_1d_float32_c</a> (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg, ne10_int32_t inverse_fft)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data.  <a href="#ga8a03f9824ed0ccc270ce39c0eab1a658"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.  <a href="#ga8a03f9824ed0ccc270ce39c0eab1a658"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a> (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg, ne10_int32_t inverse_fft)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data.  <a href="#ga0f08fc88104e972e788870840894bc0e"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.  <a href="#ga0f08fc88104e972e788870840894bc0e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">ne10_fft_alloc_c2c_int16</a> (ne10_int32_t nfft)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to allocate all necessary storage space for the fft.  <a href="#gaf4cbe44e5e5f6acbdfb767ba9f2749e4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gab46724c7178fe02e858be576e2ce74b5">ne10_fft_c2c_1d_int16_c</a> (<a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fout, <a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fin, <a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a> cfg, ne10_int32_t inverse_fft, ne10_int32_t scaled_flag)</td></tr>
@@ -146,12 +148,12 @@ Functions</h2></td></tr>
 </ul>
 </dd></dl>
 <hr/><h2>Function Documentation</h2>
-<a class="anchor" id="ga0c6d88d8ab945b6f3738f8764a385775"></a><!-- doxytag: member="NE10_fft_float32.c::ne10_fft_alloc_c2c_float32" ref="ga0c6d88d8ab945b6f3738f8764a385775" args="(ne10_int32_t nfft)" -->
+<a class="anchor" id="gadf681ba4e27770ed9aa097b4bc29372d"></a><!-- doxytag: member="NE10_fft_float32.c::ne10_fft_alloc_c2c_float32_c" ref="gadf681ba4e27770ed9aa097b4bc29372d" args="(ne10_int32_t nfft)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> <a class="el" href="group__C2C__FFT__IFFT.html#ga0c6d88d8ab945b6f3738f8764a385775">ne10_fft_alloc_c2c_float32</a> </td>
+          <td class="memname"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> <a class="el" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d">ne10_fft_alloc_c2c_float32_c</a> </td>
           <td>(</td>
           <td class="paramtype">ne10_int32_t&#160;</td>
           <td class="paramname"><em>nfft</em></td><td>)</td>
@@ -170,7 +172,35 @@ Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>st point to the FFT config memory. This memory is allocated with malloc. The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff. </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l01033">1033</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l00999">999</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga620f02d2af16542038fef6fa403a3f0d"></a><!-- doxytag: member="NE10_fft.c::ne10_fft_alloc_c2c_float32_neon" ref="ga620f02d2af16542038fef6fa403a3f0d" args="(ne10_int32_t nfft)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> <a class="el" href="group__C2C__FFT__IFFT.html#ga620f02d2af16542038fef6fa403a3f0d">ne10_fft_alloc_c2c_float32_neon</a> </td>
+          <td>(</td>
+          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramname"><em>nfft</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>User-callable function to allocate all necessary storage space for the fft. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>length of FFT </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>st point to the FFT config memory. This memory is allocated with malloc. The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff. </dd></dl>
+
+<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00221">221</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
 
 </div>
 </div>
@@ -198,7 +228,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>st point to the FFT config memory. This memory is allocated with malloc. The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff. </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01066">1066</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01032">1032</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
 
 </div>
 </div>
@@ -226,7 +256,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>st point to the FFT config memory. This memory is allocated with malloc. The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff. </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01064">1064</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01029">1029</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
 
 </div>
 </div>
@@ -267,7 +297,7 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data. </p>
+<p>Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>point to the output buffer (out-of-place) </td></tr>
@@ -277,9 +307,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>none. The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported. Otherwise, this FFT is an out-of-place algorithm. For the usage of this function, please check <a class="el" href="test__suite__fft__float32_8c_source.html">test/test_suite_fft_float32.c</a> </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>none. The function implements a mixed radix-2/3/4/5 complex FFT/IFFT. The length of 2^N*3^M*5^K(N,M,K is 1, 2, 3, 4, 5, 6 ....etc) is supported. Otherwise, this FFT is an out-of-place algorithm. For the usage of this function, please check <a class="el" href="test__suite__fft__float32_8c_source.html">test/test_suite_fft_float32.c</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l01113">1113</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l01063">1063</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
 
 </div>
 </div>
@@ -320,7 +350,7 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data. </p>
+<p>Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data. </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>point to the output buffer (out-of-place) </td></tr>
@@ -330,9 +360,9 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>none. The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 1, 2, 3, 4, 5, 6 ....etc) is supported. Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check <a class="el" href="test__suite__fft__float32_8c_source.html">test/test_suite_fft_float32.c</a> </dd></dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>none. The function implements a mixed radix-2/3/4/5 complex FFT/IFFT. The length of 2^N*3^M*5^K(N,M,K are 1, 2, 3, 4, 5, 6 ....etc, and length &gt;= 4) is supported. Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check <a class="el" href="test__suite__fft__float32_8c_source.html">test/test_suite_fft_float32.c</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__float32_8neon_8c_source.html#l00675">675</a> of file <a class="el" href="NE10__fft__float32_8neon_8c_source.html">NE10_fft_float32.neon.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__float32_8neon_8c_source.html#l00676">676</a> of file <a class="el" href="NE10__fft__float32_8neon_8c_source.html">NE10_fft_float32.neon.c</a>.</p>
 
 </div>
 </div>
@@ -392,7 +422,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>none. The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported. Otherwise, this FFT is an out-of-place algorithm. For the usage of this function, please check <a class="el" href="test__suite__fft__int16_8c_source.html">test/test_suite_fft_int16.c</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01146">1146</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01112">1112</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
 
 </div>
 </div>
@@ -526,7 +556,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>none. The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported. Otherwise, this FFT is an out-of-place algorithm. For the usage of this function, please check <a class="el" href="test__suite__fft__int32_8c_source.html">test/test_suite_fft_int32.c</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01143">1143</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01108">1108</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
 
 </div>
 </div>
@@ -586,7 +616,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>none. The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported. Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check <a class="el" href="test__suite__fft__int32_8c_source.html">test/test_suite_fft_int32.c</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="NE10__fft__int32_8neon_8c_source.html#l01219">1219</a> of file <a class="el" href="NE10__fft__int32_8neon_8c_source.html">NE10_fft_int32.neon.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int32_8neon_8c_source.html#l01220">1220</a> of file <a class="el" href="NE10__fft__int32_8neon_8c_source.html">NE10_fft_int32.neon.c</a>.</p>
 
 </div>
 </div>
@@ -608,7 +638,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

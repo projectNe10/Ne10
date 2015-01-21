@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Project Ne10: /home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/physics/NE10_init_physics.c Source File</title>
+<title>Project Ne10: /home/philwong/Ne10-gerrit/modules/physics/NE10_init_physics.c Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,11 +78,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">/home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/physics/NE10_init_physics.c</div>  </div>
+<div class="title">/home/philwong/Ne10-gerrit/modules/physics/NE10_init_physics.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
-<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2014 ARM Limited</span>
+<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2014 ARM Limited and Contributors.</span>
 <a name="l00003"></a>00003 <span class="comment"> *  All rights reserved.</span>
 <a name="l00004"></a>00004 <span class="comment"> *</span>
 <a name="l00005"></a>00005 <span class="comment"> *  Redistribution and use in source and binary forms, with or without</span>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00016"></a>00016 <span class="comment"> *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS &quot;AS IS&quot; AND</span>
 <a name="l00017"></a>00017 <span class="comment"> *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
 <a name="l00018"></a>00018 <span class="comment"> *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
-<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY</span>
+<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY</span>
 <a name="l00020"></a>00020 <span class="comment"> *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
 <a name="l00021"></a>00021 <span class="comment"> *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
 <a name="l00022"></a>00022 <span class="comment"> *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
@@ -120,39 +120,53 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00037"></a>00037 {
 <a name="l00038"></a>00038     <span class="keywordflow">if</span> (NE10_OK == is_NEON_available)
 <a name="l00039"></a>00039     {
-<a name="l00040"></a>00040         ne10_physics_compute_aabb_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga2c6bbe58953fe01d89c570a9b927b543" title="compute AABB for ploygon.">ne10_physics_compute_aabb_vec2f_neon</a>;
-<a name="l00041"></a>00041         ne10_physics_relative_v_vec2f = ne10_physics_relative_v_vec2f_neon;
-<a name="l00042"></a>00042         ne10_physics_apply_impulse_vec2f = ne10_physics_apply_impulse_vec2f_neon;
-<a name="l00043"></a>00043     }
-<a name="l00044"></a>00044     <span class="keywordflow">else</span>
-<a name="l00045"></a>00045     {
-<a name="l00046"></a>00046         ne10_physics_compute_aabb_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga56217a1498088bfdcf766162f5bed082" title="compute AABB for ploygon.">ne10_physics_compute_aabb_vec2f_c</a>;
-<a name="l00047"></a>00047         ne10_physics_relative_v_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga8bbbab93df2edc94845635ca49b6e4fb" title="calculate relative velocity at contact.">ne10_physics_relative_v_vec2f_c</a>;
-<a name="l00048"></a>00048         ne10_physics_apply_impulse_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga5a2aacf9ec76997b40964898f11ce74a" title="apply contact impulse.">ne10_physics_apply_impulse_vec2f_c</a>;
-<a name="l00049"></a>00049     }
-<a name="l00050"></a>00050     <span class="keywordflow">return</span> NE10_OK;
-<a name="l00051"></a>00051 }
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053 <span class="comment">// These are actual definitions of our function pointers that are declared in inc/NE10_physics.h</span>
-<a name="l00054"></a>00054 void (*ne10_physics_compute_aabb_vec2f) (ne10_mat2x2f_t *aabb,
-<a name="l00055"></a>00055         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *vertices,
-<a name="l00056"></a>00056         ne10_mat2x2f_t *xf,
-<a name="l00057"></a>00057         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *radius,
-<a name="l00058"></a>00058         ne10_uint32_t vertex_count);
-<a name="l00059"></a>00059 void (*ne10_physics_relative_v_vec2f) (<a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *dv,
-<a name="l00060"></a>00060                                        <a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wa,
-<a name="l00061"></a>00061                                        <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *ra,
-<a name="l00062"></a>00062                                        <a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wb,
-<a name="l00063"></a>00063                                        <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *rb,
-<a name="l00064"></a>00064                                        ne10_uint32_t count);
-<a name="l00065"></a>00065 void (*ne10_physics_apply_impulse_vec2f) (<a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wa,
-<a name="l00066"></a>00066         <a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wb,
-<a name="l00067"></a>00067         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *ra,
-<a name="l00068"></a>00068         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *rb,
-<a name="l00069"></a>00069         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *ima,
-<a name="l00070"></a>00070         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *imb,
-<a name="l00071"></a>00071         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *p,
-<a name="l00072"></a>00072         ne10_uint32_t count);
+<a name="l00040"></a>00040 <span class="preprocessor">#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON</span>
+<a name="l00041"></a>00041 <span class="preprocessor"></span>        ne10_physics_compute_aabb_vec2f = ne10_physics_compute_aabb_vec2f_neon;
+<a name="l00042"></a>00042 <span class="preprocessor">#else</span>
+<a name="l00043"></a>00043 <span class="preprocessor"></span>        ne10_physics_compute_aabb_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga56217a1498088bfdcf766162f5bed082" title="compute AABB for ploygon.">ne10_physics_compute_aabb_vec2f_c</a>;
+<a name="l00044"></a>00044 <span class="preprocessor">#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON</span>
+<a name="l00045"></a>00045 <span class="preprocessor"></span>
+<a name="l00046"></a>00046 <span class="preprocessor">#ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON</span>
+<a name="l00047"></a>00047 <span class="preprocessor"></span>        ne10_physics_relative_v_vec2f = ne10_physics_relative_v_vec2f_neon;
+<a name="l00048"></a>00048 <span class="preprocessor">#else</span>
+<a name="l00049"></a>00049 <span class="preprocessor"></span>        ne10_physics_relative_v_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga8bbbab93df2edc94845635ca49b6e4fb" title="calculate relative velocity at contact.">ne10_physics_relative_v_vec2f_c</a>;
+<a name="l00050"></a>00050 <span class="preprocessor">#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON</span>
+<a name="l00051"></a>00051 <span class="preprocessor"></span>
+<a name="l00052"></a>00052 <span class="preprocessor">#ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON</span>
+<a name="l00053"></a>00053 <span class="preprocessor"></span>        ne10_physics_apply_impulse_vec2f = ne10_physics_apply_impulse_vec2f_neon;
+<a name="l00054"></a>00054 <span class="preprocessor">#else</span>
+<a name="l00055"></a>00055 <span class="preprocessor"></span>        ne10_physics_apply_impulse_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga5a2aacf9ec76997b40964898f11ce74a" title="apply contact impulse.">ne10_physics_apply_impulse_vec2f_c</a>;
+<a name="l00056"></a>00056 <span class="preprocessor">#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON</span>
+<a name="l00057"></a>00057 <span class="preprocessor"></span>    }
+<a name="l00058"></a>00058     <span class="keywordflow">else</span>
+<a name="l00059"></a>00059     {
+<a name="l00060"></a>00060         ne10_physics_compute_aabb_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga56217a1498088bfdcf766162f5bed082" title="compute AABB for ploygon.">ne10_physics_compute_aabb_vec2f_c</a>;
+<a name="l00061"></a>00061         ne10_physics_relative_v_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga8bbbab93df2edc94845635ca49b6e4fb" title="calculate relative velocity at contact.">ne10_physics_relative_v_vec2f_c</a>;
+<a name="l00062"></a>00062         ne10_physics_apply_impulse_vec2f = <a class="code" href="group__COLLISION__DETECT.html#ga5a2aacf9ec76997b40964898f11ce74a" title="apply contact impulse.">ne10_physics_apply_impulse_vec2f_c</a>;
+<a name="l00063"></a>00063     }
+<a name="l00064"></a>00064     <span class="keywordflow">return</span> NE10_OK;
+<a name="l00065"></a>00065 }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 <span class="comment">// These are actual definitions of our function pointers that are declared in inc/NE10_physics.h</span>
+<a name="l00068"></a>00068 void (*ne10_physics_compute_aabb_vec2f) (ne10_mat2x2f_t *aabb,
+<a name="l00069"></a>00069         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *vertices,
+<a name="l00070"></a>00070         ne10_mat2x2f_t *xf,
+<a name="l00071"></a>00071         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *radius,
+<a name="l00072"></a>00072         ne10_uint32_t vertex_count);
+<a name="l00073"></a>00073 void (*ne10_physics_relative_v_vec2f) (<a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *dv,
+<a name="l00074"></a>00074                                        <a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wa,
+<a name="l00075"></a>00075                                        <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *ra,
+<a name="l00076"></a>00076                                        <a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wb,
+<a name="l00077"></a>00077                                        <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *rb,
+<a name="l00078"></a>00078                                        ne10_uint32_t count);
+<a name="l00079"></a>00079 void (*ne10_physics_apply_impulse_vec2f) (<a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wa,
+<a name="l00080"></a>00080         <a class="code" href="structne10__vec3f__t.html" title="a 3-tuple of ne10_float32_t values.">ne10_vec3f_t</a> *v_wb,
+<a name="l00081"></a>00081         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *ra,
+<a name="l00082"></a>00082         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *rb,
+<a name="l00083"></a>00083         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *ima,
+<a name="l00084"></a>00084         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *imb,
+<a name="l00085"></a>00085         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *p,
+<a name="l00086"></a>00086         ne10_uint32_t count);
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -171,7 +185,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

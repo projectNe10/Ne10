@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Project Ne10: /home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/dsp/NE10_fft_float32.c Source File</title>
+<title>Project Ne10: /home/philwong/Ne10-gerrit/modules/dsp/NE10_fft_float32.c Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,11 +78,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">/home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/dsp/NE10_fft_float32.c</div>  </div>
+<div class="title">/home/philwong/Ne10-gerrit/modules/dsp/NE10_fft_float32.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
-<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2013-14 ARM Limited</span>
+<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2013-14 ARM Limited and Contributors.</span>
 <a name="l00003"></a>00003 <span class="comment"> *  All rights reserved.</span>
 <a name="l00004"></a>00004 <span class="comment"> *</span>
 <a name="l00005"></a>00005 <span class="comment"> *  Redistribution and use in source and binary forms, with or without</span>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00016"></a>00016 <span class="comment"> *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS &quot;AS IS&quot; AND</span>
 <a name="l00017"></a>00017 <span class="comment"> *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
 <a name="l00018"></a>00018 <span class="comment"> *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
-<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY</span>
+<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY</span>
 <a name="l00020"></a>00020 <span class="comment"> *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
 <a name="l00021"></a>00021 <span class="comment"> *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
 <a name="l00022"></a>00022 <span class="comment"> *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
@@ -933,298 +933,279 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00850"></a>00850     } <span class="comment">// last stage</span>
 <a name="l00851"></a>00851 }
 <a name="l00852"></a>00852 
-<a name="l00853"></a>00853 <span class="comment">/* factors buffer:</span>
-<a name="l00854"></a>00854 <span class="comment"> * 0: stage number</span>
-<a name="l00855"></a>00855 <span class="comment"> * 1: stride for the first stage</span>
-<a name="l00856"></a>00856 <span class="comment"> * others: factors */</span>
-<a name="l00857"></a>00857 <span class="keyword">static</span> ne10_int32_t ne10_factor (ne10_int32_t n, ne10_int32_t * facbuf)
-<a name="l00858"></a>00858 {
-<a name="l00859"></a>00859     ne10_int32_t p = 4;
-<a name="l00860"></a>00860     ne10_int32_t i = 1;
-<a name="l00861"></a>00861     ne10_int32_t stage_num = 0;
-<a name="l00862"></a>00862     ne10_int32_t stride_max = n;
+<a name="l00853"></a>00853 <span class="keyword">static</span> <span class="keywordtype">void</span> ne10_fft_split_r2c_1d_float32 (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *dst,
+<a name="l00854"></a>00854         <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *src,
+<a name="l00855"></a>00855         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles,
+<a name="l00856"></a>00856         ne10_int32_t ncfft)
+<a name="l00857"></a>00857 {
+<a name="l00858"></a>00858     ne10_int32_t k;
+<a name="l00859"></a>00859     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> fpnk, fpk, f1k, f2k, tw, tdc;
+<a name="l00860"></a>00860 
+<a name="l00861"></a>00861     tdc.r = src[0].r;
+<a name="l00862"></a>00862     tdc.i = src[0].i;
 <a name="l00863"></a>00863 
-<a name="l00864"></a>00864     <span class="comment">/* factor out powers of 4, powers of 2 */</span>
-<a name="l00865"></a>00865     <span class="keywordflow">do</span>
-<a name="l00866"></a>00866     {
-<a name="l00867"></a>00867         <span class="keywordflow">if</span> ( (n % p) == 2)
-<a name="l00868"></a>00868             p = 2;
-<a name="l00869"></a>00869         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (n % p)
-<a name="l00870"></a>00870         {
-<a name="l00871"></a>00871             <span class="keywordflow">return</span> NE10_ERR;
-<a name="l00872"></a>00872         }
+<a name="l00864"></a>00864     dst[0].r = tdc.r + tdc.i;
+<a name="l00865"></a>00865     dst[ncfft].r = tdc.r - tdc.i;
+<a name="l00866"></a>00866     dst[ncfft].i = dst[0].i = 0;
+<a name="l00867"></a>00867 
+<a name="l00868"></a>00868     <span class="keywordflow">for</span> (k = 1; k &lt;= ncfft / 2 ; ++k)
+<a name="l00869"></a>00869     {
+<a name="l00870"></a>00870         fpk    = src[k];
+<a name="l00871"></a>00871         fpnk.r =   src[ncfft - k].r;
+<a name="l00872"></a>00872         fpnk.i = - src[ncfft - k].i;
 <a name="l00873"></a>00873 
-<a name="l00874"></a>00874         n /= p;
-<a name="l00875"></a>00875         facbuf[2 * i] = p;
-<a name="l00876"></a>00876         facbuf[2 * i + 1] = n;
-<a name="l00877"></a>00877         i++;
-<a name="l00878"></a>00878         stage_num++;
-<a name="l00879"></a>00879     }
-<a name="l00880"></a>00880     <span class="keywordflow">while</span> (n &gt; 1);
-<a name="l00881"></a>00881     facbuf[0] = stage_num;
-<a name="l00882"></a>00882     facbuf[1] = stride_max / p;
-<a name="l00883"></a>00883     <span class="keywordflow">return</span> NE10_OK;
-<a name="l00884"></a>00884 }
-<a name="l00885"></a>00885 
-<a name="l00886"></a>00886 
-<a name="l00887"></a>00887 <span class="keyword">static</span> <span class="keywordtype">void</span> ne10_fft_split_r2c_1d_float32 (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *dst,
-<a name="l00888"></a>00888         <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *src,
-<a name="l00889"></a>00889         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles,
-<a name="l00890"></a>00890         ne10_int32_t ncfft)
-<a name="l00891"></a>00891 {
-<a name="l00892"></a>00892     ne10_int32_t k;
-<a name="l00893"></a>00893     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> fpnk, fpk, f1k, f2k, tw, tdc;
-<a name="l00894"></a>00894 
-<a name="l00895"></a>00895     tdc.r = src[0].r;
-<a name="l00896"></a>00896     tdc.i = src[0].i;
-<a name="l00897"></a>00897 
-<a name="l00898"></a>00898     dst[0].r = tdc.r + tdc.i;
-<a name="l00899"></a>00899     dst[ncfft].r = tdc.r - tdc.i;
-<a name="l00900"></a>00900     dst[ncfft].i = dst[0].i = 0;
-<a name="l00901"></a>00901 
-<a name="l00902"></a>00902     <span class="keywordflow">for</span> (k = 1; k &lt;= ncfft / 2 ; ++k)
-<a name="l00903"></a>00903     {
-<a name="l00904"></a>00904         fpk    = src[k];
-<a name="l00905"></a>00905         fpnk.r =   src[ncfft - k].r;
-<a name="l00906"></a>00906         fpnk.i = - src[ncfft - k].i;
-<a name="l00907"></a>00907 
-<a name="l00908"></a>00908         f1k.r = fpk.r + fpnk.r;
-<a name="l00909"></a>00909         f1k.i = fpk.i + fpnk.i;
-<a name="l00910"></a>00910 
-<a name="l00911"></a>00911         f2k.r = fpk.r - fpnk.r;
-<a name="l00912"></a>00912         f2k.i = fpk.i - fpnk.i;
-<a name="l00913"></a>00913 
-<a name="l00914"></a>00914         tw.r = f2k.r * (twiddles[k - 1]).r - f2k.i * (twiddles[k - 1]).i;
-<a name="l00915"></a>00915         tw.i = f2k.r * (twiddles[k - 1]).i + f2k.i * (twiddles[k - 1]).r;
-<a name="l00916"></a>00916 
-<a name="l00917"></a>00917         dst[k].r = (f1k.r + tw.r) * 0.5f;
-<a name="l00918"></a>00918         dst[k].i = (f1k.i + tw.i) * 0.5f;
-<a name="l00919"></a>00919         dst[ncfft - k].r = (f1k.r - tw.r) * 0.5f;
-<a name="l00920"></a>00920         dst[ncfft - k].i = (tw.i - f1k.i) * 0.5f;
-<a name="l00921"></a>00921     }
-<a name="l00922"></a>00922 }
-<a name="l00923"></a>00923 
-<a name="l00924"></a>00924 <span class="keyword">static</span> <span class="keywordtype">void</span> ne10_fft_split_c2r_1d_float32 (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *dst,
-<a name="l00925"></a>00925         <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *src,
-<a name="l00926"></a>00926         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles,
-<a name="l00927"></a>00927         ne10_int32_t ncfft)
-<a name="l00928"></a>00928 {
-<a name="l00929"></a>00929 
-<a name="l00930"></a>00930     ne10_int32_t k;
-<a name="l00931"></a>00931     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> fk, fnkc, fek, fok, tmp;
-<a name="l00932"></a>00932 
-<a name="l00933"></a>00933 
-<a name="l00934"></a>00934     dst[0].r = (src[0].r + src[ncfft].r) * 0.5f;
-<a name="l00935"></a>00935     dst[0].i = (src[0].r - src[ncfft].r) * 0.5f;
-<a name="l00936"></a>00936 
-<a name="l00937"></a>00937     <span class="keywordflow">for</span> (k = 1; k &lt;= ncfft / 2; k++)
-<a name="l00938"></a>00938     {
-<a name="l00939"></a>00939         fk = src[k];
-<a name="l00940"></a>00940         fnkc.r = src[ncfft - k].r;
-<a name="l00941"></a>00941         fnkc.i = -src[ncfft - k].i;
-<a name="l00942"></a>00942 
-<a name="l00943"></a>00943         fek.r = fk.r + fnkc.r;
-<a name="l00944"></a>00944         fek.i = fk.i + fnkc.i;
-<a name="l00945"></a>00945 
-<a name="l00946"></a>00946         tmp.r = fk.r - fnkc.r;
-<a name="l00947"></a>00947         tmp.i = fk.i - fnkc.i;
-<a name="l00948"></a>00948 
-<a name="l00949"></a>00949         fok.r = tmp.r * twiddles[k - 1].r + tmp.i * twiddles[k - 1].i;
-<a name="l00950"></a>00950         fok.i = tmp.i * twiddles[k - 1].r - tmp.r * twiddles[k - 1].i;
-<a name="l00951"></a>00951 
-<a name="l00952"></a>00952         dst[k].r = (fek.r + fok.r) * 0.5f;
-<a name="l00953"></a>00953         dst[k].i = (fek.i + fok.i) * 0.5f;
-<a name="l00954"></a>00954 
-<a name="l00955"></a>00955         dst[ncfft - k].r = (fek.r - fok.r) * 0.5f;
-<a name="l00956"></a>00956         dst[ncfft - k].i = (fok.i - fek.i) * 0.5f;
-<a name="l00957"></a>00957     }
-<a name="l00958"></a>00958 }
-<a name="l00959"></a>00959 
-<a name="l01033"></a><a class="code" href="group__C2C__FFT__IFFT.html#ga0c6d88d8ab945b6f3738f8764a385775">01033</a> <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> <a class="code" href="group__C2C__FFT__IFFT.html#ga0c6d88d8ab945b6f3738f8764a385775" title="User-callable function to allocate all necessary storage space for the fft.">ne10_fft_alloc_c2c_float32</a> (ne10_int32_t nfft)
-<a name="l01034"></a>01034 {
-<a name="l01035"></a>01035     <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> st = NULL;
-<a name="l01036"></a>01036     ne10_uint32_t memneeded = <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>)
-<a name="l01037"></a>01037                               + <span class="keyword">sizeof</span> (ne10_int32_t) * (NE10_MAXFACTORS * 2) <span class="comment">/* factors*/</span>
-<a name="l01038"></a>01038                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * nfft        <span class="comment">/* twiddle*/</span>
-<a name="l01039"></a>01039                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * nfft        <span class="comment">/* buffer*/</span>
-<a name="l01040"></a>01040                               + NE10_FFT_BYTE_ALIGNMENT;     <span class="comment">/* 64-bit alignment*/</span>
-<a name="l01041"></a>01041 
-<a name="l01042"></a>01042     st = (<a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>) NE10_MALLOC (memneeded);
-<a name="l01043"></a>01043 
-<a name="l01044"></a>01044     <span class="keywordflow">if</span> (st)
-<a name="l01045"></a>01045     {
-<a name="l01046"></a>01046         uintptr_t address = (uintptr_t) st + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>);
-<a name="l01047"></a>01047         NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
-<a name="l01048"></a>01048         st-&gt;factors = (ne10_int32_t*) address;
-<a name="l01049"></a>01049         st-&gt;twiddles = (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) (st-&gt;factors + (NE10_MAXFACTORS * 2));
-<a name="l01050"></a>01050         st-&gt;buffer = st-&gt;twiddles + nfft;
-<a name="l01051"></a>01051         st-&gt;nfft = nfft;
-<a name="l01052"></a>01052 
-<a name="l01053"></a>01053         ne10_int32_t result = ne10_factor (nfft, st-&gt;factors);
-<a name="l01054"></a>01054         <span class="keywordflow">if</span> (result == NE10_ERR)
-<a name="l01055"></a>01055         {
-<a name="l01056"></a>01056             NE10_FREE (st);
-<a name="l01057"></a>01057             <span class="keywordflow">return</span> st;
-<a name="l01058"></a>01058         }
-<a name="l01059"></a>01059 
-<a name="l01060"></a>01060         ne10_int32_t i, j;
-<a name="l01061"></a>01061         ne10_int32_t *factors = st-&gt;factors;
-<a name="l01062"></a>01062         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles = st-&gt;twiddles;
-<a name="l01063"></a>01063         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *tw;
-<a name="l01064"></a>01064         ne10_int32_t stage_count = factors[0];
-<a name="l01065"></a>01065         ne10_int32_t fstride1 = factors[1];
-<a name="l01066"></a>01066         ne10_int32_t fstride2 = fstride1 * 2;
-<a name="l01067"></a>01067         ne10_int32_t fstride3 = fstride1 * 3;
-<a name="l01068"></a>01068         ne10_int32_t m;
-<a name="l01069"></a>01069 
-<a name="l01070"></a>01070         <span class="keyword">const</span> ne10_float32_t pi = NE10_PI;
-<a name="l01071"></a>01071         ne10_float32_t phase1;
-<a name="l01072"></a>01072         ne10_float32_t phase2;
-<a name="l01073"></a>01073         ne10_float32_t phase3;
-<a name="l01074"></a>01074 
-<a name="l01075"></a>01075         <span class="keywordflow">for</span> (i = stage_count - 1; i &gt; 0; i--)
-<a name="l01076"></a>01076         {
-<a name="l01077"></a>01077             fstride1 &gt;&gt;= 2;
-<a name="l01078"></a>01078             fstride2 &gt;&gt;= 2;
-<a name="l01079"></a>01079             fstride3 &gt;&gt;= 2;
-<a name="l01080"></a>01080             m = factors[2 * i + 1];
-<a name="l01081"></a>01081             tw = twiddles;
-<a name="l01082"></a>01082             <span class="keywordflow">for</span> (j = 0; j &lt; m; j++)
-<a name="l01083"></a>01083             {
-<a name="l01084"></a>01084                 phase1 = -2 * pi * fstride1 * j / nfft;
-<a name="l01085"></a>01085                 phase2 = -2 * pi * fstride2 * j / nfft;
-<a name="l01086"></a>01086                 phase3 = -2 * pi * fstride3 * j / nfft;
-<a name="l01087"></a>01087                 tw-&gt;r = (ne10_float32_t) cos (phase1);
-<a name="l01088"></a>01088                 tw-&gt;i = (ne10_float32_t) sin (phase1);
-<a name="l01089"></a>01089                 (tw + m)-&gt;r = (ne10_float32_t) cos (phase2);
-<a name="l01090"></a>01090                 (tw + m)-&gt;i = (ne10_float32_t) sin (phase2);
-<a name="l01091"></a>01091                 (tw + m * 2)-&gt;r = (ne10_float32_t) cos (phase3);
-<a name="l01092"></a>01092                 (tw + m * 2)-&gt;i = (ne10_float32_t) sin (phase3);
-<a name="l01093"></a>01093                 tw++;
-<a name="l01094"></a>01094             }
-<a name="l01095"></a>01095             twiddles += m * 3;
-<a name="l01096"></a>01096         }
-<a name="l01097"></a>01097 
-<a name="l01098"></a>01098     }
-<a name="l01099"></a>01099     <span class="keywordflow">return</span> st;
-<a name="l01100"></a>01100 }
-<a name="l01101"></a>01101 
-<a name="l01113"></a><a class="code" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">01113</a> <span class="keywordtype">void</span> <a class="code" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658" title="Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data.">ne10_fft_c2c_1d_float32_c</a> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
-<a name="l01114"></a>01114                                 <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
-<a name="l01115"></a>01115                                 <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg,
-<a name="l01116"></a>01116                                 ne10_int32_t inverse_fft)
-<a name="l01117"></a>01117 {
-<a name="l01118"></a>01118 
-<a name="l01119"></a>01119     <span class="keywordflow">if</span> (inverse_fft)
-<a name="l01120"></a>01120         ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, cfg-&gt;factors, cfg-&gt;twiddles, cfg-&gt;buffer);
-<a name="l01121"></a>01121     <span class="keywordflow">else</span>
-<a name="l01122"></a>01122         ne10_mixed_radix_butterfly_float32_c (fout, fin, cfg-&gt;factors, cfg-&gt;twiddles, cfg-&gt;buffer);
-<a name="l01123"></a>01123 }
-<a name="l01124"></a>01124  <span class="comment">//end of C2C_FFT_IFFT group</span>
-<a name="l01128"></a>01128 
-<a name="l01212"></a><a class="code" href="group__R2C__FFT__IFFT.html#ga1062f8a774736d0cac821b57522d4ea0">01212</a> <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> <a class="code" href="group__R2C__FFT__IFFT.html#ga1062f8a774736d0cac821b57522d4ea0" title="User-callable function to allocate all necessary storage space for the fft (r2c/c2r).">ne10_fft_alloc_r2c_float32</a> (ne10_int32_t nfft)
-<a name="l01213"></a>01213 {
-<a name="l01214"></a>01214     <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> st = NULL;
-<a name="l01215"></a>01215     ne10_int32_t ncfft = nfft &gt;&gt; 1;
+<a name="l00874"></a>00874         f1k.r = fpk.r + fpnk.r;
+<a name="l00875"></a>00875         f1k.i = fpk.i + fpnk.i;
+<a name="l00876"></a>00876 
+<a name="l00877"></a>00877         f2k.r = fpk.r - fpnk.r;
+<a name="l00878"></a>00878         f2k.i = fpk.i - fpnk.i;
+<a name="l00879"></a>00879 
+<a name="l00880"></a>00880         tw.r = f2k.r * (twiddles[k - 1]).r - f2k.i * (twiddles[k - 1]).i;
+<a name="l00881"></a>00881         tw.i = f2k.r * (twiddles[k - 1]).i + f2k.i * (twiddles[k - 1]).r;
+<a name="l00882"></a>00882 
+<a name="l00883"></a>00883         dst[k].r = (f1k.r + tw.r) * 0.5f;
+<a name="l00884"></a>00884         dst[k].i = (f1k.i + tw.i) * 0.5f;
+<a name="l00885"></a>00885         dst[ncfft - k].r = (f1k.r - tw.r) * 0.5f;
+<a name="l00886"></a>00886         dst[ncfft - k].i = (tw.i - f1k.i) * 0.5f;
+<a name="l00887"></a>00887     }
+<a name="l00888"></a>00888 }
+<a name="l00889"></a>00889 
+<a name="l00890"></a>00890 <span class="keyword">static</span> <span class="keywordtype">void</span> ne10_fft_split_c2r_1d_float32 (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *dst,
+<a name="l00891"></a>00891         <span class="keyword">const</span> <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *src,
+<a name="l00892"></a>00892         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles,
+<a name="l00893"></a>00893         ne10_int32_t ncfft)
+<a name="l00894"></a>00894 {
+<a name="l00895"></a>00895 
+<a name="l00896"></a>00896     ne10_int32_t k;
+<a name="l00897"></a>00897     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> fk, fnkc, fek, fok, tmp;
+<a name="l00898"></a>00898 
+<a name="l00899"></a>00899 
+<a name="l00900"></a>00900     dst[0].r = (src[0].r + src[ncfft].r) * 0.5f;
+<a name="l00901"></a>00901     dst[0].i = (src[0].r - src[ncfft].r) * 0.5f;
+<a name="l00902"></a>00902 
+<a name="l00903"></a>00903     <span class="keywordflow">for</span> (k = 1; k &lt;= ncfft / 2; k++)
+<a name="l00904"></a>00904     {
+<a name="l00905"></a>00905         fk = src[k];
+<a name="l00906"></a>00906         fnkc.r = src[ncfft - k].r;
+<a name="l00907"></a>00907         fnkc.i = -src[ncfft - k].i;
+<a name="l00908"></a>00908 
+<a name="l00909"></a>00909         fek.r = fk.r + fnkc.r;
+<a name="l00910"></a>00910         fek.i = fk.i + fnkc.i;
+<a name="l00911"></a>00911 
+<a name="l00912"></a>00912         tmp.r = fk.r - fnkc.r;
+<a name="l00913"></a>00913         tmp.i = fk.i - fnkc.i;
+<a name="l00914"></a>00914 
+<a name="l00915"></a>00915         fok.r = tmp.r * twiddles[k - 1].r + tmp.i * twiddles[k - 1].i;
+<a name="l00916"></a>00916         fok.i = tmp.i * twiddles[k - 1].r - tmp.r * twiddles[k - 1].i;
+<a name="l00917"></a>00917 
+<a name="l00918"></a>00918         dst[k].r = (fek.r + fok.r) * 0.5f;
+<a name="l00919"></a>00919         dst[k].i = (fek.i + fok.i) * 0.5f;
+<a name="l00920"></a>00920 
+<a name="l00921"></a>00921         dst[ncfft - k].r = (fek.r - fok.r) * 0.5f;
+<a name="l00922"></a>00922         dst[ncfft - k].i = (fok.i - fek.i) * 0.5f;
+<a name="l00923"></a>00923     }
+<a name="l00924"></a>00924 }
+<a name="l00925"></a>00925 
+<a name="l00999"></a><a class="code" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d">00999</a> <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> <a class="code" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d" title="User-callable function to allocate all necessary storage space for the fft.">ne10_fft_alloc_c2c_float32_c</a> (ne10_int32_t nfft)
+<a name="l01000"></a>01000 {
+<a name="l01001"></a>01001     <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> st = NULL;
+<a name="l01002"></a>01002     ne10_uint32_t memneeded = <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>)
+<a name="l01003"></a>01003                               + <span class="keyword">sizeof</span> (ne10_int32_t) * (NE10_MAXFACTORS * 2) <span class="comment">/* factors*/</span>
+<a name="l01004"></a>01004                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * nfft        <span class="comment">/* twiddle*/</span>
+<a name="l01005"></a>01005                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * nfft        <span class="comment">/* buffer*/</span>
+<a name="l01006"></a>01006                               + NE10_FFT_BYTE_ALIGNMENT;     <span class="comment">/* 64-bit alignment*/</span>
+<a name="l01007"></a>01007 
+<a name="l01008"></a>01008     st = (<a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>) NE10_MALLOC (memneeded);
+<a name="l01009"></a>01009 
+<a name="l01010"></a>01010     <span class="keywordflow">if</span> (st == NULL)
+<a name="l01011"></a>01011     {
+<a name="l01012"></a>01012         <span class="keywordflow">return</span> st;
+<a name="l01013"></a>01013     }
+<a name="l01014"></a>01014 
+<a name="l01015"></a>01015     uintptr_t address = (uintptr_t) st + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>);
+<a name="l01016"></a>01016     NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+<a name="l01017"></a>01017     st-&gt;factors = (ne10_int32_t*) address;
+<a name="l01018"></a>01018     st-&gt;twiddles = (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) (st-&gt;factors + (NE10_MAXFACTORS * 2));
+<a name="l01019"></a>01019     st-&gt;buffer = st-&gt;twiddles + nfft;
+<a name="l01020"></a>01020     st-&gt;nfft = nfft;
+<a name="l01021"></a>01021 
+<a name="l01022"></a>01022     ne10_int32_t result = ne10_factor (nfft, st-&gt;factors, NE10_FACTOR_DEFAULT);
+<a name="l01023"></a>01023     <span class="keywordflow">if</span> (result == NE10_ERR)
+<a name="l01024"></a>01024     {
+<a name="l01025"></a>01025         NE10_FREE (st);
+<a name="l01026"></a>01026         <span class="keywordflow">return</span> st;
+<a name="l01027"></a>01027     }
+<a name="l01028"></a>01028 
+<a name="l01029"></a>01029     <span class="comment">// Check if ALGORITHM FLAG is NE10_FFT_ALG_ANY.</span>
+<a name="l01030"></a>01030     {
+<a name="l01031"></a>01031         ne10_int32_t stage_count    = st-&gt;factors[0];
+<a name="l01032"></a>01032         ne10_int32_t algorithm_flag = st-&gt;factors[2 * (stage_count + 1)];
+<a name="l01033"></a>01033 
+<a name="l01034"></a>01034         <span class="comment">// Enable radix-8.</span>
+<a name="l01035"></a>01035         <span class="keywordflow">if</span> (algorithm_flag == NE10_FFT_ALG_ANY)
+<a name="l01036"></a>01036         {
+<a name="l01037"></a>01037             result = ne10_factor (st-&gt;nfft, st-&gt;factors, NE10_FACTOR_EIGHT);
+<a name="l01038"></a>01038             <span class="keywordflow">if</span> (result == NE10_ERR)
+<a name="l01039"></a>01039             {
+<a name="l01040"></a>01040                 PRINT_HIT;
+<a name="l01041"></a>01041                 NE10_FREE (st);
+<a name="l01042"></a>01042                 <span class="keywordflow">return</span> st;
+<a name="l01043"></a>01043             }
+<a name="l01044"></a>01044         }
+<a name="l01045"></a>01045     }
+<a name="l01046"></a>01046 
+<a name="l01047"></a>01047     ne10_fft_generate_twiddles_float32 (st-&gt;twiddles, st-&gt;factors, nfft);
+<a name="l01048"></a>01048 
+<a name="l01049"></a>01049     <span class="keywordflow">return</span> st;
+<a name="l01050"></a>01050 }
+<a name="l01051"></a>01051 
+<a name="l01063"></a><a class="code" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">01063</a> <span class="keywordtype">void</span> <a class="code" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658" title="Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.">ne10_fft_c2c_1d_float32_c</a> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
+<a name="l01064"></a>01064                                 <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
+<a name="l01065"></a>01065                                 <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg,
+<a name="l01066"></a>01066                                 ne10_int32_t inverse_fft)
+<a name="l01067"></a>01067 {
+<a name="l01068"></a>01068     ne10_int32_t stage_count = cfg-&gt;factors[0];
+<a name="l01069"></a>01069     ne10_int32_t algorithm_flag = cfg-&gt;factors[2 * (stage_count + 1)];
+<a name="l01070"></a>01070 
+<a name="l01071"></a>01071     assert ((algorithm_flag == NE10_FFT_ALG_24)
+<a name="l01072"></a>01072             || (algorithm_flag == NE10_FFT_ALG_ANY));
+<a name="l01073"></a>01073 
+<a name="l01074"></a>01074     <span class="keywordflow">switch</span> (algorithm_flag)
+<a name="l01075"></a>01075     {
+<a name="l01076"></a>01076     <span class="keywordflow">case</span> NE10_FFT_ALG_24:
+<a name="l01077"></a>01077         <span class="keywordflow">if</span> (inverse_fft)
+<a name="l01078"></a>01078         {
+<a name="l01079"></a>01079             ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, cfg-&gt;factors, cfg-&gt;twiddles, cfg-&gt;buffer);
+<a name="l01080"></a>01080         }
+<a name="l01081"></a>01081         <span class="keywordflow">else</span>
+<a name="l01082"></a>01082         {
+<a name="l01083"></a>01083             ne10_mixed_radix_butterfly_float32_c (fout, fin, cfg-&gt;factors, cfg-&gt;twiddles, cfg-&gt;buffer);
+<a name="l01084"></a>01084         }
+<a name="l01085"></a>01085         <span class="keywordflow">break</span>;
+<a name="l01086"></a>01086     <span class="keywordflow">case</span> NE10_FFT_ALG_ANY:
+<a name="l01087"></a>01087         <span class="keywordflow">if</span> (inverse_fft)
+<a name="l01088"></a>01088         {
+<a name="l01089"></a>01089             ne10_mixed_radix_generic_butterfly_inverse_float32_c (fout, fin, cfg-&gt;factors, cfg-&gt;twiddles, cfg-&gt;buffer);
+<a name="l01090"></a>01090         }
+<a name="l01091"></a>01091         <span class="keywordflow">else</span>
+<a name="l01092"></a>01092         {
+<a name="l01093"></a>01093             ne10_mixed_radix_generic_butterfly_float32_c (fout, fin, cfg-&gt;factors, cfg-&gt;twiddles, cfg-&gt;buffer);
+<a name="l01094"></a>01094         }
+<a name="l01095"></a>01095         <span class="keywordflow">break</span>;
+<a name="l01096"></a>01096     }
+<a name="l01097"></a>01097 }
+<a name="l01098"></a>01098  <span class="comment">//end of C2C_FFT_IFFT group</span>
+<a name="l01102"></a>01102 
+<a name="l01180"></a>01180 <span class="comment">// only for ARMv7-A and AArch32 platform.</span>
+<a name="l01181"></a>01181 <span class="comment">// For AArch64 these functions are implemented in NE10_rfft_float32.c</span>
+<a name="l01182"></a>01182 <span class="preprocessor">#ifdef __arm__</span>
+<a name="l01183"></a>01183 <span class="preprocessor"></span>
+<a name="l01184"></a>01184 <span class="comment">// RFFT reference model for ARMv7-A and AArch32 neon</span>
+<a name="l01186"></a>01186 <span class="comment"></span>
+<a name="l01193"></a>01193 <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
+<a name="l01194"></a>01194 {
+<a name="l01195"></a>01195     <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> st = NULL;
+<a name="l01196"></a>01196     ne10_int32_t ncfft = nfft &gt;&gt; 1;
+<a name="l01197"></a>01197 
+<a name="l01198"></a>01198     ne10_uint32_t memneeded = <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>)
+<a name="l01199"></a>01199                               + <span class="keyword">sizeof</span> (ne10_int32_t) * (NE10_MAXFACTORS * 2) <span class="comment">/* factors */</span>
+<a name="l01200"></a>01200                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * ncfft       <span class="comment">/* twiddle*/</span>
+<a name="l01201"></a>01201                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * (ncfft / 2) <span class="comment">/* super twiddles*/</span>
+<a name="l01202"></a>01202                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * nfft        <span class="comment">/* buffer*/</span>
+<a name="l01203"></a>01203                               + NE10_FFT_BYTE_ALIGNMENT;     <span class="comment">/* 64-bit alignment*/</span>
+<a name="l01204"></a>01204 
+<a name="l01205"></a>01205     st = (<a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a>) NE10_MALLOC (memneeded);
+<a name="l01206"></a>01206 
+<a name="l01207"></a>01207     <span class="keywordflow">if</span> (st)
+<a name="l01208"></a>01208     {
+<a name="l01209"></a>01209         uintptr_t address = (uintptr_t) st + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>);
+<a name="l01210"></a>01210         NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+<a name="l01211"></a>01211         st-&gt;factors = (ne10_int32_t*) address;
+<a name="l01212"></a>01212         st-&gt;twiddles = (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) (st-&gt;factors + (NE10_MAXFACTORS * 2));
+<a name="l01213"></a>01213         st-&gt;super_twiddles = st-&gt;twiddles + ncfft;
+<a name="l01214"></a>01214         st-&gt;buffer = st-&gt;super_twiddles + (ncfft / 2);
+<a name="l01215"></a>01215         st-&gt;ncfft = ncfft;
 <a name="l01216"></a>01216 
-<a name="l01217"></a>01217     ne10_uint32_t memneeded = <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>)
-<a name="l01218"></a>01218                               + <span class="keyword">sizeof</span> (ne10_int32_t) * (NE10_MAXFACTORS * 2) <span class="comment">/* factors */</span>
-<a name="l01219"></a>01219                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * ncfft       <span class="comment">/* twiddle*/</span>
-<a name="l01220"></a>01220                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * (ncfft / 2) <span class="comment">/* super twiddles*/</span>
-<a name="l01221"></a>01221                               + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>) * nfft        <span class="comment">/* buffer*/</span>
-<a name="l01222"></a>01222                               + NE10_FFT_BYTE_ALIGNMENT;     <span class="comment">/* 64-bit alignment*/</span>
+<a name="l01217"></a>01217         ne10_int32_t result = ne10_factor (ncfft, st-&gt;factors, NE10_FACTOR_DEFAULT);
+<a name="l01218"></a>01218         <span class="keywordflow">if</span> (result == NE10_ERR)
+<a name="l01219"></a>01219         {
+<a name="l01220"></a>01220             NE10_FREE (st);
+<a name="l01221"></a>01221             <span class="keywordflow">return</span> st;
+<a name="l01222"></a>01222         }
 <a name="l01223"></a>01223 
-<a name="l01224"></a>01224     st = (<a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a>) NE10_MALLOC (memneeded);
-<a name="l01225"></a>01225 
-<a name="l01226"></a>01226     <span class="keywordflow">if</span> (st)
-<a name="l01227"></a>01227     {
-<a name="l01228"></a>01228         uintptr_t address = (uintptr_t) st + <span class="keyword">sizeof</span> (<a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>);
-<a name="l01229"></a>01229         NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
-<a name="l01230"></a>01230         st-&gt;factors = (ne10_int32_t*) address;
-<a name="l01231"></a>01231         st-&gt;twiddles = (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) (st-&gt;factors + (NE10_MAXFACTORS * 2));
-<a name="l01232"></a>01232         st-&gt;super_twiddles = st-&gt;twiddles + ncfft;
-<a name="l01233"></a>01233         st-&gt;buffer = st-&gt;super_twiddles + (ncfft / 2);
-<a name="l01234"></a>01234         st-&gt;ncfft = ncfft;
-<a name="l01235"></a>01235 
-<a name="l01236"></a>01236         ne10_int32_t result = ne10_factor (ncfft, st-&gt;factors);
-<a name="l01237"></a>01237         <span class="keywordflow">if</span> (result == NE10_ERR)
-<a name="l01238"></a>01238         {
-<a name="l01239"></a>01239             NE10_FREE (st);
-<a name="l01240"></a>01240             <span class="keywordflow">return</span> st;
-<a name="l01241"></a>01241         }
-<a name="l01242"></a>01242 
-<a name="l01243"></a>01243         ne10_int32_t i, j;
-<a name="l01244"></a>01244         ne10_int32_t *factors = st-&gt;factors;
-<a name="l01245"></a>01245         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles = st-&gt;twiddles;
-<a name="l01246"></a>01246         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *tw;
-<a name="l01247"></a>01247         ne10_int32_t stage_count = factors[0];
-<a name="l01248"></a>01248         ne10_int32_t fstride1 = factors[1];
-<a name="l01249"></a>01249         ne10_int32_t fstride2 = fstride1 * 2;
-<a name="l01250"></a>01250         ne10_int32_t fstride3 = fstride1 * 3;
-<a name="l01251"></a>01251         ne10_int32_t m;
-<a name="l01252"></a>01252 
-<a name="l01253"></a>01253         <span class="keyword">const</span> ne10_float32_t pi = NE10_PI;
-<a name="l01254"></a>01254         ne10_float32_t phase1;
-<a name="l01255"></a>01255         ne10_float32_t phase2;
-<a name="l01256"></a>01256         ne10_float32_t phase3;
-<a name="l01257"></a>01257 
-<a name="l01258"></a>01258         <span class="keywordflow">for</span> (i = stage_count - 1; i &gt; 0; i--)
-<a name="l01259"></a>01259         {
-<a name="l01260"></a>01260             fstride1 &gt;&gt;= 2;
-<a name="l01261"></a>01261             fstride2 &gt;&gt;= 2;
-<a name="l01262"></a>01262             fstride3 &gt;&gt;= 2;
-<a name="l01263"></a>01263             m = factors[2 * i + 1];
-<a name="l01264"></a>01264             tw = twiddles;
-<a name="l01265"></a>01265             <span class="keywordflow">for</span> (j = 0; j &lt; m; j++)
-<a name="l01266"></a>01266             {
-<a name="l01267"></a>01267                 phase1 = -2 * pi * fstride1 * j / ncfft;
-<a name="l01268"></a>01268                 phase2 = -2 * pi * fstride2 * j / ncfft;
-<a name="l01269"></a>01269                 phase3 = -2 * pi * fstride3 * j / ncfft;
-<a name="l01270"></a>01270                 tw-&gt;r = (ne10_float32_t) cos (phase1);
-<a name="l01271"></a>01271                 tw-&gt;i = (ne10_float32_t) sin (phase1);
-<a name="l01272"></a>01272                 (tw + m)-&gt;r = (ne10_float32_t) cos (phase2);
-<a name="l01273"></a>01273                 (tw + m)-&gt;i = (ne10_float32_t) sin (phase2);
-<a name="l01274"></a>01274                 (tw + m * 2)-&gt;r = (ne10_float32_t) cos (phase3);
-<a name="l01275"></a>01275                 (tw + m * 2)-&gt;i = (ne10_float32_t) sin (phase3);
-<a name="l01276"></a>01276                 tw++;
-<a name="l01277"></a>01277             }
-<a name="l01278"></a>01278             twiddles += m * 3;
-<a name="l01279"></a>01279         }
-<a name="l01280"></a>01280 
-<a name="l01281"></a>01281         tw = st-&gt;super_twiddles;
-<a name="l01282"></a>01282         <span class="keywordflow">for</span> (i = 0; i &lt; ncfft / 2; i++)
-<a name="l01283"></a>01283         {
-<a name="l01284"></a>01284             phase1 = -pi * ( (ne10_float32_t) (i + 1) / ncfft + 0.5f);
-<a name="l01285"></a>01285             tw-&gt;r = (ne10_float32_t) cos (phase1);
-<a name="l01286"></a>01286             tw-&gt;i = (ne10_float32_t) sin (phase1);
-<a name="l01287"></a>01287             tw++;
-<a name="l01288"></a>01288         }
-<a name="l01289"></a>01289 
-<a name="l01290"></a>01290     }
-<a name="l01291"></a>01291     <span class="keywordflow">return</span> st;
-<a name="l01292"></a>01292 }
-<a name="l01293"></a>01293 
-<a name="l01304"></a><a class="code" href="group__R2C__FFT__IFFT.html#gad1d4b5445787387f4e547ecee2215b31">01304</a> <span class="keywordtype">void</span> <a class="code" href="group__R2C__FFT__IFFT.html#gad1d4b5445787387f4e547ecee2215b31" title="Mixed radix-2/4 FFT (real to complex) of float(32-bit) data.">ne10_fft_r2c_1d_float32_c</a> (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
-<a name="l01305"></a>01305                                 ne10_float32_t *fin,
-<a name="l01306"></a>01306                                 <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg)
-<a name="l01307"></a>01307 {
-<a name="l01308"></a>01308     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * tmpbuf = cfg-&gt;buffer;
-<a name="l01309"></a>01309 
-<a name="l01310"></a>01310     ne10_mixed_radix_butterfly_float32_c (tmpbuf, (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) fin, cfg-&gt;factors, cfg-&gt;twiddles, fout);
-<a name="l01311"></a>01311     ne10_fft_split_r2c_1d_float32 (fout, tmpbuf, cfg-&gt;super_twiddles, cfg-&gt;ncfft);
-<a name="l01312"></a>01312 }
-<a name="l01313"></a>01313 
-<a name="l01324"></a><a class="code" href="group__R2C__FFT__IFFT.html#gae177621225ec20beed5d3b9643b83360">01324</a> <span class="keywordtype">void</span> <a class="code" href="group__R2C__FFT__IFFT.html#gae177621225ec20beed5d3b9643b83360" title="Mixed radix-2/4 IFFT (complex to real) of float(32-bit) data.">ne10_fft_c2r_1d_float32_c</a> (ne10_float32_t *fout,
-<a name="l01325"></a>01325                                 <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
-<a name="l01326"></a>01326                                 <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg)
-<a name="l01327"></a>01327 {
-<a name="l01328"></a>01328     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * tmpbuf1 = cfg-&gt;buffer;
-<a name="l01329"></a>01329     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * tmpbuf2 = cfg-&gt;buffer + cfg-&gt;ncfft;
-<a name="l01330"></a>01330 
-<a name="l01331"></a>01331     ne10_fft_split_c2r_1d_float32 (tmpbuf1, fin, cfg-&gt;super_twiddles, cfg-&gt;ncfft);
-<a name="l01332"></a>01332     ne10_mixed_radix_butterfly_inverse_float32_c ( (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) fout, tmpbuf1, cfg-&gt;factors, cfg-&gt;twiddles, tmpbuf2);
-<a name="l01333"></a>01333 }
-<a name="l01334"></a>01334 
+<a name="l01224"></a>01224         ne10_int32_t i, j;
+<a name="l01225"></a>01225         ne10_int32_t *factors = st-&gt;factors;
+<a name="l01226"></a>01226         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles = st-&gt;twiddles;
+<a name="l01227"></a>01227         <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *tw;
+<a name="l01228"></a>01228         ne10_int32_t stage_count = factors[0];
+<a name="l01229"></a>01229         ne10_int32_t fstride1 = factors[1];
+<a name="l01230"></a>01230         ne10_int32_t fstride2 = fstride1 * 2;
+<a name="l01231"></a>01231         ne10_int32_t fstride3 = fstride1 * 3;
+<a name="l01232"></a>01232         ne10_int32_t m;
+<a name="l01233"></a>01233 
+<a name="l01234"></a>01234         <span class="keyword">const</span> ne10_float32_t pi = NE10_PI;
+<a name="l01235"></a>01235         ne10_float32_t phase1;
+<a name="l01236"></a>01236         ne10_float32_t phase2;
+<a name="l01237"></a>01237         ne10_float32_t phase3;
+<a name="l01238"></a>01238 
+<a name="l01239"></a>01239         <span class="keywordflow">for</span> (i = stage_count - 1; i &gt; 0; i--)
+<a name="l01240"></a>01240         {
+<a name="l01241"></a>01241             fstride1 &gt;&gt;= 2;
+<a name="l01242"></a>01242             fstride2 &gt;&gt;= 2;
+<a name="l01243"></a>01243             fstride3 &gt;&gt;= 2;
+<a name="l01244"></a>01244             m = factors[2 * i + 1];
+<a name="l01245"></a>01245             tw = twiddles;
+<a name="l01246"></a>01246             <span class="keywordflow">for</span> (j = 0; j &lt; m; j++)
+<a name="l01247"></a>01247             {
+<a name="l01248"></a>01248                 phase1 = -2 * pi * fstride1 * j / ncfft;
+<a name="l01249"></a>01249                 phase2 = -2 * pi * fstride2 * j / ncfft;
+<a name="l01250"></a>01250                 phase3 = -2 * pi * fstride3 * j / ncfft;
+<a name="l01251"></a>01251                 tw-&gt;r = (ne10_float32_t) cos (phase1);
+<a name="l01252"></a>01252                 tw-&gt;i = (ne10_float32_t) sin (phase1);
+<a name="l01253"></a>01253                 (tw + m)-&gt;r = (ne10_float32_t) cos (phase2);
+<a name="l01254"></a>01254                 (tw + m)-&gt;i = (ne10_float32_t) sin (phase2);
+<a name="l01255"></a>01255                 (tw + m * 2)-&gt;r = (ne10_float32_t) cos (phase3);
+<a name="l01256"></a>01256                 (tw + m * 2)-&gt;i = (ne10_float32_t) sin (phase3);
+<a name="l01257"></a>01257                 tw++;
+<a name="l01258"></a>01258             }
+<a name="l01259"></a>01259             twiddles += m * 3;
+<a name="l01260"></a>01260         }
+<a name="l01261"></a>01261 
+<a name="l01262"></a>01262         tw = st-&gt;super_twiddles;
+<a name="l01263"></a>01263         <span class="keywordflow">for</span> (i = 0; i &lt; ncfft / 2; i++)
+<a name="l01264"></a>01264         {
+<a name="l01265"></a>01265             phase1 = -pi * ( (ne10_float32_t) (i + 1) / ncfft + 0.5f);
+<a name="l01266"></a>01266             tw-&gt;r = (ne10_float32_t) cos (phase1);
+<a name="l01267"></a>01267             tw-&gt;i = (ne10_float32_t) sin (phase1);
+<a name="l01268"></a>01268             tw++;
+<a name="l01269"></a>01269         }
+<a name="l01270"></a>01270 
+<a name="l01271"></a>01271     }
+<a name="l01272"></a>01272     <span class="keywordflow">return</span> st;
+<a name="l01273"></a>01273 }
+<a name="l01274"></a>01274 
+<a name="l01285"></a>01285 <span class="keywordtype">void</span> ne10_fft_r2c_1d_float32_c (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout,
+<a name="l01286"></a>01286                                 ne10_float32_t *fin,
+<a name="l01287"></a>01287                                 <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg)
+<a name="l01288"></a>01288 {
+<a name="l01289"></a>01289     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * tmpbuf = cfg-&gt;buffer;
+<a name="l01290"></a>01290 
+<a name="l01291"></a>01291     ne10_mixed_radix_butterfly_float32_c (tmpbuf, (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) fin, cfg-&gt;factors, cfg-&gt;twiddles, fout);
+<a name="l01292"></a>01292     ne10_fft_split_r2c_1d_float32 (fout, tmpbuf, cfg-&gt;super_twiddles, cfg-&gt;ncfft);
+<a name="l01293"></a>01293 }
+<a name="l01294"></a>01294 
+<a name="l01305"></a>01305 <span class="keywordtype">void</span> ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
+<a name="l01306"></a>01306                                 <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin,
+<a name="l01307"></a>01307                                 <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a> cfg)
+<a name="l01308"></a>01308 {
+<a name="l01309"></a>01309     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * tmpbuf1 = cfg-&gt;buffer;
+<a name="l01310"></a>01310     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> * tmpbuf2 = cfg-&gt;buffer + cfg-&gt;ncfft;
+<a name="l01311"></a>01311 
+<a name="l01312"></a>01312     ne10_fft_split_c2r_1d_float32 (tmpbuf1, fin, cfg-&gt;super_twiddles, cfg-&gt;ncfft);
+<a name="l01313"></a>01313     ne10_mixed_radix_butterfly_inverse_float32_c ( (<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>*) fout, tmpbuf1, cfg-&gt;factors, cfg-&gt;twiddles, tmpbuf2);
+<a name="l01314"></a>01314 }
+<a name="l01315"></a>01315 
+<a name="l01319"></a>01319 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -1243,7 +1224,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

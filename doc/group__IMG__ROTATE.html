@@ -83,10 +83,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__ROTATE.html#gaf5a70f4362b6fc69cf57c1bb9ec006d2">ne10_img_rotate_rgba_c</a> (ne10_uint8_t *dst, ne10_uint32_t *dst_width, ne10_uint32_t *dst_height, ne10_uint8_t *src, ne10_uint32_t src_width, ne10_uint32_t src_height, ne10_int32_t angle)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">image resize of 8-bit data.  <a href="#gaf5a70f4362b6fc69cf57c1bb9ec006d2"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaaae1396219d1a8b5dd189e03e1701fe2"></a><!-- doxytag: member="IMG_ROTATE::ne10_img_rotate_get_quad_rangle_subpix_rgba_neon" ref="gaaae1396219d1a8b5dd189e03e1701fe2" args="(ne10_uint8_t *dst, ne10_uint8_t *src, ne10_int32_t srcw, ne10_int32_t srch, ne10_int32_t dstw, ne10_int32_t dsth, ne10_float32_t *matrix) asm(&quot;ne10_img_rotate_get_quad_rangle_subpix_rgba_neon&quot;)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_img_rotate_get_quad_rangle_subpix_rgba_neon</b> (ne10_uint8_t *dst, ne10_uint8_t *src, ne10_int32_t srcw, ne10_int32_t srch, ne10_int32_t dstw, ne10_int32_t dsth, ne10_float32_t *matrix) asm(&quot;ne10_img_rotate_get_quad_rangle_subpix_rgba_neon&quot;)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__ROTATE.html#gaef1b31cd1f2ae7f5bb5f521449e8c4c0">ne10_img_rotate_rgba_neon</a> (ne10_uint8_t *dst, ne10_uint32_t *dst_width, ne10_uint32_t *dst_height, ne10_uint8_t *src, ne10_uint32_t src_width, ne10_uint32_t src_height, ne10_int32_t angle)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">image rotate of 8-bit data.  <a href="#gaef1b31cd1f2ae7f5bb5f521449e8c4c0"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <dl class="user"><dt><b></b></dt><dd>Image rotate is a generic functionality in image processing. For C implementation, we take the cvGetQuadrangleSubPix function from OpenCV (<a href="http://opencv.org/">http://opencv.org/</a>) for reference. </dd></dl>
@@ -167,80 +163,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_img_rotate_get_q
 
 </div>
 </div>
-<a class="anchor" id="gaef1b31cd1f2ae7f5bb5f521449e8c4c0"></a><!-- doxytag: member="NE10_rotate.c::ne10_img_rotate_rgba_neon" ref="gaef1b31cd1f2ae7f5bb5f521449e8c4c0" args="(ne10_uint8_t *dst, ne10_uint32_t *dst_width, ne10_uint32_t *dst_height, ne10_uint8_t *src, ne10_uint32_t src_width, ne10_uint32_t src_height, ne10_int32_t angle)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="group__IMG__ROTATE.html#gaef1b31cd1f2ae7f5bb5f521449e8c4c0">ne10_img_rotate_rgba_neon</a> </td>
-          <td>(</td>
-          <td class="paramtype">ne10_uint8_t *&#160;</td>
-          <td class="paramname"><em>dst</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ne10_uint32_t *&#160;</td>
-          <td class="paramname"><em>dst_width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ne10_uint32_t *&#160;</td>
-          <td class="paramname"><em>dst_height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ne10_uint8_t *&#160;</td>
-          <td class="paramname"><em>src</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ne10_uint32_t&#160;</td>
-          <td class="paramname"><em>src_width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ne10_uint32_t&#160;</td>
-          <td class="paramname"><em>src_height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
-          <td class="paramname"><em>angle</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>image rotate of 8-bit data. </p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*dst</td><td>point to the destination image </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*dst_width</td><td>width of destination image </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*dst_height</td><td>height of destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*src</td><td>point to the source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_width</td><td>width of source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_height</td><td>height of source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">angle</td><td>angle of rotate </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="return"><dt><b>Returns:</b></dt><dd>none. The function extracts pixels from src at sub-pixel accuracy and stores them to dst </dd></dl>
-
-<p>Definition at line <a class="el" href="NE10__rotate_8c_source.html#l00284">284</a> of file <a class="el" href="NE10__rotate_8c_source.html">NE10_rotate.c</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -259,7 +181,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_img_rotate_get_q
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

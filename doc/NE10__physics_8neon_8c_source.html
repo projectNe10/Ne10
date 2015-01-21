@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Project Ne10: /home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/physics/NE10_physics.neon.c Source File</title>
+<title>Project Ne10: /home/philwong/Ne10-gerrit/modules/physics/NE10_physics.neon.c Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,11 +78,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">/home/yang01/projects/Ne10/Ne10_doc/Ne10/modules/physics/NE10_physics.neon.c</div>  </div>
+<div class="title">/home/philwong/Ne10-gerrit/modules/physics/NE10_physics.neon.c</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
-<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2014 ARM Limited</span>
+<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2014 ARM Limited and Contributors.</span>
 <a name="l00003"></a>00003 <span class="comment"> *  All rights reserved.</span>
 <a name="l00004"></a>00004 <span class="comment"> *</span>
 <a name="l00005"></a>00005 <span class="comment"> *  Redistribution and use in source and binary forms, with or without</span>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00016"></a>00016 <span class="comment"> *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS &quot;AS IS&quot; AND</span>
 <a name="l00017"></a>00017 <span class="comment"> *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
 <a name="l00018"></a>00018 <span class="comment"> *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
-<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY</span>
+<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY</span>
 <a name="l00020"></a>00020 <span class="comment"> *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
 <a name="l00021"></a>00021 <span class="comment"> *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
 <a name="l00022"></a>00022 <span class="comment"> *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
@@ -114,99 +114,102 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032 <span class="preprocessor">#include &quot;NE10_types.h&quot;</span>
 <a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_physics_compute_aabb_vertex4_vec2f_neon (ne10_mat2x2f_t *aabb,
-<a name="l00035"></a>00035         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *vertices,
-<a name="l00036"></a>00036         ne10_mat2x2f_t *xf,
-<a name="l00037"></a>00037         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *radius,
-<a name="l00038"></a>00038         ne10_uint32_t vertex_count)
-<a name="l00039"></a>00039 <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_physics_compute_aabb_vertex4_vec2f_neon&quot;</span>);
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> ne10_mul_matvec_float (ne10_mat2x2f_t T, <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> v)
-<a name="l00042"></a>00042 {
-<a name="l00043"></a>00043     <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> tmp;
-<a name="l00044"></a>00044     ne10_float32_t x = (T.c2.r2 * v.x - T.c2.r1 * v.y) + T.c1.r1;
-<a name="l00045"></a>00045     ne10_float32_t y = (T.c2.r1 * v.x + T.c2.r2 * v.y) + T.c1.r2;
-<a name="l00046"></a>00046     tmp.x = x;
-<a name="l00047"></a>00047     tmp.y = y;
-<a name="l00048"></a>00048     <span class="keywordflow">return</span> tmp;
-<a name="l00049"></a>00049 }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="keyword">static</span> <span class="keyword">inline</span> ne10_float32_t min (<span class="keywordtype">float</span> a, ne10_float32_t b)
-<a name="l00052"></a>00052 {
-<a name="l00053"></a>00053     <span class="keywordflow">return</span> a &lt; b ? a : b;
-<a name="l00054"></a>00054 }
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> min_2f (<a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> a, <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> b)
-<a name="l00057"></a>00057 {
-<a name="l00058"></a>00058     <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> tmp = {min (a.x, b.x), min (a.y, b.y) };
-<a name="l00059"></a>00059     <span class="keywordflow">return</span> tmp;
-<a name="l00060"></a>00060 }
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062 <span class="keyword">static</span> <span class="keyword">inline</span> ne10_float32_t max (<span class="keywordtype">float</span> a, ne10_float32_t b)
-<a name="l00063"></a>00063 {
-<a name="l00064"></a>00064     <span class="keywordflow">return</span> a &gt; b ? a : b;
-<a name="l00065"></a>00065 }
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> max_2f (<a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> a, <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> b)
-<a name="l00068"></a>00068 {
-<a name="l00069"></a>00069     <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> tmp = {max (a.x, b.x), max (a.y, b.y) };
-<a name="l00070"></a>00070     <span class="keywordflow">return</span> tmp;
-<a name="l00071"></a>00071 }
-<a name="l00072"></a>00072 
-<a name="l00084"></a><a class="code" href="group__COLLISION__DETECT.html#ga2c6bbe58953fe01d89c570a9b927b543">00084</a> <span class="keywordtype">void</span> <a class="code" href="group__COLLISION__DETECT.html#ga2c6bbe58953fe01d89c570a9b927b543" title="compute AABB for ploygon.">ne10_physics_compute_aabb_vec2f_neon</a> (ne10_mat2x2f_t *aabb,
-<a name="l00085"></a>00085         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *vertices,
-<a name="l00086"></a>00086         ne10_mat2x2f_t *xf,
-<a name="l00087"></a>00087         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *radius,
-<a name="l00088"></a>00088         ne10_uint32_t vertex_count)
-<a name="l00089"></a>00089 {
-<a name="l00090"></a>00090     ne10_int32_t residual_loops = (vertex_count &amp; 0x3);
-<a name="l00091"></a>00091     ne10_int32_t main_loops = vertex_count - residual_loops;
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093     <span class="keywordflow">if</span> (main_loops &gt; 0)
-<a name="l00094"></a>00094     {
-<a name="l00095"></a>00095         ne10_physics_compute_aabb_vertex4_vec2f_neon (aabb, vertices, xf, radius, main_loops);
-<a name="l00096"></a>00096     }
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098     <span class="keywordflow">if</span> (residual_loops &gt; 0)
-<a name="l00099"></a>00099     {
-<a name="l00100"></a>00100         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> lower;
-<a name="l00101"></a>00101         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> upper;
-<a name="l00102"></a>00102         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> lower2;
-<a name="l00103"></a>00103         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> upper2;
-<a name="l00104"></a>00104         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> v;
-<a name="l00105"></a>00105         ne10_int32_t i;
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107        <span class="keywordflow">if</span> (main_loops == 0)
-<a name="l00108"></a>00108        {
-<a name="l00109"></a>00109             lower = ne10_mul_matvec_float (*xf, vertices[main_loops]);
-<a name="l00110"></a>00110             upper = lower;
-<a name="l00111"></a>00111        }
-<a name="l00112"></a>00112        <span class="keywordflow">else</span>
-<a name="l00113"></a>00113        {
-<a name="l00114"></a>00114             lower2.x = aabb-&gt;c1.r1 + radius-&gt;x;
-<a name="l00115"></a>00115             lower2.y = aabb-&gt;c1.r2 + radius-&gt;y;
-<a name="l00116"></a>00116             upper2.x = aabb-&gt;c2.r1 - radius-&gt;x;
-<a name="l00117"></a>00117             upper2.y = aabb-&gt;c2.r2 - radius-&gt;y;
-<a name="l00118"></a>00118             lower = ne10_mul_matvec_float (*xf, vertices[main_loops]);
-<a name="l00119"></a>00119             upper = lower;
-<a name="l00120"></a>00120             lower = min_2f (lower, lower2);
-<a name="l00121"></a>00121             upper = max_2f (upper, upper2);
-<a name="l00122"></a>00122        }
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124         <span class="keywordflow">for</span> (i = main_loops + 1; i &lt; vertex_count; ++i)
-<a name="l00125"></a>00125         {
-<a name="l00126"></a>00126             v = ne10_mul_matvec_float (*xf, vertices[i]);
-<a name="l00127"></a>00127             lower = min_2f (lower, v);
-<a name="l00128"></a>00128             upper = max_2f (upper, v);
-<a name="l00129"></a>00129         }
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131         aabb-&gt;c1.r1 = lower.x - radius-&gt;x;
-<a name="l00132"></a>00132         aabb-&gt;c1.r2 = lower.y - radius-&gt;y;
-<a name="l00133"></a>00133         aabb-&gt;c2.r1 = upper.x + radius-&gt;x;
-<a name="l00134"></a>00134         aabb-&gt;c2.r2 = upper.y + radius-&gt;y;
-<a name="l00135"></a>00135     }
-<a name="l00136"></a>00136 }
-<a name="l00137"></a>00137 
+<a name="l00034"></a>00034 <span class="preprocessor">#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON</span>
+<a name="l00035"></a>00035 <span class="preprocessor"></span><span class="keyword">extern</span> <span class="keywordtype">void</span> ne10_physics_compute_aabb_vertex4_vec2f_neon (ne10_mat2x2f_t *aabb,
+<a name="l00036"></a>00036         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *vertices,
+<a name="l00037"></a>00037         ne10_mat2x2f_t *xf,
+<a name="l00038"></a>00038         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *radius,
+<a name="l00039"></a>00039         ne10_uint32_t vertex_count)
+<a name="l00040"></a>00040 <span class="keyword">asm</span> (<span class="stringliteral">&quot;ne10_physics_compute_aabb_vertex4_vec2f_neon&quot;</span>);
+<a name="l00041"></a>00041 <span class="preprocessor">#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span>
+<a name="l00043"></a>00043 <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> ne10_mul_matvec_float (ne10_mat2x2f_t T, <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> v)
+<a name="l00044"></a>00044 {
+<a name="l00045"></a>00045     <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> tmp;
+<a name="l00046"></a>00046     ne10_float32_t x = (T.c2.r2 * v.x - T.c2.r1 * v.y) + T.c1.r1;
+<a name="l00047"></a>00047     ne10_float32_t y = (T.c2.r1 * v.x + T.c2.r2 * v.y) + T.c1.r2;
+<a name="l00048"></a>00048     tmp.x = x;
+<a name="l00049"></a>00049     tmp.y = y;
+<a name="l00050"></a>00050     <span class="keywordflow">return</span> tmp;
+<a name="l00051"></a>00051 }
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 <span class="keyword">static</span> <span class="keyword">inline</span> ne10_float32_t min (<span class="keywordtype">float</span> a, ne10_float32_t b)
+<a name="l00054"></a>00054 {
+<a name="l00055"></a>00055     <span class="keywordflow">return</span> a &lt; b ? a : b;
+<a name="l00056"></a>00056 }
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> min_2f (<a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> a, <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> b)
+<a name="l00059"></a>00059 {
+<a name="l00060"></a>00060     <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> tmp = {min (a.x, b.x), min (a.y, b.y) };
+<a name="l00061"></a>00061     <span class="keywordflow">return</span> tmp;
+<a name="l00062"></a>00062 }
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 <span class="keyword">static</span> <span class="keyword">inline</span> ne10_float32_t max (<span class="keywordtype">float</span> a, ne10_float32_t b)
+<a name="l00065"></a>00065 {
+<a name="l00066"></a>00066     <span class="keywordflow">return</span> a &gt; b ? a : b;
+<a name="l00067"></a>00067 }
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 <span class="keyword">static</span> <span class="keyword">inline</span> <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> max_2f (<a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> a, <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> b)
+<a name="l00070"></a>00070 {
+<a name="l00071"></a>00071     <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> tmp = {max (a.x, b.x), max (a.y, b.y) };
+<a name="l00072"></a>00072     <span class="keywordflow">return</span> tmp;
+<a name="l00073"></a>00073 }
+<a name="l00074"></a>00074 
+<a name="l00086"></a>00086 <span class="preprocessor">#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON</span>
+<a name="l00087"></a>00087 <span class="preprocessor"></span><span class="keywordtype">void</span> ne10_physics_compute_aabb_vec2f_neon (ne10_mat2x2f_t *aabb,
+<a name="l00088"></a>00088         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *vertices,
+<a name="l00089"></a>00089         ne10_mat2x2f_t *xf,
+<a name="l00090"></a>00090         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> *radius,
+<a name="l00091"></a>00091         ne10_uint32_t vertex_count)
+<a name="l00092"></a>00092 {
+<a name="l00093"></a>00093     ne10_int32_t residual_loops = (vertex_count &amp; 0x3);
+<a name="l00094"></a>00094     ne10_int32_t main_loops = vertex_count - residual_loops;
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096     <span class="keywordflow">if</span> (main_loops &gt; 0)
+<a name="l00097"></a>00097     {
+<a name="l00098"></a>00098         ne10_physics_compute_aabb_vertex4_vec2f_neon (aabb, vertices, xf, radius, main_loops);
+<a name="l00099"></a>00099     }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101     <span class="keywordflow">if</span> (residual_loops &gt; 0)
+<a name="l00102"></a>00102     {
+<a name="l00103"></a>00103         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> lower;
+<a name="l00104"></a>00104         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> upper;
+<a name="l00105"></a>00105         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> lower2;
+<a name="l00106"></a>00106         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> upper2;
+<a name="l00107"></a>00107         <a class="code" href="structne10__vec2f__t.html" title="a 2-tuple of ne10_float32_t values.">ne10_vec2f_t</a> v;
+<a name="l00108"></a>00108         ne10_int32_t i;
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110        <span class="keywordflow">if</span> (main_loops == 0)
+<a name="l00111"></a>00111        {
+<a name="l00112"></a>00112             lower = ne10_mul_matvec_float (*xf, vertices[main_loops]);
+<a name="l00113"></a>00113             upper = lower;
+<a name="l00114"></a>00114        }
+<a name="l00115"></a>00115        <span class="keywordflow">else</span>
+<a name="l00116"></a>00116        {
+<a name="l00117"></a>00117             lower2.x = aabb-&gt;c1.r1 + radius-&gt;x;
+<a name="l00118"></a>00118             lower2.y = aabb-&gt;c1.r2 + radius-&gt;y;
+<a name="l00119"></a>00119             upper2.x = aabb-&gt;c2.r1 - radius-&gt;x;
+<a name="l00120"></a>00120             upper2.y = aabb-&gt;c2.r2 - radius-&gt;y;
+<a name="l00121"></a>00121             lower = ne10_mul_matvec_float (*xf, vertices[main_loops]);
+<a name="l00122"></a>00122             upper = lower;
+<a name="l00123"></a>00123             lower = min_2f (lower, lower2);
+<a name="l00124"></a>00124             upper = max_2f (upper, upper2);
+<a name="l00125"></a>00125        }
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127         <span class="keywordflow">for</span> (i = main_loops + 1; i &lt; vertex_count; ++i)
+<a name="l00128"></a>00128         {
+<a name="l00129"></a>00129             v = ne10_mul_matvec_float (*xf, vertices[i]);
+<a name="l00130"></a>00130             lower = min_2f (lower, v);
+<a name="l00131"></a>00131             upper = max_2f (upper, v);
+<a name="l00132"></a>00132         }
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134         aabb-&gt;c1.r1 = lower.x - radius-&gt;x;
+<a name="l00135"></a>00135         aabb-&gt;c1.r2 = lower.y - radius-&gt;y;
+<a name="l00136"></a>00136         aabb-&gt;c2.r1 = upper.x + radius-&gt;x;
+<a name="l00137"></a>00137         aabb-&gt;c2.r2 = upper.y + radius-&gt;y;
+<a name="l00138"></a>00138     }
+<a name="l00139"></a>00139 }
+<a name="l00140"></a>00140 <span class="preprocessor">#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -225,7 +228,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

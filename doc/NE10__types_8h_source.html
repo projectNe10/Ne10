@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<title>Project Ne10: /home/yang01/projects/Ne10/Ne10_doc/Ne10/inc/NE10_types.h Source File</title>
+<title>Project Ne10: /home/philwong/Ne10-gerrit/inc/NE10_types.h Source File</title>
 
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
@@ -78,11 +78,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="headertitle">
-<div class="title">/home/yang01/projects/Ne10/Ne10_doc/Ne10/inc/NE10_types.h</div>  </div>
+<div class="title">/home/philwong/Ne10-gerrit/inc/NE10_types.h</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="comment">/*</span>
-<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2011-14 ARM Limited</span>
+<a name="l00002"></a>00002 <span class="comment"> *  Copyright 2011-14 ARM Limited and Contributors.</span>
 <a name="l00003"></a>00003 <span class="comment"> *  All rights reserved.</span>
 <a name="l00004"></a>00004 <span class="comment"> *</span>
 <a name="l00005"></a>00005 <span class="comment"> *  Redistribution and use in source and binary forms, with or without</span>
@@ -99,7 +99,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00016"></a>00016 <span class="comment"> *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS &quot;AS IS&quot; AND</span>
 <a name="l00017"></a>00017 <span class="comment"> *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED</span>
 <a name="l00018"></a>00018 <span class="comment"> *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE</span>
-<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY</span>
+<a name="l00019"></a>00019 <span class="comment"> *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY</span>
 <a name="l00020"></a>00020 <span class="comment"> *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES</span>
 <a name="l00021"></a>00021 <span class="comment"> *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;</span>
 <a name="l00022"></a>00022 <span class="comment"> *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND</span>
@@ -282,150 +282,163 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00223"></a>00223     ne10_int32_t *factors;
 <a name="l00224"></a>00224     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles;
 <a name="l00225"></a>00225     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *buffer;
-<a name="l00226"></a>00226 } <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>;
-<a name="l00227"></a>00227 
-<a name="l00228"></a>00228 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>* <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>;
-<a name="l00229"></a>00229 
-<a name="l00230"></a><a class="code" href="structne10__fft__r2c__state__float32__t.html">00230</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00231"></a>00231 {
-<a name="l00232"></a>00232     ne10_int32_t nfft;
-<a name="l00233"></a>00233     ne10_int32_t ncfft;
-<a name="l00234"></a>00234     ne10_int32_t *factors;
-<a name="l00235"></a>00235     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles;
-<a name="l00236"></a>00236     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *super_twiddles;
-<a name="l00237"></a>00237     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *buffer;
-<a name="l00238"></a>00238 } <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>;
-<a name="l00239"></a>00239 
-<a name="l00240"></a>00240 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>* <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a>;
-<a name="l00241"></a>00241 
-<a name="l00245"></a><a class="code" href="structne10__fft__cpx__int16__t.html">00245</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00246"></a>00246 {
-<a name="l00247"></a>00247     ne10_int16_t r;
-<a name="l00248"></a>00248     ne10_int16_t i;
-<a name="l00249"></a>00249 } <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a>;
-<a name="l00250"></a>00250 
-<a name="l00251"></a><a class="code" href="structne10__fft__state__int16__t.html">00251</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00252"></a>00252 {
-<a name="l00253"></a>00253     ne10_int32_t nfft;
-<a name="l00254"></a>00254     ne10_int32_t *factors;
-<a name="l00255"></a>00255     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *twiddles;
-<a name="l00256"></a>00256     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *buffer;
-<a name="l00257"></a>00257 } <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_state_int16_t</a>;
-<a name="l00258"></a>00258 
-<a name="l00259"></a>00259 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_state_int16_t</a>* <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a>;
-<a name="l00260"></a>00260 
-<a name="l00261"></a><a class="code" href="structne10__fft__r2c__state__int16__t.html">00261</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00262"></a>00262 {
-<a name="l00263"></a>00263     ne10_int32_t nfft;
-<a name="l00264"></a>00264     ne10_int32_t ncfft;
-<a name="l00265"></a>00265     ne10_int32_t *factors;
-<a name="l00266"></a>00266     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *twiddles;
-<a name="l00267"></a>00267     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *super_twiddles;
-<a name="l00268"></a>00268     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *buffer;
-<a name="l00269"></a>00269 } <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_state_int16_t</a>;
-<a name="l00270"></a>00270 
-<a name="l00271"></a>00271 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_state_int16_t</a>* <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_cfg_int16_t</a>;
-<a name="l00272"></a>00272 
-<a name="l00276"></a><a class="code" href="structne10__fft__cpx__int32__t.html">00276</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00277"></a>00277 {
-<a name="l00278"></a>00278     ne10_int32_t r;
-<a name="l00279"></a>00279     ne10_int32_t i;
-<a name="l00280"></a>00280 } <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a>;
-<a name="l00281"></a>00281 
-<a name="l00282"></a><a class="code" href="structne10__fft__state__int32__t.html">00282</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00283"></a>00283 {
-<a name="l00284"></a>00284     ne10_int32_t nfft;
-<a name="l00285"></a>00285     ne10_int32_t *factors;
-<a name="l00286"></a>00286     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *twiddles;
-<a name="l00287"></a>00287     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *buffer;
-<a name="l00288"></a>00288 } <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_state_int32_t</a>;
-<a name="l00289"></a>00289 
-<a name="l00290"></a>00290 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_state_int32_t</a>* <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a>;
-<a name="l00291"></a>00291 
-<a name="l00292"></a><a class="code" href="structne10__fft__r2c__state__int32__t.html">00292</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00293"></a>00293 {
-<a name="l00294"></a>00294     ne10_int32_t nfft;
-<a name="l00295"></a>00295     ne10_int32_t ncfft;
-<a name="l00296"></a>00296     ne10_int32_t *factors;
-<a name="l00297"></a>00297     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *twiddles;
-<a name="l00298"></a>00298     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *super_twiddles;
-<a name="l00299"></a>00299     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *buffer;
-<a name="l00300"></a>00300 } <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_state_int32_t</a>;
-<a name="l00301"></a>00301 
-<a name="l00302"></a>00302 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_state_int32_t</a>* <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_cfg_int32_t</a>;
-<a name="l00303"></a>00303 
-<a name="l00305"></a>00305 <span class="comment">// definitions for fir</span>
-<a name="l00307"></a>00307 <span class="comment"></span>
-<a name="l00311"></a><a class="code" href="structne10__fir__instance__f32__t.html">00311</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00312"></a>00312 {
-<a name="l00313"></a><a class="code" href="structne10__fir__instance__f32__t.html#a717e372aa7ef9b22f75f8a64b6d599dd">00313</a>     ne10_uint16_t <a class="code" href="structne10__fir__instance__f32__t.html#a717e372aa7ef9b22f75f8a64b6d599dd" title="Length of the filter.">numTaps</a>;    
-<a name="l00314"></a><a class="code" href="structne10__fir__instance__f32__t.html#a3fd087d0d394a2600385f0085e31ad89">00314</a>     ne10_float32_t *<a class="code" href="structne10__fir__instance__f32__t.html#a3fd087d0d394a2600385f0085e31ad89" title="Points to the state variable array.">pState</a>;    
-<a name="l00315"></a><a class="code" href="structne10__fir__instance__f32__t.html#aad3f48460bd35f61409c8175623bcb0c">00315</a>     ne10_float32_t *<a class="code" href="structne10__fir__instance__f32__t.html#aad3f48460bd35f61409c8175623bcb0c" title="Points to the coefficient array.">pCoeffs</a>;   
-<a name="l00316"></a>00316 } <a class="code" href="structne10__fir__instance__f32__t.html" title="Instance structure for the floating-point FIR filter.">ne10_fir_instance_f32_t</a>;
-<a name="l00317"></a>00317 
-<a name="l00321"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html">00321</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00322"></a>00322 {
-<a name="l00323"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html#ae4a561baf3d862af9004fefcd598cf98">00323</a>     ne10_uint16_t <a class="code" href="structne10__fir__lattice__instance__f32__t.html#ae4a561baf3d862af9004fefcd598cf98" title="numStages of the of lattice filter.">numStages</a>;    
-<a name="l00324"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html#a0d90b9f77fe367cd9965d1f771de8736">00324</a>     ne10_float32_t *<a class="code" href="structne10__fir__lattice__instance__f32__t.html#a0d90b9f77fe367cd9965d1f771de8736" title="Points to the state variable array.">pState</a>;      
-<a name="l00325"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html#aa214a237dc2daeede1809ad2f0aeebe2">00325</a>     ne10_float32_t *<a class="code" href="structne10__fir__lattice__instance__f32__t.html#aa214a237dc2daeede1809ad2f0aeebe2" title="Points to the coefficient array.">pCoeffs</a>;     
-<a name="l00326"></a>00326 } <a class="code" href="structne10__fir__lattice__instance__f32__t.html" title="Instance structure for the floating point FIR Lattice filter.">ne10_fir_lattice_instance_f32_t</a>;
-<a name="l00327"></a>00327 
-<a name="l00331"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html">00331</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00332"></a>00332 {
-<a name="l00333"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#a176f0696ae503114eaca76a4093de62b">00333</a>     ne10_uint8_t  <a class="code" href="structne10__fir__decimate__instance__f32__t.html#a176f0696ae503114eaca76a4093de62b" title="Decimation Factor.">M</a>;            
-<a name="l00334"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#afe593013c0ef6ef72ff89dd46b6329a2">00334</a>     ne10_uint16_t <a class="code" href="structne10__fir__decimate__instance__f32__t.html#afe593013c0ef6ef72ff89dd46b6329a2" title="Length of the filter.">numTaps</a>;      
-<a name="l00335"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#adc6f08a68cb09ebf19d32c4564769009">00335</a>     ne10_float32_t    *<a class="code" href="structne10__fir__decimate__instance__f32__t.html#adc6f08a68cb09ebf19d32c4564769009" title="Points to the coefficient array.">pCoeffs</a>;      
-<a name="l00336"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#a8ce4f0123b8ca54a9ed22482dae755a1">00336</a>     ne10_float32_t    *<a class="code" href="structne10__fir__decimate__instance__f32__t.html#a8ce4f0123b8ca54a9ed22482dae755a1" title="Points to the state variable array.">pState</a>;       
-<a name="l00337"></a>00337 } <a class="code" href="structne10__fir__decimate__instance__f32__t.html" title="Instance structure for the floating-point FIR Decimation.">ne10_fir_decimate_instance_f32_t</a>;
-<a name="l00338"></a>00338 
-<a name="l00342"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html">00342</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00343"></a>00343 {
-<a name="l00344"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af568a3f1adbddbb79f671c53a049088b">00344</a>     ne10_uint8_t <a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af568a3f1adbddbb79f671c53a049088b" title="Interpolation Factor.">L</a>;             
-<a name="l00345"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af085c85f66c7b0ea7d24a57172cee249">00345</a>     ne10_uint16_t <a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af085c85f66c7b0ea7d24a57172cee249" title="Length of each polyphase filter component.">phaseLength</a>;  
-<a name="l00346"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#a3ea8578807f26839ec53708a015cccf1">00346</a>     ne10_float32_t *<a class="code" href="structne10__fir__interpolate__instance__f32__t.html#a3ea8578807f26839ec53708a015cccf1" title="Points to the coefficient array.">pCoeffs</a>;         
-<a name="l00347"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#aedbc03a244da0a441c0072dc0cf2fcff">00347</a>     ne10_float32_t *<a class="code" href="structne10__fir__interpolate__instance__f32__t.html#aedbc03a244da0a441c0072dc0cf2fcff" title="Points to the state variable array.">pState</a>;          
-<a name="l00348"></a>00348 } <a class="code" href="structne10__fir__interpolate__instance__f32__t.html" title="Instance structure for the floating-point FIR Interpolation.">ne10_fir_interpolate_instance_f32_t</a>;
-<a name="l00349"></a>00349 
-<a name="l00353"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html">00353</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00354"></a>00354 {
-<a name="l00355"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a25240d88cbf2a8271a1870583ded1c40">00355</a>     ne10_uint16_t <a class="code" href="structne10__fir__sparse__instance__f32__t.html#a25240d88cbf2a8271a1870583ded1c40" title="Length of the filter.">numTaps</a>;      
-<a name="l00356"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9df7353c16b6a05a5bd3a1b8ed9365ef">00356</a>     ne10_uint16_t <a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9df7353c16b6a05a5bd3a1b8ed9365ef" title="Index pointer for the state buffer .">stateIndex</a>;   
-<a name="l00357"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#adb37a9975c1646ec80b98eced0692511">00357</a>     ne10_float32_t *<a class="code" href="structne10__fir__sparse__instance__f32__t.html#adb37a9975c1646ec80b98eced0692511" title="Points to the state variable array.">pState</a>;          
-<a name="l00358"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9b6050266b2818f842d5ecd532dd22aa">00358</a>     ne10_float32_t *<a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9b6050266b2818f842d5ecd532dd22aa" title="Points to the coefficient array.">pCoeffs</a>;         
-<a name="l00359"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a2b58dfbac68c90132bcaecceefc04263">00359</a>     ne10_uint16_t  <a class="code" href="structne10__fir__sparse__instance__f32__t.html#a2b58dfbac68c90132bcaecceefc04263" title="the largest number of delay line values .">maxDelay</a>;    
-<a name="l00360"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#ae6ff1e6f322feb38fdbd87aebd71a30c">00360</a>     ne10_int32_t  *<a class="code" href="structne10__fir__sparse__instance__f32__t.html#ae6ff1e6f322feb38fdbd87aebd71a30c" title="Pointer to the array containing positions of the non-zero tap values.">pTapDelay</a>;    
-<a name="l00361"></a>00361 } <a class="code" href="structne10__fir__sparse__instance__f32__t.html" title="Instance structure for the floating-point FIR Sparse filter.">ne10_fir_sparse_instance_f32_t</a>;
+<a name="l00226"></a>00226     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *last_twiddles;
+<a name="l00227"></a>00227 } <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>;
+<a name="l00228"></a>00228 
+<a name="l00229"></a>00229 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_state_float32_t</a>* <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>;
+<a name="l00230"></a>00230 
+<a name="l00231"></a><a class="code" href="structne10__fft__r2c__state__float32__t.html">00231</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00232"></a>00232 {
+<a name="l00233"></a>00233     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *buffer;
+<a name="l00234"></a>00234 <span class="preprocessor">#if defined(__arm__)</span>
+<a name="l00235"></a>00235 <span class="preprocessor"></span>    ne10_int32_t ncfft;
+<a name="l00236"></a>00236     ne10_int32_t *factors;
+<a name="l00237"></a>00237     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *twiddles;
+<a name="l00238"></a>00238     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *super_twiddles;
+<a name="l00239"></a>00239 <span class="preprocessor">#elif defined( __aarch64__)</span>
+<a name="l00240"></a>00240 <span class="preprocessor"></span>    ne10_int32_t nfft;
+<a name="l00241"></a>00241     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *r_twiddles;
+<a name="l00242"></a>00242     ne10_int32_t *r_factors;
+<a name="l00243"></a>00243     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *r_twiddles_backward;
+<a name="l00244"></a>00244     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *r_twiddles_neon;
+<a name="l00245"></a>00245     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *r_twiddles_neon_backward;
+<a name="l00246"></a>00246     ne10_int32_t *r_factors_neon;
+<a name="l00247"></a>00247     <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *r_super_twiddles_neon;
+<a name="l00248"></a>00248 <span class="preprocessor">#else</span>
+<a name="l00249"></a>00249 <span class="preprocessor"></span><span class="preprocessor">    #error(&quot;unsupported platform, current supported are arm(32) and aarch64&quot;)</span>
+<a name="l00250"></a>00250 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00251"></a>00251 <span class="preprocessor"></span>} <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>;
+<a name="l00252"></a>00252 
+<a name="l00253"></a>00253 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_state_float32_t</a>* <a class="code" href="structne10__fft__r2c__state__float32__t.html">ne10_fft_r2c_cfg_float32_t</a>;
+<a name="l00254"></a>00254 
+<a name="l00258"></a><a class="code" href="structne10__fft__cpx__int16__t.html">00258</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00259"></a>00259 {
+<a name="l00260"></a>00260     ne10_int16_t r;
+<a name="l00261"></a>00261     ne10_int16_t i;
+<a name="l00262"></a>00262 } <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a>;
+<a name="l00263"></a>00263 
+<a name="l00264"></a><a class="code" href="structne10__fft__state__int16__t.html">00264</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00265"></a>00265 {
+<a name="l00266"></a>00266     ne10_int32_t nfft;
+<a name="l00267"></a>00267     ne10_int32_t *factors;
+<a name="l00268"></a>00268     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *twiddles;
+<a name="l00269"></a>00269     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *buffer;
+<a name="l00270"></a>00270 } <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_state_int16_t</a>;
+<a name="l00271"></a>00271 
+<a name="l00272"></a>00272 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_state_int16_t</a>* <a class="code" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a>;
+<a name="l00273"></a>00273 
+<a name="l00274"></a><a class="code" href="structne10__fft__r2c__state__int16__t.html">00274</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00275"></a>00275 {
+<a name="l00276"></a>00276     ne10_int32_t nfft;
+<a name="l00277"></a>00277     ne10_int32_t ncfft;
+<a name="l00278"></a>00278     ne10_int32_t *factors;
+<a name="l00279"></a>00279     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *twiddles;
+<a name="l00280"></a>00280     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *super_twiddles;
+<a name="l00281"></a>00281     <a class="code" href="structne10__fft__cpx__int16__t.html" title="structure for the 16 bits fixed point FFT function.">ne10_fft_cpx_int16_t</a> *buffer;
+<a name="l00282"></a>00282 } <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_state_int16_t</a>;
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_state_int16_t</a>* <a class="code" href="structne10__fft__r2c__state__int16__t.html">ne10_fft_r2c_cfg_int16_t</a>;
+<a name="l00285"></a>00285 
+<a name="l00289"></a><a class="code" href="structne10__fft__cpx__int32__t.html">00289</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00290"></a>00290 {
+<a name="l00291"></a>00291     ne10_int32_t r;
+<a name="l00292"></a>00292     ne10_int32_t i;
+<a name="l00293"></a>00293 } <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a>;
+<a name="l00294"></a>00294 
+<a name="l00295"></a><a class="code" href="structne10__fft__state__int32__t.html">00295</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00296"></a>00296 {
+<a name="l00297"></a>00297     ne10_int32_t nfft;
+<a name="l00298"></a>00298     ne10_int32_t *factors;
+<a name="l00299"></a>00299     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *twiddles;
+<a name="l00300"></a>00300     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *buffer;
+<a name="l00301"></a>00301 } <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_state_int32_t</a>;
+<a name="l00302"></a>00302 
+<a name="l00303"></a>00303 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_state_int32_t</a>* <a class="code" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a>;
+<a name="l00304"></a>00304 
+<a name="l00305"></a><a class="code" href="structne10__fft__r2c__state__int32__t.html">00305</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00306"></a>00306 {
+<a name="l00307"></a>00307     ne10_int32_t nfft;
+<a name="l00308"></a>00308     ne10_int32_t ncfft;
+<a name="l00309"></a>00309     ne10_int32_t *factors;
+<a name="l00310"></a>00310     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *twiddles;
+<a name="l00311"></a>00311     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *super_twiddles;
+<a name="l00312"></a>00312     <a class="code" href="structne10__fft__cpx__int32__t.html" title="structure for the 32 bits fixed point FFT function.">ne10_fft_cpx_int32_t</a> *buffer;
+<a name="l00313"></a>00313 } <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_state_int32_t</a>;
+<a name="l00314"></a>00314 
+<a name="l00315"></a>00315 <span class="keyword">typedef</span> <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_state_int32_t</a>* <a class="code" href="structne10__fft__r2c__state__int32__t.html">ne10_fft_r2c_cfg_int32_t</a>;
+<a name="l00316"></a>00316 
+<a name="l00318"></a>00318 <span class="comment">// definitions for fir</span>
+<a name="l00320"></a>00320 <span class="comment"></span>
+<a name="l00324"></a><a class="code" href="structne10__fir__instance__f32__t.html">00324</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00325"></a>00325 {
+<a name="l00326"></a><a class="code" href="structne10__fir__instance__f32__t.html#a717e372aa7ef9b22f75f8a64b6d599dd">00326</a>     ne10_uint16_t <a class="code" href="structne10__fir__instance__f32__t.html#a717e372aa7ef9b22f75f8a64b6d599dd" title="Length of the filter.">numTaps</a>;    
+<a name="l00327"></a><a class="code" href="structne10__fir__instance__f32__t.html#a3fd087d0d394a2600385f0085e31ad89">00327</a>     ne10_float32_t *<a class="code" href="structne10__fir__instance__f32__t.html#a3fd087d0d394a2600385f0085e31ad89" title="Points to the state variable array.">pState</a>;    
+<a name="l00328"></a><a class="code" href="structne10__fir__instance__f32__t.html#aad3f48460bd35f61409c8175623bcb0c">00328</a>     ne10_float32_t *<a class="code" href="structne10__fir__instance__f32__t.html#aad3f48460bd35f61409c8175623bcb0c" title="Points to the coefficient array.">pCoeffs</a>;   
+<a name="l00329"></a>00329 } <a class="code" href="structne10__fir__instance__f32__t.html" title="Instance structure for the floating-point FIR filter.">ne10_fir_instance_f32_t</a>;
+<a name="l00330"></a>00330 
+<a name="l00334"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html">00334</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00335"></a>00335 {
+<a name="l00336"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html#ae4a561baf3d862af9004fefcd598cf98">00336</a>     ne10_uint16_t <a class="code" href="structne10__fir__lattice__instance__f32__t.html#ae4a561baf3d862af9004fefcd598cf98" title="numStages of the of lattice filter.">numStages</a>;    
+<a name="l00337"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html#a0d90b9f77fe367cd9965d1f771de8736">00337</a>     ne10_float32_t *<a class="code" href="structne10__fir__lattice__instance__f32__t.html#a0d90b9f77fe367cd9965d1f771de8736" title="Points to the state variable array.">pState</a>;      
+<a name="l00338"></a><a class="code" href="structne10__fir__lattice__instance__f32__t.html#aa214a237dc2daeede1809ad2f0aeebe2">00338</a>     ne10_float32_t *<a class="code" href="structne10__fir__lattice__instance__f32__t.html#aa214a237dc2daeede1809ad2f0aeebe2" title="Points to the coefficient array.">pCoeffs</a>;     
+<a name="l00339"></a>00339 } <a class="code" href="structne10__fir__lattice__instance__f32__t.html" title="Instance structure for the floating point FIR Lattice filter.">ne10_fir_lattice_instance_f32_t</a>;
+<a name="l00340"></a>00340 
+<a name="l00344"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html">00344</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00345"></a>00345 {
+<a name="l00346"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#a176f0696ae503114eaca76a4093de62b">00346</a>     ne10_uint8_t  <a class="code" href="structne10__fir__decimate__instance__f32__t.html#a176f0696ae503114eaca76a4093de62b" title="Decimation Factor.">M</a>;            
+<a name="l00347"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#afe593013c0ef6ef72ff89dd46b6329a2">00347</a>     ne10_uint16_t <a class="code" href="structne10__fir__decimate__instance__f32__t.html#afe593013c0ef6ef72ff89dd46b6329a2" title="Length of the filter.">numTaps</a>;      
+<a name="l00348"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#adc6f08a68cb09ebf19d32c4564769009">00348</a>     ne10_float32_t    *<a class="code" href="structne10__fir__decimate__instance__f32__t.html#adc6f08a68cb09ebf19d32c4564769009" title="Points to the coefficient array.">pCoeffs</a>;      
+<a name="l00349"></a><a class="code" href="structne10__fir__decimate__instance__f32__t.html#a8ce4f0123b8ca54a9ed22482dae755a1">00349</a>     ne10_float32_t    *<a class="code" href="structne10__fir__decimate__instance__f32__t.html#a8ce4f0123b8ca54a9ed22482dae755a1" title="Points to the state variable array.">pState</a>;       
+<a name="l00350"></a>00350 } <a class="code" href="structne10__fir__decimate__instance__f32__t.html" title="Instance structure for the floating-point FIR Decimation.">ne10_fir_decimate_instance_f32_t</a>;
+<a name="l00351"></a>00351 
+<a name="l00355"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html">00355</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00356"></a>00356 {
+<a name="l00357"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af568a3f1adbddbb79f671c53a049088b">00357</a>     ne10_uint8_t <a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af568a3f1adbddbb79f671c53a049088b" title="Interpolation Factor.">L</a>;             
+<a name="l00358"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af085c85f66c7b0ea7d24a57172cee249">00358</a>     ne10_uint16_t <a class="code" href="structne10__fir__interpolate__instance__f32__t.html#af085c85f66c7b0ea7d24a57172cee249" title="Length of each polyphase filter component.">phaseLength</a>;  
+<a name="l00359"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#a3ea8578807f26839ec53708a015cccf1">00359</a>     ne10_float32_t *<a class="code" href="structne10__fir__interpolate__instance__f32__t.html#a3ea8578807f26839ec53708a015cccf1" title="Points to the coefficient array.">pCoeffs</a>;         
+<a name="l00360"></a><a class="code" href="structne10__fir__interpolate__instance__f32__t.html#aedbc03a244da0a441c0072dc0cf2fcff">00360</a>     ne10_float32_t *<a class="code" href="structne10__fir__interpolate__instance__f32__t.html#aedbc03a244da0a441c0072dc0cf2fcff" title="Points to the state variable array.">pState</a>;          
+<a name="l00361"></a>00361 } <a class="code" href="structne10__fir__interpolate__instance__f32__t.html" title="Instance structure for the floating-point FIR Interpolation.">ne10_fir_interpolate_instance_f32_t</a>;
 <a name="l00362"></a>00362 
-<a name="l00366"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html">00366</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00366"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html">00366</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
 <a name="l00367"></a>00367 {
-<a name="l00368"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa48abb29f85832e544fc08ad8ab2ebbe">00368</a>     ne10_uint16_t <a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa48abb29f85832e544fc08ad8ab2ebbe" title="numStages of the of lattice filter.">numStages</a>;    
-<a name="l00369"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#a1db6ab06eb2601f99d98ae9cfcf872a1">00369</a>     ne10_float32_t *<a class="code" href="structne10__iir__lattice__instance__f32__t.html#a1db6ab06eb2601f99d98ae9cfcf872a1" title="Points to the state variable array.">pState</a>;      
-<a name="l00370"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#a46966d51e0c94046d65ff815fe6a314e">00370</a>     ne10_float32_t *<a class="code" href="structne10__iir__lattice__instance__f32__t.html#a46966d51e0c94046d65ff815fe6a314e" title="Points to the reflection coefficient array.">pkCoeffs</a>;    
-<a name="l00371"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa66c73deb6155898dfd02363a651c424">00371</a>     ne10_float32_t *<a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa66c73deb6155898dfd02363a651c424" title="Points to the ladder coefficient array.">pvCoeffs</a>;    
-<a name="l00372"></a>00372 } <a class="code" href="structne10__iir__lattice__instance__f32__t.html" title="Instance structure for the floating point IIR Lattice filter.">ne10_iir_lattice_instance_f32_t</a>;
-<a name="l00373"></a>00373 
-<a name="l00375"></a>00375 <span class="comment">// definitions for imgproc module</span>
-<a name="l00377"></a>00377 <span class="comment"></span>
-<a name="l00381"></a><a class="code" href="structne10__point__t.html">00381</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00382"></a>00382 {
-<a name="l00383"></a>00383     ne10_uint32_t x;
-<a name="l00384"></a>00384     ne10_uint32_t y;
-<a name="l00385"></a>00385 } <a class="code" href="structne10__point__t.html" title="Structure for point in image.">ne10_point_t</a>;
+<a name="l00368"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a25240d88cbf2a8271a1870583ded1c40">00368</a>     ne10_uint16_t <a class="code" href="structne10__fir__sparse__instance__f32__t.html#a25240d88cbf2a8271a1870583ded1c40" title="Length of the filter.">numTaps</a>;      
+<a name="l00369"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9df7353c16b6a05a5bd3a1b8ed9365ef">00369</a>     ne10_uint16_t <a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9df7353c16b6a05a5bd3a1b8ed9365ef" title="Index pointer for the state buffer .">stateIndex</a>;   
+<a name="l00370"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#adb37a9975c1646ec80b98eced0692511">00370</a>     ne10_float32_t *<a class="code" href="structne10__fir__sparse__instance__f32__t.html#adb37a9975c1646ec80b98eced0692511" title="Points to the state variable array.">pState</a>;          
+<a name="l00371"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9b6050266b2818f842d5ecd532dd22aa">00371</a>     ne10_float32_t *<a class="code" href="structne10__fir__sparse__instance__f32__t.html#a9b6050266b2818f842d5ecd532dd22aa" title="Points to the coefficient array.">pCoeffs</a>;         
+<a name="l00372"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#a2b58dfbac68c90132bcaecceefc04263">00372</a>     ne10_uint16_t  <a class="code" href="structne10__fir__sparse__instance__f32__t.html#a2b58dfbac68c90132bcaecceefc04263" title="the largest number of delay line values .">maxDelay</a>;    
+<a name="l00373"></a><a class="code" href="structne10__fir__sparse__instance__f32__t.html#ae6ff1e6f322feb38fdbd87aebd71a30c">00373</a>     ne10_int32_t  *<a class="code" href="structne10__fir__sparse__instance__f32__t.html#ae6ff1e6f322feb38fdbd87aebd71a30c" title="Pointer to the array containing positions of the non-zero tap values.">pTapDelay</a>;    
+<a name="l00374"></a>00374 } <a class="code" href="structne10__fir__sparse__instance__f32__t.html" title="Instance structure for the floating-point FIR Sparse filter.">ne10_fir_sparse_instance_f32_t</a>;
+<a name="l00375"></a>00375 
+<a name="l00379"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html">00379</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00380"></a>00380 {
+<a name="l00381"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa48abb29f85832e544fc08ad8ab2ebbe">00381</a>     ne10_uint16_t <a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa48abb29f85832e544fc08ad8ab2ebbe" title="numStages of the of lattice filter.">numStages</a>;    
+<a name="l00382"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#a1db6ab06eb2601f99d98ae9cfcf872a1">00382</a>     ne10_float32_t *<a class="code" href="structne10__iir__lattice__instance__f32__t.html#a1db6ab06eb2601f99d98ae9cfcf872a1" title="Points to the state variable array.">pState</a>;      
+<a name="l00383"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#a46966d51e0c94046d65ff815fe6a314e">00383</a>     ne10_float32_t *<a class="code" href="structne10__iir__lattice__instance__f32__t.html#a46966d51e0c94046d65ff815fe6a314e" title="Points to the reflection coefficient array.">pkCoeffs</a>;    
+<a name="l00384"></a><a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa66c73deb6155898dfd02363a651c424">00384</a>     ne10_float32_t *<a class="code" href="structne10__iir__lattice__instance__f32__t.html#aa66c73deb6155898dfd02363a651c424" title="Points to the ladder coefficient array.">pvCoeffs</a>;    
+<a name="l00385"></a>00385 } <a class="code" href="structne10__iir__lattice__instance__f32__t.html" title="Instance structure for the floating point IIR Lattice filter.">ne10_iir_lattice_instance_f32_t</a>;
 <a name="l00386"></a>00386 
-<a name="l00387"></a><a class="code" href="structne10__size__t.html">00387</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
-<a name="l00388"></a>00388 {
-<a name="l00389"></a>00389     ne10_uint32_t x;
-<a name="l00390"></a>00390     ne10_uint32_t y;
-<a name="l00391"></a>00391 } <a class="code" href="structne10__size__t.html">ne10_size_t</a>;
-<a name="l00392"></a>00392 
-<a name="l00393"></a>00393 <span class="keyword">typedef</span> <span class="keyword">enum</span>
-<a name="l00394"></a>00394 {
-<a name="l00395"></a>00395     UBUNTU_COMMAND_LINE,
-<a name="l00396"></a>00396     ANDROID_DEMO,
-<a name="l00397"></a>00397     IOS_DEMO
-<a name="l00398"></a>00398 } ne10_print_target_t;
+<a name="l00388"></a>00388 <span class="comment">// definitions for imgproc module</span>
+<a name="l00390"></a>00390 <span class="comment"></span>
+<a name="l00394"></a><a class="code" href="structne10__point__t.html">00394</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00395"></a>00395 {
+<a name="l00396"></a>00396     ne10_uint32_t x;
+<a name="l00397"></a>00397     ne10_uint32_t y;
+<a name="l00398"></a>00398 } <a class="code" href="structne10__point__t.html" title="Structure for point in image.">ne10_point_t</a>;
 <a name="l00399"></a>00399 
-<a name="l00400"></a>00400 <span class="preprocessor">#endif</span>
+<a name="l00400"></a><a class="code" href="structne10__size__t.html">00400</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>
+<a name="l00401"></a>00401 {
+<a name="l00402"></a>00402     ne10_uint32_t x;
+<a name="l00403"></a>00403     ne10_uint32_t y;
+<a name="l00404"></a>00404 } <a class="code" href="structne10__size__t.html">ne10_size_t</a>;
+<a name="l00405"></a>00405 
+<a name="l00406"></a>00406 <span class="keyword">typedef</span> <span class="keyword">enum</span>
+<a name="l00407"></a>00407 {
+<a name="l00408"></a>00408     UBUNTU_COMMAND_LINE,
+<a name="l00409"></a>00409     ANDROID_DEMO,
+<a name="l00410"></a>00410     IOS_DEMO
+<a name="l00411"></a>00411 } ne10_print_target_t;
+<a name="l00412"></a>00412 
+<a name="l00413"></a>00413 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -444,7 +457,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

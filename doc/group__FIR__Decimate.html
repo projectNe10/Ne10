@@ -73,18 +73,32 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#groups">Modules</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Finite Impulse Response (FIR) Decimator</div>  </div>
 <div class="ingroups"><a class="el" href="group__groupDSPs.html">Signal Processing Functions</a></div></div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="groups"></a>
+Modules</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Interpolate.html">Finite Impulse Response (FIR) Interpolator</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Lattice.html">Finite Impulse Response (FIR) Lattice Filters</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Sparse.html">Finite Impulse Response (FIR) Sparse Filters</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IIR__Lattice.html">Infinite Impulse Response (IIR) Lattice Filters</a></td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6900b0dd7c6628556c8b407d86c478dd"></a><!-- doxytag: member="FIR_Decimate::ne10_fir_decimate_float_neon" ref="ga6900b0dd7c6628556c8b407d86c478dd" args="(const ne10_fir_decimate_instance_f32_t *S, ne10_float32_t *pSrc, ne10_float32_t *pDst, ne10_uint32_t blockSize) asm(&quot;ne10_fir_decimate_float_neon&quot;)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_fir_decimate_float_neon</b> (const <a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *S, ne10_float32_t *pSrc, ne10_float32_t *pDst, ne10_uint32_t blockSize) asm(&quot;ne10_fir_decimate_float_neon&quot;)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Decimate.html#ga4213c8dbc94a503ad296e21f906d404f">ne10_iir_lattice_init_float</a> (<a class="el" href="structne10__iir__lattice__instance__f32__t.html">ne10_iir_lattice_instance_f32_t</a> *S, ne10_uint16_t numStages, ne10_float32_t *pkCoeffs, ne10_float32_t *pvCoeffs, ne10_float32_t *pState, ne10_uint32_t blockSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the floating-point IIR lattice filter.  <a href="#ga4213c8dbc94a503ad296e21f906d404f"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Decimate.html#ga4301dded3173cae5473078a71d258376">ne10_iir_lattice_float_c</a> (const <a class="el" href="structne10__iir__lattice__instance__f32__t.html">ne10_iir_lattice_instance_f32_t</a> *S, ne10_float32_t *pSrc, ne10_float32_t *pDst, ne10_uint32_t blockSize)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point IIR lattice filter.  <a href="#ga4301dded3173cae5473078a71d258376"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Decimate.html#gaec604418277427a584b2a42937813c94">ne10_fir_decimate_float_c</a> (const <a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *S, ne10_float32_t *pSrc, ne10_float32_t *pDst, ne10_uint32_t blockSize)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point FIR decimator.  <a href="#gaec604418277427a584b2a42937813c94"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac13deb3df4e08d3890cc156ebd658d3a"></a><!-- doxytag: member="FIR_Decimate::ne10_iir_lattice_float" ref="gac13deb3df4e08d3890cc156ebd658d3a" args=")(const ne10_iir_lattice_instance_f32_t *S, ne10_float32_t *pSrc, ne10_float32_t *pDst, ne10_uint32_t blockSize)" -->
+void(*&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_iir_lattice_float</b> )(const <a class="el" href="structne10__iir__lattice__instance__f32__t.html">ne10_iir_lattice_instance_f32_t</a> *S, ne10_float32_t *pSrc, ne10_float32_t *pDst, ne10_uint32_t blockSize)</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <dl class="user"><dt><b></b></dt><dd>These functions combine an FIR filter together with a decimator. They are used in multirate systems for reducing the sample rate of a signal without introducing aliasing distortion. Conceptually, the functions are equivalent to the block diagram below: <div class="image">
@@ -170,6 +184,126 @@ Components included in the FIR Decimator functions</div></div>
 
 </div>
 </div>
+<a class="anchor" id="ga4301dded3173cae5473078a71d258376"></a><!-- doxytag: member="NE10_dsp.h::ne10_iir_lattice_float_c" ref="ga4301dded3173cae5473078a71d258376" args="(const ne10_iir_lattice_instance_f32_t *S, ne10_float32_t *pSrc, ne10_float32_t *pDst, ne10_uint32_t blockSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="group__IIR__Lattice.html#ga4301dded3173cae5473078a71d258376">ne10_iir_lattice_float_c</a> </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structne10__iir__lattice__instance__f32__t.html">ne10_iir_lattice_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_float32_t *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_float32_t *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Processing function for the floating-point IIR lattice filter. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point IIR lattice structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to the block of input data. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to the block of output data. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples to process. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>none. </dd></dl>
+
+<p>Definition at line <a class="el" href="NE10__iir_8c_source.html#l00118">118</a> of file <a class="el" href="NE10__iir_8c_source.html">NE10_iir.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga4213c8dbc94a503ad296e21f906d404f"></a><!-- doxytag: member="NE10_dsp.h::ne10_iir_lattice_init_float" ref="ga4213c8dbc94a503ad296e21f906d404f" args="(ne10_iir_lattice_instance_f32_t *S, ne10_uint16_t numStages, ne10_float32_t *pkCoeffs, ne10_float32_t *pvCoeffs, ne10_float32_t *pState, ne10_uint32_t blockSize)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ne10_result_t <a class="el" href="group__FIR__Decimate.html#ga4213c8dbc94a503ad296e21f906d404f">ne10_iir_lattice_init_float</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__iir__lattice__instance__f32__t.html">ne10_iir_lattice_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_uint16_t&#160;</td>
+          <td class="paramname"><em>numStages</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_float32_t *&#160;</td>
+          <td class="paramname"><em>pkCoeffs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_float32_t *&#160;</td>
+          <td class="paramname"><em>pvCoeffs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_float32_t *&#160;</td>
+          <td class="paramname"><em>pState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ne10_uint32_t&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Initialization function for the floating-point IIR lattice filter. </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point IIR lattice structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numStages</td><td>number of stages in the filter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pkCoeffs</td><td>points to the reflection coefficient buffer. The array is of length numStages. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pvCoeffs</td><td>points to the ladder coefficient buffer. The array is of length numStages+1. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to the state buffer. The array is of length numStages+blockSize. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples to process. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>none. </dd></dl>
+
+<p>Definition at line <a class="el" href="NE10__iir__init_8c_source.html#l00045">45</a> of file <a class="el" href="NE10__iir__init_8c_source.html">NE10_iir_init.c</a>.</p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -188,7 +322,7 @@ Components included in the FIR Decimator functions</div></div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jul 23 2014 15:12:21 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jan 21 2015 18:47:14 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
