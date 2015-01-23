@@ -69,4 +69,6 @@ const static ne10_fft_cpx_int32_t TW_5B_S32 =
 const static ne10_float32_t TW_3I_F32  =   0.866025403784439; // sqrt (3) / 2
 const static ne10_float32_t TW_3IN_F32 = - 0.866025403784439; // - TW_3IN_F32
 const static ne10_int32_t TW_3I_S32 = 1859775393; // round (TW_3I_F32 * 2^31)
+const static ne10_int32_t TW_3IN_S32 = -1859775393; // round (TW_3IN_F32 * 2^31)
+
 #endif // NE10_FFT_COMMON_VARIBLES_H

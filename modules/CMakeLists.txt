@@ -178,6 +178,7 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.cpp
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.c
@@ -203,6 +204,7 @@ if(NE10_ENABLE_DSP)
            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
+           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.neonintrinsic.cpp
            )
 
       foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
@@ -225,6 +227,7 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.neonintrinsic.cpp
         )
     endif()
 

@@ -257,4 +257,122 @@ inline void FFT_FCU<5> (ne10_fft_cpx_int32_t Fout[5],
     Fout[4] = scratch_in[4];
 }
 
+/**
+ * @brief Conjugate a fix-point complex scalar/NEON vector.
+ */
+template<class T>
+inline void NE10_CONJ_S (T &);
+
+template<>
+inline void NE10_CONJ_S<ne10_fft_cpx_int32_t> (ne10_fft_cpx_int32_t &scalar)
+{
+    scalar.i = -scalar.i;
+}
+
+/**
+ * @brief Conjugate a fix-point complex array.
+ * @tparam RADIX Length of given fix-point complex array
+ * @param[out] in Given array
+ */
+template<int RADIX, class T = ne10_fft_cpx_int32_t>
+inline void NE10_CONJ (T in[RADIX])
+{
+    NE10_CONJ<RADIX - 1> (in);
+    NE10_CONJ_S<T> (in[RADIX - 1]);
+}
+
+template<>
+inline void NE10_CONJ<1, ne10_fft_cpx_int32_t> (ne10_fft_cpx_int32_t in[1])
+{
+    NE10_CONJ_S<ne10_fft_cpx_int32_t> (in[0]);
+}
+
+template<class T>
+inline T NE10_CPX_LOAD_S (const T *ptr)
+{
+    return *ptr;
+}
+
+template<class T>
+inline void NE10_CPX_STORE_S (T *Fout, const T in)
+{
+    *Fout = in;
+}
+
+/**
+ * @brief Load a fixed-size array from given buffer, by given step.
+ * @tparam RADIX Length of array.
+ * @param[out] out      Array to which data are loaded
+ * @param[in]  Fin      Pointing to buffer from which data are loaded
+ * @param[in]  in_step  Step between loaded data in Fin
+ */
+template<int RADIX, class T = ne10_fft_cpx_int32_t>
+inline void NE10_LOAD_BY_STEP (T out[RADIX],
+        const T *Fin,
+        const ne10_int32_t in_step);
+
+template<>
+inline void NE10_LOAD_BY_STEP<1, ne10_fft_cpx_int32_t> (
+        ne10_fft_cpx_int32_t out[0],
+        const ne10_fft_cpx_int32_t *Fin,
+        const ne10_int32_t)
+{
+    out[0] = NE10_CPX_LOAD_S<ne10_fft_cpx_int32_t> (Fin);
+}
+
+template<int RADIX, class T>
+inline void NE10_LOAD_BY_STEP (T out[RADIX],
+        const T *Fin,
+        const ne10_int32_t in_step)
+{
+    out[0] = NE10_CPX_LOAD_S<T> (Fin);
+    NE10_LOAD_BY_STEP<RADIX - 1, T> (out + 1, Fin + in_step, in_step);
+}
+
+/**
+ * @brief Store a fixed-size array to given buffer, by given step.
+ * @tparam RADIX Length of array.
+ * @param[out] Fout         Pointing to buffer to which data are stored
+ * @param[in]  out          Array to from data are stored
+ * @param[in]  out_step     Step between stored data in Fout
+ */
+template<int RADIX, class T = ne10_fft_cpx_int32_t>
+inline void NE10_STORE_BY_STEP (T *Fout,
+        const T in[RADIX],
+        const ne10_int32_t out_step)
+{
+    NE10_CPX_STORE_S<T> (Fout, in[0]);
+    NE10_STORE_BY_STEP<RADIX - 1, T> (Fout + out_step, in + 1, out_step);
+}
+
+template<>
+inline void NE10_STORE_BY_STEP<1, ne10_fft_cpx_int32_t> (
+        ne10_fft_cpx_int32_t *Fout,
+        const ne10_fft_cpx_int32_t in[1],
+        const ne10_int32_t)
+{
+    Fout[0] = in[0];
+}
+
+/**
+ * @brief Scale a fixed-size array by given divider.
+ * @tparam          RADIX        Length of array.
+ * @param[out]      out          Array whose elements are scaled
+ * @param[in]       scaling      Divider by which array is divided
+ */
+template<int RADIX>
+inline void NE10_SCALED (ne10_fft_cpx_int32_t out[RADIX],
+        const ne10_int32_t scaling)
+{
+    NE10_F2I32_FIXDIV (out[0], scaling);
+    NE10_SCALED<RADIX - 1> (out + 1, scaling);
+}
+
+template<>
+inline void NE10_SCALED<1> (ne10_fft_cpx_int32_t out[1],
+        const ne10_int32_t scaling)
+{
+    NE10_F2I32_FIXDIV (out[0], scaling);
+}
+
 #endif // NE10_FFT_GENERIC_INT32_H

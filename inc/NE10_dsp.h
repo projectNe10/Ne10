@@ -166,6 +166,8 @@ extern "C" {
             ne10_fft_cpx_float32_t *fin,
             ne10_fft_r2c_cfg_float32_t cfg);
 
+    extern ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft);
+
     extern void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
                                             ne10_fft_cpx_int32_t *fin,
                                             ne10_fft_cfg_int32_t cfg,

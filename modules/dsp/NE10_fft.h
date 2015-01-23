@@ -135,6 +135,20 @@ extern "C" {
             ne10_fft_cpx_int32_t * buffer,
             const ne10_int32_t scaled_flag);
 
+    extern void ne10_mixed_radix_generic_butterfly_int32_neon (ne10_fft_cpx_int32_t * Fout,
+            const ne10_fft_cpx_int32_t * Fin,
+            const ne10_int32_t * factors,
+            const ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer,
+            const ne10_int32_t scaled_flag);
+
+    extern void ne10_mixed_radix_generic_butterfly_inverse_int32_neon (ne10_fft_cpx_int32_t * Fout,
+            const ne10_fft_cpx_int32_t * Fin,
+            const ne10_int32_t * factors,
+            const ne10_fft_cpx_int32_t * twiddles,
+            ne10_fft_cpx_int32_t * buffer,
+            const ne10_int32_t scaled_flag);
+
     extern void ne10_mixed_radix_fft_forward_int32_unscaled_neon (ne10_fft_cpx_int32_t * Fout,
             ne10_fft_cpx_int32_t *fin,
             ne10_int32_t * factors,
