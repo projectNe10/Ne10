@@ -47,6 +47,7 @@ extern "C" {
 
     /* function pointers*/
     extern ne10_fft_cfg_float32_t (*ne10_fft_alloc_c2c_float32) (ne10_int32_t nfft);
+    extern ne10_fft_cfg_int32_t (*ne10_fft_alloc_c2c_int32) (ne10_int32_t nfft);
 
     extern void (*ne10_fft_c2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
                                             ne10_fft_cpx_float32_t *fin,
@@ -94,7 +95,6 @@ extern "C" {
                                           ne10_int32_t scaled_flag);
 
     /* init functions*/
-    extern ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32 (ne10_int32_t nfft);
     extern ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft);
 
     extern ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft);
@@ -103,6 +103,7 @@ extern "C" {
 
     /* C version*/
     extern ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft);
+    extern ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_c (ne10_int32_t nfft);
 
     extern void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                            ne10_fft_cpx_float32_t *fin,
@@ -152,6 +153,7 @@ extern "C" {
 
     /* NEON version*/
     extern ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft);
+    extern ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft);
 
     extern void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
             ne10_fft_cpx_float32_t *fin,
@@ -165,8 +167,6 @@ extern "C" {
     extern void ne10_fft_c2r_1d_float32_neon (ne10_float32_t *fout,
             ne10_fft_cpx_float32_t *fin,
             ne10_fft_r2c_cfg_float32_t cfg);
-
-    extern ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft);
 
     extern void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
                                             ne10_fft_cpx_int32_t *fin,

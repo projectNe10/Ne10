@@ -83,7 +83,8 @@ void test_fft_c2c_1d_int32_conformance()
 
     ne10_int32_t i = 0;
     ne10_int32_t fftSize = 0;
-    ne10_fft_cfg_int32_t cfg;
+    ne10_fft_cfg_int32_t cfg_c;
+    ne10_fft_cfg_int32_t cfg_neon;
     ne10_float32_t * out_c_tmp = NULL;
     ne10_float32_t * out_neon_tmp = NULL;
 
@@ -113,9 +114,17 @@ void test_fft_c2c_1d_int32_conformance()
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
         /* FFT init */
-        cfg = ne10_fft_alloc_c2c_int32 (fftSize);
-        if (cfg == NULL)
+        cfg_c = ne10_fft_alloc_c2c_int32_c (fftSize);
+        if (cfg_c == NULL)
         {
+            fprintf (stdout, "======ERROR, FFT alloc fails\n");
+            return;
+        }
+
+        cfg_neon = ne10_fft_alloc_c2c_int32_neon (fftSize);
+        if (cfg_neon == NULL)
+        {
+            NE10_FREE (cfg_c);
             fprintf (stdout, "======ERROR, FFT alloc fails\n");
             return;
         }
@@ -126,8 +135,8 @@ void test_fft_c2c_1d_int32_conformance()
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 0, 0);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 0, 0);
+        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 0);
+        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 0);
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
 
@@ -146,8 +155,8 @@ void test_fft_c2c_1d_int32_conformance()
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 1, 0);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 1, 0);
+        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 0);
+        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 0);
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
 
@@ -166,8 +175,8 @@ void test_fft_c2c_1d_int32_conformance()
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 0, 1);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 0, 1);
+        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 1);
+        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 1);
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
 
@@ -186,8 +195,8 @@ void test_fft_c2c_1d_int32_conformance()
 
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 1, 1);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 1, 1);
+        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 1);
+        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 1);
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
         CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
 
@@ -200,7 +209,8 @@ void test_fft_c2c_1d_int32_conformance()
         snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
         assert_false ( (snr < SNR_THRESHOLD_INT32));
 
-        NE10_FREE (cfg);
+        NE10_FREE (cfg_c);
+        NE10_FREE (cfg_neon);
     }
 
     NE10_FREE (guarded_in_c);
@@ -216,7 +226,8 @@ void test_fft_c2c_1d_int32_performance()
 
     ne10_int32_t i = 0;
     ne10_int32_t fftSize = 0;
-    ne10_fft_cfg_int32_t cfg;
+    ne10_fft_cfg_int32_t cfg_c;
+    ne10_fft_cfg_int32_t cfg_neon;
     ne10_int32_t test_loop = 0;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
@@ -246,12 +257,21 @@ void test_fft_c2c_1d_int32_performance()
         /* FFT test */
         memcpy (in_c, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
         memcpy (in_neon, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
-        cfg = ne10_fft_alloc_c2c_int32 (fftSize);
-        if (cfg == NULL)
+        cfg_c = ne10_fft_alloc_c2c_int32_c (fftSize);
+        if (cfg_c == NULL)
         {
             fprintf (stdout, "======ERROR, FFT alloc fails\n");
             return;
         }
+
+        cfg_neon = ne10_fft_alloc_c2c_int32_neon (fftSize);
+        if (cfg_neon == NULL)
+        {
+            NE10_FREE (cfg_c);
+            fprintf (stdout, "======ERROR, FFT alloc fails\n");
+            return;
+        }
+
         test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
@@ -259,7 +279,7 @@ void test_fft_c2c_1d_int32_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 0, 0);
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 0);
         }
         );
         GET_TIME
@@ -267,7 +287,7 @@ void test_fft_c2c_1d_int32_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 0, 0);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_neon, 0, 0);
         }
         );
         time_speedup = (ne10_float32_t) time_c / time_neon;
@@ -283,7 +303,7 @@ void test_fft_c2c_1d_int32_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 1, 0);
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 0);
         }
         );
         GET_TIME
@@ -291,7 +311,7 @@ void test_fft_c2c_1d_int32_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 1, 0);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 0);
         }
         );
 
@@ -308,7 +328,7 @@ void test_fft_c2c_1d_int32_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 0, 1);
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 1);
         }
         );
         GET_TIME
@@ -316,7 +336,7 @@ void test_fft_c2c_1d_int32_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 0, 1);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_neon, 0, 1);
         }
         );
         time_speedup = (ne10_float32_t) time_c / time_neon;
@@ -332,7 +352,7 @@ void test_fft_c2c_1d_int32_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 1, 1);
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 1);
         }
         );
         GET_TIME
@@ -340,7 +360,7 @@ void test_fft_c2c_1d_int32_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 1, 1);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 1);
         }
         );
 
@@ -348,7 +368,8 @@ void test_fft_c2c_1d_int32_performance()
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         ne10_log (__FUNCTION__, "  scaled IFFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
 
-        NE10_FREE (cfg);
+        NE10_FREE (cfg_c);
+        NE10_FREE (cfg_neon);
     }
 
     NE10_FREE (guarded_in_c);

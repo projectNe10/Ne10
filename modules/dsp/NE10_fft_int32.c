@@ -1026,7 +1026,7 @@ static void ne10_fft_split_c2r_1d_int32 (ne10_fft_cpx_int32_t *dst,
  * @return      st               point to the FFT config memory. This memory is allocated with malloc.
  * The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff.
  */
-ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32 (ne10_int32_t nfft)
+ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_c (ne10_int32_t nfft)
 {
     ne10_fft_cfg_int32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_int32_t)

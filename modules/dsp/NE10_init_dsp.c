@@ -34,6 +34,7 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
     if (NE10_OK == is_NEON_available)
     {
         ne10_fft_alloc_c2c_float32 = ne10_fft_alloc_c2c_float32_neon;
+        ne10_fft_alloc_c2c_int32 = ne10_fft_alloc_c2c_int32_neon;
         ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_neon;
         ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_neon;
         ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_neon;
@@ -85,6 +86,7 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
     else
     {
         ne10_fft_alloc_c2c_float32 = ne10_fft_alloc_c2c_float32_c;
+        ne10_fft_alloc_c2c_int32 = ne10_fft_alloc_c2c_int32_c;
         ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_c;
         ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_c;
         ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_c;
@@ -110,6 +112,7 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
 
 // These are actual definitions of our function pointers that are declared in inc/NE10_dsp.h
 ne10_fft_cfg_float32_t (*ne10_fft_alloc_c2c_float32) (ne10_int32_t nfft);
+ne10_fft_cfg_int32_t (*ne10_fft_alloc_c2c_int32) (ne10_int32_t nfft);
 
 void (*ne10_fft_c2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
                                  ne10_fft_cpx_float32_t *fin,

@@ -274,7 +274,7 @@ inline void NE10_CONJ_S<ne10_fft_cpx_int32_t> (ne10_fft_cpx_int32_t &scalar)
  * @tparam RADIX Length of given fix-point complex array
  * @param[out] in Given array
  */
-template<int RADIX, class T = ne10_fft_cpx_int32_t>
+template<int RADIX, class T>
 inline void NE10_CONJ (T in[RADIX])
 {
     NE10_CONJ<RADIX - 1> (in);
@@ -306,7 +306,7 @@ inline void NE10_CPX_STORE_S (T *Fout, const T in)
  * @param[in]  Fin      Pointing to buffer from which data are loaded
  * @param[in]  in_step  Step between loaded data in Fin
  */
-template<int RADIX, class T = ne10_fft_cpx_int32_t>
+template<int RADIX, class T>
 inline void NE10_LOAD_BY_STEP (T out[RADIX],
         const T *Fin,
         const ne10_int32_t in_step);
@@ -336,7 +336,7 @@ inline void NE10_LOAD_BY_STEP (T out[RADIX],
  * @param[in]  out          Array to from data are stored
  * @param[in]  out_step     Step between stored data in Fout
  */
-template<int RADIX, class T = ne10_fft_cpx_int32_t>
+template<int RADIX, class T>
 inline void NE10_STORE_BY_STEP (T *Fout,
         const T in[RADIX],
         const ne10_int32_t out_step)
