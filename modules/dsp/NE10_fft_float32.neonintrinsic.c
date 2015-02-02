@@ -1474,12 +1474,12 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
         if (inverse_fft)
         {
             ne10_mixed_radix_generic_butterfly_inverse_float32_neon (fout, fin,
-                    cfg->factors, cfg->twiddles, cfg->buffer);
+                    cfg->factors, cfg->twiddles, cfg->buffer, cfg->is_backward_scaled);
         }
         else
         {
             ne10_mixed_radix_generic_butterfly_float32_neon (fout, fin,
-                    cfg->factors, cfg->twiddles, cfg->buffer);
+                    cfg->factors, cfg->twiddles, cfg->buffer, cfg->is_forward_scaled);
         }
         return;
     }

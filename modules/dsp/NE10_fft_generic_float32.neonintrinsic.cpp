@@ -360,8 +360,6 @@ static inline void NE10_FFT5_FUC_INPLACE_NEON_F32 (CPLX Fout[5])
 static inline void NE10_FFT8_FUC_NEON_F32 (CPLX out[8],
         const CPLX in[8])
 {
-    PRINT_HIT;
-
     CPLX s[8];
     const static ne10_fft_cpx_float32_t TW_8[4] =
     {
@@ -432,7 +430,7 @@ static inline void NE10_FFT8_FUC_NEON_F32 (CPLX out[8],
 ////////////////////////////////////
 // Following are butterfly functions
 ////////////////////////////////////
-template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse>
+template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse, bool is_scaled>
 static void ne10_radix_2_butterfly_float32_neon (CPLX *Fout,
         const CPLX *Fin,
         const ne10_fft_cpx_float32_t *twiddles,
@@ -440,8 +438,6 @@ static void ne10_radix_2_butterfly_float32_neon (CPLX *Fout,
         const ne10_int32_t out_step,
         const ne10_int32_t nfft)
 {
-    PRINT_HIT;
-
     CPLX in[2];
     CPLX out[2];
 
@@ -474,7 +470,7 @@ static void ne10_radix_2_butterfly_float32_neon (CPLX *Fout,
             {
                 NE10_FFT2_CONJ (out);
 
-                if (is_first_stage == 1)
+                if (is_scaled)
                 {
                     NE10_FFT2_SCALING (out, one_by_fft_neon);
                 }
@@ -502,7 +498,7 @@ static void ne10_radix_2_butterfly_float32_neon (CPLX *Fout,
         }
     }
 }
-template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse>
+template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse, bool is_scaled>
 static void ne10_radix_4_butterfly_float32_neon (CPLX *Fout,
         const CPLX *Fin,
         const ne10_fft_cpx_float32_t *twiddles,
@@ -544,10 +540,10 @@ static void ne10_radix_4_butterfly_float32_neon (CPLX *Fout,
             if (is_inverse == 1)
             {
                 NE10_FFT4_CONJ (in);
-                if (is_first_stage == 1)
-                {
-                    NE10_FFT4_SCALING (in, one_by_fft_neon);
-                }
+            }
+            if (is_scaled)
+            {
+                NE10_FFT4_SCALING (in, one_by_fft_neon);
             }
 
             NE10_CPLX_STORE (Fout + 0 * out_step, in[0]);
@@ -575,7 +571,7 @@ static void ne10_radix_4_butterfly_float32_neon (CPLX *Fout,
     }
 }
 
-template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse>
+template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse, bool is_scaled>
 static void ne10_radix_3_butterfly_float32_neon (CPLX *Fout,
         const CPLX *Fin,
         const ne10_fft_cpx_float32_t *twiddles,
@@ -616,10 +612,10 @@ static void ne10_radix_3_butterfly_float32_neon (CPLX *Fout,
             if (is_inverse == 1)
             {
                 NE10_FFT3_CONJ (out);
-                if (is_first_stage == 1)
-                {
-                    NE10_FFT3_SCALING (out, one_by_fft_neon);
-                }
+            }
+            if (is_scaled)
+            {
+                NE10_FFT3_SCALING (out, one_by_fft_neon);
             }
 
             NE10_CPLX_STORE (Fout + 0 * out_step, out[0]);
@@ -646,7 +642,7 @@ static void ne10_radix_3_butterfly_float32_neon (CPLX *Fout,
     }
 }
 
-template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse>
+template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse, bool is_scaled>
 static void ne10_radix_5_butterfly_float32_neon (CPLX *Fout,
         const CPLX *Fin,
         const ne10_fft_cpx_float32_t *twiddles,
@@ -690,10 +686,10 @@ static void ne10_radix_5_butterfly_float32_neon (CPLX *Fout,
             if (is_inverse == 1)
             {
                 NE10_FFT5_CONJ (in);
-                if (is_first_stage == 1)
-                {
-                    NE10_FFT5_SCALING (in, one_by_fft_neon);
-                }
+            }
+            if (is_scaled)
+            {
+                NE10_FFT5_SCALING (in, one_by_fft_neon);
             }
 
             NE10_CPLX_STORE (Fout + 0 * out_step, in[0]);
@@ -722,16 +718,14 @@ static void ne10_radix_5_butterfly_float32_neon (CPLX *Fout,
     }
 }
 
-template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse>
+template<ne10_int32_t is_first_stage, ne10_int32_t is_inverse, bool is_scaled>
 static void ne10_radix_8_butterfly_float32_neon (CPLX *Fout,
         const CPLX *Fin,
-        const ne10_fft_cpx_float32_t *twiddles,
+        const ne10_fft_cpx_float32_t *,
         const ne10_int32_t fstride,
         const ne10_int32_t out_step,
         const ne10_int32_t nfft)
 {
-    PRINT_HIT;
-
     CPLX in[8];
     CPLX out[8];
 
@@ -764,6 +758,9 @@ static void ne10_radix_8_butterfly_float32_neon (CPLX *Fout,
             if (is_inverse == 1)
             {
                 NE10_FFT8_CONJ (out);
+            }
+            if (is_scaled)
+            {
                 NE10_FFT8_SCALING (out, one_by_fft_neon);
             }
 
@@ -782,15 +779,13 @@ static void ne10_radix_8_butterfly_float32_neon (CPLX *Fout,
     }
 }
 
-template<ne10_int32_t is_inverse>
+template<ne10_int32_t is_inverse, bool is_scaled>
 static void ne10_mixed_radix_generic_butterfly_float32_neon_impl (CPLX *Fout,
         const CPLX *Fin,
         const ne10_int32_t *factors,
         const ne10_fft_cpx_float32_t *twiddles,
         CPLX *buffer)
 {
-    PRINT_HIT;
-
     ne10_int32_t fstride, mstride, radix;
     ne10_int32_t stage_count;
     ne10_int32_t nfft;
@@ -802,8 +797,6 @@ static void ne10_mixed_radix_generic_butterfly_float32_neon_impl (CPLX *Fout,
     radix = factors[ stage_count << 1 ]; // radix of first stage
     nfft = fstride * radix;
 
-    PRINT_HIT;
-
     // swap to make sure output to Fout
     if (stage_count % 2 == 0)
     {
@@ -814,28 +807,23 @@ static void ne10_mixed_radix_generic_butterfly_float32_neon_impl (CPLX *Fout,
     switch (radix)
     {
     case 2:
-        PRINT_HIT;
-        ne10_radix_2_butterfly_float32_neon<1, is_inverse> (Fout, Fin, NULL,
+        ne10_radix_2_butterfly_float32_neon<1, is_inverse, is_scaled> (Fout, Fin, NULL,
                 fstride, 1, nfft);
         break;
     case 4:
-        PRINT_HIT;
-        ne10_radix_4_butterfly_float32_neon<1, is_inverse> (Fout, Fin, NULL,
+        ne10_radix_4_butterfly_float32_neon<1, is_inverse, is_scaled> (Fout, Fin, NULL,
                 fstride, 1, nfft);
         break;
     case 3:
-        PRINT_HIT;
-        ne10_radix_3_butterfly_float32_neon<1, is_inverse> (Fout, Fin, NULL,
+        ne10_radix_3_butterfly_float32_neon<1, is_inverse, is_scaled> (Fout, Fin, NULL,
                 fstride, 1, nfft);
         break;
     case 5:
-        PRINT_HIT;
-        ne10_radix_5_butterfly_float32_neon<1, is_inverse> (Fout, Fin, NULL,
+        ne10_radix_5_butterfly_float32_neon<1, is_inverse, is_scaled> (Fout, Fin, NULL,
                 fstride, 1, nfft);
         break;
     case 8:
-        PRINT_HIT;
-        ne10_radix_8_butterfly_float32_neon<1, is_inverse> (Fout, Fin, NULL,
+        ne10_radix_8_butterfly_float32_neon<1, is_inverse, is_scaled> (Fout, Fin, NULL,
                 fstride, 1, nfft);
         break;
     }
@@ -868,19 +856,19 @@ static void ne10_mixed_radix_generic_butterfly_float32_neon_impl (CPLX *Fout,
         switch (radix)
         {
         case 2:
-            ne10_radix_2_butterfly_float32_neon<0, is_inverse> (Fout, buffer,
+            ne10_radix_2_butterfly_float32_neon<0, is_inverse, false> (Fout, buffer,
                     twiddles, fstride, mstride, nfft);
             break;
         case 3:
-            ne10_radix_3_butterfly_float32_neon<0, is_inverse> (Fout, buffer,
+            ne10_radix_3_butterfly_float32_neon<0, is_inverse, false> (Fout, buffer,
                     twiddles, fstride, mstride, nfft);
             break;
         case 4:
-            ne10_radix_4_butterfly_float32_neon<0, is_inverse> (Fout, buffer,
+            ne10_radix_4_butterfly_float32_neon<0, is_inverse, false> (Fout, buffer,
                     twiddles, fstride, mstride, nfft);
             break;
         case 5:
-            ne10_radix_5_butterfly_float32_neon<0, is_inverse> (Fout, buffer,
+            ne10_radix_5_butterfly_float32_neon<0, is_inverse, false> (Fout, buffer,
                     twiddles, fstride, mstride, nfft);
             break;
         } // switch (radix)
@@ -899,18 +887,8 @@ static void ne10_c2c_1d_last_stage_neon (CPLX *Fout,
         const ne10_fft_cpx_float32_t *twiddles,
         const ne10_int32_t fstride,
         const ne10_int32_t out_step,
-        const ne10_int32_t nfft)
+        const ne10_int32_t)
 {
-#ifdef NE10_VERBOSE
-    // Clear Fout
-    int i;
-    for (i = 0; i < nfft; i++)
-    {
-        ((ne10_fft_cpx_float32_t *) Fout)[i].r = 0.0;
-        ((ne10_fft_cpx_float32_t *) Fout)[i].i = 0.0;
-    }
-#endif
-
     ne10_int32_t f_count;
     ne10_int32_t m_count;
 
@@ -1040,24 +1018,37 @@ static void ne10_c2c_1d_last_stage_neon (CPLX *Fout,
     }
 }
 
+typedef void (*NE10_MIXED_RADIX_FUNC) (CPLX*, const CPLX *, const ne10_int32_t *,
+        const ne10_fft_cpx_float32_t *, CPLX *);
+
 void ne10_mixed_radix_generic_butterfly_float32_neon (
         ne10_fft_cpx_float32_t *Fout,
         const ne10_fft_cpx_float32_t *Fin,
         const ne10_int32_t *factors,
         const ne10_fft_cpx_float32_t *twiddles,
-        ne10_fft_cpx_float32_t *buffer)
+        ne10_fft_cpx_float32_t *buffer,
+        const ne10_int32_t is_scaled)
 {
-    PRINT_HIT;
-
     ne10_int32_t stage_count = factors[0];
     ne10_int32_t fstride = factors[1];
     ne10_int32_t radix = factors[stage_count << 1]; // radix of first stage
+
+    NE10_MIXED_RADIX_FUNC ne10_mixed_radix_impl = NULL;
 
     // nfft below is not the actual length of FFT, it is 1/4 of the actual one
     // instead.
     ne10_int32_t nfft = fstride * radix;
 
-    ne10_mixed_radix_generic_butterfly_float32_neon_impl<0> ((CPLX *) buffer,
+    if (is_scaled)
+    {
+        ne10_mixed_radix_impl = ne10_mixed_radix_generic_butterfly_float32_neon_impl<0, true>;
+    }
+    else
+    {
+        ne10_mixed_radix_impl = ne10_mixed_radix_generic_butterfly_float32_neon_impl<0, false>;
+    }
+
+    ne10_mixed_radix_impl ((CPLX *) buffer,
             (const CPLX *) Fin, // From Fin to buffer
             factors,
             twiddles,
@@ -1069,8 +1060,6 @@ void ne10_mixed_radix_generic_butterfly_float32_neon (
             1, // out_step == fstride == 1
             nfft, // in_step == mstride == nfft
             nfft * 4); // Actual length of FFT
-
-    PRINT_HIT;
 }
 
 void ne10_mixed_radix_generic_butterfly_inverse_float32_neon (
@@ -1078,19 +1067,29 @@ void ne10_mixed_radix_generic_butterfly_inverse_float32_neon (
         const ne10_fft_cpx_float32_t *Fin,
         const ne10_int32_t *factors,
         const ne10_fft_cpx_float32_t *twiddles,
-        ne10_fft_cpx_float32_t *buffer)
+        ne10_fft_cpx_float32_t *buffer,
+        const ne10_int32_t is_scaled)
 {
-    PRINT_HIT;
-
     ne10_int32_t stage_count = factors[0];
     ne10_int32_t fstride = factors[1];
     ne10_int32_t radix = factors[stage_count << 1]; // radix of first stage
+
+    NE10_MIXED_RADIX_FUNC ne10_mixed_radix_impl = NULL;
 
     // nfft below is not the actual length of FFT, it is 1/4 of the actual one
     // instead.
     ne10_int32_t nfft = fstride * radix;
 
-    ne10_mixed_radix_generic_butterfly_float32_neon_impl<1> ((CPLX *) buffer,
+    if (is_scaled)
+    {
+        ne10_mixed_radix_impl = ne10_mixed_radix_generic_butterfly_float32_neon_impl<1, true>;
+    }
+    else
+    {
+        ne10_mixed_radix_impl = ne10_mixed_radix_generic_butterfly_float32_neon_impl<1, false>;
+    }
+
+    ne10_mixed_radix_impl ((CPLX *) buffer,
             (const CPLX *) Fin, // From Fin to buffer
             factors,
             twiddles,
@@ -1102,6 +1101,4 @@ void ne10_mixed_radix_generic_butterfly_inverse_float32_neon (
             1, // out_step == fstride == 1
             nfft, // in_step == mstride == nfft
             nfft * 4); // Actual length of FFT
-
-    PRINT_HIT;
 }

@@ -59,7 +59,8 @@ static inline void ne10_radix_2_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
         const ne10_int32_t out_step,
         const ne10_int32_t nfft,
         const ne10_int32_t is_first_stage,
-        const ne10_int32_t is_inverse)
+        const ne10_int32_t is_inverse,
+        const ne10_int32_t is_scaled)
 {
     ne10_fft_cpx_float32_t scratch_in[2];
     ne10_fft_cpx_float32_t scratch_out[2];
@@ -82,7 +83,7 @@ static inline void ne10_radix_2_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
             }
 
 #ifdef NE10_DSP_CFFT_SCALING
-            if (is_inverse && is_first_stage)
+            if (is_scaled && is_first_stage)
             {
                 const ne10_float32_t one_by_nfft = 1.0 / nfft;
 
@@ -144,7 +145,8 @@ static inline void ne10_radix_4_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
         const ne10_int32_t out_step,
         const ne10_int32_t nfft,
         const ne10_int32_t is_first_stage,
-        const ne10_int32_t is_inverse)
+        const ne10_int32_t is_inverse,
+        const ne10_int32_t is_scaled)
 {
     ne10_fft_cpx_float32_t scratch_in[4];
     ne10_fft_cpx_float32_t scratch_out[4];
@@ -171,7 +173,7 @@ static inline void ne10_radix_4_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
             }
 
 #ifdef NE10_DSP_CFFT_SCALING
-            if (is_inverse && is_first_stage)
+            if (is_scaled && is_first_stage)
             {
                 const ne10_float32_t one_by_nfft = 1.0 / nfft;
 
@@ -245,7 +247,8 @@ static inline void ne10_radix_8_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
         const ne10_int32_t out_step,
         const ne10_int32_t nfft,
         const ne10_int32_t is_first_stage,
-        const ne10_int32_t is_inverse)
+        const ne10_int32_t is_inverse,
+        const ne10_int32_t is_scaled)
 {
     assert (is_first_stage == 1);
 
@@ -282,7 +285,7 @@ static inline void ne10_radix_8_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
             }
 
 #ifdef NE10_DSP_CFFT_SCALING
-            if (is_inverse)
+            if (is_scaled)
             {
                 const ne10_float32_t one_by_nfft = 1.0 / nfft;
 
@@ -341,7 +344,8 @@ static inline void ne10_radix_3_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
         const ne10_int32_t out_step,
         const ne10_int32_t nfft,
         const ne10_int32_t is_first_stage,
-        const ne10_int32_t is_inverse)
+        const ne10_int32_t is_inverse,
+        const ne10_int32_t is_scaled)
 {
     ne10_fft_cpx_float32_t scratch_in[3];
     ne10_fft_cpx_float32_t scratch_out[3];
@@ -366,7 +370,7 @@ static inline void ne10_radix_3_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
             }
 
 #ifdef NE10_DSP_CFFT_SCALING
-            if (is_first_stage && is_inverse)
+            if (is_scaled && is_first_stage)
             {
                 const ne10_float32_t one_by_nfft = 1.0 / nfft;
 
@@ -434,7 +438,8 @@ static inline void ne10_radix_5_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
         const ne10_int32_t out_step,
         const ne10_int32_t nfft,
         const ne10_int32_t is_first_stage,
-        const ne10_int32_t is_inverse)
+        const ne10_int32_t is_inverse,
+        const ne10_int32_t is_scaled)
 {
     ne10_fft_cpx_float32_t scratch_in[5];
     ne10_fft_cpx_float32_t scratch_out[5];
@@ -463,7 +468,7 @@ static inline void ne10_radix_5_butterfly_float32_c (ne10_fft_cpx_float32_t *Fou
             }
 
 #ifdef NE10_DSP_CFFT_SCALING
-            if (is_first_stage && is_inverse)
+            if (is_scaled && is_first_stage)
             {
                 const ne10_float32_t one_by_nfft = 1.0 / nfft;
 
@@ -542,7 +547,8 @@ static inline void ne10_radix_generic_butterfly_float32_c (ne10_fft_cpx_float32_
         const ne10_int32_t radix,
         const ne10_int32_t in_step,
         const ne10_int32_t out_step,
-        const ne10_int32_t is_inverse)
+        const ne10_int32_t is_inverse,
+        const ne10_int32_t is_scaled)
 {
     ne10_int32_t q, q1;
     ne10_int32_t f_count = in_step;
@@ -562,9 +568,12 @@ static inline void ne10_radix_generic_butterfly_float32_c (ne10_fft_cpx_float32_
             {
                 scratch[q1].i = -scratch[q1].i;
 #ifdef NE10_DSP_CFFT_SCALING
-                const ne10_float32_t one_by_nfft = 1.0 / (radix * in_step);
-                scratch[q1].r *= one_by_nfft;
-                scratch[q1].i *= one_by_nfft;
+                if (is_scaled)
+                {
+                    const ne10_float32_t one_by_nfft = 1.0 / (radix * in_step);
+                    scratch[q1].r *= one_by_nfft;
+                    scratch[q1].i *= one_by_nfft;
+                }
 #endif
             }
         } // q1
@@ -602,7 +611,8 @@ static inline void ne10_mixed_radix_generic_butterfly_float32_impl_c (ne10_fft_c
         const ne10_int32_t *factors,
         const ne10_fft_cpx_float32_t *twiddles,
         ne10_fft_cpx_float32_t *buffer,
-        const ne10_int32_t is_inverse)
+        const ne10_int32_t is_inverse,
+        const ne10_int32_t is_scaled)
 {
     ne10_int32_t fstride, mstride, radix;
     ne10_int32_t stage_count;
@@ -620,29 +630,31 @@ static inline void ne10_mixed_radix_generic_butterfly_float32_impl_c (ne10_fft_c
         ne10_swap_ptr (buffer, Fout);
     }
 
-    PRINT_STAGE_INFO;
-    PRINT_POINTERS_INFO (Fin, Fout, buffer, twiddles);
     // first stage
     switch (radix)
     {
     case 2:
-        ne10_radix_2_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1, is_inverse);
+        ne10_radix_2_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1,
+                is_inverse, is_scaled);
         break;
     case 4:
-        ne10_radix_4_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1, is_inverse);
+        ne10_radix_4_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1,
+                is_inverse, is_scaled);
         break;
     case 3:
-        ne10_radix_3_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1, is_inverse);
+        ne10_radix_3_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1,
+                is_inverse, is_scaled);
         break;
     case 5:
-        ne10_radix_5_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1, is_inverse);
-        break;
+        ne10_radix_5_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1,
+                is_inverse, is_scaled);
         break;
     case 8:
-        ne10_radix_8_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1, is_inverse);
+        ne10_radix_8_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1,
+                is_inverse, is_scaled);
     default:
         ne10_radix_generic_butterfly_float32_c (Fout, Fin, twiddles, radix,
-                fstride, 1, is_inverse);
+                fstride, 1, is_inverse, is_scaled);
         break;
     }
 
@@ -668,24 +680,27 @@ static inline void ne10_mixed_radix_generic_butterfly_float32_impl_c (ne10_fft_c
         assert ((radix > 1) && (radix < 6));
 
         fstride /= radix;
-        PRINT_STAGE_INFO;
         switch (radix)
         {
         case 2:
             ne10_radix_2_butterfly_float32_c (Fout, buffer, twiddles, fstride,
-                    mstride, nfft, 0, is_inverse);
+                    mstride, nfft, 0, is_inverse,
+                    0); // Only scaling in the first stage.
             break;
         case 3:
             ne10_radix_3_butterfly_float32_c (Fout, buffer, twiddles, fstride,
-                    mstride, nfft, 0, is_inverse);
+                    mstride, nfft, 0, is_inverse,
+                    0); // Only scaling in the first stage.
             break;
         case 4:
             ne10_radix_4_butterfly_float32_c (Fout, buffer, twiddles, fstride,
-                    mstride, nfft, 0, is_inverse);
+                    mstride, nfft, 0, is_inverse,
+                    0); // Only scaling in the first stage.
             break;
         case 5:
             ne10_radix_5_butterfly_float32_c (Fout, buffer, twiddles, fstride,
-                    mstride, nfft, 0, is_inverse);
+                    mstride, nfft, 0, is_inverse,
+                    0); // Only scaling in the first stage.
             break;
         } // switch (radix)
 
@@ -699,16 +714,40 @@ void ne10_mixed_radix_generic_butterfly_float32_c (ne10_fft_cpx_float32_t *Fout,
         const ne10_fft_cpx_float32_t *Fin,
         const ne10_int32_t *factors,
         const ne10_fft_cpx_float32_t *twiddles,
-        ne10_fft_cpx_float32_t *buffer)
+        ne10_fft_cpx_float32_t *buffer,
+        const ne10_int32_t is_scaled)
 {
-    ne10_mixed_radix_generic_butterfly_float32_impl_c (Fout, Fin, factors, twiddles, buffer, 0);
+    if (is_scaled)
+    {
+        ne10_mixed_radix_generic_butterfly_float32_impl_c (Fout, Fin, factors,
+                twiddles, buffer, 0,
+                1); // Scaling.
+    }
+    else
+    {
+        ne10_mixed_radix_generic_butterfly_float32_impl_c (Fout, Fin, factors,
+                twiddles, buffer, 0,
+                0); // Unscaling.
+    }
 }
 
 void ne10_mixed_radix_generic_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t *Fout,
         const ne10_fft_cpx_float32_t *Fin,
         const ne10_int32_t *factors,
         const ne10_fft_cpx_float32_t *twiddles,
-        ne10_fft_cpx_float32_t *buffer)
+        ne10_fft_cpx_float32_t *buffer,
+        const ne10_int32_t is_scaled)
 {
-    ne10_mixed_radix_generic_butterfly_float32_impl_c (Fout, Fin, factors, twiddles, buffer, 1);
+    if (is_scaled)
+    {
+        ne10_mixed_radix_generic_butterfly_float32_impl_c (Fout, Fin, factors,
+                twiddles, buffer, 1,
+                1); // Scaling
+    }
+    else
+    {
+        ne10_mixed_radix_generic_butterfly_float32_impl_c (Fout, Fin, factors,
+                twiddles, buffer, 1,
+                0); // unscaling
+    }
 }

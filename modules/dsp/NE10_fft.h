@@ -85,25 +85,29 @@ extern "C" {
             const ne10_fft_cpx_float32_t * Fin,
             const ne10_int32_t * factors,
             const ne10_fft_cpx_float32_t * twiddles,
-            ne10_fft_cpx_float32_t * buffer);
+            ne10_fft_cpx_float32_t * buffer,
+            const ne10_int32_t is_scaled);
 
     extern void ne10_mixed_radix_generic_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t * Fout,
             const ne10_fft_cpx_float32_t * Fin,
             const ne10_int32_t * factors,
             const ne10_fft_cpx_float32_t * twiddles,
-            ne10_fft_cpx_float32_t * buffer);
+            ne10_fft_cpx_float32_t * buffer,
+            const ne10_int32_t is_scaled);
 
     extern void ne10_mixed_radix_generic_butterfly_float32_neon (ne10_fft_cpx_float32_t * Fout,
             const ne10_fft_cpx_float32_t * Fin,
             const ne10_int32_t * factors,
             const ne10_fft_cpx_float32_t * twiddles,
-            ne10_fft_cpx_float32_t * buffer);
+            ne10_fft_cpx_float32_t * buffer,
+            const ne10_int32_t is_scaled);
 
     extern void ne10_mixed_radix_generic_butterfly_inverse_float32_neon (ne10_fft_cpx_float32_t * Fout,
             const ne10_fft_cpx_float32_t * Fin,
             const ne10_int32_t * factors,
             const ne10_fft_cpx_float32_t * twiddles,
-            ne10_fft_cpx_float32_t * buffer);
+            ne10_fft_cpx_float32_t * buffer,
+            const ne10_int32_t is_scaled);
 
     extern void ne10_mixed_radix_fft_forward_float32_neon (ne10_fft_cpx_float32_t * Fout,
             ne10_fft_cpx_float32_t * Fin,
