@@ -446,5 +446,66 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 }
 
 /**
+ * @defgroup C2C_FFT_IFFT_DESTROY Float/Fixed point Complex FFT Destroy functions
+ * @brief User-callable function to destroy all necessary storage space for the fft.
+ * @param[in]   cfg     point to the FFT config memory. This memory is allocaed with malloc by Ne10.
+ * @{
+ */
+
+void ne10_fft_destroy_c2c_float32 (ne10_fft_cfg_float32_t cfg)
+{
+    free(cfg);
+}
+
+void ne10_fft_destroy_c2c_int32 (ne10_fft_cfg_int32_t cfg)
+{
+    free (cfg);
+}
+
+void ne10_fft_destroy_c2c_int16 (ne10_fft_cfg_int16_t cfg)
+{
+    free (cfg);
+}
+
+/**
+ * @}
+ */ //end of C2C_FFT_IFFT_DESTROY group
+
+/**
  * @}
  */ //end of C2C_FFT_IFFT group
+
+/**
+ * @addtogroup R2C_FFT_IFFT
+ * @{
+ */
+
+/**
+ * @defgroup R2C_FFT_IFFT_DESTROY Float/Fixed point Real2Complex FFT Destroy functions
+ * @brief User-callable function to destroy all necessary storage space for the fft.
+ * @param[in]   cfg     point to the FFT config memory. This memory is allocaed with malloc by Ne10.
+ * @{
+ */
+
+void ne10_fft_destroy_r2c_float32 (ne10_fft_r2c_cfg_float32_t cfg)
+{
+    free(cfg);
+}
+
+void ne10_fft_destroy_r2c_int32 (ne10_fft_r2c_cfg_int32_t cfg)
+{
+    free (cfg);
+}
+
+void ne10_fft_destroy_r2c_int16 (ne10_fft_r2c_cfg_int16_t cfg)
+{
+    free (cfg);
+}
+
+/**
+ * @}
+ */ //end of R2C_FFT_IFFT_DESTROY group
+
+/**
+ * @}
+ */ //end of R2C_FFT_IFFT group

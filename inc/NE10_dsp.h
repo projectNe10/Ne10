@@ -97,6 +97,15 @@ extern "C" {
     /* init functions*/
     extern ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft);
 
+    /* destroy functions */
+    extern void ne10_fft_destroy_c2c_float32 (ne10_fft_cfg_float32_t);
+    extern void ne10_fft_destroy_c2c_int32 (ne10_fft_cfg_int32_t);
+    extern void ne10_fft_destroy_c2c_int16 (ne10_fft_cfg_int16_t);
+
+    extern void ne10_fft_destroy_r2c_float32 (ne10_fft_r2c_cfg_float32_t);
+    extern void ne10_fft_destroy_r2c_int32 (ne10_fft_r2c_cfg_int32_t);
+    extern void ne10_fft_destroy_r2c_int16 (ne10_fft_r2c_cfg_int16_t);
+
     extern ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft);
     extern ne10_fft_r2c_cfg_int32_t ne10_fft_alloc_r2c_int32 (ne10_int32_t nfft);
     extern ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft);
