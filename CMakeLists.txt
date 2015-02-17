@@ -53,8 +53,26 @@ if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM) AND (NOT IOS_PLATFORM))
     message(FATAL_ERROR "No platform is defined! see CMakeBuilding.txt under doc for details.")
 endif()
 
+if(DEFINED NE10_ANDROID_TARGET_ARCH)
+    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+        set(NE10_TARGET_ARCH "armv7")
+    else()
+        set(NE10_TARGET_ARCH "aarch64")
+    endif()
+endif()
+
+if(DEFINED NE10_LINUX_TARGET_ARCH)
+    if(${NE10_LINUX_TARGET_ARCH} STREQUAL "armv7")
+        set(NE10_TARGET_ARCH "armv7")
+    else()
+        set(NE10_TARGET_ARCH "aarch64")
+    endif()
+endif()
+
+message("-- Target architecture : ${NE10_TARGET_ARCH}")
+
 #select functionalities to be compiled
-if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+if(${NE10_TARGET_ARCH} STREQUAL "armv7")
     # Math module has not been optimized for aarch64.
     option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
 endif()
@@ -83,7 +101,7 @@ if(ANDROID_PLATFORM)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=${NDK_SYSROOT_PATH} -pie")
 
     # Adding cflags for armv7. Aarch64 does not need such flags.
-    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfloat-abi=${FLOAT_ABI} -mfpu=vfp3")
         if(NE10_ARM_HARD_FLOAT)
             # "--no-warn-mismatch" is needed for linker to suppress linker error about not all functions use VFP register to pass argument, eg.
@@ -99,6 +117,8 @@ if(ANDROID_PLATFORM)
     ${CMAKE_C_COMPILER}
     ${CMAKE_CXX_COMPILER}
     ${CMAKE_ASM_COMPILER}")
+    message("-- CMAKE_C_FLAGS:
+    ${CMAKE_C_FLAGS}")
 elseif(GNULINUX_PLATFORM)
     #TODO Development has been moved to android, GNULINUX_PLATFORM is not
     # needed any more. GNULINUX_PLATFORM support needs to be removed.

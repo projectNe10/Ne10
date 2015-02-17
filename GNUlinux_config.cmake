@@ -25,10 +25,30 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+#  Usage:
+#   $ mkdir build && cd build
+#   $ cmake -DCMAKE_TOOLCHAIN_FILE=path/of/GNUlinux_config.cmake ..
+#   $ make
+#
+#  Option:
+#   - Choose target architecture
+#     Target architecture can be specified by setting NE10_LINUX_TARGET_ARCH to
+#     armv7 or aarch64 (Not done yet). Defaut is armv7.
+
 set(GNULINUX_PLATFORM ON)
+#TODO: add support to AArch64 target
 set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
 set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
 set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)
+
+if(NOT DEFINED ENV{NE10_LINUX_TARGET_ARCH})
+    set(NE10_LINUX_TARGET_ARCH "armv7")
+else()
+    if($ENV{NE10_LINUX_TARGET_ARCH} STREQUAL "aarch64")
+        message(FATAL_ERROR "aarch64 on GNU Linux support has not been done yet.")
+    endif()
+    set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})
+endif()
 
 find_program(CMAKE_AR NAMES "arm-linux-gnueabihf-ar")
 mark_as_advanced(CMAKE_AR)
