@@ -183,3 +183,62 @@ endif()
 if(IOS_PLATFORM AND IOS_DEMO)
     add_subdirectory(ios)
 endif()
+
+if(GNULINUX_PLATFORM)
+	# package config
+	set(prefix ${CMAKE_INSTALL_PREFIX})
+	set(exec_prefix "\${prefix}")
+	set(libdir "\${exec_prefix}/lib${LIB_SUFFIX}")
+	set(includedir "\${prefix}/include")
+
+	configure_file(
+    	${CMAKE_CURRENT_SOURCE_DIR}/ne10.pc.in
+    	${CMAKE_CURRENT_BINARY_DIR}/ne10.pc
+	@ONLY)
+
+	install(
+   		FILES ${CMAKE_CURRENT_BINARY_DIR}/ne10.pc
+    	DESTINATION lib${LIB_SUFFIX}/pkgconfig)
+
+	# install rules
+	install( DIRECTORY inc/ 
+			 DESTINATION include/ne10 
+			 FILES_MATCHING PATTERN "*.h")
+	install( DIRECTORY common/ 
+			 DESTINATION include/ne10 
+			 FILES_MATCHING PATTERN "*.h")
+
+	if(NE10_ENABLE_DSP)
+		install( DIRECTORY modules/dsp/
+			     DESTINATION include/ne10/dsp
+		 	 	 FILES_MATCHING PATTERN "*.h")
+	endif()
+
+	if(NE10_ENABLE_MATH)
+		install( DIRECTORY modules/math/ 
+			 	 DESTINATION include/ne10/math
+		 	 	 FILES_MATCHING PATTERN "*.h")
+	endif()
+
+	if(NE10_ENABLE_IMGPROC)
+		install( DIRECTORY modules/imgproc/ 
+				 DESTINATION include/ne10/imgproc
+		 		 FILES_MATCHING PATTERN "*.h")
+	endif()
+
+	if(NE10_ENABLE_PHYSICS)
+		install( DIRECTORY modules/physics/ 
+			 	 DESTINATION include/ne10/physics
+		 	 	 FILES_MATCHING PATTERN "*.h")
+	endif()
+	# uninstall rules
+	configure_file(
+    	${CMAKE_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in
+    	${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
+	@ONLY)
+
+	add_custom_target(uninstall
+    	${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake
+	)
+endif()
+
