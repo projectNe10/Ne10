@@ -393,6 +393,7 @@ if(NE10_BUILD_SHARED)
         OUTPUT_NAME "NE10"
         CLEAN_DIRECT_OUTPUT 1
         VERSION ${NE10_VERSION}
+        LINKER_LANGUAGE C
     )
 
     add_library( NE10_test SHARED
