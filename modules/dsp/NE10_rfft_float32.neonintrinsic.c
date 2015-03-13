@@ -267,6 +267,7 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
 
     for (m_count = loop_count; m_count > 0; m_count -- )
     {
+#ifndef NE10_INLINE_ASM_OPT
         // load
         q2_in0.val[0] = vld1q_f32( (ne10_float32_t*) (Fin_neon + 0*in_step    ) );
         q2_in0.val[1] = vld1q_f32( (ne10_float32_t*) (Fin_neon + 0*in_step + 1) );
@@ -290,7 +291,63 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
         q2_tw2.val[1] = vdupq_n_f32(twiddles[out_step*2].i);
 
         // R2C TW KERNEL
-        NE10_RADIX4x4_R2C_TW_NEON_KERNEL(q2_out,q2_in,q2_tw);
+        NE10_RADIX4x4_R2C_TW_MUL_NEON (q2_out, q2_in, q2_tw);
+#else // NE10_INLINE_ASM_OPT
+#ifndef __aarch64__
+#error Currently, inline assembly optimizations are only available on AArch64.
+#else // __aarch64__
+        const ne10_float32_t *ptr_inr = ((const ne10_float32_t *) Fin_neon);
+        const ne10_float32_t *ptr_ini = ((const ne10_float32_t *) Fin_neon) + 4;
+        const ne10_float32_t *ptr_tw  = (const ne10_float32_t *) twiddles;
+
+        asm volatile (
+            "ld1 {%[q2_out0r].4s}, [%[ptr_inr]], %[offset_in] \n\t"
+            "ld1 {%[q2_out0i].4s}, [%[ptr_ini]] \n\t"
+            "ld1 {v10.4s, v11.4s}, [%[ptr_inr]], %[offset_in] \n\t"
+            "ld1 {v12.4s, v13.4s}, [%[ptr_inr]], %[offset_in] \n\t"
+            "ld1 {v14.4s, v15.4s}, [%[ptr_inr]] \n\t"
+            "ld1 {v0.1d},  [%[ptw0]], %[offset_out] \n\t"
+            "ld1 {v1.1d},  [%[ptw1]], %[offset_out] \n\t"
+            "ld1 {v2.1d},  [%[ptw2]] \n\t"
+
+            "fmul %[q2_out1r].4s, v10.4s, v0.4s[0] \n\t" // RR
+            "fmul %[q2_out1i].4s, v10.4s, v0.4s[1] \n\t" // RI
+            "fmls %[q2_out1r].4s, v11.4s, v0.4s[1] \n\t" // RR - II
+            "fmla %[q2_out1i].4s, v11.4s, v0.4s[0] \n\t" // RI + IR
+
+            "fmul %[q2_out2r].4s, v12.4s, v1.4s[0] \n\t" // RR
+            "fmul %[q2_out2i].4s, v12.4s, v1.4s[1] \n\t" // RI
+            "fmls %[q2_out2r].4s, v13.4s, v1.4s[1] \n\t" // RR - II
+            "fmla %[q2_out2i].4s, v13.4s, v1.4s[0] \n\t" // RI + IR
+
+            "fmul %[q2_out3r].4s, v14.4s, v2.4s[0] \n\t" // RR
+            "fmul %[q2_out3i].4s, v14.4s, v2.4s[1] \n\t" // RI
+            "fmls %[q2_out3r].4s, v15.4s, v2.4s[1] \n\t" // RR - II
+            "fmla %[q2_out3i].4s, v15.4s, v2.4s[0] \n\t" // RI + IR
+        : [q2_out0r]"+w"(q2_out0.val[0]),
+          [q2_out0i]"+w"(q2_out0.val[1]),
+          [q2_out1r]"+w"(q2_out1.val[0]),
+          [q2_out1i]"+w"(q2_out1.val[1]),
+          [q2_out2r]"+w"(q2_out2.val[0]),
+          [q2_out2i]"+w"(q2_out2.val[1]),
+          [q2_out3r]"+w"(q2_out3.val[0]),
+          [q2_out3i]"+w"(q2_out3.val[1]),
+          [ptr_inr]"+r"(ptr_inr),
+          [ptr_ini]"+r"(ptr_ini),
+          [ptr_tw]"+r"(ptr_tw)
+        : [ptw0]"r"(twiddles),
+          [ptw1]"r"(twiddles + out_step),
+          [ptw2]"r"(twiddles + out_step * 2),
+          [offset_in]"r"(in_step * 16),
+          [offset_out]"r"(out_step * 4)
+        : "memory", "v0", "v1", "v2",
+          "v10", "v11", "v12", "v13", "v14", "v15"
+        );
+#endif // __aarch64__
+#endif // NE10_INLINE_ASM_OPT
+
+        NE10_RADIX4x4_R2C_TW_NEON_KERNEL_S1 (q2_in, q2_out);
+        NE10_RADIX4x4_R2C_TW_NEON_KERNEL_S2 (q2_out, q2_in);
 
         // store
         vst1q_f32( (ne10_float32_t*) ( Fout_neon                      ), q2_out0.val[0] );
@@ -1238,17 +1295,21 @@ NE10_INLINE void ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (ne10_
                                             const ne10_fft_cpx_float32_t *twiddles,
                                             const ne10_int32_t nfft)
 {
-    const ne10_float32_t *fin_r  = ((const ne10_float32_t*) src ) + 12 + 16 ;
-          ne10_float32_t *fout_r =        (ne10_float32_t*) dst + 8;
-          ne10_float32_t *fout_b =        (ne10_float32_t*) dst - 14;
-    const ne10_float32_t *tw     = ((const ne10_float32_t*) twiddles) + 8  + 16;
-    ne10_int32_t loop_count = ((nfft>>2)-8)>>3;
+    const ne10_float32_t *fin_r = ((const ne10_float32_t*) src) + 12 + 16;
+    ne10_float32_t *fout_r = (ne10_float32_t*) dst + 8;
+    ne10_float32_t *fout_b = (ne10_float32_t*) dst - 14;
+    const ne10_float32_t *tw = ((const ne10_float32_t*) twiddles) + 8  + 16;
 
-    for ( ; loop_count>0; loop_count -- )
+    // Take 4 elements as a set.
+    // The leading 8 sets are already transformed in first and seconds butterflies.
+    // This function transforms 8 sets in each loop.
+    ne10_int32_t loop_count = ((nfft >> 2) - 8) >> 3;
+
+    for (; loop_count > 0; loop_count--)
     {
-        NE10_DECLARE_4(float32x4x2_t,q2_in);    // 8Q
-        NE10_DECLARE_3(float32x4x2_t,q2_tw);    // 6Q
-        NE10_DECLARE_4(float32x4x2_t,q2_out);   // 8Q
+        NE10_DECLARE_4 (float32x4x2_t, q2_in);    // 8Q
+        NE10_DECLARE_3 (float32x4x2_t, q2_tw);    // 6Q
+        NE10_DECLARE_4 (float32x4x2_t, q2_out);   // 8Q
 
         /*  INPUT
          *  0R  1R  2R  3R      Q0
@@ -1260,30 +1321,6 @@ NE10_INLINE void ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (ne10_
          *  cR  dR  eR  fR      Q6
          *  cI  dI  eI  fI      Q7
          */
-
-        q2_out0.val[0] = vld1q_f32(fin_r);
-        fin_r += 4;
-        q2_out0.val[1] = vld1q_f32(fin_r);
-        fin_r += 4;
-        q2_out1.val[0] = vld1q_f32(fin_r);
-        fin_r += 4;
-        q2_out1.val[1] = vld1q_f32(fin_r);
-        fin_r += 4;
-        q2_out2.val[0] = vld1q_f32(fin_r);
-        fin_r += 4;
-        q2_out2.val[1] = vld1q_f32(fin_r);
-        fin_r += 4;
-        q2_out3.val[0] = vld1q_f32(fin_r);
-        fin_r += 4;
-        q2_out3.val[1] = vld1q_f32(fin_r);
-        fin_r += 4;
-
-        q2_tw0 = vld2q_f32(tw);
-        tw += 8;
-        q2_tw1 = vld2q_f32(tw);
-        tw += 8;
-        q2_tw2 = vld2q_f32(tw);
-        tw += 8;
 
         // transpose
         // q2_out -> q2_in
@@ -1301,14 +1338,144 @@ NE10_INLINE void ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (ne10_
          *  3I  7I  bI  fI      Q7
          */
 
-        NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in,q2_out);
+#ifndef NE10_INLINE_ASM_OPT
+        q2_out0.val[0] = vld1q_f32 (fin_r);
+        fin_r += 4;
+        q2_out0.val[1] = vld1q_f32 (fin_r);
+        fin_r += 4;
+        q2_out1.val[0] = vld1q_f32 (fin_r);
+        fin_r += 4;
+        q2_out1.val[1] = vld1q_f32 (fin_r);
+        fin_r += 4;
+        q2_out2.val[0] = vld1q_f32 (fin_r);
+        fin_r += 4;
+        q2_out2.val[1] = vld1q_f32 (fin_r);
+        fin_r += 4;
+        q2_out3.val[0] = vld1q_f32 (fin_r);
+        fin_r += 4;
+        q2_out3.val[1] = vld1q_f32 (fin_r);
+        fin_r += 4;
+
+        NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in, q2_out);
+#else // NE10_INLINE_ASM_OPT
+#ifndef __aarch64__
+#error Currently, inline assembly optimizations are only available on AArch64.
+#else // __aarch64__
+        asm volatile (
+            "ld1 {v0.4s}, [%[fin_r0]] \n\t" // q2_in0.val[0]
+            "ld1 {v4.4s}, [%[fin_r1]] \n\t" // q2_in0.val[1]
+            "ld1 {v1.4s}, [%[fin_r2]] \n\t" // q2_in1.val[0]
+            "ld1 {v5.4s}, [%[fin_r3]] \n\t" // q2_in1.val[1]
+            "ld1 {v2.4s}, [%[fin_r4]] \n\t" // q2_in2.val[0]
+            "ld1 {v6.4s}, [%[fin_r5]] \n\t" // q2_in2.val[1]
+            "ld1 {v3.4s}, [%[fin_r6]] \n\t" // q2_in3.val[0]
+            "ld1 {v7.4s}, [%[fin_r7]] \n\t" // q2_in3.val[1]
+            // NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in,q2_out);
+            "trn1 v8.4s, v0.4s, v1.4s \n\t"
+            "trn2 v9.4s, v0.4s, v1.4s \n\t"
+            "trn1 v10.4s, v2.4s, v3.4s \n\t"
+            "trn2 v11.4s, v2.4s, v3.4s \n\t"
+
+            "trn1 %[q2_in0r].2d, v8.2d, v10.2d \n\t"
+            "trn1 %[q2_in1r].2d, v9.2d, v11.2d \n\t"
+            "trn2 %[q2_in2r].2d, v8.2d, v10.2d \n\t"
+            "trn2 %[q2_in3r].2d, v9.2d, v11.2d \n\t"
+
+            "trn1 v8.4s, v4.4s, v5.4s \n\t"
+            "trn2 v9.4s, v4.4s, v5.4s \n\t"
+            "trn1 v10.4s, v6.4s, v7.4s \n\t"
+            "trn2 v11.4s, v6.4s, v7.4s \n\t"
+
+            "trn1 %[q2_in0i].2d, v8.2d, v10.2d \n\t"
+            "trn1 %[q2_in1i].2d, v9.2d, v11.2d \n\t"
+            "trn2 %[q2_in2i].2d, v8.2d, v10.2d \n\t"
+            "trn2 %[q2_in3i].2d, v9.2d, v11.2d \n\t"
+
+        : [q2_in0r]"+w"(q2_in0.val[0]),
+          [q2_in0i]"+w"(q2_in0.val[1]),
+          [q2_in1r]"+w"(q2_in1.val[0]),
+          [q2_in1i]"+w"(q2_in1.val[1]),
+          [q2_in2r]"+w"(q2_in2.val[0]),
+          [q2_in2i]"+w"(q2_in2.val[1]),
+          [q2_in3r]"+w"(q2_in3.val[0]),
+          [q2_in3i]"+w"(q2_in3.val[1])
+        : [fin_r0]"r"(fin_r),
+          [fin_r1]"r"(fin_r + 4),
+          [fin_r2]"r"(fin_r + 8),
+          [fin_r3]"r"(fin_r + 12),
+          [fin_r4]"r"(fin_r + 16),
+          [fin_r5]"r"(fin_r + 20),
+          [fin_r6]"r"(fin_r + 24),
+          [fin_r7]"r"(fin_r + 28)
+        : "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
+          "v8", "v9", "v10", "v11"
+        );
+        fin_r += 32;
+#endif // __aarch64__
+#endif // NE10_INLINE_ASM_OPT
+
+#ifndef NE10_INLINE_ASM_OPT
+        // Load twiddles
+        q2_tw0 = vld2q_f32 (tw);
+        tw += 8;
+        q2_tw1 = vld2q_f32 (tw);
+        tw += 8;
+        q2_tw2 = vld2q_f32 (tw);
+        tw += 8;
 
         // tw
         // q2_in -> q2_out
         q2_out0 = q2_in0;
-        NE10_CPX_MUL_NEON_F32(q2_out1,q2_in1,q2_tw0);
-        NE10_CPX_MUL_NEON_F32(q2_out2,q2_in2,q2_tw1);
-        NE10_CPX_MUL_NEON_F32(q2_out3,q2_in3,q2_tw2);
+        NE10_CPX_MUL_NEON_F32 (q2_out1, q2_in1, q2_tw0);
+        NE10_CPX_MUL_NEON_F32 (q2_out2, q2_in2, q2_tw1);
+        NE10_CPX_MUL_NEON_F32 (q2_out3, q2_in3, q2_tw2);
+#else // NE10_INLINE_ASM_OPT
+#ifndef __aarch64__
+#error Currently, inline assembly optimizations are only available on AArch64.
+#else // __aarch64__
+        asm volatile (
+            // Load twiddles
+            "ld2 {v0.4s, v1.4s}, [%[tw0]] \n\t" // q2_tw0
+            "ld2 {v2.4s, v3.4s}, [%[tw1]] \n\t" // q2_tw1
+            "ld2 {v4.4s, v5.4s}, [%[tw2]] \n\t" // q2_tw2
+            // tw
+            // q2_in -> q2_out
+            // NE10_CPX_MUL_NEON_F32(q2_out1,q2_in1,q2_tw0);
+            "fmul %[q2_out1r].4s, v0.4s, %[q2_in1r].4s \n\t" // RR
+            "fmul %[q2_out1i].4s, v0.4s, %[q2_in1i].4s \n\t" // RI
+            "fmls %[q2_out1r].4s, v1.4s, %[q2_in1i].4s \n\t" // RR - II
+            "fmla %[q2_out1i].4s, v1.4s, %[q2_in1r].4s \n\t" // RI + IR
+            // NE10_CPX_MUL_NEON_F32(q2_out2,q2_in2,q2_tw1);
+            "fmul %[q2_out2r].4s, v2.4s, %[q2_in2r].4s \n\t" // RR
+            "fmul %[q2_out2i].4s, v2.4s, %[q2_in2i].4s \n\t" // RI
+            "fmls %[q2_out2r].4s, v3.4s, %[q2_in2i].4s \n\t" // RR - II
+            "fmla %[q2_out2i].4s, v3.4s, %[q2_in2r].4s \n\t" // RI + IR
+            // NE10_CPX_MUL_NEON_F32(q2_out3,q2_in3,q2_tw2);
+            "fmul %[q2_out3r].4s, v4.4s, %[q2_in3r].4s \n\t" // RR
+            "fmul %[q2_out3i].4s, v4.4s, %[q2_in3i].4s \n\t" // RI
+            "fmls %[q2_out3r].4s, v5.4s, %[q2_in3i].4s \n\t" // RR - II
+            "fmla %[q2_out3i].4s, v5.4s, %[q2_in3r].4s \n\t" // RI + IR
+        : [q2_out1r]"+w"(q2_out1.val[0]),
+          [q2_out1i]"+w"(q2_out1.val[1]),
+          [q2_out2r]"+w"(q2_out2.val[0]),
+          [q2_out2i]"+w"(q2_out2.val[1]),
+          [q2_out3r]"+w"(q2_out3.val[0]),
+          [q2_out3i]"+w"(q2_out3.val[1])
+        : [tw0]"r"(tw),
+          [tw1]"r"(tw + 8),
+          [tw2]"r"(tw + 16),
+          [q2_in1r]"w"(q2_in1.val[0]),
+          [q2_in1i]"w"(q2_in1.val[1]),
+          [q2_in2r]"w"(q2_in2.val[0]),
+          [q2_in2i]"w"(q2_in2.val[1]),
+          [q2_in3r]"w"(q2_in3.val[0]),
+          [q2_in3i]"w"(q2_in3.val[1])
+        : "memory", "v0", "v1", "v2", "v3", "v4", "v5"
+        );
+        q2_out0 = q2_in0;
+        tw += 24;
+#endif // __aarch64__
+#endif // NE10_INLINE_ASM_OPT
 
         // butterfly
         // out -> in
@@ -1324,30 +1491,76 @@ NE10_INLINE void ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (ne10_
         // in -> out
         q2_out2.val[0] = vsubq_f32 (q2_in0.val[0], q2_in2.val[0]);
         q2_out2.val[1] = vsubq_f32 (q2_in0.val[1], q2_in2.val[1]);
+        q2_out3.val[0] = vsubq_f32 (q2_in1.val[0], q2_in3.val[1]);
+        q2_out3.val[1] = vaddq_f32 (q2_in1.val[1], q2_in3.val[0]);
+
+        q2_out3.val[1] = vnegq_f32 (q2_out3.val[1]);
+        q2_out2.val[1] = vnegq_f32 (q2_out2.val[1]);
+
+#ifndef NE10_INLINE_ASM_OPT
         q2_out0.val[0] = vaddq_f32 (q2_in0.val[0], q2_in2.val[0]);
         q2_out0.val[1] = vaddq_f32 (q2_in0.val[1], q2_in2.val[1]);
 
         q2_out1.val[0] = vaddq_f32 (q2_in1.val[0], q2_in3.val[1]);
         q2_out1.val[1] = vsubq_f32 (q2_in1.val[1], q2_in3.val[0]);
-        q2_out3.val[0] = vsubq_f32 (q2_in1.val[0], q2_in3.val[1]);
-        q2_out3.val[1] = vaddq_f32 (q2_in1.val[1], q2_in3.val[0]);
 
         // reverse -- CONJ
-        NE10_REVERSE_FLOAT32X4( q2_out3.val[0] );
-        NE10_REVERSE_FLOAT32X4( q2_out3.val[1] );
-        NE10_REVERSE_FLOAT32X4( q2_out2.val[0] );
-        NE10_REVERSE_FLOAT32X4( q2_out2.val[1] );
-
-        q2_out2.val[1] = vnegq_f32( q2_out2.val[1] );
-        q2_out3.val[1] = vnegq_f32( q2_out3.val[1] );
+        NE10_REVERSE_FLOAT32X4 (q2_out2.val[0]);
+        NE10_REVERSE_FLOAT32X4 (q2_out2.val[1]);
+        NE10_REVERSE_FLOAT32X4 (q2_out3.val[0]);
+        NE10_REVERSE_FLOAT32X4 (q2_out3.val[1]);
 
         // store
-        vst2q_f32(fout_r            , q2_out0 );
-        vst2q_f32(fout_r + (nfft>>1), q2_out1 );
-        fout_r += 8;
+        vst2q_f32 (fout_r, q2_out0);
+        vst2q_f32 (fout_r + (nfft >> 1), q2_out1);
+        vst2q_f32 (fout_b + (nfft >> 1), q2_out3);
+        vst2q_f32 (fout_b + nfft, q2_out2);
+#else // NE10_INLINE_ASM_OPT
+#ifndef __aarch64__
+#error Currently, inline assembly optimizations are only available on AArch64.
+#else // __aarch64__
+        asm volatile (
+            "fadd v0.4s, %[q2_in0r].4s, %[q2_in2r].4s \n\t"
+            "fadd v1.4s, %[q2_in0i].4s, %[q2_in2i].4s \n\t"
+            "fadd v2.4s, %[q2_in1r].4s, %[q2_in3i].4s \n\t"
+            "fsub v3.4s, %[q2_in1i].4s, %[q2_in3r].4s \n\t"
+            // reverse -- CONJ
+            "rev64 %[q2_in2r].4s, %[q2_out2r].4s \n\t"
+            "rev64 %[q2_in2i].4s, %[q2_out2i].4s \n\t"
+            "rev64 %[q2_in3r].4s, %[q2_out3r].4s \n\t"
+            "rev64 %[q2_in3i].4s, %[q2_out3i].4s \n\t"
+            "ext v4.16b, %[q2_in2r].16b, %[q2_in2r].16b, #8 \n\t"
+            "ext v5.16b, %[q2_in2i].16b, %[q2_in2i].16b, #8 \n\t"
+            "ext v6.16b, %[q2_in3r].16b, %[q2_in3r].16b, #8 \n\t"
+            "ext v7.16b, %[q2_in3i].16b, %[q2_in3i].16b, #8 \n\t"
+            // store
+            "st2 {v0.4s, v1.4s}, [%[fout0]] \n\t"
+            "st2 {v2.4s, v3.4s}, [%[fout1]] \n\t"
+            "st2 {v4.4s, v5.4s}, [%[fout2]] \n\t"
+            "st2 {v6.4s, v7.4s}, [%[fout3]] \n\t"
+        :
+        : [fout0]"r"(fout_r),
+          [fout1]"r"(fout_r + (nfft>>1)),
+          [fout2]"r"(fout_b + nfft),
+          [fout3]"r"(fout_b + (nfft>>1)),
+          [q2_out2r]"w"(q2_out2.val[0]),
+          [q2_out2i]"w"(q2_out2.val[1]),
+          [q2_out3r]"w"(q2_out3.val[0]),
+          [q2_out3i]"w"(q2_out3.val[1]),
+          [q2_in0r]"w"(q2_in0.val[0]),
+          [q2_in0i]"w"(q2_in0.val[1]),
+          [q2_in1r]"w"(q2_in1.val[0]),
+          [q2_in1i]"w"(q2_in1.val[1]),
+          [q2_in2r]"w"(q2_in2.val[0]),
+          [q2_in2i]"w"(q2_in2.val[1]),
+          [q2_in3r]"w"(q2_in3.val[0]),
+          [q2_in3i]"w"(q2_in3.val[1])
+        : "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7"
+        );
+#endif // __aarch64__
+#endif // NE10_INLINE_ASM_OPT
 
-        vst2q_f32(fout_b + (nfft>>1), q2_out3 );
-        vst2q_f32(fout_b + nfft     , q2_out2 );
+        fout_r += 8;
         fout_b -= 8;
     }
 }
