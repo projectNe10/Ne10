@@ -59,11 +59,47 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 typedef int32x4x2_t CPLX;
 typedef int32x4_t   REAL;
 #define NE10_REAL_DUP_NEON_S32 vdupq_n_s32
+
+#ifndef NE10_INLINE_ASM_OPT
 #define NE10_CPLX_LOAD(PTR) vld2q_s32 ((ne10_int32_t*) (PTR))
 #define NE10_CPLX_STORE(PTR,OUT) \
     do { \
         vst2q_s32 ((ne10_int32_t*) (PTR), OUT); \
     } while (0)
+#else // NE10_INLINE_ASM_OPT
+#ifndef __aarch64__
+#error Currently, inline assembly optimizations are only available on AArch64.
+#else // __aarch64__
+template<class T>
+inline static int32x4x2_t NE10_CPLX_LOAD(T *ptr)
+{
+    int32x4x2_t result;
+    asm volatile (
+        "ld2 {v0.4s, v1.4s}, [%[pin]] \n\t"
+        "mov %[r].16b, v0.16b \n\t"
+        "mov %[i].16b, v1.16b \n\t"
+    : [r]"+w"(result.val[0]),
+      [i]"+w"(result.val[1])
+    : [pin]"r"(ptr)
+    : "memory", "v0", "v1");
+    return result;
+}
+
+template<class T>
+inline static void NE10_CPLX_STORE(T *ptr, int32x4x2_t out)
+{
+    asm volatile (
+        "mov v0.16b, %[r].16b  \n\t"
+        "mov v1.16b, %[i].16b  \n\t"
+        "st2 {v0.4s, v1.4s}, [%[pout]] \n\t"
+    : [r]"+w"(out.val[0]),
+      [i]"+w"(out.val[1])
+    : [pout]"r"(ptr)
+    : "memory", "v0", "v1");
+}
+
+#endif // __aarch64__
+#endif // NE10_INLINE_ASM_OPT
 
 template<>
 inline CPLX NE10_CPX_LOAD_S<CPLX> (const CPLX *ptr)
