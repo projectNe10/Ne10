@@ -49,7 +49,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_fft.h"
 #include "NE10_dsp.h"
 
-#if defined(__aarch64__)
+#if (NE10_UNROLL_LEVEL > 0)
 
 void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
                         const ne10_fft_cpx_float32_t *Fin,
@@ -907,4 +907,4 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
  * @} end of R2C_FFT_IFFT group
  */
 
-#endif // __aarch64__
+#endif // NE10_UNROLL_LEVEL

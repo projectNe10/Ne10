@@ -71,9 +71,9 @@ endif()
 
 if(DEFINED NE10_IOS_TARGET_ARCH)
     if(${NE10_IOS_TARGET_ARCH} STREQUAL "armv7")
-        set(NE10_TARGE_ARCH "armv7")
+        set(NE10_TARGET_ARCH "armv7")
     else()
-        set(NE10_TARGE_ARCH "aarch64")
+        set(NE10_TARGET_ARCH "aarch64")
     endif()
 endif()
 

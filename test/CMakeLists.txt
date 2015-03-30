@@ -138,6 +138,10 @@ if(NE10_ENABLE_DSP)
             )
         endif()
 
+        set_target_properties(NE10_dsp_unit_test_static PROPERTIES
+            LINKER_LANGUAGE C
+            )
+
     endif()
 endif()
 

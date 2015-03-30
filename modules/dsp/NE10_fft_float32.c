@@ -1183,12 +1183,8 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  *
  */
 
-// only for ARMv7-A and AArch32 platform.
-// For AArch64 these functions are implemented in NE10_rfft_float32.c
-#ifdef __arm__
-////////////////////////////////////////////////////
-// RFFT reference model for ARMv7-A and AArch32 neon
-////////////////////////////////////////////////////
+// For NE10_UNROLL_LEVEL > 0, please refer to NE10_rfft_float.c
+#if (NE10_UNROLL_LEVEL == 0)
 
 /**
  * @brief User-callable function to allocate all necessary storage space for the fft (r2c/c2r).
@@ -1322,4 +1318,4 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
 /**
  * @} end of R2C_FFT_IFFT group
  */
-#endif
+#endif // NE10_UNROLL_LEVEL
