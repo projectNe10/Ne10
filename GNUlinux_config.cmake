@@ -36,21 +36,26 @@
 #     armv7 or aarch64 (Not done yet). Defaut is armv7.
 
 set(GNULINUX_PLATFORM ON)
-#TODO: add support to AArch64 target
-set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
-set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
-set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)
 
 if(NOT DEFINED ENV{NE10_LINUX_TARGET_ARCH})
-    set(NE10_LINUX_TARGET_ARCH "armv7")
+   set(NE10_LINUX_TARGET_ARCH "armv7")
 else()
-    if($ENV{NE10_LINUX_TARGET_ARCH} STREQUAL "aarch64")
-        message(FATAL_ERROR "aarch64 on GNU Linux support has not been done yet.")
-    endif()
-    set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})
+   set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})
 endif()
 
-find_program(CMAKE_AR NAMES "arm-linux-gnueabihf-ar")
+if(NE10_LINUX_TARGET_ARCH STREQUAL "armv7")
+   set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+   set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
+   set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)
+   find_program(CMAKE_AR NAMES "arm-linux-gnueabihf-ar")
+   find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabihf-ranlib")
+elseif(NE10_LINUX_TARGET_ARCH STREQUAL "aarch64")
+   set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+   set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+   set(CMAKE_ASM_COMPILER aarch64-linux-gnu-as)
+   find_program(CMAKE_AR NAMES "aarch64-linux-gnu-ar")
+   find_program(CMAKE_RANLIB NAMES "aarch64-linux-gnu-ranlib")
+endif()
+
 mark_as_advanced(CMAKE_AR)
-find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabihf-ranlib")
 mark_as_advanced(CMAKE_RANLIB)
