@@ -1223,6 +1223,29 @@ void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
                                  ne10_int32_t inverse_fft,
                                  ne10_int32_t scaled_flag)
 {
+    ne10_int32_t stage_count = cfg->factors[0];
+    ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
+
+    assert ((algorithm_flag == NE10_FFT_ALG_24)
+            || (algorithm_flag == NE10_FFT_ALG_ANY));
+
+    // For NE10_FFT_ALG_ANY.
+    // Function will return inside this branch.
+    if (algorithm_flag == NE10_FFT_ALG_ANY)
+    {
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_generic_butterfly_inverse_int32_neon (fout, fin,
+                    cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        else
+        {
+            ne10_mixed_radix_generic_butterfly_int32_neon (fout, fin,
+                    cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        return;
+    }
+
     if (scaled_flag)
     {
         if (inverse_fft)
