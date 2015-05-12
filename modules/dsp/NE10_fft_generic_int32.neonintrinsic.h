@@ -407,6 +407,11 @@ static __attribute__ ((noinline)) void ne10_radix_butterfly_int32_neon (
                 NE10_CONJ<RADIX> (in);
             }
 
+            if (is_scaled)
+            {
+                NE10_FFT_SCALING<RADIX> () (in);
+            }
+
             if (!is_first_stage)
             {
                 NE10_LOAD_TW_AND_MUL<RADIX> (in, twiddles, out_step);
@@ -417,11 +422,6 @@ static __attribute__ ((noinline)) void ne10_radix_butterfly_int32_neon (
             if (is_inverse)
             {
                 NE10_CONJ<RADIX> (out);
-            }
-
-            if (is_scaled)
-            {
-                NE10_FFT_SCALING<RADIX> () (out);
             }
 
             NE10_STORE_BY_STEP<RADIX, CPLX> (Fout, out, out_step);
@@ -573,6 +573,11 @@ static void ne10_c2c_1d_last_stage_neon (CPLX *Fout,
             scratch_in[2] = NE10_CPLX_LOAD (Fin + 2);
             scratch_in[3] = NE10_CPLX_LOAD (Fin + 3);
 
+            if (is_scaled)
+            {
+                NE10_FFT_SCALING<4> () (scratch_in);
+            }
+
             // Transpose
             {
                 float32x4x2_t scratch0, scratch_in0;
@@ -626,11 +631,6 @@ static void ne10_c2c_1d_last_stage_neon (CPLX *Fout,
                 NE10_CONJ<4, CPLX> (scratch_out);
             }
 
-            if (is_scaled)
-            {
-                NE10_FFT_SCALING<4> () (scratch_out);
-            }
-
             // Store.
             {
                 ne10_fft_cpx_int32_t *Fout_cpx;
@@ -667,6 +667,20 @@ static void ne10_c2c_1d_last_stage_neon (CPLX *Fout,
         scratch_in[2] = Fin_s[2];
         scratch_in[3] = Fin_s[3];
 
+        if (is_scaled)
+        {
+            scratch_in[0].r = scratch_in[0].r >> 2;
+            scratch_in[1].r = scratch_in[1].r >> 2;
+            scratch_in[2].r = scratch_in[2].r >> 2;
+            scratch_in[3].r = scratch_in[3].r >> 2;
+
+            scratch_in[0].i = scratch_in[0].i >> 2;
+            scratch_in[1].i = scratch_in[1].i >> 2;
+            scratch_in[2].i = scratch_in[2].i >> 2;
+            scratch_in[3].i = scratch_in[3].i >> 2;
+        }
+
+
         if (is_inverse)
         {
             scratch_in[0].i = -scratch_in[0].i;
@@ -691,19 +705,6 @@ static void ne10_c2c_1d_last_stage_neon (CPLX *Fout,
             scratch_in[1].i = -scratch_in[1].i;
             scratch_in[2].i = -scratch_in[2].i;
             scratch_in[3].i = -scratch_in[3].i;
-        }
-
-        if (is_scaled)
-        {
-            scratch_in[0].r = scratch_in[0].r >> 2;
-            scratch_in[1].r = scratch_in[1].r >> 2;
-            scratch_in[2].r = scratch_in[2].r >> 2;
-            scratch_in[3].r = scratch_in[3].r >> 2;
-
-            scratch_in[0].i = scratch_in[0].i >> 2;
-            scratch_in[1].i = scratch_in[1].i >> 2;
-            scratch_in[2].i = scratch_in[2].i >> 2;
-            scratch_in[3].i = scratch_in[3].i >> 2;
         }
 
         Fout_s[0 * out_step] = scratch_in[0];
