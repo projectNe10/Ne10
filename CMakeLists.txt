@@ -99,6 +99,9 @@ else(BUILD_DEBUG)
     message("-- Building type: RELEASE")
 endif(BUILD_DEBUG)
 
+# By default, we compile c intrinsic.
+set(NE10_ASM_OPTIMIZATION off)
+
 if(ANDROID_PLATFORM)
     if(NE10_ARM_HARD_FLOAT)
         set(FLOAT_ABI "hard")
@@ -121,6 +124,8 @@ if(ANDROID_PLATFORM)
             # Refer $NDK/tests/device/hard-float/jni/Android.mk for more details.
             set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,--no-warn-mismatch")
         endif()
+        # Turn on asm optimization for Android on ARM v7.
+        set(NE10_ASM_OPTIMIZATION on)
     endif()
     message("-- Loaded toolchain:
     ${CMAKE_C_COMPILER}
@@ -132,6 +137,8 @@ elseif(GNULINUX_PLATFORM)
     if(${NE10_TARGET_ARCH} STREQUAL "armv7")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=vfp3 -funsafe-math-optimizations")
       set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=neon")
+      # Turn on asm optimization for Linux on ARM v7.
+      set(NE10_ASM_OPTIMIZATION on)
     endif()
 elseif(IOS_PLATFORM)
     #set minimal target ios version.If not provided this option, Xcode

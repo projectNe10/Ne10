@@ -172,6 +172,10 @@ endif()
 if(NE10_ENABLE_DSP)
     #enable NE10_init_dsp
     add_definitions(-DNE10_ENABLE_DSP)
+
+    set(NE10_DSP_INTRINSIC_SRCS )
+    set(NE10_DSP_NEON_SRCS )
+
     # Add dsp C files.
     set(NE10_DSP_C_SRCS
         ${PROJECT_SOURCE_DIR}/common/NE10_mask_table.c
@@ -190,50 +194,64 @@ if(NE10_ENABLE_DSP)
 
     # Tell CMake these files need to be compiled with "-mfpu=neon"
     if(${NE10_TARGET_ARCH} STREQUAL "armv7")
-        # Following definition is only available under armv7.
-        add_definitions(-DENABLE_NE10_FIR_FLOAT_NEON)
-        add_definitions(-DENABLE_NE10_FIR_DECIMATE_FLOAT_NEON)
-        add_definitions(-DENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON)
-        add_definitions(-DENABLE_NE10_FIR_LATTICE_FLOAT_NEON)
-        add_definitions(-DENABLE_NE10_FIR_SPARSE_FLOAT_NEON)
-        add_definitions(-DENABLE_NE10_IIR_LATTICE_FLOAT_NEON)
+        if(IOS_PLATFORM)
+        else()
+            # Following definition is only available under armv7.
+            add_definitions(-DENABLE_NE10_FIR_FLOAT_NEON)
+            add_definitions(-DENABLE_NE10_FIR_DECIMATE_FLOAT_NEON)
+            add_definitions(-DENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON)
+            add_definitions(-DENABLE_NE10_FIR_LATTICE_FLOAT_NEON)
+            add_definitions(-DENABLE_NE10_FIR_SPARSE_FLOAT_NEON)
+            add_definitions(-DENABLE_NE10_IIR_LATTICE_FLOAT_NEON)
 
-        # Add dsp intrinsic NEON files.
-        set(NE10_DSP_INTRINSIC_SRCS
-           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
-           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
-           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
-           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
-           ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.neonintrinsic.cpp
-           )
+            # Add dsp NEON files.
+            set(NE10_DSP_NEON_SRCS
+                ${NE10_DSP_NEON_SRCS}
+                ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
+                ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
+                )
+            endif()
+    endif()
 
-      foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
-        set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-      endforeach(intrinsic_file)
-
-        # Add dsp NEON files.
+    if(NE10_ASM_OPTIMIZATION)
         set(NE10_DSP_NEON_SRCS
+            ${NE10_DSP_NEON_SRCS}
             ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.s
             ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.s
             ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.s
-            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
-            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
-            )
-    else()
-        # Add dsp intrinsic NEON files.
+        )
         set(NE10_DSP_INTRINSIC_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.neonintrinsic.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neonintrinsic.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
+            ${NE10_DSP_INTRINSIC_SRCS}
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
+        )
+    else()
+        add_definitions(-DNE10_UNROLL_LEVEL=1)
+        set(NE10_DSP_INTRINSIC_SRCS
+            ${NE10_DSP_INTRINSIC_SRCS}
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neonintrinsic.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.neonintrinsic.c
+            )
+    endif()
+
+    # Add dsp intrinsic NEON files.
+    set(NE10_DSP_INTRINSIC_SRCS
+        ${NE10_DSP_INTRINSIC_SRCS}
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.neonintrinsic.cpp
-        )
+    )
+
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+        foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
+            set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+        endforeach(intrinsic_file)
     endif()
 
 if(IOS_PLATFORM)
-    convert_gas(NE10_DSP_NEON_SRCS NE10_DSP_IOS_NEON_SRCS)
-    set_file_to_c(NE10_DSP_IOS_NEON_SRCS)
+    set_file_to_c(NE10_DSP_NEON_SRCS)
 else(IOS_PLATFORM)
     set_file_to_c(NE10_DSP_NEON_SRCS)
 endif(IOS_PLATFORM)
@@ -370,6 +388,12 @@ if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
     set_target_properties(NE10 PROPERTIES
         CLEAN_DIRECT_OUTPUT 1
         VERSION ${NE10_VERSION}
+    )
+
+    target_link_libraries(NE10 stdc++)
+
+    set_target_properties(NE10 PROPERTIES
+        LINKER_LANGUAGE C
     )
 
   if(IOS_DEMO)

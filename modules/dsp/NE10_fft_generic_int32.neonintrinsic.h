@@ -193,7 +193,7 @@ struct NE10_FFT_SCALING {
     inline void operator() (CPLX scratch_out[RADIX])
     {
 #ifdef NE10_DSP_CFFT_SCALING
-        const static int32x4_t one_by_RADIX =
+        const int32x4_t one_by_RADIX =
         {
             (ne10_int32_t) floor(1.0 / RADIX * NE10_F2I32_MAX + 0.5f),
             (ne10_int32_t) floor(1.0 / RADIX * NE10_F2I32_MAX + 0.5f),
@@ -212,7 +212,7 @@ struct NE10_FFT_SCALING<RADIX, 1> {
     inline void operator () (CPLX scratch_out[1])
     {
 #ifdef NE10_DSP_CFFT_SCALING
-        const static int32x4_t one_by_RADIX =
+        const int32x4_t one_by_RADIX =
         {
             (ne10_int32_t) floor(1.0 / RADIX * NE10_F2I32_MAX + 0.5f),
             (ne10_int32_t) floor(1.0 / RADIX * NE10_F2I32_MAX + 0.5f),
@@ -239,7 +239,7 @@ inline void NE10_CPX_SUB_NEON_S32 (CPLX &result, const CPLX a, const CPLX b)
 
 inline REAL NE10_HALF (REAL src)
 {
-    const static int32x4_t CONST_HALF_NEON = { -1, -1, -1, -1};
+    const int32x4_t CONST_HALF_NEON = { -1, -1, -1, -1};
     src = vshlq_s32 (src, CONST_HALF_NEON);
     return src;
 }
