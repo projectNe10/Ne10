@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+LV_CXXFLAGS=@LV_CXXFLAGS@
+
+
+Name: ne10
+Description: Ne10: An open optimized software library project for the ARM® Architecture
+Requires:
+Version: @LIBVER@
+Libs: -L${libdir} -lne10
+Cflags: -I${includedir} ${LV_CXXFLAGS}
