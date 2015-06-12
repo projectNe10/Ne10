@@ -306,9 +306,9 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
             "ld1 {v10.4s, v11.4s}, [%[ptr_inr]], %[offset_in] \n\t"
             "ld1 {v12.4s, v13.4s}, [%[ptr_inr]], %[offset_in] \n\t"
             "ld1 {v14.4s, v15.4s}, [%[ptr_inr]] \n\t"
-            "ld1 {v0.1d},  [%[ptw0]], %[offset_out] \n\t"
-            "ld1 {v1.1d},  [%[ptw1]], %[offset_out] \n\t"
-            "ld1 {v2.1d},  [%[ptw2]] \n\t"
+            "ld1 {v0.1d},  [%[ptr_tw]], %[offset_out] \n\t"
+            "ld1 {v1.1d},  [%[ptr_tw]], %[offset_out] \n\t"
+            "ld1 {v2.1d},  [%[ptr_tw]] \n\t"
 
             "fmul %[q2_out1r].4s, v10.4s, v0.4s[0] \n\t" // RR
             "fmul %[q2_out1i].4s, v10.4s, v0.4s[1] \n\t" // RI
@@ -335,11 +335,8 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
           [ptr_inr]"+r"(ptr_inr),
           [ptr_ini]"+r"(ptr_ini),
           [ptr_tw]"+r"(ptr_tw)
-        : [ptw0]"r"(twiddles),
-          [ptw1]"r"(twiddles + out_step),
-          [ptw2]"r"(twiddles + out_step * 2),
-          [offset_in]"r"(in_step * 16),
-          [offset_out]"r"(out_step * 4)
+        : [offset_in]"r"(in_step * 16),
+          [offset_out]"r"(out_step * 8)
         : "memory", "v0", "v1", "v2",
           "v10", "v11", "v12", "v13", "v14", "v15"
         );
@@ -1362,14 +1359,14 @@ NE10_INLINE void ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (ne10_
 #error Currently, inline assembly optimizations are only available on AArch64.
 #else // __aarch64__
         asm volatile (
-            "ld1 {v0.4s}, [%[fin_r0]] \n\t" // q2_in0.val[0]
-            "ld1 {v4.4s}, [%[fin_r1]] \n\t" // q2_in0.val[1]
-            "ld1 {v1.4s}, [%[fin_r2]] \n\t" // q2_in1.val[0]
-            "ld1 {v5.4s}, [%[fin_r3]] \n\t" // q2_in1.val[1]
-            "ld1 {v2.4s}, [%[fin_r4]] \n\t" // q2_in2.val[0]
-            "ld1 {v6.4s}, [%[fin_r5]] \n\t" // q2_in2.val[1]
-            "ld1 {v3.4s}, [%[fin_r6]] \n\t" // q2_in3.val[0]
-            "ld1 {v7.4s}, [%[fin_r7]] \n\t" // q2_in3.val[1]
+            "ld1 {v0.4s}, [%[fin_r]], 16 \n\t" // q2_in0.val[0]
+            "ld1 {v4.4s}, [%[fin_r]], 16 \n\t" // q2_in0.val[1]
+            "ld1 {v1.4s}, [%[fin_r]], 16 \n\t" // q2_in1.val[0]
+            "ld1 {v5.4s}, [%[fin_r]], 16 \n\t" // q2_in1.val[1]
+            "ld1 {v2.4s}, [%[fin_r]], 16 \n\t" // q2_in2.val[0]
+            "ld1 {v6.4s}, [%[fin_r]], 16 \n\t" // q2_in2.val[1]
+            "ld1 {v3.4s}, [%[fin_r]], 16 \n\t" // q2_in3.val[0]
+            "ld1 {v7.4s}, [%[fin_r]], 16 \n\t" // q2_in3.val[1]
             // NE10_RADIX4X4C_TRANSPOSE_NEON (q2_in,q2_out);
             "trn1 v8.4s, v0.4s, v1.4s \n\t"
             "trn2 v9.4s, v0.4s, v1.4s \n\t"
@@ -1398,19 +1395,12 @@ NE10_INLINE void ne10_radix4_r2c_with_twiddles_last_stage_other_butterfly (ne10_
           [q2_in2r]"+w"(q2_in2.val[0]),
           [q2_in2i]"+w"(q2_in2.val[1]),
           [q2_in3r]"+w"(q2_in3.val[0]),
-          [q2_in3i]"+w"(q2_in3.val[1])
-        : [fin_r0]"r"(fin_r),
-          [fin_r1]"r"(fin_r + 4),
-          [fin_r2]"r"(fin_r + 8),
-          [fin_r3]"r"(fin_r + 12),
-          [fin_r4]"r"(fin_r + 16),
-          [fin_r5]"r"(fin_r + 20),
-          [fin_r6]"r"(fin_r + 24),
-          [fin_r7]"r"(fin_r + 28)
+          [q2_in3i]"+w"(q2_in3.val[1]),
+          [fin_r]"+r"(fin_r)
+        :
         : "memory", "v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7",
           "v8", "v9", "v10", "v11"
         );
-        fin_r += 32;
 #endif // __aarch64__
 #endif // NE10_INLINE_ASM_OPT
 
