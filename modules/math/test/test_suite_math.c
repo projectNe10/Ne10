@@ -108,7 +108,7 @@ void test_abs_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -151,7 +151,7 @@ void test_abs_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -206,8 +206,8 @@ void test_addc_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -261,8 +261,8 @@ void test_addc_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -329,8 +329,8 @@ void test_add_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -375,8 +375,8 @@ void test_add_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -528,8 +528,8 @@ void test_divc_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -582,8 +582,8 @@ void test_divc_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -696,8 +696,8 @@ void test_div_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -1503,8 +1503,8 @@ void test_rsbc_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -1557,8 +1557,8 @@ void test_rsbc_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -1626,7 +1626,7 @@ void test_setc_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -1678,7 +1678,7 @@ void test_setc_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -1745,8 +1745,8 @@ void test_subc_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thecst, guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -1799,8 +1799,8 @@ void test_subc_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -1867,8 +1867,8 @@ void test_sub_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -1913,8 +1913,8 @@ void test_sub_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -1967,8 +1967,8 @@ void test_addmat_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -2013,8 +2013,8 @@ void test_addmat_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -2110,7 +2110,7 @@ void test_detmat_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -2288,7 +2288,7 @@ void test_invmat_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -2386,8 +2386,8 @@ void test_mulmat_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -2440,8 +2440,8 @@ void test_submat_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc2, guarded_src2, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -2486,8 +2486,8 @@ void test_submat_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc2, perftest_guarded_src2, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -2540,7 +2540,7 @@ void test_transmat_case0()
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
-    NE10_SRC_ALLOC (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (thesrc1, guarded_src1, fixed_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
@@ -2583,7 +2583,7 @@ void test_transmat_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -2684,8 +2684,8 @@ void test_mulcmatvec_case0()
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
-    NE10_SRC_ALLOC (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
-    NE10_SRC_ALLOC (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
+    NE10_SRC_ALLOC_LIMIT (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
 
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);

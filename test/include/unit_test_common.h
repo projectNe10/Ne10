@@ -74,14 +74,14 @@
 //#define TEST_ARRLEN_MATRICES 1051
 
 #define ARRAY_GUARD_LEN      4
-#define MAX_FUNC_COUNT       8 //C and NEON version with 4 different data type, 
+#define MAX_FUNC_COUNT       8 //C and NEON version with 4 different data type
 
 // The sign bit mask
 #define SIGNBIT_MASK  0x7FFFFFFF
 
 // What's the acceptable error between the integer representations of two ne10_float32_t values
-#define ERROR_MARGIN_SMALL 0x0A
-#define ERROR_MARGIN_LARGE 0xFF
+#define ERROR_MARGIN_SMALL 1
+#define ERROR_MARGIN_LARGE 1
 #define SNR_THRESHOLD 50.0f
 #define PSNR_THRESHOLD 30.0f
 

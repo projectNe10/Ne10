@@ -75,68 +75,17 @@ void FILL_FLOAT_ARRAY_LIMIT_GT1 (ne10_float32_t *arr, ne10_uint32_t count)
     }
 }
 
-// this function checks whether the difference between two ne10_float32_tvalues is within the acceptable error range
+// this function checks whether the difference between two ne10_float32_t values is within the acceptable error range
 ne10_int32_t EQUALS_FLOAT (ne10_float32_t fa, ne10_float32_t fb , ne10_uint32_t err)
-{
-    union
+{   ne10_float32_t tolerance = (ne10_float32_t)err / 200000;
+    if (abs(fa-fb) <= tolerance)
     {
-        ne10_int32_t          vi;
-        ne10_float32_t       vf;
-    } conv1, conv2;
-
-    ne10_uint32_t ui1, ui2;
-
-    if (fa == fb) return 1;   // if identical, then return TRUE
-
-    conv1.vf = fa;
-    conv2.vf = fb;
-
-    if ( (conv1.vi & NAN_OR_INF) == NAN_OR_INF)
-    {
-        //fprintf( stderr, "HINT: The 1st floating-pone10_int32_t value is either \'Not a number\' or \'Infinity\'. " );
-        return 0; // INF or NAN, unacceptable return FALSE
+        return 1;
     }
-
-    if ( (conv2.vi & NAN_OR_INF) == NAN_OR_INF)
+    else
     {
-        //fprintf( stderr, "HINT: The 1st floating-pone10_int32_t value is either \'Not a number\' or \'Infinity\'. " );
-        return 0; // INF or NAN, unacceptable return FALSE
-    }
-
-    ne10_int32_t cut1 = conv1.vi & SIGNBIT_MASK; // drop the sign bit - i.e. the left most bit
-    ne10_int32_t cut2 = conv2.vi & SIGNBIT_MASK;
-
-    if ( (cut1 & EXPONENT_MASK) == cut1)
-    {
-        cut1 = 0;    // zero out subnormal ne10_float32_tvalues
-    }
-    if ( (cut2 & EXPONENT_MASK) == cut2)
-    {
-        cut2 = 0;    // zero out subnormal ne10_float32_tvalues
-    }
-
-    memcpy (&ui1,  &fa, sizeof (ne10_float32_t));
-    memcpy (&ui2,  &fb, sizeof (ne10_float32_t));
-
-    if (abs (cut1 - cut2) > err)    // this is the log() of the actual error
-    {
-        // then we have an unacceptable error
-
-        // report an unacceptable error
-        //fprintf( stderr, "HINT: %e (0x%04X) != %e (0x%04X) ", fa, ui1, fb, ui2 );
-
         return 0;
     }
-
-    if (fb * fa < 0.0f)
-    {
-
-        //fprintf( stderr, "HINT: %e (0x%04X) is the opposite of %e (0x%04X) ", fa, ui1, fb, ui2 );
-
-        return 0;
-    }
-
-    return 1; // acceptable, return TRUE
 }
 
 ne10_float32_t ARRAY_GUARD_SIG[ARRAY_GUARD_LEN] = { 10.0f, 20.0f, 30.0f, 40.0f };

@@ -147,8 +147,8 @@ float NE10_float_rng_max()
 
 // the same as above functions except the range of values are limited
 
-#define IS_TOO_SMALL(f) ((fabs(f)<1.0e-6)?1:0)
-#define   IS_TOO_BIG(f) ((fabs(f)>1.0e12)?1:0)
+#define IS_TOO_SMALL(f) ((fabs(f)<1.0e-3)?1:0)
+#define   IS_TOO_BIG(f) ((fabs(f)>1.0e3)?1:0)
 
 static NE10_float_rng_t __NE10_float_rng_limit; // local array for internal use only
 
