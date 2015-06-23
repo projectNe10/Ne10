@@ -678,6 +678,14 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_fft_cfg_float32_t cfg,
                                    ne10_int32_t inverse_fft)
 {
+    // For input shorter than 16, fall back to c version.
+    // We would not get much improvement from NEON for these cases.
+    if (cfg->nfft < 16)
+    {
+        ne10_fft_c2c_1d_float32_c (fout, fin, cfg, inverse_fft);
+        return;
+    }
+
     ne10_int32_t stage_count = cfg->factors[0];
     ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
 
