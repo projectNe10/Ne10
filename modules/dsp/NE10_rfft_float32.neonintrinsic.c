@@ -284,11 +284,11 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
         q2_tw0.val[0] = vdupq_n_f32(twiddles[0].r);
         q2_tw0.val[1] = vdupq_n_f32(twiddles[0].i);
 
-        q2_tw1.val[0] = vdupq_n_f32(twiddles[out_step].r);
-        q2_tw1.val[1] = vdupq_n_f32(twiddles[out_step].i);
+        q2_tw1.val[0] = vdupq_n_f32(twiddles[1].r);
+        q2_tw1.val[1] = vdupq_n_f32(twiddles[1].i);
 
-        q2_tw2.val[0] = vdupq_n_f32(twiddles[out_step*2].r);
-        q2_tw2.val[1] = vdupq_n_f32(twiddles[out_step*2].i);
+        q2_tw2.val[0] = vdupq_n_f32(twiddles[2].r);
+        q2_tw2.val[1] = vdupq_n_f32(twiddles[2].i);
 
         // R2C TW KERNEL
         NE10_RADIX4x4_R2C_TW_MUL_NEON (q2_out, q2_in, q2_tw);
@@ -298,17 +298,13 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
 #else // __aarch64__
         const ne10_float32_t *ptr_inr = ((const ne10_float32_t *) Fin_neon);
         const ne10_float32_t *ptr_ini = ((const ne10_float32_t *) Fin_neon) + 4;
-        const ne10_float32_t *ptr_tw  = (const ne10_float32_t *) twiddles;
-
         asm volatile (
             "ld1 {%[q2_out0r].4s}, [%[ptr_inr]], %[offset_in] \n\t"
             "ld1 {%[q2_out0i].4s}, [%[ptr_ini]] \n\t"
             "ld1 {v10.4s, v11.4s}, [%[ptr_inr]], %[offset_in] \n\t"
             "ld1 {v12.4s, v13.4s}, [%[ptr_inr]], %[offset_in] \n\t"
             "ld1 {v14.4s, v15.4s}, [%[ptr_inr]] \n\t"
-            "ld1 {v0.1d},  [%[ptr_tw]], %[offset_out] \n\t"
-            "ld1 {v1.1d},  [%[ptr_tw]], %[offset_out] \n\t"
-            "ld1 {v2.1d},  [%[ptr_tw]] \n\t"
+            "ld1 {v0.1d, v1.1d, v2.1d},  [%[ptr_tw]] \n\t"
 
             "fmul %[q2_out1r].4s, v10.4s, v0.4s[0] \n\t" // RR
             "fmul %[q2_out1i].4s, v10.4s, v0.4s[1] \n\t" // RI
@@ -333,10 +329,9 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
           [q2_out3r]"+w"(q2_out3.val[0]),
           [q2_out3i]"+w"(q2_out3.val[1]),
           [ptr_inr]"+r"(ptr_inr),
-          [ptr_ini]"+r"(ptr_ini),
-          [ptr_tw]"+r"(ptr_tw)
+          [ptr_ini]"+r"(ptr_ini)
         : [offset_in]"r"(in_step * 16),
-          [offset_out]"r"(out_step * 8)
+          [ptr_tw]"r"(twiddles)
         : "memory", "v0", "v1", "v2",
           "v10", "v11", "v12", "v13", "v14", "v15"
         );
@@ -363,7 +358,7 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon (float32x4
         Fin_neon  += 2;
         Fout_neon += 2;
         Fout_b    -= 2;
-        twiddles ++;
+        twiddles += 3;
     }
 }
 
@@ -399,11 +394,11 @@ NE10_INLINE void ne10_radix4x4_c2r_with_twiddles_other_butterfly_neon (float32x4
         q2_tw0.val[0] = vdupq_n_f32(twiddles[0].r);
         q2_tw0.val[1] = vdupq_n_f32(twiddles[0].i);
 
-        q2_tw1.val[0] = vdupq_n_f32(twiddles[out_step].r);
-        q2_tw1.val[1] = vdupq_n_f32(twiddles[out_step].i);
+        q2_tw1.val[0] = vdupq_n_f32(twiddles[1].r);
+        q2_tw1.val[1] = vdupq_n_f32(twiddles[1].i);
 
-        q2_tw2.val[0] = vdupq_n_f32(twiddles[out_step*2].r);
-        q2_tw2.val[1] = vdupq_n_f32(twiddles[out_step*2].i);
+        q2_tw2.val[0] = vdupq_n_f32(twiddles[2].r);
+        q2_tw2.val[1] = vdupq_n_f32(twiddles[2].i);
 
         // NE10_PRINT_Q2x4_VECTOR(q2_in);
 
@@ -429,7 +424,7 @@ NE10_INLINE void ne10_radix4x4_c2r_with_twiddles_other_butterfly_neon (float32x4
         Fin_neon  += 2;
         Fout_neon += 2;
         Fin_b    -= 2;
-        twiddles ++;
+        twiddles += 3;
     }
 }
 
@@ -496,27 +491,25 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_neon (ne10_fft_cpx_float32_t *F
 
     for (f_count = fstride; f_count; f_count --)
     {
-        tw = twiddles;
+        tw = twiddles + 3;
 
         // first butterfly
-        ne10_radix4x4_r2c_with_twiddles_first_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, tw);
+        ne10_radix4x4_r2c_with_twiddles_first_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, NULL);
 
-        tw ++;
         Fin_neon ++;
         Fout_neon ++;
 
         // other butterfly
+        // Twiddle tables are transposed to avoid memory access by a large stride.
         ne10_radix4x4_r2c_with_twiddles_other_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, tw);
 
         // update Fin_r, Fout_r, twiddles
-        tw        +=     ( (out_step >> 1) - 1);
         Fin_neon  += 2 * ( (out_step >> 1) - 1);
         Fout_neon += 2 * ( (out_step >> 1) - 1);
 
         // last butterfly
-        ne10_radix4x4_r2c_with_twiddles_last_butterfly_neon (Fout_neon, Fin_neon, out_step, in_step, tw);
+        ne10_radix4x4_r2c_with_twiddles_last_butterfly_neon (Fout_neon, Fin_neon, out_step, in_step, NULL);
         Fin_neon ++;
-        tw++;
         Fout_neon ++;
 
         Fout_neon = Fout_neon + 3 * out_step;
@@ -540,27 +533,25 @@ NE10_INLINE void ne10_radix4x4_c2r_with_twiddles_neon (ne10_fft_cpx_float32_t *F
 
     for (f_count = fstride; f_count; f_count --)
     {
-        tw = twiddles;
+        tw = twiddles + 3;
 
         // first butterfly
-        ne10_radix4x4_c2r_with_twiddles_first_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, tw);
+        ne10_radix4x4_c2r_with_twiddles_first_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, NULL);
 
-        tw ++;
         Fin_neon ++;
         Fout_neon ++;
 
         // other butterfly
+        // Twiddle tables are transposed to avoid memory access by a large stride.
         ne10_radix4x4_c2r_with_twiddles_other_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, tw);
 
         // update Fin_r, Fout_r, twiddles
-        tw        +=     ( (out_step >> 1) - 1);
         Fin_neon  += 2 * ( (out_step >> 1) - 1);
         Fout_neon += 2 * ( (out_step >> 1) - 1);
 
         // last butterfly
-        ne10_radix4x4_c2r_with_twiddles_last_butterfly_neon (Fout_neon, Fin_neon, out_step, in_step, tw);
+        ne10_radix4x4_c2r_with_twiddles_last_butterfly_neon (Fout_neon, Fin_neon, out_step, in_step, NULL);
         Fin_neon ++;
-        tw++;
         Fout_neon ++;
 
         Fin_neon = Fin_neon + 3 * out_step;

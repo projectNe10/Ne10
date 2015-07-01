@@ -76,6 +76,11 @@ extern "C" {
         const ne10_int32_t * factors,
         const ne10_int32_t nfft );
 
+    extern ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
+        ne10_fft_cpx_float32_t * twiddles,
+        const ne10_int32_t * factors,
+        const ne10_int32_t nfft );
+
     extern ne10_fft_cpx_int32_t* ne10_fft_generate_twiddles_int32 (ne10_fft_cpx_int32_t * twiddles,
         const ne10_int32_t * factors,
         const ne10_int32_t nfft );

@@ -149,10 +149,10 @@ ne10_int32_t ne10_factor (ne10_int32_t n,
     return NE10_OK;
 }
 
-// Twiddles matrix [mstride][radix-1]
-// First column (k == 0)is ignored because phase == 1, and
+// Twiddles matrix [radix-1][mstride]
+// First column (k == 0) is ignored because phase == 1, and
 // twiddle = (1.0, 0.0).
-static void ne10_fft_generate_twiddles_line_float32 (ne10_fft_cpx_float32_t * twiddles,
+void ne10_fft_generate_twiddles_line_float32 (ne10_fft_cpx_float32_t * twiddles,
         const ne10_int32_t mstride,
         const ne10_int32_t fstride,
         const ne10_int32_t radix,
@@ -169,6 +169,33 @@ static void ne10_fft_generate_twiddles_line_float32 (ne10_fft_cpx_float32_t * tw
             phase = -2 * pi * fstride * k * j / nfft;
             twiddles[mstride * (k - 1) + j].r = (ne10_float32_t) cos (phase);
             twiddles[mstride * (k - 1) + j].i = (ne10_float32_t) sin (phase);
+        } // radix
+    } // mstride
+}
+
+// Transposed twiddles matrix [mstride][radix-1]
+// First row (k == 0) is ignored because phase == 1, and
+// twiddle = (1.0, 0.0).
+// Transposed twiddle tables are used in RFFT to avoid memory access by a large
+// stride.
+void ne10_fft_generate_twiddles_line_transposed_float32 (
+    ne10_fft_cpx_float32_t* twiddles,
+    const ne10_int32_t mstride,
+    const ne10_int32_t fstride,
+    const ne10_int32_t radix,
+    const ne10_int32_t nfft)
+{
+    ne10_int32_t j, k;
+    ne10_float32_t phase;
+    const ne10_float64_t pi = NE10_PI;
+
+    for (j = 0; j < mstride; j++)
+    {
+        for (k = 1; k < radix; k++) // phase = 1 when k = 0
+        {
+            phase = -2 * pi * fstride * k * j / nfft;
+            twiddles[(radix - 1) * j + k - 1].r = (ne10_float32_t) cos (phase);
+            twiddles[(radix - 1) * j + k - 1].i = (ne10_float32_t) sin (phase);
         } // radix
     } // mstride
 }
@@ -232,9 +259,17 @@ ne10_fft_cpx_int32_t* ne10_fft_generate_twiddles_int32 (ne10_fft_cpx_int32_t * t
     return twiddles;
 }
 
-ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_float32_t * twiddles,
-        const ne10_int32_t * factors,
-        const ne10_int32_t nfft )
+typedef void (*line_generator_float32)(ne10_fft_cpx_float32_t*,
+      const ne10_int32_t,
+      const ne10_int32_t,
+      const ne10_int32_t,
+      const ne10_int32_t);
+
+ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_impl_float32 (
+      line_generator_float32 generator,
+      ne10_fft_cpx_float32_t * twiddles,
+      const ne10_int32_t * factors,
+      const ne10_int32_t nfft)
 {
     ne10_int32_t stage_count = factors[0];
     ne10_int32_t fstride = factors[1];
@@ -248,7 +283,7 @@ ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_float32
         twiddles[0].r = 1.0;
         twiddles[0].i = 0.0;
         twiddles += 1;
-        ne10_fft_generate_twiddles_line_float32 (twiddles, 1, fstride, cur_radix, nfft);
+        generator (twiddles, 1, fstride, cur_radix, nfft);
         twiddles += cur_radix - 1;
     }
     stage_count --;
@@ -259,10 +294,32 @@ ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_float32
         cur_radix = factors[2 * stage_count];
         fstride /= cur_radix;
         mstride = factors[2 * stage_count + 1];
-        ne10_fft_generate_twiddles_line_float32 (twiddles, mstride, fstride, cur_radix, nfft);
+        generator (twiddles, mstride, fstride, cur_radix, nfft);
         twiddles += mstride * (cur_radix - 1);
     } // stage_count
 
+    return twiddles;
+}
+
+ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_float32 (ne10_fft_cpx_float32_t * twiddles,
+        const ne10_int32_t * factors,
+        const ne10_int32_t nfft )
+{
+    line_generator_float32 generator = ne10_fft_generate_twiddles_line_float32;
+    twiddles = ne10_fft_generate_twiddles_impl_float32(generator,
+        twiddles, factors, nfft);
+    return twiddles;
+}
+
+ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
+      ne10_fft_cpx_float32_t * twiddles,
+      const ne10_int32_t * factors,
+      const ne10_int32_t nfft)
+{
+    line_generator_float32 generator =
+        ne10_fft_generate_twiddles_line_transposed_float32;
+    twiddles = ne10_fft_generate_twiddles_impl_float32(generator,
+        twiddles, factors, nfft);
     return twiddles;
 }
 

@@ -798,7 +798,11 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
         return st;
     }
 
-    st->r_twiddles_neon_backward = ne10_fft_generate_twiddles_float32 (st->r_twiddles_neon, st->r_factors_neon, nfft/4);
+    // Twiddle table is transposed here to improve cache access performance.
+    st->r_twiddles_neon_backward = ne10_fft_generate_twiddles_transposed_float32 (
+        st->r_twiddles_neon,
+        st->r_factors_neon,
+        nfft/4);
 
     // nfft/4 x 4
     tw = st->r_super_twiddles_neon;
