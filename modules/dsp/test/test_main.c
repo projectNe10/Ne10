@@ -75,5 +75,5 @@ int main (ne10_int32_t argc, char** argv)
 {
     suite_setup (my_suite_setup);
     suite_teardown (my_suite_teardown);
-    return run_tests (all_tests);
+    return !run_tests (all_tests);
 }
