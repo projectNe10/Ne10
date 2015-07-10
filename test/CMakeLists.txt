@@ -46,6 +46,9 @@ include_directories (
     ${PROJECT_SOURCE_DIR}/test/include
 )
 
+# Define Function Enabling Macros
+include(../cmake/FunctionSwitch.cmake)
+
 # Define common test files.
 set(NE10_TEST_COMMON_SRCS
     ${PROJECT_SOURCE_DIR}/test/src/seatest.c

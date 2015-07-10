@@ -25,6 +25,9 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+# Define Function Enabling Macros
+include(../cmake/FunctionSwitch.cmake)
+
 if(NE10_ARM_HARD_FLOAT)
     add_definitions(-DNE10_ENABLE_HF)
 endif()
@@ -192,25 +195,16 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir_init.c
     )
 
-    # Tell CMake these files need to be compiled with "-mfpu=neon"
     if(${NE10_TARGET_ARCH} STREQUAL "armv7")
         if(IOS_PLATFORM)
         else()
-            # Following definition is only available under armv7.
-            add_definitions(-DENABLE_NE10_FIR_FLOAT_NEON)
-            add_definitions(-DENABLE_NE10_FIR_DECIMATE_FLOAT_NEON)
-            add_definitions(-DENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON)
-            add_definitions(-DENABLE_NE10_FIR_LATTICE_FLOAT_NEON)
-            add_definitions(-DENABLE_NE10_FIR_SPARSE_FLOAT_NEON)
-            add_definitions(-DENABLE_NE10_IIR_LATTICE_FLOAT_NEON)
-
             # Add dsp NEON files.
             set(NE10_DSP_NEON_SRCS
                 ${NE10_DSP_NEON_SRCS}
                 ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
                 ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
                 )
-            endif()
+        endif()
     endif()
 
     if(NE10_ASM_OPTIMIZATION)
@@ -331,11 +325,6 @@ if(NE10_ENABLE_PHYSICS)
     )
 
     if(${NE10_TARGET_ARCH} STREQUAL "armv7")
-        # Following definition is only available under armv7.
-        add_definitions(-DENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON)
-        add_definitions(-DENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON)
-        add_definitions(-DENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON)
-
         # Add physics NEON files.
         set(NE10_PHYSICS_NEON_SRCS
             ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.s
