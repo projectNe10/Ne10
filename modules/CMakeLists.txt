@@ -276,8 +276,6 @@ if(NE10_ENABLE_IMGPROC)
     )
 
     if(${NE10_TARGET_ARCH} STREQUAL "armv7")
-        # Following definition is only available under armv7.
-        add_definitions(-DENABLE_NE10_IMG_ROTATE_RGBA_NEON)
         # Add image processing NEON files.
         set(NE10_IMGPROC_NEON_SRCS
             ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
