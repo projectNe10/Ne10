@@ -336,6 +336,13 @@ ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
  */
 ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
 {
+    // For input shorter than 15, fall back to c version.
+    // We would not get much improvement from NEON for these cases.
+    if (nfft < 15)
+    {
+        return ne10_fft_alloc_c2c_float32_c (nfft);
+    }
+
     ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors*/
@@ -427,6 +434,13 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
  */
 ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 {
+    // For input shorter than 15, fall back to c version.
+    // We would not get much improvement from NEON for these cases.
+    if (nfft < 15)
+    {
+        return ne10_fft_alloc_c2c_int32_c (nfft);
+    }
+
     ne10_fft_cfg_int32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_int32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors*/
