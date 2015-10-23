@@ -46,6 +46,7 @@ For Unix platforms, say the following on a terminal:
     mkdir build && cd build
     export NE10_LINUX_TARGET_ARCH=armv7
     cmake -DGNULINUX_PLATFORM=ON ..
+    cd ..
     make
 Then the libNE10.a is placed in ./modules/ and a sample program
 "NE10_test_static" is placed in ./samples/. you can run it. And default building
