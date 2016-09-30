@@ -1709,7 +1709,6 @@ NE10_INLINE void ne10_radix4_c2r_with_twiddles_first_stage( ne10_fft_cpx_float32
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
- * @return none.
  *
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
@@ -1745,7 +1744,6 @@ void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
- * @return none.
  *
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.

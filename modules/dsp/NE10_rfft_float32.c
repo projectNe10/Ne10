@@ -736,10 +736,14 @@ NE10_INLINE void ne10_mixed_radix_c2r_butterfly_float32_c (
 }
 
 /**
- * @brief User-callable function to allocate all necessary storage space for the fft (r2c/c2r).
+ * @brief User-callable function to create a configuration structure for the R2C/C2R FFT/IFFT.
  * @param[in]   nfft             length of FFT
- * @return      st               point to the FFT config memory. This memory is allocated with malloc.
- * The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff.
+ * @retval      st               pointer to the FFT configuration memory, allocated with malloc.
+ *
+ * This function allocates and initialises an ne10_fft_r2c_cfg_float32_t configuration structure for the
+ * real-to-complex and complex-to-real FFT/IFFT. As part of this, it reserves a buffer used internally
+ * by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle
+ * table" of coefficients used in the FFT "butterfly" calculations.
  */
 ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
 {
@@ -840,7 +844,6 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
- * @return none.
  *
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
@@ -877,7 +880,6 @@ void ne10_fft_r2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
- * @return none.
  *
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.

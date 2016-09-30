@@ -519,10 +519,9 @@
 
 
         /**
-         * @details
-         * This function implements the radix4/8 forward FFT
+         * @details This function implements a radix-4/8 forwards FFT.
          *
-         * @param[in/out] *Fout        points to input/output pointers
+         * @param[in,out] *Fout        points to input/output pointers
          * @param[in]     *factors     factors pointer:
                                         * 0: stage number
                                         * 1: stride for the first stage
@@ -701,10 +700,9 @@ ne10_mixed_radix_fft_forward_int32_unscaled_neon:
         /* end of ne10_mixed_radix_fft_forward_int32_unscaled_neon */
 
         /**
-         * @details
-         * This function implements the radix4/8 backward FFT
+         * @details This function implements a radix-4/8 backwards FFT.
          *
-         * @param[in/out] *Fout        points to input/output pointers
+         * @param[in,out] *Fout        points to input/output pointers
          * @param[in]     *factors     factors pointer:
                                         * 0: stage number
                                         * 1: stride for the first stage
@@ -885,10 +883,9 @@ ne10_mixed_radix_fft_backward_int32_unscaled_neon:
 
 
         /**
-         * @details
-         * This function implements the radix4/8 forward FFT
+         * @details This function implements a radix-4/8 forwards FFT.
          *
-         * @param[in/out] *Fout        points to input/output pointers
+         * @param[in,out] *Fout        points to input/output pointers
          * @param[in]     *factors     factors pointer:
                                         * 0: stage number
                                         * 1: stride for the first stage
@@ -1067,10 +1064,9 @@ ne10_mixed_radix_fft_forward_int32_scaled_neon:
         /* end of ne10_mixed_radix_fft_forward_int32_scaled_neon */
 
         /**
-         * @details
-         * This function implements the radix4/8 backward FFT
+         * @details This function implements a radix-4/8 backwards FFT.
          *
-         * @param[in/out] *Fout        points to input/output pointers
+         * @param[in,out] *Fout        points to input/output pointers
          * @param[in]     *factors     factors pointer:
                                         * 0: stage number
                                         * 1: stride for the first stage

@@ -82,7 +82,7 @@ typedef double                  ne10_float64_t;
 typedef int                     ne10_result_t;     // resulting [error-]code
 
 /**
- * @brief a 2-tuple of ne10_float32_t values.
+ * @brief A 2-tuple of ne10_float32_t values.
  */
 typedef struct
 {
@@ -91,7 +91,7 @@ typedef struct
 } ne10_vec2f_t;
 
 /**
- * @brief a 3-tuple of ne10_float32_t values.
+ * @brief A 3-tuple of ne10_float32_t values.
  */
 typedef struct
 {
@@ -101,7 +101,7 @@ typedef struct
 } ne10_vec3f_t;
 
 /**
- * @brief a 4-tuple of ne10_float32_t values.
+ * @brief A 4-tuple of ne10_float32_t values.
  */
 typedef struct
 {
@@ -224,7 +224,7 @@ static inline void createColumnMajorMatrix4x4 (ne10_mat4x4f_t * outMat, ne10_flo
 /////////////////////////////////////////////////////////
 
 /**
- * @brief structure for the floating point FFT function.
+ * @brief Structure for the floating point FFT function.
  */
 #define NE10_MAXFACTORS             32
 typedef struct
@@ -234,8 +234,7 @@ typedef struct
 } ne10_fft_cpx_float32_t;
 
 /**
- * @brief structure for the floating point FFT state
- *
+ * @brief Structure for the floating point FFT state
  */
 typedef struct
 {
@@ -245,27 +244,25 @@ typedef struct
     ne10_fft_cpx_float32_t *buffer;
     ne10_fft_cpx_float32_t *last_twiddles;
     /**
-     *  @biref Flag to control scaling behaviour in forward floating point complex FFT.
+     *  @brief Flag to control scaling behaviour in forward floating point complex FFT.
      *  @note If is_forward_scaled is set 0, Ne10 will not scale output of forward floating
      *  point complex FFT. Otherwise, Ne10 will scale output of forward floating
      *  point complex FFT.
-     *  @warning
-     *  Only non-power-of-2 FFT is affected by this flag.
+     *  @warning Only non-power-of-two FFTs are affected by this flag.
      */
     ne10_int32_t is_forward_scaled;
     /**
-     *  @biref Flag to control scaling behaviour in backward floating point complex FFT.
+     *  @brief Flag to control scaling behaviour in backward floating point complex FFT.
      *  @note If is_backward_scaled is set 0, Ne10 will not scale output of backward floating
      *  point complex FFT. Otherwise, Ne10 will scale output of backward floating
      *  point complex FFT.
-     *  @warning
-     *  Only non-power-of-2 FFT is affected by this flag.
+     *  @warning Only non-power-of-two FFTs are affected by this flag.
      */
     ne10_int32_t is_backward_scaled;
 } ne10_fft_state_float32_t;
 
 /**
- * @brief Configure for floating point FFT.
+ * @brief Configuration structure for floating point FFT.
  */
 typedef ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;
 
@@ -292,7 +289,7 @@ typedef struct
 typedef ne10_fft_r2c_state_float32_t* ne10_fft_r2c_cfg_float32_t;
 
 /**
- * @brief structure for the 16 bits fixed point FFT function.
+ * @brief Structure for the 16-bit fixed point FFT function.
  */
 typedef struct
 {
@@ -323,7 +320,7 @@ typedef struct
 typedef ne10_fft_r2c_state_int16_t* ne10_fft_r2c_cfg_int16_t;
 
 /**
- * @brief structure for the 32 bits fixed point FFT function.
+ * @brief Structure for the 32-bit fixed point FFT function.
  */
 typedef struct
 {
@@ -429,7 +426,7 @@ typedef struct
 /////////////////////////////////////////////////////////
 
 /**
- * @brief Structure for point in image
+ * @brief Structure for point in image.
  */
 typedef struct
 {

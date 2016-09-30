@@ -114,8 +114,6 @@
  * @param[in]  *pSrc points to the block of input data.
  * @param[out] *pDst points to the block of output data.
  * @param[in]  blockSize number of samples to process per call.
- * @return     none.
- *
  */
 
 void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
@@ -441,13 +439,12 @@ void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
  */
 
 /**
-   * @brief Processing function for the floating-point FIR decimator.
-   * @param[in] *S        points to an instance of the floating-point FIR decimator structure.
-   * @param[in] *pSrc     points to the block of input data.
-   * @param[out] *pDst    points to the block of output data.
-   * @param[in] blockSize number of input samples to process per call.
-   * @return none.
-   */
+ * @brief Processing function for the floating-point FIR decimator.
+ * @param[in] *S        points to an instance of the floating-point FIR decimator structure.
+ * @param[in] *pSrc     points to the block of input data.
+ * @param[out] *pDst    points to the block of output data.
+ * @param[in] blockSize number of input samples to process per call.
+ */
 
 void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
                                 ne10_float32_t * pSrc,
@@ -706,7 +703,6 @@ void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
  * @param[in] *pSrc     points to the block of input data.
  * @param[out] *pDst    points to the block of output data.
  * @param[in] blockSize number of input samples to process per call.
- * @return none.
  */
 
 void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S,
@@ -961,13 +957,12 @@ void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S
  */
 
 /**
-   * @brief Processing function for the floating-point FIR lattice filter.
-   * @param[in]  *S        points to an instance of the floating-point FIR lattice structure.
-   * @param[in]  *pSrc     points to the block of input data.
-   * @param[out] *pDst     points to the block of output data
-   * @param[in]  blockSize number of samples to process.
-   * @return none.
-   */
+ * @brief Processing function for the floating-point FIR lattice filter.
+ * @param[in]  *S        points to an instance of the floating-point FIR lattice structure.
+ * @param[in]  *pSrc     points to the block of input data.
+ * @param[out] *pDst     points to the block of output data
+ * @param[in]  blockSize number of samples to process.
+ */
 
 void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
                                ne10_float32_t * pSrc,
@@ -1268,7 +1263,7 @@ void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
 /** @} */ //end of FIR_Lattice group
 
 /**
- * @brief floating-point Circular write function.
+ * @brief Floating point circular write function.
  */
 static void ne10_circular_write_float (ne10_int32_t * circBuffer,
                                        ne10_int32_t L,
@@ -1312,7 +1307,7 @@ static void ne10_circular_write_float (ne10_int32_t * circBuffer,
 
 
 /**
- * @brief floating-point Circular Read function.
+ * @brief Floating point circular read function.
  */
 static void ne10_circular_read_float (ne10_int32_t * circBuffer,
                                       ne10_int32_t L,
@@ -1433,7 +1428,6 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
  * @param[out] *pDst       points to the block of output data
  * @param[in]  *pScratchIn points to a temporary buffer of size blockSize.
  * @param[in]  blockSize   number of input samples to process per call.
- * @return none.
  */
 
 void ne10_fir_sparse_float_c (ne10_fir_sparse_instance_f32_t * S,

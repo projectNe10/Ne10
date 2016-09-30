@@ -1205,16 +1205,16 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
 
 
 /**
- * @brief Mixed radix-2/4 complex FFT/IFFT of 32-bit fixed point data.
+ * @brief Mixed radix-2/4 complex NEON FFT/IFFT of 32-bit fixed point data.
  * @param[out]  *fout            point to the output buffer (out-of-place)
  * @param[in]   *fin             point to the input buffer (out-of-place)
  * @param[in]   cfg              point to the config struct
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
- * @return none.
+ *
  * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
- *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_int32.c
+ * output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_int32.c
  */
 
 void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
@@ -1349,7 +1349,7 @@ void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
- * @return none.
+ *
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int32.c
@@ -1377,7 +1377,7 @@ void ne10_fft_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
- * @return none.
+ *
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_int32.c

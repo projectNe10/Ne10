@@ -64,7 +64,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #define NE10_S_MUL_S32(A,S) (((NE10_F2I32_SAMPPROD) (A) * (S)) >> 31)
 
 /**
- * @brief Multiply input with twiddles
+ * @brief Multiply input with twiddles.
  * @tparam RADIX Length of given fix-point complex array
  * @param[out] out      Output array.
  * @param[in]  in       Input array.
@@ -123,7 +123,7 @@ inline void FFT_FCU<2> (ne10_fft_cpx_int32_t scratch_out[2],
 }
 
 /**
- * @brief Basic fixed-point Radix-3 butterfly used in each stage.
+ * @brief Basic fixed-point radix-3 butterfly used in each stage.
  * @param[out] scratch_out      Output array.
  * @param[in]  scratch_in       Input array.
  */
@@ -165,7 +165,7 @@ inline void FFT_FCU<3> (ne10_fft_cpx_int32_t Fout[3],
 }
 
 /**
- * @brief Basic fixed-point Radix-4 butterfly used in each stage.
+ * @brief Basic fixed-point radix-4 butterfly used in each stage.
  * @param[out] scratch_out      Output array.
  * @param[in]  scratch_in       Input array.
  */
@@ -190,7 +190,7 @@ inline void FFT_FCU<4> (ne10_fft_cpx_int32_t scratch_out[4],
 }
 
 /**
- * @brief Basic fixed-point Radix-5 butterfly used in each stage.
+ * @brief Basic fixed-point radix-5 butterfly used in each stage.
  * @param[out] scratch_out      Output array.
  * @param[in]  scratch_in       Input array.
  */

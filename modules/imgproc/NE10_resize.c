@@ -353,7 +353,7 @@ static void ne10_img_resize_cal_offset_linear (ne10_int32_t* xofs,
  */
 
 /**
- * @brief image resize of 8-bit data.
+ * @brief Image resize of 8-bit data.
  * @param[out]  *dst                  point to the destination image
  * @param[in]   dst_width             width of destination image
  * @param[in]   dst_height            height of destination image
@@ -361,8 +361,8 @@ static void ne10_img_resize_cal_offset_linear (ne10_int32_t* xofs,
  * @param[in]   src_width             width of source image
  * @param[in]   src_height            height of source image
  * @param[in]   src_stride            stride of source buffer
- * @return none.
- * The function implements image resize
+ *
+ * The function implements image resize.
  */
 void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
                                       ne10_uint32_t dst_width,
@@ -494,7 +494,7 @@ static void ne10_img_resize_generic_linear_neon (ne10_uint8_t* src,
 }
 
 /**
- * @brief image resize of 8-bit data.
+ * @brief Image resize of 8-bit data.
  * @param[out]  *dst                  point to the destination image
  * @param[in]   dst_width             width of destination image
  * @param[in]   dst_height            height of destination image
@@ -502,8 +502,8 @@ static void ne10_img_resize_generic_linear_neon (ne10_uint8_t* src,
  * @param[in]   src_width             width of source image
  * @param[in]   src_height            height of source image
  * @param[in]   src_stride            stride of source buffer
- * @return none.
- * The function implements image resize
+ *
+ * The function implements image resize.
  */
 void ne10_img_resize_bilinear_rgba_neon (ne10_uint8_t* dst,
         ne10_uint32_t dst_width,

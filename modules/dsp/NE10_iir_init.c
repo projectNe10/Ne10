@@ -39,7 +39,6 @@
  * @param[in] *pvCoeffs points to the ladder coefficient buffer.  The array is of length numStages+1.
  * @param[in] *pState points to the state buffer.  The array is of length numStages+blockSize.
  * @param[in] blockSize number of samples to process.
- * @return none.
  */
 
 ne10_result_t ne10_iir_lattice_init_float (ne10_iir_lattice_instance_f32_t * S,

@@ -212,12 +212,12 @@ void ne10_img_rotate_get_quad_rangle_subpix_rgba_c (ne10_uint8_t *dst,
  * @{
  */
 /**
- * @brief image resize of 8-bit data.
- * @return none.
- * The function implements image resize
+ * @brief Image resize of 8-bit data.
+ *
+ * The function implements image resize.
  */
 /**
- * @brief image rotate of 8-bit data.
+ * @brief Image rotate of 8-bit data.
  * @param[out]  *dst                  point to the destination image
  * @param[out]  *dst_width            width of destination image
  * @param[out]  *dst_height           height of destination image
@@ -225,7 +225,7 @@ void ne10_img_rotate_get_quad_rangle_subpix_rgba_c (ne10_uint8_t *dst,
  * @param[in]   src_width             width of source image
  * @param[in]   src_height            height of source image
  * @param[in]   angle                 angle of rotate
- * @return none.
+ *
  * The function extracts pixels from src at sub-pixel accuracy and stores them to dst
  */
 void ne10_img_rotate_rgba_c (ne10_uint8_t* dst,
@@ -269,7 +269,7 @@ extern void ne10_img_rotate_get_quad_rangle_subpix_rgba_neon (ne10_uint8_t *dst,
     asm("ne10_img_rotate_get_quad_rangle_subpix_rgba_neon");
 
 /**
- * @brief image rotate of 8-bit data.
+ * @brief Image rotate of 8-bit data.
  * @param[out]  *dst                  point to the destination image
  * @param[out]  *dst_width            width of destination image
  * @param[out]  *dst_height           height of destination image
@@ -277,8 +277,8 @@ extern void ne10_img_rotate_get_quad_rangle_subpix_rgba_neon (ne10_uint8_t *dst,
  * @param[in]   src_width             width of source image
  * @param[in]   src_height            height of source image
  * @param[in]   angle                 angle of rotate
- * @return none.
- * The function extracts pixels from src at sub-pixel accuracy and stores them to dst
+ *
+ * The function extracts pixels from src at sub-pixel accuracy and stores them to dst.
  */
 void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
                                 ne10_uint32_t* dst_width,

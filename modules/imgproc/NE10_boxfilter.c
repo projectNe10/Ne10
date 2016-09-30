@@ -338,7 +338,7 @@ void ne10_img_boxfilter_col_c (const ne10_uint8_t *src,
  */
 
 /**
- * @brief box filter
+ * @brief Box filter.
  * @param[out]  *dst                  point to the destination image
  * @param[in]   *src                  point to the source image
  * @param[in]   src_sz              source image size struction
@@ -347,9 +347,9 @@ void ne10_img_boxfilter_col_c (const ne10_uint8_t *src,
  * @param[in]   kernel                kernel size of box filter, both of kernel edge
  * supports from 1 to 65535, that is 1x1 1x2 1x3 ... 1x65535 2x1 2x2 2x3 ... 2x65535
  * ... are all supported.
- * @return none.
- * The function implements box filter, destination image's size is smae as
- * source image
+ *
+ * The function implements box filter, where the destination image size is the same as
+ * that of the source image.
  */
 void ne10_img_boxfilter_rgba8888_c (const ne10_uint8_t *src,
                                     ne10_uint8_t *dst,

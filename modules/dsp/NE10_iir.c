@@ -112,7 +112,6 @@
  * @param[in] *pSrc points to the block of input data.
  * @param[out] *pDst points to the block of output data.
  * @param[in] blockSize number of samples to process.
- * @return none.
  */
 
 void ne10_iir_lattice_float_c (const ne10_iir_lattice_instance_f32_t * S,

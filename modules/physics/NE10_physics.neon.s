@@ -41,10 +41,9 @@
 ne10_physics_compute_aabb_vertex4_vec2f_neon:
         /**
         *@
-        *@ compute AABB for ploygon
-        *@ vertex_count is the multiple of 4
-        *@ to improve performance, 4 vertices are processed in one loop
-        *@ when vertex_count < 4*n, the lacking of vertices should be filled with 0
+        *@ Compute the AABB for a polygon where the vertex_count is a multiple of 4.
+        *@ To improve performance, four vertices are processed in one loop.
+        *@ When vertex_count < 4*n, the lacking of vertices should be filled with 0.
         *@
         *@ void ne10_physics_compute_aabb_vertex4_vec2f_neon(ne10_mat2x2f_t *aabb,
         *@                 ne10_vec2f_t *vertices,

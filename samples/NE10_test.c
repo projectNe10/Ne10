@@ -38,10 +38,8 @@
  */
 
 /**
- * @brief This test code shows you how to call Ne10 functions with auto detecting NEON hardware
- * @param[in]  none
- * @param[in]  none
- * @return none.
+ * @brief This test code shows you how to call Ne10 functions with auto detecting NEON
+ * hardware.
  */
 void test_add1 (void)
 {
@@ -60,10 +58,7 @@ void test_add1 (void)
 }
 
 /**
- * @brief This test code shows you how to call Ne10 functions directly
- * @param[in]  none
- * @param[in]  none
- * @return none.
+ * @brief This test code shows you how to call Ne10 functions directly.
  */
 void test_add2 (void)
 {
@@ -83,10 +78,7 @@ void test_add2 (void)
 }
 
 /**
- * @brief main function
- * @param[in]  none
- * @param[in]  none
- * @return none.
+ * @brief Main function.
  */
 int main()
 {

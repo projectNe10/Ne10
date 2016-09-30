@@ -166,11 +166,12 @@ ne10_int32_t CHECK_ARRAY_GUARD_UINT8 (ne10_uint8_t* array, ne10_uint32_t array_l
 }
 
 /**
- * @brief  Caluclation of SNR
+ * @brief  Caluclation of SNR.
  * @param  ne10_float32_t*  Pointer to the reference buffer
  * @param  ne10_float32_t*  Pointer to the test buffer
  * @param  ne10_uint32_t    total number of samples
  * @return ne10_float32_t   SNR
+ *
  * The function Caluclates signal to noise ratio for the reference output
  * and test output
  */
@@ -192,11 +193,12 @@ ne10_float32_t CAL_SNR_FLOAT32 (ne10_float32_t *pRef, ne10_float32_t *pTest, ne1
 }
 
 /**
- * @brief  Caluclation of PSNR
+ * @brief  Caluclation of PSNR.
  * @param  ne10_uint8_t*  Pointer to the reference buffer
  * @param  ne10_uint8_t*  Pointer to the test buffer
  * @param  ne10_uint32_t    total number of samples
  * @return ne10_float32_t   PSNR
+ *
  * The function Caluclates peak signal to noise ratio for the reference output
  * and test output
  */

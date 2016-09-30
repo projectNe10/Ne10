@@ -1022,14 +1022,14 @@ static void ne10_fft_split_c2r_1d_int16 (ne10_fft_cpx_int16_t *dst,
  */
 
 /**
- * @brief User-callable function to create a configuration structure for the C2C INT16 FFT/IFFT.
+ * @brief User-callable function to create a configuration structure for the INT16 C2C FFT/IFFT.
  * @param[in]   nfft             length of FFT
- * @return      st               pointer to the FFT configuration memory, allocated with malloc.
+ * @retval      st               pointer to the FFT configuration memory, allocated with malloc.
  *
  * This function allocates and initialises an ne10_fft_cfg_int16_t configuration structure for the
- * INT16 complex-to-complex FFT/IFFT. As part of this, it reserves a buffer used internally by the 
- * FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle
- * table" of coefficients used in the FFT "butterfly" calculations.
+ * complex-to-complex 16-bit integer fixed point FFT/IFFT. As part of this, it reserves a buffer
+ * used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and
+ * generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
  */
 ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
 {
@@ -1107,7 +1107,6 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
  * @param[in]   cfg              pointer to the configuration struct
  * @param[in]   inverse_fft      whether this is an FFT or IFFT (0: FFT, 1: IFFT)
  * @param[in]   scaled_flag      scale flag (0: unscaled, 1: scaled)
- * @return none.
  *
  * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, this FFT is an out-of-place algorithm. For the usage of this function, please check test/test_suite_fft_int16.c
@@ -1137,9 +1136,9 @@ void ne10_fft_c2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
  */
 
 /**
- * @brief User-callable function to create a configuration structure for the R2C/C2R INT16 FFT/IFFT.
+ * @brief User-callable function to create a configuration structure for the INT16 R2C/C2R FFT/IFFT.
  * @param[in]   nfft             length of FFT
- * @return      st               pointer to the FFT config memory. This memory is allocated with malloc.
+ * @retval      st               pointer to the FFT config memory. This memory is allocated with malloc.
  *
  * This function allocates and initialises an ne10_fft_r2c_cfg_int16_t configuration structure for the
  * INT16 real-to-complex and complex-to-real FFT/IFFT. As part of this, it reserves a buffer used
@@ -1234,7 +1233,6 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
- * @return none.
  *
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
@@ -1257,7 +1255,6 @@ void ne10_fft_r2c_1d_int16_c (ne10_fft_cpx_int16_t *fout,
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
- * @return none.
  *
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.

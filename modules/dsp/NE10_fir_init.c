@@ -37,7 +37,6 @@
  * @param[in]     *pCoeffs points to the filter coefficients buffer.
  * @param[in]     *pState points to the state buffer.
  * @param[in]     blockSize number of samples that are processed per call.
- * @return        none.
  *
  * <b>Description:</b>
  * \par
@@ -71,7 +70,7 @@ ne10_result_t ne10_fir_init_float (ne10_fir_instance_f32_t * S,
 }
 
 /**
- * @brief  Initialization function for the floating-point FIR decimator.
+ * @brief Initialization function for the floating-point FIR decimator.
  * @param[in,out] *S points to an instance of the floating-point FIR decimator structure.
  * @param[in] numTaps  number of coefficients in the filter.
  * @param[in] M  decimation factor.
@@ -134,7 +133,7 @@ ne10_result_t ne10_fir_decimate_init_float (
 }
 
 /**
- * @brief  Initialization function for the floating-point FIR interpolator.
+ * @brief Initialization function for the floating-point FIR interpolator.
  * @param[in,out] *S        points to an instance of the floating-point FIR interpolator structure.
  * @param[in]     L         upsample factor.
  * @param[in]     numTaps   number of filter coefficients in the filter.
@@ -206,7 +205,6 @@ ne10_result_t ne10_fir_interpolate_init_float (
  * @param[in] numStages  number of filter stages.
  * @param[in] *pCoeffs points to the coefficient buffer.  The array is of length numStages.
  * @param[in] *pState points to the state buffer.  The array is of length numStages.
- * @return none.
  */
 
 ne10_result_t ne10_fir_lattice_init_float (
@@ -231,7 +229,7 @@ ne10_result_t ne10_fir_lattice_init_float (
 }
 
 /**
- * @brief  Initialization function for the floating-point sparse FIR filter.
+ * @brief Initialization function for the floating-point sparse FIR filter.
  * @param[in,out] *S         points to an instance of the floating-point sparse FIR structure.
  * @param[in]     numTaps    number of nonzero coefficients in the filter.
  * @param[in]     *pCoeffs   points to the array of filter coefficients.
@@ -239,7 +237,6 @@ ne10_result_t ne10_fir_lattice_init_float (
  * @param[in]     *pTapDelay points to the array of offset times.
  * @param[in]     maxDelay   maximum offset time supported.
  * @param[in]     blockSize  number of samples that will be processed per block.
- * @return none
  *
  * <b>Description:</b>
  * \par
@@ -283,5 +280,3 @@ ne10_result_t ne10_fir_sparse_init_float (
 
     return NE10_OK;
 }
-
-

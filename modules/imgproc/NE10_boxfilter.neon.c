@@ -418,7 +418,7 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
  */
 
 /**
- * @brief neon optimized box filter
+ * @brief NEON optimized box filter.
  * @param[out]  *dst                  point to the destination image
  * @param[in]   *src                  point to the source image
  * @param[in]   src_sz              source image size struction
@@ -427,7 +427,7 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
  * @param[in]   kernel                kernel size of box filter, both of kernel
  * edge supports from 2 to 127 are all supported. and for 1 and larger than 127
  * case, it is supported by calling the c version of box filter
- * @return none.
+ *
  * The function implements box filter, destination image's size is smae as
  * source image
  */
