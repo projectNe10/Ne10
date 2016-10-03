@@ -31,8 +31,7 @@
 
         .text
 
-        /* Registers define*/
-        /*ARM Registers*/
+        /* ARM register aliases */
 #define        p_fout             x0
 #define        p_fin              x1
 #define        p_factors          x2
@@ -62,7 +61,7 @@
 #define        p_out1             x15
 #define        tmp0               x16
 
-               /*NEON variale Declaration for the first stage*/
+        /* NEON register aliases for the first stage */
 #define        q_in0_r            v0.4s
 #define        q_in0_i            v1.4s
 #define        q_in1_r            v2.4s
@@ -191,7 +190,7 @@
 #define        q_out3_i9bdf_h     v31.4s
 
 
-               /*NEON variale Declaration for mstride loop */
+        /* NEON register aliases for the mstride loop */
 #define        q_tw0_r            v8.4s
 #define        q_tw0_i            v9.4s
 #define        q_tw1_r            v10.4s
@@ -223,9 +222,9 @@
 #define        d_one_by_nfft      v31.2s
 #define        q_one_by_nfft      v31.4s
 
+        /* radix 4 butterfly without twiddles */
         .macro BUTTERFLY4X4_WITHOUT_TWIDDLES inverse
 
-        /* radix 4 butterfly without twiddles */
         fadd            q_s0_r, q_in0_r, q_in2_r
         fadd            q_s0_i, q_in0_i, q_in2_i
         fsub            q_s1_r, q_in0_r, q_in2_r
@@ -268,6 +267,7 @@
         st4             {q_out_r8ace, q_out_i8ace, q_out_r9bdf, q_out_i9bdf}, [p_tmp], #64
         .endm
 
+        /* radix 4 butterfly with twiddles */
         .macro BUTTERFLY4X4_WITH_TWIDDLES inverse, last_stage
 
         sub             p_in1, p_in1, nstep, lsl #2
@@ -360,7 +360,7 @@
 
         .endm
 
-
+        /* radix 8 butterfly without twiddles */
         .macro BUTTERFLY8X4_WITHOUT_TWIDDLES inverse
         /**
          *   q_in0: Fin1[0]
@@ -384,7 +384,7 @@
         ld2             {q_in5_r, q_in5_i}, [p_in1], fstep
         ld2             {q_in7_r, q_in7_i}, [p_in1], fstep
 
-        // radix 4 butterfly without twiddles
+        /* radix 4 butterfly without twiddles */
         fadd            q_sin0_r, q_in0_r, q_in1_r
         fadd            q_sin0_i, q_in0_i, q_in1_i
         fsub            q_sin1_r, q_in0_r, q_in1_r
@@ -424,7 +424,7 @@
         fmul            q_s7_r, q_s7_r, d_tw_twn[1]
         fmul            q_s7_i, q_s7_i, d_tw_twn[1]
 
-        // radix 2 butterfly
+        /* radix 2 butterfly */
         fadd            q_s8_r, q_sin0_r, q_sin4_r
         fadd            q_s8_i, q_sin0_i, q_sin4_i
         fadd            q_s9_r, q_sin1_r, q_s5_r
@@ -434,7 +434,7 @@
         fsub            q_s11_r, q_sin1_r, q_s5_r
         fsub            q_s11_i, q_sin1_i, q_s5_i
 
-        // radix 2 butterfly
+        /* radix 2 butterfly */
         fadd            q_s12_r, q_sin2_r, q_sin6_r
         fadd            q_s12_i, q_sin2_i, q_sin6_i
         fadd            q_s13_r, q_s3_r, q_s7_r

@@ -32,8 +32,7 @@
         .text
         .syntax   unified
 
-        /* Registers define*/
-        /*ARM Registers*/
+        /* ARM register aliases */
         p_fout          .req   r0
         p_fin           .req   r1
         p_factors       .req   r2
@@ -62,7 +61,7 @@
         p_out1          .req   r12
         tmp0            .req   r9
 
-        /*NEON variale Declaration for the first stage*/
+        /* NEON register aliases for the first stage */
         q_in0_01        .qn   q0
         q_in1_01        .qn   q1
         q_in2_01        .qn   q2
@@ -164,7 +163,7 @@
         d_out7_i        .dn   d29
 
 
-        /*NEON variale Declaration for mstride loop */
+        /* NEON register aliases for the mstride loop */
         d_fin0_r        .dn   d0
         d_fin0_i        .dn   d1
         d_fin1_r        .dn   d2
@@ -213,9 +212,9 @@
         d_one_by_nfft   .dn   d14
         q_one_by_nfft   .qn   q9
 
+        /* radix 4 butterfly without twiddles */
         .macro BUTTERFLY4X2_WITHOUT_TWIDDLES inverse
 
-        /* radix 4 butterfly without twiddles */
         vadd.f32        q_s0_2, q_in0_01, q_in2_01
         vsub.f32        q_s1_2, q_in0_01, q_in2_01
         vld2.32         {q_in0_01}, [p_fin0:64]!
@@ -248,6 +247,7 @@
         vst2.32         {q_out3_2}, [p_tmp]!
         .endm
 
+        /* radix 4 butterfly with twiddles */
         .macro BUTTERFLY4X2_WITH_TWIDDLES inverse, last_stage
 
         sub             p_in1, p_in1, nstep, lsl #2
@@ -332,6 +332,7 @@
         .endm
 
 
+        /* radix 8 butterfly without twiddles */
         .macro BUTTERFLY8X2_WITHOUT_TWIDDLES inverse
         /**
          *   q_in0: Fin1[0]
@@ -355,7 +356,7 @@
         vld2.32         {d_in5_r, d_in5_i}, [p_in1:64], fstep
         vld2.32         {d_in7_r, d_in7_i}, [p_in1:64], fstep
 
-        // radix 4 butterfly without twiddles
+        /* radix 4 butterfly without twiddles */
         vadd.f32        q_sin0, q_in0, q_in1
         vsub.f32        q_sin1, q_in0, q_in1
         vld1.32         {d_tw_twn}, [tmp0]
@@ -384,13 +385,13 @@
         vmul.f32        q_s3, q_s3, d_tw_twn[0]
         vmul.f32        q_s7, q_s7, d_tw_twn[1]
 
-        // radix 2 butterfly
+        /* radix 2 butterfly */
         vadd.f32        q_s8, q_sin0, q_sin4
         vadd.f32        q_s9, q_sin1, q_sin5
         vsub.f32        q_s10, q_sin0, q_sin4
         vsub.f32        q_s11, q_sin1, q_sin5
 
-        // radix 2 butterfly
+        /* radix 2 butterfly */
         vadd.f32        q_s12, q_sin2, q_sin6
         vadd.f32        q_s13, q_s3, q_s7
         vsub.f32        q_s14, q_sin2, q_sin6

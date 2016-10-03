@@ -662,24 +662,24 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
  */
 
 /**
- * @brief Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.
- * @param[out]  *fout            point to the output buffer (out-of-place)
- * @param[in]   *fin             point to the input buffer (out-of-place)
- * @param[in]   cfg              point to the config struct
- * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
+ * @brief Mixed radix-2/3/4/5 complex NEON FFT/IFFT of single precision floating point data.
+ * @param[out]  *fout            pointer to the output buffer (out-of-place)
+ * @param[in]   *fin             pointer to the input buffer (out-of-place)
+ * @param[in]   cfg              pointer to the configuration struct
+ * @param[in]   inverse_fft      whether this is an FFT or IFFT (0: FFT, 1: IFFT)
  * @return none.
- * The function implements a mixed radix-2/3/4/5 complex FFT/IFFT. The length of 2^N*3^M*5^K(N,M,K are 1, 2, 3, 4, 5, 6 ....etc, and length >= 4) is supported.
- * Otherwise, this FFT is an out-of-place algorithm. When you want to get an in-place FFT, it creates a temp buffer as
- *  output buffer and then copies the temp buffer back to input buffer. For the usage of this function, please check test/test_suite_fft_float32.c
+ *
+ * This function implements a mixed radix-2/3/4/5 complex NEON FFT/IFFT, supporting input lengths of the
+ * form 2^N*3^M*5^K (N, M, K > 0, length >= 4). This is an out-of-place algorithm. For usage information,
+ * please check test/test_suite_fft_float32.c
  */
-
 void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_fft_cpx_float32_t *fin,
                                    ne10_fft_cfg_float32_t cfg,
                                    ne10_int32_t inverse_fft)
 {
-    // For input shorter than 15, fall back to c version.
-    // We would not get much improvement from NEON for these cases.
+    // For inputs shorter than 15 samples in length, fall back to the C version. We are
+    // unlikely to see an improvement from NEON in these cases.
     if (cfg->nfft < 15)
     {
         ne10_fft_c2c_1d_float32_c (fout, fin, cfg, inverse_fft);
@@ -759,11 +759,12 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
  */
 
 /**
- * @brief Mixed radix-2/4 FFT (real to complex) of float(32-bit) data.
+ * @brief Mixed radix-2/4 real-to-complex NEON FFT of single precision floating point data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @return none.
+ *
  * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_float32.c
@@ -786,11 +787,12 @@ void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
 }
 
 /**
- * @brief Mixed radix-2/4 IFFT (complex to real) of float(32-bit) data.
+ * @brief Mixed radix-2/4 complex-to-real NEON IFFT of single precision floating point data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @return none.
+ *
  * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_float32.c
