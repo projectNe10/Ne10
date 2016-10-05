@@ -1020,13 +1020,13 @@ static void ne10_fft_split_c2r_1d_int32 (ne10_fft_cpx_int32_t *dst,
 
 /**
  * @brief User-callable function to create a configuration structure for the INT32 C2C C FFT/IFFT.
- * @param[in]   nfft             length of FFT
- * @retval      st               pointer to the FFT configuration memory, allocated with malloc.
+ * @param[in]   nfft             input length
+ * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
  *
- * This function allocates and initialises an ne10_fft_cfg_int32_t configuration structure for the
- * C complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a buffer
- * used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and
- * generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
+ * This function allocates and initialises an `ne10_fft_cfg_int32_t` configuration structure for
+ * the C complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a
+ * buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks,
+ * and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
  */
 ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_c (ne10_int32_t nfft)
 {
@@ -1064,14 +1064,15 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_c (ne10_int32_t nfft)
 
 /**
  * @brief Mixed radix-2/4 complex C FFT/IFFT of 32-bit fixed point data.
- * @param[out]  *fout            pointer to the output buffer (out-of-place)
- * @param[in]   *fin             pointer to the input buffer (out-of-place)
- * @param[in]   cfg              pointer to the configuration struct
+ * @param[out]  *fout            pointer to the output buffer
+ * @param[in]   *fin             pointer to the input buffer
+ * @param[in]   cfg              pointer to the configuration structure
  * @param[in]   inverse_fft      whether this is an FFT or IFFT (0: FFT, 1: IFFT)
  * @param[in]   scaled_flag      scale flag (0: unscaled, 1: scaled)
  *
- * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
- * Otherwise, this FFT is an out-of-place algorithm. For the usage of this function, please check test/test_suite_fft_int32.c
+ * This function implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the
+ * form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please
+ * check test/test_suite_fft_int32.c.
  */
 void ne10_fft_c2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
                               ne10_fft_cpx_int32_t *fin,
@@ -1122,11 +1123,11 @@ void ne10_fft_c2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
 
 /**
  * @brief User-callable function to create a configuration structure for the INT32 R2C/C2R FFT/IFFT.
- * @param[in]   nfft             length of FFT
- * @retval      st               pointer to the FFT configuration memory, allocated with malloc.
+ * @param[in]   nfft             input length
+ * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
  *
- * This function allocates and initialises an ne10_fft_r2c_cfg_int32_t configuration structure for the
- * INT32 real-to-complex and complex-to-real FFT/IFFT. As part of this, it reserves a buffer used
+ * This function allocates and initialises an `ne10_fft_r2c_cfg_int32_t` configuration structure for
+ * the INT32 real-to-complex and complex-to-real FFT/IFFT. As part of this, it reserves a buffer used
  * internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates
  * a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
  */
@@ -1213,15 +1214,15 @@ ne10_fft_r2c_cfg_int32_t ne10_fft_alloc_r2c_int32 (ne10_int32_t nfft)
 }
 
 /**
- * @brief Mixed radix-2/4 FFT (real to complex) of 32-bit fixed point data.
- * @param[out]  *fout            point to the output buffer
- * @param[in]   *fin             point to the input buffer
- * @param[in]   cfg              point to the config struct
- * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
+ * @brief Mixed radix-2/4 real-to-complex C FFT of 32-bit fixed point data.
+ * @param[out]  *fout            pointer to the output buffer
+ * @param[in]   *fin             pointer to the input buffer
+ * @param[in]   cfg              pointer to the configuration structure
+ * @param[in]   scaled_flag      scale flag (0: unscaled, 1: scaled)
  *
- * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
- * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
- * For the usage of this function, please check test/test_suite_fft_int32.c
+ * The function implements a mixed radix-2/4 real-to-complex FFT, supporting input lengths of
+ * the form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please check
+ * test/test_suite_fft_int32.c.
  */
 
 void ne10_fft_r2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
@@ -1236,15 +1237,15 @@ void ne10_fft_r2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
 }
 
 /**
- * @brief Mixed radix-2/4 IFFT (complex to real) of 32-bit fixed point data.
- * @param[out]  *fout            point to the output buffer
- * @param[in]   *fin             point to the input buffer
- * @param[in]   cfg              point to the config struct
- * @param[in]   scaled_flag      scale flag, 0 unscaled, 1 scaled
+ * @brief Mixed radix-2/4 complex-to-real C IFFT of 32-bit fixed point data.
+ * @param[out]  *fout            pointer to the output buffer
+ * @param[in]   *fin             pointer to the input buffer
+ * @param[in]   cfg              pointer to the configuration structure
+ * @param[in]   scaled_flag      scale flag (0: unscaled, 1: scaled)
  *
- * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
- * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
- * For the usage of this function, please check test/test_suite_fft_int32.c
+ * The function implements a mixed radix-2/4 complex-to-real IFFT, supporting input lengths of
+ * the form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please check
+ * test/test_suite_fft_int32.c.
  */
 void ne10_fft_c2r_1d_int32_c (ne10_int32_t *fout,
                               ne10_fft_cpx_int32_t *fin,

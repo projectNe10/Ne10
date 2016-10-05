@@ -340,12 +340,12 @@ ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
 
 /**
  * @brief User-callable function to create a configuration structure for the FP32 C2C NEON FFT/IFFT.
- * @param[in]   nfft             length of FFT
- * @retval      st               pointer to the FFT configuration memory, allocated with malloc.
+ * @param[in]   nfft             input length
+ * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
  *
- * This function allocates and initialises an ne10_fft_cfg_float32_t configuration structure for the
- * NEON complex-to-complex single precision floating point FFT/IFFT. As part of this, it reserves a
- * buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks,
+ * This function allocates and initialises an `ne10_fft_cfg_float32_t` configuration structure for
+ * the NEON complex-to-complex single precision floating point FFT/IFFT. As part of this, it reserves
+ * a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks,
  * and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
  */
 ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
@@ -442,11 +442,11 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
 
 /**
  * @brief User-callable function to create a configuration structure for the INT32 C2C NEON FFT/IFFT.
- * @param[in]   nfft             length of FFT
- * @retval      st               pointer to the FFT configuration memory, allocated with malloc.
+ * @param[in]   nfft             input length
+ * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
  *
- * This function allocates and initialises an ne10_fft_cfg_int32_t configuration structure for the
- * NEON complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a
+ * This function allocates and initialises an `ne10_fft_cfg_int32_t` configuration structure for
+ * the NEON complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a
  * buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks,
  * and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
  */
@@ -541,7 +541,7 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 /**
  * @defgroup C2C_FFT_IFFT_DESTROY Floating & Fixed Point Complex FFT "Destroy" Functions
  * @brief User-callable functions to destroy the configuration structure for the FFT (free memory, etc.)
- * @param[in]   cfg     pointer to the FFT configuration memory, allocated with malloc by Ne10.
+ * @param[in]   cfg     pointer to the FFT configuration structure, allocated with `malloc`
  * @{
  */
 
@@ -576,7 +576,7 @@ void ne10_fft_destroy_c2c_int16 (ne10_fft_cfg_int16_t cfg)
 /**
  * @defgroup R2C_FFT_IFFT_DESTROY Floating & Fixed Point Real-to-Complex FFT "Destroy" Functions
  * @brief User-callable functions to destroy the configuration structure for the FFT (free memory, etc.)
- * @param[in]   cfg     pointer to the FFT configuration memory, allocated with malloc by Ne10.
+ * @param[in]   cfg     pointer to the FFT configuration structure, allocated with `malloc`
  * @{
  */
 
