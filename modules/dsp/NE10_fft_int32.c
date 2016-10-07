@@ -1021,7 +1021,7 @@ static void ne10_fft_split_c2r_1d_int32 (ne10_fft_cpx_int32_t *dst,
 /**
  * @brief User-callable function to create a configuration structure for the INT32 C2C C FFT/IFFT.
  * @param[in]   nfft             input length
- * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
+ * @retval      st               pointer to an FFT configuration structure (allocated with `malloc`), or `NULL` to indicate an error
  *
  * This function allocates and initialises an `ne10_fft_cfg_int32_t` configuration structure for
  * the C complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a
@@ -1124,7 +1124,7 @@ void ne10_fft_c2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
 /**
  * @brief User-callable function to create a configuration structure for the INT32 R2C/C2R FFT/IFFT.
  * @param[in]   nfft             input length
- * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
+ * @retval      st               pointer to an FFT configuration structure (allocated with `malloc`), or `NULL` to indicate an error
  *
  * This function allocates and initialises an `ne10_fft_r2c_cfg_int32_t` configuration structure for
  * the INT32 real-to-complex and complex-to-real FFT/IFFT. As part of this, it reserves a buffer used

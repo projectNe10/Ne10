@@ -341,7 +341,7 @@ ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
 /**
  * @brief User-callable function to create a configuration structure for the FP32 C2C NEON FFT/IFFT.
  * @param[in]   nfft             input length
- * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
+ * @retval      st               pointer to an FFT configuration structure (allocated with `malloc`), or `NULL` to indicate an error
  *
  * This function allocates and initialises an `ne10_fft_cfg_float32_t` configuration structure for
  * the NEON complex-to-complex single precision floating point FFT/IFFT. As part of this, it reserves
@@ -443,7 +443,7 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
 /**
  * @brief User-callable function to create a configuration structure for the INT32 C2C NEON FFT/IFFT.
  * @param[in]   nfft             input length
- * @retval      st               pointer to an FFT configuration structure, allocated with `malloc`
+ * @retval      st               pointer to an FFT configuration structure (allocated with `malloc`), or `NULL` to indicate an error
  *
  * This function allocates and initialises an `ne10_fft_cfg_int32_t` configuration structure for
  * the NEON complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a

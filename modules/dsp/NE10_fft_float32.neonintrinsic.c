@@ -1461,8 +1461,8 @@ void ne10_mixed_radix_fft_backward_float32_neon (ne10_fft_cpx_float32_t *out,
  * @param[in]   inverse_fft      whether this is an FFT or IFFT (0: FFT, 1: IFFT)
  *
  * This function implements a mixed radix-2/3/4/5 complex FFT/IFFT, supporting input lengths of the
- * form 2^N*3^M*5^K (N, M, K > 0, length >= 4). This is an out-of-place algorithm. For usage information,
- * please check test/test_suite_fft_float32.c.
+ * form 2^N*3^M*5^K (N, M, K > 0, length % 4 = 0). This is an out-of-place algorithm. For usage
+ * information, please check test/test_suite_fft_float32.c.
  */
 void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_fft_cpx_float32_t *fin,
