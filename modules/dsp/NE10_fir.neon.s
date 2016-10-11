@@ -549,7 +549,7 @@ dInp2_1          .dn   D31.F32
                     ADD         pTemp,pTemp,pc
                     LDR         pMask,[pTemp,pMask]
 #else
-                    LDR         pTemp,=ne10_divLookUpTable
+                    LDR         pMask,=ne10_divLookUpTable
 #endif
                     SUBS        mask,decimationFact,#1
                     ADD         pMask,pMask,mask,LSL #2
