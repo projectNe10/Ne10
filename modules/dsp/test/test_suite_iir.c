@@ -97,7 +97,7 @@ static ne10_float32_t testvCoeffs8[9] =
 
 static ne10_float32_t testkCoeffs10[10] = { 0.001770,    -0.021279,    0.109785,    -0.312208,    0.551053,    -0.711844,    0.797513,    -0.828316,
         0.902786,    -0.741338
-                                          };
+};
 
 static ne10_float32_t testvCoeffs10[11] =
 {
@@ -201,7 +201,7 @@ typedef struct
 } test_config;
 
 /* All Test configurations, 100% Code Coverage */
-
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static test_config CONFIG[] = {{32, 1, 10, &testkCoeffs1[0], &testvCoeffs1[0], &testInput_f32[0]},
     {32, 9, 10, &testkCoeffs9[0], &testvCoeffs9[0], &testInput_f32[0]},
     {2, 9, 160, &testkCoeffs9[0], &testvCoeffs9[0], &testInput_f32[0]},
@@ -212,16 +212,17 @@ static test_config CONFIG[] = {{32, 1, 10, &testkCoeffs1[0], &testvCoeffs1[0], &
     {32, 8, 10, &testkCoeffs8[0], &testvCoeffs8[0], &testInput_f32[0]},
     {32, 33, 10, &testkCoeffs33[0], &testvCoeffs33[0], &testInput_f32[0]}
 };
-
+#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
+#endif
+#ifdef PERFORMANCE_TEST
 static test_config CONFIG_PERF[] =
 {
     {2, 9, 160, &testkCoeffs9[0], &testvCoeffs9[0], &testInput_f32[0]},
     {32, 9, 10, &testkCoeffs9[0], &testvCoeffs9[0], &testInput_f32[0]},
     {32, 33, 10, &testkCoeffs33[0], &testvCoeffs33[0], &testInput_f32[0]}
 };
-
-#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
+#endif
 
 //input and output
 static ne10_float32_t * guarded_in_c = NULL;
@@ -239,8 +240,9 @@ static ne10_float32_t * guarded_iir_state_neon = NULL;
 static ne10_float32_t * iir_state_c = NULL;
 static ne10_float32_t * iir_state_neon = NULL;
 
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static ne10_float32_t snr = 0.0f;
-
+#endif
 #ifdef PERFORMANCE_TEST
 static ne10_int64_t time_c = 0;
 static ne10_int64_t time_neon = 0;
@@ -250,17 +252,13 @@ static ne10_float32_t time_savings = 0.0f;
 
 void test_iir_lattice_case0()
 {
-    ne10_float32_t *p_src = testInput_f32;
     ne10_iir_lattice_instance_f32_t SC, SN;
 
     ne10_uint16_t loop = 0;
     ne10_uint16_t block = 0;
-    ne10_uint16_t k = 0;
     ne10_uint16_t i = 0;
-    ne10_uint16_t pos = 0;
 
     test_config *config;
-    ne10_result_t status = NE10_OK;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -278,6 +276,7 @@ void test_iir_lattice_case0()
 
 #ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_uint16_t pos = 0;
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
         config = &CONFIG[loop];
@@ -333,6 +332,7 @@ void test_iir_lattice_case0()
 #endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
+    ne10_uint16_t k;
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "IIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     for (loop = 0; loop < NUM_PERF_TESTS; loop++)
     {

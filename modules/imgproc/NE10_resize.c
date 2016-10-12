@@ -383,7 +383,6 @@ void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
     ne10_int32_t xmin = 0;
     ne10_int32_t xmax = dstw;
     ne10_int32_t width = dstw * cn;
-    ne10_float32_t fx, fy;
 
     ne10_int32_t ksize = 0, ksize2;
     ksize = 2;
@@ -525,7 +524,6 @@ void ne10_img_resize_bilinear_rgba_neon (ne10_uint8_t* dst,
     ne10_int32_t xmin = 0;
     ne10_int32_t xmax = dstw;
     ne10_int32_t width = dstw * cn;
-    ne10_float32_t fx, fy;
 
     ne10_int32_t ksize = 0, ksize2;
     ksize = 2;

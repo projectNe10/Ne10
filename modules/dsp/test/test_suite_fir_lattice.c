@@ -64,8 +64,9 @@ static ne10_float32_t * guarded_fir_state_neon = NULL;
 static ne10_float32_t * fir_state_c = NULL;
 static ne10_float32_t * fir_state_neon = NULL;
 
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static ne10_float32_t snr = 0.0f;
-
+#endif
 #ifdef PERFORMANCE_TEST
 static ne10_int64_t time_c = 0;
 static ne10_int64_t time_neon = 0;
@@ -81,7 +82,6 @@ static ne10_float32_t testCoeffs9_f32[9] =
     -0.954402,    -0.250769,    0.265646,    0.605696,    1.809474,    -1.971027,    -0.923924,    -4.488990,
     0.833201
 };
-
 
 /* ----------------------------------------------------------------------
 ** Coefficients of 7-tap filter
@@ -174,6 +174,7 @@ typedef struct
 } test_config;
 
 /* All Test configurations, 100% Code Coverage */
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static test_config CONFIG[] =
 {
     {2, 31, 160, &testCoeffs31_f32[0], &testInput_f32[0]},
@@ -191,7 +192,9 @@ static test_config CONFIG[] =
     {64, 3, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
     {64, 1, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
 };
-
+#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
+#endif
+#ifdef PERFORMANCE_TEST
 static test_config CONFIG_PERF[] =
 {
     {32, 3, 10, &testCoeffs31_f32[0], &testInput_f32[0]},
@@ -199,21 +202,17 @@ static test_config CONFIG_PERF[] =
     {64, 3, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
     {64, 1, 5, &testCoeffs31_f32[0], &testInput_f32[0]},
 };
-
-#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
+#endif
 
 
 void test_fir_lattice_case0()
 {
-    ne10_float32_t *p_src = testInput_f32;
     ne10_fir_lattice_instance_f32_t SC, SN;
 
     ne10_uint16_t loop = 0;
     ne10_uint16_t block = 0;
-    ne10_uint16_t k = 0;
     ne10_uint16_t i = 0;
-    ne10_uint16_t pos = 0;
 
     test_config *config;
     ne10_result_t status_c = NE10_OK;
@@ -235,6 +234,7 @@ void test_fir_lattice_case0()
 
 #ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_uint16_t pos = 0;
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
         config = &CONFIG[loop];
@@ -292,6 +292,7 @@ void test_fir_lattice_case0()
 #endif // ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
+    ne10_uint16_t k;
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     for (loop = 0; loop < NUM_PERF_TESTS; loop++)
     {

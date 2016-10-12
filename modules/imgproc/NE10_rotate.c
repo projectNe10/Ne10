@@ -242,7 +242,6 @@ void ne10_img_rotate_rgba_c (ne10_uint8_t* dst,
     ne10_int32_t srch = src_height;
     ne10_int32_t dstw = (srch * fabs (a)) + (srcw * fabs (b)) + 1;
     ne10_int32_t dsth = (srch * fabs (b)) + (srcw * fabs (a)) + 1;
-    ne10_int32_t i;
     ne10_float32_t m[6];
     ne10_float32_t dx = (dstw - 1) * 0.5;
     ne10_float32_t dy = (dsth - 1) * 0.5;
@@ -295,7 +294,6 @@ void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
     ne10_int32_t srch = src_height;
     ne10_int32_t dstw = (srch * fabs (a)) + (srcw * fabs (b)) + 1;
     ne10_int32_t dsth = (srch * fabs (b)) + (srcw * fabs (a)) + 1;
-    ne10_int32_t i;
     ne10_float32_t m[6];
     ne10_float32_t dx = (dstw - 1) * 0.5;
     ne10_float32_t dy = (dsth - 1) * 0.5;

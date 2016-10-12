@@ -75,11 +75,12 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
 
 
 
-    // init fstride, mstride, N
+    // init fstride, mstride, N, tw
     stage_count = factors[0];
     fstride = factors[1];
     mstride = factors[ (stage_count << 1) - 1 ];
     N = factors[ stage_count << 1 ]; // radix
+    tw = twiddles;
 
     // the first stage
     Fin1 = Fin;
@@ -88,7 +89,6 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
     {
         // radix 8
         N = fstride >> 1; // 1/4 of length of FFT
-        tw = twiddles;
         fstride1 = fstride >> 2;
 
         Fin1 = Fin;
@@ -280,7 +280,6 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
 
         // update address for other stages
         stage_count--;
-        tw = twiddles;
         fstride >>= 2;
         // end of first stage
     }
@@ -515,6 +514,7 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
     fstride = factors[1];
     mstride = factors[ (stage_count << 1) - 1 ];
     N = factors[ stage_count << 1 ]; // radix
+    tw = twiddles;
 
     // the first stage
     Fin1 = Fin;
@@ -523,7 +523,6 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
     {
         // radix 8
         N = fstride >> 1; // 1/4 of length of FFT
-        tw = twiddles;
         fstride1 = fstride >> 2;
 
         Fin1 = Fin;
@@ -711,7 +710,6 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
         N = fstride; // 1/4 of length of FFT
         // update address for other stages
         stage_count--;
-        tw = twiddles;
         fstride >>= 2;
 
         // swap

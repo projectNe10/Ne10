@@ -71,11 +71,12 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t * Fout,
     const ne10_float32_t TW_81 = 0.70710678;
     const ne10_float32_t TW_81N = -0.70710678;
 
-    // init fstride, mstride, N
+    // init fstride, mstride, N, tw
     stage_count = factors[0];
     fstride = factors[1];
     mstride = factors[ (stage_count << 1) - 1 ];
     N = factors[ stage_count << 1 ]; // radix
+    tw = twiddles;
 
     // the first stage
     Fin1 = Fin;
@@ -84,7 +85,6 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t * Fout,
     {
         // radix 8
         N = fstride >> 1; // 1/4 of length of FFT
-        tw = twiddles;
         fstride1 = fstride >> 2;
 
         Fin1 = Fin;
@@ -253,7 +253,6 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t * Fout,
 
         // update address for other stages
         stage_count--;
-        tw = twiddles;
         fstride >>= 2;
 
         // swap
@@ -463,12 +462,13 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
     const ne10_float32_t TW_81 = 0.70710678;
     const ne10_float32_t TW_81N = -0.70710678;
 
-    // init fstride, mstride, N
+    // init fstride, mstride, N, one_by_nfft, tw
     stage_count = factors[0];
     fstride = factors[1];
     mstride = factors[ (stage_count << 1) - 1 ];
     N = factors[ stage_count << 1 ]; // radix
     one_by_nfft = (1.0f / (ne10_float32_t) (fstride * N));
+    tw = twiddles;
 
     // the first stage
     Fin1 = Fin;
@@ -477,7 +477,6 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
     {
         // radix 8
         N = fstride >> 1; // 1/4 of length of FFT
-        tw = twiddles;
         fstride1 = fstride >> 2;
 
         Fin1 = Fin;
@@ -656,7 +655,6 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
 
         // update address for other stages
         stage_count--;
-        tw = twiddles;
         fstride >>= 2;
 
         if (stage_count == 0)

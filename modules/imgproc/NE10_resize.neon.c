@@ -152,7 +152,7 @@ void ne10_img_vresize_linear_neon (const int** src, unsigned char* dst, const sh
     uint16x8_t qT_01234567;
     uint8x8_t dT_01234567, dDst_01234567;
 
-    int32x2_t dBeta;
+    int32x2_t dBeta = {};
     dBeta = vset_lane_s32 ( (int) (beta[0]), dBeta, 0);
     dBeta = vset_lane_s32 ( (int) (beta[1]), dBeta, 1);
 
@@ -229,5 +229,3 @@ void ne10_img_vresize_linear_neon (const int** src, unsigned char* dst, const sh
         vst1_u8 (&dst[x], dMask);
     }
 }
-
-

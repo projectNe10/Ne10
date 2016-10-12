@@ -61,8 +61,6 @@ static ne10_uint8_t * in_neon = NULL;
 static ne10_uint8_t * out_c = NULL;
 static ne10_uint8_t * out_neon = NULL;
 
-static ne10_float32_t psnr = 0.0f;
-
 #ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 void test_rotate_conformance_case()
 {
@@ -73,8 +71,8 @@ void test_rotate_conformance_case()
     ne10_float32_t PSNR = 0.0f;
     ne10_int32_t srcw = SRC_WIDTH;
     ne10_int32_t srch = SRC_HEIGHT;
-    ne10_int32_t dstw_c, dsth_c;
-    ne10_int32_t dstw_neon, dsth_neon;
+    ne10_uint32_t dstw_c, dsth_c;
+    ne10_uint32_t dstw_neon, dsth_neon;
     ne10_int32_t angle;
 
     /* init input memory */
@@ -119,8 +117,8 @@ void test_rotate_performance_case()
     ne10_int32_t out_size = DST_HEIGHT * DST_WIDTH * channels;
     ne10_int32_t srcw = SRC_WIDTH;
     ne10_int32_t srch = SRC_HEIGHT;
-    ne10_int32_t dstw_c, dsth_c;
-    ne10_int32_t dstw_neon, dsth_neon;
+    ne10_uint32_t dstw_c, dsth_c;
+    ne10_uint32_t dstw_neon, dsth_neon;
     ne10_int32_t angle;
     ne10_int64_t time_c = 0;
     ne10_int64_t time_neon = 0;
@@ -204,6 +202,3 @@ void test_fixture_rotate (void)
 
     test_fixture_end();                 // ends a fixture
 }
-
-
-

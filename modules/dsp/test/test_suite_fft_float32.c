@@ -88,7 +88,6 @@ static ne10_int32_t test_c2c_alloc (ne10_int32_t fftSize);
 
 void test_fft_c2c_1d_float32_conformance()
 {
-    ne10_int32_t i = 0;
     ne10_int32_t fftSize = 0;
     ne10_int32_t flag_result = NE10_OK;
 

@@ -1325,12 +1325,12 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
                                       ne10_uint32_t blockSize)
 {
     ne10_uint32_t i = 0u;
-    ne10_int32_t rOffset, dst_end;
+    ne10_int32_t rOffset, *dst_end;
 
     /* Copy the value of Index pointer that points
      * to the current location from where the input samples to be read */
     rOffset = *readOffset;
-    dst_end = (ne10_int32_t) (dst_base + dst_length);
+    dst_end = dst_base + dst_length;
 
     /* Loop over the blockSize */
     i = blockSize;
@@ -1343,7 +1343,7 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
         /* Update the input pointer */
         dst += dstInc;
 
-        if (dst == (ne10_int32_t *) dst_end)
+        if (dst == dst_end)
         {
             dst = dst_base;
         }
@@ -1601,4 +1601,3 @@ void ne10_fir_sparse_float_c (ne10_fir_sparse_instance_f32_t * S,
 
 }
 /** @} */ //end of FIR_sparse group
-

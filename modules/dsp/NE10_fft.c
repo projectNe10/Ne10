@@ -94,12 +94,12 @@ ne10_int32_t ne10_factor (ne10_int32_t n,
             case 8:
                 p = 8;
                 break;
-            case 40:
-                p = 5;
-                alg_flag = NE10_FFT_ALG_ANY;
-                break;
             case 24:
                 p = 3;
+                alg_flag = NE10_FFT_ALG_ANY;
+                break;
+            default: // n == 40
+                p = 5;
                 alg_flag = NE10_FFT_ALG_ANY;
                 break;
             }

@@ -46,6 +46,7 @@ ne10_func_4args_cst_t ftbl_4args_cst[MAX_FUNC_COUNT];
 ne10_func_5args_cst_t ftbl_5args_cst[MAX_FUNC_COUNT];
 
 //input and output
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static ne10_float32_t * guarded_acc = NULL;
 static ne10_float32_t * guarded_src1 = NULL;
 static ne10_float32_t * guarded_src2 = NULL;
@@ -59,6 +60,7 @@ static ne10_float32_t * guarded_dst_c = NULL;
 static ne10_float32_t * guarded_dst_neon = NULL;
 static ne10_float32_t * thedst_c = NULL;
 static ne10_float32_t * thedst_neon = NULL;
+#endif
 
 #ifdef PERFORMANCE_TEST
 static ne10_float32_t * perftest_guarded_acc = NULL;
@@ -86,10 +88,7 @@ void test_abs_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     /* init function table */
     memset (ftbl_3args, 0, sizeof (ftbl_3args));
@@ -105,6 +104,8 @@ void test_abs_case0()
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -132,6 +133,7 @@ void test_abs_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -183,10 +185,7 @@ void test_addc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -203,6 +202,8 @@ void test_addc_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_addc_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -240,6 +241,7 @@ void test_addc_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -307,10 +309,7 @@ void test_add_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -326,6 +325,8 @@ void test_add_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_add_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -354,6 +355,7 @@ void test_add_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -409,10 +411,7 @@ void test_cross_case0()
 {
 #define MAX_VEC_COMPONENTS 3
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -422,6 +421,8 @@ void test_cross_case0()
     ftbl_4args[ 5] = (ne10_func_4args_t) ne10_cross_vec3f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -450,6 +451,7 @@ void test_cross_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -505,10 +507,7 @@ void test_divc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -525,6 +524,8 @@ void test_divc_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_divc_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -561,6 +562,7 @@ void test_divc_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -628,10 +630,7 @@ void test_div_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -647,6 +646,8 @@ void test_div_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_vdiv_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -675,6 +676,7 @@ void test_div_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -730,10 +732,7 @@ void test_dot_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -747,6 +746,7 @@ void test_dot_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_dot_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -761,7 +761,9 @@ void test_dot_case0()
     {
         for (loop = 0; loop < TEST_ITERATION; loop++)
         {
-            vec_size = func_loop + 1;
+#ifdef DEBUG_TRACE
+            ne10_int32_t vec_size = func_loop + 1;
+#endif
 
             GUARD_ARRAY (thedst_c, loop);
             GUARD_ARRAY (thedst_neon, loop);
@@ -775,6 +777,7 @@ void test_dot_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -830,10 +833,7 @@ void test_len_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     /* init function table */
     memset (ftbl_3args, 0, sizeof (ftbl_3args));
@@ -847,6 +847,8 @@ void test_len_case0()
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -874,6 +876,7 @@ void test_len_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -925,10 +928,7 @@ void test_mlac_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -945,6 +945,8 @@ void test_mlac_case0()
     ftbl_5args[ 7] = (ne10_func_5args_t) ne10_mlac_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -982,6 +984,7 @@ void test_mlac_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1053,10 +1056,7 @@ void test_mla_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1072,6 +1072,8 @@ void test_mla_case0()
     ftbl_5args[ 7] = (ne10_func_5args_t) ne10_vmla_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1101,6 +1103,7 @@ void test_mla_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1160,10 +1163,7 @@ void test_mulc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1180,6 +1180,8 @@ void test_mulc_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_mulc_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1216,6 +1218,7 @@ void test_mulc_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1283,10 +1286,7 @@ void test_mul_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1302,6 +1302,8 @@ void test_mul_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_vmul_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1330,6 +1332,7 @@ void test_mul_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1385,10 +1388,7 @@ void test_normalize_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     /* init function table */
     memset (ftbl_3args, 0, sizeof (ftbl_3args));
@@ -1402,6 +1402,8 @@ void test_normalize_case0()
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1429,6 +1431,7 @@ void test_normalize_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1480,10 +1483,7 @@ void test_rsbc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1500,6 +1500,8 @@ void test_rsbc_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_rsbc_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1536,6 +1538,7 @@ void test_rsbc_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1603,10 +1606,7 @@ void test_setc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1623,6 +1623,8 @@ void test_setc_case0()
     ftbl_3args[ 7] = (ne10_func_3args_t) ne10_setc_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1658,6 +1660,7 @@ void test_setc_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1722,10 +1725,7 @@ void test_subc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1742,6 +1742,8 @@ void test_subc_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_subc_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1778,6 +1780,7 @@ void test_subc_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1845,10 +1848,7 @@ void test_sub_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1864,6 +1864,8 @@ void test_sub_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_sub_vec4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1892,6 +1894,7 @@ void test_sub_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -1947,10 +1950,7 @@ void test_addmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -1964,6 +1964,8 @@ void test_addmat_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_addmat_4x4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -1992,6 +1994,7 @@ void test_addmat_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -2047,10 +2050,7 @@ void test_detmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -2064,6 +2064,8 @@ void test_detmat_case0()
     ftbl_3args[ 7] = (ne10_func_3args_t) ne10_detmat_4x4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -2091,6 +2093,7 @@ void test_detmat_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -2142,10 +2145,7 @@ void test_identitymat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -2159,6 +2159,8 @@ void test_identitymat_case0()
     ftbl_2args[ 7] = (ne10_func_2args_t) ne10_identitymat_4x4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init dst memory */
@@ -2225,10 +2227,7 @@ void test_invmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -2242,6 +2241,8 @@ void test_invmat_case0()
     ftbl_3args[ 7] = (ne10_func_3args_t) ne10_invmat_4x4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -2269,6 +2270,7 @@ void test_invmat_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -2320,10 +2322,7 @@ void test_mulmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -2337,6 +2336,8 @@ void test_mulmat_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_mulmat_4x4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -2365,6 +2366,7 @@ void test_mulmat_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -2420,10 +2422,7 @@ void test_submat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -2437,6 +2436,8 @@ void test_submat_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_submat_4x4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -2465,6 +2466,7 @@ void test_submat_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -2520,10 +2522,7 @@ void test_transmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -2537,6 +2536,8 @@ void test_transmat_case0()
     ftbl_3args[ 7] = (ne10_func_3args_t) ne10_transmat_4x4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -2564,6 +2565,7 @@ void test_transmat_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size; i++)
                 {
@@ -2615,10 +2617,7 @@ void test_mulcmatvec_case0()
 {
 #define MAX_VEC_COMPONENTS 4
     ne10_int32_t loop;
-    ne10_int32_t i;
     ne10_int32_t func_loop;
-    ne10_int32_t vec_size;
-    ne10_int32_t pos;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
@@ -2632,6 +2631,8 @@ void test_mulcmatvec_case0()
     ftbl_4args[ 7] = (ne10_func_4args_t) ne10_mulcmatvec_cm4x4f_v4f_neon;
 
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_int32_t vec_size;
+    ne10_int32_t pos;
     const ne10_uint32_t fixed_length = TEST_ITERATION * MAX_VEC_COMPONENTS;
 
     /* init src memory */
@@ -2660,6 +2661,7 @@ void test_mulcmatvec_case0()
             for (pos = 0; pos < loop; pos++)
             {
 #ifdef DEBUG_TRACE
+                ne10_int32_t i;
                 fprintf (stdout, "func: %d loop count: %d position: %d \n", func_loop, loop, pos);
                 for (i = 0; i < vec_size * vec_size; i++)
                 {

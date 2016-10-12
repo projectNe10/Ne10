@@ -68,8 +68,9 @@ static ne10_float32_t * fir_state_neon = NULL;
 static ne10_float32_t scratch_c[MAX_BLOCKSIZE] = {0};
 static ne10_float32_t scratch_neon[MAX_BLOCKSIZE] = {0};
 
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static ne10_float32_t snr = 0.0f;
-
+#endif
 #ifdef PERFORMANCE_TEST
 static ne10_int64_t time_c = 0;
 static ne10_int64_t time_neon = 0;
@@ -89,13 +90,13 @@ static ne10_float32_t testCoeffs5_f32[5] =
 /* ----------------------------------------------------------------------
 ** Coefficients for 32-tap filter for F32
 ** ------------------------------------------------------------------- */
-static ne10_float32_t testCoeffs32_f32[32] =
-{
-    1.749140,    0.132598,    0.325228,    -0.793809,    0.314924,    -0.527270,    0.932267,    1.164664,
-    -2.045669,    -0.644373,    1.741066,    0.486768,    1.048829,    1.488575,    1.270501,    -1.856124,
-    2.134321,    1.435847,    -0.917302,    -1.106077,    0.810571,    0.698543,    -0.401583,    1.268751,
-    -0.783608,    0.213266,    0.787898,    0.896682,    -0.186917,    1.013182,    0.248435,    0.059608
-};
+// static ne10_float32_t testCoeffs32_f32[32] =
+// {
+//     1.749140,    0.132598,    0.325228,    -0.793809,    0.314924,    -0.527270,    0.932267,    1.164664,
+//     -2.045669,    -0.644373,    1.741066,    0.486768,    1.048829,    1.488575,    1.270501,    -1.856124,
+//     2.134321,    1.435847,    -0.917302,    -1.106077,    0.810571,    0.698543,    -0.401583,    1.268751,
+//     -0.783608,    0.213266,    0.787898,    0.896682,    -0.186917,    1.013182,    0.248435,    0.059608
+// };
 
 /* ----------------------------------------------------------------------
 ** Delay offsets for 5-tap Sparse filter for F32
@@ -108,13 +109,13 @@ static ne10_int32_t tapDelay5_f32[5] =
 /* ----------------------------------------------------------------------
 ** Delay offsets for 32-tap Sparse filter for F32
 ** ------------------------------------------------------------------- */
-static ne10_int32_t tapDelay32_f32[32] =
-{
-    95,    23,    61,    49,    89,    76,    46,    2,
-    82,    44,    62,    79,    92,    74,    18,    41,
-    94,    92,    41,    89,    6,     35,    81,    1,
-    14,    20,    20,    60,    27,    20,    2,     75
-};
+// static ne10_int32_t tapDelay32_f32[32] =
+// {
+//     95,    23,    61,    49,    89,    76,    46,    2,
+//     82,    44,    62,    79,    92,    74,    18,    41,
+//     94,    92,    41,    89,    6,     35,    81,    1,
+//     14,    20,    20,    60,    27,    20,    2,     75
+// };
 
 /* ----------------------------------------------------------------------
 ** Test input data for F32
@@ -179,6 +180,7 @@ typedef struct
 } test_config;
 
 /* All Test configurations, 100% Code Coverage */
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static test_config CONFIG[] =
 {
     {0, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
@@ -188,27 +190,26 @@ static test_config CONFIG[] =
     {5, 5, 64, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
     //{64, 32, 5, 100, &tapDelay32_f32[0], &testCoeffs32_f32[0], &testInput_f32[0]}
 };
+#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
+#endif
+#ifdef PERFORMANCE_TEST
 static test_config CONFIG_PERF[] =
 {
     {2, 5, 160, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
     {64, 5, 5, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
     {5, 5, 64, 100, &tapDelay5_f32[0], &testCoeffs5_f32[0], &testInput_f32[0]},
 };
-
-#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
+#endif
 
 
 void test_fir_sparse_case0()
 {
-    ne10_float32_t *p_src = testInput_f32;
     ne10_fir_sparse_instance_f32_t SC, SN;
 
     ne10_uint16_t loop = 0;
     ne10_uint16_t block = 0;
-    ne10_uint16_t k = 0;
     ne10_uint16_t i = 0;
-    ne10_uint16_t pos = 0;
 
     test_config *config;
     ne10_result_t status_c = NE10_OK;
@@ -230,6 +231,7 @@ void test_fir_sparse_case0()
 
 #ifdef ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_uint16_t pos = 0;
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
         config = &CONFIG[loop];
@@ -290,6 +292,7 @@ void test_fir_sparse_case0()
 #endif // ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
+    ne10_uint16_t k;
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     for (loop = 0; loop < NUM_PERF_TESTS; loop++)
     {

@@ -39,6 +39,8 @@
 extern "C" {
 #endif
 
+    ne10_result_t ne10_init_physics (ne10_int32_t is_NEON_available);
+
 ///////////////////////////
 // function prototypes:
 ///////////////////////////

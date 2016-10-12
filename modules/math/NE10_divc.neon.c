@@ -40,8 +40,6 @@
 
 ne10_result_t ne10_divc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count)
 {
-    ne10_uint32_t ii = 0;
-    ne10_float32_t d[4];
     NE10_XC_OPERATION_FLOAT_NEON
     (
         /* a single division operation */

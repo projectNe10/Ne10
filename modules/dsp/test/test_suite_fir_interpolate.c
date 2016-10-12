@@ -64,8 +64,9 @@ static ne10_float32_t * guarded_fir_state_neon = NULL;
 static ne10_float32_t * fir_state_c = NULL;
 static ne10_float32_t * fir_state_neon = NULL;
 
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static ne10_float32_t snr = 0.0f;
-
+#endif
 #ifdef PERFORMANCE_TEST
 static ne10_int64_t time_c = 0;
 static ne10_int64_t time_neon = 0;
@@ -98,7 +99,7 @@ static ne10_float32_t testCoeffs8_f32[8] =
 ** Coefficients for 1-tap filter for F32
 ** ------------------------------------------------------------------- */
 
-static ne10_float32_t testCoeffs1_f32 = 0.086440;
+// static ne10_float32_t testCoeffs1_f32 = 0.086440;
 
 /* ----------------------------------------------------------------------
 ** Coefficients for 27-tap filter for F32
@@ -149,6 +150,7 @@ typedef struct
 } test_config;
 
 /* All Test configurations, 100% Code Coverage */
+#if defined (SMOKE_TEST)||(REGRESSION_TEST)
 static test_config CONFIG[] = {{0, 1, 1, 10, &testCoeffs6_f32[0], &testInput_f32[0]},
     {8, 6, 6, 10, &testCoeffs6_f32[0], &testInput_f32[0]},
     {8, 8, 2, 10, &testCoeffs8_f32[0], &testInput_f32[0]},
@@ -159,6 +161,9 @@ static test_config CONFIG[] = {{0, 1, 1, 10, &testCoeffs6_f32[0], &testInput_f32
     {80, 27, 4, 1, &testCoeffs27_f32[0], &testInput_f32[0]},
     {80, 32, 4, 1, &testCoeffs32_f32[0], &testInput_f32[0]}
 };
+#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
+#endif
+#ifdef PERFORMANCE_TEST
 static test_config CONFIG_PERF[] =
 {
     {8, 27, 3, 10, &testCoeffs27_f32[0], &testInput_f32[0]},
@@ -166,21 +171,17 @@ static test_config CONFIG_PERF[] =
     {80, 27, 3, 1, &testCoeffs27_f32[0], &testInput_f32[0]},
     {80, 32, 4, 1, &testCoeffs32_f32[0], &testInput_f32[0]}
 };
-
-#define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
+#endif
 
 
 void test_fir_interpolate_case0()
 {
-    ne10_float32_t *p_src = testInput_f32;
     ne10_fir_interpolate_instance_f32_t SC, SN;
 
     ne10_uint16_t loop = 0;
     ne10_uint16_t block = 0;
-    ne10_uint16_t k = 0;
     ne10_uint16_t i = 0;
-    ne10_uint16_t pos = 0;
     ne10_uint16_t length = 0;
 
     test_config *config;
@@ -203,6 +204,7 @@ void test_fir_interpolate_case0()
 
 #ifdef ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
+    ne10_uint16_t pos = 0;
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
         config = &CONFIG[loop];
@@ -269,6 +271,7 @@ void test_fir_interpolate_case0()
 #endif // ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
+    ne10_uint16_t k;
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
     for (loop = 0; loop < NUM_PERF_TESTS; loop++)
     {

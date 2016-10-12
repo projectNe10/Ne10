@@ -73,8 +73,6 @@ static ne10_float32_t snr = 0.0f;
 
 static ne10_int64_t time_c = 0;
 static ne10_int64_t time_neon = 0;
-static ne10_int64_t time_overhead_c = 0;
-static ne10_int64_t time_overhead_neon = 0;
 static ne10_float32_t time_speedup = 0.0f;
 static ne10_float32_t time_savings = 0.0f;
 

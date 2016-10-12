@@ -183,8 +183,6 @@ void ne10_physics_apply_impulse_vec2f_c (ne10_vec3f_t *v_wa,
         ne10_uint32_t count)
 {
     ne10_int32_t i;
-    ne10_vec2f_t va;
-    ne10_vec2f_t vb;
 
     for (i = 0; i < count; i++)
     {

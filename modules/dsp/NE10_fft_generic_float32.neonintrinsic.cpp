@@ -569,7 +569,9 @@ static void ne10_radix_4_butterfly_float32_neon (CPLX *Fout,
         const ne10_int32_t nfft)
 {
     CPLX in[4];
+    #ifdef NE10_INLINE_ASM_OPT
     CPLX s[4];
+    #endif
 
     const ne10_int32_t in_step = nfft / 4;
     ne10_int32_t f_count;

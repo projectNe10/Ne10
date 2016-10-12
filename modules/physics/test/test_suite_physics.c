@@ -60,11 +60,11 @@ static void float_array_assignment (ne10_float32_t *array, ne10_int32_t len)
 
 void test_compute_aabb_vec2f_conformance()
 {
+#if defined ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
     ne10_vec2f_t radius = {0.2f, 0.2f};
     ne10_vec2f_t *vertices_c, *vertices_neon;
     ne10_mat2x2f_t aabb_c, aabb_neon;
     ne10_mat2x2f_t xf;
-    ne10_int32_t i;
     ne10_int32_t vertex_count;
     ne10_int32_t vec_size = sizeof (ne10_mat2x2f_t) / sizeof (ne10_float32_t);
 
@@ -82,7 +82,6 @@ void test_compute_aabb_vec2f_conformance()
     xf.c2.r1 = sin (tmp);
     xf.c2.r2 = cos (tmp);
 
-#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 #if defined (REGRESSION_TEST)
     for (vertex_count = 1; vertex_count < TEST_LENGTH_SAMPLES; vertex_count++)
     {
@@ -93,9 +92,7 @@ void test_compute_aabb_vec2f_conformance()
         printf ("----vertex_count %d\n", vertex_count);
         assert_float_vec_equal ( (ne10_float32_t*) &aabb_c, (ne10_float32_t*) &aabb_neon, ERROR_MARGIN_LARGE, vec_size);
     }
-#endif
-
-#if defined (SMOKE_TEST)
+#else // defined (SMOKE_TEST)
     for (vertex_count = 1; vertex_count < TEST_LENGTH_SAMPLES; vertex_count += 3)
     {
         //C version
@@ -106,20 +103,20 @@ void test_compute_aabb_vec2f_conformance()
         assert_float_vec_equal ( (ne10_float32_t*) &aabb_c, (ne10_float32_t*) &aabb_neon, ERROR_MARGIN_LARGE, vec_size);
     }
 #endif
-#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
     free (vertices_c);
     free (vertices_neon);
+#endif
 }
 
 void test_compute_aabb_vec2f_performance()
 {
     ne10_vec2f_t radius = {0.2f, 0.2f};
     ne10_vec2f_t *vertices_c, *vertices_neon;
-    ne10_mat2x2f_t aabb_c, aabb_neon;
+    ne10_mat2x2f_t aabb_c;
     ne10_mat2x2f_t xf;
     ne10_int32_t i;
     ne10_int32_t vertex_count;
-    ne10_int32_t vec_size = sizeof (ne10_mat2x2f_t) / sizeof (ne10_float32_t);
+    // ne10_int32_t vec_size = sizeof (ne10_mat2x2f_t) / sizeof (ne10_float32_t);
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "vertex count", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
@@ -149,6 +146,7 @@ void test_compute_aabb_vec2f_performance()
 
 #ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
         //neon version
+        ne10_mat2x2f_t aabb_neon;
         GET_TIME
         (time_neon,
         {
@@ -168,6 +166,7 @@ void test_compute_aabb_vec2f_performance()
 
 void test_relative_v_vec2f_conformance()
 {
+#if defined ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
     ne10_vec2f_t *guarded_dv_c, *guarded_dv_neon;
     ne10_vec2f_t *dv_c, *dv_neon;
     ne10_vec3f_t *v_wa, *v_wb;
@@ -194,7 +193,6 @@ void test_relative_v_vec2f_conformance()
     dv_c = (ne10_vec2f_t*) ( (ne10_float32_t*) guarded_dv_c + ARRAY_GUARD_LEN);
     dv_neon = (ne10_vec2f_t*) ( (ne10_float32_t*) guarded_dv_neon + ARRAY_GUARD_LEN);
 
-#ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
 #if defined (REGRESSION_TEST)
     for (count = 1; count < TEST_LENGTH_SAMPLES; count++)
     {
@@ -212,9 +210,7 @@ void test_relative_v_vec2f_conformance()
         for (i = 0; i < count; i++)
             assert_float_vec_equal ( (ne10_float32_t*) &dv_c[i], (ne10_float32_t*) &dv_neon[i], ERROR_MARGIN_LARGE, vec_size);
     }
-#endif
-
-#if defined (SMOKE_TEST)
+#else // defined (SMOKE_TEST)
     for (count = 1; count < TEST_LENGTH_SAMPLES; count += 5)
     {
         GUARD_ARRAY ( (ne10_float32_t*) dv_c, count * vec_size);
@@ -232,13 +228,13 @@ void test_relative_v_vec2f_conformance()
             assert_float_vec_equal ( (ne10_float32_t*) &dv_c[i], (ne10_float32_t*) &dv_neon[i], ERROR_MARGIN_LARGE, vec_size);
     }
 #endif
-#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
     free (v_wa);
     free (v_wb);
     free (ra);
     free (rb);
     free (guarded_dv_c);
     free (guarded_dv_neon);
+#endif
 }
 
 void test_relative_v_vec2f_performance()
@@ -249,7 +245,7 @@ void test_relative_v_vec2f_performance()
     ne10_vec2f_t *ra, *rb;
     ne10_int32_t i;
     ne10_int32_t count;
-    ne10_int32_t vec_size = sizeof (ne10_vec2f_t) / sizeof (ne10_float32_t);
+    // ne10_int32_t vec_size = sizeof (ne10_vec2f_t) / sizeof (ne10_float32_t);
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "count", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
@@ -306,6 +302,7 @@ void test_relative_v_vec2f_performance()
 
 void test_apply_impulse_vec2f_conformance()
 {
+#if defined ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
     ne10_vec3f_t *guarded_v_wa_c, *guarded_v_wa_neon, *guarded_v_wb_c, *guarded_v_wb_neon;
     ne10_vec3f_t *v_wa_c, *v_wa_neon, *v_wb_c, *v_wb_neon;
     ne10_vec2f_t *ra, *rb, *ima, *imb, *p;
@@ -341,7 +338,6 @@ void test_apply_impulse_vec2f_conformance()
     memcpy (v_wa_neon, v_wa_c, TEST_LENGTH_SAMPLES * sizeof (ne10_vec3f_t));
     memcpy (v_wb_neon, v_wb_c, TEST_LENGTH_SAMPLES * sizeof (ne10_vec3f_t));
 
-#ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
 #if defined (REGRESSION_TEST)
     for (count = 1; count < TEST_LENGTH_SAMPLES; count++)
     {
@@ -367,9 +363,7 @@ void test_apply_impulse_vec2f_conformance()
             assert_float_vec_equal ( (ne10_float32_t*) &v_wb_c[i], (ne10_float32_t*) &v_wb_neon[i], ERROR_MARGIN_LARGE, vec_size);
         }
     }
-#endif
-
-#if defined (SMOKE_TEST)
+#else // defined (SMOKE_TEST)
     for (count = 1; count < TEST_LENGTH_SAMPLES; count += 5)
     {
         GUARD_ARRAY ( (ne10_float32_t*) v_wa_c, count * vec_size);
@@ -394,7 +388,6 @@ void test_apply_impulse_vec2f_conformance()
         }
     }
 #endif
-#endif // ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
     free (ra);
     free (rb);
     free (ima);
@@ -404,6 +397,7 @@ void test_apply_impulse_vec2f_conformance()
     free (guarded_v_wa_neon);
     free (guarded_v_wb_c);
     free (guarded_v_wb_neon);
+#endif
 }
 
 void test_apply_impulse_vec2f_performance()
@@ -413,7 +407,7 @@ void test_apply_impulse_vec2f_performance()
     ne10_vec2f_t *ra, *rb, *ima, *imb, *p;
     ne10_int32_t i;
     ne10_int32_t count;
-    ne10_int32_t vec_size = sizeof (ne10_vec3f_t) / sizeof (ne10_float32_t);
+    // ne10_int32_t vec_size = sizeof (ne10_vec3f_t) / sizeof (ne10_float32_t);
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "count", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");

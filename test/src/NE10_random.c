@@ -96,7 +96,6 @@ void NE10_float_rng_init_g (NE10_float_rng_t* float_rng, uint32_t seed)
 float NE10_float_rng_next_g (NE10_float_rng_t* float_rng)
 {
     uint32_t frc, exp, sgn, ret;
-    float __ret;
 
     do
     {
@@ -179,8 +178,6 @@ float NE10_float_rng_limit_max()
 
 #define IS_TOO_SMALL_GT1(f) ((fabs(f)<1.0e-6)?1:0)
 #define   IS_TOO_BIG_GT1(f) ((fabs(f)>1.0e+3)?1:0)
-
-static NE10_float_rng_t __NE10_float_rng_limit_gt1; // local array for internal use only
 
 void NE10_float_rng_limit_gt1_init (uint32_t seed)
 {

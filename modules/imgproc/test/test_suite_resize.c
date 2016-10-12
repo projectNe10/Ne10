@@ -58,19 +58,17 @@ static ne10_uint8_t * in_neon = NULL;
 static ne10_uint8_t * out_c = NULL;
 static ne10_uint8_t * out_neon = NULL;
 
-static ne10_float32_t snr = 0.0f;
-
 void test_resize_conformance_case()
 {
     ne10_int32_t srcw;
     ne10_int32_t srch;
     ne10_int32_t dstw;
     ne10_int32_t dsth;
-    ne10_int32_t i;
     ne10_int32_t w, h;
+    ne10_float32_t PSNR;
+    ne10_int32_t i;
     ne10_int32_t channels = 4;
     ne10_int32_t pic_size = MEM_SIZE * MEM_SIZE * channels * sizeof (ne10_uint8_t);
-    ne10_float32_t PSNR = 0.0f;
 
     /* init input memory */
     in_c = NE10_MALLOC (pic_size);
@@ -84,10 +82,10 @@ void test_resize_conformance_case()
     {
         in_c[i] = in_neon[i] = (rand() & 0xff);
     }
-#if defined(SMOKE_TEST)
-    for (h = 96; h < MEM_SIZE; h++)
+#if defined(REGRESSION_TEST)
+    for (h = 1; h < MEM_SIZE; h++)
     {
-        for (w = 96; w < MEM_SIZE; w++)
+        for (w = 1; w < MEM_SIZE; w++)
         {
             srcw = h;
             srch = h;
@@ -104,12 +102,10 @@ void test_resize_conformance_case()
             assert_false ( (PSNR < PSNR_THRESHOLD));
         }
     }
-#endif
-
-#if defined(REGRESSION_TEST)
-    for (h = 1; h < MEM_SIZE; h++)
+#else // defined(SMOKE_TEST)
+    for (h = 96; h < MEM_SIZE; h++)
     {
-        for (w = 1; w < MEM_SIZE; w++)
+        for (w = 96; w < MEM_SIZE; w++)
         {
             srcw = h;
             srch = h;
@@ -227,6 +223,3 @@ void test_fixture_resize (void)
 
     test_fixture_end();                 // ends a fixture
 }
-
-
-
