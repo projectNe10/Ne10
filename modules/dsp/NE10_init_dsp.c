@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012-14 ARM Limited
+ *  Copyright 2012-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -33,39 +33,71 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
 {
     if (NE10_OK == is_NEON_available)
     {
-        //ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_neon;
-        //ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_neon;
-        //ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_neon;
+        ne10_fft_alloc_c2c_float32 = ne10_fft_alloc_c2c_float32_neon;
+        ne10_fft_alloc_c2c_int32 = ne10_fft_alloc_c2c_int32_neon;
+        ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_neon;
+        ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_neon;
+        ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_neon;
 
-        //ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_neon;
-        //ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_neon;
-        //ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_neon;
+        ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_neon;
+        ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_neon;
+        ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_neon;
 
-        //ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_neon;
-        //ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_neon;
-        //ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_neon;
+        ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_neon;
+        ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_neon;
+        ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_neon;
 
+#ifdef ENABLE_NE10_FIR_FLOAT_NEON
         ne10_fir_float = ne10_fir_float_neon;
-        ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
-        ne10_fir_interpolate_float = ne10_fir_interpolate_float_neon;
-        ne10_fir_lattice_float = ne10_fir_lattice_float_neon;
-        ne10_fir_sparse_float = ne10_fir_sparse_float_neon;
+#else
+        ne10_fir_float = ne10_fir_float_c;
+#endif // ENABLE_NE10_FIR_FLOAT_NEON
 
+#ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
+        ne10_fir_decimate_float = ne10_fir_decimate_float_neon;
+#else
+        ne10_fir_decimate_float = ne10_fir_decimate_float_c;
+#endif // ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
+        ne10_fir_interpolate_float = ne10_fir_interpolate_float_neon;
+#else
+        ne10_fir_interpolate_float = ne10_fir_interpolate_float_c;
+#endif // ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
+        ne10_fir_lattice_float = ne10_fir_lattice_float_neon;
+#else
+        ne10_fir_lattice_float = ne10_fir_lattice_float_c;
+#endif // ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
+        ne10_fir_sparse_float = ne10_fir_sparse_float_neon;
+#else
+        ne10_fir_sparse_float = ne10_fir_sparse_float_c;
+#endif // ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
+
+#ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
         ne10_iir_lattice_float = ne10_iir_lattice_float_neon;
+#else
+        ne10_iir_lattice_float = ne10_iir_lattice_float_c;
+#endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
     }
     else
     {
-        //ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_c;
-        //ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_c;
-        //ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_c;
+        ne10_fft_alloc_c2c_float32 = ne10_fft_alloc_c2c_float32_c;
+        ne10_fft_alloc_c2c_int32 = ne10_fft_alloc_c2c_int32_c;
+        ne10_fft_c2c_1d_float32 = ne10_fft_c2c_1d_float32_c;
+        ne10_fft_r2c_1d_float32 = ne10_fft_r2c_1d_float32_c;
+        ne10_fft_c2r_1d_float32 = ne10_fft_c2r_1d_float32_c;
 
-        //ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_c;
-        //ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_c;
-        //ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_c;
+        ne10_fft_c2c_1d_int32 = ne10_fft_c2c_1d_int32_c;
+        ne10_fft_r2c_1d_int32 = ne10_fft_r2c_1d_int32_c;
+        ne10_fft_c2r_1d_int32 = ne10_fft_c2r_1d_int32_c;
 
-        //ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_c;
-        //ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_c;
-        //ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_c;
+        ne10_fft_c2c_1d_int16 = ne10_fft_c2c_1d_int16_c;
+        ne10_fft_r2c_1d_int16 = ne10_fft_r2c_1d_int16_c;
+        ne10_fft_c2r_1d_int16 = ne10_fft_c2r_1d_int16_c;
 
         ne10_fir_float = ne10_fir_float_c;
         ne10_fir_decimate_float = ne10_fir_decimate_float_c;
@@ -79,6 +111,9 @@ ne10_result_t ne10_init_dsp (ne10_int32_t is_NEON_available)
 }
 
 // These are actual definitions of our function pointers that are declared in inc/NE10_dsp.h
+ne10_fft_cfg_float32_t (*ne10_fft_alloc_c2c_float32) (ne10_int32_t nfft);
+ne10_fft_cfg_int32_t (*ne10_fft_alloc_c2c_int32) (ne10_int32_t nfft);
+
 void (*ne10_fft_c2c_1d_float32) (ne10_fft_cpx_float32_t *fout,
                                  ne10_fft_cpx_float32_t *fin,
                                  ne10_fft_cfg_float32_t cfg,

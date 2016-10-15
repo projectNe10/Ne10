@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013-14 ARM Limited
+ *  Copyright 2013-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -34,7 +34,12 @@ ne10_result_t ne10_init_imgproc (ne10_int32_t is_NEON_available)
     if (NE10_OK == is_NEON_available)
     {
         ne10_img_resize_bilinear_rgba = ne10_img_resize_bilinear_rgba_neon;
+
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
         ne10_img_rotate_rgba = ne10_img_rotate_rgba_neon;
+#else
+        ne10_img_rotate_rgba = ne10_img_rotate_rgba_c;
+#endif
         ne10_img_boxfilter_rgba8888 = ne10_img_boxfilter_rgba8888_neon;
     }
     else

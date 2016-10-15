@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 ARM Limited
+ *  Copyright 2014-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -82,6 +82,7 @@ void test_compute_aabb_vec2f_conformance()
     xf.c2.r1 = sin (tmp);
     xf.c2.r2 = cos (tmp);
 
+#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 #if defined (REGRESSION_TEST)
     for (vertex_count = 1; vertex_count < TEST_LENGTH_SAMPLES; vertex_count++)
     {
@@ -105,6 +106,7 @@ void test_compute_aabb_vec2f_conformance()
         assert_float_vec_equal ( (ne10_float32_t*) &aabb_c, (ne10_float32_t*) &aabb_neon, ERROR_MARGIN_LARGE, vec_size);
     }
 #endif
+#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
     free (vertices_c);
     free (vertices_neon);
 }
@@ -144,6 +146,8 @@ void test_compute_aabb_vec2f_performance()
                 ne10_physics_compute_aabb_vec2f_c (&aabb_c, vertices_c, &xf, &radius, vertex_count);
         }
         );
+
+#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
         //neon version
         GET_TIME
         (time_neon,
@@ -152,6 +156,7 @@ void test_compute_aabb_vec2f_performance()
                 ne10_physics_compute_aabb_vec2f_neon (&aabb_neon, vertices_neon, &xf, &radius, vertex_count);
         }
         );
+#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         printf ("vertax count: %10d time C: %10lld time NEON: %10lld\n", vertex_count, time_c, time_neon);
@@ -189,6 +194,7 @@ void test_relative_v_vec2f_conformance()
     dv_c = (ne10_vec2f_t*) ( (ne10_float32_t*) guarded_dv_c + ARRAY_GUARD_LEN);
     dv_neon = (ne10_vec2f_t*) ( (ne10_float32_t*) guarded_dv_neon + ARRAY_GUARD_LEN);
 
+#ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
 #if defined (REGRESSION_TEST)
     for (count = 1; count < TEST_LENGTH_SAMPLES; count++)
     {
@@ -226,6 +232,7 @@ void test_relative_v_vec2f_conformance()
             assert_float_vec_equal ( (ne10_float32_t*) &dv_c[i], (ne10_float32_t*) &dv_neon[i], ERROR_MARGIN_LARGE, vec_size);
     }
 #endif
+#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
     free (v_wa);
     free (v_wb);
     free (ra);
@@ -273,6 +280,7 @@ void test_relative_v_vec2f_performance()
                 ne10_physics_relative_v_vec2f_c (dv_c, v_wa, ra, v_wb, rb, count);
         }
         );
+#ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
         //neon version
         GET_TIME
         (time_neon,
@@ -285,6 +293,7 @@ void test_relative_v_vec2f_performance()
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         printf ("count: %10d time C: %10lld time NEON: %10lld\n", count, time_c, time_neon);
         //ne10_log (__FUNCTION__, "Compute aabb%21d%20lld%20lld%19.2f%%%18.2f:1\n", count, time_c, time_neon, time_savings, time_speedup);
+#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
     }
 
     free (v_wa);
@@ -332,6 +341,7 @@ void test_apply_impulse_vec2f_conformance()
     memcpy (v_wa_neon, v_wa_c, TEST_LENGTH_SAMPLES * sizeof (ne10_vec3f_t));
     memcpy (v_wb_neon, v_wb_c, TEST_LENGTH_SAMPLES * sizeof (ne10_vec3f_t));
 
+#ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
 #if defined (REGRESSION_TEST)
     for (count = 1; count < TEST_LENGTH_SAMPLES; count++)
     {
@@ -384,6 +394,7 @@ void test_apply_impulse_vec2f_conformance()
         }
     }
 #endif
+#endif // ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
     free (ra);
     free (rb);
     free (ima);
@@ -443,6 +454,8 @@ void test_apply_impulse_vec2f_performance()
                 ne10_physics_apply_impulse_vec2f_c (v_wa_c, v_wb_c, ra, rb, ima, imb, p, count);
         }
         );
+
+#ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
         //neon version
         GET_TIME
         (time_neon,
@@ -451,6 +464,7 @@ void test_apply_impulse_vec2f_performance()
                 ne10_physics_apply_impulse_vec2f_neon (v_wa_neon, v_wb_neon, ra, rb, ima, imb, p, count);
         }
         );
+#endif // ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         printf ("count: %10d time C: %10lld time NEON: %10lld\n", count, time_c, time_neon);

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 ARM Limited
+ *  Copyright 2014-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -32,25 +32,24 @@
 #ifndef NE10_FFT_NEONINTRINSIC_H
 #define NE10_FFT_NEONINTRINSIC_H
 
+#include "NE10_fft.h"
 #include <arm_neon.h>
 
 #define NE10_CPX_ADD_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = vaddq_f32( A.val[0] , B.val[0] );    \
-    Z.val[1] = vaddq_f32( A.val[1] , B.val[1] );    \
+    Z.val[0] = A.val[0] + B.val[0];    \
+    Z.val[1] = A.val[1] + B.val[1];    \
 } while (0);
 
 #define NE10_CPX_SUB_NEON_F32(Z,A,B) do {           \
-    Z.val[0] = vsubq_f32( A.val[0] , B.val[0] );    \
-    Z.val[1] = vsubq_f32( A.val[1] , B.val[1] );    \
+    Z.val[0] = A.val[0] - B.val[0];    \
+    Z.val[1] = A.val[1] - B.val[1];    \
 } while (0);
 
 #define NE10_CPX_MUL_NEON_F32(Z,A,B) do {           \
     float32x4_t ARBR = vmulq_f32( A.val[0], B.val[0] ); \
-    float32x4_t AIBI = vmulq_f32( A.val[1], B.val[1] ); \
     float32x4_t ARBI = vmulq_f32( A.val[0], B.val[1] ); \
-    float32x4_t AIBR = vmulq_f32( A.val[1], B.val[0] ); \
-    Z.val[0] = vsubq_f32(ARBR,AIBI);                \
-    Z.val[1] = vaddq_f32(AIBR,ARBI);                \
+    Z.val[0] = vmlsq_f32(ARBR, A.val[1], B.val[1]); \
+    Z.val[1] = vmlaq_f32(ARBI, A.val[1], B.val[0]); \
 } while (0);
 
 #define NE10_CPX_MUL_INV_NEON_F32(Z,A,B) do {           \
@@ -116,11 +115,11 @@
 const static float32x4_t Q_TW_81    = VDUPQ_N_F32(CONST_TW_81 );
 const static float32x4_t Q_TW_81N   = VDUPQ_N_F32(CONST_TW_81N);
 
-#define DIV_TW81    1.4121356f
-#define DIV_TW81N - 1.4121356f
+#define DIV_TW81   1.4142136f
+#define DIV_TW81N -1.4142136f
 
-const static float32x4_t DIV_TW81_NEON  = VDUPQ_N_F32( 1.4121356f);
-const static float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(-1.4121356f);
+const static float32x4_t DIV_TW81_NEON  = VDUPQ_N_F32(DIV_TW81);
+const static float32x4_t DIV_TW81N_NEON = VDUPQ_N_F32(DIV_TW81N);
 
 #define NE10_RADIX8x4_R2C_NEON_KERNEL_S1(Q_OUT,Q_IN) do {   \
         Q_OUT ## 0 = vaddq_f32 (Q_IN ## 0, Q_IN ## 4);      \

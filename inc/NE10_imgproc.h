@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013-14 ARM Limited
+ *  Copyright 2013-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -30,7 +30,7 @@
  */
 
 
-#include <NE10_types.h>
+#include "NE10_types.h"
 
 #ifndef NE10_IMGPROC_H
 #define NE10_IMGPROC_H
@@ -89,6 +89,7 @@ extern "C" {
                                         ne10_uint32_t src_width,
                                         ne10_uint32_t src_height,
                                         ne10_int32_t angle);
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
     /* NEON version*/
     extern void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
                                            ne10_uint32_t* dst_width,
@@ -98,6 +99,7 @@ extern "C" {
                                            ne10_uint32_t src_height,
                                            ne10_int32_t angle)
     asm ("ne10_img_rotate_rgba_neon");
+#endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 
     /* image boxfilter functions */
     /* function pointers */

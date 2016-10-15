@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013-14 ARM Limited
+ *  Copyright 2013-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -996,7 +996,7 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
  * @return      st               point to the FFT config memory. This memory is allocated with malloc.
  * The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff.
  */
-ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
+ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft)
 {
     ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
@@ -1007,72 +1007,60 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32 (ne10_int32_t nfft)
 
     st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
 
-    if (st)
+    // Only backward FFT is scaled by default.
+    st->is_forward_scaled = 0;
+    st->is_backward_scaled = 1;
+
+    if (st == NULL)
     {
-        uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_float32_t);
-        NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
-        st->factors = (ne10_int32_t*) address;
-        st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
-        st->buffer = st->twiddles + nfft;
-        st->nfft = nfft;
-
-        ne10_int32_t result = ne10_factor (nfft, st->factors);
-        if (result == NE10_ERR)
-        {
-            NE10_FREE (st);
-            return st;
-        }
-
-        ne10_int32_t i, j;
-        ne10_int32_t *factors = st->factors;
-        ne10_fft_cpx_float32_t *twiddles = st->twiddles;
-        ne10_fft_cpx_float32_t *tw;
-        ne10_int32_t stage_count = factors[0];
-        ne10_int32_t fstride1 = factors[1];
-        ne10_int32_t fstride2 = fstride1 * 2;
-        ne10_int32_t fstride3 = fstride1 * 3;
-        ne10_int32_t m;
-
-        const ne10_float32_t pi = NE10_PI;
-        ne10_float32_t phase1;
-        ne10_float32_t phase2;
-        ne10_float32_t phase3;
-
-        for (i = stage_count - 1; i > 0; i--)
-        {
-            fstride1 >>= 2;
-            fstride2 >>= 2;
-            fstride3 >>= 2;
-            m = factors[2 * i + 1];
-            tw = twiddles;
-            for (j = 0; j < m; j++)
-            {
-                phase1 = -2 * pi * fstride1 * j / nfft;
-                phase2 = -2 * pi * fstride2 * j / nfft;
-                phase3 = -2 * pi * fstride3 * j / nfft;
-                tw->r = (ne10_float32_t) cos (phase1);
-                tw->i = (ne10_float32_t) sin (phase1);
-                (tw + m)->r = (ne10_float32_t) cos (phase2);
-                (tw + m)->i = (ne10_float32_t) sin (phase2);
-                (tw + m * 2)->r = (ne10_float32_t) cos (phase3);
-                (tw + m * 2)->i = (ne10_float32_t) sin (phase3);
-                tw++;
-            }
-            twiddles += m * 3;
-        }
-
+        return st;
     }
+
+    uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_float32_t);
+    NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
+    st->factors = (ne10_int32_t*) address;
+    st->twiddles = (ne10_fft_cpx_float32_t*) (st->factors + (NE10_MAXFACTORS * 2));
+    st->buffer = st->twiddles + nfft;
+    st->nfft = nfft;
+
+    ne10_int32_t result = ne10_factor (nfft, st->factors, NE10_FACTOR_DEFAULT);
+    if (result == NE10_ERR)
+    {
+        NE10_FREE (st);
+        return st;
+    }
+
+    // Check if ALGORITHM FLAG is NE10_FFT_ALG_ANY.
+    {
+        ne10_int32_t stage_count    = st->factors[0];
+        ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
+
+        // Enable radix-8.
+        if (algorithm_flag == NE10_FFT_ALG_ANY)
+        {
+            result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT);
+            if (result == NE10_ERR)
+            {
+                PRINT_HIT;
+                NE10_FREE (st);
+                return st;
+            }
+        }
+    }
+
+    ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, nfft);
+
     return st;
 }
 
 /**
- * @brief Mixed radix-2/4 complex FFT/IFFT of float(32-bit) data.
+ * @brief Mixed radix-2/3/4/5 complex FFT/IFFT of float(32-bit) data.
  * @param[out]  *fout            point to the output buffer (out-of-place)
  * @param[in]   *fin             point to the input buffer (out-of-place)
  * @param[in]   cfg              point to the config struct
  * @param[in]   inverse_fft      the flag of IFFT, 0: FFT, 1: IFFT
  * @return none.
- * The function implements a mixed radix-2/4 complex FFT/IFFT. The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
+ * The function implements a mixed radix-2/3/4/5 complex FFT/IFFT. The length of 2^N*3^M*5^K(N,M,K is 1, 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, this FFT is an out-of-place algorithm.
  * For the usage of this function, please check test/test_suite_fft_float32.c
  */
@@ -1081,11 +1069,37 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
                                 ne10_fft_cfg_float32_t cfg,
                                 ne10_int32_t inverse_fft)
 {
+    ne10_int32_t stage_count = cfg->factors[0];
+    ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
 
-    if (inverse_fft)
-        ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
-    else
-        ne10_mixed_radix_butterfly_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+    assert ((algorithm_flag == NE10_FFT_ALG_24)
+            || (algorithm_flag == NE10_FFT_ALG_ANY));
+
+    switch (algorithm_flag)
+    {
+    case NE10_FFT_ALG_24:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+        }
+        else
+        {
+            ne10_mixed_radix_butterfly_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
+        }
+        break;
+    case NE10_FFT_ALG_ANY:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_generic_butterfly_inverse_float32_c (fout, fin,
+                    cfg->factors, cfg->twiddles, cfg->buffer, cfg->is_backward_scaled);
+        }
+        else
+        {
+            ne10_mixed_radix_generic_butterfly_float32_c (fout, fin,
+                    cfg->factors, cfg->twiddles, cfg->buffer, cfg->is_forward_scaled);
+        }
+        break;
+    }
 }
 
 /**
@@ -1169,12 +1183,8 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  *
  */
 
-// only for ARMv7-A and AArch32 platform.
-// For AArch64 these functions are implemented in NE10_rfft_float32.c
-#ifdef __arm__
-////////////////////////////////////////////////////
-// RFFT reference model for ARMv7-A and AArch32 neon
-////////////////////////////////////////////////////
+// For NE10_UNROLL_LEVEL > 0, please refer to NE10_rfft_float.c
+#if (NE10_UNROLL_LEVEL == 0)
 
 /**
  * @brief User-callable function to allocate all necessary storage space for the fft (r2c/c2r).
@@ -1206,7 +1216,7 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
         st->buffer = st->super_twiddles + (ncfft / 2);
         st->ncfft = ncfft;
 
-        ne10_int32_t result = ne10_factor (ncfft, st->factors);
+        ne10_int32_t result = ne10_factor (ncfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);
@@ -1308,4 +1318,4 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
 /**
  * @} end of R2C_FFT_IFFT group
  */
-#endif
+#endif // NE10_UNROLL_LEVEL

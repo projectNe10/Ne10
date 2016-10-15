@@ -1,5 +1,5 @@
 /*
- *  Copyright 2011-14 ARM Limited
+ *  Copyright 2011-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -42,6 +42,22 @@
 #include <math.h>
 #include <string.h>
 #include <assert.h>
+
+/**
+ * @TODO Move the definition of NE10_UNROLL_LEVEL to cmake configuration files.
+ * Macro NE10_UNROLL_LEVEL controls algorithm of FFT funtions.
+ * When NE10_UNROLL_LEVEL == 0, complex FFT performs radix-4 x2 per loop.
+ * When NE10_UNROLL_LEVEL == 1, complex FFT performs radix-4 x4 per loop.
+ */
+#if !defined(NE10_UNROLL_LEVEL)
+#if defined(__arm__)
+#define NE10_UNROLL_LEVEL 0
+#elif defined(__aarch64__)
+#define NE10_UNROLL_LEVEL 1
+#else
+#define NE10_UNROLL_LEVEL 0
+#endif
+#endif
 
 /////////////////////////////////////////////////////////
 // constant values that are used across the library
@@ -217,25 +233,51 @@ typedef struct
     ne10_float32_t i;
 } ne10_fft_cpx_float32_t;
 
+/**
+ * @brief structure for the floating point FFT state
+ *
+ */
 typedef struct
 {
     ne10_int32_t nfft;
     ne10_int32_t *factors;
     ne10_fft_cpx_float32_t *twiddles;
     ne10_fft_cpx_float32_t *buffer;
+    ne10_fft_cpx_float32_t *last_twiddles;
+    /**
+     *  @biref Flag to control scaling behaviour in forward floating point complex FFT.
+     *  @note If is_forward_scaled is set 0, Ne10 will not scale output of forward floating
+     *  point complex FFT. Otherwise, Ne10 will scale output of forward floating
+     *  point complex FFT.
+     *  @warning
+     *  Only non-power-of-2 FFT is affected by this flag.
+     */
+    ne10_int32_t is_forward_scaled;
+    /**
+     *  @biref Flag to control scaling behaviour in backward floating point complex FFT.
+     *  @note If is_backward_scaled is set 0, Ne10 will not scale output of backward floating
+     *  point complex FFT. Otherwise, Ne10 will scale output of backward floating
+     *  point complex FFT.
+     *  @warning
+     *  Only non-power-of-2 FFT is affected by this flag.
+     */
+    ne10_int32_t is_backward_scaled;
 } ne10_fft_state_float32_t;
 
+/**
+ * @brief Configure for floating point FFT.
+ */
 typedef ne10_fft_state_float32_t* ne10_fft_cfg_float32_t;
 
 typedef struct
 {
     ne10_fft_cpx_float32_t *buffer;
-#if defined(__arm__)
+#if (NE10_UNROLL_LEVEL == 0)
     ne10_int32_t ncfft;
     ne10_int32_t *factors;
     ne10_fft_cpx_float32_t *twiddles;
     ne10_fft_cpx_float32_t *super_twiddles;
-#elif defined( __aarch64__)
+#elif (NE10_UNROLL_LEVEL > 0)
     ne10_int32_t nfft;
     ne10_fft_cpx_float32_t *r_twiddles;
     ne10_int32_t *r_factors;
@@ -244,8 +286,6 @@ typedef struct
     ne10_fft_cpx_float32_t *r_twiddles_neon_backward;
     ne10_int32_t *r_factors_neon;
     ne10_fft_cpx_float32_t *r_super_twiddles_neon;
-#else
-    #error("unsupported platform, current supported are arm(32) and aarch64")
 #endif
 } ne10_fft_r2c_state_float32_t;
 
@@ -297,6 +337,7 @@ typedef struct
     ne10_int32_t *factors;
     ne10_fft_cpx_int32_t *twiddles;
     ne10_fft_cpx_int32_t *buffer;
+    ne10_fft_cpx_int32_t *last_twiddles;
 } ne10_fft_state_int32_t;
 
 typedef ne10_fft_state_int32_t* ne10_fft_cfg_int32_t;

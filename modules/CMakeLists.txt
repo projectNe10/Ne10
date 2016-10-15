@@ -1,5 +1,5 @@
 #
-#  Copyright 2011-14 ARM Limited
+#  Copyright 2011-15 ARM Limited and Contributors.
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
 #  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
 #  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 #  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
 #  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 #  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 #  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -24,6 +24,9 @@
 #  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+
+# Define Function Enabling Macros
+include(../cmake/FunctionSwitch.cmake)
 
 if(NE10_ARM_HARD_FLOAT)
     add_definitions(-DNE10_ENABLE_HF)
@@ -120,9 +123,11 @@ if(NE10_ENABLE_MATH)
     )
 
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_MATH_INTRINSIC_SRCS})
-    set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+      foreach(intrinsic_file ${NE10_MATH_INTRINSIC_SRCS})
+        set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+      endforeach(intrinsic_file)
+    endif()
 
     set(NE10_MATH_NEON_SRCS
         ${PROJECT_SOURCE_DIR}/modules/math/NE10_abs.neon.s
@@ -170,11 +175,17 @@ endif()
 if(NE10_ENABLE_DSP)
     #enable NE10_init_dsp
     add_definitions(-DNE10_ENABLE_DSP)
+
+    set(NE10_DSP_INTRINSIC_SRCS )
+    set(NE10_DSP_NEON_SRCS )
+
     # Add dsp C files.
     set(NE10_DSP_C_SRCS
         ${PROJECT_SOURCE_DIR}/common/NE10_mask_table.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.c
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.cpp
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.c
@@ -184,34 +195,57 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir_init.c
     )
 
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+        if(IOS_PLATFORM)
+        else()
+            # Add dsp NEON files.
+            set(NE10_DSP_NEON_SRCS
+                ${NE10_DSP_NEON_SRCS}
+                ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
+                ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
+                )
+        endif()
+    endif()
+
+    if(NE10_ASM_OPTIMIZATION)
+        set(NE10_DSP_NEON_SRCS
+            ${NE10_DSP_NEON_SRCS}
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.s
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.s
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.s
+        )
+        set(NE10_DSP_INTRINSIC_SRCS
+            ${NE10_DSP_INTRINSIC_SRCS}
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
+        )
+    else()
+        add_definitions(-DNE10_UNROLL_LEVEL=1)
+        set(NE10_DSP_INTRINSIC_SRCS
+            ${NE10_DSP_INTRINSIC_SRCS}
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neonintrinsic.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
+            ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.neonintrinsic.c
+            )
+    endif()
+
     # Add dsp intrinsic NEON files.
     set(NE10_DSP_INTRINSIC_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.c
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.c
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_rfft_float32.neonintrinsic.c
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neonintrinsic.c
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neonintrinsic.c
-        #${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neonintrinsic.c
+        ${NE10_DSP_INTRINSIC_SRCS}
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_float32.neonintrinsic.cpp
+        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.neonintrinsic.cpp
     )
 
-    # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
-        set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
-
-    # Add dsp NEON files.
-    set(NE10_DSP_NEON_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_float32.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int32.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_int16.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
-        ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
-    )
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+        foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
+            set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
+        endforeach(intrinsic_file)
+    endif()
 
 if(IOS_PLATFORM)
-    convert_gas(NE10_DSP_NEON_SRCS NE10_DSP_IOS_NEON_SRCS)
-    set_file_to_c(NE10_DSP_IOS_NEON_SRCS)
+    set_file_to_c(NE10_DSP_NEON_SRCS)
 else(IOS_PLATFORM)
     set_file_to_c(NE10_DSP_NEON_SRCS)
 endif(IOS_PLATFORM)
@@ -241,19 +275,23 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_boxfilter.c
     )
 
-    # Add image processing NEON files.
-    set(NE10_IMGPROC_NEON_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
-    )
-    # Add image intrinsic NEON files.
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+        # Add image processing NEON files.
+        set(NE10_IMGPROC_NEON_SRCS
+            ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
+            )
+    endif()
+        # Add image intrinsic NEON files.
     set(NE10_IMGPROC_INTRINSIC_SRCS
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_resize.neon.c
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_boxfilter.neon.c
     )
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_IMGPROC_INTRINSIC_SRCS})
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+      foreach(intrinsic_file ${NE10_IMGPROC_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
+      endforeach(intrinsic_file)
+    endif()
     # Add image processing init files.
     set(NE10_IMGPROC_INIT_SRCS
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_init_imgproc.c
@@ -284,18 +322,22 @@ if(NE10_ENABLE_PHYSICS)
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.c
     )
 
-    # Add physics NEON files.
-    set(NE10_PHYSICS_NEON_SRCS
-        ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.s
-    )
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+        # Add physics NEON files.
+        set(NE10_PHYSICS_NEON_SRCS
+            ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.s
+            )
+    endif()
     # Add physics NEON files.
     set(NE10_PHYSICS_INTRINSIC_SRCS
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.c
     )
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    foreach(intrinsic_file ${NE10_PHYSICS_INTRINSIC_SRCS})
+    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+      foreach(intrinsic_file ${NE10_PHYSICS_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
-    endforeach(intrinsic_file)
+      endforeach(intrinsic_file)
+    endif()
     # Add physics init files.
     set(NE10_PHYSICS_INIT_SRCS
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_init_physics.c
@@ -335,6 +377,12 @@ if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
         VERSION ${NE10_VERSION}
     )
 
+    target_link_libraries(NE10 stdc++)
+
+    set_target_properties(NE10 PROPERTIES
+        LINKER_LANGUAGE C
+    )
+
   if(IOS_DEMO)
     install(TARGETS NE10
       DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../ios/NE10Demo/libs/)
@@ -356,6 +404,7 @@ if(NE10_BUILD_SHARED)
         OUTPUT_NAME "NE10"
         CLEAN_DIRECT_OUTPUT 1
         VERSION ${NE10_VERSION}
+        LINKER_LANGUAGE C
     )
 
     add_library( NE10_test SHARED

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 ARM Limited
+ *  Copyright 2014-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -37,9 +37,23 @@ ne10_result_t ne10_init_physics (ne10_int32_t is_NEON_available)
 {
     if (NE10_OK == is_NEON_available)
     {
+#ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
         ne10_physics_compute_aabb_vec2f = ne10_physics_compute_aabb_vec2f_neon;
+#else
+        ne10_physics_compute_aabb_vec2f = ne10_physics_compute_aabb_vec2f_c;
+#endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
+
+#ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
         ne10_physics_relative_v_vec2f = ne10_physics_relative_v_vec2f_neon;
+#else
+        ne10_physics_relative_v_vec2f = ne10_physics_relative_v_vec2f_c;
+#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
+
+#ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
         ne10_physics_apply_impulse_vec2f = ne10_physics_apply_impulse_vec2f_neon;
+#else
+        ne10_physics_apply_impulse_vec2f = ne10_physics_apply_impulse_vec2f_c;
+#endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
     }
     else
     {

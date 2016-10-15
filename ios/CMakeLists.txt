@@ -1,5 +1,5 @@
 #
-#  Copyright 2013-14 ARM Limited
+#  Copyright 2013-15 ARM Limited and Contributors.
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
 #  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
 #  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 #  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
 #  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 #  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 #  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -48,8 +48,6 @@ set(NE10_TEST_MATH_SRCS
 # Define dsp test files.
 set(NE10_TEST_DSP_SRCS
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_main.c
-    ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_cfft.c
-    ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_rfft.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_decimate.c
     ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_interpolate.c

@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013-14 ARM Limited
+ *  Copyright 2013-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -35,6 +35,7 @@
 #include <string.h>
 
 #include "NE10_dsp.h"
+#include "NE10_macros.h"
 #include "seatest.h"
 #include "unit_test_common.h"
 
@@ -79,34 +80,37 @@ static ne10_int64_t time_neon = 0;
 static ne10_float32_t time_speedup = 0.0f;
 static ne10_float32_t time_savings = 0.0f;
 
+static ne10_fft_cfg_float32_t cfg_c;
+static ne10_fft_cfg_float32_t cfg_neon;
+
+static ne10_int32_t test_c2c_alloc (ne10_int32_t fftSize);
+
 void test_fft_c2c_1d_float32_conformance()
 {
-
     ne10_int32_t i = 0;
     ne10_int32_t fftSize = 0;
-    ne10_fft_cfg_float32_t cfg;
+    ne10_int32_t flag_result = NE10_OK;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     for (fftSize = MIN_LENGTH_SAMPLES_CPX; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
         fprintf (stdout, "FFT size %d\n", fftSize);
+        flag_result = test_c2c_alloc (fftSize);
+        if (flag_result == NE10_ERR)
+        {
+            return;
+        }
 
         /* FFT test */
         memcpy (in_c, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
-        cfg = ne10_fft_alloc_c2c_float32 (fftSize);
-        if (cfg == NULL)
-        {
-            fprintf (stdout, "======ERROR, FFT alloc fails\n");
-            return;
-        }
 
         GUARD_ARRAY (out_c, fftSize * 2);
         GUARD_ARRAY (out_neon, fftSize * 2);
 
-        ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg, 0);
-        ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg, 0);
+        ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg_c, 0);
+        ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg_neon, 0);
 
         CHECK_ARRAY_GUARD (out_c, fftSize * 2);
         CHECK_ARRAY_GUARD (out_neon, fftSize * 2);
@@ -122,8 +126,8 @@ void test_fft_c2c_1d_float32_conformance()
         GUARD_ARRAY (out_c, fftSize * 2);
         GUARD_ARRAY (out_neon, fftSize * 2);
 
-        ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg, 1);
-        ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg, 1);
+        ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg_c,  1);
+        ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg_neon, 1);
 
         CHECK_ARRAY_GUARD (out_c, fftSize * 2);
         CHECK_ARRAY_GUARD (out_neon, fftSize * 2);
@@ -132,16 +136,16 @@ void test_fft_c2c_1d_float32_conformance()
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize * 2);
         assert_false ( (snr < SNR_THRESHOLD));
 
-        NE10_FREE (cfg);
+        NE10_FREE (cfg_c);
+        NE10_FREE (cfg_neon);
     }
 }
 
 void test_fft_c2c_1d_float32_performance()
 {
-
     ne10_int32_t i = 0;
     ne10_int32_t fftSize = 0;
-    ne10_fft_cfg_float32_t cfg;
+    ne10_int32_t flag_result = NE10_OK;
     ne10_int32_t test_loop = 0;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
@@ -154,12 +158,12 @@ void test_fft_c2c_1d_float32_performance()
         /* FFT test */
         memcpy (in_c, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
         memcpy (in_neon, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
-        cfg = ne10_fft_alloc_c2c_float32 (fftSize);
-        if (cfg == NULL)
+        flag_result = test_c2c_alloc (fftSize);
+        if (flag_result == NE10_ERR)
         {
-            fprintf (stdout, "======ERROR, FFT alloc fails\n");
             return;
         }
+
         test_loop = TEST_COUNT / fftSize;
 
         GET_TIME
@@ -167,7 +171,7 @@ void test_fft_c2c_1d_float32_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg, 0);
+                ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg_c, 0);
         }
         );
         GET_TIME
@@ -175,7 +179,7 @@ void test_fft_c2c_1d_float32_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg, 0);
+                ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg_neon, 0);
         }
         );
 
@@ -192,7 +196,7 @@ void test_fft_c2c_1d_float32_performance()
             time_c,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg, 1);
+                ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg_c, 1);
         }
         );
         GET_TIME
@@ -200,7 +204,7 @@ void test_fft_c2c_1d_float32_performance()
             time_neon,
         {
             for (i = 0; i < test_loop; i++)
-                ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg, 1);
+                ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg_neon, 1);
         }
         );
 
@@ -208,7 +212,8 @@ void test_fft_c2c_1d_float32_performance()
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
         ne10_log (__FUNCTION__, "Float FFT%21d%20lld%20lld%19.2f%%%18.2f:1\n", fftSize, time_c, time_neon, time_savings, time_speedup);
 
-        NE10_FREE (cfg);
+        NE10_FREE (cfg_c);
+        NE10_FREE (cfg_neon);
     }
 }
 
@@ -410,17 +415,6 @@ void test_fft_c2c_1d_float32()
 void test_fft_r2c_1d_float32()
 {
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
-#if defined (__aarch64__)
-    // test for macro
-    assert_true ( is_ne10_radix8x4_r2c_neon_kernel_s1_conformed() );
-    assert_true ( is_ne10_radix8x4_r2c_neon_kernel_s2_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_neon_kernel_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_s1_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_s2_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_mul_neon_conformed() );
-    assert_true ( is_ne10_radix4x4_r2c_tw_neon_kernel_last_conformed() );
-#endif
     test_fft_r2c_1d_float32_conformance();
 #endif
 
@@ -453,4 +447,26 @@ void test_fixture_fft_r2c_1d_float32 (void)
     fixture_teardown(my_test_teardown);
 
     test_fixture_end();                 // ends a fixture
+}
+
+ne10_int32_t test_c2c_alloc (ne10_int32_t fftSize)
+{
+    NE10_FREE (cfg_c);
+    NE10_FREE (cfg_neon);
+
+    cfg_c = ne10_fft_alloc_c2c_float32_c (fftSize);
+    if (cfg_c == NULL)
+    {
+        fprintf (stdout, "======ERROR, FFT alloc fails\n");
+        return NE10_ERR;
+    }
+
+    cfg_neon = ne10_fft_alloc_c2c_float32_neon (fftSize);
+    if (cfg_neon == NULL)
+    {
+        NE10_FREE (cfg_c);
+        fprintf (stdout, "======ERROR, FFT alloc fails\n");
+        return NE10_ERR;
+    }
+    return NE10_OK;
 }

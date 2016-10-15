@@ -21,6 +21,13 @@ You could open the "index.html" to start.
 2. online documents
 http://projectne10.github.io/Ne10/doc/
 
+Contributing
+=============
+See https://github.com/projectNe10/Ne10/blob/master/contributing.md
+You must fill out an industry standard contribution licensing agreements (CLA):
+http://www.arm.com/community/open-source-contributing.php
+And email it to: cla-submissions@arm.com
+
 Code formatter
 ==============
 See Formatter.txt file in the "doc" folder
@@ -36,4 +43,6 @@ Want us to help cross promote your product using Ne10 at developer events?
 We’re looking for use cases we can demonstrate ProjectNe10 with at conferences
 and meetups.
 
-matthew.dupuy@arm.com
+steve.bannister@arm.com 
+matthew.dupuy@arm.com 
+fang.bao@arm.com 

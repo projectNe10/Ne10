@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012-14 ARM Limited
+ *  Copyright 2012-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -74,14 +74,14 @@
 //#define TEST_ARRLEN_MATRICES 1051
 
 #define ARRAY_GUARD_LEN      4
-#define MAX_FUNC_COUNT       8 //C and NEON version with 4 different data type, 
+#define MAX_FUNC_COUNT       8 //C and NEON version with 4 different data type
 
 // The sign bit mask
 #define SIGNBIT_MASK  0x7FFFFFFF
 
 // What's the acceptable error between the integer representations of two ne10_float32_t values
-#define ERROR_MARGIN_SMALL 0x0A
-#define ERROR_MARGIN_LARGE 0xFF
+#define ERROR_MARGIN_SMALL 1
+#define ERROR_MARGIN_LARGE 1
 #define SNR_THRESHOLD 50.0f
 #define PSNR_THRESHOLD 30.0f
 

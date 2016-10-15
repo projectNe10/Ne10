@@ -1,5 +1,5 @@
 #
-#  Copyright 2013-14 ARM Limited
+#  Copyright 2013-15 ARM Limited and Contributors.
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
 #  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
 #  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 #  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
 #  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 #  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 #  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -36,6 +36,8 @@
 #       export IOS_DEVELOPER_PATH=/absolute/path/of/ios/developer/path,
 #   IOS_DEVELOPER_PATH is set to /Applications/Xcode.app/Contents/Developer by
 #   default.
+#   you may specify target architecture by setting NE10_IOS_TARGET_ARCH to
+#   aarch64 or armv7. Default is armv7.
 
 set(IOS_PLATFORM ON)
 
@@ -45,6 +47,12 @@ endif()
 
 if(IOS_DEMO)
   add_definitions(-DNE10_IOS_DEMO)
+endif()
+
+if(NOT DEFINED ENV{NE10_IOS_TARGET_ARCH})
+    set(NE10_IOS_TARGET_ARCH "armv7")
+else()
+    set(NE10_IOS_TARGET_ARCH $ENV{NE10_IOS_TARGET_ARCH})
 endif()
 
 if(NOT DEFINED ENV{IOS_DEVELOPER_PATH})
@@ -70,8 +78,9 @@ set(CMAKE_CXX_COMPILER_WORKS TRUE)
 set(CMAKE_C_COMPILER_WORKS TRUE)
 set(CMAKE_ASM_COMPILER TRUE)
 
+# Require iOS SDK >= 8.1
 set(CMAKE_IOS_SDK_PATH
-  "$ENV{IOS_DEVELOPER_PATH}/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/")
+  "$ENV{IOS_DEVELOPER_PATH}/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/")
 
 set(CMAKE_OSX_SYSROOT ${CMAKE_IOS_SDK_PATH})
 set(CMAKE_FIND_ROOT_PATH ${CMAKE_IOS_SDK_PATH})

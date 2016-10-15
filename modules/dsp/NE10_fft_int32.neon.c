@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013-14 ARM Limited
+ *  Copyright 2013-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -34,6 +34,7 @@
 #include "NE10_types.h"
 #include "NE10_macros.h"
 #include "NE10_fft.h"
+#include "NE10_dsp.h"
 
 static inline void ne10_fft4_forward_int32_unscaled (ne10_fft_cpx_int32_t * Fout,
         ne10_fft_cpx_int32_t * Fin)
@@ -1222,6 +1223,37 @@ void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
                                  ne10_int32_t inverse_fft,
                                  ne10_int32_t scaled_flag)
 {
+    // For input shorter than 15, fall back to c version.
+    // We would not get much improvement from NEON for these cases.
+    if (cfg->nfft < 15)
+    {
+        ne10_fft_c2c_1d_int32_c (fout, fin, cfg, inverse_fft, scaled_flag);
+        return;
+    }
+
+    ne10_int32_t stage_count = cfg->factors[0];
+    ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
+
+    assert ((algorithm_flag == NE10_FFT_ALG_24)
+            || (algorithm_flag == NE10_FFT_ALG_ANY));
+
+    // For NE10_FFT_ALG_ANY.
+    // Function will return inside this branch.
+    if (algorithm_flag == NE10_FFT_ALG_ANY)
+    {
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_generic_butterfly_inverse_int32_neon (fout, fin,
+                    cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        else
+        {
+            ne10_mixed_radix_generic_butterfly_int32_neon (fout, fin,
+                    cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        return;
+    }
+
     if (scaled_flag)
     {
         if (inverse_fft)

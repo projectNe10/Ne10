@@ -1,5 +1,5 @@
 /*
- *  Copyright 2014 ARM Limited
+ *  Copyright 2014-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -49,13 +49,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_fft.h"
 #include "NE10_dsp.h"
 
-#if defined(__aarch64__)
+#if (NE10_UNROLL_LEVEL > 0)
 
-extern void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
-                                  const ne10_fft_cpx_float32_t *Fin,
-                                  const ne10_int32_t fstride,
-                                  const ne10_int32_t mstride,
-                                  const ne10_int32_t nfft)
+void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin,
+                        const ne10_int32_t fstride,
+                        const ne10_int32_t mstride,
+                        const ne10_int32_t nfft)
 {
     const ne10_int32_t in_step = nfft >> 3;
           ne10_int32_t f_count;
@@ -79,8 +79,8 @@ extern void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
         scratch_in[6] = Fin_r[in_step * 3] + Fin_r[in_step * (3 + 4)];
         scratch_in[7] = Fin_r[in_step * 3] - Fin_r[in_step * (3 + 4)];
 
-        scratch_in[3] *= TW_81;
-        scratch_in[7] *= TW_81N;
+        scratch_in[3] *= TW_81_F32;
+        scratch_in[7] *= TW_81N_F32;
 
         // radix 2 butterfly
         scratch[0] =   scratch_in[0] + scratch_in[4];
@@ -106,11 +106,11 @@ extern void ne10_radix8_r2c_c (ne10_fft_cpx_float32_t *Fout,
     }
 }
 
-extern void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
-                                  const ne10_fft_cpx_float32_t *Fin,
-                                  const ne10_int32_t fstride,
-                                  const ne10_int32_t mstride,
-                                  const ne10_int32_t nfft)
+void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin,
+                        const ne10_int32_t fstride,
+                        const ne10_int32_t mstride,
+                        const ne10_int32_t nfft)
 {
     const ne10_int32_t in_step = nfft >> 3;
           ne10_int32_t f_count;
@@ -134,8 +134,8 @@ extern void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
         scratch_in[6] =   Fin_r[0] + Fin_r[4] + Fin_r[4] - Fin_r[7];
         scratch_in[7] =   Fin_r[1] + Fin_r[2] - Fin_r[5] + Fin_r[6];
 
-        scratch_in[3] /= TW_81;
-        scratch_in[7] /= TW_81N;
+        scratch_in[3] /= TW_81_F32;
+        scratch_in[7] /= TW_81N_F32;
 
         Fout_r[0 * in_step] = scratch_in[0] + scratch_in[1];
         Fout_r[4 * in_step] = scratch_in[0] - scratch_in[1];
@@ -786,19 +786,23 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
     }
 
     // factors and twiddles for rfft C
-    ne10_factor (nfft, st->r_factors);
+    ne10_factor (nfft, st->r_factors, NE10_FACTOR_DEFAULT);
 
     // backward twiddles pointers
     st->r_twiddles_backward = ne10_fft_generate_twiddles_float32 (st->r_twiddles, st->r_factors, nfft);
 
     // factors and twiddles for rfft neon
-    result = ne10_factor (nfft/4, st->r_factors_neon);
+    result = ne10_factor (nfft/4, st->r_factors_neon, NE10_FACTOR_DEFAULT);
     if (result == NE10_ERR)
     {
         return st;
     }
 
-    st->r_twiddles_neon_backward = ne10_fft_generate_twiddles_float32 (st->r_twiddles_neon, st->r_factors_neon, nfft/4);
+    // Twiddle table is transposed here to improve cache access performance.
+    st->r_twiddles_neon_backward = ne10_fft_generate_twiddles_transposed_float32 (
+        st->r_twiddles_neon,
+        st->r_factors_neon,
+        nfft/4);
 
     // nfft/4 x 4
     tw = st->r_super_twiddles_neon;
@@ -907,4 +911,4 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
  * @} end of R2C_FFT_IFFT group
  */
 
-#endif // __aarch64__
+#endif // NE10_UNROLL_LEVEL

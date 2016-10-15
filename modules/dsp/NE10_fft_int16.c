@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013-14 ARM Limited
+ *  Copyright 2013-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -1049,7 +1049,7 @@ ne10_fft_cfg_int16_t ne10_fft_alloc_c2c_int16 (ne10_int32_t nfft)
         st->buffer = st->twiddles + nfft;
         st->nfft = nfft;
 
-        ne10_int32_t result = ne10_factor (nfft, st->factors);
+        ne10_int32_t result = ne10_factor (nfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);
@@ -1163,7 +1163,7 @@ ne10_fft_r2c_cfg_int16_t ne10_fft_alloc_r2c_int16 (ne10_int32_t nfft)
         st->buffer = st->super_twiddles + (ncfft / 2);
         st->ncfft = ncfft;
 
-        ne10_int32_t result = ne10_factor (ncfft, st->factors);
+        ne10_int32_t result = ne10_factor (ncfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);

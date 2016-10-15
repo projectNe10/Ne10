@@ -1,5 +1,5 @@
 /*
- *  Copyright 2013-14 ARM Limited
+ *  Copyright 2013-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -1026,7 +1026,7 @@ static void ne10_fft_split_c2r_1d_int32 (ne10_fft_cpx_int32_t *dst,
  * @return      st               point to the FFT config memory. This memory is allocated with malloc.
  * The function allocate all necessary storage space for the fft. It also factors out the length of FFT and generates the twiddle coeff.
  */
-ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32 (ne10_int32_t nfft)
+ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_c (ne10_int32_t nfft)
 {
     ne10_fft_cfg_int32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_int32_t)
@@ -1045,51 +1045,17 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32 (ne10_int32_t nfft)
         st->buffer = st->twiddles + nfft;
         st->nfft = nfft;
 
-        ne10_int32_t result = ne10_factor (nfft, st->factors);
+        ne10_int32_t result = ne10_factor (nfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);
             return st;
         }
 
-        ne10_int32_t i, j;
         ne10_int32_t *factors = st->factors;
         ne10_fft_cpx_int32_t *twiddles = st->twiddles;
-        ne10_fft_cpx_int32_t *tw;
-        ne10_int32_t stage_count = factors[0];
-        ne10_int32_t fstride1 = factors[1];
-        ne10_int32_t fstride2 = fstride1 * 2;
-        ne10_int32_t fstride3 = fstride1 * 3;
-        ne10_int32_t m;
 
-        const ne10_float32_t pi = NE10_PI;
-        ne10_float32_t phase1;
-        ne10_float32_t phase2;
-        ne10_float32_t phase3;
-
-        for (i = stage_count - 1; i > 0; i--)
-        {
-            fstride1 >>= 2;
-            fstride2 >>= 2;
-            fstride3 >>= 2;
-            m = factors[2 * i + 1];
-            tw = twiddles;
-            for (j = 0; j < m; j++)
-            {
-                phase1 = -2 * pi * fstride1 * j / nfft;
-                phase2 = -2 * pi * fstride2 * j / nfft;
-                phase3 = -2 * pi * fstride3 * j / nfft;
-                tw->r = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * cos (phase1));
-                tw->i = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * sin (phase1));
-                (tw + m)->r = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * cos (phase2));
-                (tw + m)->i = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * sin (phase2));
-                (tw + m * 2)->r = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * cos (phase3));
-                (tw + m * 2)->i = (ne10_int32_t) floor (0.5f + NE10_F2I32_MAX * sin (phase3));
-                tw++;
-            }
-            twiddles += m * 3;
-        }
-
+        ne10_fft_generate_twiddles_int32 (twiddles, factors, nfft);
     }
     return st;
 }
@@ -1111,10 +1077,35 @@ void ne10_fft_c2c_1d_int32_c (ne10_fft_cpx_int32_t *fout,
                               ne10_int32_t inverse_fft,
                               ne10_int32_t scaled_flag)
 {
-    if (inverse_fft)
-        ne10_mixed_radix_butterfly_inverse_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
-    else
-        ne10_mixed_radix_butterfly_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+    ne10_int32_t stage_count = cfg->factors[0];
+    ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
+
+    assert ((algorithm_flag == NE10_FFT_ALG_24)
+            || (algorithm_flag == NE10_FFT_ALG_ANY));
+
+    switch (algorithm_flag)
+    {
+    case NE10_FFT_ALG_24:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_butterfly_inverse_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        else
+        {
+            ne10_mixed_radix_butterfly_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        break;
+    case NE10_FFT_ALG_ANY:
+        if (inverse_fft)
+        {
+            ne10_mixed_radix_generic_butterfly_inverse_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        else
+        {
+            ne10_mixed_radix_generic_butterfly_int32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer, scaled_flag);
+        }
+        break;
+    }
 }
 
 /**
@@ -1157,7 +1148,7 @@ ne10_fft_r2c_cfg_int32_t ne10_fft_alloc_r2c_int32 (ne10_int32_t nfft)
         st->buffer = st->super_twiddles + (ncfft / 2);
         st->ncfft = ncfft;
 
-        ne10_int32_t result = ne10_factor (ncfft, st->factors);
+        ne10_int32_t result = ne10_factor (ncfft, st->factors, NE10_FACTOR_DEFAULT);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);

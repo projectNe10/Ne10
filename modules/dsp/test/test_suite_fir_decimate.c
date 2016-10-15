@@ -1,5 +1,5 @@
 /*
- *  Copyright 2012-14 ARM Limited
+ *  Copyright 2012-15 ARM Limited and Contributors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
  *  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
  *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+ *  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
  *  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
  *  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
  *  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -191,7 +191,6 @@ static test_config CONFIG_PERF[] =
 #define NUM_TESTS (sizeof(CONFIG) / sizeof(CONFIG[0]) )
 #define NUM_PERF_TESTS (sizeof(CONFIG_PERF) / sizeof(CONFIG_PERF[0]) )
 
-
 void test_fir_decimate_case0()
 {
     ne10_float32_t *p_src = testInput_f32;
@@ -222,6 +221,7 @@ void test_fir_decimate_case0()
     NE10_DST_ALLOC (fir_state_c, guarded_fir_state_c, MAX_NUMTAPS + MAX_BLOCKSIZE);
     NE10_DST_ALLOC (fir_state_neon, guarded_fir_state_neon, MAX_NUMTAPS + MAX_BLOCKSIZE);
 
+#ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
     for (loop = 0; loop < NUM_TESTS; loop++)
     {
@@ -258,6 +258,7 @@ void test_fir_decimate_case0()
         {
             ne10_fir_decimate_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize / config->D), config->blockSize);
         }
+
         for (block = 0; block < config->numFrames; block++)
         {
             ne10_fir_decimate_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize / config->D), config->blockSize);
@@ -285,6 +286,7 @@ void test_fir_decimate_case0()
         }
     }
 #endif
+#endif // ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
@@ -330,7 +332,7 @@ void test_fir_decimate_case0()
             }
         }
         );
-
+#ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
         GET_TIME
         (
             time_neon,
@@ -344,6 +346,7 @@ void test_fir_decimate_case0()
             }
         }
         );
+#endif // ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
 
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;

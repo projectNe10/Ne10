@@ -1,5 +1,5 @@
 #
-#  Copyright 2013-14 ARM Limited
+#  Copyright 2013-15 ARM Limited and Contributors.
 #  All rights reserved.
 #
 #  Redistribution and use in source and binary forms, with or without
@@ -16,7 +16,7 @@
 #  THIS SOFTWARE IS PROVIDED BY ARM LIMITED AND CONTRIBUTORS "AS IS" AND
 #  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 #  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED BE LIABLE FOR ANY
+#  DISCLAIMED. IN NO EVENT SHALL ARM LIMITED AND CONTRIBUTORS BE LIABLE FOR ANY
 #  DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
 #  (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
 #  LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
@@ -25,12 +25,37 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-set(GNULINUX_PLATFORM ON)
-set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
-set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
-set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)
+#  Usage:
+#   $ mkdir build && cd build
+#   $ cmake -DCMAKE_TOOLCHAIN_FILE=path/of/GNUlinux_config.cmake ..
+#   $ make
+#
+#  Option:
+#   - Choose target architecture
+#     Target architecture can be specified by setting NE10_LINUX_TARGET_ARCH to
+#     armv7 or aarch64 (Not done yet). Defaut is armv7.
 
-find_program(CMAKE_AR NAMES "arm-linux-gnueabihf-ar")
+set(GNULINUX_PLATFORM ON)
+
+if(NOT DEFINED ENV{NE10_LINUX_TARGET_ARCH})
+   set(NE10_LINUX_TARGET_ARCH "armv7")
+else()
+   set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})
+endif()
+
+if(NE10_LINUX_TARGET_ARCH STREQUAL "armv7")
+   set(CMAKE_C_COMPILER arm-linux-gnueabihf-gcc)
+   set(CMAKE_CXX_COMPILER arm-linux-gnueabihf-g++)
+   set(CMAKE_ASM_COMPILER arm-linux-gnueabihf-as)
+   find_program(CMAKE_AR NAMES "arm-linux-gnueabihf-ar")
+   find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabihf-ranlib")
+elseif(NE10_LINUX_TARGET_ARCH STREQUAL "aarch64")
+   set(CMAKE_C_COMPILER aarch64-linux-gnu-gcc)
+   set(CMAKE_CXX_COMPILER aarch64-linux-gnu-g++)
+   set(CMAKE_ASM_COMPILER aarch64-linux-gnu-as)
+   find_program(CMAKE_AR NAMES "aarch64-linux-gnu-ar")
+   find_program(CMAKE_RANLIB NAMES "aarch64-linux-gnu-ranlib")
+endif()
+
 mark_as_advanced(CMAKE_AR)
-find_program(CMAKE_RANLIB NAMES "arm-linux-gnueabihf-ranlib")
 mark_as_advanced(CMAKE_RANLIB)
