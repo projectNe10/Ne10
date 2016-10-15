@@ -524,6 +524,7 @@
 
         .endm
 
+        .align 4
 .L_TW_81_16:
 .word 23169
 .word -23169

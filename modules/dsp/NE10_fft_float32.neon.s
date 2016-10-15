@@ -441,6 +441,7 @@
 
         .endm
 
+        .align 4
 .L_TW_81:
 .float 0.70710678
 .float -0.70710678
