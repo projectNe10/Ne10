@@ -153,9 +153,9 @@
  * @defgroup groupSamples Sample Functions
  *
  *
- * This set of functions provide some sample functions.
+ * These sample code snippets outline how Ne10 can be used to accomplish a number of
+ * common tasks, including the FFT, FIR, and matrix multiply operations.
  */
-
 
 #ifndef NE10_H
 #define NE10_H

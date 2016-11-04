@@ -30,8 +30,10 @@ include_directories (
     ${PROJECT_SOURCE_DIR}/inc
 )
 
+file(GLOB SAMPLE_SOURCE_FILES "${PROJECT_SOURCE_DIR}/samples/*.c")
+
 if(NE10_BUILD_SHARED)
-    add_executable(NE10_test_dynamic NE10_test.c)
+    add_executable(NE10_test_dynamic ${SAMPLE_SOURCE_FILES})
     target_link_libraries (
         NE10_test_dynamic
         NE10_test
@@ -40,12 +42,10 @@ if(NE10_BUILD_SHARED)
 endif()
 
 if(NE10_BUILD_STATIC)
-    add_executable(NE10_test_static NE10_test.c)
+    add_executable(NE10_test_static ${SAMPLE_SOURCE_FILES})
     target_link_libraries (
         NE10_test_static
         NE10
         m
     )
 endif()
-
-
