@@ -113,9 +113,9 @@
     }
 
 #define GET_TIME(time, code) { \
-        (time) = GetTickCount(); \
+        (time) = GetMicrosecondCount(); \
         code \
-        (time) = GetTickCount() - (time);\
+        (time) = GetMicrosecondCount() - (time);\
     }
 
 typedef ne10_result_t (*ne10_func_5args_t) (void * dst, void * acc, void * src1, void * src2, ne10_uint32_t count);
@@ -167,4 +167,3 @@ extern int diff_count(const ne10_int32_t *mat,
                       ne10_int32_t channel);
 
 #endif // __UNIT_TEST_COMMON
-

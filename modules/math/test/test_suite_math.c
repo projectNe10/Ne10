@@ -150,7 +150,7 @@ void test_abs_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -260,7 +260,7 @@ void test_addc_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -374,7 +374,7 @@ void test_add_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -470,7 +470,7 @@ void test_cross_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -581,7 +581,7 @@ void test_divc_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -695,7 +695,7 @@ void test_div_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -796,7 +796,7 @@ void test_dot_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -893,7 +893,7 @@ void test_len_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1005,7 +1005,7 @@ void test_mlac_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_theacc, perftest_guarded_acc, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1124,7 +1124,7 @@ void test_mla_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_theacc, perftest_guarded_acc, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1237,7 +1237,7 @@ void test_mulc_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1351,7 +1351,7 @@ void test_mul_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1448,7 +1448,7 @@ void test_normalize_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1557,7 +1557,7 @@ void test_rsbc_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1678,7 +1678,7 @@ void test_setc_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thecst, perftest_guarded_cst, MAX_VEC_COMPONENTS); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1799,7 +1799,7 @@ void test_subc_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -1913,7 +1913,7 @@ void test_sub_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -2013,7 +2013,7 @@ void test_addmat_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -2110,7 +2110,7 @@ void test_detmat_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -2196,7 +2196,7 @@ void test_identitymat_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init dst memory */
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
@@ -2287,7 +2287,7 @@ void test_invmat_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -2385,7 +2385,7 @@ void test_mulmat_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -2485,7 +2485,7 @@ void test_submat_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -2582,7 +2582,7 @@ void test_transmat_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end
@@ -2683,7 +2683,7 @@ void test_mulcmatvec_case0()
 #endif
 
 #ifdef PERFORMANCE_TEST
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "N-component Vector", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     perftest_length = PERF_TEST_ITERATION * MAX_VEC_COMPONENTS;
     /* init src memory */
     NE10_SRC_ALLOC_LIMIT (perftest_thesrc1, perftest_guarded_src1, perftest_length); // 16 extra bytes at the begining and 16 extra bytes at the end

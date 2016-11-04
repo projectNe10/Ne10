@@ -183,7 +183,7 @@ void test_fft_c2c_1d_float32_performance()
     ne10_int32_t test_loop = 0;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
 
     for (fftSize = MIN_LENGTH_SAMPLES_CPX; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {
@@ -327,7 +327,7 @@ void test_fft_r2c_1d_float32_performance()
     ne10_int32_t test_loop = 0;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
 
     for (fftSize = MIN_LENGTH_SAMPLES_REAL; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
     {

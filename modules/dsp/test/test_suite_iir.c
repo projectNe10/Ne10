@@ -333,7 +333,7 @@ void test_iir_lattice_case0()
 
 #ifdef PERFORMANCE_TEST
     ne10_uint16_t k;
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "IIR Length&Taps", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "IIR Length&Taps", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
     for (loop = 0; loop < NUM_PERF_TESTS; loop++)
     {
         config = &CONFIG_PERF[loop];

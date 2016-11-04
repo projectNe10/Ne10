@@ -119,7 +119,7 @@ void test_compute_aabb_vec2f_performance()
     // ne10_int32_t vec_size = sizeof (ne10_mat2x2f_t) / sizeof (ne10_float32_t);
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "vertex count", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "vertex count", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
 
     /* init input memory */
     vertices_c = (ne10_vec2f_t*) NE10_MALLOC (TEST_LENGTH_SAMPLES * sizeof (ne10_vec2f_t));
@@ -248,7 +248,7 @@ void test_relative_v_vec2f_performance()
     // ne10_int32_t vec_size = sizeof (ne10_vec2f_t) / sizeof (ne10_float32_t);
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "count", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "count", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
 
     /* init input memory */
     v_wa = (ne10_vec3f_t*) NE10_MALLOC (TEST_LENGTH_SAMPLES * sizeof (ne10_vec3f_t));
@@ -410,7 +410,7 @@ void test_apply_impulse_vec2f_performance()
     // ne10_int32_t vec_size = sizeof (ne10_vec3f_t) / sizeof (ne10_float32_t);
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "count", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "count", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
 
     /* init input memory */
     ra = (ne10_vec2f_t*) NE10_MALLOC (TEST_LENGTH_SAMPLES * sizeof (ne10_vec2f_t));

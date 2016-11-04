@@ -8,10 +8,14 @@ int seatest_is_string_equal_i(const char* s1, const char* s2)
         return stricmp(s1, s2) == 0;
 }
 
+long int GetMicrosecondCount()
+{
+    return GetTickCount() * 1000;
+}
 #else
 #include <sys/time.h>
 
-long int GetTickCount()
+long int GetMicrosecondCount()
 {
 //#ifndef __MACH__
 //    struct timespec tv;
@@ -354,11 +358,11 @@ int seatest_should_run( char* fixture, char* test)
 int run_tests(seatest_void_void tests)
 {
         unsigned long long end;
-        unsigned long long start = GetTickCount();
+        unsigned long long start = GetMicrosecondCount();
         char version[40];
         char s[40];
         tests();
-        end = GetTickCount();
+        end = GetMicrosecondCount();
 
         if(seatest_is_display_only() || seatest_machine_readable) return 1;
         sprintf(version, "SEATEST v%s", SEATEST_VERSION);

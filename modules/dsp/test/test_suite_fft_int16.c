@@ -225,7 +225,7 @@ void test_fft_c2c_1d_int16_performance()
     ne10_int32_t test_loop = 0;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
 
     /* init input memory */
     guarded_in_c = (ne10_int16_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_int16_t));
@@ -532,7 +532,7 @@ void test_fft_r2c_1d_int16_performance()
     ne10_int32_t test_loop = 0;
 
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
-    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time in ms", "NEON Time in ms", "Time Savings", "Performance Ratio");
+    fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FFT Length", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
 
     /* init input memory */
     guarded_in_c = (ne10_int16_t*) NE10_MALLOC ( (TEST_LENGTH_SAMPLES * 2 + ARRAY_GUARD_LEN * 2) * sizeof (ne10_int16_t));
