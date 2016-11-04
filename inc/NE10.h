@@ -120,9 +120,8 @@
  * @defgroup groupMaths Math Functions
  *
  *
- * This set of functions provide vector/matrix algebra functions that include
- * add, sub, multiply, div and so on. Currently, only the float (single precision)
- * data type is supported.
+ * These functions provide an assortment of vector/matrix math operations.
+ * Currently, only the single precision floating point data type is supported.
  */
 
 /**

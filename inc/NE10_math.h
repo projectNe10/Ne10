@@ -54,7 +54,7 @@ extern "C" {
      * @defgroup ADD_VEC Vector Add
      *
      * \par
-     * These functions implement the vector add operation for float data type.
+     * These functions implement vector addition operations for single precision floating point values.
      */
 
     /**
@@ -63,48 +63,52 @@ extern "C" {
      */
 
     /**
-     * Adds a constant scalar value to all the elements of an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_addc_float_c, ne10_addc_float_neon and ne10_addc_float_asm.
+     * Adds a constant scalar value to all elements of an input array, storing the results
+     * in an output array. Points to `ne10_addc_float_c`, `ne10_addc_float_neon` or
+     * `ne10_addc_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   The constant scalar added to the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to add
+     * @param[in]  count The number of scalar values to be processed
      */
     extern ne10_result_t (*ne10_addc_float) (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count) asm ("ne10_addc_float_neon");
     extern ne10_result_t ne10_addc_float_asm (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     /**
-     * Adds a constant 2D vector to all of the vectors in an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_addc_vec2f_c, ne10_addc_vec2f_neon and ne10_addc_vec2f_asm.
+     * Adds a constant 2D vector to all the vectors in an input array, storing the
+     * results in an output array. Points to `ne10_addc_vec2f_c`, `ne10_addc_vec2f_neon`, or
+     * `ne10_addc_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 2D vector added to the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 2D vector to add
+     * @param[in]  count The number of 2D vectors to be processed
      */
     extern ne10_result_t (*ne10_addc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec2f_neon");
     extern ne10_result_t ne10_addc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
-     * Adds a constant 3D vector to all of the vectors in an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_addc_vec3f_c, ne10_addc_vec3f_neon and ne10_addc_vec3f_asm.
+     * Adds a constant 3D vector to all the vectors in an input array, storing the
+     * results in an output array. Points to `ne10_addc_vec3f_c`, `ne10_addc_vec3f_neon` or
+     * `ne10_addc_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 3D vector added to the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 3D vector to add
+     * @param[in]  count The number of 3D vectors to be processed
      */
     extern ne10_result_t (*ne10_addc_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count) asm ("ne10_addc_vec3f_neon");
     extern ne10_result_t ne10_addc_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     /**
-     * Adds a constant 4D vector to all of the vectors in an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_addc_vec4f_c, ne10_addc_vec4f_neon and ne10_addc_vec4f_asm.
+     * Adds a constant 4D vector to all the vectors in an input array, storing the
+     * results in an output array. Points to `ne10_addc_vec4f_c`, `ne10_addc_vec4f_neon` or
+     * `ne10_addc_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 4D vector added to the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 4D vector to add
+     * @param[in]  count The number of 4D vectors to be processed
      */
     extern ne10_result_t (*ne10_addc_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_addc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
@@ -113,48 +117,52 @@ extern "C" {
 
 
     /**
-     * Adds the elements of src1 to the elements of src2 and stores the results in the dst.
-     * This function point could be pointed to one of ne10_add_float_c, ne10_add_float_neon and ne10_add_float_asm.
+     * Adds the scalar elements of one input array with those of the same index in another,
+     * storing the results in an output array. Points to `ne10_add_float_c`, `ne10_add_float_neon`
+     * or `ne10_add_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1  The first array to use as the input array
-     * @param[in]  src2  The second array to use as the input array
-     * @param[in]  count The number of items in the two input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of additions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_add_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_add_float_neon");
     extern ne10_result_t ne10_add_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
-     * Vector addition of two 2D vectors.
-     * This function point could be pointed to one of ne10_add_vec2f_c, ne10_add_vec2f_neon and ne10_add_vec2f_asm.
+     * Adds the 2D vectors of one input array with those of the same index in another,
+     * storing the results in an output array. Points to `ne10_add_vec2f_c`, `ne10_add_vec2f_neon`
+     * or `ne10_add_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of additions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_add_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec2f_neon");
     extern ne10_result_t ne10_add_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
-     * Vector addition of two 3D vectors.
-     * This function point could be pointed to one of ne10_add_vec3f_c, ne10_add_vec3f_neon and ne10_add_vec3f_asm.
+     * Adds the 3D vectors of one input array with those of the same index in another,
+     * storing the results in an output array. Points to `ne10_add_vec3f_c`, `ne10_add_vec3f_neon`
+     * or `ne10_add_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of additions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_add_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_add_vec3f_neon");
     extern ne10_result_t ne10_add_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
-     * Vector addition of two 4D vectors.
-     * This function point could be pointed to one of ne10_add_vec4f_c, ne10_add_vec4f_neon and ne10_add_vec4f_asm.
+     * Adds the 4D vectors of one input array with those of the same index in another,
+     * storing the results in an output array. Points to `ne10_add_vec4f_c`, `ne10_add_vec4f_neon`
+     * or `ne10_add_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of additions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_add_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_add_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
@@ -170,7 +178,7 @@ extern "C" {
      * @defgroup ADD_MAT Matrix Add
      *
      * \par
-     * These functions implement the matrix add operation for float data type.
+     * These functions implement matrix addition operations for single precision floating point values.
      */
 
     /**
@@ -179,36 +187,39 @@ extern "C" {
      */
 
     /**
-     * Vector addition of two 4x4 matrixs.
-     * This function point could be pointed to one of ne10_addmat_4x4f_c, ne10_addmat_4x4f_neon and ne10_addmat_4x4f_asm.
+     * Adds the 4x4 matrices of one input array with those of the same index in another,
+     * storing the results in an output array. Points to `ne10_addmat_4x4f_c`, `ne10_addmat_4x4f_neon`
+     * or `ne10_addmat_4x4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of additions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_addmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_addmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_addmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_addmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     /**
-     * Vector addition of two 3x3 matrixs.
-     * This function point could be pointed to one of ne10_addmat_3x3f_c, ne10_addmat_3x3f_neon and ne10_addmat_3x3f_asm.
+     * Adds the 3x3 matrices of one input array with those of the same index in another,
+     * storing the results in an output array. Points to `ne10_addmat_3x3f_c`, `ne10_addmat_3x3f_neon`
+     * or `ne10_addmat_3x3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of additions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_addmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_addmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_addmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_addmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     /**
-     * Vector addition of two 2x2 matrixs.
-     * This function point could be pointed to one of ne10_addmat_2x2f_c, ne10_addmat_2x2f_neon and ne10_addmat_2x2f_asm.
+     * Adds the 2x2 matrices of one input array with those of the same index in another,
+     * storing the results in an output array. Points to `ne10_addmat_2x2f_c`, `ne10_addmat_2x2f_neon`
+     * or `ne10_addmat_2x2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of additions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_addmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_addmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
@@ -222,10 +233,10 @@ extern "C" {
      */
 
     /**
-     * @defgroup SUB_VEC Vector Sub
+     * @defgroup SUB_VEC Vector Subtract
      *
      * \par
-     * These functions implement the vector sub operation for float data type.
+     * These functions implement vector subtraction operations for single precision floating point values.
      */
 
     /**
@@ -234,48 +245,52 @@ extern "C" {
      */
 
     /**
-     * Subtracts a constant scalar from all the elements of an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_subc_float_c, ne10_subc_float_neon and ne10_subc_float_asm.
+     * Subtracts a constant scalar value from all elements of an input array, storing the
+     * results in an output array. Points to `ne10_subc_float_c`, `ne10_subc_float_neon` or
+     * `ne10_subc_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   The constant scalar subtracted from the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to be subtracted
+     * @param[in]  count The number of scalar values to be processed
      */
     extern ne10_result_t (*ne10_subc_float) (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_subc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
     extern ne10_result_t ne10_subc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
     extern ne10_result_t ne10_subc_float_asm (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract cst from the element(s)
     /**
-     * Subtracts a constant 2D vector from all of the vectors in an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_subc_vec2f_c, ne10_subc_vec2f_neon and ne10_subc_vec2f_asm.
+     * Subtracts a constant 2D vector from all the vectors in an input array, storing the
+     * results in an output array. Points to `ne10_subc_vec2f_c`, `ne10_subc_vec2f_neon`, or
+     * `ne10_subc_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 2D vector subtracted from the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 2D vector be subtract
+     * @param[in]  count The number of 2D vectors to be processed
      */
     extern ne10_result_t (*ne10_subc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_subc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
     extern ne10_result_t ne10_subc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
     extern ne10_result_t ne10_subc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
     /**
-     * Subtracts a constant 3D vector from all of the vectors in an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_subc_vec3f_c, ne10_subc_vec3f_neon and ne10_subc_vec3f_asm.
+     * Subtracts a constant 3D vector from all the vectors in an input array, storing the
+     * results in an output array. Points to `ne10_subc_vec3f_c`, `ne10_subc_vec3f_neon`, or
+     * `ne10_subc_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 3D vector subtracted from the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 3D vector to subtract
+     * @param[in]  count The number of 3D vectors to be processed
      */
     extern ne10_result_t (*ne10_subc_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_subc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
     extern ne10_result_t ne10_subc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
     extern ne10_result_t ne10_subc_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
     /**
-     * Subtracts a constant 4D vector from all of the vectors in an input array and stores the results in an output array.
-     * This function point could be pointed to one of ne10_subc_vec4f_c, ne10_subc_vec4f_neon and ne10_subc_vec4f_asm.
+     * Subtracts a constant 4D vector from all the vectors in an input array, storing the
+     * results in an output array. Points to `ne10_subc_vec4f_c`, `ne10_subc_vec4f_neon`, or
+     * `ne10_subc_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 4D vector subtracted from the input values
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 4D vector to subtract
+     * @param[in]  count The number of 4D vectors to be processed
      */
     extern ne10_result_t (*ne10_subc_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_subc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
@@ -283,64 +298,68 @@ extern "C" {
     extern ne10_result_t ne10_subc_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract cst from the element(s)
 
     /**
-     * Subtracts the elements of src2 from the elements of src1 and stores the results in the dst.
-     * This function point could be pointed to one of ne10_sub_float_c, ne10_sub_float_neon and ne10_sub_float_asm.
+     * Subtracts the scalar elements of one input array from those of the same index in another,
+     * storing the results in an output array. Points to `ne10_sub_float_c`, `ne10_sub_float_neon`
+     * or `ne10_sub_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1  The first array to use as the input array
-     * @param[in]  src2  The second array to use as the input array
-     * @param[in]  count The number of items in the two input arrays
+     * @param[in]  src1  Pointer to the source array of elements to be subtracted from
+     * @param[in]  src2  Pointer to the source array of elements to subtract
+     * @param[in]  count The number of subtractions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_sub_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_sub_float_neon");
     extern ne10_result_t ne10_sub_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
-     * Vector subtraction of two 2D vectors.
-     * This function point could be pointed to one of ne10_sub_vec2f_c, ne10_sub_vec2f_neon and ne10_sub_vec2f_asm.
+     * Subtracts the 2D vectors of one input array from those of the same index in another,
+     * storing the results in an output array. Points to `ne10_sub_vec2f_c`, `ne10_sub_vec2f_neon`
+     * or `ne10_sub_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the source array of elements to be subtracted from
+     * @param[in]  src2  Pointer to the source array of elements to subtract
+     * @param[in]  count The number of subtractions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_sub_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec2f_neon");
     extern ne10_result_t ne10_sub_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
-     * Vector subtraction of two 3D vectors.
-     * This function point could be pointed to one of ne10_sub_vec3f_c, ne10_sub_vec3f_neon and ne10_sub_vec3f_asm.
+     * Subtracts the 3D vectors of one input array from those of the same index in another,
+     * storing the results in an output array. Points to `ne10_sub_vec3f_c`, `ne10_sub_vec3f_neon`
+     * or `ne10_sub_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the source array of elements to be subtracted from
+     * @param[in]  src2  Pointer to the source array of elements to subtract
+     * @param[in]  count The number of subtractions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_sub_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec3f_neon");
     extern ne10_result_t ne10_sub_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
-     * Vector subtraction of two 4D vectors.
-     * This function point could be pointed to one of ne10_sub_vec4f_c, ne10_sub_vec4f_neon and ne10_sub_vec4f_asm.
+     * Subtracts the 4D vectors of one input array from those of the same index in another,
+     * storing the results in an output array. Points to `ne10_sub_vec4f_c`, `ne10_sub_vec4f_neon`
+     * or `ne10_sub_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the source array of elements to be subtracted from
+     * @param[in]  src2  Pointer to the source array of elements to subtract
+     * @param[in]  count The number of subtractions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_sub_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_sub_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_sub_vec4f_neon");
     extern ne10_result_t ne10_sub_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    /** @} */ //end of Vector Sub group
+    /** @} */ //end of Vector Subtract group
 
     /**
      * @ingroup groupMaths
      */
 
     /**
-     * @defgroup RSBC Vector Rsbc
+     * @defgroup RSBC Vector Subtract From
      *
      * \par
-     * These functions implement the vector rsbc operation for float data type.
+     * These functions implement vector "subtract from" RSBC operations for single precision floating point values.
      */
 
     /**
@@ -348,48 +367,52 @@ extern "C" {
      * @{
      */
     /**
-     * Subtracts the elements of an input array from a constant scalar and stores the results in an output array.
-     * This function point could be pointed to one of ne10_rsbc_float_c, ne10_rsbc_float_neon and ne10_rsbc_float_asm.
+     * Subtracts all scalar elements of an input array from a constant value, storing the
+     * results in an output array. Points to `ne10_rsbc_float_c`, `ne10_rsbc_float_neon` or
+     * `ne10_rsbc_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   The constant scalar to subtract the input values from
-     * @param[in]  count The number of items in the input array
+     * @param[in]  src   Pointer to the source array of elements to subtract
+     * @param[in]  cst   The constant to be subtracted from
+     * @param[in]  count The number of scalar values to be processed
      */
     extern ne10_result_t (*ne10_rsbc_float) (ne10_float32_t * dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_rsbc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
     extern ne10_result_t ne10_rsbc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
     extern ne10_result_t ne10_rsbc_float_asm (ne10_float32_t * dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count); // subtract element(s) from a cst
     /**
-     * Subtracts the vectors in an input array from a constant 2D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_rsbc_vec2f_c, ne10_rsbc_vec2f_neon and ne10_rsbc_vec2f_asm.
+     * Subtracts all the 2D vectors in an input array from a constant vector, storing the
+     * results in an output array. Points to `ne10_rsbc_vec2f_c`, `ne10_rsbc_vec2f_neon`, or
+     * `ne10_rsbc_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 2D vector to subtract the input values from
-     * @param[in]  count The number of items in the input array
+     * @param[in]  src   Pointer to the source array of elements to subtract
+     * @param[in]  cst   Pointer to the constant 2D vector to be subtracted from
+     * @param[in]  count The number of 2D vectors to be processed
      */
     extern ne10_result_t (*ne10_rsbc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_rsbc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
     extern ne10_result_t ne10_rsbc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
     extern ne10_result_t ne10_rsbc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t *src, const ne10_vec2f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
     /**
-     * Subtracts the vectors in an input array from a constant 3D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_rsbc_vec3f_c, ne10_rsbc_vec3f_neon and ne10_rsbc_vec3f_asm.
-     * @param[out] dst   Pointer to the destination array
-     * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 3D vector to subtract the input values from
-     * @param[in]  count The number of items in the input array
+      * Subtracts all the 3D vectors in an input array from a constant vector, storing the
+      * results in an output array. Points to `ne10_rsbc_vec3f_c`, `ne10_rsbc_vec3f_neon`, or
+      * `ne10_rsbc_vec3f_asm`. This operation can be performed in-place.
+      * @param[out] dst   Pointer to the destination array
+      * @param[in]  src   Pointer to the source array of elements to subtract
+      * @param[in]  cst   Pointer to the constant 3D vector to be subtracted from
+      * @param[in]  count The number of 3D vectors to be processed
      */
     extern ne10_result_t (*ne10_rsbc_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_rsbc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
     extern ne10_result_t ne10_rsbc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
     extern ne10_result_t ne10_rsbc_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t *src, const ne10_vec3f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
     /**
-     * Subtracts the vectors in an input array from a constant 4D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_rsbc_vec4f_c, ne10_rsbc_vec4f_neon and ne10_rsbc_vec4f_asm.
+     * Subtracts all the 4D vectors in an input array from a constant vector, storing the
+     * results in an output array. Points to `ne10_rsbc_vec4f_c`, `ne10_rsbc_vec4f_neon`, or
+     * `ne10_rsbc_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 4D vector to subtract the input values from
-     * @param[in]  count The number of items in the input array
+     * @param[in]  src   Pointer to the source array of elements to subtract
+     * @param[in]  cst   Pointer to the constant 4D vector to be subtracted from
+     * @param[in]  count The number of 4D vectors to be processed
      */
     extern ne10_result_t (*ne10_rsbc_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_rsbc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count); // subtract element(s) from a cst
@@ -402,10 +425,10 @@ extern "C" {
      */
 
     /**
-     * @defgroup SUB_MAT Matrix Sub
+     * @defgroup SUB_MAT Matrix Subtract
      *
      * \par
-     * These functions implement the matrix sub operation for float data type.
+     * These functions implement matrix subtraction operations for single precision floating point values.
      */
 
     /**
@@ -413,12 +436,13 @@ extern "C" {
      * @{
      */
     /**
-     * Matrix subtraction of two 4x4 matrixs.
-     * This function point could be pointed to one of ne10_submat_4x4f_c, ne10_submat_4x4f_neon and ne10_submat_4x4f_asm.
+     * Subtracts the 4x4 matrices of one input array from those of the same index in another,
+     * storing the results in an output array. Points to `ne10_submat_4x4f_c`, `ne10_submat_4x4f_neon`
+     * or `ne10_submat_4x4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the source array of elements to be subtracted from
+     * @param[in]  src2  Pointer to the source array of elements to subtract
+     * @param[in]  count The number of subtractions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_submat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_submat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
@@ -426,12 +450,13 @@ extern "C" {
     extern ne10_result_t ne10_submat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
 
     /**
-     * Matrix subtraction of two 3x3 matrixs.
-     * This function point could be pointed to one of ne10_submat_3x3f_c, ne10_submat_3x3f_neon and ne10_submat_3x3f_asm.
+     * Subtracts the 3x3 matrices of one input array from those of the same index in another,
+     * storing the results in an output array. Points to `ne10_submat_3x3f_c`, `ne10_submat_3x3f_neon`
+     * or `ne10_submat_3x3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the source array of elements to be subtracted from
+     * @param[in]  src2  Pointer to the source array of elements to subtract
+     * @param[in]  count The number of subtractions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_submat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_submat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
@@ -439,18 +464,19 @@ extern "C" {
     extern ne10_result_t ne10_submat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
 
     /**
-     * Matrix subtraction of two 2x2 matrixs.
-     * This function point could be pointed to one of ne10_submat_2x2f_c, ne10_submat_2x2f_neon and ne10_submat_2x2f_asm.
+     * Subtracts the 2x2 matrices of one input array from those of the same index in another,
+     * storing the results in an output array. Points to `ne10_submat_2x2f_c`, `ne10_submat_2x2f_neon`
+     * or `ne10_submat_2x2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the source array of elements to be subtracted from
+     * @param[in]  src2  Pointer to the source array of elements to subtract
+     * @param[in]  count The number of subtractions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_submat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_submat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_submat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_submat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-    /** @} */ //end of Matrix Sub group
+    /** @} */ //end of Matrix Subtract group
 
     /**
      * @ingroup groupMaths
@@ -460,7 +486,7 @@ extern "C" {
      * @defgroup MUL_VEC Vector Multiply
      *
      * \par
-     * These functions implement the vector multiply operation for float data type.
+     * These functions implement vector element-wise multiplication operations for single precision floating point values.
      */
 
     /**
@@ -469,48 +495,52 @@ extern "C" {
      */
 
     /**
-     * Multiplies the elements of an input array by a constant scalar and stores the results in an output array.
-     * This function point could be pointed to one of ne10_mulc_float_c, ne10_mulc_float_neon and ne10_mulc_float_asm.
+     * Multiplies all scalar elements of an input array by a constant value, storing the
+     * results in an output array. Points to `ne10_mulc_float_c`, `ne10_mulc_float_neon` or
+     * `ne10_mulc_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   The constant scalar to multiply the input values with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to multiply by
+     * @param[in]  count The number of scalar values to be processed
      */
     extern ne10_result_t (*ne10_mulc_float) (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_float_asm (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     /**
-     * Multiplies the components of 2D vectors in an input array by the components of a constant 2D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_mulc_vec2f_c, ne10_mulc_vec2f_neon and ne10_mulc_vec2f_asm.
+     * Element-wise multiplies all the 2D vectors in an input array by a constant vector,
+     * storing the results in an output array. Points to `ne10_mulc_vec2f_c`, `ne10_mulc_vec2f_neon`
+     * or `ne10_mulc_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 2D vector to multiply the input values with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 2D vector to multiply by
+     * @param[in]  count The number of 2D vectors to be processed
      */
     extern ne10_result_t (*ne10_mulc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
-     * Multiplies the components of 3D vectors in an input array by the components of a constant 3D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_mulc_vec3f_c, ne10_mulc_vec3f_neon and ne10_mulc_vec3f_asm.
+     * Element-wise multiplies all the 3D vectors in an input array by a constant vector,
+     * storing the results in an output array. Points to `ne10_mulc_vec3f_c`, `ne10_mulc_vec3f_neon`
+     * or `ne10_mulc_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 3D vector to multiply the input values with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 3D vector to multiply by
+     * @param[in]  count The number of 3D vectors to be processed
      */
     extern ne10_result_t (*ne10_mulc_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     /**
-     * Multiplies the components of 4D vectors in an input array by the components of a constant 4D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_mulc_vec4f_c, ne10_mulc_vec4f_neon and ne10_mulc_vec4f_asm.
+     * Element-wise multiplies all the 4D vectors in an input array by a constant vector,
+     * storing the results in an output array. Points to `ne10_mulc_vec4f_c`, `ne10_mulc_vec4f_neon`
+     * or `ne10_mulc_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 4D vector to multiply the input values with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 4D vector to multiply by
+     * @param[in]  count The number of 4D vectors to be processed
      */
     extern ne10_result_t (*ne10_mulc_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mulc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
@@ -518,48 +548,52 @@ extern "C" {
     extern ne10_result_t ne10_mulc_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
     /**
-     * Multiplies the elements of src1 by the elements of src2 and stores the results in the dst.
-     * This function point could be pointed to one of ne10_mul_float_c, ne10_mul_float_neon and ne10_mul_float_asm.
+     * Multiplies the scalar elements of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_mul_float_c`, `ne10_mul_float_neon`
+     * or `ne10_mul_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1  The first array to use as the input array
-     * @param[in]  src2  The second array to use as the input array
-     * @param[in]  count The number of items in the two input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mul_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mul_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mul_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_mul_float_neon");
     extern ne10_result_t ne10_mul_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
-     * Multiplies the components of a 2D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vmul_vec2f_c, ne10_vmul_vec2f_neon and ne10_vmul_vec2f_asm.
+     * Element-wise multiplies the 2D vectors of one input array by those of the same index
+     * in another, storing the results in an output array. Points to `ne10_vmul_vec2f_c`,
+     * `ne10_vmul_vec2f_neon` or `ne10_vmul_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vmul_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec2f_neon");
     extern ne10_result_t ne10_vmul_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
-     * Multiplies the components of a 3D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vmul_vec3f_c, ne10_vmul_vec3f_neon and ne10_vmul_vec3f_asm.
+     * Element-wise multiplies the 3D vectors of one input array by those of the same index
+     * in another, storing the results in an output array. Points to `ne10_vmul_vec3f_c`,
+     * `ne10_vmul_vec3f_neon` or `ne10_vmul_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vmul_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vmul_vec3f_neon");
     extern ne10_result_t ne10_vmul_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
-     * Multiplies the components of a 4D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vmul_vec4f_c, ne10_vmul_vec4f_neon and ne10_vmul_vec4f_asm.
+     * Element-wise multiplies the 4D vectors of one input array by those of the same index
+     * in another, storing the results in an output array. Points to `ne10_vmul_vec4f_c`,
+     * `ne10_vmul_vec4f_neon` or `ne10_vmul_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vmul_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmul_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
@@ -572,10 +606,10 @@ extern "C" {
      */
 
     /**
-     * @defgroup MLA_VEC Vector Multiply-Accumulator
+     * @defgroup MLA_VEC Vector Multiply-Accumulate
      *
      * \par
-     * These functions implement the vector multiply-accumulator operation for float data type.
+     * These functions implement vector multiply-accumulate operations for single precision floating point values.
      */
 
     /**
@@ -584,56 +618,60 @@ extern "C" {
      */
 
     /**
-     * Multiplies each entry in the source array (src) by cst, then adds the result to
-     * the corresponding item of the accumulation array (acc), and stores the result in the destination array.
-     * This function point could be pointed to one of ne10_mlac_float_c, ne10_mlac_float_neon and ne10_mlac_float_asm.
+     * Multiplies all scalar elements of an input array by constant value, adding this product
+     * to a value of the same index in another input array, and storing the results in an
+     * output array. Points to `ne10_mlac_float_c`, `ne10_mlac_float_neon` or `ne10_mlac_float_asm`.
+     * This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  acc   The corresponding elemetn is added to the result of the multiplication
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   The constant scalar to multiply the input elements with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source array)
      */
     extern ne10_result_t (*ne10_mlac_float) (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_float_c (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_float_neon (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_float_asm (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     /**
-     * Multiplies each entry in the source array (src) by the 2D vector cst, then adds the result to
-     * the corresponding item of the accumulation array (acc), and stores the result in the destination array.
-     * This function point could be pointed to one of ne10_mlac_vec2f_c, ne10_mlac_vec2f_neon and ne10_mlac_vec2f_asm.
+     * Element-wise multiplies all the 2D vectors of an input array by a constant vector,
+     * adding this vector to another of the same index in another input array, and storing
+     * the results in an output array. Points to `ne10_mlac_vec2f_c`, `ne10_mlac_vec2f_neon`
+     * or `ne10_mlac_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  acc   The corresponding elemetn is added to the result of the multiplication
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 2D vector to multiply the input vectors with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source array)
      */
     extern ne10_result_t (*ne10_mlac_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
-     * Multiplies each entry in the source array (src) by the 3D vector cst, then adds the result to
-     * the corresponding item of the accumulation array (acc), and stores the result in the destination array.
-     * This function point could be pointed to one of ne10_mlac_vec3f_c, ne10_mlac_vec3f_neon and ne10_mlac_vec3f_asm.
+     * Element-wise multiplies all the 3D vectors of an input array by a constant vector,
+     * adding this vector to another of the same index in another input array, and storing
+     * the results in an output array. Points to `ne10_mlac_vec3f_c`, `ne10_mlac_vec3f_neon`
+     * or `ne10_mlac_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  acc   The corresponding elemetn is added to the result of the multiplication
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 3D vector to multiply the input vectors with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source array)
      */
     extern ne10_result_t (*ne10_mlac_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     /**
-     * Multiplies each entry in the source array (src) by the 4D vector cst, then adds the result to
-     * the corresponding item of the accumulation array (acc), and stores the result in the destination array.
-     * This function point could be pointed to one of ne10_mlac_vec4f_c, ne10_mlac_vec4f_neon and ne10_mlac_vec4f_asm.
+     * Element-wise multiplies all the 4D vectors of an input array by a constant vector,
+     * adding this vector to another of the same index in another input array, and storing
+     * the results in an output array. Points to `ne10_mlac_vec4f_c`, `ne10_mlac_vec4f_neon`
+     * or `ne10_mlac_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  acc   The corresponding elemetn is added to the result of the multiplication
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 4D vector to multiply the input vectors with
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source array)
      */
     extern ne10_result_t (*ne10_mlac_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_mlac_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
@@ -641,55 +679,66 @@ extern "C" {
     extern ne10_result_t ne10_mlac_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
 
     /**
-     * Performs a multiply and accumulate operation using the corresponding elements in acc, src1, and src2.
-     * This function point could be pointed to one of ne10_mla_float_c, ne10_mla_float_neon and ne10_mla_float_asm.
+     * Multiplies all scalar elements of an input array by those of the same index in another,
+     * adding this product to a value of the same index in yet another input array, and
+     * storing the results in an output array. Points to `ne10_mlac_float_c`, `ne10_mlac_float_neon`
+     * or `ne10_mlac_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  acc   These elemtns are added to the result of the multiplication operation
-     * @param[in]  src1  The first array to use as the input array
-     * @param[in]  src2  The second array to use as the input array
-     * @param[in]  count The number of items in the two input arrays
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
+     * @param[in]  src1  Pointer to the source array
+     * @param[in]  src2  Pointer to the array of elements to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mla_float) (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mla_float_c (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mla_float_neon (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_mla_float_neon");
     extern ne10_result_t ne10_mla_float_asm (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
-     * Performs a multiply and accumulate operation on the components of a 2D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vmla_vec2f_c, ne10_vmla_vec2f_neon and ne10_vmla_vec2f_asm.
+     * Element-wise multiplies all the 2D vector elements of an input array by those of the
+     * same index in another, adding this vector to another of the same index in yet another
+     * input array, and storing the results in an output array. Points to `ne10_vmla_vec2f_c`,
+     * `ne10_vmla_vec2f_neon` or `ne10_vmla_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
+     * @param[in]  src1  Pointer to the source array
+     * @param[in]  src2  Pointer to the array of elements to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vmla_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec2f_neon");
     extern ne10_result_t ne10_vmla_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
-     * Performs a multiply and accumulate operation on the components of a 3D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vmla_vec3f_c, ne10_vmla_vec3f_neon and ne10_vmla_vec3f_asm.
+     * Element-wise multiplies all the 3D vector elements of an input array by those of the
+     * same index in another, adding this vector to another of the same index in yet another
+     * input array, and storing the results in an output array. Points to `ne10_vmla_vec3f_c`,
+     * `ne10_vmla_vec3f_neon` or `ne10_vmla_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
+     * @param[in]  src1  Pointer to the source array
+     * @param[in]  src2  Pointer to the array of elements to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vmla_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec3f_neon");
     extern ne10_result_t ne10_vmla_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
-     * Performs a multiply and accumulate operation on the components of a 4D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vmla_vec4f_c, ne10_vmla_vec4f_neon and ne10_vmla_vec4f_asm.
+     * Element-wise multiplies all the 4D vector elements of an input array by those of the
+     * same index in another, adding this vector to another of the same index in yet another
+     * input array, and storing the results in an output array. Points to `ne10_vmla_vec4f_c`,
+     * `ne10_vmla_vec4f_neon` or `ne10_vmla_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  acc   Pointer to the array of elements to be added post-multiplication
+     * @param[in]  src1  Pointer to the source array
+     * @param[in]  src2  Pointer to the array of elements to multiply by
+     * @param[in]  count The number of multiply-accumulates to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vmla_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vmla_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vmla_vec4f_neon");
     extern ne10_result_t ne10_vmla_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    /** @} */ //end of Vector Multiply-Accumulator group
+    /** @} */ //end of Vector Multiply-Accumulate group
 
     /**
      * @ingroup groupMaths
@@ -699,7 +748,7 @@ extern "C" {
      * @defgroup MUL_MAT Matrix Multiply
      *
      * \par
-     * These functions implement the matrix multiply operation for float data type.
+     * These functions implement matrix multiplication operations for single precision floating point values.
      */
 
     /**
@@ -708,12 +757,13 @@ extern "C" {
      */
 
     /**
-     * Matrix multiplication of two 4x4 matrixs.
-     * This function point could be pointed to one of ne10_mulmat_4x4f_c, ne10_mulmat_4x4f_neon and ne10_mulmat_4x4f_asm.
+     * Multiplies the 4x4 matrices of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_mulmat_4x4f_c`, `ne10_mulmat_4x4f_neon`
+     * or `ne10_mulmat_4x4f_asm`. This operation cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mulmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mulmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
@@ -721,12 +771,13 @@ extern "C" {
     extern ne10_result_t ne10_mulmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
 
     /**
-     * Matrix multiplication of two 3x3 matrixs.
-     * This function point could be pointed to one of ne10_mulmat_3x3f_c, ne10_mulmat_3x3f_neon and ne10_mulmat_3x3f_asm.
+     * Multiplies the 3x3 matrices of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_mulmat_3x3f_c`, `ne10_mulmat_3x3f_neon`
+     * or `ne10_mulmat_3x3f_asm`. This operation cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mulmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
@@ -734,12 +785,13 @@ extern "C" {
     extern ne10_result_t ne10_mulmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
 
     /**
-     * Matrix multiplication of two 2x2 matrixs.
-     * This function point could be pointed to one of ne10_mulmat_2x2f_c, ne10_mulmat_2x2f_neon and ne10_mulmat_2x2f_asm.
+     * Multiplies the 2x2 matrices of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_mulmat_2x2f_c`, `ne10_mulmat_2x2f_neon`
+     * or `ne10_mulmat_2x2f_asm`. This operation cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mulmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_mulmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
@@ -755,7 +807,7 @@ extern "C" {
      * @defgroup MUL_MAT_VEC Matrix Vector Multiply
      *
      * \par
-     * These functions implement the matrix vector multiply operation for float data type.
+     * These functions implement matrix vector multiplication operations for single precision floating point values.
      */
 
     /**
@@ -763,36 +815,42 @@ extern "C" {
      * @{
      */
     /**
-     * Matrix multiplication of 4x4 matrix and 4D vector.
-     * This function point could be pointed to one of ne10_mulcmatvec_cm4x4f_v4f_c, ne10_mulcmatvec_cm4x4f_v4f_neon and ne10_mulcmatvec_cm4x4f_v4f_asm.
+     * Multiplies the 4x4 matrices of one input array by the 4D vectors of the same index in
+     * another, storing the results in an output array. Points to `ne10_mulcmatvec_cm4x4f_v4f_c`,
+     * `ne10_mulcmatvec_cm4x4f_v4f_neon` or `ne10_mulcmatvec_cm4x4f_v4f_asm`. This operation
+     * cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  cst   Pointer to the matrix to multiply the input values with
-     * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  cst   Pointer to the source array of matrices
+     * @param[in]  src   Pointer to the source array of vectors
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mulcmatvec_cm4x4f_v4f) (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_c (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_neon (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm4x4f_v4f_neon");
     extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_asm (ne10_vec4f_t * dst, const ne10_mat4x4f_t * cst, ne10_vec4f_t * src, ne10_uint32_t count);
     /**
-     * Matrix multiplication of 3x3 matrix and 3D vector.
-     * This function point could be pointed to one of ne10_mulcmatvec_cm3x3f_v3f_c, ne10_mulcmatvec_cm3x3f_v3f_neon and ne10_mulcmatvec_cm3x3f_v3f_asm.
+     * Multiplies the 3x3 matrices of one input array by the 3D vectors of the same index in
+     * another, storing the results in an output array. Points to `ne10_mulcmatvec_cm3x3f_v3f_c`,
+     * `ne10_mulcmatvec_cm3x3f_v3f_neon` or `ne10_mulcmatvec_cm3x3f_v3f_asm`. This operation
+     * cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  cst   Pointer to the matrix to multiply the input values with
-     * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  cst   Pointer to the source array of matrices
+     * @param[in]  src   Pointer to the source array of vectors
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mulcmatvec_cm3x3f_v3f) (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_c (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_neon (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_mulcmatvec_cm3x3f_v3f_neon");
     extern ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_asm (ne10_vec3f_t * dst, const ne10_mat3x3f_t * cst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
-     * Matrix multiplication of 2x2 matrix and 2D vector.
-     * This function point could be pointed to one of ne10_mulcmatvec_cm2x2f_v2f_c, ne10_mulcmatvec_cm2x2f_v2f_neon and ne10_mulcmatvec_cm2x2f_v2f_asm.
+     * Multiplies the 2x2 matrices of one input array by the 2D vectors of the same index in
+     * another, storing the results in an output array. Points to `ne10_mulcmatvec_cm2x2f_v2f_c`,
+     * `ne10_mulcmatvec_cm2x2f_v2f_neon` or `ne10_mulcmatvec_cm2x2f_v2f_asm`. This operation
+     * cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  cst   Pointer to the matrix to multiply the input values with
-     * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  cst   Pointer to the source array of matrices
+     * @param[in]  src   Pointer to the source array of vectors
+     * @param[in]  count The number of multiplications to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_mulcmatvec_cm2x2f_v2f) (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_c (ne10_vec2f_t * dst, const ne10_mat2x2f_t * cst, ne10_vec2f_t * src, ne10_uint32_t count);
@@ -806,10 +864,10 @@ extern "C" {
      */
 
     /**
-     * @defgroup DIV_VEC Vector Div
+     * @defgroup DIV_VEC Vector Divide
      *
      * \par
-     * These functions implement the vector division operation for float data type.
+     * These functions implement vector element-wise division operations for single precision floating point values.
      */
 
     /**
@@ -818,112 +876,121 @@ extern "C" {
      */
 
     /**
-     * Divides the elements of an input array by a constant scalar and stores the results in an output array.
-     * This function point could be pointed to one of ne10_divc_float_c, ne10_divc_float_neon and ne10_divc_float_asm.
+     * Divides all scalar elements of an input array by a constant value, storing the
+     * results in an output array. Points to `ne10_divc_float_c`, `ne10_divc_float_neon`
+     * or `ne10_divc_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   The constant scalar to divide the input values by
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to divide by
+     * @param[in]  count The number of scalar values to be processed
      */
     extern ne10_result_t (*ne10_divc_float) (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_float_asm (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count);
     /**
-     * Divides the components of 2D vectors in an input array with the components of a constant 2D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_divc_vec2f_c, ne10_divc_vec2f_neon and ne10_divc_vec2f_asm.
+     * Element-wise divides all the 2D vectors in an input array by a constant vector,
+     * storing the results in an output array. Points to `ne10_divc_vec2f_c`, `ne10_divc_vec2f_neon`
+     * or `ne10_divc_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 2D vector to divide the input values by
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 2D vector to divide by
+     * @param[in]  count The number of 2D vectors to be processed
      */
     extern ne10_result_t (*ne10_divc_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
-     * Divides the components of 3D vectors in an input array with the components of a constant 3D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_divc_vec3f_c, ne10_divc_vec3f_neon and ne10_divc_vec3f_asm.
+     * Element-wise divides all the 3D vectors in an input array by a constant vector,
+     * storing the results in an output array. Points to `ne10_divc_vec3f_c`, `ne10_divc_vec3f_neon`
+     * or `ne10_divc_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 3D vector to divide the input values by
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 3D vector to divide by
+     * @param[in]  count The number of 3D vectors to be processed
      */
     extern ne10_result_t (*ne10_divc_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count);
     /**
-     * Divides the components of 4D vectors in an input array with the components of a constant 4D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_divc_vec4f_c, ne10_divc_vec4f_neon and ne10_divc_vec4f_asm.
+     * Element-wise divides all the 4D vectors in an input array by a constant vector,
+     * storing the results in an output array. Points to `ne10_divc_vec4f_c`, `ne10_divc_vec4f_neon`
+     * or `ne10_divc_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  cst   Pointer to the 4D vector to divide the input values by
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   Pointer to the constant 4D vector to divide by
+     * @param[in]  count The number of 4D vectors to be processed
      */
     extern ne10_result_t (*ne10_divc_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_divc_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count);
     /**
-     *  Divides the elements of src1 by the elements of src2 and stores the results in the dst.
-     * This function point could be pointed to one of ne10_div_float_c, ne10_div_float_neon and ne10_div_float_asm.
+     * Divides the scalar elements of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_div_float_c`, `ne10_div_float_neon`
+     * or `ne10_div_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1  The first array to use as the input array
-     * @param[in]  src2  The second array to use as the input array
-     * @param[in]  count The number of items in the two input arrays
+     * @param[in]  src1  Pointer to source array of elements to be divided by
+     * @param[in]  src2  Pointer to the source array of elements to divide by
+     * @param[in]  count The number of divisions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_div_float) (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_div_float_c (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_div_float_neon (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count) asm ("ne10_div_float_neon");
     extern ne10_result_t ne10_div_float_asm (ne10_float32_t * dst, ne10_float32_t * src1, ne10_float32_t * src2, ne10_uint32_t count);
     /**
-     * Divides the components of a 2D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vdiv_vec2f_c, ne10_vdiv_vec2f_neon and ne10_vdiv_vec2f_asm.
+     * Element-wise divides the 2D vectors of one input array by those of the same index in
+     * another, storing the results in an output array. Points to `ne10_vdiv_vec2f_c`,
+     * `ne10_vdiv_vec2f_neon` or `ne10_vdiv_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the nominators' source array
-     * @param[in]  src2   Pointer to the denominators' source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to source array of elements to be divided by
+     * @param[in]  src2  Pointer to the source array of elements to divide by
+     * @param[in]  count The number of divisions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vdiv_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec2f_neon");
     extern ne10_result_t ne10_vdiv_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
-     * Divides the components of a 3D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vdiv_vec3f_c, ne10_vdiv_vec3f_neon and ne10_vdiv_vec3f_asm.
+     * Element-wise divides the 3D vectors of one input array by those of the same index in
+     * another, storing the results in an output array. Points to `ne10_vdiv_vec3f_c`,
+     * `ne10_vdiv_vec3f_neon` or `ne10_vdiv_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the nominators' source array
-     * @param[in]  src2   Pointer to the denominators' source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to source array of elements to be divided by
+     * @param[in]  src2  Pointer to the source array of elements to divide by
+     * @param[in]  count The number of divisions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vdiv_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec3f_neon");
     extern ne10_result_t ne10_vdiv_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
-     * Divides the components of a 4D vector with the corresponding components of another.
-     * This function point could be pointed to one of ne10_vdiv_vec4f_c, ne10_vdiv_vec4f_neon and ne10_vdiv_vec4f_asm.
+     * Element-wise divides the 4D vectors of one input array by those of the same index in
+     * another, storing the results in an output array. Points to `ne10_vdiv_vec4f_c`,
+     * `ne10_vdiv_vec4f_neon` or `ne10_vdiv_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the nominators' source array
-     * @param[in]  src2   Pointer to the denominators' source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to source array of elements to be divided by
+     * @param[in]  src2  Pointer to the source array of elements to divide by
+     * @param[in]  count The number of divisions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_vdiv_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_vdiv_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_vdiv_vec4f_neon");
     extern ne10_result_t ne10_vdiv_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    /** @} */ //end of Vector Div group
+    /** @} */ //end of Vector Divide group
 
     /**
      * @ingroup groupMaths
      */
 
     /**
-     * @defgroup DIV_MAT Matrix Div
+     * @cond DOXYGEN_EXCLUDE
+     * @defgroup DIV_MAT Matrix Divide
      *
      * \par
-     * These functions implement the matrix division operation for float data type.
+     * These functions implement matrix division operations for single precision floating point values.
      */
 
     /**
@@ -932,52 +999,57 @@ extern "C" {
      */
 
     /**
-     * Divides the components of a 4x4 matrix with the corresponding components of another.
-     * This function point could be pointed to one of ne10_divmat_4x4f_c, ne10_divmat_4x4f_neon and ne10_divmat_4x4f_asm.
+     * Divides the 4x4 matrices of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_divmat_4x4f_c`,
+     * `ne10_divmat_4x4f_neon` or `ne10_divmat_4x4f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the nominators' source array
-     * @param[in]  src2   Pointer to the denominators' source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to source array of elements to be divided by
+     * @param[in]  src2  Pointer to the source array of elements to divide by
+     * @param[in]  count The number of divisions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_divmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_4x4f_neon");
     extern ne10_result_t ne10_divmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count);
     /**
-     * Divides the components of a 3x3 matrix with the corresponding components of another.
-     * This function point could be pointed to one of ne10_divmat_3x3f_c, ne10_divmat_3x3f_neon and ne10_divmat_3x3f_asm.
+     * Divides the 3x3 matrices of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_divmat_3x3f_c`,
+     * `ne10_divmat_3x3f_neon` or `ne10_divmat_3x3f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the nominators' source array
-     * @param[in]  src2   Pointer to the denominators' source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to source array of elements to be divided by
+     * @param[in]  src2  Pointer to the source array of elements to divide by
+     * @param[in]  count The number of divisions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_divmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_3x3f_neon");
     extern ne10_result_t ne10_divmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count);
     /**
-     * Divides the components of a 2x2 matrix with the corresponding components of another.
-     * This function point could be pointed to one of ne10_divmat_2x2f_c, ne10_divmat_2x2f_neon and ne10_divmat_2x2f_asm.
+     * Divides the 2x2 matrices of one input array by those of the same index in another,
+     * storing the results in an output array. Points to `ne10_divmat_2x2f_c`,
+     * `ne10_divmat_2x2f_neon` or `ne10_divmat_2x2f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the nominators' source array
-     * @param[in]  src2   Pointer to the denominators' source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to source array of elements to be divided by
+     * @param[in]  src2  Pointer to the source array of elements to divide by
+     * @param[in]  count The number of divisions to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_divmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_divmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count) asm ("ne10_divmat_2x2f_neon");
     extern ne10_result_t ne10_divmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count);
-    /** @} */ //end of Matrix Div group
+    /** @}
+     * @endcond
+     */ //end of Matrix Divide group
 
     /**
      * @ingroup groupMaths
      */
 
     /**
-     * @defgroup SETC_VEC Vector Setc
+     * @defgroup SETC_VEC Vector Set
      *
      * \par
-     * These functions implement vector setc operation for float data type.
+     * These functions implement vector set operations for single precision floating point values.
      */
 
     /**
@@ -986,60 +1058,60 @@ extern "C" {
      */
 
     /**
-     * Sets the elements of an input array to a constant scalar and stores the results in an output array.
-     * This function point could be pointed to one of ne10_setc_float_c, ne10_setc_float_neon and ne10_setc_float_asm.
+     * Sets the scalar elements of an array to a constant value. Points to `ne10_setc_float_c`,
+     * `ne10_setc_float_neon` or `ne10_setc_float_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  cst   The constant scalar to set the input values to
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to set the elements of the destination to
+     * @param[in]  count The number of elements to set
      */
     extern ne10_result_t (*ne10_setc_float) (ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_float_c (ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_float_neon (ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_float_asm (ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count);
     /**
-     * Sets the components of 2D vectors in an input array to the components of a constant 2D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_setc_vec2f_c, ne10_setc_vec2f_neon and ne10_setc_vec2f_asm.
+     * Sets the 2D vector elements of an array to a constant vector. Points to `ne10_setc_vec2f_c`,
+     * `ne10_setc_vec2f_neon` or `ne10_setc_vec2f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  cst   Pointer to the 2D vector to set the input values to
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to set the elements of the destination to
+     * @param[in]  count The number of elements to set
      */
     extern ne10_result_t (*ne10_setc_vec2f) (ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec2f_c (ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec2f_neon (ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec2f_asm (ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count);
     /**
-     * Sets the components of 3D vectors in an input array to the components of a constant 3D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_setc_vec3f_c, ne10_setc_vec3f_neon and ne10_setc_vec3f_asm.
+     * Sets the 3D vector elements of an array to a constant vector. Points to `ne10_setc_vec3f_c`,
+     * `ne10_setc_vec3f_neon` or `ne10_setc_vec3f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  cst   Pointer to the 3D vector to set the input values to
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to set the elements of the destination to
+     * @param[in]  count The number of elements to set
      */
     extern ne10_result_t (*ne10_setc_vec3f) (ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec3f_c (ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec3f_neon (ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec3f_asm (ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count);
     /**
-     * Sets the components of 4D vectors in an input array to the components of a constant 3D vector and stores the results in an output array.
-     * This function point could be pointed to one of ne10_setc_vec4f_c, ne10_setc_vec4f_neon and ne10_setc_vec4f_asm.
+     * Sets the 4D vector elements of an array to a constant vector. Points to `ne10_setc_vec4f_c`,
+     * `ne10_setc_vec4f_neon` or `ne10_setc_vec4f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  cst   Pointer to the 4D vector to set the input values to
-     * @param[in]  count The number of items in the input array
+     * @param[in]  cst   The constant to set the elements of the destination to
+     * @param[in]  count The number of elements to set
      */
     extern ne10_result_t (*ne10_setc_vec4f) (ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec4f_c (ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec4f_neon (ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
     extern ne10_result_t ne10_setc_vec4f_asm (ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count);
-    /** @} */ //end of Vector Setc group
+    /** @} */ //end of Vector Set group
 
     /**
      * @ingroup groupMaths
      */
 
     /**
-     * @defgroup LEN_VEC Vector Len
+     * @defgroup LEN_VEC Vector Length
      *
      * \par
-     * These functions implement vector len operation for float data type.
+     * These functions implement vector magnitude operations for single precision floating point values.
      */
 
     /**
@@ -1047,39 +1119,42 @@ extern "C" {
      * @{
      */
     /**
-     * Returns length of 2D vectors in corresponding elements of the output array.
-     * This function point could be pointed to one of ne10_len_vec2f_c, ne10_len_vec2f_neon and ne10_len_vec2f_asm.
+     * Calculates the magnitude of 2D vectors within an input array, storing the results
+     * in an output array. Points to `ne10_len_vec2f_c`, `ne10_len_vec2f_neon` or
+     * `ne10_len_vec2f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_len_vec2f) (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec2f_c (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_len_vec2f_neon");
     extern ne10_result_t ne10_len_vec2f_asm (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /**
-     * Returns length of 3D vectors in corresponding elements of the output array.
-     * This function point could be pointed to one of ne10_len_vec3f_c, ne10_len_vec3f_neon and ne10_len_vec3f_asm.
+     * Calculates the magnitude of 3D vectors within an input array, storing the results
+     * in an output array. Points to `ne10_len_vec3f_c`, `ne10_len_vec3f_neon` or
+     * `ne10_len_vec3f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_len_vec3f) (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec3f_c (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_len_vec3f_neon");
     extern ne10_result_t ne10_len_vec3f_asm (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
-     * Returns length of 4D vectors in corresponding elements of the output array.
-     * This function point could be pointed to one of ne10_len_vec4f_c, ne10_len_vec4f_neon and ne10_len_vec4f_asm.
+     * Calculates the magnitude of 4D vectors within an input array, storing the results
+     * in an output array. Points to `ne10_len_vec4f_c`, `ne10_len_vec4f_neon` or
+     * `ne10_len_vec4f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_len_vec4f) (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec4f_c (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_len_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_len_vec4f_neon");
     extern ne10_result_t ne10_len_vec4f_asm (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
-    /** @} */ //end of Vector Len group
+    /** @} */ //end of Vector Length group
 
 
     /**
@@ -1090,7 +1165,7 @@ extern "C" {
      * @defgroup NORM_VEC Vector Normalize
      *
      * \par
-     * These functions implement vector normalize operation for float data type.
+     * These functions implement vector normalization operations for single precision floating point values.
      */
 
     /**
@@ -1098,33 +1173,36 @@ extern "C" {
      * @{
      */
     /**
-     * Normalizes 2D vectors of the input array and stores them in the corresponding elements of the output array.
-     * This function point could be pointed to one of ne10_normalize_vec2f_c, ne10_normalize_vec2f_neon and ne10_normalize_vec2f_asm.
+     * Calculates the normalization of 2D vectors within an input array, storing the results
+     * in an output array. Points to `ne10_normalize_vec2f_c`, `ne10_normalize_vec2f_neon`
+     * or `ne10_normalize_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_normalize_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec2f_neon");
     extern ne10_result_t ne10_normalize_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /**
-     * Normalizes 3D vectors of the input array and stores them in the corresponding elements of the output array.
-     * This function point could be pointed to one of ne10_normalize_vec3f_c, ne10_normalize_vec3f_neon and ne10_normalize_vec3f_asm.
+     * Calculates the normalization of 3D vectors within an input array, storing the results
+     * in an output array. Points to `ne10_normalize_vec3f_c`, `ne10_normalize_vec3f_neon`
+     * or `ne10_normalize_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_normalize_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_normalize_vec3f_neon");
     extern ne10_result_t ne10_normalize_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
-     * Normalizes 4D vectors of the input array and stores them in the corresponding elements of the output array.
-     * This function point could be pointed to one of ne10_normalize_vec4f_c, ne10_normalize_vec4f_neon and ne10_normalize_vec4f_asm.
+     * Calculates the normalization of 4D vectors within an input array, storing the results
+     * in an output array. Points to `ne10_normalize_vec4f_c`, `ne10_normalize_vec4f_neon`
+     * or `ne10_normalize_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_normalize_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_normalize_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
@@ -1138,10 +1216,10 @@ extern "C" {
      */
 
     /**
-     * @defgroup ABS_VEC Vector Abs
+     * @defgroup ABS_VEC Vector Absolute Value
      *
      * \par
-     * These functions implement vector abs operation for float data type.
+     * These functions implement vector absolute value operations for single precision floating point values.
      */
 
     /**
@@ -1150,60 +1228,64 @@ extern "C" {
      */
 
     /**
-     * Calculates the absolute value of each element in the source array and stores the result in the corresponding entry of the destination array.
-     * This function point could be pointed to one of ne10_abs_float_c, ne10_abs_float_neon and ne10_abs_float_asm.
+     * Calculates the absolute value of scalars within an input array, storing the results
+     * in an output array. Points to `ne10_abs_float_c`, `ne10_abs_float_neon` or
+     * `ne10_abs_float_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_abs_float) (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_float_c (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_float_neon (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count) asm ("ne10_abs_float_neon");
     extern ne10_result_t ne10_abs_float_asm (ne10_float32_t * dst, ne10_float32_t * src, ne10_uint32_t count);
     /**
-     * Generates a 2D vector from the absolute values of each of the components of an input vector.
-     * This function point could be pointed to one of ne10_abs_vec2f_c, ne10_abs_vec2f_neon and ne10_abs_vec2f_asm.
+     * Calculates the element-wise absolute value of 2D vectors within an input array, storing
+     * the results in an output array. Points to `ne10_abs_vec2f_c`, `ne10_abs_vec2f_neon` or
+     * `ne10_abs_vec2f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_abs_vec2f) (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec2f_neon");
     extern ne10_result_t ne10_abs_vec2f_asm (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne10_uint32_t count);
     /**
-     * Generates a 3D vector from the absolute values of each of the components of an input vector.
-     * This function point could be pointed to one of ne10_abs_vec3f_c, ne10_abs_vec3f_neon and ne10_abs_vec3f_asm.
+     * Calculates the element-wise absolute value of 3D vectors within an input array, storing
+     * the results in an output array. Points to `ne10_abs_vec3f_c`, `ne10_abs_vec3f_neon` or
+     * `ne10_abs_vec3f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_abs_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec3f_neon");
     extern ne10_result_t ne10_abs_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count);
     /**
-     * Generates a 4D vector from the absolute values of each of the components of an input vector.
-     * This function point could be pointed to one of ne10_abs_vec4f_c, ne10_abs_vec4f_neon and ne10_abs_vec4f_asm.
+     * Calculates the element-wise absolute value of 4D vectors within an input array, storing
+     * the results in an output array. Points to `ne10_abs_vec4f_c`, `ne10_abs_vec4f_neon` or
+     * `ne10_abs_vec4f_asm`. This operation can be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of vectors to be processed
      */
     extern ne10_result_t (*ne10_abs_vec4f) (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_abs_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count) asm ("ne10_abs_vec4f_neon");
     extern ne10_result_t ne10_abs_vec4f_asm (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count);
-    /** @} */ //end of Vector Abs group
+    /** @} */ //end of Vector Absolute Value group
 
     /**
      * @ingroup groupMaths
      */
 
     /**
-     * @defgroup DOT_VEC Vector Dot
+     * @defgroup DOT_VEC Vector Dot Product
      *
      * \par
-     * These functions implement vector dot operation for float data type.
+     * These functions implement vector dot product operations for single precision floating point values.
      */
 
     /**
@@ -1211,42 +1293,45 @@ extern "C" {
      * @{
      */
     /**
-     * Dot product of two 2D vectors.
-     * This function point could be pointed to one of ne10_dot_vec2f_c, ne10_dot_vec2f_neon and ne10_dot_vec2f_asm.
+     * Calculates the dot product of 2D vectors from one input array with those of the same
+     * index in another, storing the results in an output array. Points to `ne10_dot_vec2f_c`,
+     * `ne10_dot_vec2f_neon` or `ne10_dot_vec2f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of dot products to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_dot_vec2f) (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec2f_c (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec2f_neon (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec2f_neon");
     extern ne10_result_t ne10_dot_vec2f_asm (ne10_float32_t * dst, ne10_vec2f_t * src1, ne10_vec2f_t * src2, ne10_uint32_t count);
     /**
-     * Dot product of two 3D vectors.
-     * This function point could be pointed to one of ne10_dot_vec3f_c, ne10_dot_vec3f_neon and ne10_dot_vec3f_asm.
+     * Calculate the dot product of 3D vectors from one input array with those of the same
+     * index in another, storing the results in an output array. Points to `ne10_dot_vec3f_c`,
+     * `ne10_dot_vec3f_neon` or `ne10_dot_vec3f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of dot products to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_dot_vec3f) (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec3f_c (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec3f_neon (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec3f_neon");
     extern ne10_result_t ne10_dot_vec3f_asm (ne10_float32_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     /**
-     * Dot product of two 4D vectors.
-     * This function point could be pointed to one of ne10_dot_vec4f_c, ne10_dot_vec4f_neon and ne10_dot_vec4f_asm.
+     * Calculates the dot product of 4D vectors from one input array with those of the same
+     * index in another, storing the results in an output array. Points to `ne10_dot_vec4f_c`,
+     * `ne10_dot_vec4f_neon` or `ne10_dot_vec4f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of dot products to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_dot_vec4f) (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec4f_c (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_dot_vec4f_neon (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count) asm ("ne10_dot_vec4f_neon");
     extern ne10_result_t ne10_dot_vec4f_asm (ne10_float32_t * dst, ne10_vec4f_t * src1, ne10_vec4f_t * src2, ne10_uint32_t count);
-    /** @} */ //end of Vector Dot group
+    /** @} */ //end of Vector Dot Product group
 
 
     /**
@@ -1254,10 +1339,10 @@ extern "C" {
      */
 
     /**
-     * @defgroup CROSS_VEC Vector Cross
+     * @defgroup CROSS_VEC Vector Cross Product
      *
      * \par
-     * These functions implement vector cross operation for float data type.
+     * These functions implement vector cross product operations for single precision floating point values.
      */
 
     /**
@@ -1266,18 +1351,19 @@ extern "C" {
      */
 
     /**
-     * Performs a cross product operation on the two input vectors.
-     * This function point could be pointed to one of ne10_cross_vec3f_c, ne10_cross_vec3f_neon and ne10_cross_vec3f_asm.
+     * Calculate the cross product of 3D vectors from one input array with those of the same
+     * index in another, storing the results in an output array. Points to `ne10_cross_vec3f_c`,
+     * `ne10_cross_vec3f_neon` or `ne10_cross_vec3f_asm`. This operation cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  src1   Pointer to the first source array
-     * @param[in]  src2   Pointer to the second source array
-     * @param[in]  count The number of items in the input arrays
+     * @param[in]  src1  Pointer to the first source array
+     * @param[in]  src2  Pointer to the second source array
+     * @param[in]  count The number of dot products to be performed (i.e. the length of the source arrays)
      */
     extern ne10_result_t (*ne10_cross_vec3f) (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_cross_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
     extern ne10_result_t ne10_cross_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count) asm ("ne10_cross_vec3f_neon");
     extern ne10_result_t ne10_cross_vec3f_asm (ne10_vec3f_t * dst, ne10_vec3f_t * src1, ne10_vec3f_t * src2, ne10_uint32_t count);
-    /** @} */ //end of Vector Cross group
+    /** @} */ //end of Vector Cross Product group
 
     /**
      * @ingroup groupMaths
@@ -1287,7 +1373,7 @@ extern "C" {
      * @defgroup DET_MAT Matrix Determinant
      *
      * \par
-     * These functions implement matrix determinant operation for float data type.
+     * These functions implement matrix determinant operations for single precision floating point values.
      */
 
     /**
@@ -1296,33 +1382,36 @@ extern "C" {
      */
 
     /**
-     * Calculate the determinant of a 4x4 matrix.
-     * This function point could be pointed to one of ne10_detmat_4x4f_c, ne10_detmat_4x4f_neon and ne10_detmat_4x4f_asm.
+     * Calculates the determinant of 4x4 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_detmat_4x4f_c`, `ne10_detmat_4x4f_neon` or
+     * `ne10_detmat_4x4f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_detmat_4x4f) (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_4x4f_c (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_4x4f_neon (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_detmat_4x4f_neon");
     extern ne10_result_t ne10_detmat_4x4f_asm (ne10_float32_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the determinant of a 3x3 matrix.
-     * This function point could be pointed to one of ne10_detmat_3x3f_c, ne10_detmat_3x3f_neon and ne10_detmat_3x3f_asm.
+     * Calculates the determinant of 3x3 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_detmat_3x3f_c`, `ne10_detmat_3x3f_neon` or
+     * `ne10_detmat_3x3f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_detmat_3x3f) (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_3x3f_c (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_3x3f_neon (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_detmat_3x3f_neon");
     extern ne10_result_t ne10_detmat_3x3f_asm (ne10_float32_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the determinant of a 2x2 matrix.
-     * This function point could be pointed to one of ne10_detmat_2x2f_c, ne10_detmat_2x2f_neon and ne10_detmat_2x2f_asm.
+     * Calculates the determinant of 2x2 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_detmat_2x2f_c`, `ne10_detmat_2x2f_neon` or
+     * `ne10_detmat_2x2f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_detmat_2x2f) (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_detmat_2x2f_c (ne10_float32_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
@@ -1335,10 +1424,10 @@ extern "C" {
      */
 
     /**
-     * @defgroup INV_MAT Matrix Invertible
+     * @defgroup INV_MAT Matrix Inverse
      *
      * \par
-     * These functions implement matrix invertible operation for float data type.
+     * These functions implement matrix inversion operations for single precision floating point values.
      */
 
     /**
@@ -1346,39 +1435,42 @@ extern "C" {
      * @{
      */
     /**
-     * Calculate the invertible matrix of a 4x4 matrix.
-     * This function point could be pointed to one of ne10_invmat_4x4f_c, ne10_invmat_4x4f_neon and ne10_invmat_4x4f_asm.
+     * Calculates the inverse of 4x4 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_invmat_4x4f_c`, `ne10_invmat_4x4f_neon` or
+     * `ne10_invmat_4x4f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_invmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_invmat_4x4f_neon");
     extern ne10_result_t ne10_invmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the invertible matrix of a 3x3 matrix.
-     * This function point could be pointed to one of ne10_invmat_3x3f_c, ne10_invmat_3x3f_neon and ne10_invmat_3x3f_asm.
+     * Calculates the inverse of 3x3 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_invmat_3x3f_c`, `ne10_invmat_3x3f_neon` or
+     * `ne10_invmat_3x3f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_invmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_invmat_3x3f_neon");
     extern ne10_result_t ne10_invmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the invertible matrix of a 2x2 matrix.
-     * This function point could be pointed to one of ne10_invmat_2x2f_c, ne10_invmat_2x2f_neon and ne10_invmat_2x2f_asm.
+     * Calculates the inverse of 2x2 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_invmat_2x2f_c`, `ne10_invmat_2x2f_neon` or
+     * `ne10_invmat_2x2f_asm`.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_invmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_invmat_2x2f_neon (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count) asm ("ne10_invmat_2x2f_neon");
     extern ne10_result_t ne10_invmat_2x2f_asm (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
-    /** @} */ //end of Matrix Invertible group
+    /** @} */ //end of Matrix Inverse group
 
     /**
      * @ingroup groupMaths
@@ -1388,7 +1480,7 @@ extern "C" {
      * @defgroup TRANS_MAT Matrix Transpose
      *
      * \par
-     * These functions implement matrix transpose operation for float data type.
+     * These functions implement matrix transpose operations for single precision floating point values.
      */
 
     /**
@@ -1396,33 +1488,36 @@ extern "C" {
      * @{
      */
     /**
-     * Calculate the transpose matrix of a 4x4 matrix.
-     * This function point could be pointed to one of ne10_transmat_4x4f_c, ne10_transmat_4x4f_neon and ne10_transmat_4x4f_asm.
+     * Calculates the transpose of 4x4 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_transmat_4x4f_c`, `ne10_transmat_4x4f_neon` or
+     * `ne10_transmat_4x4f_asm`. This operation cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_transmat_4x4f) (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_transmat_4x4f_neon");
     extern ne10_result_t ne10_transmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the transpose matrix of a 4x4 matrix.
-     * This function point could be pointed to one of ne10_transmat_4x4f_c, ne10_transmat_4x4f_neon and ne10_transmat_4x4f_asm.
+     * Calculates the transpose of 3x3 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_transmat_3x3f_c`, `ne10_transmat_3x3f_neon` or
+     * `ne10_transmat_3x3f_asm`. This operation cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_transmat_3x3f) (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_transmat_3x3f_neon");
     extern ne10_result_t ne10_transmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the transpose matrix of a 3x3 matrix.
-     * This function point could be pointed to one of ne10_transmat_3x3f_c, ne10_transmat_3x3f_neon and ne10_transmat_3x3f_asm.
+     * Calculates the transpose of 2x2 matrices within an input array, storing the results
+     * in an output array. Points to `ne10_transmat_2x2f_c`, `ne10_transmat_2x2f_neon` or
+     * `ne10_transmat_2x2f_asm`. This operation cannot be performed in-place.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of matrices to be processed
      */
     extern ne10_result_t (*ne10_transmat_2x2f) (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
     extern ne10_result_t ne10_transmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count);
@@ -1438,7 +1533,7 @@ extern "C" {
      * @defgroup IDENTITY_MAT Matrix Identity
      *
      * \par
-     * These functions implement matrix identity operation for float data type.
+     * These functions implement matrix identity operations for single precision floating point values.
      */
 
     /**
@@ -1446,30 +1541,30 @@ extern "C" {
      * @{
      */
     /**
-     * Set the identity matrix of a 2x2 matrix.
-     * This function point could be pointed to one of ne10_identitymat_2x2f_c, ne10_identitymat_2x2f_neon and ne10_identitymat_2x2f_asm.
+     * Sets the elements of an array of 4x4 matrices to the identity matrix. Points to
+     * `ne10_identitymat_4x4f_c`, `ne10_identitymat_4x4f_neon` or `ne10_identitymat_4x4f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of elements to set
      */
     extern ne10_result_t (*ne10_identitymat_4x4f) (ne10_mat4x4f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_4x4f_c (ne10_mat4x4f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_4x4f_neon");
     extern ne10_result_t ne10_identitymat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_uint32_t count);
     /**
-     * Set the identity matrix of a 3x3 matrix.
-     * This function point could be pointed to one of ne10_identitymat_3x3f_c, ne10_identitymat_3x3f_neon and ne10_identitymat_3x3f_asm.
+     * Sets the elements of an array of 3x3 matrices to the identity matrix. Points to
+     * `ne10_identitymat_3x3f_c`, `ne10_identitymat_3x3f_neon` or `ne10_identitymat_3x3f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of elements to set
      */
     extern ne10_result_t (*ne10_identitymat_3x3f) (ne10_mat3x3f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_3x3f_c (ne10_mat3x3f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_uint32_t count) asm ("ne10_identitymat_3x3f_neon");
     extern ne10_result_t ne10_identitymat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_uint32_t count);
     /**
-     * Set the identity matrix of a 2x2 matrix.
-     * This function point could be pointed to one of ne10_identitymat_2x2f_c, ne10_identitymat_2x2f_neon and ne10_identitymat_2x2f_asm.
+     * Sets the elements of an array of 2x2 matrices to the identity matrix. Points to
+     * `ne10_identitymat_2x2f_c`, `ne10_identitymat_2x2f_neon` or `ne10_identitymat_2x2f_asm`.
      * @param[out] dst   Pointer to the destination array
-     * @param[in]  count The number of items in the input array
+     * @param[in]  count The number of elements to set
      */
     extern ne10_result_t (*ne10_identitymat_2x2f) (ne10_mat2x2f_t * dst, ne10_uint32_t count);
     extern ne10_result_t ne10_identitymat_2x2f_c (ne10_mat2x2f_t * dst, ne10_uint32_t count);
