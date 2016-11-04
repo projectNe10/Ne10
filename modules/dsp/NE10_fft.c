@@ -414,6 +414,12 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
 
     if (algorithm_flag == NE10_FFT_ALG_ANY)
     {
+        if (nfft % NE10_FFT_PARA_LEVEL)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+
         ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, st->nfft);
 
         // Generate super twiddles for the last stage.
@@ -520,6 +526,12 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 
     if (algorithm_flag == NE10_FFT_ALG_ANY)
     {
+        if (nfft % NE10_FFT_PARA_LEVEL)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
+
         ne10_fft_generate_twiddles_int32 (st->twiddles, st->factors, st->nfft);
 
         // Generate super twiddles for the last stage.
