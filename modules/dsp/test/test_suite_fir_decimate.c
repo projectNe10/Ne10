@@ -266,8 +266,8 @@ void test_fir_decimate_case0()
             ne10_fir_decimate_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize / config->D), config->blockSize);
         }
 
-        CHECK_ARRAY_GUARD (out_c, length);
-        CHECK_ARRAY_GUARD (out_neon, length);
+        assert_true (CHECK_ARRAY_GUARD (out_c, length));
+        assert_true (CHECK_ARRAY_GUARD (out_neon, length));
 
         //conformance test 1: compare snr
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, length);

@@ -266,8 +266,8 @@ void test_fir_sparse_case0()
             ne10_fir_sparse_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), scratch_neon, config->blockSize);
         }
 
-        CHECK_ARRAY_GUARD (out_c, TEST_LENGTH_SAMPLES);
-        CHECK_ARRAY_GUARD (out_neon, TEST_LENGTH_SAMPLES);
+        assert_true (CHECK_ARRAY_GUARD (out_c, TEST_LENGTH_SAMPLES));
+        assert_true (CHECK_ARRAY_GUARD (out_neon, TEST_LENGTH_SAMPLES));
 
         //conformance test 1: compare snr
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, TEST_LENGTH_SAMPLES);

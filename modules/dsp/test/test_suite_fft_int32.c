@@ -145,8 +145,8 @@ void test_fft_c2c_1d_int32_conformance()
                 GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
                 ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 0);
                 ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 0);
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t)));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t)));
 
                 //conformance test
                 for (i = 0; i < fftSize * 2; i++)
@@ -165,8 +165,8 @@ void test_fft_c2c_1d_int32_conformance()
                 GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
                 ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 0);
                 ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 0);
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t)));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t)));
 
                 //conformance test
                 for (i = 0; i < fftSize * 2; i++)
@@ -185,8 +185,8 @@ void test_fft_c2c_1d_int32_conformance()
                 GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
                 ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 1);
                 ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 1);
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t)));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t)));
 
                 //conformance test
                 for (i = 0; i < fftSize * 2; i++)
@@ -205,8 +205,8 @@ void test_fft_c2c_1d_int32_conformance()
                 GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
                 ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 1);
                 ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 1);
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t)));
+                assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t)));
 
                 //conformance test
                 for (i = 0; i < fftSize * 2; i++)
@@ -459,8 +459,8 @@ void test_fft_r2c_1d_int32_conformance()
         ne10_fft_r2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, in_c, cfg, 0);
         ne10_fft_r2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, in_neon, cfg, 0);
 
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t)));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t)));
 
         //conformance test
         for (i = 0; i < (fftSize / 2 + 1) * 2; i++)
@@ -491,8 +491,8 @@ void test_fft_r2c_1d_int32_conformance()
         ne10_fft_c2r_1d_int32_c (out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 0);
         ne10_fft_c2r_1d_int32_neon (out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 0);
 
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int32_t));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int32_t)));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int32_t)));
 
         //conformance test
         for (i = 0; i < fftSize; i++)
@@ -513,8 +513,8 @@ void test_fft_r2c_1d_int32_conformance()
         ne10_fft_r2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, in_c, cfg, 1);
         ne10_fft_r2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, in_neon, cfg, 1);
 
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t)));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, (fftSize / 2 + 1) * 2 * sizeof (ne10_int32_t)));
 
         //conformance test
         for (i = 0; i < (fftSize / 2 + 1) * 2; i++)
@@ -545,8 +545,8 @@ void test_fft_r2c_1d_int32_conformance()
         ne10_fft_c2r_1d_int32_c (out_c, (ne10_fft_cpx_int32_t*) in_c, cfg, 1);
         ne10_fft_c2r_1d_int32_neon (out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg, 1);
 
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int32_t));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * sizeof (ne10_int32_t)));
+        assert_true (CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * sizeof (ne10_int32_t)));
 
         //conformance test
         for (i = 0; i < fftSize; i++)

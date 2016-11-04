@@ -121,8 +121,8 @@ void test_fft_c2c_1d_float32_conformance()
                 ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg_c, 0);
                 ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg_neon, 0);
 
-                CHECK_ARRAY_GUARD (out_c, fftSize * 2);
-                CHECK_ARRAY_GUARD (out_neon, fftSize * 2);
+                assert_true (CHECK_ARRAY_GUARD (out_c, fftSize * 2));
+                assert_true (CHECK_ARRAY_GUARD (out_neon, fftSize * 2));
 
                 //conformance test
                 snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize * 2);
@@ -137,6 +137,9 @@ void test_fft_c2c_1d_float32_conformance()
 
                 ne10_fft_c2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, (ne10_fft_cpx_float32_t*) in_c, cfg_c,  1);
                 ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg_neon, 1);
+
+                assert_true (CHECK_ARRAY_GUARD (out_c, fftSize * 2));
+                assert_true (CHECK_ARRAY_GUARD (out_neon, fftSize * 2));
 
                 CHECK_ARRAY_GUARD (out_c, fftSize * 2);
                 CHECK_ARRAY_GUARD (out_neon, fftSize * 2);
@@ -277,8 +280,8 @@ void test_fft_r2c_1d_float32_conformance()
         ne10_fft_r2c_1d_float32_c ( (ne10_fft_cpx_float32_t*) out_c, in_c, cfg);
         ne10_fft_r2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) out_neon, in_neon, cfg);
 
-        CHECK_ARRAY_GUARD (out_c, (fftSize / 2 + 1) * 2);
-        CHECK_ARRAY_GUARD (out_neon, (fftSize / 2 + 1) * 2);
+        assert_true (CHECK_ARRAY_GUARD (out_c, (fftSize / 2 + 1) * 2));
+        assert_true (CHECK_ARRAY_GUARD (out_neon, (fftSize / 2 + 1) * 2));
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, (fftSize / 2 + 1) * 2);
@@ -304,8 +307,8 @@ void test_fft_r2c_1d_float32_conformance()
         ne10_fft_c2r_1d_float32_c (out_c, (ne10_fft_cpx_float32_t*) in_c, cfg);
         ne10_fft_c2r_1d_float32_neon (out_neon, (ne10_fft_cpx_float32_t*) in_neon, cfg);
 
-        CHECK_ARRAY_GUARD (out_c, fftSize);
-        CHECK_ARRAY_GUARD (out_neon, fftSize);
+        assert_true (CHECK_ARRAY_GUARD (out_c, fftSize));
+        assert_true (CHECK_ARRAY_GUARD (out_neon, fftSize));
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize);

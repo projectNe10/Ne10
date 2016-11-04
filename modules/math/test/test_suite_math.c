@@ -127,8 +127,8 @@ void test_abs_case0()
             ftbl_3args[2 * func_loop] (thedst_c, thesrc1, loop);
             ftbl_3args[2 * func_loop + 1] (thedst_neon, thesrc1, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -235,8 +235,8 @@ void test_addc_case0()
             }
 
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -349,8 +349,8 @@ void test_add_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -445,8 +445,8 @@ void test_cross_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -556,8 +556,8 @@ void test_divc_case0()
                 ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
             }
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -670,8 +670,8 @@ void test_div_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -771,8 +771,8 @@ void test_dot_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop);
-            CHECK_ARRAY_GUARD (thedst_neon, loop);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -870,8 +870,8 @@ void test_len_case0()
             ftbl_3args[2 * func_loop] (thedst_c, thesrc1, loop);
             ftbl_3args[2 * func_loop + 1] (thedst_neon, thesrc1, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop);
-            CHECK_ARRAY_GUARD (thedst_neon, loop);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -978,8 +978,8 @@ void test_mlac_case0()
                 ftbl_5args[2 * func_loop + 1] (thedst_neon, theacc, thesrc1, thecst, loop);
             }
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1097,8 +1097,8 @@ void test_mla_case0()
             ftbl_5args[2 * func_loop] (thedst_c, theacc, thesrc1, thesrc2, loop);
             ftbl_5args[2 * func_loop + 1] (thedst_neon, theacc, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1212,8 +1212,8 @@ void test_mulc_case0()
                 ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
             }
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1326,8 +1326,8 @@ void test_mul_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1425,8 +1425,8 @@ void test_normalize_case0()
             ftbl_3args[2 * func_loop] (thedst_c, thesrc1, loop);
             ftbl_3args[2 * func_loop + 1] (thedst_neon, thesrc1, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1532,8 +1532,8 @@ void test_rsbc_case0()
                 ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
             }
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1654,8 +1654,8 @@ void test_setc_case0()
                 ftbl_3args[2 * func_loop + 1] (thedst_neon, thecst, loop);
             }
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1774,8 +1774,8 @@ void test_subc_case0()
                 ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thecst, loop);
             }
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1888,8 +1888,8 @@ void test_sub_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -1988,8 +1988,8 @@ void test_addmat_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -2087,8 +2087,8 @@ void test_detmat_case0()
             ftbl_3args[2 * func_loop] (thedst_c, thesrc1, loop);
             ftbl_3args[2 * func_loop + 1] (thedst_neon, thesrc1, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop);
-            CHECK_ARRAY_GUARD (thedst_neon, loop);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -2179,8 +2179,8 @@ void test_identitymat_case0()
             ftbl_2args[2 * func_loop] (thedst_c, loop);
             ftbl_2args[2 * func_loop + 1] (thedst_neon, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -2264,8 +2264,8 @@ void test_invmat_case0()
             ftbl_3args[2 * func_loop] (thedst_c, thesrc1, loop);
             ftbl_3args[2 * func_loop + 1] (thedst_neon, thesrc1, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -2360,8 +2360,8 @@ void test_mulmat_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -2460,8 +2460,8 @@ void test_submat_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thesrc1, thesrc2, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thesrc1, thesrc2, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -2559,8 +2559,8 @@ void test_transmat_case0()
             ftbl_3args[2 * func_loop] (thedst_c, thesrc1, loop);
             ftbl_3args[2 * func_loop + 1] (thedst_neon, thesrc1, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {
@@ -2655,8 +2655,8 @@ void test_mulcmatvec_case0()
             ftbl_4args[2 * func_loop] (thedst_c, thecst, thesrc1, loop);
             ftbl_4args[2 * func_loop + 1] (thedst_neon, thecst, thesrc1, loop);
 
-            CHECK_ARRAY_GUARD (thedst_c, loop * vec_size);
-            CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size);
+            assert_true (CHECK_ARRAY_GUARD (thedst_c, loop * vec_size));
+            assert_true (CHECK_ARRAY_GUARD (thedst_neon, loop * vec_size));
 
             for (pos = 0; pos < loop; pos++)
             {

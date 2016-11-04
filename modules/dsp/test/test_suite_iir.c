@@ -306,8 +306,8 @@ void test_iir_lattice_case0()
             ne10_iir_lattice_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), config->blockSize);
         }
 
-        CHECK_ARRAY_GUARD (out_c, TEST_LENGTH_SAMPLES);
-        CHECK_ARRAY_GUARD (out_neon, TEST_LENGTH_SAMPLES);
+        assert_true (CHECK_ARRAY_GUARD (out_c, TEST_LENGTH_SAMPLES));
+        assert_true (CHECK_ARRAY_GUARD (out_neon, TEST_LENGTH_SAMPLES));
 
         //conformance test 1: compare snr
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, TEST_LENGTH_SAMPLES);

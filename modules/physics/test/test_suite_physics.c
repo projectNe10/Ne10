@@ -204,8 +204,8 @@ void test_relative_v_vec2f_conformance()
         //neon version
         ne10_physics_relative_v_vec2f_neon (dv_neon, v_wa, ra, v_wb, rb, count);
 
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_c, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_neon, count * vec_size);
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_c, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_neon, count * vec_size));
         printf ("----count %d\n", count);
         for (i = 0; i < count; i++)
             assert_float_vec_equal ( (ne10_float32_t*) &dv_c[i], (ne10_float32_t*) &dv_neon[i], ERROR_MARGIN_LARGE, vec_size);
@@ -221,8 +221,8 @@ void test_relative_v_vec2f_conformance()
         //neon version
         ne10_physics_relative_v_vec2f_neon (dv_neon, v_wa, ra, v_wb, rb, count);
 
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_c, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_neon, count * vec_size);
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_c, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) dv_neon, count * vec_size));
         printf ("----count %d\n", count);
         for (i = 0; i < count; i++)
             assert_float_vec_equal ( (ne10_float32_t*) &dv_c[i], (ne10_float32_t*) &dv_neon[i], ERROR_MARGIN_LARGE, vec_size);
@@ -351,10 +351,10 @@ void test_apply_impulse_vec2f_conformance()
         //neon version
         ne10_physics_apply_impulse_vec2f_neon (v_wa_neon, v_wb_neon, ra, rb, ima, imb, p, count);
 
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_c, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_neon, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_c, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_neon, count * vec_size);
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_c, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_neon, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_c, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_neon, count * vec_size));
 
         printf ("----count %d\n", count);
         for (i = 0; i < count; i++)
@@ -376,10 +376,10 @@ void test_apply_impulse_vec2f_conformance()
         //neon version
         ne10_physics_apply_impulse_vec2f_neon (v_wa_neon, v_wb_neon, ra, rb, ima, imb, p, count);
 
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_c, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_neon, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_c, count * vec_size);
-        CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_neon, count * vec_size);
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_c, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wa_neon, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_c, count * vec_size));
+        assert_true (CHECK_ARRAY_GUARD ( (ne10_float32_t*) v_wb_neon, count * vec_size));
         printf ("----count %d\n", count);
         for (i = 0; i < count; i++)
         {
