@@ -374,7 +374,7 @@
          *
          */
 
-        ldr             tmp0, =TW_81
+        adr             tmp0, .L_TW_81
         ld2             {q_in0_r, q_in0_i}, [p_in1], fstep
         ld2             {q_in2_r, q_in2_i}, [p_in1], fstep
         ld2             {q_in4_r, q_in4_i}, [p_in1], fstep
@@ -520,8 +520,8 @@
 
         .endm
 
-        .global TW_81
-TW_81:
+        .align 4
+.L_TW_81:
 .float 0.70710678
 .float -0.70710678
 

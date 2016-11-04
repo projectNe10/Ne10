@@ -405,7 +405,7 @@
          *
          */
 
-        ldr             tmp0, =TW_81_32
+        adr             tmp0, .L_TW_81_32
         vld2.32         {d_in0_r, d_in0_i}, [p_in1:64], fstep
         vld2.32         {d_in2_r, d_in2_i}, [p_in1:64], fstep
         vld2.32         {d_in4_r, d_in4_i}, [p_in1:64], fstep
@@ -512,8 +512,8 @@
 
         .endm
 
-        .global TW_81_32
-TW_81_32:
+        .align 4
+.L_TW_81_32:
 .long 1518500249
 .long -1518500249
 

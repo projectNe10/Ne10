@@ -151,7 +151,16 @@ dGnext_1         .dn   D31.F32
 
 
                             @/*Load Mask Valies*/
+#ifdef __PIC__
+                            @/* position-independent access of LDR pMask,=ne10_qMaskTable32 */
+                            LDR         pMask,.L_PIC0_GOT_OFFSET
+                            LDR         pTemp,.L_GOT_ne10_qMaskTable32
+.L_PIC0:
+                            ADD         pMask,pMask, pc
+                            LDR         pMask,[pMask, pTemp]
+#else
                             LDR         pMask,=ne10_qMaskTable32
+#endif
                             AND         mask,numStages,#3
                             ADD         tapCnt,mask,#1
 
@@ -395,6 +404,16 @@ iirLatticeEnd:
 .unreq    dGnext_1
                             VPOP    {d8-d9}
                             POP     {r4-r12,pc}
+
+#ifdef __PIC__
+@/*GOT trampoline values*/
+        .align  4
+.L_PIC0_GOT_OFFSET:
+.word   _GLOBAL_OFFSET_TABLE_-(.L_PIC0+4)
+
+.L_GOT_ne10_qMaskTable32:
+.word   ne10_qMaskTable32(GOT)
+#endif
 
         .end
 #endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
