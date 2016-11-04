@@ -26,7 +26,7 @@
 #
 
 # Following definition is only available under armv7.
-if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
     if(IOS_PLATFORM)
         # We use intrinsic for iOS, no definition is needed.
     else()

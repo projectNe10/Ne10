@@ -61,6 +61,9 @@ if(DEFINED NE10_ANDROID_TARGET_ARCH)
     endif()
 endif()
 
+if(NOT DEFINED NE10_LINUX_TARGET_ARCH AND DEFINED ENV{NE10_LINUX_TARGET_ARCH})
+    set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})
+endif()
 if(DEFINED NE10_LINUX_TARGET_ARCH)
     if(${NE10_LINUX_TARGET_ARCH} STREQUAL "armv7")
         set(NE10_TARGET_ARCH "armv7")
@@ -80,7 +83,7 @@ endif()
 message("-- Target architecture: ${NE10_TARGET_ARCH}")
 
 #select functionalities to be compiled
-if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
     # Math module has not been optimized for aarch64.
     option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
     # Physics module has not been optimized for aarch64.
@@ -134,7 +137,7 @@ if(ANDROID_PLATFORM)
     message("-- CMAKE_C_FLAGS:
     ${CMAKE_C_FLAGS}")
 elseif(GNULINUX_PLATFORM)
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=vfp3 -funsafe-math-optimizations")
       set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mthumb-interwork -mthumb -march=armv7-a -mfpu=neon")
       # Turn on asm optimization for Linux on ARM v7.

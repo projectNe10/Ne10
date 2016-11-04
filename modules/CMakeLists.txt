@@ -123,7 +123,7 @@ if(NE10_ENABLE_MATH)
     )
 
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
       foreach(intrinsic_file ${NE10_MATH_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
       endforeach(intrinsic_file)
@@ -195,7 +195,7 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir_init.c
     )
 
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
         if(IOS_PLATFORM)
         else()
             # Add dsp NEON files.
@@ -238,7 +238,7 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fft_generic_int32.neonintrinsic.cpp
     )
 
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
         foreach(intrinsic_file ${NE10_DSP_INTRINSIC_SRCS})
             set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
         endforeach(intrinsic_file)
@@ -275,7 +275,7 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_boxfilter.c
     )
 
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
         # Add image processing NEON files.
         set(NE10_IMGPROC_NEON_SRCS
             ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_rotate.neon.s
@@ -287,7 +287,7 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/NE10_boxfilter.neon.c
     )
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
       foreach(intrinsic_file ${NE10_IMGPROC_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
       endforeach(intrinsic_file)
@@ -322,7 +322,7 @@ if(NE10_ENABLE_PHYSICS)
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.c
     )
 
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
         # Add physics NEON files.
         set(NE10_PHYSICS_NEON_SRCS
             ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.s
@@ -333,7 +333,7 @@ if(NE10_ENABLE_PHYSICS)
         ${PROJECT_SOURCE_DIR}/modules/physics/NE10_physics.neon.c
     )
     # Tell CMake these files need to be compiled with "-mfpu=neon"
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
       foreach(intrinsic_file ${NE10_PHYSICS_INTRINSIC_SRCS})
         set_source_files_properties(${intrinsic_file} PROPERTIES COMPILE_FLAGS "-mfpu=neon" )
       endforeach(intrinsic_file)
