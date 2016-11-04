@@ -22,8 +22,8 @@
             }
             #container {
                 margin: 0 auto;
-                max-width: 700px;
-                padding: 3em 4em 1.5em;
+                max-width: 730px;
+                padding: 3em 3.5em 1.5em;
                 background-color: rgb(23, 23, 23);
                 background-color: rgba(23, 23, 23, .98);
                 border: 1px solid #000;
@@ -43,6 +43,7 @@
                 color: #cccc33;
             }
             pre {
+                margin: 1.5em 0;
                 padding: 15px;
                 background: #000000 none repeat scroll 0% 50%;
                 color: #ffffff;
@@ -61,6 +62,10 @@
             .logo img {
                 border: none;
                 width: 545px;
+            }
+            .lead {
+                font-size: 1.2em;
+                line-height: 1.35em;
             }
             .footer {
                 font-size: .8em;
@@ -119,35 +124,33 @@
                     <img alt="Ne10 - An Open Optimized Software Library Project for the ARM Architecture" src="NE10+tag_final.png">
                 </a>
             </h1>
-            <p>Project Ne10 <a href="https://community.arm.com/groups/android-community/blog/2013/10/28/ne10-a-new-open-source-library-to-accelerate-your-applications-with-neon" target="_blank">has been created</a> to provide a set of common, useful functions that are heavily optimized for the <a href="http://www.arm.com/products/processors/technologies/instruction-set-architectures.php" target="_blank">ARM architecture</a>, providing consistent, well-tested behavior that can be easily incorporated into applications. C interfaces to the functions are provided for both assembler and <a href="http://www.arm.com/products/processors/technologies/neon.php" target="_blank">NEON&trade;</a> implementations, supporting both static and dynamic linking. The library is structured into modules such that functionality that is not required can be ignored.</p>
-            <p>For new users, the project's documentation, along with some other resources you may find helpful, are linked below.</p>
+            <p class="lead">Ne10 is a library of common, useful functions that have been heavily optimised for ARM-based CPUs equipped with <a href="https://www.arm.com/products/processors/technologies/neon.php">NEON</a> SIMD capabilities. It provides consistent, well-tested behaviour, allowing for painless integration into a wide variety of applications via static or dynamic linking.</p>
 
-            <ul>
-                <li><a href="https://github.com/projectNe10/Ne10" target="_blank">Ne10 GitHub Repository</a></li>
-                <li><a href="http://projectne10.github.com/Ne10/doc/" target="_blank">Official Documentation (doxygen)</a></li>
-                <li><a href="http://community.arm.com/groups/android-community/blog/2013/09/26/ne10-library-getting-started" target="_blank">&ldquo;Ne10 Library Getting Started&rdquo;</a></li>
-                <li><a href="http://community.arm.com/groups/android-community/blog/2013/09/30/using-ne10-on-android-and-ios" target="_blank">&ldquo;Using Ne10 on Android and iOS&rdquo;</a></li>
-                <li><a href="http://community.arm.com/groups/android-community/blog/2013/11/21/indoors-uses-arm-s-ne10-library-extends-indoor-lbs-performance-lead" target="_blank">&ldquo;Indoo.rs uses ARM’s Ne10 Library: Extends indoor LBS performance lead&rdquo;</a></li>
-                <li><a href="http://community.arm.com/groups/android-community/blog/2013/12/18/projectne10-fft-is-updated" target="_blank">&ldquo;Ne10 FFT feature&rdquo;</a></li>
-            </ul>
+            <p>The library provides some of the <a href="https://community.arm.com/groups/android-community/blog/2013/12/18/projectne10-fft-is-updated">fastest open source implementations of key operations</a> available for the ARM v7-A and v8-A architectures, particularly focusing on math, signal processing, image processing, and physics functions.</p>
 
-            <h2>License</h2>
-            <p>Ne10 is currently distributed under the <a href="http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22Revised_BSD_License.22.2C_.22New_BSD_License.22.2C_or_.22Modified_BSD_License.22.29">BSD 3-clause license</a>.</p>
+            <h2>How do I get started?</h2>
+            <p>You can download the latest Ne10 release as a <a href="https://github.com/projectNe10/Ne10/zipball/master">zip</a> or <a href="https://github.com/projectNe10/Ne10/tarball/master">tarball</a>. Or, alternatively, you can clone the current cutting-edge version of Ne10 directly with Git by running:</p>
+
+            <pre class="terminal">git clone https://github.com/projectNe10/Ne10</pre>
+
+            <p>Further instructions for building, linking, and using Ne10 are available on <a href="https://github.com/projectNe10/Ne10">the official GitHub page</a>. This includes the <a href="http://projectne10.github.io/Ne10/doc/">doxygen documentation</a>, and a number of <a href="https://github.com/projectNe10/Ne10/tree/master/samples">pre-prepared code snippets</a>, providing examples of how Ne10 can be used to perform common tasks such as <a href="https://github.com/projectNe10/Ne10/blob/master/samples/NE10_sample_complex_fft.c">FFT</a>, <a href="https://github.com/projectNe10/Ne10/blob/master/samples/NE10_sample_fir.c">FIR</a>, and <a href="https://github.com/projectNe10/Ne10/blob/master/samples/NE10_sample_matrix_multiply.c">matrix multiply</a> operations.</p>
+
+            <h2>What license does Ne10 use?</h2>
+            <p>Ne10 is distributed under the <a href="http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22Revised_BSD_License.22.2C_.22New_BSD_License.22.2C_or_.22Modified_BSD_License.22.29">BSD 3-clause license</a>.</p>
+
+            <h2>How can I contribute to Ne10?</h2>
+            <p>Ne10 welcomes and encourages external contributions of any and all forms. If you’ve found a bug or have a suggestion, please don’t hesitate to detail these in the <a href="https://github.com/projectNe10/Ne10/issues">official issue tracker</a>, or if you’re looking to contribute code, please see our <a href="https://github.com/projectNe10/Ne10/blob/master/contributing.md">contributing.md</a> file for more details.</p>
 
             <h2>Call for use cases</h2>
             <p>Find Project Ne10 useful? You can help us justify spending more engineering resources on the project! Please email us, outlining how you are using the project in your applications.</p>
             <p>Want us to help cross-promote your product using Ne10 at developer events? We’re also looking for Ne10 use cases to show at conferences and meetups.</p>
 
-            <h2>Contact</h2>
+            <h2>Contacts</h2>
             <ul>
                 <li>roberto.mijat@arm.com</li>
                 <li>matthew.dupuy@arm.com</li>
                 <li>fang.bao@arm.com</li>
             </ul>
-
-            <h2>Download</h2>
-            <p>You can download the project as a <a href="https://github.com/projectNe10/Ne10/zipball/master">zip</a> or <a href="https://github.com/projectNe10/Ne10/tarball/master">tarball</a>, or you can clone the project with Git by running:</p>
-            <pre class="terminal">git clone https://github.com/projectNe10/Ne10</pre>
 
             <div class="footer">
                 Get the source code on GitHub: <a href="https://github.com/projectNe10/Ne10">projectNe10/Ne10</a>
