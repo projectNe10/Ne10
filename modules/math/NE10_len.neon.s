@@ -81,11 +81,11 @@ ne10_len_vec2f_neon:
 
         @ get SQRT of the last vector while loading a new vector
           vrsqrte.f32     q3, q2
-          vmul.f32        q4, q2, q3
-          vrsqrts.f32     q4, q4, q3
-          vmul.f32        q4, q3, q4
+          vmul.f32        q8, q2, q3
+          vrsqrts.f32     q8, q8, q3
+          vmul.f32        q8, q3, q8
 
-          vmul.f32        q2, q2, q4
+          vmul.f32        q2, q2, q8
 
           vst1.32         {q2}, [r0]!
 
@@ -101,11 +101,11 @@ ne10_len_vec2f_neon:
 
         @ get SQRT of the last vector
           vrsqrte.f32     q3, q2
-          vmul.f32        q4, q2, q3
-          vrsqrts.f32     q4, q4, q3
-          vmul.f32        q4, q3, q4
+          vmul.f32        q8, q2, q3
+          vrsqrts.f32     q8, q8, q3
+          vmul.f32        q8, q3, q8
 
-          vmul.f32        q2, q2, q4
+          vmul.f32        q2, q2, q8
 
           vst1.32         {q2}, [r0]!
 
@@ -174,9 +174,9 @@ ne10_len_vec3f_neon:
           subs            r2, r2, #4
 
         @ calculate sum of square of the components
-          vmul.f32        q5, q0, q0
-          vmla.f32        q5, q1, q1
-          vmla.f32        q5, q2, q2
+          vmul.f32        q9, q0, q0
+          vmla.f32        q9, q1, q1
+          vmla.f32        q9, q2, q2
 
           ble             .L_mainloopend_vec3
 
@@ -187,19 +187,19 @@ ne10_len_vec3f_neon:
         subs              r2, r2, #4
 
         @ get SQRT of the last vector while loading a new vector
-          vrsqrte.f32     q3, q5
-          vmul.f32        q4, q5, q3
-          vrsqrts.f32     q4, q4, q3
-          vmul.f32        q4, q3, q4
+          vrsqrte.f32     q3, q9
+          vmul.f32        q8, q9, q3
+          vrsqrts.f32     q8, q8, q3
+          vmul.f32        q8, q3, q8
 
-          vmul.f32        q5, q5, q4
+          vmul.f32        q9, q9, q8
 
-          vst1.32         {q5}, [r0]!
+          vst1.32         {q9}, [r0]!
 
         @ calculate sum of square of the components
-        vmul.f32          q5, q0, q0
-        vmla.f32          q5, q1, q1
-        vmla.f32          q5, q2, q2
+        vmul.f32          q9, q0, q0
+        vmla.f32          q9, q1, q1
+        vmla.f32          q9, q2, q2
 
         bgt               .L_mainloop_vec3             @ loop if r2 is > r3, if we have at least another 4 vectors (12 floats) to process
 
@@ -207,14 +207,14 @@ ne10_len_vec3f_neon:
         @ the last iteration for this call
 
         @ get SQRT of the last vector
-          vrsqrte.f32     q3, q5
-          vmul.f32        q4, q5, q3
-          vrsqrts.f32     q4, q4, q3
-          vmul.f32        q4, q3, q4
+          vrsqrte.f32     q3, q9
+          vmul.f32        q8, q9, q3
+          vrsqrts.f32     q8, q8, q3
+          vmul.f32        q8, q3, q8
 
-          vmul.f32        q5, q5, q4
+          vmul.f32        q9, q9, q8
 
-          vst1.32         {q5}, [r0]!
+          vst1.32         {q9}, [r0]!
 
 .L_check_vec3:
      @ check if anything left to process at the end of the input array
@@ -284,10 +284,10 @@ ne10_len_vec4f_neon:
           subs            r2, r2, #4
 
         @ calculate sum of square of the components
-          vmul.f32        q5, q0, q0
-          vmla.f32        q5, q1, q1
-          vmla.f32        q5, q2, q2
-          vmla.f32        q5, q3, q3
+          vmul.f32        q9, q0, q0
+          vmla.f32        q9, q1, q1
+          vmla.f32        q9, q2, q2
+          vmla.f32        q9, q3, q3
 
           ble             .L_mainloopend_vec4
 
@@ -298,20 +298,20 @@ ne10_len_vec4f_neon:
         subs              r2, r2, #4
 
         @ get SQRT of the last vector while loading a new vector
-          vrsqrte.f32     q6, q5
-          vmul.f32        q4, q5, q6
-          vrsqrts.f32     q4, q4, q6
-          vmul.f32        q4, q6, q4
+          vrsqrte.f32     q10, q9
+          vmul.f32        q8, q9, q10
+          vrsqrts.f32     q8, q8, q10
+          vmul.f32        q8, q10, q8
 
-          vmul.f32        q5, q5, q4
+          vmul.f32        q9, q9, q8
 
-          vst1.32         {q5}, [r0]!
+          vst1.32         {q9}, [r0]!
 
         @ calculate sum of square of the components
-        vmul.f32        q5, q0, q0
-        vmla.f32        q5, q1, q1
-        vmla.f32        q5, q2, q2
-        vmla.f32        q5, q3, q3
+        vmul.f32        q9, q0, q0
+        vmla.f32        q9, q1, q1
+        vmla.f32        q9, q2, q2
+        vmla.f32        q9, q3, q3
 
         bgt               .L_mainloop_vec4             @ loop if r2 is > r3, if we have at least another 4 vectors (12 floats) to process
 
@@ -319,14 +319,14 @@ ne10_len_vec4f_neon:
         @ the last iteration for this call
 
         @ get SQRT of the last vector
-          vrsqrte.f32     q6, q5
-          vmul.f32        q4, q5, q6
-          vrsqrts.f32     q4, q4, q6
-          vmul.f32        q4, q6, q4
+          vrsqrte.f32     q10, q9
+          vmul.f32        q8, q9, q10
+          vrsqrts.f32     q8, q8, q10
+          vmul.f32        q8, q10, q8
 
-          vmul.f32        q5, q5, q4
+          vmul.f32        q9, q9, q8
 
-          vst1.32         {q5}, [r0]!
+          vst1.32         {q9}, [r0]!
 
 .L_check_vec4:
      @ check if anything left to process at the end of the input array
@@ -362,4 +362,3 @@ ne10_len_vec4f_neon:
      @ return
         mov               r0, #0
         bx                lr
-
