@@ -87,39 +87,35 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t *out,
     ne10_fft_cpx_float32_t scratch_tw[6];
 
     // The first stage (using hardcoded twiddles)
-    if (first_radix == 2) // Under radix-4 factoring this means nfft is of form 2^{odd}
+    if (first_radix == 8) // For our factoring this means nfft is of form 2^{odd}
     {
-        // Instead of performing a radix-2 butterfly as the factors array suggests,
-        // we will instead perform a radix-8 butterfly.
-        // (For C2C, fstride = nfft / 2, fstride1 = nfft / 8).
-        ne10_int32_t fstride1 = (fstride / 4);
-        for (f_count = 0; f_count < fstride1; f_count++)
+        for (f_count = 0; f_count < fstride; f_count++)
         {
             dst = &out[f_count * 8];
 
             // X[0] +/- X[4N/8]
-            scratch_in[0].r = src[0].r + src[0 + fstride].r;
-            scratch_in[0].i = src[0].i + src[0 + fstride].i;
-            scratch_in[1].r = src[0].r - src[0 + fstride].r;
-            scratch_in[1].i = src[0].i - src[0 + fstride].i;
+            scratch_in[0].r = src[0].r + src[fstride * 4].r;
+            scratch_in[0].i = src[0].i + src[fstride * 4].i;
+            scratch_in[1].r = src[0].r - src[fstride * 4].r;
+            scratch_in[1].i = src[0].i - src[fstride * 4].i;
 
             // X[N/8] +/- X[5N/8]
-            scratch_in[2].r = src[fstride1].r + src[fstride1 + fstride].r;
-            scratch_in[2].i = src[fstride1].i + src[fstride1 + fstride].i;
-            scratch_in[3].r = src[fstride1].r - src[fstride1 + fstride].r;
-            scratch_in[3].i = src[fstride1].i - src[fstride1 + fstride].i;
+            scratch_in[2].r = src[fstride].r + src[fstride * 5].r;
+            scratch_in[2].i = src[fstride].i + src[fstride * 5].i;
+            scratch_in[3].r = src[fstride].r - src[fstride * 5].r;
+            scratch_in[3].i = src[fstride].i - src[fstride * 5].i;
 
             // X[2N/8] +/- X[6N/8]
-            scratch_in[4].r = src[fstride1 * 2].r + src[fstride1 * 2 + fstride].r;
-            scratch_in[4].i = src[fstride1 * 2].i + src[fstride1 * 2 + fstride].i;
-            scratch_in[5].r = src[fstride1 * 2].r - src[fstride1 * 2 + fstride].r;
-            scratch_in[5].i = src[fstride1 * 2].i - src[fstride1 * 2 + fstride].i;
+            scratch_in[4].r = src[fstride * 2].r + src[fstride * 6].r;
+            scratch_in[4].i = src[fstride * 2].i + src[fstride * 6].i;
+            scratch_in[5].r = src[fstride * 2].r - src[fstride * 6].r;
+            scratch_in[5].i = src[fstride * 2].i - src[fstride * 6].i;
 
             // X[3N/8] +/- X[7N/8]
-            scratch_in[6].r = src[fstride1 * 3].r + src[fstride1 * 3 + fstride].r;
-            scratch_in[6].i = src[fstride1 * 3].i + src[fstride1 * 3 + fstride].i;
-            scratch_in[7].r = src[fstride1 * 3].r - src[fstride1 * 3 + fstride].r;
-            scratch_in[7].i = src[fstride1 * 3].i - src[fstride1 * 3 + fstride].i;
+            scratch_in[6].r = src[fstride * 3].r + src[fstride * 7].r;
+            scratch_in[6].i = src[fstride * 3].i + src[fstride * 7].i;
+            scratch_in[7].r = src[fstride * 3].r - src[fstride * 7].r;
+            scratch_in[7].i = src[fstride * 3].i - src[fstride * 7].i;
 
 
             scratch[0] = scratch_in[0]; // X[0] + X[4N/8]
@@ -192,13 +188,11 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t *out,
         } // f_count
 
         // Update variables for the next stages
-        step = fstride >> 1; // For C2C, 1/4 of input size (fstride is nfft/2)
-        mstride *= 4;
-        fstride /= 16;
-        stage_count -= 2;
-        twiddles += 6; // Skip the twiddles we no longer need (as we did radix 8, not 2)
+        step = fstride << 1; // For C2C, 1/4 of input size (fstride is nfft/8)
+        stage_count--;
+        fstride /= 4;
     }
-    else // first_radix == 4, under radix-4 factoring this means nfft is of form 2^{even}
+    else // first_radix == 4, for our factoring this means nfft is of form 2^{even}
     {
         for (f_count = fstride; f_count; f_count--)
         {
@@ -421,31 +415,29 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
     ne10_fft_cpx_float32_t scratch_tw[6];
 
     // The first stage (using hardcoded twiddles)
-    if (first_radix == 2) // nfft is of form 2^{odd}
+    if (first_radix == 8) // nfft is of form 2^{odd}
     {
-        // Perform a radix-8 butterfly (rather than the "suggested" radix-2)
-        ne10_int32_t fstride1 = (fstride / 4);
-        for (f_count = 0; f_count < fstride1; f_count++)
+        for (f_count = 0; f_count < fstride; f_count++)
         {
             dst = &out[f_count * 8];
 
             // Prepare sums for the butterfly calculations
-            scratch_in[0].r = src[0].r + src[0 + fstride].r;
-            scratch_in[0].i = src[0].i + src[0 + fstride].i;
-            scratch_in[1].r = src[0].r - src[0 + fstride].r;
-            scratch_in[1].i = src[0].i - src[0 + fstride].i;
-            scratch_in[2].r = src[fstride1].r + src[fstride1 + fstride].r;
-            scratch_in[2].i = src[fstride1].i + src[fstride1 + fstride].i;
-            scratch_in[3].r = src[fstride1].r - src[fstride1 + fstride].r;
-            scratch_in[3].i = src[fstride1].i - src[fstride1 + fstride].i;
-            scratch_in[4].r = src[fstride1 * 2].r + src[fstride1 * 2 + fstride].r;
-            scratch_in[4].i = src[fstride1 * 2].i + src[fstride1 * 2 + fstride].i;
-            scratch_in[5].r = src[fstride1 * 2].r - src[fstride1 * 2 + fstride].r;
-            scratch_in[5].i = src[fstride1 * 2].i - src[fstride1 * 2 + fstride].i;
-            scratch_in[6].r = src[fstride1 * 3].r + src[fstride1 * 3 + fstride].r;
-            scratch_in[6].i = src[fstride1 * 3].i + src[fstride1 * 3 + fstride].i;
-            scratch_in[7].r = src[fstride1 * 3].r - src[fstride1 * 3 + fstride].r;
-            scratch_in[7].i = src[fstride1 * 3].i - src[fstride1 * 3 + fstride].i;
+            scratch_in[0].r = src[0].r + src[fstride * 4].r;
+            scratch_in[0].i = src[0].i + src[fstride * 4].i;
+            scratch_in[1].r = src[0].r - src[fstride * 4].r;
+            scratch_in[1].i = src[0].i - src[fstride * 4].i;
+            scratch_in[2].r = src[fstride].r + src[fstride * 5].r;
+            scratch_in[2].i = src[fstride].i + src[fstride * 5].i;
+            scratch_in[3].r = src[fstride].r - src[fstride * 5].r;
+            scratch_in[3].i = src[fstride].i - src[fstride * 5].i;
+            scratch_in[4].r = src[fstride * 2].r + src[fstride * 6].r;
+            scratch_in[4].i = src[fstride * 2].i + src[fstride * 6].i;
+            scratch_in[5].r = src[fstride * 2].r - src[fstride * 6].r;
+            scratch_in[5].i = src[fstride * 2].i - src[fstride * 6].i;
+            scratch_in[6].r = src[fstride * 3].r + src[fstride * 7].r;
+            scratch_in[6].i = src[fstride * 3].i + src[fstride * 7].i;
+            scratch_in[7].r = src[fstride * 3].r - src[fstride * 7].r;
+            scratch_in[7].i = src[fstride * 3].i - src[fstride * 7].i;
 
             // Multiply some of these by hardcoded radix-8 twiddles
             scratch[0] = scratch_in[0];
@@ -513,11 +505,9 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
         } // f_count
 
         // Update variables for the next stages
-        step = fstride >> 1;
-        mstride *= 4;
-        fstride /= 16;
-        stage_count -= 2;
-        twiddles += 6;
+        step = fstride << 1;
+        stage_count--;
+        fstride /= 4;
 
         if (stage_count == 0)
         {
@@ -880,10 +870,10 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft)
 {
     ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
-                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors*/
-                              + sizeof (ne10_fft_cpx_float32_t) * nfft        /* twiddle*/
-                              + sizeof (ne10_fft_cpx_float32_t) * nfft        /* buffer*/
-                              + NE10_FFT_BYTE_ALIGNMENT;     /* 64-bit alignment*/
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft       /* twiddles */
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft         /* buffer */
+                              + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
 
     st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
 
@@ -903,29 +893,12 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft)
     st->buffer = st->twiddles + nfft;
     st->nfft = nfft;
 
-    ne10_int32_t result = ne10_factor (nfft, st->factors, NE10_FACTOR_DEFAULT);
+    ne10_int32_t result;
+    result = ne10_factor (nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
     if (result == NE10_ERR)
     {
         NE10_FREE (st);
-        return st;
-    }
-
-    // Check if ALGORITHM FLAG is NE10_FFT_ALG_ANY.
-    {
-        ne10_int32_t stage_count    = st->factors[0];
-        ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
-
-        // Enable radix-8.
-        if (algorithm_flag == NE10_FFT_ALG_ANY)
-        {
-            result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT);
-            if (result == NE10_ERR)
-            {
-                PRINT_HIT;
-                NE10_FREE (st);
-                return st;
-            }
-        }
+        return NULL;
     }
 
     ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, nfft);
@@ -952,12 +925,12 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
     ne10_int32_t stage_count = cfg->factors[0];
     ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
 
-    assert ((algorithm_flag == NE10_FFT_ALG_24)
+    assert ((algorithm_flag == NE10_FFT_ALG_DEFAULT)
             || (algorithm_flag == NE10_FFT_ALG_ANY));
 
     switch (algorithm_flag)
     {
-    case NE10_FFT_ALG_24:
+    case NE10_FFT_ALG_DEFAULT:
         if (inverse_fft)
         {
             ne10_mixed_radix_butterfly_inverse_float32_c (fout, fin, cfg->factors, cfg->twiddles, cfg->buffer);
@@ -1067,11 +1040,11 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
     ne10_int32_t ncfft = nfft >> 1;
 
     ne10_uint32_t memneeded = sizeof (ne10_fft_r2c_state_float32_t)
-                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
-                              + sizeof (ne10_fft_cpx_float32_t) * ncfft       /* twiddle*/
-                              + sizeof (ne10_fft_cpx_float32_t) * (ncfft / 2) /* super twiddles*/
-                              + sizeof (ne10_fft_cpx_float32_t) * nfft        /* buffer*/
-                              + NE10_FFT_BYTE_ALIGNMENT;     /* 64-bit alignment*/
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2)        /* factors */
+                              + sizeof (ne10_fft_cpx_float32_t) * ncfft              /* twiddle */
+                              + sizeof (ne10_fft_cpx_float32_t) * (ncfft / 2) /* super twiddles */
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft                /* buffer */
+                              + NE10_FFT_BYTE_ALIGNMENT;                    /* 64-bit alignment */
 
     st = (ne10_fft_r2c_cfg_float32_t) NE10_MALLOC (memneeded);
 
@@ -1085,61 +1058,54 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
         st->buffer = st->super_twiddles + (ncfft / 2);
         st->ncfft = ncfft;
 
-        ne10_int32_t result = ne10_factor (ncfft, st->factors, NE10_FACTOR_DEFAULT);
+        ne10_int32_t result = ne10_factor (ncfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);
-            return st;
+            return NULL;
         }
 
-        ne10_int32_t i, j;
+        ne10_int32_t j, k;
         ne10_int32_t *factors = st->factors;
         ne10_fft_cpx_float32_t *twiddles = st->twiddles;
-        ne10_fft_cpx_float32_t *tw;
         ne10_int32_t stage_count = factors[0];
-        ne10_int32_t fstride1 = factors[1];
-        ne10_int32_t fstride2 = fstride1 * 2;
-        ne10_int32_t fstride3 = fstride1 * 3;
-        ne10_int32_t m;
-
+        ne10_int32_t fstride = factors[1];
+        ne10_int32_t mstride;
+        ne10_int32_t cur_radix;
+        ne10_float32_t phase;
         const ne10_float32_t pi = NE10_PI;
-        ne10_float32_t phase1;
-        ne10_float32_t phase2;
-        ne10_float32_t phase3;
 
-        for (i = stage_count - 1; i > 0; i--)
+        // Don't generate any twiddles for the first stage
+        stage_count --;
+
+        // Generate twiddles for the other stages
+        for (; stage_count > 0; stage_count --)
         {
-            fstride1 >>= 2;
-            fstride2 >>= 2;
-            fstride3 >>= 2;
-            m = factors[2 * i + 1];
-            tw = twiddles;
-            for (j = 0; j < m; j++)
+            cur_radix = factors[2 * stage_count];
+            fstride /= cur_radix;
+            mstride = factors[2 * stage_count + 1];
+            for (j = 0; j < mstride; j++)
             {
-                phase1 = -2 * pi * fstride1 * j / ncfft;
-                phase2 = -2 * pi * fstride2 * j / ncfft;
-                phase3 = -2 * pi * fstride3 * j / ncfft;
-                tw->r = (ne10_float32_t) cos (phase1);
-                tw->i = (ne10_float32_t) sin (phase1);
-                (tw + m)->r = (ne10_float32_t) cos (phase2);
-                (tw + m)->i = (ne10_float32_t) sin (phase2);
-                (tw + m * 2)->r = (ne10_float32_t) cos (phase3);
-                (tw + m * 2)->i = (ne10_float32_t) sin (phase3);
-                tw++;
+                for (k = 1; k < cur_radix; k++) // phase = 1 when k = 0
+                {
+                    phase = -2 * pi * fstride * k * j / ncfft;
+                    twiddles[mstride * (k - 1) + j].r = (ne10_float32_t) cos (phase);
+                    twiddles[mstride * (k - 1) + j].i = (ne10_float32_t) sin (phase);
+                }
             }
-            twiddles += m * 3;
+            twiddles += mstride * (cur_radix - 1);
         }
 
-        tw = st->super_twiddles;
-        for (i = 0; i < ncfft / 2; i++)
+        twiddles = st->super_twiddles;
+        for (j = 0; j < ncfft / 2; j++)
         {
-            phase1 = -pi * ( (ne10_float32_t) (i + 1) / ncfft + 0.5f);
-            tw->r = (ne10_float32_t) cos (phase1);
-            tw->i = (ne10_float32_t) sin (phase1);
-            tw++;
+            phase = -pi * ( (ne10_float32_t) (j + 1) / ncfft + 0.5f);
+            twiddles->r = (ne10_float32_t) cos (phase);
+            twiddles->i = (ne10_float32_t) sin (phase);
+            twiddles++;
         }
-
     }
+
     return st;
 }
 

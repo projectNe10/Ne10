@@ -569,8 +569,8 @@ ne10_mixed_radix_fft_forward_float32_neon:
         mov             p_out_ls, p_fout
 
         /* ---------------the first stage---------------  */
-        /* judge the radix is 2 or 4  */
-        cmp             radix, #2
+        /* judge the radix is 4 or 8  */
+        cmp             radix, #8
         beq             .L_ne10_radix8_butterfly_first_stage
 
         /* ---------------first stage: radix 4  */
@@ -607,10 +607,10 @@ ne10_mixed_radix_fft_forward_float32_neon:
 
         /* ---------------first stage: radix 8  */
 .L_ne10_radix8_butterfly_first_stage:
-        lsr             fstride1, fstride, #2
+        mov             fstride1, fstride
         mov             p_in1, p_fin
         mov             p_tmp, p_fout
-        lsl             fstep, fstride, #1
+        lsl             fstep, fstride, #3
 
 .L_ne10_radix8_butterfly_first_stage_fstride1:
         BUTTERFLY8X4_WITHOUT_TWIDDLES "FALSE"
@@ -618,11 +618,9 @@ ne10_mixed_radix_fft_forward_float32_neon:
         subs            fstride1, fstride1, #4
         bgt             .L_ne10_radix8_butterfly_first_stage_fstride1
 
-        lsl             nstep, fstride, #2
-        sub             stage_count, stage_count, #2
-        lsr             fstride, fstride, #4
-        lsl             mstride, mstride, #2
-        add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
+        lsl             nstep, fstride, #4
+        sub             stage_count, stage_count, #1
+        lsr             fstride, fstride, #2
 
         /* swap input/output buffer  */
         mov             p_fin, p_fout
@@ -777,8 +775,8 @@ ne10_mixed_radix_fft_backward_float32_neon:
         mov             p_out_ls, p_fout
 
         /* ---------------the first stage---------------  */
-        /* judge the radix is 2 or 4  */
-        cmp             radix, #2
+        /* judge the radix is 4 or 8  */
+        cmp             radix, #8
         beq             .L_ne10_radix8_butterfly_inverse_first_stage
 
         /* ---------------first stage: radix 4  */
@@ -815,10 +813,10 @@ ne10_mixed_radix_fft_backward_float32_neon:
 
         /* ---------------first stage: radix 8  */
 .L_ne10_radix8_butterfly_inverse_first_stage:
-        lsr             fstride1, fstride, #2
+        mov             fstride1, fstride
         mov             p_in1, p_fin
         mov             p_tmp, p_fout
-        lsl             fstep, fstride, #1
+        lsl             fstep, fstride, #3
 
 .L_ne10_radix8_butterfly_inverse_first_stage_fstride1:
         BUTTERFLY8X4_WITHOUT_TWIDDLES "TRUE"
@@ -826,11 +824,9 @@ ne10_mixed_radix_fft_backward_float32_neon:
         subs            fstride1, fstride1, #4
         bgt             .L_ne10_radix8_butterfly_inverse_first_stage_fstride1
 
-        lsl             nstep, fstride, #2
-        sub             stage_count, stage_count, #2
-        lsr             fstride, fstride, #4
-        lsl             mstride, mstride, #2
-        add             p_twiddles, p_twiddles, #48 /* get the address of twiddles += 6 */
+        lsl             nstep, fstride, #4
+        sub             stage_count, stage_count, #1
+        lsr             fstride, fstride, #2
 
         /* swap input/output buffer  */
         mov             p_fin, p_fout

@@ -45,15 +45,32 @@
 #define NE10_FFT_BYTE_ALIGNMENT 8
 #define NE10_INLINE inline static
 
-/* Algorithms used in FFT */
-#define NE10_FFT_ALG_24 0
-#define NE10_FFT_ALG_ANY 1
+/*
+ * FFT Algorithm Flags
+ *
+ * These are used within Ne10 to decide, after factoring an FFT into stages, what
+ * FFT algorithm should be used.
+ *
+ * - NE10_FFT_ALG_DEFAULT is a mixed radix 2/4 algorithm.
+ * - NE10_FFT_ALG_ANY is designated specifically for non-power-of-two input sizes.
+ */
+#define NE10_FFT_ALG_DEFAULT  0
+#define NE10_FFT_ALG_ANY      1
 
-/* NE10_FACTOR_FLAGS */
-// Only factors into 2, 3, 4, 5
-#define NE10_FACTOR_DEFAULT 0
-// Factors into 2, 3, 4, 5, 8
-#define NE10_FACTOR_EIGHT   1
+/*
+ * FFT Factor Flags
+ *
+ * These are used within Ne10 to decide how an input FFT size should be factored into
+ * stages (i.e. what radices should be used).
+ *
+ * - NE10_FACTOR_DEFAULT factors into 2, 3, 4, 5.
+ * - NE10_FACTOR_EIGHT_FIRST_STAGE is NE10_FACTOR_DEFAULT with the extended ability to
+ *   have a radix-8 initial stage.
+ * - NE10_FACTOR_EIGHT factors into 2, 3, 4, 5, 8.
+ */
+#define NE10_FACTOR_DEFAULT             0
+#define NE10_FACTOR_EIGHT_FIRST_STAGE   1
+#define NE10_FACTOR_EIGHT               2
 
 // Comment when do not want to scale output result
 #define NE10_DSP_RFFT_SCALING

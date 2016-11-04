@@ -1263,17 +1263,14 @@ void ne10_mixed_radix_fft_forward_int32_##scaled##_neon (ne10_fft_cpx_int32_t * 
     /* the first stage */ \
     Fin1 = Fin; \
     Fout1 = Fout; \
-    if (N == 2) \
+    if (N == 8) \
     { \
-        N = fstride >> 1;\
+        N = fstride << 1;\
         tw = twiddles; \
-        fstride1 = fstride >> 2; \
-        ne10_radix8x4_forward_##scaled##_neon (Fout, Fin, fstride1);\
+        ne10_radix8x4_forward_##scaled##_neon (Fout, Fin, fstride);\
  \
-        tw += 6; \
-        mstride <<= 2; \
-        fstride >>= 4; \
-        stage_count -= 2; \
+        fstride >>= 2; \
+        stage_count--; \
  \
         Ftmp = buffer; \
         buffer = Fout; \
@@ -1350,17 +1347,14 @@ void ne10_mixed_radix_fft_backward_int32_##scaled##_neon (ne10_fft_cpx_int32_t *
     /* the first stage */ \
     Fin1 = Fin; \
     Fout1 = Fout; \
-    if (N == 2) \
+    if (N == 8) \
     { \
-        N = fstride >> 1;\
+        N = fstride << 1;\
         tw = twiddles; \
-        fstride1 = fstride >> 2; \
-        ne10_radix8x4_backward_##scaled##_neon (Fout, Fin, fstride1);\
+        ne10_radix8x4_backward_##scaled##_neon (Fout, Fin, fstride);\
  \
-        tw += 6; \
-        mstride <<= 2; \
-        fstride >>= 4; \
-        stage_count -= 2; \
+        fstride >>= 2; \
+        stage_count--; \
  \
         Ftmp = buffer; \
         buffer = Fout; \
@@ -1752,7 +1746,7 @@ void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
     ne10_int32_t stage_count = cfg->factors[0];
     ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
 
-    assert ((algorithm_flag == NE10_FFT_ALG_24)
+    assert ((algorithm_flag == NE10_FFT_ALG_DEFAULT)
             || (algorithm_flag == NE10_FFT_ALG_ANY));
 
     // For NE10_FFT_ALG_ANY.

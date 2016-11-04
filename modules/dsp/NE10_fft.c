@@ -87,16 +87,18 @@ ne10_int32_t ne10_factor (ne10_int32_t n,
     ne10_int32_t stage_num = 0;
     ne10_int32_t stride_max = n;
 
-    // Default algorithm flag is NE10_FFT_ALG_24
-    ne10_int32_t alg_flag = NE10_FFT_ALG_24;
+    // Default algorithm flag is NE10_FFT_ALG_DEFAULT
+    ne10_int32_t alg_flag = NE10_FFT_ALG_DEFAULT;
 
-    // Factor out powers of 4, 2, 5, 3, and other.
+    // Factor out powers of 4, 2, 5, and 3. Additionally, factor out powers
+    // of 8 if the right factor flags are passed. If none of these factors
+    // can be applied at any stage, the remaining size is used as a factor.
     do
     {
-        // If NE10_FACTOR_FLAGS has enable NE10_FACTOR_EIGHT.
-        // Try to combine one radix-4 and one radix-2 stages
-        // into one radix-8 stage.
-        if ((ne10_factor_flags & NE10_FACTOR_EIGHT)
+        // If NE10_FACTOR_EIGHT_FIRST_STAGE is enabled, we can generate
+        // a first stage of radix-8 (e.g. by combining one radix-4 and
+        // one radix-2 stage into a single radix-8 stage).
+        if ((ne10_factor_flags & NE10_FACTOR_EIGHT_FIRST_STAGE)
                 && ((n==8) || (n==40) || (n==24)))
         {
             switch (n)
@@ -113,6 +115,10 @@ ne10_int32_t ne10_factor (ne10_int32_t n,
                 alg_flag = NE10_FFT_ALG_ANY;
                 break;
             }
+        }
+        else if ((ne10_factor_flags & NE10_FACTOR_EIGHT) && ((n % 8) == 0))
+        {
+            p = 8;
         }
         else if ((n % 4) == 0)
         {
@@ -359,10 +365,10 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
 
     ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
-                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors*/
-                              + sizeof (ne10_fft_cpx_float32_t) * nfft        /* twiddle*/
-                              + sizeof (ne10_fft_cpx_float32_t) * nfft        /* buffer*/
-                              + NE10_FFT_BYTE_ALIGNMENT;     /* 64-bit alignment*/
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft       /* twiddles */
+                              + sizeof (ne10_fft_cpx_float32_t) * nfft         /* buffer */
+                              + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
 
     st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
 
@@ -373,7 +379,7 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
     // Bad allocation.
     if (st == NULL)
     {
-        return st;
+        return NULL;
     }
 
     uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_float32_t);
@@ -394,49 +400,52 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
         st->last_twiddles = st->twiddles + nfft / NE10_FFT_PARA_LEVEL;
     }
 
-    ne10_int32_t result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_DEFAULT);
+    ne10_int32_t result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
 
-    // Can not factor.
+    // Cannot factor
     if (result == NE10_ERR)
     {
         NE10_FREE (st);
-        return st;
+        return NULL;
     }
 
-    // Check if radix-8 can be enabled
     ne10_int32_t stage_count    = st->factors[0];
     ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
 
-    // Enable radix-8.
     if (algorithm_flag == NE10_FFT_ALG_ANY)
     {
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT);
+        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);
-            return st;
+            return NULL;
         }
         ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, st->nfft);
+
+        // Generate super twiddles for the last stage.
+        if (nfft % NE10_FFT_PARA_LEVEL == 0)
+        {
+            // Size of FFT satisfies requirement of NEON optimization.
+            ne10_fft_generate_twiddles_line_float32 (st->last_twiddles,
+                    st->nfft,
+                    1,
+                    NE10_FFT_PARA_LEVEL,
+                    nfft);
+        }
     }
     else
     {
         st->last_twiddles = NULL;
         st->nfft = nfft;
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_DEFAULT);
+        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+        if (result == NE10_ERR)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
         ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, st->nfft);
-        return st;
     }
 
-    // Generate super twiddles for the last stage.
-    if (nfft % NE10_FFT_PARA_LEVEL == 0)
-    {
-        // Size of FFT satisfies requirement of NEON optimization.
-        ne10_fft_generate_twiddles_line_float32 (st->last_twiddles,
-                st->nfft,
-                1,
-                NE10_FFT_PARA_LEVEL,
-                nfft);
-    }
     return st;
 }
 
@@ -461,17 +470,17 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 
     ne10_fft_cfg_int32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_int32_t)
-                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors*/
-                              + sizeof (ne10_fft_cpx_int32_t) * nfft        /* twiddle*/
-                              + sizeof (ne10_fft_cpx_int32_t) * nfft        /* buffer*/
-                              + NE10_FFT_BYTE_ALIGNMENT;     /* 64-bit alignment*/
+                              + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
+                              + sizeof (ne10_fft_cpx_int32_t) * nfft         /* twiddles */
+                              + sizeof (ne10_fft_cpx_int32_t) * nfft           /* buffer */
+                              + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
 
     st = (ne10_fft_cfg_int32_t) NE10_MALLOC (memneeded);
 
     // Bad allocation.
     if (st == NULL)
     {
-        return st;
+        return NULL;
     }
 
     uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_int32_t);
@@ -492,49 +501,52 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
         st->last_twiddles = st->twiddles + nfft / NE10_FFT_PARA_LEVEL;
     }
 
-    ne10_int32_t result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_DEFAULT);
+    ne10_int32_t result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
 
-    // Can not factor.
+    // Cannot factor
     if (result == NE10_ERR)
     {
         NE10_FREE (st);
-        return st;
+        return NULL;
     }
 
-    // Check if radix-8 can be enabled
     ne10_int32_t stage_count    = st->factors[0];
     ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
 
-    // Enable radix-8.
     if (algorithm_flag == NE10_FFT_ALG_ANY)
     {
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT);
+        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
         if (result == NE10_ERR)
         {
             NE10_FREE (st);
-            return st;
+            return NULL;
         }
         ne10_fft_generate_twiddles_int32 (st->twiddles, st->factors, st->nfft);
+
+        // Generate super twiddles for the last stage.
+        if (nfft % NE10_FFT_PARA_LEVEL == 0)
+        {
+            // Size of FFT satisfies requirement of NEON optimization.
+            ne10_fft_generate_twiddles_line_int32 (st->last_twiddles,
+                    st->nfft,
+                    1,
+                    NE10_FFT_PARA_LEVEL,
+                    nfft);
+        }
     }
     else
     {
         st->last_twiddles = NULL;
         st->nfft = nfft;
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_DEFAULT);
+        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
+        if (result == NE10_ERR)
+        {
+            NE10_FREE (st);
+            return NULL;
+        }
         ne10_fft_generate_twiddles_int32 (st->twiddles, st->factors, st->nfft);
-        return st;
     }
 
-    // Generate super twiddles for the last stage.
-    if (nfft % NE10_FFT_PARA_LEVEL == 0)
-    {
-        // Size of FFT satisfies requirement of NEON optimization.
-        ne10_fft_generate_twiddles_line_int32 (st->last_twiddles,
-                st->nfft,
-                1,
-                NE10_FFT_PARA_LEVEL,
-                nfft);
-    }
     return st;
 }
 

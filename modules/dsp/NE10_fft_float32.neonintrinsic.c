@@ -1289,20 +1289,16 @@ void ne10_mixed_radix_fft_forward_float32_neon (ne10_fft_cpx_float32_t *out,
     ne10_fft_cpx_float32_t *tw, *tmp;
 
     // The first stage (using hardcoded twiddles)
-    if (first_radix == 2) // For radix-4 factoring, this means nfft is of form 2^{odd}
+    if (first_radix == 8) // For our factoring, this means nfft is of form 2^{odd}
     {
-        // Instead of performing a radix-2 butterfly as the factors array suggests,
-        // we will instead perform a radix-8 butterfly.
-        ne10_radix8x4_neon (dst, src, fstride / 4);
+        ne10_radix8x4_neon (dst, src, fstride);
 
         // Update variables for the next stages
-        step = fstride >> 1; // For C2C, 1/4 of input size (fstride is nfft/2)
-        mstride *= 4;
-        fstride /= 16;
-        stage_count -= 2;
-        twiddles += 6; // Skip the twiddles we no longer need (as we did radix 8, not 2)
+        step = fstride << 1; // For C2C, 1/4 of input size (fstride is nfft/8)
+        stage_count--;
+        fstride /= 4;
     }
-    else if (first_radix == 4) // For radix-4 factoring, this means nfft is of form 2^{even}
+    else if (first_radix == 4) // For our factoring, this means nfft is of form 2^{even}
     {
         ne10_radix4x4_without_twiddles_neon (dst, src, fstride);
 
@@ -1380,17 +1376,14 @@ void ne10_mixed_radix_fft_backward_float32_neon (ne10_fft_cpx_float32_t *out,
     ne10_fft_cpx_float32_t *tw, *tmp;
 
     // The first stage (using hardcoded twiddles)
-    if (first_radix == 2) // nfft is of form 2^{odd}
+    if (first_radix == 8) // nfft is of form 2^{odd}
     {
-        // Perform a radix-8 butterfly (rather than the "suggested" radix-2)
-        ne10_radix8x4_inverse_neon (dst, src, fstride / 4);
+        ne10_radix8x4_inverse_neon (dst, src, fstride);
 
         // Update variables for the next stages
-        step = fstride >> 1;
-        mstride *= 4;
-        fstride /= 16;
-        stage_count -= 2;
-        twiddles += 6;
+        step = fstride << 1;
+        stage_count--;
+        fstride /= 4;
     }
     else if (first_radix == 4) // nfft is of form 2^{even}
     {
@@ -1480,7 +1473,7 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
     ne10_int32_t stage_count = cfg->factors[0];
     ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
 
-    assert ((algorithm_flag == NE10_FFT_ALG_24)
+    assert ((algorithm_flag == NE10_FFT_ALG_DEFAULT)
             || (algorithm_flag == NE10_FFT_ALG_ANY));
 
     // For NE10_FFT_ALG_ANY.
@@ -1501,7 +1494,7 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
     }
 
     // Since function goes pass assertion and skips branch above, algorithm_flag
-    // must be NE10_FFT_ALG_24.
+    // must be NE10_FFT_ALG_DEFAULT.
     if (inverse_fft)
     {
         switch (cfg->nfft)

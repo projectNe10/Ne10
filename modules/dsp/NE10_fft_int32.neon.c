@@ -1233,7 +1233,7 @@ void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
     ne10_int32_t stage_count = cfg->factors[0];
     ne10_int32_t algorithm_flag = cfg->factors[2 * (stage_count + 1)];
 
-    assert ((algorithm_flag == NE10_FFT_ALG_24)
+    assert ((algorithm_flag == NE10_FFT_ALG_DEFAULT)
             || (algorithm_flag == NE10_FFT_ALG_ANY));
 
     // For NE10_FFT_ALG_ANY.

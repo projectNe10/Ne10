@@ -616,22 +616,13 @@ NE10_INLINE void ne10_mixed_radix_r2c_butterfly_float32_c (
 
     // PRINT_STAGE_INFO;
 
-    if (radix == 2)
-    {
-        // combine one radix-4 and one radix-2 into one radix-8
-        mstride <<= 2;
-        fstride >>= 2;
-        twiddles += 6; // (4-1) x 2
-        stage_count --;
-    }
-
     if (stage_count % 2 == 0)
     {
         ne10_swap_ptr (buffer, Fout);
     }
 
     // the first stage
-    if (radix == 2)   // length of FFT is 2^n (n is odd)
+    if (radix == 8)   // length of FFT is 2^n (n is odd)
     {
         // PRINT_POINTERS_INFO(Fin,Fout,buffer,twiddles);
         ne10_radix8_r2c_c (Fout, Fin, fstride, mstride, nfft);
@@ -682,12 +673,6 @@ NE10_INLINE void ne10_mixed_radix_c2r_butterfly_float32_c (
     mstride = nfft >> 2;
     // PRINT_STAGE_INFO;
 
-    if (radix == 2)
-    {
-        // combine one radix-4 and one radix-2 into one radix-8
-        stage_count --;
-    }
-
     if (stage_count % 2 == 1)
     {
         ne10_swap_ptr (buffer, Fout);
@@ -719,10 +704,8 @@ NE10_INLINE void ne10_mixed_radix_c2r_butterfly_float32_c (
     } // other stage
 
     // first stage -- inversed
-    if (radix == 2)   // length of FFT is 2^n (n is odd)
+    if (radix == 8)   // length of FFT is 2^n (n is odd)
     {
-        mstride >>= 1;
-
         // PRINT_STAGE_INFO;
         // PRINT_POINTERS_INFO(Fin,Fout,buffer,twiddles);
         ne10_radix8_c2r_c (Fout, buffer, fstride, mstride, nfft);
@@ -790,13 +773,13 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
     }
 
     // factors and twiddles for rfft C
-    ne10_factor (nfft, st->r_factors, NE10_FACTOR_DEFAULT);
+    ne10_factor (nfft, st->r_factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
 
     // backward twiddles pointers
     st->r_twiddles_backward = ne10_fft_generate_twiddles_float32 (st->r_twiddles, st->r_factors, nfft);
 
     // factors and twiddles for rfft neon
-    result = ne10_factor (nfft/4, st->r_factors_neon, NE10_FACTOR_DEFAULT);
+    result = ne10_factor (nfft/4, st->r_factors_neon, NE10_FACTOR_EIGHT_FIRST_STAGE);
     if (result == NE10_ERR)
     {
         return st;

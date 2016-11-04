@@ -987,17 +987,14 @@ void ne10_mixed_radix_fft_forward_int16_##scaled##_neon (ne10_fft_cpx_int16_t * 
     /* the first stage */ \
     Fin1 = Fin; \
     Fout1 = Fout; \
-    if (N == 2) \
+    if (N == 8) \
     { \
-        N = fstride >> 1;\
+        N = fstride << 1;\
         tw = twiddles; \
-        fstride1 = fstride >> 2; \
-        ne10_radix8x4_forward_##scaled##_neon (Fout, Fin, fstride1);\
+        ne10_radix8x4_forward_##scaled##_neon (Fout, Fin, fstride);\
  \
-        tw += 6; \
-        mstride <<= 2; \
-        fstride >>= 4; \
-        stage_count -= 2; \
+        fstride >>= 2; \
+        stage_count--; \
  \
         Ftmp = Fin; \
         Fin = Fout; \
@@ -1074,17 +1071,14 @@ void ne10_mixed_radix_fft_backward_int16_##scaled##_neon (ne10_fft_cpx_int16_t *
     /* the first stage */ \
     Fin1 = Fin; \
     Fout1 = Fout; \
-    if (N == 2) \
+    if (N == 8) \
     { \
-        N = fstride >> 1;\
+        N = fstride << 1;\
         tw = twiddles; \
-        fstride1 = fstride >> 2; \
-        ne10_radix8x4_backward_##scaled##_neon (Fout, Fin, fstride1);\
+        ne10_radix8x4_backward_##scaled##_neon (Fout, Fin, fstride);\
  \
-        tw += 6; \
-        mstride <<= 2; \
-        fstride >>= 4; \
-        stage_count -= 2; \
+        fstride >>= 2; \
+        stage_count--; \
  \
         Ftmp = Fin; \
         Fin = Fout; \

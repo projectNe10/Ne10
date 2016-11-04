@@ -579,22 +579,13 @@ NE10_INLINE void ne10_mixed_radix_r2c_butterfly_float32_neon (ne10_fft_cpx_float
 
     // PRINT_STAGE_INFO;
 
-    if (radix == 2)
-    {
-        // combine one radix-4 and one radix-2 into one radix-8
-        mstride <<= 2;
-        fstride >>= 2;
-        twiddles += 6;
-        stage_count --;
-    }
-
     if (stage_count % 2 == 1) // since there is another stage outside
     {
         ne10_swap_ptr (buffer, Fout);
     }
 
     // the first stage
-    if (radix == 2)   // length of FFT is 2^n (n is odd)
+    if (radix == 8)   // length of FFT is 2^n (n is odd)
     {
         ne10_radix8x4_r2c_neon (Fout, Fin, fstride, mstride, nfft);
     }
@@ -640,12 +631,6 @@ NE10_INLINE void ne10_mixed_radix_c2r_butterfly_float32_neon (ne10_fft_cpx_float
     fstride = 1;
     mstride = nfft >> 2;
 
-    if (radix == 2)
-    {
-        // combine one radix-4 and one radix-2 into one radix-8
-        stage_count --;
-    }
-
     if (stage_count % 2 == 0)
     {
         ne10_swap_ptr(Fout,buffer);
@@ -667,10 +652,8 @@ NE10_INLINE void ne10_mixed_radix_c2r_butterfly_float32_neon (ne10_fft_cpx_float
     }
 
     // first stage -- inversed
-    if (radix == 2)   // length of FFT is 2^n (n is odd)
+    if (radix == 8)   // length of FFT is 2^n (n is odd)
     {
-        mstride >>= 1;
-
         // PRINT_STAGE_INFO;
         // PRINT_POINTERS_INFO(Fin,Fout,buffer,twiddles);
         ne10_radix8x4_c2r_neon (Fout, buffer, fstride, mstride, nfft);
