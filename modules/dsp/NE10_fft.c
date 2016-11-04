@@ -526,7 +526,8 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 
     if (algorithm_flag == NE10_FFT_ALG_ANY)
     {
-        if (nfft % NE10_FFT_PARA_LEVEL)
+        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_DEFAULT);
+        if ((result == NE10_ERR) || (nfft % NE10_FFT_PARA_LEVEL))
         {
             NE10_FREE (st);
             return NULL;
