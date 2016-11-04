@@ -1,154 +1,174 @@
 <!DOCTYPE html>
-<html><head>
-  
-  <meta charset="utf-8">
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Project Ne10: An Open Optimized Software Library Project for the ARM Architecture">
+        <meta name="keywords" content="arm, neon, ne10, open source, C, C++, accelerate, intrinsics, SIMD, graphics, programming, github, android, ndk, asop, android open source project">
+        <title>Project Ne10: An Open Optimized Software Library Project for the ARM Architecture @ GitHub</title>
 
-  
-  <meta name="description" content="Project Ne10: An Open Optimized Software Library Project for the ARM Architecture">
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link href="https://plus.google.com/115879083498419961981" rel="publisher">
+        <style type="text/css">
+            body {
+                font-size: 16px;
+                font-family: 'Helvetica Neue', Helvetica, Arial, FreeSans, sans-serif;
+                line-height: 1.6em;
+                color: #f1f1f1;
+                background-color: #000;
+                background-image: url(neon_cells.jpg);
+                background-size: cover;
+                margin-top: 1em;
+                min-width: 320px;
+            }
+            #container {
+                margin: 0 auto;
+                max-width: 700px;
+                padding: 3em 4em 1.5em;
+                background-color: rgb(23, 23, 23);
+                background-color: rgba(23, 23, 23, .98);
+                border: 1px solid #000;
+            }
+            h1, h2, h3, h4, h5 {
+                margin: 1.2em 0 .5em;
+            }
+            h1 {
+                font-size: 3.8em;
+            }
+            h2 {
+                color: #cccc33;
+                font-size: 1.5em;
+                text-decoration: none;
+            }
+            a {
+                color: #cccc33;
+            }
+            pre {
+                padding: 15px;
+                background: #000000 none repeat scroll 0% 50%;
+                color: #ffffff;
+                overflow-x: auto;
+            }
+            ul {
+                list-style-type: none;
+            }
+            img {
+                max-width: 100%;
+            }
+            .logo {
+                text-align: center;
+                margin-top: 0;
+            }
+            .logo img {
+                border: none;
+                width: 545px;
+            }
+            .footer {
+                font-size: .8em;
+                line-height: 1.4em;
+                color: silver;
+                text-align: center;
+                padding-top: 2em;
+            }
+            .attribution {
+                text-align: right;
+                font-size: .7em;
+                color: silver;
+                text-shadow: 0 1px 1px rgba(0, 0, 0, .5);
+                margin-top: 1em;
+            }
+            .fork-me {
+                position: absolute;
+                top: 0;
+                right: 0;
+                border: none;
+                outline: none;
+            }
+            .fork-me img {
+                border: none;
+                outline: none;
+            }
+            .terminal:before {
+                content: "$ ";
+            }
+            @media all and (max-width: 460px) {
+                body, #container {
+                    margin: 2px;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+                #container {
+                    margin: 0;
+                    padding: .5em;
+                    width: 100%;
+                    border: none;
+                }
+                .attribution {
+                    text-align: center;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <a class="fork-me" href="https://github.com/projectNe10/Ne10">
+            <img src="//s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub">
+        </a>
+        <div class="background-image"></div>
+        <div id="container">
+            <h1 class="logo">
+                <a href="https://github.com/projectNe10/Ne10">
+                    <img alt="Ne10 - An Open Optimized Software Library Project for the ARM Architecture" src="NE10+tag_final.png">
+                </a>
+            </h1>
+            <p>Project Ne10 <a href="https://community.arm.com/groups/android-community/blog/2013/10/28/ne10-a-new-open-source-library-to-accelerate-your-applications-with-neon" target="_blank">has been created</a> to provide a set of common, useful functions that are heavily optimized for the <a href="http://www.arm.com/products/processors/technologies/instruction-set-architectures.php" target="_blank">ARM architecture</a>, providing consistent, well-tested behavior that can be easily incorporated into applications. C interfaces to the functions are provided for both assembler and <a href="http://www.arm.com/products/processors/technologies/neon.php" target="_blank">NEON&trade;</a> implementations, supporting both static and dynamic linking. The library is structured into modules such that functionality that is not required can be ignored.</p>
+            <p>For new users, the project's documentation, along with some other resources you may find helpful, are linked below.</p>
 
-  
-  <meta name="keywords" content="arm, neon, ne10, open source, apache 2.0, box2d, android, ndk, asop, android open source project, C, C++, java, accelerate, intrinsics, SIMD, graphics, games, augmented reality, programming, contribute, best practice, example code, free, contribute, github">
-  <title>Project Ne10: An Open Optimized Software Library Project for
-the ARM Architecture @ GitHub</title>
+            <ul>
+                <li><a href="https://github.com/projectNe10/Ne10" target="_blank">Ne10 GitHub Repository</a></li>
+                <li><a href="http://projectne10.github.com/Ne10/doc/" target="_blank">Official Documentation (doxygen)</a></li>
+                <li><a href="http://community.arm.com/groups/android-community/blog/2013/09/26/ne10-library-getting-started" target="_blank">&ldquo;Ne10 Library Getting Started&rdquo;</a></li>
+                <li><a href="http://community.arm.com/groups/android-community/blog/2013/09/30/using-ne10-on-android-and-ios" target="_blank">&ldquo;Using Ne10 on Android and iOS&rdquo;</a></li>
+                <li><a href="http://community.arm.com/groups/android-community/blog/2013/11/21/indoors-uses-arm-s-ne10-library-extends-indoor-lbs-performance-lead" target="_blank">&ldquo;Indoo.rs uses ARM’s Ne10 Library: Extends indoor LBS performance lead&rdquo;</a></li>
+                <li><a href="http://community.arm.com/groups/android-community/blog/2013/12/18/projectne10-fft-is-updated" target="_blank">&ldquo;Ne10 FFT feature&rdquo;</a></li>
+            </ul>
 
-  
-  
-  <style type="text/css">
-body {
-  background-color: #000000;
-  color: #ffffff;
-  margin-top: 1em;
-  font-family: Helvetica,Arial,FreeSans,san-serif;
-}
+            <h2>License</h2>
+            <p>Ne10 is currently distributed under the <a href="http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22Revised_BSD_License.22.2C_.22New_BSD_License.22.2C_or_.22Modified_BSD_License.22.29">BSD 3-clause license</a>.</p>
 
-#container {
-  margin: 0 auto;
-  width: 700px;
-}
-h1 {
-  font-size: 3.8em;
-}
-h2 {
-  color: #cccc33;
-  font-size: 1.5em;
-  text-decoration: none;
-}
-nrml {
-  color: #ffffff;
-  font-family: Helvetica,Arial,FreeSans,san-serif;
-  margin-top: 1em;
-  text-shadow: #000000 1px 1px 2px, #000000 -1px -1px 1px;
-}
-a {
-  color: #cccc33;
-  text-decoration: none;
-}
-pre {
-  padding: 15px;
-  background: #000000 none repeat scroll 0% 50%;
-  color: #ffffff;
-}
-hr {
-  border-style: none none solid;
-  border-color: -moz-use-text-color -moz-use-text-color #aaaaaa;
-  border-width: 0 0 1px;
-  width: 80%;
-}
-.footer {
-  text-align: center;
-  padding-top: 30px;
-  font-style: italic;
-}
-atrib {
-  font-family: Helvetica,Arial,FreeSans,san-serif;
-  color: #c1c1c1;
-  font-size: 1em;
-  margin-top: 1em;
-}
+            <h2>Call for use cases</h2>
+            <p>Find Project Ne10 useful? You can help us justify spending more engineering resources on the project! Please email us, outlining how you are using the project in your applications.</p>
+            <p>Want us to help cross-promote your product using Ne10 at developer events? We’re also looking for Ne10 use cases to show at conferences and meetups.</p>
 
-  </style>
-  
-  <script type="text/javascript">
+            <h2>Contact</h2>
+            <ul>
+                <li>roberto.mijat@arm.com</li>
+                <li>matthew.dupuy@arm.com</li>
+                <li>fang.bao@arm.com</li>
+            </ul>
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-27682067-2']);
-  _gaq.push(['_trackPageview']);
+            <h2>Download</h2>
+            <p>You can download the project as a <a href="https://github.com/projectNe10/Ne10/zipball/master">zip</a> or <a href="https://github.com/projectNe10/Ne10/tarball/master">tarball</a>, or you can clone the project with Git by running:</p>
+            <pre class="terminal">git clone https://github.com/projectNe10/Ne10</pre>
 
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-  </script>
-  <link href="https://plus.google.com/115879083498419961981" rel="publisher">
-
-  <script type="text/javascript">
-  (function() {
-    var po = document.createElement("script"); po.type = "text/javascript"; po.async = true;
-    po.src = "https://apis.google.com/js/plusone.js?publisherid=115879083498419961981";
-    var s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(po, s);
-  })();
-  </script>
-</head><body style="background-image: url(Neon-Dim.jpg);">
-<a href="https://github.com/projectNe10/Ne10"><img style="border: 0pt none ; position: absolute; top: 0pt; right: 0pt;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-<div id="container">
-<h1 style="text-align: center;"><a href="https://github.com/projectNe10/Ne10"><img style="border: 0px solid ; width: 674px; height: 212px;" alt="Ne10 - An Open Optimized Software Library Project for the ARM Architecture" src="NE10+tag_final.png"></a><a href="https://github.com/projectNe10/Ne10"><br>
-</a><span class="small"></span></h1>
-<p>
-<nrml>The Ne10 project <a href="http://blogs.arm.com/software-enablement/703-ne10-a-new-open-source-library-to-accelerate-your-applications-with-neon/" target="_blank">has been set up</a>
-to provide a set of common, useful functions which have been heavily
-optimized for the <a href="http://www.arm.com/products/processors/technologies/instruction-set-architectures.php" target="_blank">ARM Architecture</a> and provide consistent well
-tested
-behavior that can be easily incorporated into applications. C
-interfaces to the functions are provided for both assembler and <a href="http://www.arm.com/products/processors/technologies/neon.php" target="_blank">NEON&trade;</a> implementations. The library supports static
-and dynamic linking and is modular, so that functionality that is not
-required can be discarded. We have doxygen documentation and several blogs to help you along the way: <br>  <a href="http://projectne10.github.com/Ne10/doc/" target="_blank">doxygen documentation</a> <br> <a href="http://community.arm.com/groups/android-community/blog/2013/09/26/ne10-library-getting-started" target="_blank">Ne10 Library Getting Started</a><br> <a href="http://community.arm.com/groups/android-community/blog/2013/09/30/using-ne10-on-android-and-ios" target="_blank">Using Ne10 on Android and iOS</a><br>  <a href="http://community.arm.com/groups/android-community/blog/2013/11/21/indoors-uses-arm-s-ne10-library-extends-indoor-lbs-performance-lead" target="_blank">Indoo.rs uses ARM’s Ne10 Library: Extends indoor LBS performance lead</a><br>  <a href="http://community.arm.com/groups/android-community/blog/2013/12/18/projectne10-fft-is-updated" target="_blank">Ne10 FFT feature</a> <br> 
-</nrml>
-</p>
-<h2 style="color: rgb(204, 204, 51);"><a href="http://en.wikipedia.org/wiki/BSD_licenses#3-clause_license_.28.22New_BSD_License.22_or_.22Modified_BSD_License.22.29">License</a></h2>
-<nrml>BSD 3-clause</nrml>
-<h2 style="color: rgb(204, 204, 51);">Call for use cases</h2>
-<nrml>Find ProjectNe10 useful?  You can help us justify more project engineering resources. Please email us your uses!<p>
-Want us to help cross promote your product using Ne10 at developer events? We’re looking for use cases we can demonstrate ProjectNe10 with at conferences and meetups.
-<br>
-</nrml>
-<h2 style="color: rgb(204, 204, 51);">Contact</h2>
-<nrml> roberto.mijat@arm.com 
-<br>
-<nrml> matthew.dupuy@arm.com
-<br>
-<nrml> fang.bao@arm.com
-<br>
-</nrml>
-<h2 style="color: rgb(204, 204, 51);">Download</h2>
-<nrml> You can download this project in either <a href="https://github.com/projectNe10/Ne10/zipball/master">zip</a> or <a href="https://github.com/projectNe10/Ne10/tarball/master">tar formats.
-</a></nrml>
-<p><nrml>You
-can
-also clone the project with Git
-by running: <nrml></nrml></nrml></p>
-<pre>$ git clone http://github.com/projectNe10/Ne10</pre>
-<div class="footer"> get the source code on GitHub : <a href="https://github.com/projectNe10/Ne10">projectNe10/Ne10</a><br>
-</div>
-<div style="text-align: center;"><nrml><a href="https://github.com/projectNe10/Ne10/wiki/F.A.Q.">Frequently
-Asked
-Questions</a> -- <a href="https://plus.google.com/115879083498419961981" rel="publisher">Google+</a></nrml><br>
-</div>
-</div>
-
-<script type="\&quot;text/javascript\&quot;">
-var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");
-document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));
-</script>
-<script type="\&quot;text/javascript\&quot;">
-try {
-var pageTracker = _gat._getTracker("UA-27682067-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-<div style="text-align: right;"><br>
-<small><small><atrib><a style="color: rgb(160, 160, 40);" href="http://en.wikipedia.org/wiki/File:Neon.JPG" target="_blank">background
-image</a><span style="color: silver;"> by Jan Mehlich
--
-licenced under</span> <a style="color: rgb(160, 160, 40);" href="http://creativecommons.org/licenses/by-sa/2.5/deed.en" target="_blank">CC-SA</a></atrib></small></small></div>
-
-</body></html>
+            <div class="footer">
+                Get the source code on GitHub: <a href="https://github.com/projectNe10/Ne10">projectNe10/Ne10</a>
+                <div style="text-align: center;">
+                    <a href="https://github.com/projectNe10/Ne10/wiki/F.A.Q.">Frequently Asked Questions</a> &bull;
+                    <a href="https://plus.google.com/115879083498419961981" rel="publisher">Google+</a>
+                </div>
+            </div>
+        </div>
+        <div class="attribution">
+            <a href="https://commons.wikimedia.org/wiki/File:Neon_cells.jpg" target="_blank">background image</a> by Zhiguo.he &mdash; licenced under <a href="http://creativecommons.org/licenses/by-sa/2.5/deed.en" target="_blank">CC-SA</a>
+        </div>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-27682067-2']);
+            _gaq.push(['_trackPageview']);
+            (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>
+    </body>
+</html>
