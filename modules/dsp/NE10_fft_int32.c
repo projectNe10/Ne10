@@ -1045,10 +1045,23 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_c (ne10_int32_t nfft)
             return NULL;
         }
 
-        ne10_int32_t *factors = st->factors;
-        ne10_fft_cpx_int32_t *twiddles = st->twiddles;
+        // Disable radix 8 for generic INT32 FFTs (it isn't supported)
+        {
+            ne10_int32_t stage_count    = st->factors[0];
+            ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
 
-        ne10_fft_generate_twiddles_int32 (twiddles, factors, nfft);
+            if (algorithm_flag == NE10_FFT_ALG_ANY)
+            {
+                result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_DEFAULT);
+                if (result == NE10_ERR)
+                {
+                    NE10_FREE (st);
+                    return NULL;
+                }
+            }
+        }
+
+        ne10_fft_generate_twiddles_int32 (st->twiddles, st->factors, nfft);
     }
 
     return st;

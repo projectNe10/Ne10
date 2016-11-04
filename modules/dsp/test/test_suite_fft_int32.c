@@ -52,6 +52,8 @@
 
 #define TEST_COUNT 250000
 
+#define NE10_FFT_PARA_LEVEL 4
+
 /* ----------------------------------------------------------------------
 ** Defines each of the tests performed
 ** ------------------------------------------------------------------- */
@@ -80,7 +82,8 @@ void test_fft_c2c_1d_int32_conformance()
 {
 
     ne10_int32_t i = 0;
-    ne10_int32_t fftSize = 0;
+    ne10_int32_t baseSize = 0, fftSize = 0;
+    ne10_int32_t factor;
     ne10_fft_cfg_int32_t cfg_c;
     ne10_fft_cfg_int32_t cfg_neon;
     ne10_float32_t * out_c_tmp = NULL;
@@ -108,107 +111,135 @@ void test_fft_c2c_1d_int32_conformance()
         testInput_i32_unscaled[i] = (ne10_int32_t) (drand48() * 8192) - 4096;
         testInput_i32_scaled[i] = (ne10_int32_t) (drand48() * NE10_F2I32_MAX) - NE10_F2I32_MAX / 2;
     }
-    for (fftSize = MIN_LENGTH_SAMPLES_CPX; fftSize <= TEST_LENGTH_SAMPLES; fftSize *= 2)
+
+    for (baseSize = MIN_LENGTH_SAMPLES_CPX; baseSize <= TEST_LENGTH_SAMPLES; baseSize *= 2)
     {
-        fprintf (stdout, "FFT size %d\n", fftSize);
-        /* FFT init */
-        cfg_c = ne10_fft_alloc_c2c_int32_c (fftSize);
-        if (cfg_c == NULL)
+        factor = 2;
+        fftSize = baseSize;
+        while (factor && fftSize <= TEST_LENGTH_SAMPLES)
         {
-            fprintf (stdout, "======ERROR, FFT alloc fails\n");
-            return;
+            if (fftSize % NE10_FFT_PARA_LEVEL == 0)
+            {
+                fprintf (stdout, "FFT size %d\n", fftSize);
+                /* FFT init */
+                cfg_c = ne10_fft_alloc_c2c_int32_c (fftSize);
+                if (cfg_c == NULL)
+                {
+                    fprintf (stdout, "======ERROR, FFT alloc fails\n");
+                    return;
+                }
+
+                cfg_neon = ne10_fft_alloc_c2c_int32_neon (fftSize);
+                if (cfg_neon == NULL)
+                {
+                    NE10_FREE (cfg_c);
+                    fprintf (stdout, "======ERROR, FFT alloc fails\n");
+                    return;
+                }
+
+                /* unscaled FFT test */
+                memcpy (in_c, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
+                memcpy (in_neon, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
+
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 0);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 0);
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+
+                //conformance test
+                for (i = 0; i < fftSize * 2; i++)
+                {
+                    out_c_tmp[i] = (ne10_float32_t) out_c[i];
+                    out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+                }
+                snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
+                assert_false ( (snr < SNR_THRESHOLD_INT32));
+
+                /* IFFT test */
+                memcpy (in_c, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
+                memcpy (in_neon, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
+
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 0);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 0);
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+
+                //conformance test
+                for (i = 0; i < fftSize * 2; i++)
+                {
+                    out_c_tmp[i] = (ne10_float32_t) out_c[i];
+                    out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+                }
+                snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
+                assert_false ( (snr < SNR_THRESHOLD_INT32));
+
+                /* scaled FFT test */
+                memcpy (in_c, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
+                memcpy (in_neon, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
+
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 1);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 1);
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+
+                //conformance test
+                for (i = 0; i < fftSize * 2; i++)
+                {
+                    out_c_tmp[i] = (ne10_float32_t) out_c[i];
+                    out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+                }
+                snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
+                assert_false ( (snr < SNR_THRESHOLD_INT32));
+
+                /* IFFT test */
+                memcpy (in_c, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
+                memcpy (in_neon, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
+
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+                ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 1);
+                ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 1);
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
+                CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
+
+                //conformance test
+                for (i = 0; i < fftSize * 2; i++)
+                {
+                    out_c_tmp[i] = (ne10_float32_t) out_c[i];
+                    out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
+                }
+                snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
+                assert_false ( (snr < SNR_THRESHOLD_INT32));
+
+                NE10_FREE (cfg_c);
+                NE10_FREE (cfg_neon);
+            }
+
+            switch (factor)
+            {
+            case 2:
+                factor = 3;
+                fftSize += (fftSize / 2);
+                break;
+            case 3:
+                factor = 5;
+                fftSize += (fftSize / 3) * 2;
+                break;
+            case 5:
+                factor = 15;
+                fftSize += (fftSize * 2);
+                break;
+            case 15:
+                factor = 0;
+                break;
+            }
         }
-
-        cfg_neon = ne10_fft_alloc_c2c_int32_neon (fftSize);
-        if (cfg_neon == NULL)
-        {
-            NE10_FREE (cfg_c);
-            fprintf (stdout, "======ERROR, FFT alloc fails\n");
-            return;
-        }
-
-        /* unscaled FFT test */
-        memcpy (in_c, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
-        memcpy (in_neon, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
-
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 0);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 0);
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-
-        //conformance test
-        for (i = 0; i < fftSize * 2; i++)
-        {
-            out_c_tmp[i] = (ne10_float32_t) out_c[i];
-            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
-        }
-        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
-        assert_false ( (snr < SNR_THRESHOLD_INT32));
-
-        /* IFFT test */
-        memcpy (in_c, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
-        memcpy (in_neon, testInput_i32_unscaled, 2 * fftSize * sizeof (ne10_int32_t));
-
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 0);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 0);
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-
-        //conformance test
-        for (i = 0; i < fftSize * 2; i++)
-        {
-            out_c_tmp[i] = (ne10_float32_t) out_c[i];
-            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
-        }
-        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
-        assert_false ( (snr < SNR_THRESHOLD_INT32));
-
-        /* scaled FFT test */
-        memcpy (in_c, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
-        memcpy (in_neon, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
-
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 0, 1);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 0, 1);
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-
-        //conformance test
-        for (i = 0; i < fftSize * 2; i++)
-        {
-            out_c_tmp[i] = (ne10_float32_t) out_c[i];
-            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
-        }
-        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
-        assert_false ( (snr < SNR_THRESHOLD_INT32));
-
-        /* IFFT test */
-        memcpy (in_c, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
-        memcpy (in_neon, testInput_i32_scaled, 2 * fftSize * sizeof (ne10_int32_t));
-
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        GUARD_ARRAY_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-        ne10_fft_c2c_1d_int32_c ( (ne10_fft_cpx_int32_t*) out_c, (ne10_fft_cpx_int32_t*) in_c, cfg_c, 1, 1);
-        ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) out_neon, (ne10_fft_cpx_int32_t*) in_neon, cfg_neon, 1, 1);
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_c, fftSize * 2 * sizeof (ne10_int32_t));
-        CHECK_ARRAY_GUARD_UINT8 ( (ne10_uint8_t*) out_neon, fftSize * 2 * sizeof (ne10_int32_t));
-
-        //conformance test
-        for (i = 0; i < fftSize * 2; i++)
-        {
-            out_c_tmp[i] = (ne10_float32_t) out_c[i];
-            out_neon_tmp[i] = (ne10_float32_t) out_neon[i];
-        }
-        snr = CAL_SNR_FLOAT32 (out_c_tmp, out_neon_tmp, fftSize * 2);
-        assert_false ( (snr < SNR_THRESHOLD_INT32));
-
-        NE10_FREE (cfg_c);
-        NE10_FREE (cfg_neon);
     }
 
     NE10_FREE (guarded_in_c);

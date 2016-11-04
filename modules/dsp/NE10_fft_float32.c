@@ -901,6 +901,22 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft)
         return NULL;
     }
 
+    // Disable radix 8 for generic FFTs (it doesn't work properly)
+    {
+        ne10_int32_t stage_count    = st->factors[0];
+        ne10_int32_t algorithm_flag = st->factors[2 * (stage_count + 1)];
+
+        if (algorithm_flag == NE10_FFT_ALG_ANY)
+        {
+            result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_DEFAULT);
+            if (result == NE10_ERR)
+            {
+                NE10_FREE (st);
+                return NULL;
+            }
+        }
+    }
+
     ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, nfft);
 
     return st;
