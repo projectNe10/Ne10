@@ -43,8 +43,9 @@ ne10_result_t ne10_invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne
 {
     ne10_float32_t det = 0.0f;
 
-    NE10_DETMAT_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         det = DET2x2 (&src[ itr ]);
 
         if (1 == IS_FLOAT_NEAR_ZERO (det))
@@ -57,7 +58,8 @@ ne10_result_t ne10_invmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne
         dst[ itr ].c1.r2 =    -1 * det * src[ itr ].c1.r2;
         dst[ itr ].c2.r1 =    -1 * det * src[ itr ].c2.r1;
         dst[ itr ].c2.r2 =         det * src[ itr ].c1.r1;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
@@ -75,8 +77,9 @@ ne10_result_t ne10_invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne
     ne10_float32_t det = 0.0f;
     ne10_mat2x2f_t A, B, C, D, E, F, G, H, I;
 
-    NE10_DETMAT_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         det = DET3x3 (&src[ itr ]);
 
         if (1 == IS_FLOAT_NEAR_ZERO (det))
@@ -107,7 +110,8 @@ ne10_result_t ne10_invmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne
         dst[ itr ].c3.r1 =         det * DET2x2 (&C);
         dst[ itr ].c3.r2 = -1.0f * det * DET2x2 (&F);
         dst[ itr ].c3.r3 =         det * DET2x2 (&I);
-    );
+    }
+    return NE10_OK;
 
 #undef aa
 #undef bb
@@ -145,8 +149,9 @@ ne10_result_t ne10_invmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne
     ne10_float32_t det = 0.0f;
     ne10_mat3x3f_t A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P;
 
-    NE10_DETMAT_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         det = DET4x4 (&src[ itr ]);
 
         if (1 == IS_FLOAT_NEAR_ZERO (det))
@@ -193,7 +198,8 @@ ne10_result_t ne10_invmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne
         dst[ itr ].c4.r2 =         det * DET3x3 (&H);
         dst[ itr ].c4.r3 = -1.0f * det * DET3x3 (&L);
         dst[ itr ].c4.r4 =         det * DET3x3 (&P);
-    );
+    }
+    return NE10_OK;
 
 #undef aa
 #undef bb

@@ -40,7 +40,7 @@
 
 ne10_result_t ne10_divc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_FLOAT_NEON
+    NE10_DstSrcCst_DO_COUNT_TIMES_FLOAT_NEON
     (
         /* a single division operation */
         float32x4_t rec = vrecpeq_f32 (n_cst);
@@ -49,16 +49,16 @@ ne10_result_t ne10_divc_float_neon (ne10_float32_t * dst, ne10_float32_t * src, 
         n_dst = vmulq_f32 (n_src , rec);
         ,
         /* a single division operation */
-        float32x2_t rec = vrecpe_f32 (n_tmp_cst);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst, rec), rec);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst, rec), rec);
-        n_tmp_src = vmul_f32 (n_tmp_src, rec);
+        float32x2_t rec = vrecpe_f32 (n_rest_cst);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst, rec), rec);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst, rec), rec);
+        n_rest = vmul_f32 (n_rest, rec);
     );
 }
 
 ne10_result_t ne10_divc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_VEC2F_NEON
+    NE10_DstSrcCst_DO_COUNT_TIMES_VEC2F_NEON
     (
         /* a single division operation */
         float32x4_t rec = vrecpeq_f32 (n_cst);
@@ -67,16 +67,16 @@ ne10_result_t ne10_divc_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * src, cons
         n_dst = vmulq_f32 (n_src , rec);
         ,
         /* a single division operation */
-        float32x2_t rec = vrecpe_f32 (n_tmp_cst);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst, rec), rec);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst, rec), rec);
-        n_tmp_src = vmul_f32 (n_tmp_src, rec);
+        float32x2_t rec = vrecpe_f32 (n_rest_cst);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst, rec), rec);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst, rec), rec);
+        n_rest = vmul_f32 (n_rest, rec);
     );
 }
 
 ne10_result_t ne10_divc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_VEC3F_NEON
+    NE10_DstSrcCst_DO_COUNT_TIMES_VEC3F_NEON
     (
         /* three division operations */
         float32x4_t rec = vrecpeq_f32 (n_cst1);
@@ -95,26 +95,26 @@ ne10_result_t ne10_divc_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * src, cons
         n_dst3 = vmulq_f32 (n_src3 , rec);
         ,
         /* three division operations */
-        float32x2_t rec = vrecpe_f32 (n_tmp_cst.val[0]);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst.val[0], rec), rec);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst.val[0], rec), rec);
-        n_tmp_src.val[0] = vmul_f32 (n_tmp_src.val[0] , rec);
+        float32x2_t rec = vrecpe_f32 (n_rest_cst.val[0]);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst.val[0], rec), rec);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst.val[0], rec), rec);
+        n_rest.val[0] = vmul_f32 (n_rest.val[0] , rec);
 
-        rec = vrecpe_f32 (n_tmp_cst.val[1]);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst.val[1], rec), rec);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst.val[1], rec), rec);
-        n_tmp_src.val[1] = vmul_f32 (n_tmp_src.val[1] , rec);
+        rec = vrecpe_f32 (n_rest_cst.val[1]);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst.val[1], rec), rec);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst.val[1], rec), rec);
+        n_rest.val[1] = vmul_f32 (n_rest.val[1] , rec);
 
-        rec = vrecpe_f32 (n_tmp_cst.val[2]);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst.val[2], rec), rec);
-        rec = vmul_f32 (vrecps_f32 (n_tmp_cst.val[2], rec), rec);
-        n_tmp_src.val[2] = vmul_f32 (n_tmp_src.val[2] , rec);
+        rec = vrecpe_f32 (n_rest_cst.val[2]);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst.val[2], rec), rec);
+        rec = vmul_f32 (vrecps_f32 (n_rest_cst.val[2], rec), rec);
+        n_rest.val[2] = vmul_f32 (n_rest.val[2] , rec);
     );
 }
 
 ne10_result_t ne10_divc_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_VEC4F_NEON
+    NE10_DstSrcCst_DO_COUNT_TIMES_VEC4F_NEON
     (
         /* a single division operation */
         float32x4_t rec = vrecpeq_f32 (n_cst);

@@ -34,23 +34,20 @@
 
 ne10_result_t ne10_identitymat_2x2f_c (ne10_mat2x2f_t * dst, ne10_uint32_t count)
 {
-    ne10_mat2x2f_t *src = dst; // dummy placeholder
-
-    NE10_DETMAT_OPERATION_X_C
-    (
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 =  1.0f;
         dst[ itr ].c1.r2 =  0.0f;
         dst[ itr ].c2.r1 =  0.0f;
         dst[ itr ].c2.r2 =  1.0f;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_identitymat_3x3f_c (ne10_mat3x3f_t * dst, ne10_uint32_t count)
 {
-    ne10_mat3x3f_t *src = dst; // dummy placeholder
-
-    NE10_DETMAT_OPERATION_X_C
-    (
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 =  1.0f;
         dst[ itr ].c1.r2 =  0.0f;
         dst[ itr ].c1.r3 =  0.0f;
@@ -62,15 +59,14 @@ ne10_result_t ne10_identitymat_3x3f_c (ne10_mat3x3f_t * dst, ne10_uint32_t count
         dst[ itr ].c3.r1 =  0.0f;
         dst[ itr ].c3.r2 =  0.0f;
         dst[ itr ].c3.r3 =  1.0f;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_identitymat_4x4f_c (ne10_mat4x4f_t * dst, ne10_uint32_t count)
 {
-    ne10_mat4x4f_t *src = dst; // dummy placeholder
-
-    NE10_DETMAT_OPERATION_X_C
-    (
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 =  1.0f;
         dst[ itr ].c1.r2 =  0.0f;
         dst[ itr ].c1.r3 =  0.0f;
@@ -90,5 +86,6 @@ ne10_result_t ne10_identitymat_4x4f_c (ne10_mat4x4f_t * dst, ne10_uint32_t count
         dst[ itr ].c4.r2 =  0.0f;
         dst[ itr ].c4.r3 =  0.0f;
         dst[ itr ].c4.r4 =  1.0f;
-    );
+    }
+    return NE10_OK;
 }

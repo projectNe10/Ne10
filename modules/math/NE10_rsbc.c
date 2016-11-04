@@ -36,38 +36,46 @@
 
 ne10_result_t ne10_rsbc_float_c (ne10_float32_t * dst, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrcCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ] = cst - src[ itr ];
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_rsbc_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrcCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].x = cst->x - src[ itr ].x;
         dst[ itr ].y = cst->y - src[ itr ].y;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_rsbc_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrcCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].x = cst->x - src[ itr ].x;
         dst[ itr ].y = cst->y - src[ itr ].y;
         dst[ itr ].z = cst->z - src[ itr ].z;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_rsbc_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count)
 {
-    NE10_XC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrcCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].x = cst->x - src[ itr ].x;
         dst[ itr ].y = cst->y - src[ itr ].y;
         dst[ itr ].z = cst->z - src[ itr ].z;
         dst[ itr ].w = cst->w - src[ itr ].w;
-    );
+    }
+    return NE10_OK;
 }

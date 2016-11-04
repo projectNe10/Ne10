@@ -40,22 +40,25 @@ ne10_result_t ne10_normalize_vec2f_c (ne10_vec2f_t * dst, ne10_vec2f_t * src, ne
 {
     ne10_float32_t len;
 
-    NE10_LEN_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         len = sqrt (src[ itr ].x * src[ itr ].x +
                     src[ itr ].y * src[ itr ].y) ;
 
         dst[ itr ].x = src[ itr ].x / len;
         dst[ itr ].y = src[ itr ].y / len;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne10_uint32_t count)
 {
     ne10_float32_t len;
 
-    NE10_LEN_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         len = sqrt (src[ itr ].x * src[ itr ].x +
                     src[ itr ].y * src[ itr ].y +
                     src[ itr ].z * src[ itr ].z);
@@ -63,15 +66,17 @@ ne10_result_t ne10_normalize_vec3f_c (ne10_vec3f_t * dst, ne10_vec3f_t * src, ne
         dst[ itr ].x = src[ itr ].x / len;
         dst[ itr ].y = src[ itr ].y / len;
         dst[ itr ].z = src[ itr ].z / len;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_normalize_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne10_uint32_t count)
 {
     ne10_float32_t len;
 
-    NE10_LEN_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         len = sqrt (src[ itr ].x * src[ itr ].x +
                     src[ itr ].y * src[ itr ].y +
                     src[ itr ].z * src[ itr ].z +
@@ -81,5 +86,6 @@ ne10_result_t ne10_normalize_vec4f_c (ne10_vec4f_t * dst, ne10_vec4f_t * src, ne
         dst[ itr ].y = src[ itr ].y / len;
         dst[ itr ].z = src[ itr ].z / len;
         dst[ itr ].w = src[ itr ].w / len;
-    );
+    }
+    return NE10_OK;
 }

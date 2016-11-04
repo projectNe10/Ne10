@@ -36,20 +36,23 @@
 
 ne10_result_t ne10_submat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, ne10_mat2x2f_t * src2, ne10_uint32_t count)
 {
-    NE10_X_OPERATION_FLOAT_C
-    (
+    NE10_CHECKPOINTER_DstSrc1Src2;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 = src1[ itr ].c1.r1 - src2[ itr ].c1.r1;
         dst[ itr ].c1.r2 = src1[ itr ].c1.r2 - src2[ itr ].c1.r2;
 
         dst[ itr ].c2.r1 = src1[ itr ].c2.r1 - src2[ itr ].c2.r1;
         dst[ itr ].c2.r2 = src1[ itr ].c2.r2 - src2[ itr ].c2.r2;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_submat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, ne10_mat3x3f_t * src2, ne10_uint32_t count)
 {
-    NE10_X_OPERATION_FLOAT_C
-    (
+    NE10_CHECKPOINTER_DstSrc1Src2;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 = src1[ itr ].c1.r1 - src2[ itr ].c1.r1;
         dst[ itr ].c1.r2 = src1[ itr ].c1.r2 - src2[ itr ].c1.r2;
         dst[ itr ].c1.r3 = src1[ itr ].c1.r3 - src2[ itr ].c1.r3;
@@ -61,13 +64,15 @@ ne10_result_t ne10_submat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, n
         dst[ itr ].c3.r1 = src1[ itr ].c3.r1 - src2[ itr ].c3.r1;
         dst[ itr ].c3.r2 = src1[ itr ].c3.r2 - src2[ itr ].c3.r2;
         dst[ itr ].c3.r3 = src1[ itr ].c3.r3 - src2[ itr ].c3.r3;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_submat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, ne10_mat4x4f_t * src2, ne10_uint32_t count)
 {
-    NE10_X_OPERATION_FLOAT_C
-    (
+    NE10_CHECKPOINTER_DstSrc1Src2;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 = src1[ itr ].c1.r1 - src2[ itr ].c1.r1;
         dst[ itr ].c1.r2 = src1[ itr ].c1.r2 - src2[ itr ].c1.r2;
         dst[ itr ].c1.r3 = src1[ itr ].c1.r3 - src2[ itr ].c1.r3;
@@ -87,5 +92,6 @@ ne10_result_t ne10_submat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, n
         dst[ itr ].c4.r2 = src1[ itr ].c4.r2 - src2[ itr ].c4.r2;
         dst[ itr ].c4.r3 = src1[ itr ].c4.r3 - src2[ itr ].c4.r3;
         dst[ itr ].c4.r4 = src1[ itr ].c4.r4 - src2[ itr ].c4.r4;
-    );
+    }
+    return NE10_OK;
 }

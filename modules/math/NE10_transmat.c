@@ -44,19 +44,22 @@ inline void swap (ne10_float32_t *a, ne10_float32_t *b)
 
 ne10_result_t ne10_transmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src, ne10_uint32_t count)
 {
-    NE10_DETMAT_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 =  src[ itr ].c1.r1;
         dst[ itr ].c1.r2 =  src[ itr ].c2.r1;
         dst[ itr ].c2.r1 =  src[ itr ].c1.r2;
         dst[ itr ].c2.r2 =  src[ itr ].c2.r2;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count)
 {
-    NE10_DETMAT_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 =  src[ itr ].c1.r1;
         dst[ itr ].c1.r2 =  src[ itr ].c2.r1;
         dst[ itr ].c1.r3 =  src[ itr ].c3.r1;
@@ -68,13 +71,15 @@ ne10_result_t ne10_transmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, 
         dst[ itr ].c3.r1 =  src[ itr ].c1.r3;
         dst[ itr ].c3.r2 =  src[ itr ].c2.r3;
         dst[ itr ].c3.r3 =  src[ itr ].c3.r3;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_transmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count)
 {
-    NE10_DETMAT_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 =  src[ itr ].c1.r1;
         dst[ itr ].c1.r2 =  src[ itr ].c2.r1;
         dst[ itr ].c1.r3 =  src[ itr ].c3.r1;
@@ -94,5 +99,6 @@ ne10_result_t ne10_transmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, 
         dst[ itr ].c4.r2 =  src[ itr ].c2.r4;
         dst[ itr ].c4.r3 =  src[ itr ].c3.r4;
         dst[ itr ].c4.r4 =  src[ itr ].c4.r4;
-    );
+    }
+    return NE10_OK;
 }

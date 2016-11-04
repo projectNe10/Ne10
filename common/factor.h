@@ -29,38 +29,14 @@
  * NE10 Library : common/factor.h
  */
 
-// Typebuilding MACROs
-// - Slight difference between toolchain versions on intrinsics
+// Typebuilding macros (slight difference between toolchain versions on intrinsics)
 #define FLOAT32_2x3(x1,y1,x2,y2,x3,y3) \
     {{ \
         {x1, y1}, {x2,y2}, {x3,y3} \
     }}
 
-// Unit test use this macro to index into their function table
-// "opc" stands for operation's code (which function),
-// and "imp" stands for implementation (which implementation of the function)
-#define FTBL_IDX(opc, imp) ((opc-1)*IMPL_COUNT+(imp-1))
-
-// This macro helps measure the performance of the code passed to it through the "code" argument
-// It is used in the unit tests
-#define MEASURE(res, code) \
-   { \
-    gettimeofday (&before, &zone); \
-      code \
-    gettimeofday (&after, &zone); \
-    if (before.tv_usec > after.tv_usec) \
-    { \
-      after.tv_usec += 1000000; \
-      after.tv_sec--; \
-    } \
-    lapsed.tv_usec = after.tv_usec - before.tv_usec; \
-    lapsed.tv_sec  = after.tv_sec  - before.tv_sec; \
-    res = lapsed.tv_sec + ((double)lapsed.tv_usec / 1000000.0); \
-   }
-
-// There are several categories of functions that share common code:
-
-// Different groups of functions take different number of inputs
+// There are several categories of functions that share common code. Different groups of
+// functions take different number of inputs.
 //
 // Group 1 = Functions that take a dst, a src, and a cst ("DstSrcCst" for short)
 // Group 2 = Those that take a dst, an acc, a src, and a cst ("DstAccSrcCst" for short)
@@ -68,29 +44,18 @@
 //
 // Group 4 = These take a dst, and two src inputs, src2 and scr2 ("DstSrc1Src2")
 // Group 5 = These take a dst, an acc, and two src inputs ("DstAccSrc1Src2")
-// Group 6 = These take a dst, and a src ("DstSrc")
-//
-
-// The naming convention used in the following macros is as follows:
-//   SNAPP_<A>_OPERATION_<T>_<I>
-//   where
-//   <A> Stands for the title of the operation (add, mul, etc) followed by its type (C = const as in addc).
-//       The letter X - if used - means any such operation.
-//   <T> Indicates the type of the operation (float, vec2, etc.)
-//       The letter X - is used - means any type.
-//   <I> This indicates the implementation (it can be C, ASM, or NEON).
 
 // A few macros to check pointers and their address range to make sure there's
-//  no unwanted overlap between any two of them
-#define NE10_CHECKPOINTER_DstSrcCst_OPERATION \
+// no unwanted overlap between any two of them
+#define NE10_CHECKPOINTER_DstSrcCst \
    if ( (void *)dst < (void *)src ) \
     { assert ( (void *)dst + count <= (void *)src ); } \
    else if ( (void *)dst > (void *)src ) \
     { assert ( (void *)src + count <= (void *)dst ); }
 
-#define NE10_CHECKPOINTER_DstSrc_OPERATION NE10_CHECKPOINTER_DstSrcCst_OPERATION
+#define NE10_CHECKPOINTER_DstSrc NE10_CHECKPOINTER_DstSrcCst
 
-#define NE10_CHECKPOINTER_3POINTER_OPERATION(arg1, arg2, arg3) \
+#define NE10_CHECKPOINTER_3POINTER(arg1, arg2, arg3) \
    if ( (void *)arg1 < (void *)arg2 ) \
     { assert ( (void *)arg1 + count <= (void *)arg2 ); } \
    else if ( (void *)arg1 > (void *)arg2 ) \
@@ -104,8 +69,8 @@
    else if ( (void *)arg3 > (void *)arg2 ) \
     { assert ( (void *)arg2 + count <= (void *)arg3 ); }
 
-#define NE10_CHECKPOINTER_4POINTER_OPERATION(arg1, arg2, arg3, arg4) \
-   NE10_CHECKPOINTER_3POINTER_OPERATION(arg1, arg2, arg3) \
+#define NE10_CHECKPOINTER_4POINTER(arg1, arg2, arg3, arg4) \
+   NE10_CHECKPOINTER_3POINTER(arg1, arg2, arg3) \
    if ( (void *)arg1 < (void *)arg4 ) \
     { assert ( (void *)arg1 + count <= (void *)arg4 ); } \
    else if ( (void *)arg1 > (void *)arg4 ) \
@@ -121,31 +86,17 @@
 
 
 
-#define NE10_CHECKPOINTER_DstAccSrcCst_OPERATION { \
-   NE10_CHECKPOINTER_3POINTER_OPERATION(dst, acc, src); }
+#define NE10_CHECKPOINTER_DstAccSrcCst { \
+   NE10_CHECKPOINTER_3POINTER(dst, acc, src); }
 
-#define NE10_CHECKPOINTER_DstCst_OPERATION  {}
+#define NE10_CHECKPOINTER_DstCst  {}
 
-#define NE10_CHECKPOINTER_DstSrc1Src2_OPERATION { \
-   NE10_CHECKPOINTER_3POINTER_OPERATION(dst, src1, src2); }
+#define NE10_CHECKPOINTER_DstSrc1Src2 { \
+   NE10_CHECKPOINTER_3POINTER(dst, src1, src2); }
 
-#define NE10_CHECKPOINTER_DstAccSrc1Src2_OPERATION { \
-   NE10_CHECKPOINTER_4POINTER_OPERATION(dst, acc, src1, src2); }
+#define NE10_CHECKPOINTER_DstAccSrc1Src2 { \
+   NE10_CHECKPOINTER_4POINTER(dst, acc, src1, src2); }
 
-// These macros generalise implementation of the functions.
-
-// Macros used in C implementations
-#define NE10_TEMPLATE_XC_OPERATION_X_C(checkPointer, loopCode) { \
-   ne10_result_t res = NE10_OK; \
-   unsigned int itr = 0; \
-   checkPointer; \
-   for ( itr = 0; itr < count; itr++ ) \
-   { loopCode ; /* this loop iterates through each and every float item one at a time */ \
-   } \
-   return res; \
-  }
-
-// macros used in the NEON implementations
 
 // Main Loop = The loop where the number of items to be processed is exactly the
 //              number that we can process in a single iteration.
@@ -174,21 +125,20 @@
     }
 
 #define NE10_DstSrcCst_SECONDLOOP_FLOAT_NEON(loopCode) { \
-      float32x2_t n_tmp_src = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
-      float32x2_t n_tmp_cst = { cst, cst }; /* temporary constant value for use in the main NEON operation */ \
-      n_tmp_src = vld1_lane_f32 ( (float32_t*)src, n_tmp_src, 0); /* load into the first lane of d0 */ \
+      float32x2_t n_rest = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
+      float32x2_t n_rest_cst = { cst, cst }; /* temporary constant value for use in the main NEON operation */ \
+      n_rest = vld1_lane_f32 ( (float32_t*)src, n_rest, 0); /* load into the first lane of d0 */ \
       loopCode; /* the actual operation is placed here ... */ /* exceptional cases where the count is not a multiple of 4 */ \
-      vst1_lane_f32( (float32_t*)dst, n_tmp_src, 0); /* store the lane back into the memory */ \
+      vst1_lane_f32( (float32_t*)dst, n_rest, 0); /* store the lane back into the memory */ \
       /* move to the next item in the stream */ \
       src++; \
       dst++; \
      }
 
-#define NE10_DstSrcCst_OPERATION_FLOAT_NEON(checkPointer, loopCode1, loopCode2) { \
+#define NE10_DstSrcCst_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
    ne10_result_t res = NE10_OK; \
    float32x4_t n_src; \
    float32x4_t n_dst; \
-   checkPointer; \
    int dif = 0; \
    dif = count % 4; /* either 0 or one of 1,2,3; in the latter cases the second path is taken */ \
    for (; count > dif; count -= 4) { \
@@ -214,19 +164,18 @@
     }
 
 #define NE10_DstSrcCst_SECONDLOOP_VEC2F_NEON(loopCode) { \
-     float32x2_t n_tmp_src; \
-     float32x2_t n_tmp_cst = { cst->x, cst->y }; \
-     n_tmp_src = vld1_f32( (float32_t*)src  ); \
+     float32x2_t n_rest; \
+     float32x2_t n_rest_cst = { cst->x, cst->y }; \
+     n_rest = vld1_f32( (float32_t*)src  ); \
      loopCode; /* exceptional cases where the count isn't a multiple of 2 */ \
-     vst1_f32( (float32_t*)dst, n_tmp_src); \
+     vst1_f32( (float32_t*)dst, n_rest); \
     }
 
-#define NE10_DstSrcCst_OPERATION_VEC2F_NEON(checkPointer, loopCode1, loopCode2) { \
+#define NE10_DstSrcCst_OPERATION_VEC2F_NEON(loopCode1, loopCode2) { \
    ne10_result_t res = NE10_OK; \
    float32x4_t n_cst = { cst->x, cst->y, cst->x, cst->y }; \
    float32x4_t n_src; \
    float32x4_t n_dst; \
-   checkPointer; \
    int dif = count % 2; \
    for (; count > dif; count -= 2) { \
     loopCode1; \
@@ -256,25 +205,24 @@
   }
 
 #define NE10_DstSrcCst_SECONDLOOP_VEC3F_NEON(loopCode) { \
-      float32x2x3_t n_tmp_src = FLOAT32_2x3( \
+      float32x2x3_t n_rest = FLOAT32_2x3( \
         0.0f, 0.0f, 0.0f , 0.0f, 0.0f , 0.0f); \
-      float32x2x3_t n_tmp_cst = { (const float32x2_t){cst->x, 0}, \
+      float32x2x3_t n_rest_cst = { (const float32x2_t){cst->x, 0}, \
              (const float32x2_t){cst->y, 0}, (const float32x2_t){cst->z, 0} }; \
-      n_tmp_src = vld3_lane_f32 ( (float32_t*)src, n_tmp_src, 0); \
+      n_rest = vld3_lane_f32 ( (float32_t*)src, n_rest, 0); \
       loopCode; /* exceptional cases where the count isn't a multiple of 3 */ \
-      vst3_lane_f32( (float32_t*)dst, n_tmp_src, 0); \
+      vst3_lane_f32( (float32_t*)dst, n_rest, 0); \
       src++; \
       dst++; \
      }
 
-#define NE10_DstSrcCst_OPERATION_VEC3F_NEON(checkPointer, loopCode1, loopCode2) { \
+#define NE10_DstSrcCst_OPERATION_VEC3F_NEON(loopCode1, loopCode2) { \
    ne10_result_t res = NE10_OK; \
    float32x4_t n_cst1 = { cst->x, cst->y, cst->z, cst->x }; \
    float32x4_t n_cst2 = { cst->y, cst->z, cst->x, cst->y }; \
    float32x4_t n_cst3 = { cst->z, cst->x, cst->y, cst->z }; \
     float32x4_t n_src1, n_src2, n_src3; \
    float32x4_t n_dst1, n_dst2, n_dst3; \
-   checkPointer; \
    int dif = count % 4;  \
    for (; count > dif; count -= 4) { \
     loopCode1; \
@@ -301,12 +249,11 @@
      dst ++; \
    }
 
-#define NE10_DstSrcCst_OPERATION_VEC4F_NEON(checkPointer, loopCode) { \
+#define NE10_DstSrcCst_OPERATION_VEC4F_NEON(loopCode) { \
    ne10_result_t res = NE10_OK; \
    float32x4_t n_cst = { cst->x, cst->y, cst->z, cst->w }; \
    float32x4_t n_src; \
    float32x4_t n_dst; \
-   checkPointer; \
    for (; count != 0; count --) { \
      loopCode; \
     } \
@@ -333,13 +280,13 @@
     }
 
 #define NE10_DstAccSrcCst_SECONDLOOP_FLOAT_NEON(loopCode) { \
-      float32x2_t n_tmp_acc = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
-      float32x2_t n_tmp_src = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
-      float32x2_t n_tmp_cst = { cst, cst }; /* temporary constant value for use in the main NEON operation */ \
-      n_tmp_acc = vld1_lane_f32 ( (float32_t*)acc, n_tmp_acc, 0); /* load into the first lane of d0 */ \
-      n_tmp_src = vld1_lane_f32 ( (float32_t*)src, n_tmp_src, 0); /* load into the first lane of d1 */ \
+      float32x2_t n_rest_acc = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
+      float32x2_t n_rest = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
+      float32x2_t n_rest_cst = { cst, cst }; /* temporary constant value for use in the main NEON operation */ \
+      n_rest_acc = vld1_lane_f32 ( (float32_t*)acc, n_rest_acc, 0); /* load into the first lane of d0 */ \
+      n_rest = vld1_lane_f32 ( (float32_t*)src, n_rest, 0); /* load into the first lane of d1 */ \
       loopCode; /* the actual operation is palced here ... */ /* exceptional cases where the count is not a multiple of 4 */ \
-      vst1_lane_f32( (float32_t*)dst, n_tmp_src, 0); /* store the lane back into the memory */ \
+      vst1_lane_f32( (float32_t*)dst, n_rest, 0); /* store the lane back into the memory */ \
       /* move to the next item in the stream */ \
       acc++; \
       src++; \
@@ -361,13 +308,13 @@
     }
 
 #define NE10_DstAccSrcCst_SECONDLOOP_VEC2F_NEON(loopCode) { \
-     float32x2_t n_tmp_acc; \
-     float32x2_t n_tmp_src; \
-     float32x2_t n_tmp_cst = { cst->x, cst->y }; \
-     n_tmp_acc = vld1_f32( (float32_t*)acc  ); \
-     n_tmp_src = vld1_f32( (float32_t*)src  ); \
+     float32x2_t n_rest_acc; \
+     float32x2_t n_rest; \
+     float32x2_t n_rest_cst = { cst->x, cst->y }; \
+     n_rest_acc = vld1_f32( (float32_t*)acc  ); \
+     n_rest = vld1_f32( (float32_t*)src  ); \
      loopCode; /* exceptional cases where the count isn't a multiple of 2 */ \
-     vst1_f32( (float32_t*)dst, n_tmp_src); \
+     vst1_f32( (float32_t*)dst, n_rest); \
     }
 
 #define NE10_DstAccSrcCst_OPERATION_VEC2F_NEON    NE10_DstSrcCst_OPERATION_VEC2F_NEON
@@ -397,23 +344,23 @@
   }
 
 #define NE10_DstAccSrcCst_SECONDLOOP_VEC3F_NEON(loopCode) { \
-      float32x2x3_t n_tmp_acc = FLOAT32_2x3( \
+      float32x2x3_t n_rest_acc = FLOAT32_2x3( \
          0.0f, 0.0f, \
          0.0f, 0.0f, \
          0.0f, 0.0f  \
       ); \
-      float32x2x3_t n_tmp_src = FLOAT32_2x3( \
+      float32x2x3_t n_rest = FLOAT32_2x3( \
         0.0f, 0.0f, \
         0.0f, 0.0f, \
         0.0f, 0.0f  \
       ); \
-      float32x2x3_t n_tmp_cst = { (const float32x2_t){cst->x, 0}, \
+      float32x2x3_t n_rest_cst = { (const float32x2_t){cst->x, 0}, \
                                   (const float32x2_t){cst->y, 0}, \
                                   (const float32x2_t){cst->z, 0} };     \
-      n_tmp_acc = vld3_lane_f32 ( (float32_t*)acc, n_tmp_acc, 0);       \
-      n_tmp_src = vld3_lane_f32 ( (float32_t*)src, n_tmp_src, 0);       \
+      n_rest_acc = vld3_lane_f32 ( (float32_t*)acc, n_rest_acc, 0);       \
+      n_rest = vld3_lane_f32 ( (float32_t*)src, n_rest, 0);       \
       loopCode; /* exceptional cases where the count isn't a multiple of 3 */ \
-      vst3_lane_f32( (float32_t*)dst, n_tmp_src, 0); \
+      vst3_lane_f32( (float32_t*)dst, n_rest, 0); \
       acc++; \
       src++; \
       dst++; \
@@ -451,16 +398,15 @@
     }
 
 #define NE10_DstCst_SECONDLOOP_FLOAT_NEON(loopCode) { \
-      float32x2_t n_tmp_cst = { cst, cst }; /* temporary constant value for use in the main NEON operation */ \
+      float32x2_t n_rest_cst = { cst, cst }; /* temporary constant value for use in the main NEON operation */ \
       loopCode; /* the actual operation is palced here ... */ /* exceptional cases where the count is not a multiple of 4 */ \
-      vst1_lane_f32( (float32_t*)dst, n_tmp_cst, 0); /* store the lane back into the memory */ \
+      vst1_lane_f32( (float32_t*)dst, n_rest_cst, 0); /* store the lane back into the memory */ \
       /* move to the next item in the stream */ \
       dst++; \
      }
 
-#define NE10_DstCst_OPERATION_FLOAT_NEON(checkPointer, loopCode1, loopCode2) { \
+#define NE10_DstCst_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
    ne10_result_t res = NE10_OK; \
-   checkPointer; \
    int dif = 0; \
    dif = count % 4; /* either 0 or one of 1,2,3; in the latter cases the second path is taken */ \
    for (; count > dif; count -= 4) { \
@@ -485,15 +431,14 @@
     }
 
 #define NE10_DstCst_SECONDLOOP_VEC2F_NEON(loopCode) { \
-     float32x2_t n_tmp_cst = { cst->x, cst->y }; \
+     float32x2_t n_rest_cst = { cst->x, cst->y }; \
      loopCode; /* exceptional cases where the count isn't a multiple of 2 */ \
-     vst1_f32( (float32_t*)dst, n_tmp_cst); \
+     vst1_f32( (float32_t*)dst, n_rest_cst); \
     }
 
-#define NE10_DstCst_OPERATION_VEC2F_NEON(checkPointer, loopCode1, loopCode2) { \
+#define NE10_DstCst_OPERATION_VEC2F_NEON(loopCode1, loopCode2) { \
    ne10_result_t res = NE10_OK; \
    float32x4_t n_cst = { cst->x, cst->y, cst->x, cst->y }; \
-   checkPointer; \
    int dif = count % 2; \
    for (; count > dif; count -= 2) { \
     loopCode1; \
@@ -517,19 +462,18 @@
   }
 
 #define NE10_DstCst_SECONDLOOP_VEC3F_NEON(loopCode) { \
-      float32x2x3_t n_tmp_cst = { (const float32x2_t){cst->x, 0}, \
+      float32x2x3_t n_rest_cst = { (const float32x2_t){cst->x, 0}, \
       (const float32x2_t){cst->y, 0}, (const float32x2_t){cst->z, 0} }; \
       loopCode; /* exceptional cases where the count isn't a multiple of 3 */ \
-      vst3_lane_f32( (float32_t*)dst, n_tmp_cst, 0); \
+      vst3_lane_f32( (float32_t*)dst, n_rest_cst, 0); \
       dst++; \
      }
 
-#define NE10_DstCst_OPERATION_VEC3F_NEON(checkPointer, loopCode1, loopCode2) { \
+#define NE10_DstCst_OPERATION_VEC3F_NEON(loopCode1, loopCode2) { \
    ne10_result_t res = NE10_OK; \
    float32x4_t n_cst1 = { cst->x, cst->y, cst->z, cst->x }; \
    float32x4_t n_cst2 = { cst->y, cst->z, cst->x, cst->y }; \
    float32x4_t n_cst3 = { cst->z, cst->x, cst->y, cst->z }; \
-   checkPointer; \
    int dif = count % 4;  \
    for (; count > dif; count -= 4) { \
     loopCode1; \
@@ -551,10 +495,9 @@
      dst ++; \
    }
 
-#define NE10_DstCst_OPERATION_VEC4F_NEON(checkPointer, loopCode) { \
+#define NE10_DstCst_OPERATION_VEC4F_NEON(loopCode) { \
    ne10_result_t res = NE10_OK; \
    float32x4_t n_cst = { cst->x, cst->y, cst->z, cst->w }; \
-   checkPointer; \
    for (; count != 0; count --) { \
      loopCode; \
     } \
@@ -581,12 +524,12 @@
     }
 
 #define NE10_DstSrc1Src2_SECONDLOOP_FLOAT_NEON(loopCode) { \
-      float32x2_t n_tmp_src = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
-      float32x2_t n_tmp_src2 = { 0.0f , 0.0f }; \
-      n_tmp_src = vld1_lane_f32 ( (float32_t*)src1, n_tmp_src, 0); /* load into the first lane of d0 */ \
-      n_tmp_src2 = vld1_lane_f32 ( (float32_t*)src2, n_tmp_src, 0); \
+      float32x2_t n_rest = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
+      float32x2_t n_rest2 = { 0.0f , 0.0f }; \
+      n_rest = vld1_lane_f32 ( (float32_t*)src1, n_rest, 0); /* load into the first lane of d0 */ \
+      n_rest2 = vld1_lane_f32 ( (float32_t*)src2, n_rest, 0); \
       loopCode; /* the actual operation is placed here ... */ /* exceptional cases where the count is not a multiple of 4 */ \
-      vst1_lane_f32( (float32_t*)dst, n_tmp_src, 0); /* store the lane back into the memory */ \
+      vst1_lane_f32( (float32_t*)dst, n_rest, 0); /* store the lane back into the memory */ \
       /* move to the next item in the stream */ \
       src1++; \
       src2++; \
@@ -617,14 +560,14 @@
     }
 
 #define NE10_DstAccSrc1Src2_SECONDLOOP_FLOAT_NEON(loopCode) { \
-      float32x2_t n_tmp_acc = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
-      float32x2_t n_tmp_src = { 0.0f , 0.0f }; \
-      float32x2_t n_tmp_src2 = { 0.0f, 0.0f }; \
-      n_tmp_acc = vld1_lane_f32 ( (float32_t*)acc, n_tmp_acc, 0); /* load into the first lane of d0 */ \
-      n_tmp_src = vld1_lane_f32 ( (float32_t*)src1, n_tmp_src, 0); /* load into the first lane of d1 */ \
-      n_tmp_src2 = vld1_lane_f32 ( (float32_t*)src2, n_tmp_src2, 0); /* load into the first lane of d2 */ \
+      float32x2_t n_rest_acc = { 0.0f , 0.0f }; /* temporary storage to be used with NEON load/store intrinsics */ \
+      float32x2_t n_rest = { 0.0f , 0.0f }; \
+      float32x2_t n_rest2 = { 0.0f, 0.0f }; \
+      n_rest_acc = vld1_lane_f32 ( (float32_t*)acc, n_rest_acc, 0); /* load into the first lane of d0 */ \
+      n_rest = vld1_lane_f32 ( (float32_t*)src1, n_rest, 0); /* load into the first lane of d1 */ \
+      n_rest2 = vld1_lane_f32 ( (float32_t*)src2, n_rest2, 0); /* load into the first lane of d2 */ \
       loopCode; /* the actual operation is palced here ... */ /* exceptional cases where the count is not a multiple of 4 */ \
-      vst1_lane_f32( (float32_t*)dst, n_tmp_src, 0); /* store the lane back into the memory */ \
+      vst1_lane_f32( (float32_t*)dst, n_rest, 0); /* store the lane back into the memory */ \
       /* move to the next item in the stream */ \
       acc++; \
       src1++; \
@@ -633,101 +576,3 @@
      }
 
 #define NE10_DstAccSrc1Src2_OPERATION_FLOAT_NEON NE10_DstAccSrcCst_OPERATION_FLOAT_NEON
-
-/****************************************************
- *                                                  *
- *  The "DstSrc" group of functions                 *
- *                                                  *
- ****************************************************/
-
-///// - FLOAT - /////
-
-#define NE10_DstSrc_MAINLOOP_FLOAT_NEON NE10_DstSrcCst_MAINLOOP_FLOAT_NEON
-
-#define NE10_DstSrc_SECONDLOOP_FLOAT_NEON NE10_DstSrcCst_SECONDLOOP_FLOAT_NEON
-
-#define NE10_DstSrc_OPERATION_FLOAT_NEON NE10_DstSrcCst_OPERATION_FLOAT_NEON
-
-///// - VEC2F - /////
-
-#define NE10_DstSrc_MAINLOOP_VEC2F_NEON(loopCode) { \
-     n_src = vld2_f32( (float32_t*)src ); /* load two vectors */ \
-     src += 2; /* move to the next two vectors */ \
-     loopCode; /* actual operation */ /* The main loop iterates through two 2D vectors each time */ \
-     /* store the results and increment the destination pointer within the loopCode */ \
-    }
-
-#define NE10_DstSrc_SECONDLOOP_VEC2F_NEON(loopCode) { \
-     loopCode; /* exceptional cases where the count isn't a multiple of 2 */ \
-     /* store the results within the loopCode */ \
-    }
-
-#define NE10_DstSrc_OPERATION_VEC2F_NEON(checkPointer, loopCode1, loopCode2) { \
-   ne10_result_t res = NE10_OK; \
-   float32x2x2_t n_src; \
-   float32x2_t n_dst; \
-   checkPointer; \
-   int dif = count % 2; \
-   for (; count > dif; count -= 2) { \
-    loopCode1; \
-   } \
-   if ( 0 != dif ) { \
-    loopCode2; \
-   } \
-   return res; \
-  }
-
-///// - VEC3F - /////
-
-#define NE10_DstSrc_MAINLOOP_VEC3F_NEON(loopCode) { \
-     n_src = vld3q_f32( (float32_t*)src ); \
-     src = ((void*)src)+(12*sizeof(ne10_float32_t)); \
-     loopCode; /* The main loop iterates through four 3D vectors each time */ \
-     /* store the results and increment the destination pointer within the loopCode */ \
-  }
-
-#define NE10_DstSrc_SECONDLOOP_VEC3F_NEON(loopCode) { \
-      loopCode; /* exceptional cases where the count isn't a multiple of 4 */ \
-      /* store the results within the loopCode */ \
-     }
-
-#define NE10_DstSrc_OPERATION_VEC3F_NEON(checkPointer, loopCode1, loopCode2) { \
-   ne10_result_t res = NE10_OK; \
-   float32x4x3_t n_src; \
-   float32x4_t n_dst; \
-   checkPointer; \
-   int dif = count % 4; \
-   for (; count > dif; count -= 4) { \
-    loopCode1; \
-   } \
-   if ( 0 != dif ) { \
-     unsigned int idx; \
-     for ( idx = 0 ; idx < dif; idx++ ) { \
-       loopCode2; \
-      } \
-     } \
-    return res; \
-   }
-
-///// - VEC4F - /////
-
-/* Note that for the VEC4* types, we do not need a second loop as the number
-    of input items is always a multiple of four. */
-
-#define NE10_DstSrc_MAINLOOP_VEC4F_NEON(loopCode) { \
-     n_src = vld1q_f32( (float32_t*)src ); \
-     src ++; \
-     loopCode; \
-     /* store the results and increment the destination pointer within the loopCode */ \
-   }
-
-#define NE10_DstSrc_OPERATION_VEC4F_NEON(checkPointer, loopCode) { \
-   ne10_result_t res = NE10_OK; \
-   float32x4_t n_src; \
-   checkPointer; \
-   for (; count != 0; count --) { \
-     loopCode; \
-    } \
-   return res; \
-  }
-

@@ -38,41 +38,41 @@
 
 ne10_result_t ne10_mlac_float_neon (ne10_float32_t * dst, ne10_float32_t * acc, ne10_float32_t * src, const ne10_float32_t cst, ne10_uint32_t count)
 {
-    NE10_MLAC_OPERATION_FLOAT_NEON
+    NE10_DstAccSrcCst_DO_COUNT_TIMES_FLOAT_NEON
     (
         n_dst = vmlaq_f32 (n_acc, n_src, n_cst);
         ,
-        n_tmp_src = vmla_f32 (n_tmp_acc, n_tmp_src, n_tmp_cst);
+        n_rest = vmla_f32 (n_rest_acc, n_rest, n_rest_cst);
     );
 }
 
 ne10_result_t ne10_mlac_vec2f_neon (ne10_vec2f_t * dst, ne10_vec2f_t * acc, ne10_vec2f_t * src, const ne10_vec2f_t * cst, ne10_uint32_t count)
 {
-    NE10_MLAC_OPERATION_VEC2F_NEON
+    NE10_DstAccSrcCst_DO_COUNT_TIMES_VEC2F_NEON
     (
         n_dst = vmlaq_f32 (n_acc, n_src , n_cst);
         ,
-        n_tmp_src = vmla_f32 (n_tmp_acc, n_tmp_src, n_tmp_cst);
+        n_rest = vmla_f32 (n_rest_acc, n_rest, n_rest_cst);
     );
 }
 
 ne10_result_t ne10_mlac_vec3f_neon (ne10_vec3f_t * dst, ne10_vec3f_t * acc, ne10_vec3f_t * src, const ne10_vec3f_t * cst, ne10_uint32_t count)
 {
-    NE10_MLAC_OPERATION_VEC3F_NEON
+    NE10_DstAccSrcCst_DO_COUNT_TIMES_VEC3F_NEON
     (
         n_dst1 = vmlaq_f32 (n_acc1, n_src1 , n_cst1);
         n_dst2 = vmlaq_f32 (n_acc2, n_src2 , n_cst2);
         n_dst3 = vmlaq_f32 (n_acc3, n_src3 , n_cst3);
         ,
-        n_tmp_src.val[0] = vmla_f32 (n_tmp_acc.val[0], n_tmp_src.val[0], n_tmp_cst.val[0]);   /* the X lane */
-        n_tmp_src.val[1] = vmla_f32 (n_tmp_acc.val[1], n_tmp_src.val[1], n_tmp_cst.val[1]);   /* the Y lane */
-        n_tmp_src.val[2] = vmla_f32 (n_tmp_acc.val[2], n_tmp_src.val[2], n_tmp_cst.val[2]);   /* the Z lane */
+        n_rest.val[0] = vmla_f32 (n_rest_acc.val[0], n_rest.val[0], n_rest_cst.val[0]);   /* the X lane */
+        n_rest.val[1] = vmla_f32 (n_rest_acc.val[1], n_rest.val[1], n_rest_cst.val[1]);   /* the Y lane */
+        n_rest.val[2] = vmla_f32 (n_rest_acc.val[2], n_rest.val[2], n_rest_cst.val[2]);   /* the Z lane */
     );
 }
 
 ne10_result_t ne10_mlac_vec4f_neon (ne10_vec4f_t * dst, ne10_vec4f_t * acc, ne10_vec4f_t * src, const ne10_vec4f_t * cst, ne10_uint32_t count)
 {
-    NE10_MLAC_OPERATION_VEC4F_NEON
+    NE10_DstAccSrcCst_DO_COUNT_TIMES_VEC4F_NEON
     (
         n_dst = vmlaq_f32 (n_acc, n_src , n_cst);
     );

@@ -45,14 +45,16 @@ ne10_result_t ne10_mulmat_2x2f_c (ne10_mat2x2f_t * dst, ne10_mat2x2f_t * src1, n
 #define D1 src1[ itr ].c2.r2
 #define D2 src2[ itr ].c2.r2
 
-    NE10_X_OPERATION_FLOAT_C
-    (
+    NE10_CHECKPOINTER_DstSrc1Src2;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 = (A1 * A2) + (C1 * B2);
         dst[ itr ].c1.r2 = (B1 * A2) + (D1 * B2);
 
         dst[ itr ].c2.r1 = (A1 * C2) + (C1 * D2);
         dst[ itr ].c2.r2 = (B1 * C2) + (D1 * D2);
-    );
+    }
+    return NE10_OK;
 
 #undef A1
 #undef A2
@@ -85,8 +87,9 @@ ne10_result_t ne10_mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, n
 #define I1 src1[ itr ].c3.r3
 #define I2 src2[ itr ].c3.r3
 
-    NE10_X_OPERATION_FLOAT_C
-    (
+    NE10_CHECKPOINTER_DstSrc1Src2;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 = (A1 * A2) + (D1 * B2) + (G1 * C2);
         dst[ itr ].c1.r2 = (B1 * A2) + (E1 * B2) + (H1 * C2);
         dst[ itr ].c1.r3 = (C1 * A2) + (F1 * B2) + (I1 * C2);
@@ -98,7 +101,8 @@ ne10_result_t ne10_mulmat_3x3f_c (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src1, n
         dst[ itr ].c3.r1 = (A1 * G2) + (D1 * H2) + (G1 * I2);
         dst[ itr ].c3.r2 = (B1 * G2) + (E1 * H2) + (H1 * I2);
         dst[ itr ].c3.r3 = (C1 * G2) + (F1 * H2) + (I1 * I2);
-    );
+    }
+    return NE10_OK;
 
 #undef A1
 #undef A2
@@ -158,8 +162,9 @@ ne10_result_t ne10_mulmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, n
 #define P1 src1[ itr ].c4.r4
 #define P2 src2[ itr ].c4.r4
 
-    NE10_X_OPERATION_FLOAT_C
-    (
+    NE10_CHECKPOINTER_DstSrc1Src2;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].c1.r1 = (A1 * A2) + (E1 * B2) + (I1 * C2) + (M1 * D2);
         dst[ itr ].c1.r2 = (B1 * A2) + (F1 * B2) + (J1 * C2) + (N1 * D2);
         dst[ itr ].c1.r3 = (C1 * A2) + (G1 * B2) + (K1 * C2) + (O1 * D2);
@@ -179,7 +184,8 @@ ne10_result_t ne10_mulmat_4x4f_c (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src1, n
         dst[ itr ].c4.r2 = (B1 * M2) + (F1 * N2) + (J1 * O2) + (N1 * P2);
         dst[ itr ].c4.r3 = (C1 * M2) + (G1 * N2) + (K1 * O2) + (O1 * P2);
         dst[ itr ].c4.r4 = (D1 * M2) + (H1 * N2) + (L1 * O2) + (P1 * P2);
-    );
+    }
+    return NE10_OK;
 
 #undef A1
 #undef A2

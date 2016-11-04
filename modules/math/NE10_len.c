@@ -38,30 +38,36 @@
 
 ne10_result_t ne10_len_vec2f_c (ne10_float32_t * dst, ne10_vec2f_t * src, ne10_uint32_t count)
 {
-    NE10_LEN_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ] = sqrt (src[ itr ].x * src[ itr ].x +
-                           src[ itr ].y * src[ itr ].y) ;
-    );
+                           src[ itr ].y * src[ itr ].y);
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_len_vec3f_c (ne10_float32_t * dst, ne10_vec3f_t * src, ne10_uint32_t count)
 {
-    NE10_LEN_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ] = sqrt (src[ itr ].x * src[ itr ].x +
                            src[ itr ].y * src[ itr ].y +
                            src[ itr ].z * src[ itr ].z);
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_len_vec4f_c (ne10_float32_t * dst, ne10_vec4f_t * src, ne10_uint32_t count)
 {
-    NE10_LEN_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ] = sqrt (src[ itr ].x * src[ itr ].x +
                            src[ itr ].y * src[ itr ].y +
                            src[ itr ].z * src[ itr ].z +
                            src[ itr ].w * src[ itr ].w);
-    );
+    }
+    return NE10_OK;
 }

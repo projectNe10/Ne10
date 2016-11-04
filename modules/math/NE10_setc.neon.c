@@ -38,37 +38,37 @@
 
 ne10_result_t ne10_setc_float_neon (ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_FLOAT_NEON
+    NE10_DstCst_DO_COUNT_TIMES_FLOAT_NEON
     (
         ;// The cst need not be altered
         ,
-        ;// n_tmp_cst need not be altered
+        ;// n_rest_cst need not be altered
     );
 }
 
 ne10_result_t ne10_setc_vec2f_neon (ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_VEC2F_NEON
+    NE10_DstCst_DO_COUNT_TIMES_VEC2F_NEON
     (
         ;// The cst need not be altered
         ,
-        ;// n_tmp_cst need not be altered
+        ;// n_rest_cst need not be altered
     );
 }
 
 ne10_result_t ne10_setc_vec3f_neon (ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_VEC3F_NEON
+    NE10_DstCst_DO_COUNT_TIMES_VEC3F_NEON
     (
         ;// cst1, cst2, and cst3 need not be altered
         ,
-        ;// n_tmp_cst.val[0], .val[1], and .val[2] need not be altered
+        ;// n_rest_cst.val[0], .val[1], and .val[2] need not be altered
     );
 }
 
 ne10_result_t ne10_setc_vec4f_neon (ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_VEC4F_NEON
+    NE10_DstCst_DO_COUNT_TIMES_VEC4F_NEON
     (
         ;// n_cst need not be altered
     );

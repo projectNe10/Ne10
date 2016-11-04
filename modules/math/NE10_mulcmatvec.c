@@ -41,11 +41,13 @@ ne10_result_t ne10_mulcmatvec_cm2x2f_v2f_c (ne10_vec2f_t * dst, const ne10_mat2x
 #define C1 cst->c2.r1
 #define D1 cst->c2.r2
 
-    NE10_CMATVEC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].x = A1 * src[ itr ].x + C1 * src[ itr ].y;
         dst[ itr ].y = B1 * src[ itr ].x + D1 * src[ itr ].y;
-    );
+    }
+    return NE10_OK;
 
 #undef A1
 #undef B1
@@ -65,12 +67,14 @@ ne10_result_t ne10_mulcmatvec_cm3x3f_v3f_c (ne10_vec3f_t * dst, const ne10_mat3x
 #define H1 cst->c3.r2
 #define I1 cst->c3.r3
 
-    NE10_CMATVEC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].x = A1 * src[ itr ].x + D1 * src[ itr ].y + G1 * src[ itr ].z;
         dst[ itr ].y = B1 * src[ itr ].x + E1 * src[ itr ].y + H1 * src[ itr ].z;
         dst[ itr ].z = C1 * src[ itr ].x + F1 * src[ itr ].y + I1 * src[ itr ].z;
-    );
+    }
+    return NE10_OK;
 
 #undef A1
 #undef B1
@@ -102,13 +106,15 @@ extern ne10_result_t ne10_mulcmatvec_cm4x4f_v4f_c (ne10_vec4f_t * dst, const ne1
 #define O1 cst->c4.r3
 #define P1 cst->c4.r4
 
-    NE10_CMATVEC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstSrc;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[ itr ].x = A1 * src[ itr ].x + E1 * src[ itr ].y + I1 * src[ itr ].z + M1 * src[ itr ].w;
         dst[ itr ].y = B1 * src[ itr ].x + F1 * src[ itr ].y + J1 * src[ itr ].z + N1 * src[ itr ].w;
         dst[ itr ].z = C1 * src[ itr ].x + G1 * src[ itr ].y + K1 * src[ itr ].z + O1 * src[ itr ].w;
         dst[ itr ].w = D1 * src[ itr ].x + H1 * src[ itr ].y + L1 * src[ itr ].z + P1 * src[ itr ].w;
-    );
+    }
+    return NE10_OK;
 
 #undef A1
 #undef B1

@@ -31,212 +31,133 @@
 
 #include "factor.h"
 
-// Macros used in actual implementations
+/*
+ * The following macros are used within some of the NEON math function implementations.
+ *
+ * With the exception of the VEC4F macros, which can always wholly fill NEON SIMD vectors,
+ * each macro takes two parameters -- loopCode1 for the code to be run within the main
+ * SIMD loop, and loopCode2 for the code to be run in processing any leftover elements.
+ * The details of the variables that are exposed within these macros can be viewed in the
+ * specific MAINLOOP and SECONDLOOP sub-macros that each macro utilizes.
+ */
 
-///// The "DstSrcCst" group of functions - FLOAT /////
+#define NE10_DstSrcCst_DO_COUNT_TIMES_FLOAT_NEON(loopCode1, loopCode2) { \
+    NE10_CHECKPOINTER_DstSrcCst; \
+    float32x4_t n_cst = { cst, cst, cst, cst }; \
+    NE10_DstSrcCst_OPERATION_FLOAT_NEON(  \
+        NE10_DstSrcCst_MAINLOOP_FLOAT_NEON(loopCode1); , \
+        NE10_DstSrcCst_SECONDLOOP_FLOAT_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_XC_OPERATION_X_C(loopCode) { \
-   NE10_TEMPLATE_XC_OPERATION_X_C( \
-      NE10_CHECKPOINTER_DstSrcCst_OPERATION; , \
-      loopCode); \
-  }
-
-#define NE10_XC_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
-   float32x4_t n_cst = { cst, cst, cst, cst }; \
-   NE10_DstSrcCst_OPERATION_FLOAT_NEON(  \
-    NE10_CHECKPOINTER_DstSrcCst_OPERATION; , \
-    NE10_DstSrcCst_MAINLOOP_FLOAT_NEON(loopCode1); , \
-    NE10_DstSrcCst_SECONDLOOP_FLOAT_NEON(loopCode2); \
-   ); \
-  }
-
-#define NE10_XC_OPERATION_VEC2F_NEON(loopCode1, loopCode2) { \
-   NE10_DstSrcCst_OPERATION_VEC2F_NEON(  \
-    NE10_CHECKPOINTER_DstSrcCst_OPERATION; , \
-    NE10_DstSrcCst_MAINLOOP_VEC2F_NEON(loopCode1); , \
-    NE10_DstSrcCst_SECONDLOOP_VEC2F_NEON(loopCode2); \
-   ); \
-  }
-
-/* This macro uses interleaving to boost the performance */
-#define NE10_XC_OPERATION_VEC3F_NEON(loopCode1, loopCode2) { \
-   NE10_DstSrcCst_OPERATION_VEC3F_NEON(  \
-    NE10_CHECKPOINTER_DstSrcCst_OPERATION; , \
-    NE10_DstSrcCst_MAINLOOP_VEC3F_NEON(loopCode1); , \
-    NE10_DstSrcCst_SECONDLOOP_VEC3F_NEON(loopCode2); \
-   ); \
-  }
-
-#define NE10_XC_OPERATION_VEC4F_NEON(loopCode) { \
-   NE10_DstSrcCst_OPERATION_VEC4F_NEON( \
-    NE10_CHECKPOINTER_DstSrcCst_OPERATION; , \
-    NE10_DstSrcCst_MAINLOOP_VEC4F_NEON(loopCode); \
-   ); \
-  }
-
-///// The "DstAccSrcCst" group of functions - FLOAT //////
-
-#define NE10_MLAC_OPERATION_X_C(loopCode) { \
-   NE10_TEMPLATE_XC_OPERATION_X_C( \
-    NE10_CHECKPOINTER_DstAccSrcCst_OPERATION; , \
-    loopCode); \
- }
-
-#define NE10_MLAC_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
-   float32x4_t n_acc; \
-   float32x4_t n_cst = { cst, cst, cst, cst }; \
-   NE10_DstAccSrcCst_OPERATION_FLOAT_NEON(  \
-    NE10_CHECKPOINTER_DstAccSrcCst_OPERATION; , \
-    NE10_DstAccSrcCst_MAINLOOP_FLOAT_NEON(loopCode1); , \
-    NE10_DstAccSrcCst_SECONDLOOP_FLOAT_NEON(loopCode2); \
-   ); \
-  }
-
-#define NE10_MLAC_OPERATION_VEC2F_NEON(loopCode1, loopCode2) { \
-   float32x4_t n_acc; \
-   NE10_DstAccSrcCst_OPERATION_VEC2F_NEON(  \
-    NE10_CHECKPOINTER_DstAccSrcCst_OPERATION; , \
-    NE10_DstAccSrcCst_MAINLOOP_VEC2F_NEON(loopCode1); , \
-    NE10_DstAccSrcCst_SECONDLOOP_VEC2F_NEON(loopCode2); \
-   ); \
-  }
-
-#define NE10_MLAC_OPERATION_VEC3F_NEON(loopCode1, loopCode2) { \
-   float32x4_t n_acc1, n_acc2, n_acc3; \
-   NE10_DstAccSrcCst_OPERATION_VEC3F_NEON(  \
-    NE10_CHECKPOINTER_DstAccSrcCst_OPERATION; , \
-    NE10_DstAccSrcCst_MAINLOOP_VEC3F_NEON(loopCode1); , \
-    NE10_DstAccSrcCst_SECONDLOOP_VEC3F_NEON(loopCode2); \
-   ); \
-  }
-
-#define NE10_MLAC_OPERATION_VEC4F_NEON(loopCode) { \
-   float32x4_t n_acc; \
-   NE10_DstAccSrcCst_OPERATION_VEC4F_NEON( \
-    NE10_CHECKPOINTER_DstAccSrcCst_OPERATION; , \
-    NE10_DstAccSrcCst_MAINLOOP_VEC4F_NEON(loopCode); \
-   ); \
-  }
-
-///// The "DstCst" group of functions - FLOAT /////
-
-#define NE10_SETC_OPERATION_X_C(loopCode) { \
-   NE10_TEMPLATE_XC_OPERATION_X_C( \
-    NE10_CHECKPOINTER_DstCst_OPERATION; , \
-    loopCode); \
-  }
-
-#define NE10_SETC_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
-   float32x4_t n_cst = { cst, cst, cst, cst }; \
-   NE10_DstCst_OPERATION_FLOAT_NEON(  \
-    NE10_CHECKPOINTER_DstCst_OPERATION; , \
-    NE10_DstCst_MAINLOOP_FLOAT_NEON(loopCode1); , \
-    NE10_DstCst_SECONDLOOP_FLOAT_NEON(loopCode2); \
-   ); \
-  }
-
-#define NE10_SETC_OPERATION_VEC2F_NEON(loopCode1, loopCode2) { \
-   NE10_DstCst_OPERATION_VEC2F_NEON(  \
-    NE10_CHECKPOINTER_DstCst_OPERATION; , \
-    NE10_DstCst_MAINLOOP_VEC2F_NEON(loopCode1); , \
-    NE10_DstCst_SECONDLOOP_VEC2F_NEON(loopCode2); \
-   ); \
-  }
+#define NE10_DstSrcCst_DO_COUNT_TIMES_VEC2F_NEON(loopCode1, loopCode2) { \
+    NE10_CHECKPOINTER_DstSrcCst; \
+    NE10_DstSrcCst_OPERATION_VEC2F_NEON(  \
+        NE10_DstSrcCst_MAINLOOP_VEC2F_NEON(loopCode1); , \
+        NE10_DstSrcCst_SECONDLOOP_VEC2F_NEON(loopCode2); \
+    ); \
+}
 
 /* This macro uses interleaving to boost the performance */
-#define NE10_SETC_OPERATION_VEC3F_NEON(loopCode1, loopCode2) { \
-   NE10_DstCst_OPERATION_VEC3F_NEON(  \
-    NE10_CHECKPOINTER_DstCst_OPERATION; , \
-    NE10_DstCst_MAINLOOP_VEC3F_NEON(loopCode1); , \
-    NE10_DstCst_SECONDLOOP_VEC3F_NEON(loopCode2); \
-   ); \
-  }
+#define NE10_DstSrcCst_DO_COUNT_TIMES_VEC3F_NEON(loopCode1, loopCode2) { \
+    NE10_CHECKPOINTER_DstSrcCst; \
+    NE10_DstSrcCst_OPERATION_VEC3F_NEON(  \
+        NE10_DstSrcCst_MAINLOOP_VEC3F_NEON(loopCode1); , \
+        NE10_DstSrcCst_SECONDLOOP_VEC3F_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_SETC_OPERATION_VEC4F_NEON(loopCode) { \
-   NE10_DstCst_OPERATION_VEC4F_NEON( \
-    NE10_CHECKPOINTER_DstCst_OPERATION; , \
-    NE10_DstCst_MAINLOOP_VEC4F_NEON(loopCode); \
-   ); \
-  }
+#define NE10_DstSrcCst_DO_COUNT_TIMES_VEC4F_NEON(loopCode) { \
+    NE10_CHECKPOINTER_DstSrcCst; \
+        NE10_DstSrcCst_OPERATION_VEC4F_NEON( \
+        NE10_DstSrcCst_MAINLOOP_VEC4F_NEON(loopCode); \
+    ); \
+}
 
-///// The "DstSrc1Src2" group of functions //////
+#define NE10_DstAccSrcCst_DO_COUNT_TIMES_FLOAT_NEON(loopCode1, loopCode2) { \
+    float32x4_t n_acc; \
+    float32x4_t n_cst = { cst, cst, cst, cst }; \
+    NE10_CHECKPOINTER_DstAccSrcCst; \
+    NE10_DstAccSrcCst_OPERATION_FLOAT_NEON(  \
+        NE10_DstAccSrcCst_MAINLOOP_FLOAT_NEON(loopCode1); , \
+        NE10_DstAccSrcCst_SECONDLOOP_FLOAT_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_X_OPERATION_FLOAT_C(loopCode) { \
-   NE10_TEMPLATE_XC_OPERATION_X_C( \
-      NE10_CHECKPOINTER_DstSrc1Src2_OPERATION; , \
-      loopCode); \
-  }
+#define NE10_DstAccSrcCst_DO_COUNT_TIMES_VEC2F_NEON(loopCode1, loopCode2) { \
+    float32x4_t n_acc; \
+    NE10_CHECKPOINTER_DstAccSrcCst; \
+    NE10_DstAccSrcCst_OPERATION_VEC2F_NEON(  \
+        NE10_DstAccSrcCst_MAINLOOP_VEC2F_NEON(loopCode1); , \
+        NE10_DstAccSrcCst_SECONDLOOP_VEC2F_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_X_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
-   float32x4_t n_src2; \
-   NE10_DstSrc1Src2_OPERATION_FLOAT_NEON(  \
-    NE10_CHECKPOINTER_DstSrc1Src2_OPERATION; , \
-    NE10_DstSrc1Src2_MAINLOOP_FLOAT_NEON(loopCode1); , \
-    NE10_DstSrc1Src2_SECONDLOOP_FLOAT_NEON(loopCode2); \
-   ); \
-  }
+#define NE10_DstAccSrcCst_DO_COUNT_TIMES_VEC3F_NEON(loopCode1, loopCode2) { \
+    float32x4_t n_acc1, n_acc2, n_acc3; \
+    NE10_CHECKPOINTER_DstAccSrcCst; \
+    NE10_DstAccSrcCst_OPERATION_VEC3F_NEON(  \
+        NE10_DstAccSrcCst_MAINLOOP_VEC3F_NEON(loopCode1); , \
+        NE10_DstAccSrcCst_SECONDLOOP_VEC3F_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_DOT_OPERATION_X_C NE10_X_OPERATION_FLOAT_C
+#define NE10_DstAccSrcCst_DO_COUNT_TIMES_VEC4F_NEON(loopCode) { \
+    float32x4_t n_acc; \
+    NE10_CHECKPOINTER_DstAccSrcCst; \
+        NE10_DstAccSrcCst_OPERATION_VEC4F_NEON( \
+        NE10_DstAccSrcCst_MAINLOOP_VEC4F_NEON(loopCode); \
+    ); \
+}
 
-///// The "DstSrc" group of functions //////
+#define NE10_DstCst_DO_COUNT_TIMES_FLOAT_NEON(loopCode1, loopCode2) { \
+    float32x4_t n_cst = { cst, cst, cst, cst }; \
+    NE10_CHECKPOINTER_DstCst; \
+    NE10_DstCst_OPERATION_FLOAT_NEON(  \
+        NE10_DstCst_MAINLOOP_FLOAT_NEON(loopCode1); , \
+        NE10_DstCst_SECONDLOOP_FLOAT_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_ABS_OPERATION_X_C(loopCode) { \
-   NE10_TEMPLATE_XC_OPERATION_X_C( \
-    NE10_CHECKPOINTER_DstSrc_OPERATION, \
-    loopCode); \
-  }
+#define NE10_DstCst_DO_COUNT_TIMES_VEC2F_NEON(loopCode1, loopCode2) { \
+    NE10_CHECKPOINTER_DstCst; \
+    NE10_DstCst_OPERATION_VEC2F_NEON(  \
+        NE10_DstCst_MAINLOOP_VEC2F_NEON(loopCode1); , \
+        NE10_DstCst_SECONDLOOP_VEC2F_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_ABS_OPERATION_FLOAT_C NE10_ABS_OPERATION_X_C
+/* This macro uses interleaving to boost the performance */
+#define NE10_DstCst_DO_COUNT_TIMES_VEC3F_NEON(loopCode1, loopCode2) { \
+    NE10_CHECKPOINTER_DstCst; \
+    NE10_DstCst_OPERATION_VEC3F_NEON(  \
+        NE10_DstCst_MAINLOOP_VEC3F_NEON(loopCode1); , \
+        NE10_DstCst_SECONDLOOP_VEC3F_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_ABS_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
-   arm_float_t cst = 0.0f; /* this is used to compare the values against. */ \
-   float32x4_t n_cst = { cst, cst, cst, cst }; \
-   NE10_DstSrc_OPERATION_FLOAT_NEON(  \
-    NE10_CHECKPOINTER_DstSrc_OPERATION; , \
-    NE10_DstSrc_MAINLOOP_FLOAT_NEON(loopCode1); , \
-    NE10_DstSrc_SECONDLOOP_FLOAT_NEON(loopCode2); \
-   ); \
-  }
+#define NE10_DstCst_DO_COUNT_TIMES_VEC4F_NEON(loopCode) { \
+    NE10_CHECKPOINTER_DstCst; \
+    NE10_DstCst_OPERATION_VEC4F_NEON( \
+        NE10_DstCst_MAINLOOP_VEC4F_NEON(loopCode); \
+    ); \
+}
 
-#define NE10_LEN_OPERATION_X_C NE10_ABS_OPERATION_X_C
+#define NE10_DstSrc1Src2_DO_COUNT_TIMES_FLOAT_NEON(loopCode1, loopCode2) { \
+    float32x4_t n_src2; \
+    NE10_CHECKPOINTER_DstSrc1Src2; \
+    NE10_DstSrc1Src2_OPERATION_FLOAT_NEON(  \
+        NE10_DstSrc1Src2_MAINLOOP_FLOAT_NEON(loopCode1); , \
+        NE10_DstSrc1Src2_SECONDLOOP_FLOAT_NEON(loopCode2); \
+    ); \
+}
 
-#define NE10_LEN_OPERATION_X_C NE10_ABS_OPERATION_X_C
-
-#define NE10_CMATVEC_OPERATION_X_C NE10_ABS_OPERATION_X_C
-
-#define NE10_LEN_OPERATION_VEC2F_NEON(loopCode1, loopCode2) { \
-    NE10_DstSrc_OPERATION_VEC2F_NEON( \
-     NE10_CHECKPOINTER_DstSrcCst_OPERATION, \
-     NE10_DstSrc_MAINLOOP_VEC2F_NEON(loopCode1), \
-     NE10_DstSrc_SECONDLOOP_VEC2F_NEON(loopCode2) \
-     ); \
-  }
-
-#define NE10_LEN_OPERATION_VEC3F_NEON(loopCode1, loopCode2) { \
-    NE10_DstSrc_OPERATION_VEC3F_NEON( \
-     NE10_CHECKPOINTER_DstSrcCst_OPERATION, \
-     NE10_DstSrc_MAINLOOP_VEC3F_NEON(loopCode1), \
-     NE10_DstSrc_SECONDLOOP_VEC3F_NEON(loopCode2) \
-     ); \
-  }
-
-#define NE10_LEN_OPERATION_VEC4F_NEON(loopCode) { \
-    NE10_DstSrc_OPERATION_VEC4F_NEON( \
-     NE10_CHECKPOINTER_DstSrcCst_OPERATION, \
-     NE10_DstSrc_MAINLOOP_VEC4F_NEON(loopCode) \
-     ); \
-  }
-
-#define NE10_DETMAT_OPERATION_X_C NE10_ABS_OPERATION_X_C
-
-///// The "DstAccSrc1Src2" group of functions //////
-
-#define NE10_MLA_OPERATION_FLOAT_NEON(loopCode1, loopCode2) { \
-   float32x4_t n_acc; \
-   float32x4_t n_src2; \
-   NE10_DstAccSrc1Src2_OPERATION_FLOAT_NEON(  \
-    NE10_CHECKPOINTER_DstAccSrc1Src2_OPERATION; , \
-    NE10_DstAccSrc1Src2_MAINLOOP_FLOAT_NEON(loopCode1); , \
-    NE10_DstAccSrc1Src2_SECONDLOOP_FLOAT_NEON(loopCode2); \
-   ); \
-  }
+#define NE10_DstAccSrc1Src2_DO_COUNT_TIMES_FLOAT_NEON(loopCode1, loopCode2) { \
+    float32x4_t n_acc; \
+    float32x4_t n_src2; \
+    NE10_CHECKPOINTER_DstAccSrc1Src2; \
+    NE10_DstAccSrc1Src2_OPERATION_FLOAT_NEON(  \
+        NE10_DstAccSrc1Src2_MAINLOOP_FLOAT_NEON(loopCode1); , \
+        NE10_DstAccSrc1Src2_SECONDLOOP_FLOAT_NEON(loopCode2); \
+    ); \
+}

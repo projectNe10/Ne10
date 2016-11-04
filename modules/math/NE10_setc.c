@@ -36,38 +36,46 @@
 
 ne10_result_t ne10_setc_float_c (ne10_float32_t * dst, const ne10_float32_t cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[itr] = cst;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_setc_vec2f_c (ne10_vec2f_t * dst, const ne10_vec2f_t * cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[itr].x = cst->x;
         dst[itr].y = cst->y;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_setc_vec3f_c (ne10_vec3f_t * dst, const ne10_vec3f_t * cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[itr].x = cst->x;
         dst[itr].y = cst->y;
         dst[itr].z = cst->z;
-    );
+    }
+    return NE10_OK;
 }
 
 ne10_result_t ne10_setc_vec4f_c (ne10_vec4f_t * dst, const ne10_vec4f_t * cst, ne10_uint32_t count)
 {
-    NE10_SETC_OPERATION_X_C
-    (
+    NE10_CHECKPOINTER_DstCst;
+    for ( unsigned int itr = 0; itr < count; itr++ )
+    {
         dst[itr].x = cst->x;
         dst[itr].y = cst->y;
         dst[itr].z = cst->z;
         dst[itr].w = cst->w;
-    );
+    }
+    return NE10_OK;
 }
