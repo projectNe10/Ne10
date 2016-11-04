@@ -425,6 +425,7 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
                     1,
                     NE10_FFT_PARA_LEVEL,
                     nfft);
+            st->nfft *= NE10_FFT_PARA_LEVEL;
         }
     }
     else
@@ -530,6 +531,7 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
                     1,
                     NE10_FFT_PARA_LEVEL,
                     nfft);
+            st->nfft *= NE10_FFT_PARA_LEVEL;
         }
     }
     else
