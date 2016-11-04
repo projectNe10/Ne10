@@ -414,12 +414,6 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
 
     if (algorithm_flag == NE10_FFT_ALG_ANY)
     {
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
-        if (result == NE10_ERR)
-        {
-            NE10_FREE (st);
-            return NULL;
-        }
         ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, st->nfft);
 
         // Generate super twiddles for the last stage.
@@ -435,14 +429,24 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
     }
     else
     {
-        st->last_twiddles = NULL;
-        st->nfft = nfft;
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
-        if (result == NE10_ERR)
+        if (nfft % NE10_FFT_PARA_LEVEL == 0)
         {
-            NE10_FREE (st);
-            return NULL;
+            st->nfft = nfft;
+            st->last_twiddles = NULL;
+
+            // Adjust the factoring for a size "nfft / 4" FFT to work for size "nfft"
+            if (stage_count > NE10_MAXFACTORS - 4)
+            {
+                NE10_FREE (st);
+                return NULL;
+            }
+            st->factors[0]++;          // Bump the stage count
+            st->factors[1] *= 4;       // Quadruple the first stage stride
+            memmove(&st->factors[4], &st->factors[2], ((2 * (stage_count + 1)) - 1) * sizeof(st->factors[0]));
+            st->factors[2] = 4;        // Add a new radix-4 stage
+            st->factors[3] = nfft / 4;
         }
+
         ne10_fft_generate_twiddles_float32 (st->twiddles, st->factors, st->nfft);
     }
 
@@ -515,12 +519,6 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 
     if (algorithm_flag == NE10_FFT_ALG_ANY)
     {
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
-        if (result == NE10_ERR)
-        {
-            NE10_FREE (st);
-            return NULL;
-        }
         ne10_fft_generate_twiddles_int32 (st->twiddles, st->factors, st->nfft);
 
         // Generate super twiddles for the last stage.
@@ -536,14 +534,24 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
     }
     else
     {
-        st->last_twiddles = NULL;
-        st->nfft = nfft;
-        result = ne10_factor (st->nfft, st->factors, NE10_FACTOR_EIGHT_FIRST_STAGE);
-        if (result == NE10_ERR)
+        if (nfft % NE10_FFT_PARA_LEVEL == 0)
         {
-            NE10_FREE (st);
-            return NULL;
+            st->nfft = nfft;
+            st->last_twiddles = NULL;
+
+            // Adjust the factoring for a size "nfft / 4" FFT to work for size "nfft"
+            if (stage_count > NE10_MAXFACTORS - 4)
+            {
+                NE10_FREE (st);
+                return NULL;
+            }
+            st->factors[0]++;          // Bump the stage count
+            st->factors[1] *= 4;       // Quadruple the first stage stride
+            memmove(&st->factors[4], &st->factors[2], ((2 * (stage_count + 1)) - 1) * sizeof(st->factors[0]));
+            st->factors[2] = 4;        // Add a new radix-4 stage
+            st->factors[3] = nfft / 4;
         }
+
         ne10_fft_generate_twiddles_int32 (st->twiddles, st->factors, st->nfft);
     }
 
