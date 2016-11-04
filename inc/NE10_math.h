@@ -1407,8 +1407,8 @@ extern "C" {
     extern ne10_result_t ne10_transmat_4x4f_neon (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count) asm ("ne10_transmat_4x4f_neon");
     extern ne10_result_t ne10_transmat_4x4f_asm (ne10_mat4x4f_t * dst, ne10_mat4x4f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the transpose matrix of a 4x4 matrix.
-     * This function point could be pointed to one of ne10_transmat_4x4f_c, ne10_transmat_4x4f_neon and ne10_transmat_4x4f_asm.
+     * Calculate the transpose matrix of a 3x3 matrix.
+     * This function point could be pointed to one of ne10_transmat_3x3f_c, ne10_transmat_3x3f_neon and ne10_transmat_3x3f_asm.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
      * @param[in]  count The number of items in the input array
@@ -1418,8 +1418,8 @@ extern "C" {
     extern ne10_result_t ne10_transmat_3x3f_neon (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count) asm ("ne10_transmat_3x3f_neon");
     extern ne10_result_t ne10_transmat_3x3f_asm (ne10_mat3x3f_t * dst, ne10_mat3x3f_t * src, ne10_uint32_t count);
     /**
-     * Calculate the transpose matrix of a 3x3 matrix.
-     * This function point could be pointed to one of ne10_transmat_3x3f_c, ne10_transmat_3x3f_neon and ne10_transmat_3x3f_asm.
+     * Calculate the transpose matrix of a 2x2 matrix.
+     * This function point could be pointed to one of ne10_transmat_2x2f_c, ne10_transmat_2x2f_neon and ne10_transmat_2x2f_asm.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  src   Pointer to the source array
      * @param[in]  count The number of items in the input array
@@ -1446,8 +1446,8 @@ extern "C" {
      * @{
      */
     /**
-     * Set the identity matrix of a 2x2 matrix.
-     * This function point could be pointed to one of ne10_identitymat_2x2f_c, ne10_identitymat_2x2f_neon and ne10_identitymat_2x2f_asm.
+     * Set the identity matrix of a 4x4 matrix.
+     * This function point could be pointed to one of ne10_identitymat_4x4f_c, ne10_identitymat_4x4f_neon and ne10_identitymat_4x4f_asm.
      * @param[out] dst   Pointer to the destination array
      * @param[in]  count The number of items in the input array
      */
