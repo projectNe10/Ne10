@@ -25,20 +25,61 @@
 #  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-#add definition for regression, smoke or regression test
-if (NE10_SMOKE_TEST)
-    add_definitions(-DSMOKE_TEST)
-elseif (NE10_REGRESSION_TEST)
-    add_definitions(-DREGRESSION_TEST)
-elseif (NE10_PERFORMANCE_TEST)
-    add_definitions(-DPERFORMANCE_TEST)
+if(NOT NE10_BUILD_UNIT_TEST)
+    return()
 endif()
+
+if((NOT NE10_SMOKE_TEST) AND (NOT NE10_REGRESSION_TEST) AND (NOT NE10_PERFORMANCE_TEST))
+    # Default to a conformance test
+    set(NE10_SMOKE_TEST ON)
+endif()
+
+# Define common test variables
+set(NE10_TEST_COMMON_SRCS
+    ${PROJECT_SOURCE_DIR}/test/src/seatest.c
+    ${PROJECT_SOURCE_DIR}/test/src/unit_test_common.c
+    ${PROJECT_SOURCE_DIR}/test/src/NE10_random.c
+)
+if(NE10_BUILD_SHARED)
+    set(NE10_TEST_LIBS "NE10_test" "m")
+    set(NE10_TEST_OUTPUT_NAME "unit_test_dynamic")
+elseif(NE10_BUILD_STATIC)
+    set(NE10_TEST_LIBS "NE10" "m")
+    set(NE10_TEST_OUTPUT_NAME "unit_test_static")
+endif()
+set(NE10_MULTIPLE_TESTS_ERROR "Only one of NE10_SMOKE_TEST, NE10_REGRESSION_TEST, and NE10_PERFORMANCE_TEST should be specified.")
+if (NE10_SMOKE_TEST)
+    if (NE10_REGRESSION_TEST OR NE10_PERFORMANCE_TEST)
+        message(SEND_ERROR ${NE10_MULTIPLE_TESTS_ERROR})
+    endif()
+    add_definitions(-DSMOKE_TEST)
+    set(NE10_TEST_NAME "NE10_SMOKE_TEST")
+    set(NE10_TEST_OUTPUT_NAME "${NE10_TEST_OUTPUT_NAME}_smoke")
+elseif (NE10_REGRESSION_TEST)
+    if (NE10_SMOKE_TEST OR NE10_PERFORMANCE_TEST)
+        message(SEND_ERROR ${NE10_MULTIPLE_TESTS_ERROR})
+    endif()
+    add_definitions(-DREGRESSION_TEST)
+    set(NE10_TEST_NAME "NE10_REGRESSION_TEST")
+    set(NE10_TEST_OUTPUT_NAME "${NE10_TEST_OUTPUT_NAME}_regression")
+elseif (NE10_PERFORMANCE_TEST)
+    if (NE10_SMOKE_TEST OR NE10_REGRESSION_TEST)
+        message(SEND_ERROR ${NE10_MULTIPLE_TESTS_ERROR})
+    endif()
+    add_definitions(-DPERFORMANCE_TEST)
+    set(NE10_TEST_NAME "NE10_PERFORMANCE_TEST")
+    set(NE10_TEST_OUTPUT_NAME "${NE10_TEST_OUTPUT_NAME}_performance")
+endif()
+if(GNULINUX_PLATFORM)
+    list(APPEND NE10_TEST_LIBS "rt")
+endif()
+message("-- Building unit test: ${NE10_TEST_NAME}")
 
 if (NE10_DEBUG_TRACE)
     add_definitions(-DDEBUG_TRACE)
 endif()
 
-add_definitions("-O0") # use -O0 to avoid compiler bug
+add_definitions("-O3")
 
 # header
 include_directories (
@@ -49,13 +90,6 @@ include_directories (
 # Define Function Enabling Macros
 include(../cmake/FunctionSwitch.cmake)
 
-# Define common test files.
-set(NE10_TEST_COMMON_SRCS
-    ${PROJECT_SOURCE_DIR}/test/src/seatest.c
-    ${PROJECT_SOURCE_DIR}/test/src/unit_test_common.c
-    ${PROJECT_SOURCE_DIR}/test/src/NE10_random.c
-)
-
 if(NE10_ENABLE_MATH)
     # Define math test files.
     set(NE10_TEST_MATH_SRCS
@@ -63,37 +97,12 @@ if(NE10_ENABLE_MATH)
         ${PROJECT_SOURCE_DIR}/modules/math/test/test_suite_math.c
     )
 
-    if(NE10_BUILD_STATIC)
-        add_executable(NE10_math_unit_test_static ${NE10_TEST_MATH_SRCS} ${NE10_TEST_COMMON_SRCS})
-        if(ANDROID_PLATFORM OR IOS_PLATFORM)
-            target_link_libraries (
-                NE10_math_unit_test_static
-                NE10
-                m
-            )
-        elseif(GNULINUX_PLATFORM)
-            target_link_libraries (
-                NE10_math_unit_test_static
-                NE10
-                m
-                rt
-            )
-        endif()
-
-        if(NE10_SMOKE_TEST)
-            set_target_properties(NE10_math_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_math_unit_test_smoke"
-            )
-        elseif (NE10_REGRESSION_TEST)
-            set_target_properties(NE10_math_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_math_unit_test_regression"
-            )
-        elseif (NE10_PERFORMANCE_TEST)
-            set_target_properties(NE10_math_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_math_unit_test_performance"
-            )
-        endif()
-    endif()
+    # Math unit tests
+    add_executable("NE10_math_${NE10_TEST_OUTPUT_NAME}" ${NE10_TEST_MATH_SRCS} ${NE10_TEST_COMMON_SRCS})
+    target_link_libraries (
+        "NE10_math_${NE10_TEST_OUTPUT_NAME}"
+        ${NE10_TEST_LIBS}
+    )
 endif()
 
 if(NE10_ENABLE_DSP)
@@ -110,42 +119,14 @@ if(NE10_ENABLE_DSP)
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_fir_sparse.c
         ${PROJECT_SOURCE_DIR}/modules/dsp/test/test_suite_iir.c
     )
-    #TODO add dynamic version of test
-    if(NE10_BUILD_STATIC)
-        add_executable(NE10_dsp_unit_test_static ${NE10_TEST_DSP_SRCS} ${NE10_TEST_COMMON_SRCS})
-        if(ANDROID_PLATFORM OR IOS_PLATFORM)
-            target_link_libraries (
-                NE10_dsp_unit_test_static
-                NE10
-                m
-            )
-        elseif(GNULINUX_PLATFORM)
-            target_link_libraries (
-                NE10_dsp_unit_test_static
-                NE10
-                m
-                rt
-            )
-        endif()
-        if(NE10_SMOKE_TEST)
-            set_target_properties(NE10_dsp_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_dsp_unit_test_smoke"
-            )
-        elseif (NE10_REGRESSION_TEST)
-            set_target_properties(NE10_dsp_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_dsp_unit_test_regression"
-            )
-        elseif (NE10_PERFORMANCE_TEST)
-            set_target_properties(NE10_dsp_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_dsp_unit_test_performance"
-            )
-        endif()
 
-        set_target_properties(NE10_dsp_unit_test_static PROPERTIES
-            LINKER_LANGUAGE C
-            )
-
-    endif()
+    # DSP unit tests
+    add_executable("NE10_dsp_${NE10_TEST_OUTPUT_NAME}" ${NE10_TEST_DSP_SRCS} ${NE10_TEST_COMMON_SRCS})
+    target_link_libraries (
+        "NE10_dsp_${NE10_TEST_OUTPUT_NAME}"
+        ${NE10_TEST_LIBS}
+    )
+    set_target_properties("NE10_dsp_${NE10_TEST_OUTPUT_NAME}" PROPERTIES LINKER_LANGUAGE C)
 endif()
 
 
@@ -158,37 +139,12 @@ if(NE10_ENABLE_IMGPROC)
         ${PROJECT_SOURCE_DIR}/modules/imgproc/test/test_suite_boxfilter.c
     )
 
-    if(NE10_BUILD_STATIC)
-        add_executable(NE10_imgproc_unit_test_static ${NE10_TEST_IMGPROC_SRCS} ${NE10_TEST_COMMON_SRCS})
-        if(ANDROID_PLATFORM OR IOS_PLATFORM)
-            target_link_libraries (
-                NE10_imgproc_unit_test_static
-                NE10
-                m
-            )
-        elseif(GNULINUX_PLATFORM)
-            target_link_libraries (
-                NE10_imgproc_unit_test_static
-                NE10
-                m
-                rt
-            )
-        endif()
-
-        if(NE10_SMOKE_TEST)
-            set_target_properties(NE10_imgproc_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_imgproc_unit_test_smoke"
-            )
-        elseif (NE10_REGRESSION_TEST)
-            set_target_properties(NE10_imgproc_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_imgproc_unit_test_regression"
-            )
-        elseif (NE10_PERFORMANCE_TEST)
-            set_target_properties(NE10_imgproc_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_imgproc_unit_test_performance"
-            )
-        endif()
-    endif()
+    # imgproc unit tests
+    add_executable("NE10_imgproc_${NE10_TEST_OUTPUT_NAME}" ${NE10_TEST_IMGPROC_SRCS} ${NE10_TEST_COMMON_SRCS})
+    target_link_libraries (
+        "NE10_imgproc_${NE10_TEST_OUTPUT_NAME}"
+        ${NE10_TEST_LIBS}
+    )
 endif()
 
 if(NE10_ENABLE_PHYSICS)
@@ -198,36 +154,10 @@ if(NE10_ENABLE_PHYSICS)
         ${PROJECT_SOURCE_DIR}/modules/physics/test/test_suite_physics.c
     )
 
-    if(NE10_BUILD_STATIC)
-        add_executable(NE10_physics_unit_test_static ${NE10_TEST_PHYSICS_SRCS} ${NE10_TEST_COMMON_SRCS})
-        if(ANDROID_PLATFORM OR IOS_PLATFORM)
-            target_link_libraries (
-                NE10_physics_unit_test_static
-                NE10
-                m
-            )
-        elseif(GNULINUX_PLATFORM)
-            target_link_libraries (
-                NE10_physics_unit_test_static
-                NE10
-                m
-                rt
-            )
-        endif()
-
-        if(NE10_SMOKE_TEST)
-            set_target_properties(NE10_physics_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_physics_unit_test_smoke"
-            )
-        elseif (NE10_REGRESSION_TEST)
-            set_target_properties(NE10_physics_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_physics_unit_test_regression"
-            )
-        elseif (NE10_PERFORMANCE_TEST)
-            set_target_properties(NE10_physics_unit_test_static PROPERTIES
-                OUTPUT_NAME "NE10_physics_unit_test_performance"
-            )
-        endif()
-    endif()
+    # Physics unit tests
+    add_executable("NE10_physics_${NE10_TEST_OUTPUT_NAME}" ${NE10_TEST_PHYSICS_SRCS} ${NE10_TEST_COMMON_SRCS})
+    target_link_libraries (
+        "NE10_physics_${NE10_TEST_OUTPUT_NAME}"
+        ${NE10_TEST_LIBS}
+    )
 endif()
-

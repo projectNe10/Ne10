@@ -36,12 +36,12 @@ option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 option(NE10_ARM_HARD_FLOAT "Build NE10 for hard float abi" ON)
 
 #unit test options
-option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" ON)
+option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
 if (NE10_BUILD_UNIT_TEST)
     #decide the test is smoke, regression or performance test, only one of
     #three options can be ON! And if you want to run performance test, you
     #should build the releave version, see the BUILD_DEBUG below.
-    option(NE10_SMOKE_TEST "Run smoke test" ON)
+    option(NE10_SMOKE_TEST "Run smoke test" OFF)
     option(NE10_REGRESSION_TEST "Run regression test" OFF)
     option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
 
@@ -77,7 +77,7 @@ if(DEFINED NE10_IOS_TARGET_ARCH)
     endif()
 endif()
 
-message("-- Target architecture : ${NE10_TARGET_ARCH}")
+message("-- Target architecture: ${NE10_TARGET_ARCH}")
 
 #select functionalities to be compiled
 if(${NE10_TARGET_ARCH} STREQUAL "armv7")
