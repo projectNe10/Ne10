@@ -1705,12 +1705,13 @@ NE10_INLINE void ne10_radix4_c2r_with_twiddles_first_stage( ne10_fft_cpx_float32
  */
 
 /**
- * @brief Mixed radix-2/4 FFT (real to complex) of float(32-bit) data.
+ * @brief Mixed radix-2/4 real-to-complex NEON FFT of single precision floating point data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @return none.
- * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
+ *
+ * The function implements a mixed radix-2/4 FFT (real to complex). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_float32.c
  */
@@ -1740,12 +1741,13 @@ void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
 }
 
 /**
- * @brief Mixed radix-2/4 IFFT (complex to real) of float(32-bit) data.
+ * @brief Mixed radix-2/4 complex-to-real NEON IFFT of single precision floating point data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
  * @return none.
- * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 3, 4, 5, 6 ....etc) is supported.
+ *
+ * The function implements a mixed radix-2/4 FFT (complex to real). The length of 2^N(N is 2, 3, 4, 5, 6 ....etc) is supported.
  * Otherwise, we alloc a temp buffer(the size is same as input buffer) for storing intermedia.
  * For the usage of this function, please check test/test_suite_fft_float32.c
  */

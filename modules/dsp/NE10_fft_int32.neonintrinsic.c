@@ -1863,7 +1863,7 @@ void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
  */
 
 /**
- * @brief Mixed radix-2/4 FFT (real to complex) of int32 data.
+ * @brief Mixed radix-2/4 FFT (real to complex) of 32-bit fixed point data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
@@ -1892,7 +1892,7 @@ void ne10_fft_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
 }
 
 /**
- * @brief Mixed radix-2/4 IFFT (complex to real) of int32 data.
+ * @brief Mixed radix-2/4 IFFT (complex to real) of 32-bit fixed point data.
  * @param[out]  *fout            point to the output buffer
  * @param[in]   *fin             point to the input buffer
  * @param[in]   cfg              point to the config struct
@@ -1923,4 +1923,3 @@ void ne10_fft_c2r_1d_int32_neon (ne10_int32_t *fout,
 /**
  * @} end of R2C_FFT_IFFT group
  */
-
