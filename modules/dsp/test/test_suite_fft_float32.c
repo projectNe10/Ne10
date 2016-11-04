@@ -48,6 +48,7 @@
 #define TEST_LENGTH_SAMPLES (32768)
 #define MIN_LENGTH_SAMPLES_CPX (4)
 #define MIN_LENGTH_SAMPLES_REAL (MIN_LENGTH_SAMPLES_CPX*2)
+#define SNR_THRESHOLD_FLOAT32 90.0f
 
 #define TEST_COUNT 10000000
 
@@ -117,7 +118,7 @@ void test_fft_c2c_1d_float32_conformance()
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize * 2);
-        assert_false ( (snr < SNR_THRESHOLD));
+        assert_false ( (snr < SNR_THRESHOLD_FLOAT32));
 
         /* IFFT test */
         memcpy (in_c, testInput_f32, 2 * fftSize * sizeof (ne10_float32_t));
@@ -134,7 +135,7 @@ void test_fft_c2c_1d_float32_conformance()
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize * 2);
-        assert_false ( (snr < SNR_THRESHOLD));
+        assert_false ( (snr < SNR_THRESHOLD_FLOAT32));
 
         NE10_FREE (cfg_c);
         NE10_FREE (cfg_neon);
@@ -251,7 +252,7 @@ void test_fft_r2c_1d_float32_conformance()
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, (fftSize / 2 + 1) * 2);
-        assert_false ( (snr < SNR_THRESHOLD));
+        assert_false ( (snr < SNR_THRESHOLD_FLOAT32));
 
         /* IFFT test */
         for (i = 1; i < (fftSize / 2); i++)
@@ -278,7 +279,7 @@ void test_fft_r2c_1d_float32_conformance()
 
         //conformance test
         snr = CAL_SNR_FLOAT32 (out_c, out_neon, fftSize);
-        assert_false ( (snr < SNR_THRESHOLD));
+        assert_false ( (snr < SNR_THRESHOLD_FLOAT32));
 
         NE10_FREE (cfg);
     }
