@@ -91,7 +91,7 @@ _Copyright (c) 2013-2014, ARM Limited and Contributors. All rights reserved._
 
 
 [Release Notes]:                 		./doc/ReleaseNote.txt
-[Building]:                           	./doc/BuildingNe10.txt
+[Building]:                           	./doc/building.md
 [Documentation]:						http://projectne10.github.io/Ne10/doc/
 [Acknowledgements]:                     ./doc/acknowledgements.md "Contributor acknowledgements"
 

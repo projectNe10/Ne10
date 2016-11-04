@@ -102,7 +102,7 @@
  *
  *\par Building Ne10
  *
- * See BuildingNe10.txt in the "doc" folder.
+ * See the building.md file in the "doc" folder
  *
  *\par Automated Code Formatting
  *

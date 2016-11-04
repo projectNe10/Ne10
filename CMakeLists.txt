@@ -50,7 +50,7 @@ endif()
 
 #check if proper platform is set.
 if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM) AND (NOT IOS_PLATFORM))
-    message(FATAL_ERROR "No platform is defined! see CMakeBuilding.txt under doc for details.")
+    message(FATAL_ERROR "No platform is defined! see doc/building.md for build instructions.")
 endif()
 
 if(DEFINED NE10_ANDROID_TARGET_ARCH)
