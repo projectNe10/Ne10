@@ -101,6 +101,6 @@ _Copyright (c) 2013-2014, ARM Limited and Contributors. All rights reserved._
 [pull request]:                 https://help.github.com/articles/using-pull-requests
 [automatically closed]:         https://help.github.com/articles/closing-issues-via-commit-messages
 [Git guidelines]:               http://git-scm.com/book/ch5-2.html
-[ProjectNe10 coding style]:     https://github.com/projectNe10/Ne10/wiki/CodeStyleGuide
+[ProjectNe10 coding style]:     https://github.com/projectNe10/Ne10/wiki/Ne10-Coding-Style
 [Ne10]:         				https://github.com/projectNe10/Ne10
 [contributing page]:            http://www.arm.com/community/open-source-contributing.php

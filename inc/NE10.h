@@ -82,7 +82,7 @@
  * ├── test
  * │   ├── directory for test framework
  * ├── tools
- * │   ├── directory for tools such as Cformatter, doxygen, etc
+ * │   ├── directory for miscellaneous tools, such as the script to modify the copyright year
  * </pre>
  *
  *\par Modules
@@ -104,15 +104,15 @@
  *
  * See the building.md file in the "doc" folder
  *
- *\par Automated Code Formatting
+ *\par Code Formatting
  *
- * See Formatter.txt in the "doc" folder.
+ * See the [Ne10 coding style guidelines](https://github.com/projectNe10/Ne10/wiki/Ne10-Coding-Style).
  *
  *\par License
  *
  * Ne10 is provided free of charge by ARM Limited and Contributors, and is licensed
- * under the New BSD License (http://opensource.org/licenses/BSD-3-Clause). See the LICENSE
- * file in the "doc" directory for details.
+ * under the [New BSD License](http://opensource.org/licenses/BSD-3-Clause). See the
+ * LICENSE file in the "doc" directory for details.
  */
 
 

@@ -16,9 +16,9 @@ Ne10 welcomes and encourages external contributions of any and all forms. If you
 
 # Miscellaneous
 
-- Ne10’s official website: http://projectne10.org/
+- Official website: http://projectne10.org/
+- Coding style guidelines: https://github.com/projectNe10/Ne10/wiki/Ne10-Coding-Style
 - Latest release notes: [`doc/ReleaseNote.txt`](https://github.com/projectNe10/Ne10/blob/master/doc/ReleaseNote.txt)
-- Automated code formatting instructions: [`doc/Formatter.txt`](https://github.com/projectNe10/Ne10/blob/master/doc/Formatter.txt)
 
 Find Project Ne10 useful? You can help us justify spending more engineering resources on the project! Please email us, outlining how you are using the project in your applications.
 
