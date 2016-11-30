@@ -20,7 +20,7 @@ This process, if completed successfully, will yield the `libNE10.a` static libra
 
 You can also generate a dynamic, shared library file by passing CMake the `-DNE10_BUILD_SHARED=ON` option. This generates a handful of `*.so` files in the same directory as the static library file, in addition to the dynamically linked `NE10_test_dynamic` sample program.
 
-By default, the release version of the library is built. The debug version can instead be produced by passing the `-DDEBUG=ON` option to CMake. Note also that the target architecture can be varied by modifying the `NE10_LINUX_TARGET_ARCH` environment variable (or, overriding this, the `-DNE10_LINUX_TARGET_ARCH=$ARCH` CMake option).
+By default, the release version of the library is built. The debug version can instead be produced by passing the `-DBUILD_DEBUG=ON` option to CMake. Note also that the target architecture can be varied by modifying the `NE10_LINUX_TARGET_ARCH` environment variable (or, overriding this, the `-DNE10_LINUX_TARGET_ARCH=$ARCH` CMake option).
 
 ## Cross compilation on \*nix platforms...
 
