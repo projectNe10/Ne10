@@ -167,6 +167,7 @@ elseif(IOS_PLATFORM)
 endif()
 
 set(CMAKE_CXX_FLAGS ${CMAKE_C_FLAGS})
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=gnu99")
 
 # Add NE10 library sub-directory.
 add_subdirectory(modules)
