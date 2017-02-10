@@ -69,17 +69,17 @@
 // some external definitions to be exposed to the users
 /////////////////////////////////////////////////////////
 
-typedef signed char             ne10_int8_t;
-typedef unsigned char           ne10_uint8_t;
-typedef signed short            ne10_int16_t;
-typedef unsigned short          ne10_uint16_t;
-typedef signed int              ne10_int32_t;
-typedef unsigned int            ne10_uint32_t;
-typedef signed long long int    ne10_int64_t;
-typedef unsigned long long int  ne10_uint64_t;
-typedef float                   ne10_float32_t;
-typedef double                  ne10_float64_t;
-typedef int                     ne10_result_t;     // resulting [error-]code
+typedef int8_t   ne10_int8_t;
+typedef uint8_t  ne10_uint8_t;
+typedef int16_t  ne10_int16_t;
+typedef uint16_t ne10_uint16_t;
+typedef int32_t  ne10_int32_t;
+typedef uint32_t ne10_uint32_t;
+typedef int64_t  ne10_int64_t;
+typedef uint64_t ne10_uint64_t;
+typedef float    ne10_float32_t;
+typedef double   ne10_float64_t;
+typedef int      ne10_result_t;     // resulting [error-]code
 
 /**
  * @brief A 2-tuple of ne10_float32_t values.
