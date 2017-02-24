@@ -74,7 +74,8 @@ ne10_result_t ne10_init()
         ++i;
     }
 
-    if (0 != strstr ( (const char *)cpuinfo, "neon"))
+    if (strstr ((const char *)cpuinfo, "neon") != NULL ||
+        strstr ((const char *)cpuinfo, "asimd") != NULL)
     {
         is_NEON_available = NE10_OK;
     }
