@@ -996,9 +996,9 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  * <pre>
  * Real-to-Complex (R2C) FFT:
  *     Input:  { Re[0], Re[1], Re[2], Re[3], Re[4], Re[5], ..., Re[fftSize - 4], Re[fftSize - 3], Re[fftSize - 2], Re[fftSize - 1] }
- *     Output: { Re[0], Im[0], Re[1], Im[1], Re[2], Im[2], ..., Re[fftSize - 2], Im[fftSize - 2], Re[fftSize - 1], Im[fftSize - 1] }
+ *     Output: { Re[0], Im[0], Re[1], Im[1], Re[2], Im[2], ..., Re[(fftSize / 2) - 1], Im[(fftSize / 2) - 1], Re[(fftSize / 2)], Im[(fftSize / 2)] }
  * Complex-to-Real (C2R) IFFT:
- *     Input:  { Re[0], Im[0], Re[1], Im[1], Re[2], Im[2], ..., Re[fftSize - 2], Im[fftSize - 2], Re[fftSize - 1], Im[fftSize - 1] }
+ *     Input:  { Re[0], Im[0], Re[1], Im[1], Re[2], Im[2], ..., Re[(fftSize / 2) - 1], Im[(fftSize / 2) - 1], Re[(fftSize / 2)], Im[(fftSize / 2)] }
  *     Output: { Re[0], Re[1], Re[2], Re[3], Re[4], Re[5], ..., Re[fftSize - 4], Re[fftSize - 3], Re[fftSize - 2], Re[fftSize - 1] }
  * </pre>
  *
