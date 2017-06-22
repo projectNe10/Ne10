@@ -1012,7 +1012,7 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  * ...
  * {
  *     ne10_int32_t fftSize = 1024; // 2^N, N > 0 (e.g. 1024 at N = 10)
- *     ne10_fft_cfg_float32_t cfg = ne10_fft_alloc_r2c_float32 (fftSize);
+ *     ne10_fft_r2c_cfg_float32_t cfg = ne10_fft_alloc_r2c_float32 (fftSize);
  *     ne10_float32_t *in = malloc (fftSize * sizeof (ne10_float32_t));
  *     ne10_fft_cpx_float32_t *out = malloc (fftSize * sizeof (ne10_fft_cpx_float32_t));
  *     ...
