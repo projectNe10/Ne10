@@ -1709,6 +1709,10 @@ void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
 
     switch (cfg->nfft)
     {
+        case 4:
+            ne10_radix4_r2c_c ( (CPLX*) fout_r, (const CPLX*) fin, 1, 1, 4);
+            fout[0].r = fout[0].i;
+            break;
         case 8:
             ne10_radix8_r2c_c ( (CPLX*) fout_r, (const CPLX*) fin, 1, 1, 8);
             fout[0].r = fout[0].i;
@@ -1746,6 +1750,12 @@ void ne10_fft_c2r_1d_float32_neon (ne10_float32_t *fout,
 
     switch (cfg->nfft)
     {
+        case 4:
+            fin[0].i = fin[0].r;
+            fin[0].r = 0.0f;
+            ne10_radix4_c2r_c  ( (CPLX*) fout, (const CPLX*) &fin[0].i, 1, 1, 4);
+            fin[0].r = fin[0].i;
+            break;
         case 8:
             fin[0].i = fin[0].r;
             fin[0].r = 0.0f;

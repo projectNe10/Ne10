@@ -192,7 +192,7 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t *out,
         stage_count--;
         fstride /= 4;
     }
-    else // first_radix == 4, for our factoring this means nfft is of form 2^{even}
+    else if (first_radix == 4) // For our factoring this means nfft is of form 2^{even} >= 4
     {
         for (f_count = fstride; f_count; f_count--)
         {
@@ -238,6 +238,14 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t *out,
         step = fstride; // For C2C, 1/4 of input size (fstride is nfft/4)
         stage_count--;
         fstride /= 4;
+    }
+    else if (first_radix == 2) // Special case, nfft = 2
+    {
+        dst[0].r = src[0].r + src[1].r;
+        dst[0].i = src[0].i + src[1].i;
+        dst[1].r = src[0].r - src[1].r;
+        dst[1].i = src[0].i - src[1].i;
+        return;
     }
 
     // The next stage should read the output of the first stage as input
@@ -519,7 +527,7 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
             }
         }
     }
-    else // first_radix == 4, nfft is of form 2^{even}
+    else if (first_radix == 4) // nfft is of form 2^{even} >= 4
     {
         for (f_count = fstride; f_count; f_count--)
         {
@@ -574,6 +582,14 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
                 dst[f_count].i *= one_by_nfft;
             }
         }
+    }
+    else if (first_radix == 2) // Special case, nfft = 2
+    {
+        dst[0].r = (src[0].r + src[1].r) * one_by_nfft;
+        dst[0].i = (src[0].i + src[1].i) * one_by_nfft;
+        dst[1].r = (src[0].r - src[1].r) * one_by_nfft;
+        dst[1].i = (src[0].i - src[1].i) * one_by_nfft;
+        return;
     }
 
     // The next stage should read the output of the first stage as input

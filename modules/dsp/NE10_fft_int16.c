@@ -206,7 +206,7 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         buffer = Fout;
         Fout = Ftmp;
     }
-    else if (N == 4)   // length of FFT is 2^n (n is even)
+    else if (N == 4)   // length of FFT is 2^n (n is even) >= 4
     {
         //fstride is nfft>>2
         for (f_count = fstride; f_count ; f_count --)
@@ -279,6 +279,23 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         stage_count--;
         fstride >>= 2;
         // end of first stage
+    }
+    else if (N == 2) // Special case, length of FFT is 2
+    {
+        scratch_in[0] = Fin1[0];
+        scratch_in[1] = Fin1[1];
+
+        if (scaled_flag == 1)
+        {
+            NE10_F2I16_FIXDIV (scratch_in[0], 2);
+            NE10_F2I16_FIXDIV (scratch_in[1], 2);
+        }
+
+        Fout1[0].r = scratch_in[0].r + scratch_in[1].r;
+        Fout1[0].i = scratch_in[0].i + scratch_in[1].i;
+        Fout1[1].r = scratch_in[0].r - scratch_in[1].r;
+        Fout1[1].i = scratch_in[0].i - scratch_in[1].i;
+        return;
     }
 
 
@@ -712,6 +729,23 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
         Fout = Ftmp;
 
         // end of first stage
+    }
+    else if (N == 2) // Special case, length of FFT is 2
+    {
+        scratch_in[0] = Fin1[0];
+        scratch_in[1] = Fin1[1];
+
+        if (scaled_flag == 1)
+        {
+            NE10_F2I16_FIXDIV (scratch_in[0], 2);
+            NE10_F2I16_FIXDIV (scratch_in[1], 2);
+        }
+
+        Fout1[0].r = scratch_in[0].r + scratch_in[1].r;
+        Fout1[0].i = scratch_in[0].i + scratch_in[1].i;
+        Fout1[1].r = scratch_in[0].r - scratch_in[1].r;
+        Fout1[1].i = scratch_in[0].i - scratch_in[1].i;
+        return;
     }
 
 

@@ -35,10 +35,49 @@
 #include "NE10_macros.h"
 #include "NE10_fft.h"
 
+static inline void ne10_fft2_forward_int16_unscaled (ne10_fft_cpx_int16_t * Fout,
+        ne10_fft_cpx_int16_t * Fin)
+
+{
+    Fout[0].r = Fin[0].r + Fin[1].r;
+    Fout[0].i = Fin[0].i + Fin[1].i;
+    Fout[1].r = Fin[0].r - Fin[1].r;
+    Fout[1].i = Fin[0].i - Fin[1].i;
+}
+
+static inline void ne10_fft2_backward_int16_unscaled (ne10_fft_cpx_int16_t * Fout,
+        ne10_fft_cpx_int16_t * Fin)
+
+{
+    Fout[0].r = Fin[0].r + Fin[1].r;
+    Fout[0].i = Fin[0].i + Fin[1].i;
+    Fout[1].r = Fin[0].r - Fin[1].r;
+    Fout[1].i = Fin[0].i - Fin[1].i;
+}
+
+static inline void ne10_fft2_forward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
+        ne10_fft_cpx_int16_t * Fin)
+
+{
+    Fout[0].r = (Fin[0].r + Fin[1].r) >> 1;
+    Fout[0].i = (Fin[0].i + Fin[1].i) >> 1;
+    Fout[1].r = (Fin[0].r - Fin[1].r) >> 1;
+    Fout[1].i = (Fin[0].i - Fin[1].i) >> 1;
+}
+
+static inline void ne10_fft2_backward_int16_scaled (ne10_fft_cpx_int16_t * Fout,
+        ne10_fft_cpx_int16_t * Fin)
+
+{
+    Fout[0].r = (Fin[0].r + Fin[1].r) >> 1;
+    Fout[0].i = (Fin[0].i + Fin[1].i) >> 1;
+    Fout[1].r = (Fin[0].r - Fin[1].r) >> 1;
+    Fout[1].i = (Fin[0].i - Fin[1].i) >> 1;
+}
+
 #define FFT4_FS_START \
     ne10_int16_t s0_r, s0_i, s1_r, s1_i, s2_r, s2_i; \
     ne10_int16_t tmp_r, tmp_i;
-
 
 #define FFT4_FS \
     s2_r = Fin[0].r - Fin[2].r; \
@@ -1487,6 +1526,9 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
         {
             switch (cfg->nfft)
             {
+            case 2:
+                ne10_fft2_backward_int16_scaled (fout, fin);
+                break;
             case 4:
                 ne10_fft4_backward_int16_scaled (fout, fin);
                 break;
@@ -1502,6 +1544,9 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
         {
             switch (cfg->nfft)
             {
+            case 2:
+                ne10_fft2_forward_int16_scaled (fout, fin);
+                break;
             case 4:
                 ne10_fft4_forward_int16_scaled (fout, fin);
                 break;
@@ -1520,6 +1565,9 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
         {
             switch (cfg->nfft)
             {
+            case 2:
+                ne10_fft2_backward_int16_unscaled (fout, fin);
+                break;
             case 4:
                 ne10_fft4_backward_int16_unscaled (fout, fin);
                 break;
@@ -1535,6 +1583,9 @@ void ne10_fft_c2c_1d_int16_neon (ne10_fft_cpx_int16_t *fout,
         {
             switch (cfg->nfft)
             {
+            case 2:
+                ne10_fft2_forward_int16_unscaled (fout, fin);
+                break;
             case 4:
                 ne10_fft4_forward_int16_unscaled (fout, fin);
                 break;

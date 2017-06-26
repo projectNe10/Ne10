@@ -162,11 +162,11 @@ void ne10_radix8_c2r_c (ne10_fft_cpx_float32_t *Fout,
     }
 }
 
-NE10_INLINE void ne10_radix4_r2c_c (ne10_fft_cpx_float32_t *Fout,
-                                  const ne10_fft_cpx_float32_t *Fin,
-                                  const ne10_int32_t fstride,
-                                  const ne10_int32_t mstride,
-                                  const ne10_int32_t nfft)
+void ne10_radix4_r2c_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin,
+                        const ne10_int32_t fstride,
+                        const ne10_int32_t mstride,
+                        const ne10_int32_t nfft)
 {
     const ne10_int32_t in_step = nfft >> 2;
           ne10_int32_t f_count;
@@ -202,11 +202,11 @@ NE10_INLINE void ne10_radix4_r2c_c (ne10_fft_cpx_float32_t *Fout,
     }
 }
 
-NE10_INLINE void ne10_radix4_c2r_c (ne10_fft_cpx_float32_t *Fout,
-                                  const ne10_fft_cpx_float32_t *Fin,
-                                  const ne10_int32_t fstride,
-                                  const ne10_int32_t mstride,
-                                  const ne10_int32_t nfft)
+void ne10_radix4_c2r_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin,
+                        const ne10_int32_t fstride,
+                        const ne10_int32_t mstride,
+                        const ne10_int32_t nfft)
 {
     ne10_int32_t f_count;
     const ne10_int32_t in_step = nfft >> 2;
@@ -840,6 +840,9 @@ void ne10_fft_r2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
 
     switch(cfg->nfft)
     {
+        case 4:
+            ne10_radix4_r2c_c( (ne10_fft_cpx_float32_t*) fout, ( ne10_fft_cpx_float32_t*) fin,1,1,4);
+            break;
         case 8:
             ne10_radix8_r2c_c( (ne10_fft_cpx_float32_t*) fout, ( ne10_fft_cpx_float32_t*) fin,1,1,8);
             break;
@@ -878,6 +881,9 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
     fin[0].r = 0.0f;
     switch(cfg->nfft)
     {
+        case 4:
+            ne10_radix4_c2r_c( (ne10_fft_cpx_float32_t*) fout, ( ne10_fft_cpx_float32_t*) &fin[0].i,1,1,4);
+            break;
         case 8:
             ne10_radix8_c2r_c( (ne10_fft_cpx_float32_t*) fout, ( ne10_fft_cpx_float32_t*) &fin[0].i,1,1,8);
             break;

@@ -46,7 +46,7 @@
 
 /* Max FFT Length and double buffer for real and imag */
 #define TEST_LENGTH_SAMPLES (32768)
-#define MIN_LENGTH_SAMPLES_CPX (4)
+#define MIN_LENGTH_SAMPLES_CPX (2)
 #define MIN_LENGTH_SAMPLES_REAL (MIN_LENGTH_SAMPLES_CPX*2)
 #define SNR_THRESHOLD_FLOAT32 90.0f
 
@@ -102,7 +102,7 @@ void test_fft_c2c_1d_float32_conformance()
         fftSize = baseSize;
         while (factor && fftSize <= TEST_LENGTH_SAMPLES)
         {
-            if (fftSize % NE10_FFT_PARA_LEVEL == 0)
+            if (fftSize == 2 || fftSize % NE10_FFT_PARA_LEVEL == 0)
             {
                 fprintf (stdout, "FFT size %d\n", fftSize);
                 flag_result = test_c2c_alloc (fftSize);
