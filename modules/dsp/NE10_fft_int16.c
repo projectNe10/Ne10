@@ -280,7 +280,7 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         fstride >>= 2;
         // end of first stage
     }
-    else if (N == 2) // Special case, length of FFT is 2
+    else if (N == 2) // Length of FFT is 2
     {
         scratch_in[0] = Fin1[0];
         scratch_in[1] = Fin1[1];
@@ -295,6 +295,11 @@ static void ne10_mixed_radix_butterfly_int16_c (ne10_fft_cpx_int16_t * Fout,
         Fout1[0].i = scratch_in[0].i + scratch_in[1].i;
         Fout1[1].r = scratch_in[0].r - scratch_in[1].r;
         Fout1[1].i = scratch_in[0].i - scratch_in[1].i;
+        return;
+    }
+    else // Length of FFT is 1
+    {
+        Fout1[0] = Fin1[0];
         return;
     }
 
@@ -730,7 +735,7 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
 
         // end of first stage
     }
-    else if (N == 2) // Special case, length of FFT is 2
+    else if (N == 2) // Length of FFT is 2
     {
         scratch_in[0] = Fin1[0];
         scratch_in[1] = Fin1[1];
@@ -745,6 +750,11 @@ static void ne10_mixed_radix_butterfly_inverse_int16_c (ne10_fft_cpx_int16_t * F
         Fout1[0].i = scratch_in[0].i + scratch_in[1].i;
         Fout1[1].r = scratch_in[0].r - scratch_in[1].r;
         Fout1[1].i = scratch_in[0].i - scratch_in[1].i;
+        return;
+    }
+    else // Length of FFT is 1
+    {
+        Fout1[0] = Fin1[0];
         return;
     }
 

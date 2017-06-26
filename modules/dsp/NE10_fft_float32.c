@@ -239,12 +239,17 @@ static void ne10_mixed_radix_butterfly_float32_c (ne10_fft_cpx_float32_t *out,
         stage_count--;
         fstride /= 4;
     }
-    else if (first_radix == 2) // Special case, nfft = 2
+    else if (first_radix == 2) // nfft = 2
     {
         dst[0].r = src[0].r + src[1].r;
         dst[0].i = src[0].i + src[1].i;
         dst[1].r = src[0].r - src[1].r;
         dst[1].i = src[0].i - src[1].i;
+        return;
+    }
+    else // nfft = 1
+    {
+        dst[0] = src[0];
         return;
     }
 
@@ -583,12 +588,17 @@ static void ne10_mixed_radix_butterfly_inverse_float32_c (ne10_fft_cpx_float32_t
             }
         }
     }
-    else if (first_radix == 2) // Special case, nfft = 2
+    else if (first_radix == 2) // nfft = 2
     {
         dst[0].r = (src[0].r + src[1].r) * one_by_nfft;
         dst[0].i = (src[0].i + src[1].i) * one_by_nfft;
         dst[1].r = (src[0].r - src[1].r) * one_by_nfft;
         dst[1].i = (src[0].i - src[1].i) * one_by_nfft;
+        return;
+    }
+    else // nfft = 1
+    {
+        dst[0] = src[0];
         return;
     }
 

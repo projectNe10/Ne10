@@ -250,6 +250,31 @@ void ne10_radix4_c2r_c (ne10_fft_cpx_float32_t *Fout,
     }
 }
 
+void ne10_radix2_r2c_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin)
+{
+    const ne10_float32_t *Fin_r  = (ne10_float32_t*) Fin;
+          ne10_float32_t *Fout_r = (ne10_float32_t*) Fout;
+    Fout_r ++; // always leave the first real empty
+
+    Fout_r[0] = Fin_r[0] + Fin_r[1];
+    Fout_r[1] = Fin_r[0] - Fin_r[1];
+}
+
+void ne10_radix2_c2r_c (ne10_fft_cpx_float32_t *Fout,
+                        const ne10_fft_cpx_float32_t *Fin)
+{
+    const ne10_float32_t *Fin_r  = (ne10_float32_t*) Fin;
+          ne10_float32_t *Fout_r = (ne10_float32_t*) Fout;
+
+    Fout_r[0] = Fin_r[0] + Fin_r[1];
+    Fout_r[1] = Fin_r[0] - Fin_r[1];
+#if defined(NE10_DSP_RFFT_SCALING)
+    Fout_r[0] *= 0.5;
+    Fout_r[1] *= 0.5;
+#endif
+}
+
 NE10_INLINE void ne10_radix4_r2c_with_twiddles_first_butterfly_c (ne10_float32_t *Fout_r,
         const ne10_float32_t *Fin_r,
         const ne10_int32_t out_step,
@@ -840,6 +865,9 @@ void ne10_fft_r2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
 
     switch(cfg->nfft)
     {
+        case 2:
+            ne10_radix2_r2c_c((ne10_fft_cpx_float32_t*) fout, (ne10_fft_cpx_float32_t*) fin);
+            break;
         case 4:
             ne10_radix4_r2c_c( (ne10_fft_cpx_float32_t*) fout, ( ne10_fft_cpx_float32_t*) fin,1,1,4);
             break;
@@ -881,6 +909,9 @@ void ne10_fft_c2r_1d_float32_c (ne10_float32_t *fout,
     fin[0].r = 0.0f;
     switch(cfg->nfft)
     {
+        case 2:
+            ne10_radix2_c2r_c((ne10_fft_cpx_float32_t*) fout, (ne10_fft_cpx_float32_t*) &fin[0].i);
+            break;
         case 4:
             ne10_radix4_c2r_c( (ne10_fft_cpx_float32_t*) fout, ( ne10_fft_cpx_float32_t*) &fin[0].i,1,1,4);
             break;

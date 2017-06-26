@@ -46,7 +46,7 @@
 /* Max FFT Length and double buffer for real and imag */
 #define TEST_LENGTH_SAMPLES (32768)
 #define MIN_LENGTH_SAMPLES_CPX (2)
-#define MIN_LENGTH_SAMPLES_REAL (MIN_LENGTH_SAMPLES_CPX*2)
+#define MIN_LENGTH_SAMPLES_REAL (MIN_LENGTH_SAMPLES_CPX)
 
 #define SNR_THRESHOLD_INT32 25.0f
 
