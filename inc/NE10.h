@@ -29,132 +29,35 @@
  * NE10 Library : inc/NE10.h
  */
 
-/**
- \mainpage Welcome to Ne10 Documentation!
- *
- *
- *\par Introduction
- *
- * [Ne10](http://projectne10.github.com/Ne10/) is a library of common, useful functions
- * that have been heavily optimized for ARM-based CPUs equipped with
- * [NEON](http://www.arm.com/products/processors/technologies/neon.php) SIMD capabilities.
- * These functions provide consistent, well-tested behavior that can be easily
- * incorporated into applications, enabling developers to get the most out of ARMv7/NEON
- * without arduous assembly programming. Ne10 is structured in a modular fashion such
- * that it can be used as a convenient "drop and go" pre-built library, but also allows
- * the programmer to "pick and mix" modules as appropriate for a particular application.
- *
- *\image html ne10_library.png "Ne10 Library Description"
- *
- *\par Top-Level Overview
- *
- * The Ne10 directory structure is roughly as follows:
- * <pre>
- * ├── android
- * │   └── Android reference files
- * ├── build
- * │   └── directory for build-related files
- * ├── common
- * │   └── directory for common header, table and macro definition files
- * ├── doc
- * │   └── directory for documentation
- * ├── inc
- * │   └── directory for function header files
- * ├── modules
- * │   ├── dsp
- * │   │   ├── @link groupDSPs dsp module@endlink that provides a set of signal processing functions, such as real/complex FFT/IFFT, FIR and IIR
- * │   │   └── test
- * │   │       └──  directory for test files
- * │   ├── imgproc
- * │   │   ├── @link groupIMGPROCs imgproc module@endlink that provides a set of image processing functions, such as image resize and rotate
- * │   │   └── test
- * │   │       └──  directory for test files
- * │   ├── math
- * │   │   ├── @link groupMaths math module@endlink that provides a set of vector/matrix algebra functions
- * │   │   └── test
- * │   │       └──  directory for test files
- * │   ├── physics
- * │   │   ├── @link groupPhysics physics module@endlink that provides a set of collision detection functions
- * │   │   └── test
- * │   │       └──  directory for test files
- * ├── samples
- * │   └── @link groupSamples sample code@endlink
- * ├── test
- * │   ├── directory for test framework
- * ├── tools
- * │   ├── directory for miscellaneous tools, such as the script to modify the copyright year
- * </pre>
- *
- *\par Modules
- *
- * Ne10's modular structure means that it actually consists of several smaller
- * libraries. Currently, these include:
- *
- * - @link groupMaths Math Functions@endlink
- * - @link groupDSPs Signal Processing Functions@endlink
- * - @link groupIMGPROCs Image Processing Functions@endlink
- * - @link groupPhysics Physics Functions@endlink
- *
- *\par Usage
- *
- * Ne10's function call interface can be understood by reading the relevant documentation
- * pages, or by examining sets of provided @link groupSamples sample code@endlink.
- *
- *\par Building Ne10
- *
- * See the building.md file in the "doc" folder
- *
- *\par Code Formatting
- *
- * See the [Ne10 coding style guidelines](https://github.com/projectNe10/Ne10/wiki/Ne10-Coding-Style).
- *
- *\par License
- *
- * Ne10 is provided free of charge by ARM Limited and Contributors, and is licensed
- * under the [New BSD License](http://opensource.org/licenses/BSD-3-Clause). See the
- * LICENSE file in the "doc" directory for details.
- */
-
 
 /**
  * @defgroup groupMaths Math Functions
  *
- *
- * These functions provide an assortment of vector/matrix math operations.
- * Currently, only the single precision floating point data type is supported.
+ * An assortment of vector/matrix math operations.
  */
 
 /**
  * @defgroup groupDSPs Signal Processing Functions
  *
  *
- * This set of functions provide some commonly used functions in signal processing,
- * such as complex/real FFT/IFFT, FIR and IIR. Currently, only the float (single precision)
- * data type is supported.
+ * An assortment of signal processing operations, including FFT/IFFT, FIR,
+ * and IIR operations.
  */
 
 /**
  * @defgroup groupIMGPROCs Image Processing Functions
  *
  *
- * This set of functions provide some commonly used functions in image processing,
- * such as image scale, image rotate.
+ * An assortment of image processing operations, including image resize
+ * and rotation operations.
  */
 
 /**
  * @defgroup groupPhysics Physics Functions
  *
  *
- * This set of functions provide some APIs used for collision detection,
- * such as compute AABB, caculate relative velocity and apply contact impulse.
- */
-
-/**
- * @defgroup groupSamples Sample Functions
- *
- *
- * These sample code snippets outline how Ne10 can be used to accomplish a number of
- * common tasks, including the FFT, FIR, and matrix multiply operations.
+ * An assortment of collision detection operations, including AABB, relative
+ * velocity, and contact impulse calculations.
  */
 
 #ifndef NE10_H

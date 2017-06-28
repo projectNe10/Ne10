@@ -344,16 +344,7 @@ ne10_fft_cpx_float32_t* ne10_fft_generate_twiddles_transposed_float32 (
  * @{
  */
 
-/**
- * @brief User-callable function to create a configuration structure for the FP32 C2C NEON FFT/IFFT.
- * @param[in]   nfft             input length
- * @retval      st               pointer to an FFT configuration structure (allocated with `malloc`), or `NULL` to indicate an error
- *
- * This function allocates and initialises an `ne10_fft_cfg_float32_t` configuration structure for
- * the NEON complex-to-complex single precision floating point FFT/IFFT. As part of this, it reserves
- * a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks,
- * and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
- */
+/** Specific implementation of @ref ne10_fft_alloc_c2c_float32 for @ref ne10_fft_c2c_1d_float32_neon. */
 ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
 {
     // For input shorter than 15, fall back to c version.
@@ -456,16 +447,7 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
     return st;
 }
 
-/**
- * @brief User-callable function to create a configuration structure for the INT32 C2C NEON FFT/IFFT.
- * @param[in]   nfft             input length
- * @retval      st               pointer to an FFT configuration structure (allocated with `malloc`), or `NULL` to indicate an error
- *
- * This function allocates and initialises an `ne10_fft_cfg_int32_t` configuration structure for
- * the NEON complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a
- * buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks,
- * and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.
- */
+/** Specific implementation of @ref ne10_fft_alloc_c2c_int32 for @ref ne10_fft_c2c_1d_int32_neon. */
 ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 {
     // For input shorter than 15, fall back to c version.
@@ -567,34 +549,36 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
 }
 
 /**
- * @defgroup C2C_FFT_IFFT_DESTROY Floating & Fixed Point Complex FFT "Destroy" Functions
- * @brief User-callable functions to destroy the configuration structure for the FFT (free memory, etc.)
- * @param[in]   cfg     pointer to the FFT configuration structure, allocated with `malloc`
- * @{
+ * @brief Destroys the configuration structure allocated by variants of @ref ne10_fft_alloc_c2c_float32 (frees memory, etc.)
+ *
+ * @param[in]   cfg     pointer to the FFT configuration structure
  */
-
 void ne10_fft_destroy_c2c_float32 (ne10_fft_cfg_float32_t cfg)
 {
     free(cfg);
 }
 
+/**
+ * @brief Destroys the configuration structure allocated by variants of @ref ne10_fft_alloc_c2c_int32 (frees memory, etc.)
+ *
+ * @param[in]   cfg     pointer to the FFT configuration structure
+ */
 void ne10_fft_destroy_c2c_int32 (ne10_fft_cfg_int32_t cfg)
 {
     free (cfg);
 }
 
+/**
+ * @brief Destroys the configuration structure allocated by @ref ne10_fft_alloc_c2c_int16 (frees memory, etc.)
+ *
+ * @param[in]   cfg     pointer to the FFT configuration structure
+ */
 void ne10_fft_destroy_c2c_int16 (ne10_fft_cfg_int16_t cfg)
 {
     free (cfg);
 }
 
-/**
- * @}
- */ //end of C2C_FFT_IFFT_DESTROY group
-
-/**
- * @}
- */ //end of C2C_FFT_IFFT group
+/** @} */ // C2C_FFT_IFFT
 
 /**
  * @addtogroup R2C_FFT_IFFT
@@ -602,31 +586,33 @@ void ne10_fft_destroy_c2c_int16 (ne10_fft_cfg_int16_t cfg)
  */
 
 /**
- * @defgroup R2C_FFT_IFFT_DESTROY Floating & Fixed Point Real-to-Complex FFT "Destroy" Functions
- * @brief User-callable functions to destroy the configuration structure for the FFT (free memory, etc.)
- * @param[in]   cfg     pointer to the FFT configuration structure, allocated with `malloc`
- * @{
+ * @brief Destroys the configuration structure allocated by @ref ne10_fft_alloc_r2c_float32 (frees memory, etc.)
+ *
+ * @param[in]   cfg     pointer to the FFT configuration structure
  */
-
 void ne10_fft_destroy_r2c_float32 (ne10_fft_r2c_cfg_float32_t cfg)
 {
     free(cfg);
 }
 
+/**
+ * @brief Destroys the configuration structure allocated by @ref ne10_fft_alloc_r2c_int32 (frees memory, etc.)
+ *
+ * @param[in]   cfg     pointer to the FFT configuration structure
+ */
 void ne10_fft_destroy_r2c_int32 (ne10_fft_r2c_cfg_int32_t cfg)
 {
     free (cfg);
 }
 
+/**
+ * @brief Destroys the configuration structure allocated by @ref ne10_fft_alloc_r2c_int16 (frees memory, etc.)
+ *
+ * @param[in]   cfg     pointer to the FFT configuration structure
+ */
 void ne10_fft_destroy_r2c_int16 (ne10_fft_r2c_cfg_int16_t cfg)
 {
     free (cfg);
 }
 
-/**
- * @}
- */ //end of R2C_FFT_IFFT_DESTROY group
-
-/**
- * @}
- */ //end of R2C_FFT_IFFT group
+/** @} */ // R2C_FFT_IFFT

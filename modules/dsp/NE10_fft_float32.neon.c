@@ -657,20 +657,10 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
 }
 
 /**
- * @addtogroup C2C_FFT_IFFT
- * @{
- */
-
-/**
- * @brief Mixed radix-2/3/4/5 complex NEON FFT/IFFT of single precision floating point data.
- * @param[out]  *fout            pointer to the output buffer
- * @param[in]   *fin             pointer to the input buffer
- * @param[in]   cfg              pointer to the configuration structure
- * @param[in]   inverse_fft      whether this is an FFT or IFFT (0: FFT, 1: IFFT)
- *
- * This function implements a mixed radix-2/3/4/5 complex FFT/IFFT, supporting input lengths of the
- * form 2^N*3^M*5^K (N, M, K > 0, length % 4 = 0). This is an out-of-place algorithm. For usage
- * information, please check test/test_suite_fft_float32.c.
+ * @ingroup C2C_FFT_IFFT
+ * Specific implementation of @ref ne10_fft_c2c_1d_float32 using NEON SIMD capabilities.
+ * Additionally requires that inputs are sized such that `fftSize % 4 == 0` if
+ * fftSize > 2.
  */
 void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_fft_cpx_float32_t *fin,
@@ -749,23 +739,8 @@ void ne10_fft_c2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
 }
 
 /**
- * @}
- */ //end of C2C_FFT_IFFT group
-
-/**
- * @addtogroup R2C_FFT_IFFT
- * @{
- */
-
-/**
- * @brief Mixed radix-2/4 real-to-complex NEON FFT of single precision floating point data.
- * @param[out]  *fout            pointer to the output buffer
- * @param[in]   *fin             pointer to the input buffer
- * @param[in]   cfg              pointer to the configuration structure
- *
- * The function implements a mixed radix-2/4 real-to-complex FFT, supporting input lengths of
- * the form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please check
- * test/test_suite_fft_float32.c.
+ * @ingroup R2C_FFT_IFFT
+ * Specific implementation of @ref ne10_fft_r2c_1d_float32 using NEON SIMD capabilities.
  */
 void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
                                    ne10_float32_t *fin,
@@ -785,14 +760,8 @@ void ne10_fft_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *fout,
 }
 
 /**
- * @brief Mixed radix-2/4 complex-to-real NEON IFFT of single precision floating point data.
- * @param[out]  *fout            pointer to the output buffer
- * @param[in]   *fin             pointer to the input buffer
- * @param[in]   cfg              pointer to the configuration structure
- *
- * The function implements a mixed radix-2/4 complex-to-real IFFT, supporting input lengths of
- * the form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please check
- * test/test_suite_fft_float32.c.
+ * @ingroup R2C_FFT_IFFT
+ * Specific implementation of @ref ne10_fft_c2r_1d_float32 using NEON SIMD capabilities.
  */
 void ne10_fft_c2r_1d_float32_neon (ne10_float32_t *fout,
                                    ne10_fft_cpx_float32_t *fin,
@@ -810,7 +779,3 @@ void ne10_fft_c2r_1d_float32_neon (ne10_float32_t *fout,
     ne10_fft_split_c2r_1d_float32_neon (tmpbuf1, fin, cfg->super_twiddles, cfg->ncfft);
     ne10_fft_c2c_1d_float32_neon ( (ne10_fft_cpx_float32_t*) fout, tmpbuf1, &c2c_state, 1);
 }
-
-/**
- * @} end of R2C_FFT_IFFT group
- */

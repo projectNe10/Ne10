@@ -32,14 +32,8 @@
 #define SAMPLES 16
 
 /**
- * @ingroup groupSamples
- */
-/**
- * @addtogroup groupSamples
- * @{
- */
-/**
- * @brief An example of using the complex-to-complex FFT functions.
+ * @example NE10_sample_complex_fft.c
+ * An example of using the complex-to-complex FFT functions.
  */
 int complex_fft_sample_main(void)
 {
@@ -81,6 +75,3 @@ int complex_fft_sample_main(void)
 
     return 0;
 }
-/**
- * @} end of groupSamples
- */

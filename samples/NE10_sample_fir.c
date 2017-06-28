@@ -35,14 +35,8 @@
 #define BUFFSIZE  (NUMBLOCKS * BLOCKSIZE)
 
 /**
- * @ingroup groupSamples
- */
-/**
- * @addtogroup groupSamples
- * @{
- */
-/**
- * @brief An example of using Ne10's vanilla FIR function.
+ * @example NE10_sample_fir.c
+ * An example of using Ne10's vanilla FIR function.
  */
 int fir_sample_main(void)
 {
@@ -102,6 +96,3 @@ int fir_sample_main(void)
 
     return 0;
 }
-/**
- * @} end of groupSamples
- */

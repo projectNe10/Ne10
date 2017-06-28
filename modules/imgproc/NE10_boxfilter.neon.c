@@ -413,11 +413,7 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
 }
 
 /**
- * @addtogroup IMG_BOXFILTER
- * @{
- */
-
-/**
+ * @ingroup IMG_BOXFILTER
  * @brief NEON optimized box filter.
  * @param[out]  *dst                  point to the destination image
  * @param[in]   *src                  point to the source image

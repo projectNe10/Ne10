@@ -33,9 +33,6 @@
 
 /**
  * @ingroup groupDSPs
- */
-
-/**
  * @defgroup FIR Finite Impulse Response (FIR) Filters
  *
  * \par
@@ -350,14 +347,11 @@ void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
     }
 
 }
-/** @} */ //end of FIR group
+/** @} */
 
 /**
  * @ingroup groupDSPs
- */
-
-/**
- * @defgroup FIR_Decimate Finite Impulse Response (FIR) Decimator
+ * @defgroup FIR_Decimate Finite Impulse Response (FIR) Decimation
  *
  * \par
  * These functions combine an FIR filter together with a decimator.
@@ -431,10 +425,6 @@ void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
  * Care must be taken when using the fixed-point versions of the FIR decimate filter functions.
  * In particular, the overflow and saturation behavior of the accumulator used in each function must be considered.
  * Refer to the function specific documentation below for usage guidelines.
- */
-
-/**
- * @addtogroup FIR_Decimate
  * @{
  */
 
@@ -600,15 +590,11 @@ void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
     }
 
 }
-/** @} */ //end of FIR_Decimate group
-
+/** @} */
 
 /**
  * @ingroup groupDSPs
- */
-
-/**
- * @defgroup FIR_Interpolate Finite Impulse Response (FIR) Interpolator
+ * @defgroup FIR_Interpolate Finite Impulse Response (FIR) Interpolation
  *
  * \par
  * These functions combine an upsampler (zero stuffer) and an FIR filter.
@@ -878,14 +864,10 @@ void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S
     }
 
 }
-/** @} */ //end of FIR_interpolate group
-
+/** @} */
 
 /**
  * @ingroup groupDSPs
- */
-
-/**
  * @defgroup FIR_Lattice Finite Impulse Response (FIR) Lattice Filters
  *
  * \par
@@ -1260,7 +1242,7 @@ void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
     }
 
 }
-/** @} */ //end of FIR_Lattice group
+/** @} */
 
 /**
  * @brief Floating point circular write function.
@@ -1361,9 +1343,6 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
 
 /**
  * @ingroup groupDSPs
- */
-
-/**
  * @defgroup FIR_Sparse Finite Impulse Response (FIR) Sparse Filters
  *
  * \par

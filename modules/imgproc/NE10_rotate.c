@@ -80,7 +80,7 @@
  * @ingroup groupIMGPROCs
  */
 /**
- * @defgroup IMG_ROTATE Image Rotate
+ * @defgroup IMG_ROTATE Image Rotation
  *
  * \par
  * Image rotate is a generic functionality in image processing. For C implementation, we take the cvGetQuadrangleSubPix function from OpenCV (http://opencv.org/) for reference.
@@ -210,11 +210,6 @@ void ne10_img_rotate_get_quad_rangle_subpix_rgba_c (ne10_uint8_t *dst,
 /**
  * @addtogroup IMG_ROTATE
  * @{
- */
-/**
- * @brief Image resize of 8-bit data.
- *
- * The function implements image resize.
  */
 /**
  * @brief Image rotate of 8-bit data.

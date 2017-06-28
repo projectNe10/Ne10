@@ -347,60 +347,6 @@ static void ne10_img_resize_cal_offset_linear (ne10_int32_t* xofs,
 
 }
 
-/**
- * @addtogroup IMG_RESIZE
- * @{
- */
-
-/**
- * @brief Image resize of 8-bit data.
- * @param[out]  *dst                  point to the destination image
- * @param[in]   dst_width             width of destination image
- * @param[in]   dst_height            height of destination image
- * @param[in]   *src                  point to the source image
- * @param[in]   src_width             width of source image
- * @param[in]   src_height            height of source image
- * @param[in]   src_stride            stride of source buffer
- *
- * The function implements image resize.
- */
-void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
-                                      ne10_uint32_t dst_width,
-                                      ne10_uint32_t dst_height,
-                                      ne10_uint8_t* src,
-                                      ne10_uint32_t src_width,
-                                      ne10_uint32_t src_height,
-                                      ne10_uint32_t src_stride)
-{
-    ne10_int32_t dstw = dst_width;
-    ne10_int32_t dsth = dst_height;
-    ne10_int32_t srcw = src_width;
-    ne10_int32_t srch = src_height;
-
-    ne10_int32_t cn = 4;
-
-
-    ne10_int32_t xmin = 0;
-    ne10_int32_t xmax = dstw;
-    ne10_int32_t width = dstw * cn;
-
-    ne10_int32_t ksize = 0, ksize2;
-    ksize = 2;
-    ksize2 = ksize / 2;
-
-    ne10_uint8_t *buffer_ = (ne10_uint8_t*) NE10_MALLOC ( (width + dsth) * (sizeof (ne10_int32_t) + sizeof (ne10_float32_t) * ksize));
-
-    ne10_int32_t* xofs = (ne10_int32_t*) buffer_;
-    ne10_int32_t* yofs = xofs + width;
-    ne10_int16_t* ialpha = (ne10_int16_t*) (yofs + dsth);
-    ne10_int16_t* ibeta = ialpha + width * ksize;
-
-    ne10_img_resize_cal_offset_linear (xofs, ialpha, yofs, ibeta, &xmin, &xmax, ksize, ksize2, srcw, srch, dstw, dsth, cn);
-
-    ne10_img_resize_generic_linear_c (src, dst, xofs, ialpha, yofs, ibeta, xmin, xmax, ksize, srcw, srch, src_stride, dstw, dsth, cn);
-    NE10_FREE (buffer_);
-}
-
 extern void ne10_img_hresize_4channels_linear_neon (const ne10_uint8_t** src,
         ne10_int32_t** dst,
         ne10_int32_t count,
@@ -490,6 +436,60 @@ static void ne10_img_resize_generic_linear_neon (ne10_uint8_t* src,
         ne10_img_vresize_linear_neon ( (const ne10_int32_t**) rows, (ne10_uint8_t*) (dst + dststep * dy), beta, dstw);
     }
 
+    NE10_FREE (buffer_);
+}
+
+/**
+ * @addtogroup IMG_RESIZE
+ * @{
+ */
+
+/**
+ * @brief Image resize of 8-bit data.
+ * @param[out]  *dst                  point to the destination image
+ * @param[in]   dst_width             width of destination image
+ * @param[in]   dst_height            height of destination image
+ * @param[in]   *src                  point to the source image
+ * @param[in]   src_width             width of source image
+ * @param[in]   src_height            height of source image
+ * @param[in]   src_stride            stride of source buffer
+ *
+ * The function implements image resize.
+ */
+void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
+                                      ne10_uint32_t dst_width,
+                                      ne10_uint32_t dst_height,
+                                      ne10_uint8_t* src,
+                                      ne10_uint32_t src_width,
+                                      ne10_uint32_t src_height,
+                                      ne10_uint32_t src_stride)
+{
+    ne10_int32_t dstw = dst_width;
+    ne10_int32_t dsth = dst_height;
+    ne10_int32_t srcw = src_width;
+    ne10_int32_t srch = src_height;
+
+    ne10_int32_t cn = 4;
+
+
+    ne10_int32_t xmin = 0;
+    ne10_int32_t xmax = dstw;
+    ne10_int32_t width = dstw * cn;
+
+    ne10_int32_t ksize = 0, ksize2;
+    ksize = 2;
+    ksize2 = ksize / 2;
+
+    ne10_uint8_t *buffer_ = (ne10_uint8_t*) NE10_MALLOC ( (width + dsth) * (sizeof (ne10_int32_t) + sizeof (ne10_float32_t) * ksize));
+
+    ne10_int32_t* xofs = (ne10_int32_t*) buffer_;
+    ne10_int32_t* yofs = xofs + width;
+    ne10_int16_t* ialpha = (ne10_int16_t*) (yofs + dsth);
+    ne10_int16_t* ibeta = ialpha + width * ksize;
+
+    ne10_img_resize_cal_offset_linear (xofs, ialpha, yofs, ibeta, &xmin, &xmax, ksize, ksize2, srcw, srch, dstw, dsth, cn);
+
+    ne10_img_resize_generic_linear_c (src, dst, xofs, ialpha, yofs, ibeta, xmin, xmax, ksize, srcw, srch, src_stride, dstw, dsth, cn);
     NE10_FREE (buffer_);
 }
 

@@ -35,14 +35,8 @@ static void initialise_matrix_column(ne10_mat_row3f *col);
 static void initialise_matrix(ne10_mat3x3f_t *mat);
 
 /**
- * @ingroup groupSamples
- */
-/**
- * @addtogroup groupSamples
- * @{
- */
-/**
- * @brief An example of using the matrix multiply functions.
+ * @example NE10_sample_matrix_multiply.c
+ * An example of using the matrix multiply functions.
  */
 int matrix_multiply_sample_main(void)
 {
@@ -87,9 +81,6 @@ int matrix_multiply_sample_main(void)
 
     return 0;
 }
-/**
- * @} end of groupSamples
- */
 
 void initialise_matrix(ne10_mat3x3f_t *mat)
 {

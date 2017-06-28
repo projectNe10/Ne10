@@ -333,11 +333,13 @@ void ne10_img_boxfilter_col_c (const ne10_uint8_t *src,
 }
 
 /**
- * @addtogroup IMG_BOXFILTER
+ * @ingroup groupIMGPROCs
+ * @defgroup IMG_BOXFILTER Image Box Filter
  * @{
  */
 
 /**
+ * @ingroup IMG_BOXFILTER
  * @brief Box filter.
  * @param[out]  *dst                  point to the destination image
  * @param[in]   *src                  point to the source image
@@ -437,7 +439,3 @@ void ne10_img_boxfilter_rgba8888_c (const ne10_uint8_t *src,
 
     free (dst_buf);
 }
-
-/**
- * @} end of IMG_BOXFILTER group
- */

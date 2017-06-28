@@ -32,15 +32,14 @@
 #define ARR_LEN 5
 
 /**
- * @ingroup groupSamples
+ * @example NE10_sample_intro.c
+ * A simple example of initialising Ne10 and calling the C and NEON variants of
+ * a function.
  */
-/**
- * @addtogroup groupSamples
- * @{
- */
-/**
- * @brief A simple example of using `ne10_addc_float`, an Ne10 function pointer that
- *        gets dynamically initialised to the most appropriate function for the hardware.
+
+/*
+ * A simple example of using `ne10_addc_float`, an Ne10 function pointer that
+ * gets dynamically initialised to the most appropriate function for the hardware.
  */
 void test_add_dynamic (void)
 {
@@ -67,9 +66,9 @@ void test_add_dynamic (void)
     }
 }
 
-/**
- * @brief A simple example of calling the C and NEON specific versions of Ne10 functions
- *        directly -- in this case, `ne10_addc_float_c` and `ne10_addc_float_neon`.
+/*
+ * A simple example of calling the C and NEON specific versions of Ne10 functions
+ * directly -- in this case, `ne10_addc_float_c` and `ne10_addc_float_neon`.
  */
 void test_add_static (void)
 {
@@ -94,9 +93,6 @@ void test_add_static (void)
         printf("\tne10_addc_float_neon:\t%f + %f = %f\n", src[i], cst, dst_neon[i]);
     }
 }
-/**
- * @} end of groupSamples
- */
 
 /*
  * The entry point of this sample program (like `main` in regular C).

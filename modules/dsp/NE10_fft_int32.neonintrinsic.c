@@ -1712,22 +1712,8 @@ static void ne10_fft_split_c2r_1d_int32_neon (ne10_fft_cpx_int32_t *dst,
 
 
 /**
- * @addtogroup C2C_FFT_IFFT
- * @{
- */
-
-
-/**
- * @brief Mixed radix-2/4 complex NEON FFT/IFFT of 32-bit fixed point data.
- * @param[out]  *fout            pointer to the output buffer
- * @param[in]   *fin             pointer to the input buffer
- * @param[in]   cfg              pointer to the configuration structure
- * @param[in]   inverse_fft      whether this is an FFT or IFFT (0: FFT, 1: IFFT)
- * @param[in]   scaled_flag      scale flag (0: unscaled, 1: scaled)
- *
- * This function implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the
- * form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please
- * check test/test_suite_fft_int32.c.
+ * @ingroup C2C_FFT_IFFT
+ * Specific implementation of @ref ne10_fft_c2c_1d_int32 using NEON SIMD capabilities.
  */
 void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
                                  ne10_fft_cpx_int32_t *fin,
@@ -1847,24 +1833,8 @@ void ne10_fft_c2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
 }
 
 /**
- * @}
- */ //end of C2C_FFT_IFFT group
-
-/**
- * @addtogroup R2C_FFT_IFFT
- * @{
- */
-
-/**
- * @brief Mixed radix-2/4 real-to-complex NEON FFT of 32-bit fixed point data.
- * @param[out]  *fout            pointer to the output buffer
- * @param[in]   *fin             pointer to the input buffer
- * @param[in]   cfg              pointer to the configuration structure
- * @param[in]   scaled_flag      scale flag (0: unscaled, 1: scaled)
- *
- * The function implements a mixed radix-2/4 real-to-complex FFT, supporting input lengths of
- * the form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please check
- * test/test_suite_fft_int32.c.
+ * @ingroup R2C_FFT_IFFT
+ * Specific implementation of @ref ne10_fft_r2c_1d_int32 using NEON SIMD capabilities.
  */
 void ne10_fft_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
                                  ne10_int32_t *fin,
@@ -1885,15 +1855,8 @@ void ne10_fft_r2c_1d_int32_neon (ne10_fft_cpx_int32_t *fout,
 }
 
 /**
- * @brief Mixed radix-2/4 complex-to-real NEON IFFT of 32-bit fixed point data.
- * @param[out]  *fout            pointer to the output buffer
- * @param[in]   *fin             pointer to the input buffer
- * @param[in]   cfg              pointer to the configuration structure
- * @param[in]   scaled_flag      scale flag (0: unscaled, 1: scaled)
- *
- * The function implements a mixed radix-2/4 complex-to-real IFFT, supporting input lengths of
- * the form 2^N (N > 0). This is an out-of-place algorithm. For usage information, please check
- * test/test_suite_fft_int32.c.
+ * @ingroup R2C_FFT_IFFT
+ * Specific implementation of @ref ne10_fft_c2r_1d_int32 using NEON SIMD capabilities.
  */
 void ne10_fft_c2r_1d_int32_neon (ne10_int32_t *fout,
                                  ne10_fft_cpx_int32_t *fin,
@@ -1912,7 +1875,3 @@ void ne10_fft_c2r_1d_int32_neon (ne10_int32_t *fout,
     ne10_fft_split_c2r_1d_int32_neon (tmpbuf1, fin, cfg->super_twiddles, cfg->ncfft, scaled_flag);
     ne10_fft_c2c_1d_int32_neon ( (ne10_fft_cpx_int32_t*) fout, tmpbuf1, &c2c_state, 1, scaled_flag);
 }
-
-/**
- * @} end of R2C_FFT_IFFT group
- */
