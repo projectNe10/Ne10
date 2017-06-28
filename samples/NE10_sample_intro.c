@@ -41,7 +41,7 @@
  * A simple example of using `ne10_addc_float`, an Ne10 function pointer that
  * gets dynamically initialised to the most appropriate function for the hardware.
  */
-void test_add_dynamic (void)
+void test_add_dynamic(void)
 {
     ne10_float32_t src[ARR_LEN]; // A source array of scalar floats
     ne10_float32_t cst;          // A constant scalar to add to the elements in `src`
@@ -50,13 +50,13 @@ void test_add_dynamic (void)
     // Generate test input values for `src` and `cst` using `rand()`
     for (int i = 0; i < ARR_LEN; i++)
     {
-        src[i] = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+        src[i] = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
     }
-    cst = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+    cst = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
 
     // Perform the operation! This will use the NEON-optimised version of the function
     // if NEON hardware has been detected, or will otherwise fall back to the C version.
-    ne10_addc_float (dst, src, cst, ARR_LEN);
+    ne10_addc_float(dst, src, cst, ARR_LEN);
 
     // Display the results
     printf("test_intro[test_add_dynamic]:\n");
@@ -70,7 +70,7 @@ void test_add_dynamic (void)
  * A simple example of calling the C and NEON specific versions of Ne10 functions
  * directly -- in this case, `ne10_addc_float_c` and `ne10_addc_float_neon`.
  */
-void test_add_static (void)
+void test_add_static(void)
 {
     ne10_float32_t src[ARR_LEN];
     ne10_float32_t cst;
@@ -79,12 +79,12 @@ void test_add_static (void)
 
     for (int i = 0; i < ARR_LEN; i++)
     {
-        src[i] = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+        src[i] = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
     }
-    cst = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+    cst = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
 
-    ne10_addc_float_c (dst_c, src, cst, ARR_LEN);
-    ne10_addc_float_neon (dst_neon, src, cst, ARR_LEN);
+    ne10_addc_float_c(dst_c, src, cst, ARR_LEN);
+    ne10_addc_float_neon(dst_neon, src, cst, ARR_LEN);
 
     printf("test_intro[test_add_static]:\n");
     for (int i = 0; i < ARR_LEN; i++)

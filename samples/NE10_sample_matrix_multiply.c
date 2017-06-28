@@ -44,7 +44,7 @@ int matrix_multiply_sample_main(void)
     ne10_mat3x3f_t mul[MATRICES]; // An array of matrices to multiply those in `src` by
     ne10_mat3x3f_t dst[MATRICES]; // A destination array for the multiplication results
 
-    // Initialise Ne10, using hardware auto-detection to set library function pointers.
+    // Initialise Ne10, using hardware auto-detection to set library function pointers
     if (ne10_init() != NE10_OK)
     {
         fprintf(stderr, "Failed to initialise Ne10.\n");
@@ -59,7 +59,7 @@ int matrix_multiply_sample_main(void)
     }
 
     // Perform the multiplication of the matrices in `src` by those in `mul`
-    ne10_mulmat_3x3f (dst, src, mul, MATRICES);
+    ne10_mulmat_3x3f(dst, src, mul, MATRICES);
 
     // Display the results (src[i] * mul[i] == dst[i])
     for (int i = 0; i < MATRICES; i++)
@@ -91,7 +91,7 @@ void initialise_matrix(ne10_mat3x3f_t *mat)
 
 void initialise_matrix_column(ne10_mat_row3f *col)
 {
-    col->r1 = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
-    col->r2 = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
-    col->r3 = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+    col->r1 = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
+    col->r2 = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
+    col->r3 = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
 }

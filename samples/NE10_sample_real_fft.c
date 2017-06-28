@@ -24,47 +24,55 @@
  *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  *  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 #include <stdio.h>
 #include <stdlib.h>
 
 #include "NE10.h"
 
-int           intro_sample_main(void);
-int matrix_multiply_sample_main(void);
-int     complex_fft_sample_main(void);
-int        real_fft_sample_main(void);
-int             fir_sample_main(void);
+#define SAMPLES 16
 
-/*
- * Run all the sample code snippets in series.
- *
- * Note that this will call `ne10_init` multiple times unnecessarily, as each sample is
- * supposed to be an isolated illustration of how to use a certain part of Ne10.
+/**
+ * @example NE10_sample_real_fft.c
+ * An example of using the real-to-complex FFT functions.
  */
-int main(void)
+int real_fft_sample_main(void)
 {
-    printf("==== Ne10 Samples ===\n\n");
+    ne10_float32_t src[SAMPLES] = {};                   // A source array of input data
+    ne10_fft_cpx_float32_t dst[(SAMPLES / 2) + 1] = {}; // A destination array for the transformed data
+    ne10_fft_r2c_cfg_float32_t cfg;                     // An FFT "configuration structure"
 
-    printf("# Introduction\n");
-    intro_sample_main();
-    printf("\n");
+    // Initialise Ne10, using hardware auto-detection to set library function pointers
+    if (ne10_init() != NE10_OK)
+    {
+        fprintf(stderr, "Failed to initialise Ne10.\n");
+        return 1;
+    }
 
-    printf("# Matrix Multiply\n");
-    matrix_multiply_sample_main();
-    printf("\n");
+    // Prepare the real-to-complex single precision floating point FFT configuration
+    // structure for inputs of length `SAMPLES`. (You need only generate this once for a
+    // particular input size.)
+    cfg = ne10_fft_alloc_r2c_float32(SAMPLES);
 
-    printf("# Complex-to-Complex FFT\n");
-    complex_fft_sample_main();
-    printf("\n");
+    // Generate test input values
+    for (int i = 0; i < SAMPLES; i++)
+    {
+        src[i] = (ne10_float32_t)rand() / RAND_MAX * 50.0f;
+    }
 
-    printf("# Real-to-Complex FFT\n");
-    real_fft_sample_main();
-    printf("\n");
+    // Perform the FFT
+    ne10_fft_r2c_1d_float32(dst, src, cfg);
 
-    printf("# FIR\n");
-    fir_sample_main();
-    printf("\n");
+    // Display the results
+    for (int i = 0; i < SAMPLES; i++)
+    {
+        printf( "IN[%2d]: %10.4f\t", i, src[i]);
+        if (i <= SAMPLES / 2)
+            printf("OUT[%2d]: %10.4f + %10.4fi", i, dst[i].r, dst[i].i);
+        printf("\n");
+    }
+
+    // Free the allocated configuration structure
+    ne10_fft_destroy_r2c_float32(cfg);
 
     return 0;
 }

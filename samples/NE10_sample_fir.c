@@ -46,7 +46,7 @@ int fir_sample_main(void)
     ne10_float32_t coeffs[NUMTAPS]; // An array of FIR coefficients (in reverse order)
     ne10_fir_instance_f32_t cfg;    // An FIR "instance structure"
 
-    // Initialise Ne10, using hardware auto-detection to set library function pointers.
+    // Initialise Ne10, using hardware auto-detection to set library function pointers
     if (ne10_init() != NE10_OK)
     {
         fprintf(stderr, "Failed to initialise Ne10.\n");
@@ -56,7 +56,7 @@ int fir_sample_main(void)
     // Prepare the FIR instance structure, storing `NUMTAPS`, `coeffs`, and `st` within
     // it, and clearing the state buffer. (For constant parameters, this process can
     // instead be performed manually.)
-    if (ne10_fir_init_float (&cfg, NUMTAPS, coeffs, st, BLOCKSIZE) != NE10_OK)
+    if (ne10_fir_init_float(&cfg, NUMTAPS, coeffs, st, BLOCKSIZE) != NE10_OK)
     {
         fprintf(stderr, "Failed to initialise FIR instance structure.\n");
         return 1;
@@ -65,20 +65,20 @@ int fir_sample_main(void)
     // Generate test coefficient values
     for (int i = 0; i < NUMTAPS; i++)
     {
-        coeffs[i] = (ne10_float32_t) rand() / RAND_MAX * 5.0f;
+        coeffs[i] = (ne10_float32_t)rand() / RAND_MAX * 5.0f;
     }
 
     // Generate test input values
     for (int i = 0; i < BUFFSIZE; i++)
     {
-        src[i] = (ne10_float32_t) rand() / RAND_MAX * 20.0f;
+        src[i] = (ne10_float32_t)rand() / RAND_MAX * 20.0f;
     }
 
     // Perform the FIR filtering of the input buffer in `NUMBLOCKS` blocks of `BLOCKSIZE`
     // elements using the parameters set up in the FIR instance structure `cfg`.
     for (int b = 0; b < NUMBLOCKS; b++)
     {
-        ne10_fir_float (&cfg, src + (b * BLOCKSIZE), dst + (b * BLOCKSIZE), BLOCKSIZE);
+        ne10_fir_float(&cfg, src + (b * BLOCKSIZE), dst + (b * BLOCKSIZE), BLOCKSIZE);
     }
 
     // Display the results (dst[i] = b[0] * src[i] + b[1] * src[i - 1] + b[2] * src[i - 2]
