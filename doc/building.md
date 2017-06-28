@@ -4,6 +4,12 @@
 
 Ne10 uses [CMake](https://cmake.org/) to manage the project's build process in a toolchain-independent, cross-platform manner. As such, you will need CMake installed to build Ne10. It can typically be obtained via a package manager (for example, with `sudo apt-get install cmake`), but can otherwise be built from source. More information about CMake is available at [cmake.org](https://cmake.org/).
 
+All builds also require a local copy of the codebase. If you haven't already done so, you can download the latest Ne10 release as a [zip](https://github.com/projectNe10/Ne10/zipball/master) or [tarball](https://github.com/projectNe10/Ne10/tarball/master). Or, alternatively, you can clone the current cutting-edge version of Ne10 directly with Git by running:
+
+```bash
+git clone https://github.com/projectNe10/Ne10
+```
+
 ## Native compilation on \*nix platforms
 
 As CMake does most of the cross-platform heavy lifting, Ne10 can be natively compiled on \*nix systems by running just a few simple commands:

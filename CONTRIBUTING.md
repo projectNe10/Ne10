@@ -1,7 +1,7 @@
 Contributing to Project Ne10
 ====================================
 
-Before you start contributing to this project you must sign the ARM
+Before you start contributing code to this project you must sign the ARM
 Contributor License Agreement (CLA).
 
 Individuals who want to contribute their own work must sign and return an
