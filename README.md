@@ -14,7 +14,7 @@ Ne10’s official documentation is generated from [doxygen](https://www.stack.nl
 We also have a handful of carefully prepared sample code snippets in the [`samples/`](https://github.com/projectNe10/Ne10/tree/master/samples) directory that outline how Ne10 can be used to accomplish a number of common tasks. These include example programs to perform the [FFT](https://github.com/projectNe10/Ne10/tree/master/samples/NE10_sample_complex_fft.c), [FIR](https://github.com/projectNe10/Ne10/tree/master/samples/NE10_sample_fir.c), and [matrix multiply](https://github.com/projectNe10/Ne10/tree/master/samples/NE10_sample_matrix_multiply.c) operations.
 
 ## Contributing
-Ne10 welcomes and encourages external contributions of any and all forms. If you’ve found a bug or have a suggestion, please don’t hesitate to detail these in the [official issue tracker](https://github.com/projectNe10/Ne10/issues). For those looking to get their hands dirty and contribute code (the best kind of contribution!), please see [`CONTRIBUTING.md`](https://github.com/projectNe10/Ne10/tree/master/doc/CONTRIBUTING.md#contributing-to-project-ne10) for more details.
+Ne10 welcomes and encourages external contributions of any and all forms. If you’ve found a bug or have a suggestion, please don’t hesitate to detail these in the [official issue tracker](https://github.com/projectNe10/Ne10/issues). For those looking to get their hands dirty and contribute code (the best kind of contribution!), please see [`CONTRIBUTING.md`](https://github.com/projectNe10/Ne10/tree/master/CONTRIBUTING.md#contributing-to-project-ne10) for more details.
 
 ## Miscellaneous
 
