@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['signal_20processing_20functions',['Signal Processing Functions',['../group__groupDSPs.html',1,'']]],
-  ['sample_20functions',['Sample Functions',['../group__groupSamples.html',1,'']]]
+  ['real_2dto_2dcomplex_20fft_20_28floating_20_26_20fixed_20point_29',['Real-to-Complex FFT (Floating &amp; Fixed Point)',['../group__R2C__FFT__IFFT.html',1,'']]]
 ];

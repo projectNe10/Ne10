@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['ne10_5ffft_5fcfg_5ffloat32_5ft',['ne10_fft_cfg_float32_t',['../NE10__types_8h.html#a2b7e065b22435b9347688cf334635613',1,'NE10_types.h']]],
+  ['ne10_5ffft_5fcfg_5fint16_5ft',['ne10_fft_cfg_int16_t',['../NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53',1,'NE10_types.h']]],
+  ['ne10_5ffft_5fcfg_5fint32_5ft',['ne10_fft_cfg_int32_t',['../NE10__types_8h.html#a853aca06748951bc977a88503398595e',1,'NE10_types.h']]],
+  ['ne10_5ffft_5fr2c_5fcfg_5ffloat32_5ft',['ne10_fft_r2c_cfg_float32_t',['../NE10__types_8h.html#a2f710f86d57b4dad08c9ecaf441700be',1,'NE10_types.h']]],
+  ['ne10_5ffft_5fr2c_5fcfg_5fint16_5ft',['ne10_fft_r2c_cfg_int16_t',['../NE10__types_8h.html#a8ce688c28ace8276f05742218b6d5dfb',1,'NE10_types.h']]],
+  ['ne10_5ffft_5fr2c_5fcfg_5fint32_5ft',['ne10_fft_r2c_cfg_int32_t',['../NE10__types_8h.html#a3142bda4df7f01ec318be9812f5ad383',1,'NE10_types.h']]],
+  ['ne10_5ffloat32_5ft',['ne10_float32_t',['../NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664',1,'NE10_types.h']]],
+  ['ne10_5ffloat64_5ft',['ne10_float64_t',['../NE10__types_8h.html#a2caca5caf556ead3ad8cff3ba1662e53',1,'NE10_types.h']]],
+  ['ne10_5fint16_5ft',['ne10_int16_t',['../NE10__types_8h.html#a0dddd9a92be0a0a2518859dcae925699',1,'NE10_types.h']]],
+  ['ne10_5fint32_5ft',['ne10_int32_t',['../NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9',1,'NE10_types.h']]],
+  ['ne10_5fint64_5ft',['ne10_int64_t',['../NE10__types_8h.html#a563e6b73c15e44f15466b7db15d8b7e7',1,'NE10_types.h']]],
+  ['ne10_5fint8_5ft',['ne10_int8_t',['../NE10__types_8h.html#a72a8da92a5cea383a865b6fe4a4e0cdf',1,'NE10_types.h']]],
+  ['ne10_5fmixed_5fradix_5ffunc',['NE10_MIXED_RADIX_FUNC',['../NE10__fft__generic__float32_8neonintrinsic_8cpp.html#a02936643baf4c964c2e04c4e85deccee',1,'NE10_fft_generic_float32.neonintrinsic.cpp']]],
+  ['ne10_5fresult_5ft',['ne10_result_t',['../NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be',1,'NE10_types.h']]],
+  ['ne10_5fuint16_5ft',['ne10_uint16_t',['../NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559',1,'NE10_types.h']]],
+  ['ne10_5fuint32_5ft',['ne10_uint32_t',['../NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f',1,'NE10_types.h']]],
+  ['ne10_5fuint64_5ft',['ne10_uint64_t',['../NE10__types_8h.html#a5bc080a8927d92d0b5899b93267ef8e9',1,'NE10_types.h']]],
+  ['ne10_5fuint8_5ft',['ne10_uint8_t',['../NE10__types_8h.html#adffb391be96467d289c9af722a0894e2',1,'NE10_types.h']]]
+];

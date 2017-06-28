@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['matrix_20add',['Matrix Add',['../group__ADD__MAT.html',1,'']]],
-  ['matrix_20determinant',['Matrix Determinant',['../group__DET__MAT.html',1,'']]],
+  ['matrix_20addition',['Matrix Addition',['../group__ADD__MAT.html',1,'']]],
+  ['matrix_20determinant_20calculation',['Matrix Determinant Calculation',['../group__DET__MAT.html',1,'']]],
   ['math_20functions',['Math Functions',['../group__groupMaths.html',1,'']]],
-  ['matrix_20identity',['Matrix Identity',['../group__IDENTITY__MAT.html',1,'']]],
-  ['matrix_20inverse',['Matrix Inverse',['../group__INV__MAT.html',1,'']]],
-  ['matrix_20multiply',['Matrix Multiply',['../group__MUL__MAT.html',1,'']]],
-  ['matrix_20vector_20multiply',['Matrix Vector Multiply',['../group__MUL__MAT__VEC.html',1,'']]],
-  ['matrix_20subtract',['Matrix Subtract',['../group__SUB__MAT.html',1,'']]],
-  ['matrix_20transpose',['Matrix Transpose',['../group__TRANS__MAT.html',1,'']]]
+  ['matrix_20identity_20assignment',['Matrix Identity Assignment',['../group__IDENTITY__MAT.html',1,'']]],
+  ['matrix_20inversion',['Matrix Inversion',['../group__INV__MAT.html',1,'']]],
+  ['matrix_20multiplication',['Matrix Multiplication',['../group__MUL__MAT.html',1,'']]],
+  ['matrix_2dvector_20multiplication',['Matrix-Vector Multiplication',['../group__MUL__MAT__VEC.html',1,'']]],
+  ['matrix_20subtraction',['Matrix Subtraction',['../group__SUB__MAT.html',1,'']]],
+  ['matrix_20transposition',['Matrix Transposition',['../group__TRANS__MAT.html',1,'']]]
 ];

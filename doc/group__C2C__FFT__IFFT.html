@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Project Ne10: Floating &amp; Fixed Point Complex-to-Complex FFT</title>
+<title>Project Ne10: Complex-to-Complex FFT (Floating &amp; Fixed Point)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,11 +22,11 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="ne10_logo.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="ne10.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Project Ne10
    </div>
-   <div id="projectbrief">An Open Optimized Software Library Project for the ARM Architecture</div>
+   <div id="projectbrief">An open, optimized software library for the ARM architecture.</div>
   </td>
  </tr>
  </tbody>
@@ -42,9 +42,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -80,81 +80,94 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#groups">Modules</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Floating &amp; Fixed Point Complex-to-Complex FFT<div class="ingroups"><a class="el" href="group__groupDSPs.html">Signal Processing Functions</a></div></div>  </div>
+<div class="title">Complex-to-Complex FFT (Floating &amp; Fixed Point)<div class="ingroups"><a class="el" href="group__groupDSPs.html">Signal Processing Functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="groups"></a>
-Modules</h2></td></tr>
-<tr class="memitem:group__C2C__FFT__IFFT__DESTROY"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT__DESTROY.html">Floating &amp; Fixed Point Complex FFT &quot;Destroy&quot; Functions</a></td></tr>
-<tr class="memdesc:group__C2C__FFT__IFFT__DESTROY"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable functions to destroy the configuration structure for the FFT (free memory, etc.) <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga620f02d2af16542038fef6fa403a3f0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga620f02d2af16542038fef6fa403a3f0d">ne10_fft_alloc_c2c_float32_neon</a> (ne10_int32_t nfft)</td></tr>
-<tr class="memdesc:ga620f02d2af16542038fef6fa403a3f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to create a configuration structure for the FP32 C2C NEON FFT/IFFT.  <a href="#ga620f02d2af16542038fef6fa403a3f0d">More...</a><br /></td></tr>
-<tr class="separator:ga620f02d2af16542038fef6fa403a3f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa9d6fb1f405c1cabdb5623fbef4775b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaa9d6fb1f405c1cabdb5623fbef4775b1">ne10_fft_alloc_c2c_int32_neon</a> (ne10_int32_t nfft)</td></tr>
-<tr class="memdesc:gaa9d6fb1f405c1cabdb5623fbef4775b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to create a configuration structure for the INT32 C2C NEON FFT/IFFT.  <a href="#gaa9d6fb1f405c1cabdb5623fbef4775b1">More...</a><br /></td></tr>
-<tr class="separator:gaa9d6fb1f405c1cabdb5623fbef4775b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadf681ba4e27770ed9aa097b4bc29372d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d">ne10_fft_alloc_c2c_float32_c</a> (ne10_int32_t nfft)</td></tr>
-<tr class="memdesc:gadf681ba4e27770ed9aa097b4bc29372d"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to create a configuration structure for the FP32 C2C C FFT/IFFT.  <a href="#gadf681ba4e27770ed9aa097b4bc29372d">More...</a><br /></td></tr>
+<tr class="memitem:gadf681ba4e27770ed9aa097b4bc29372d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d">ne10_fft_alloc_c2c_float32_c</a> (<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td></tr>
+<tr class="memdesc:gadf681ba4e27770ed9aa097b4bc29372d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">ne10_fft_c2c_1d_float32_c</a>.  <a href="#gadf681ba4e27770ed9aa097b4bc29372d">More...</a><br /></td></tr>
 <tr class="separator:gadf681ba4e27770ed9aa097b4bc29372d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8a03f9824ed0ccc270ce39c0eab1a658"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">ne10_fft_c2c_1d_float32_c</a> (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg, ne10_int32_t inverse_fft)</td></tr>
-<tr class="memdesc:ga8a03f9824ed0ccc270ce39c0eab1a658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/3/4/5 complex C FFT/IFFT of single precision floating point data.  <a href="#ga8a03f9824ed0ccc270ce39c0eab1a658">More...</a><br /></td></tr>
+<tr class="memitem:ga620f02d2af16542038fef6fa403a3f0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga620f02d2af16542038fef6fa403a3f0d">ne10_fft_alloc_c2c_float32_neon</a> (<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td></tr>
+<tr class="memdesc:ga620f02d2af16542038fef6fa403a3f0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a>.  <a href="#ga620f02d2af16542038fef6fa403a3f0d">More...</a><br /></td></tr>
+<tr class="separator:ga620f02d2af16542038fef6fa403a3f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a03f9824ed0ccc270ce39c0eab1a658"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">ne10_fft_c2c_1d_float32_c</a> (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft)</td></tr>
+<tr class="memdesc:ga8a03f9824ed0ccc270ce39c0eab1a658"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a> using plain C.  <a href="#ga8a03f9824ed0ccc270ce39c0eab1a658">More...</a><br /></td></tr>
 <tr class="separator:ga8a03f9824ed0ccc270ce39c0eab1a658"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0f08fc88104e972e788870840894bc0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a> (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg, ne10_int32_t inverse_fft)</td></tr>
-<tr class="memdesc:ga0f08fc88104e972e788870840894bc0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/3/4/5 complex NEON FFT/IFFT of single precision floating point data.  <a href="#ga0f08fc88104e972e788870840894bc0e">More...</a><br /></td></tr>
+<tr class="memitem:ga0f08fc88104e972e788870840894bc0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a> (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft)</td></tr>
+<tr class="memdesc:ga0f08fc88104e972e788870840894bc0e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a> using NEON SIMD capabilities.  <a href="#ga0f08fc88104e972e788870840894bc0e">More...</a><br /></td></tr>
 <tr class="separator:ga0f08fc88104e972e788870840894bc0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf4cbe44e5e5f6acbdfb767ba9f2749e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">ne10_fft_alloc_c2c_int16</a> (ne10_int32_t nfft)</td></tr>
-<tr class="memdesc:gaf4cbe44e5e5f6acbdfb767ba9f2749e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to create a configuration structure for the INT16 C2C FFT/IFFT.  <a href="#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">More...</a><br /></td></tr>
-<tr class="separator:gaf4cbe44e5e5f6acbdfb767ba9f2749e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab46724c7178fe02e858be576e2ce74b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gab46724c7178fe02e858be576e2ce74b5">ne10_fft_c2c_1d_int16_c</a> (<a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fout, <a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fin, <a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a> cfg, ne10_int32_t inverse_fft, ne10_int32_t scaled_flag)</td></tr>
-<tr class="memdesc:gab46724c7178fe02e858be576e2ce74b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex C FFT/IFFT of 16-bit fixed point data.  <a href="#gab46724c7178fe02e858be576e2ce74b5">More...</a><br /></td></tr>
-<tr class="separator:gab46724c7178fe02e858be576e2ce74b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5e39e948a6968a2a5811e391bbec4705"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga5e39e948a6968a2a5811e391bbec4705">ne10_fft_c2c_1d_int16_neon</a> (<a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fout, <a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fin, <a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a> cfg, ne10_int32_t inverse_fft, ne10_int32_t scaled_flag)</td></tr>
-<tr class="memdesc:ga5e39e948a6968a2a5811e391bbec4705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex NEON FFT/IFFT of 16-bit fixed point data.  <a href="#ga5e39e948a6968a2a5811e391bbec4705">More...</a><br /></td></tr>
-<tr class="separator:ga5e39e948a6968a2a5811e391bbec4705"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadd650c6e56d3566fdd0fbd93104c484d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gadd650c6e56d3566fdd0fbd93104c484d">ne10_fft_alloc_c2c_int32_c</a> (ne10_int32_t nfft)</td></tr>
-<tr class="memdesc:gadd650c6e56d3566fdd0fbd93104c484d"><td class="mdescLeft">&#160;</td><td class="mdescRight">User-callable function to create a configuration structure for the INT32 C2C C FFT/IFFT.  <a href="#gadd650c6e56d3566fdd0fbd93104c484d">More...</a><br /></td></tr>
+<tr class="memitem:gaf2022d73d3aab3b73ce51a0d1b11cb8b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaf2022d73d3aab3b73ce51a0d1b11cb8b">ne10_fft_destroy_c2c_float32</a> (<a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> cfg)</td></tr>
+<tr class="memdesc:gaf2022d73d3aab3b73ce51a0d1b11cb8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the configuration structure allocated by variants of <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a> (frees memory, etc.)  <a href="#gaf2022d73d3aab3b73ce51a0d1b11cb8b">More...</a><br /></td></tr>
+<tr class="separator:gaf2022d73d3aab3b73ce51a0d1b11cb8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gadd650c6e56d3566fdd0fbd93104c484d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gadd650c6e56d3566fdd0fbd93104c484d">ne10_fft_alloc_c2c_int32_c</a> (<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td></tr>
+<tr class="memdesc:gadd650c6e56d3566fdd0fbd93104c484d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#ga59a8b0ddb0cca0aff394d9398b361313">ne10_fft_c2c_1d_int32_c</a>.  <a href="#gadd650c6e56d3566fdd0fbd93104c484d">More...</a><br /></td></tr>
 <tr class="separator:gadd650c6e56d3566fdd0fbd93104c484d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga59a8b0ddb0cca0aff394d9398b361313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga59a8b0ddb0cca0aff394d9398b361313">ne10_fft_c2c_1d_int32_c</a> (<a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fout, <a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fin, <a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a> cfg, ne10_int32_t inverse_fft, ne10_int32_t scaled_flag)</td></tr>
-<tr class="memdesc:ga59a8b0ddb0cca0aff394d9398b361313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex C FFT/IFFT of 32-bit fixed point data.  <a href="#ga59a8b0ddb0cca0aff394d9398b361313">More...</a><br /></td></tr>
+<tr class="memitem:gaa9d6fb1f405c1cabdb5623fbef4775b1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaa9d6fb1f405c1cabdb5623fbef4775b1">ne10_fft_alloc_c2c_int32_neon</a> (<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td></tr>
+<tr class="memdesc:gaa9d6fb1f405c1cabdb5623fbef4775b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#gaeab558afe8239e25c5540d110af7947e">ne10_fft_c2c_1d_int32_neon</a>.  <a href="#gaa9d6fb1f405c1cabdb5623fbef4775b1">More...</a><br /></td></tr>
+<tr class="separator:gaa9d6fb1f405c1cabdb5623fbef4775b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59a8b0ddb0cca0aff394d9398b361313"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga59a8b0ddb0cca0aff394d9398b361313">ne10_fft_c2c_1d_int32_c</a> (<a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fout, <a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td></tr>
+<tr class="memdesc:ga59a8b0ddb0cca0aff394d9398b361313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a> using plain C.  <a href="#ga59a8b0ddb0cca0aff394d9398b361313">More...</a><br /></td></tr>
 <tr class="separator:ga59a8b0ddb0cca0aff394d9398b361313"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaeab558afe8239e25c5540d110af7947e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaeab558afe8239e25c5540d110af7947e">ne10_fft_c2c_1d_int32_neon</a> (<a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fout, <a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fin, <a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a> cfg, ne10_int32_t inverse_fft, ne10_int32_t scaled_flag)</td></tr>
-<tr class="memdesc:gaeab558afe8239e25c5540d110af7947e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex NEON FFT/IFFT of 32-bit fixed point data.  <a href="#gaeab558afe8239e25c5540d110af7947e">More...</a><br /></td></tr>
+<tr class="memitem:gaeab558afe8239e25c5540d110af7947e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaeab558afe8239e25c5540d110af7947e">ne10_fft_c2c_1d_int32_neon</a> (<a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fout, <a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td></tr>
+<tr class="memdesc:gaeab558afe8239e25c5540d110af7947e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a> using NEON SIMD capabilities.  <a href="#gaeab558afe8239e25c5540d110af7947e">More...</a><br /></td></tr>
 <tr class="separator:gaeab558afe8239e25c5540d110af7947e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0323d599ece11a7c45b7227ac299fe6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga0323d599ece11a7c45b7227ac299fe6a">ne10_fft_destroy_c2c_int32</a> (<a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> cfg)</td></tr>
+<tr class="memdesc:ga0323d599ece11a7c45b7227ac299fe6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the configuration structure allocated by variants of <a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a> (frees memory, etc.)  <a href="#ga0323d599ece11a7c45b7227ac299fe6a">More...</a><br /></td></tr>
+<tr class="separator:ga0323d599ece11a7c45b7227ac299fe6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf4cbe44e5e5f6acbdfb767ba9f2749e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">ne10_fft_alloc_c2c_int16</a> (<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td></tr>
+<tr class="memdesc:gaf4cbe44e5e5f6acbdfb767ba9f2749e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a configuration structure for variants of <a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a>.  <a href="#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">More...</a><br /></td></tr>
+<tr class="separator:gaf4cbe44e5e5f6acbdfb767ba9f2749e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab46724c7178fe02e858be576e2ce74b5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gab46724c7178fe02e858be576e2ce74b5">ne10_fft_c2c_1d_int16_c</a> (<a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fout, <a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fin, <a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td></tr>
+<tr class="memdesc:gab46724c7178fe02e858be576e2ce74b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a> using plain C.  <a href="#gab46724c7178fe02e858be576e2ce74b5">More...</a><br /></td></tr>
+<tr class="separator:gab46724c7178fe02e858be576e2ce74b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5e39e948a6968a2a5811e391bbec4705"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga5e39e948a6968a2a5811e391bbec4705">ne10_fft_c2c_1d_int16_neon</a> (<a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fout, <a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fin, <a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td></tr>
+<tr class="memdesc:ga5e39e948a6968a2a5811e391bbec4705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a> using NEON SIMD capabilities.  <a href="#ga5e39e948a6968a2a5811e391bbec4705">More...</a><br /></td></tr>
+<tr class="separator:ga5e39e948a6968a2a5811e391bbec4705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga327ea8a07f9006af90dfb2e244ddeac2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga327ea8a07f9006af90dfb2e244ddeac2">ne10_fft_destroy_c2c_int16</a> (<a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a> cfg)</td></tr>
+<tr class="memdesc:ga327ea8a07f9006af90dfb2e244ddeac2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the configuration structure allocated by <a class="el" href="group__C2C__FFT__IFFT.html#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">ne10_fft_alloc_c2c_int16</a> (frees memory, etc.)  <a href="#ga327ea8a07f9006af90dfb2e244ddeac2">More...</a><br /></td></tr>
+<tr class="separator:ga327ea8a07f9006af90dfb2e244ddeac2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gabe4c9b46438fdf53241ce389488d1edd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a> )(<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td></tr>
+<tr class="memdesc:gabe4c9b46438fdf53241ce389488d1edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a configuration structure for <a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a>.  <a href="#gabe4c9b46438fdf53241ce389488d1edd">More...</a><br /></td></tr>
+<tr class="separator:gabe4c9b46438fdf53241ce389488d1edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3afbe29e856e28e682e503493860886"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a> )(<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft)</td></tr>
+<tr class="memdesc:gad3afbe29e856e28e682e503493860886"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/3/4/5 complex FFT/IFFT of single precision floating point data.  <a href="#gad3afbe29e856e28e682e503493860886">More...</a><br /></td></tr>
+<tr class="separator:gad3afbe29e856e28e682e503493860886"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d4b0c1c0e6e79416c05caf1a2a6d834"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a> )(<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td></tr>
+<tr class="memdesc:ga3d4b0c1c0e6e79416c05caf1a2a6d834"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a configuration structure for <a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a>.  <a href="#ga3d4b0c1c0e6e79416c05caf1a2a6d834">More...</a><br /></td></tr>
+<tr class="separator:ga3d4b0c1c0e6e79416c05caf1a2a6d834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga976b5658f6b273b9c8a85bf3e5e440a3"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a> )(<a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fout, <a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td></tr>
+<tr class="memdesc:ga976b5658f6b273b9c8a85bf3e5e440a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex FFT/IFFT of 32-bit fixed point Q31 data.  <a href="#ga976b5658f6b273b9c8a85bf3e5e440a3">More...</a><br /></td></tr>
+<tr class="separator:ga976b5658f6b273b9c8a85bf3e5e440a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga52da28931574ba3eb008c114184aa07c"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a> )(<a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fout, <a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fin, <a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td></tr>
+<tr class="memdesc:ga52da28931574ba3eb008c114184aa07c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mixed radix-2/4 complex FFT/IFFT of 16-bit fixed point Q15 data.  <a href="#ga52da28931574ba3eb008c114184aa07c">More...</a><br /></td></tr>
+<tr class="separator:ga52da28931574ba3eb008c114184aa07c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<dl class="section user"><dt></dt><dd>A Fast Fourier Transform (FFT) is an efficient method of computing the <a href="https://en.wikipedia.org/wiki/Discrete_Fourier_transform">Discrete Fourier Transform</a> (DFT), or its inverse. FFT operations are widely used, and have various applications in engineering, science and mathematics.</dd></dl>
-<dl class="section user"><dt>Variants</dt><dd>This set of FFT functions implement the complex-to-complex 1D FFT &ndash; and the complementary inverse transform (IFFT) &ndash; for various input sizes, with separate versions for floating point (<code>fft_c2c_1d_float32</code>) and fixed point (<code>fft_c2c_1d_int32</code>, <code>fft_c2c_1d_int16</code>) data.</dd></dl>
-<dl class="section user"><dt>Output</dt><dd>These functions operate out-of-place, using different buffers for their input and output. An additional temporary buffer is also used internally to store intermediate results. The input and output buffers should be allocated by the user, and must be of a size greater than or equal to <code>(fftSize * sizeof (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>))</code> bytes, while the temporary buffer is reserved during allocation of the operation's "configuration structure".</dd></dl>
-<dl class="section user"><dt>Data format</dt><dd>Input and output buffers interleave the real and imaginary parts of each complex element, storing these contiguously. <pre>Format: { Re[0], Im[0], Re[1], Im[1], Re[2], Im[2], ..., Re[fftSize - 2], Im[fftSize - 2], Re[fftSize - 1], Im[fftSize - 1] }</pre></dd></dl>
-<dl class="section user"><dt>Supported lengths</dt><dd>Internally, the functions primarily utilize a mixed radix 2/4 decimation-in-time algorithm, supporting input sizes of the form 2^N (for integers N &gt; 0). Some functions also support non-power-of-two input sizes using additional radices, and this is noted in the relevant function descriptions where it applies.</dd></dl>
-<dl class="section user"><dt>Example usage</dt><dd>A single precision floating point FFT/IFFT example code snippet follows. <pre>
-#include "NE10.h"
-...
-{
-    ne10_int32_t fftSize = 1024; // 2^N, N &gt; 0 (e.g. 1024 at N = 10)
-    ne10_fft_cfg_float32_t cfg = ne10_fft_alloc_c2c_float32 (fftSize);
-    <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *in  = malloc (fftSize * sizeof (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>));
-    <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *out = malloc (fftSize * sizeof (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>));
-    ...
-    // FFT
-    ne10_fft_c2c_1d_float32_c (out, in, cfg, 0);
-    ...
-    // IFFT
-    ne10_fft_c2c_1d_float32_c (out, in, cfg, 1);
-    ...
-    NE10_FREE (out);
-    NE10_FREE (in);
-    ne10_fft_destroy_c2c_float32 (cfg);
-}
-</pre> The <code>ne10_fft_cfg_float32_t</code> variable <code>cfg</code> is a pointer to a configuration structure generated by <code>ne10_fft_alloc_c2c_float32</code>. For different inputs of the same size, the same configuration structure can (and, indeed, should) be used. The contents of this configuration structure include:<ul>
+<dl class="section user"><dt></dt><dd>A <a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform">Fast Fourier Transform (FFT)</a> is an efficient method of computing the <a href="https://en.wikipedia.org/wiki/Discrete_Fourier_transform">Discrete Fourier Transform (DFT)</a>, or its inverse. This set of functions implement complex-to-complex 1D FFTs, and the complementary inverse transforms (IFFTs).</dd></dl>
+<dl class="section user"><dt></dt><dd>Where scaling controls are not provided, these functions scale the data by <img class="formulaInl" alt="$1/N$" src="form_0.png"/> in the inverse transformation only. This is a common convention, but may contrast with typical usage in some fields, where this scale factor may instead be applied in the forwards transformation only, or where a scale factor of <img class="formulaInl" alt="$1/\sqrt{N}$" src="form_1.png"/> may be applied in both transformations.</dd></dl>
+<dl class="section user"><dt></dt><dd>Separate versions are provided for floating point (FP32) and fixed point (Q31, Q15) data, each with a plain C implementation, a NEON implementation, and a function pointer to select between these at runtime (see <a class="el" href="NE10__init_8c.html#a7256a317e08364874525f1c9057992da">ne10_init</a>). More detailed descriptions of these functions can be found alongside the relevant function pointers:</dd></dl>
+<dl class="section user"><dt></dt><dd><ul>
+<li>FP32: <a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a></li>
+<li>INT32 (Q31): <a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a></li>
+<li>INT16 (Q15): <a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a></li>
+</ul>
+</dd></dl>
+<dl class="section user"><dt>Supported lengths</dt><dd>Internally, the functions primarily utilize a mixed radix 2/4 decimation-in-time algorithm, supporting input sizes of the form 2<sup>N</sup> (for integers N &gt; 0). Some functions also support non-power-of-two input sizes using additional radices, and this is noted in the relevant function descriptions where it applies.</dd></dl>
+<dl class="section user"><dt>Memory layout</dt><dd>These functions operate out-of-place, using different buffers for their input and output. An additional temporary buffer is also used internally to store intermediate results. The input and output buffers should be allocated by the user, and must be of a size greater than or equal to <code>(fftSize * sizeof(ne10_fft_cpx_float32_t))</code> bytes, while the temporary buffer is reserved during allocation of a "configuration structure" (for instance, via <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a>).</dd></dl>
+<dl class="section user"><dt></dt><dd>Input and output buffers interleave the real and imaginary parts of each complex element, storing these contiguously. <pre>Format: { Re[0], Im[0], Re[1], Im[1], Re[2], Im[2], ..., Re[fftSize - 2], Im[fftSize - 2], Re[fftSize - 1], Im[fftSize - 1] }</pre></dd></dl>
+<dl class="section user"><dt>Example usage</dt><dd>A single precision floating point FFT/IFFT example code snippet follows.</dd></dl>
+<dl class="section user"><dt></dt><dd><div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="NE10_8h.html">NE10.h</a>&quot;</span></div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">{</div><div class="line">    <a class="code" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> fftSize = 1024;</div><div class="line">    <a class="code" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> cfg = <a class="code" href="group__C2C__FFT__IFFT.html#ga620f02d2af16542038fef6fa403a3f0d">ne10_fft_alloc_c2c_float32_neon</a>(fftSize);          <span class="comment">// Allocate a configuration structure for C2C FP32 NEON FFTs of size fftSize</span></div><div class="line">    <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *in  = malloc(fftSize * <span class="keyword">sizeof</span>(<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>)); <span class="comment">// Allocate an input array of samples</span></div><div class="line">    <a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *out = malloc(fftSize * <span class="keyword">sizeof</span>(<a class="code" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a>)); <span class="comment">// Allocate an output array of samples</span></div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">// FFT</span></div><div class="line">    <a class="code" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a>(out, in, cfg, 0); <span class="comment">// Call the FP32 C2C NEON implementation directly</span></div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    <span class="comment">// IFFT</span></div><div class="line">    <a class="code" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a>(out, in, cfg, 1); <span class="comment">// Call the FP32 C2C NEON implementation directly (reusing the configuration structure!)</span></div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    <a class="code" href="NE10__macros_8h.html#a218b373f2777dbc16e93f8a290b01071">NE10_FREE</a>(out);                    <span class="comment">// Free the allocated input array</span></div><div class="line">    <a class="code" href="NE10__macros_8h.html#a218b373f2777dbc16e93f8a290b01071">NE10_FREE</a>(in);                     <span class="comment">// Free the allocated output array</span></div><div class="line">    <a class="code" href="group__C2C__FFT__IFFT.html#gaf2022d73d3aab3b73ce51a0d1b11cb8b">ne10_fft_destroy_c2c_float32</a>(cfg); <span class="comment">// Free the allocated configuration structure</span></div><div class="line">}</div></div><!-- fragment --></dd></dl>
+<dl class="section user"><dt></dt><dd>The <a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> variable <code>cfg</code> is a pointer to a configuration structure. <b>For different inputs of the same size, the same configuration structure can</b> (and should, where possible) <b>be reused</b>.</dd></dl>
+<dl class="section user"><dt></dt><dd>The contents of these configuration structures include:</dd></dl>
+<dl class="section user"><dt></dt><dd><ul>
 <li><code>cfg-&gt;twiddles</code>: a pointer to a table of "twiddle factors" that are used in computing the FFT/IFFT</li>
 <li><code>cfg-&gt;factors</code>: a buffer of "factors", which suggests to the core algorithm how the input can be broken down into smaller calculations</li>
 <li><code>cfg-&gt;buffer</code>: a pointer to a temporary buffer used internally in calculations that is allocated when the configuration structure is set up </li>
@@ -166,31 +179,18 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> ne10_fft_alloc_c2c_float32_c </td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> ne10_fft_alloc_c2c_float32_c </td>
           <td>(</td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>nfft</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>User-callable function to create a configuration structure for the FP32 C2C C FFT/IFFT. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>input length </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">st</td><td>pointer to an FFT configuration structure (allocated with <code>malloc</code>), or <code>NULL</code> to indicate an error</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function allocates and initialises an <code>ne10_fft_cfg_float32_t</code> configuration structure for the C complex-to-complex single precision floating point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">ne10_fft_c2c_1d_float32_c</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l00869">869</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l00828">828</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
 
 </div>
 </div>
@@ -199,31 +199,18 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a> ne10_fft_alloc_c2c_float32_neon </td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> ne10_fft_alloc_c2c_float32_neon </td>
           <td>(</td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>nfft</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>User-callable function to create a configuration structure for the FP32 C2C NEON FFT/IFFT. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>input length </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">st</td><td>pointer to an FFT configuration structure (allocated with <code>malloc</code>), or <code>NULL</code> to indicate an error</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function allocates and initialises an <code>ne10_fft_cfg_float32_t</code> configuration structure for the NEON complex-to-complex single precision floating point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00357">357</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00348">348</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
 
 </div>
 </div>
@@ -232,16 +219,16 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a> ne10_fft_alloc_c2c_int16 </td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a> ne10_fft_alloc_c2c_int16 </td>
           <td>(</td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>nfft</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>User-callable function to create a configuration structure for the INT16 C2C FFT/IFFT. </p>
+<p>Creates a configuration structure for variants of <a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a>. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>input length </td></tr>
@@ -254,9 +241,10 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>This function allocates and initialises an <code>ne10_fft_cfg_int16_t</code> configuration structure for the complex-to-complex 16-bit integer fixed point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations. </p>
+<p>Allocates and initialises an <a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a> configuration structure for the complex-to-complex 16-bit integer fixed point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.</p>
+<p>To free the returned structure, call <a class="el" href="group__C2C__FFT__IFFT.html#ga327ea8a07f9006af90dfb2e244ddeac2">ne10_fft_destroy_c2c_int16</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01028">1028</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01071">1071</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
 
 </div>
 </div>
@@ -265,31 +253,18 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a> ne10_fft_alloc_c2c_int32_c </td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> ne10_fft_alloc_c2c_int32_c </td>
           <td>(</td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>nfft</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>User-callable function to create a configuration structure for the INT32 C2C C FFT/IFFT. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>input length </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">st</td><td>pointer to an FFT configuration structure (allocated with <code>malloc</code>), or <code>NULL</code> to indicate an error</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function allocates and initialises an <code>ne10_fft_cfg_int32_t</code> configuration structure for the C complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#ga59a8b0ddb0cca0aff394d9398b361313">ne10_fft_c2c_1d_int32_c</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01022">1022</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01054">1054</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
 
 </div>
 </div>
@@ -298,31 +273,18 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a> ne10_fft_alloc_c2c_int32_neon </td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> ne10_fft_alloc_c2c_int32_neon </td>
           <td>(</td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>nfft</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>User-callable function to create a configuration structure for the INT32 C2C NEON FFT/IFFT. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>input length </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="retval"><dt>Return values</dt><dd>
-  <table class="retval">
-    <tr><td class="paramname">st</td><td>pointer to an FFT configuration structure (allocated with <code>malloc</code>), or <code>NULL</code> to indicate an error</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function allocates and initialises an <code>ne10_fft_cfg_int32_t</code> configuration structure for the NEON complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a> for <a class="el" href="group__C2C__FFT__IFFT.html#gaeab558afe8239e25c5540d110af7947e">ne10_fft_c2c_1d_int32_neon</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00469">469</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00451">451</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
 
 </div>
 </div>
@@ -345,13 +307,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a>&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>inverse_fft</em>&#160;</td>
         </tr>
         <tr>
@@ -362,19 +324,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Mixed radix-2/3/4/5 complex C FFT/IFFT of single precision floating point data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT)</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function implements a mixed radix-2/3/4/5 complex FFT/IFFT, supporting input lengths of the form 2^N*3^M*5^K (N, M, K &gt; 0). This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__float32_8c_source.html">test/test_suite_fft_float32.c</a>. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a> using plain C. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l00936">936</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l00888">888</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
 
 </div>
 </div>
@@ -397,13 +349,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structne10__fft__state__float32__t.html">ne10_fft_cfg_float32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a>&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>inverse_fft</em>&#160;</td>
         </tr>
         <tr>
@@ -414,19 +366,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Mixed radix-2/3/4/5 complex NEON FFT/IFFT of single precision floating point data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT)</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function implements a mixed radix-2/3/4/5 complex FFT/IFFT, supporting input lengths of the form 2^N*3^M*5^K (N, M, K &gt; 0, length % 4 = 0). This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__float32_8c_source.html">test/test_suite_fft_float32.c</a>. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a> using NEON SIMD capabilities. </p>
+<p>Additionally requires that inputs are sized such that <code>fftSize % 4 == 0</code> if fftSize &gt; 2. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__float32_8neon_8c_source.html#l00675">675</a> of file <a class="el" href="NE10__fft__float32_8neon_8c_source.html">NE10_fft_float32.neon.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__float32_8neon_8c_source.html#l00665">665</a> of file <a class="el" href="NE10__fft__float32_8neon_8c_source.html">NE10_fft_float32.neon.c</a>.</p>
 
 </div>
 </div>
@@ -449,19 +392,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a>&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>inverse_fft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>scaled_flag</em>&#160;</td>
         </tr>
         <tr>
@@ -472,20 +415,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Mixed radix-2/4 complex C FFT/IFFT of 16-bit fixed point data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">scaled_flag</td><td>scale flag (0: unscaled, 1: scaled)</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the form 2^N (N &gt; 0). This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__int16_8c_source.html">test/test_suite_fft_int16.c</a>. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a> using plain C. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01102">1102</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int16_8c_source.html#l01137">1137</a> of file <a class="el" href="NE10__fft__int16_8c_source.html">NE10_fft_int16.c</a>.</p>
 
 </div>
 </div>
@@ -508,19 +440,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structne10__fft__state__int16__t.html">ne10_fft_cfg_int16_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a>&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>inverse_fft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>scaled_flag</em>&#160;</td>
         </tr>
         <tr>
@@ -531,20 +463,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Mixed radix-2/4 complex NEON FFT/IFFT of 16-bit fixed point data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">scaled_flag</td><td>scale flag (0: unscaled, 1: scaled)</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the form 2^N (N &gt; 0). This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__int16_8c_source.html">test/test_suite_fft_int16.c</a>. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga52da28931574ba3eb008c114184aa07c">ne10_fft_c2c_1d_int16</a> using NEON SIMD capabilities. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__int16_8neon_8c_source.html#l00746">746</a> of file <a class="el" href="NE10__fft__int16_8neon_8c_source.html">NE10_fft_int16.neon.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int16_8neon_8c_source.html#l00775">775</a> of file <a class="el" href="NE10__fft__int16_8neon_8c_source.html">NE10_fft_int16.neon.c</a>.</p>
 
 </div>
 </div>
@@ -567,19 +488,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a>&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>inverse_fft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>scaled_flag</em>&#160;</td>
         </tr>
         <tr>
@@ -590,20 +511,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Mixed radix-2/4 complex C FFT/IFFT of 32-bit fixed point data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT) </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">scaled_flag</td><td>scale flag (0: unscaled, 1: scaled)</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>This function implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the form 2^N (N &gt; 0). This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__int32_8c_source.html">test/test_suite_fft_int32.c</a>. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a> using plain C. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01082">1082</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__fft__int32_8c_source.html#l01106">1106</a> of file <a class="el" href="NE10__fft__int32_8c_source.html">NE10_fft_int32.c</a>.</p>
 
 </div>
 </div>
@@ -626,19 +536,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structne10__fft__state__int32__t.html">ne10_fft_cfg_int32_t</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a>&#160;</td>
           <td class="paramname"><em>cfg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>inverse_fft</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ne10_int32_t&#160;</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
           <td class="paramname"><em>scaled_flag</em>&#160;</td>
         </tr>
         <tr>
@@ -649,27 +559,238 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Mixed radix-2/4 complex NEON FFT/IFFT of 32-bit fixed point data. </p>
+<p>Specific implementation of <a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a> using NEON SIMD capabilities. </p>
+
+<p>Definition at line <a class="el" href="NE10__fft__int32_8neon_8c_source.html#l01204">1204</a> of file <a class="el" href="NE10__fft__int32_8neon_8c_source.html">NE10_fft_int32.neon.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gaf2022d73d3aab3b73ce51a0d1b11cb8b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_fft_destroy_c2c_float32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroys the configuration structure allocated by variants of <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a> (frees memory, etc.) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the FFT configuration structure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_complex_fft_8c-example.html#a11">NE10_sample_complex_fft.c</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00556">556</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga327ea8a07f9006af90dfb2e244ddeac2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_fft_destroy_c2c_int16 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroys the configuration structure allocated by <a class="el" href="group__C2C__FFT__IFFT.html#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">ne10_fft_alloc_c2c_int16</a> (frees memory, etc.) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the FFT configuration structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00576">576</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga0323d599ece11a7c45b7227ac299fe6a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_fft_destroy_c2c_int32 </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a>&#160;</td>
+          <td class="paramname"><em>cfg</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroys the configuration structure allocated by variants of <a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a> (frees memory, etc.) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the FFT configuration structure </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00566">566</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="gabe4c9b46438fdf53241ce389488d1edd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a>(* ne10_fft_alloc_c2c_float32) (<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a configuration structure for <a class="el" href="group__C2C__FFT__IFFT.html#gad3afbe29e856e28e682e503493860886">ne10_fft_c2c_1d_float32</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>input length </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">st</td><td>pointer to an FFT configuration structure (allocated with <code>malloc</code>), or <code>NULL</code> to indicate an error</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Allocates and initialises an <a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> configuration structure for the complex-to-complex single precision floating point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations. Points to <a class="el" href="group__C2C__FFT__IFFT.html#gadf681ba4e27770ed9aa097b4bc29372d">ne10_fft_alloc_c2c_float32_c</a> or <a class="el" href="group__C2C__FFT__IFFT.html#ga620f02d2af16542038fef6fa403a3f0d">ne10_fft_alloc_c2c_float32_neon</a>.</p>
+<p>To free the returned structure, call <a class="el" href="group__C2C__FFT__IFFT.html#gaf2022d73d3aab3b73ce51a0d1b11cb8b">ne10_fft_destroy_c2c_float32</a>. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_complex_fft_8c-example.html#a6">NE10_sample_complex_fft.c</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00114">114</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga3d4b0c1c0e6e79416c05caf1a2a6d834"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a>(* ne10_fft_alloc_c2c_int32) (<a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> nfft)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a configuration structure for <a class="el" href="group__C2C__FFT__IFFT.html#ga976b5658f6b273b9c8a85bf3e5e440a3">ne10_fft_c2c_1d_int32</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">nfft</td><td>input length </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="retval"><dt>Return values</dt><dd>
+  <table class="retval">
+    <tr><td class="paramname">st</td><td>pointer to an FFT configuration structure (allocated with <code>malloc</code>), or <code>NULL</code> to indicate an error</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Allocates and initialises an <a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> configuration structure for the complex-to-complex 32-bit integer fixed point FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations. Points to <a class="el" href="group__C2C__FFT__IFFT.html#gadd650c6e56d3566fdd0fbd93104c484d">ne10_fft_alloc_c2c_int32_c</a> or <a class="el" href="group__C2C__FFT__IFFT.html#gaa9d6fb1f405c1cabdb5623fbef4775b1">ne10_fft_alloc_c2c_int32_neon</a>.</p>
+<p>To free the returned structure, call <a class="el" href="group__C2C__FFT__IFFT.html#ga0323d599ece11a7c45b7227ac299fe6a">ne10_fft_destroy_c2c_int32</a>. </p>
+
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00115">115</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gad3afbe29e856e28e682e503493860886"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_fft_c2c_1d_float32) (<a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fout, <a class="el" href="structne10__fft__cpx__float32__t.html">ne10_fft_cpx_float32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a2b7e065b22435b9347688cf334635613">ne10_fft_cfg_float32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mixed radix-2/3/4/5 complex FFT/IFFT of single precision floating point data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure (allocated via a variant of <a class="el" href="group__C2C__FFT__IFFT.html#gabe4c9b46438fdf53241ce389488d1edd">ne10_fft_alloc_c2c_float32</a>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Implements a mixed radix-2/3/4/5 complex FFT/IFFT, supporting input lengths of the form 2<sup>N</sup>*3<sup>M</sup>*5<sup>K</sup> (N &gt; 0). Points to <a class="el" href="group__C2C__FFT__IFFT.html#ga8a03f9824ed0ccc270ce39c0eab1a658">ne10_fft_c2c_1d_float32_c</a> or <a class="el" href="group__C2C__FFT__IFFT.html#ga0f08fc88104e972e788870840894bc0e">ne10_fft_c2c_1d_float32_neon</a>, the latter of which has the additional constraint that <code>fftSize % 4 == 0</code> must hold if fftSize &gt; 2. This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__float32_8c.html">test/test_suite_fft_float32.c</a>. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_complex_fft_8c-example.html#a10">NE10_sample_complex_fft.c</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00117">117</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga52da28931574ba3eb008c114184aa07c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_fft_c2c_1d_int16) (<a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fout, <a class="el" href="structne10__fft__cpx__int16__t.html">ne10_fft_cpx_int16_t</a> *fin, <a class="el" href="NE10__types_8h.html#aad7ab0fc73aaa9b50b7a0f4799d8ad53">ne10_fft_cfg_int16_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mixed radix-2/4 complex FFT/IFFT of 16-bit fixed point Q15 data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure (allocated via <a class="el" href="group__C2C__FFT__IFFT.html#gaf4cbe44e5e5f6acbdfb767ba9f2749e4">ne10_fft_alloc_c2c_int16</a>) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT) </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">scaled_flag</td><td>scale flag (0: unscaled, 1: scaled)</td></tr>
   </table>
   </dd>
 </dl>
-<p>This function implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the form 2^N (N &gt; 0). This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__int32_8c_source.html">test/test_suite_fft_int32.c</a>. </p>
+<p>Implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the form 2<sup>N</sup> (N &gt; 0). Points to <a class="el" href="group__C2C__FFT__IFFT.html#gab46724c7178fe02e858be576e2ce74b5">ne10_fft_c2c_1d_int16_c</a> or <a class="el" href="group__C2C__FFT__IFFT.html#ga5e39e948a6968a2a5811e391bbec4705">ne10_fft_c2c_1d_int16_neon</a>. This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__int16_8c.html">test/test_suite_fft_int16.c</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fft__int32_8neon_8c_source.html#l01219">1219</a> of file <a class="el" href="NE10__fft__int32_8neon_8c_source.html">NE10_fft_int32.neon.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00147">147</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga976b5658f6b273b9c8a85bf3e5e440a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_fft_c2c_1d_int32) (<a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fout, <a class="el" href="structne10__fft__cpx__int32__t.html">ne10_fft_cpx_int32_t</a> *fin, <a class="el" href="NE10__types_8h.html#a853aca06748951bc977a88503398595e">ne10_fft_cfg_int32_t</a> cfg, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> inverse_fft, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> scaled_flag)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mixed radix-2/4 complex FFT/IFFT of 32-bit fixed point Q31 data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">*fout</td><td>pointer to the output buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*fin</td><td>pointer to the input buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cfg</td><td>pointer to the configuration structure (allocated via a variant of <a class="el" href="group__C2C__FFT__IFFT.html#ga3d4b0c1c0e6e79416c05caf1a2a6d834">ne10_fft_alloc_c2c_int32</a>) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">inverse_fft</td><td>whether this is an FFT or IFFT (0: FFT, 1: IFFT) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">scaled_flag</td><td>scale flag (0: unscaled, 1: scaled)</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Implements a mixed radix-2/4 complex FFT/IFFT, supporting input lengths of the form 2<sup>N</sup> (N &gt; 0). Points to <a class="el" href="group__C2C__FFT__IFFT.html#ga59a8b0ddb0cca0aff394d9398b361313">ne10_fft_c2c_1d_int32_c</a> or <a class="el" href="group__C2C__FFT__IFFT.html#gaeab558afe8239e25c5540d110af7947e">ne10_fft_c2c_1d_int32_neon</a>. This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__int32_8c.html">test/test_suite_fft_int32.c</a>. </p>
+
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00130">130</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 17 2017 10:49:50 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

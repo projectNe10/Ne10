@@ -22,11 +22,11 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="ne10_logo.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="ne10.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Project Ne10
    </div>
-   <div id="projectbrief">An Open Optimized Software Library Project for the ARM Architecture</div>
+   <div id="projectbrief">An open, optimized software library for the ARM architecture.</div>
   </td>
  </tr>
  </tbody>
@@ -42,9 +42,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -89,37 +89,161 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga838576c798ae6639156a2c19de3e5d56"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga838576c798ae6639156a2c19de3e5d56"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_cross_vec3f_c</b> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga838576c798ae6639156a2c19de3e5d56"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CROSS__VEC.html#ga838576c798ae6639156a2c19de3e5d56">ne10_cross_vec3f_c</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga838576c798ae6639156a2c19de3e5d56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> using plain C code.  <a href="#ga838576c798ae6639156a2c19de3e5d56">More...</a><br /></td></tr>
 <tr class="separator:ga838576c798ae6639156a2c19de3e5d56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga73f13e80d57c847266b06450923b6c12"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga73f13e80d57c847266b06450923b6c12"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_cross_vec3f_neon</b> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, ne10_uint32_t count) asm(&quot;ne10_cross_vec3f_neon&quot;)</td></tr>
+<tr class="memitem:ga73f13e80d57c847266b06450923b6c12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CROSS__VEC.html#ga73f13e80d57c847266b06450923b6c12">ne10_cross_vec3f_neon</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_cross_vec3f_neon&quot;)</td></tr>
+<tr class="memdesc:ga73f13e80d57c847266b06450923b6c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> using NEON intrinsics.  <a href="#ga73f13e80d57c847266b06450923b6c12">More...</a><br /></td></tr>
 <tr class="separator:ga73f13e80d57c847266b06450923b6c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga6d2e7ac86d3880a1047e25915f5b4e34"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga6d2e7ac86d3880a1047e25915f5b4e34"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_cross_vec3f_asm</b> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga6d2e7ac86d3880a1047e25915f5b4e34"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CROSS__VEC.html#ga6d2e7ac86d3880a1047e25915f5b4e34">ne10_cross_vec3f_asm</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga6d2e7ac86d3880a1047e25915f5b4e34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> using NEON assembly.  <a href="#ga6d2e7ac86d3880a1047e25915f5b4e34">More...</a><br /></td></tr>
 <tr class="separator:ga6d2e7ac86d3880a1047e25915f5b4e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gaab3d6c57a41e065281ce250469103967"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> )(<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gaab3d6c57a41e065281ce250469103967"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> )(<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:gaab3d6c57a41e065281ce250469103967"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the cross product of 3D vectors from one input array with those of the same index in another, storing the results in an output array.  <a href="#gaab3d6c57a41e065281ce250469103967">More...</a><br /></td></tr>
 <tr class="separator:gaab3d6c57a41e065281ce250469103967"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>These functions implement vector cross product operations for single precision floating point values. </dd></dl>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga6d2e7ac86d3880a1047e25915f5b4e34"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_cross_vec3f_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga838576c798ae6639156a2c19de3e5d56"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_cross_vec3f_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__cross_8c_source.html#l00037">37</a> of file <a class="el" href="NE10__cross_8c_source.html">NE10_cross.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga73f13e80d57c847266b06450923b6c12"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_cross_vec3f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__CROSS__VEC.html#gaab3d6c57a41e065281ce250469103967">ne10_cross_vec3f</a> using NEON intrinsics. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="gaab3d6c57a41e065281ce250469103967"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_cross_vec3f) (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_cross_vec3f) (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src1, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Calculate the cross product of 3D vectors from one input array with those of the same index in another, storing the results in an output array. </p>
-<p>Points to <code>ne10_cross_vec3f_c</code>, <code>ne10_cross_vec3f_neon</code> or <code>ne10_cross_vec3f_asm</code>. This operation cannot be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__CROSS__VEC.html#ga838576c798ae6639156a2c19de3e5d56">ne10_cross_vec3f_c</a>, <a class="el" href="group__CROSS__VEC.html#ga73f13e80d57c847266b06450923b6c12">ne10_cross_vec3f_neon</a>, or <a class="el" href="group__CROSS__VEC.html#ga6d2e7ac86d3880a1047e25915f5b4e34">ne10_cross_vec3f_asm</a>. This operation cannot be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src1</td><td>Pointer to the first source array </td></tr>
@@ -136,7 +260,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 17 2017 10:49:50 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

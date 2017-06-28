@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Project Ne10: Vector Subtract From</title>
+<title>Project Ne10: Vector Subtraction From (w[i] = v - u[i])</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,11 +22,11 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="ne10_logo.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="ne10.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Project Ne10
    </div>
-   <div id="projectbrief">An Open Optimized Software Library Project for the ARM Architecture</div>
+   <div id="projectbrief">An open, optimized software library for the ARM architecture.</div>
   </td>
  </tr>
  </tbody>
@@ -42,9 +42,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -83,79 +83,577 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Vector Subtract From<div class="ingroups"><a class="el" href="group__groupMaths.html">Math Functions</a></div></div>  </div>
+<div class="title">Vector Subtraction From (w[i] = v - u[i])<div class="ingroups"><a class="el" href="group__groupMaths.html">Math Functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gab102eac75b636bbebea3f2b7b713d5a5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab102eac75b636bbebea3f2b7b713d5a5"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_float_c</b> (ne10_float32_t *dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gab102eac75b636bbebea3f2b7b713d5a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#gab102eac75b636bbebea3f2b7b713d5a5">ne10_rsbc_float_c</a> (<a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *dst, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *src, const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gab102eac75b636bbebea3f2b7b713d5a5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> using plain C code.  <a href="#gab102eac75b636bbebea3f2b7b713d5a5">More...</a><br /></td></tr>
 <tr class="separator:gab102eac75b636bbebea3f2b7b713d5a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga561022b74ca5fb4c08c6ee7ab9b91ac3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga561022b74ca5fb4c08c6ee7ab9b91ac3"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_float_neon</b> (ne10_float32_t *dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga561022b74ca5fb4c08c6ee7ab9b91ac3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga561022b74ca5fb4c08c6ee7ab9b91ac3">ne10_rsbc_float_neon</a> (<a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *dst, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *src, const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga561022b74ca5fb4c08c6ee7ab9b91ac3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> using NEON intrinsics.  <a href="#ga561022b74ca5fb4c08c6ee7ab9b91ac3">More...</a><br /></td></tr>
 <tr class="separator:ga561022b74ca5fb4c08c6ee7ab9b91ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga1e904a111ca97e1502972be0443819c3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1e904a111ca97e1502972be0443819c3"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_float_asm</b> (ne10_float32_t *dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga1e904a111ca97e1502972be0443819c3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga1e904a111ca97e1502972be0443819c3">ne10_rsbc_float_asm</a> (<a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *dst, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *src, const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga1e904a111ca97e1502972be0443819c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> using NEON assembly.  <a href="#ga1e904a111ca97e1502972be0443819c3">More...</a><br /></td></tr>
 <tr class="separator:ga1e904a111ca97e1502972be0443819c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0b56eb6906a0a23fef8b64fb603b62b8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga0b56eb6906a0a23fef8b64fb603b62b8"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec2f_c</b> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga0b56eb6906a0a23fef8b64fb603b62b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga0b56eb6906a0a23fef8b64fb603b62b8">ne10_rsbc_vec2f_c</a> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga0b56eb6906a0a23fef8b64fb603b62b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> using plain C code.  <a href="#ga0b56eb6906a0a23fef8b64fb603b62b8">More...</a><br /></td></tr>
 <tr class="separator:ga0b56eb6906a0a23fef8b64fb603b62b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga33c2a469b5be1736edff4a31b692307a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga33c2a469b5be1736edff4a31b692307a"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec2f_neon</b> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga33c2a469b5be1736edff4a31b692307a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga33c2a469b5be1736edff4a31b692307a">ne10_rsbc_vec2f_neon</a> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga33c2a469b5be1736edff4a31b692307a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> using NEON intrinsics.  <a href="#ga33c2a469b5be1736edff4a31b692307a">More...</a><br /></td></tr>
 <tr class="separator:ga33c2a469b5be1736edff4a31b692307a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaecd954ff134eb82c7382549ec726e7f9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaecd954ff134eb82c7382549ec726e7f9"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec2f_asm</b> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gaecd954ff134eb82c7382549ec726e7f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#gaecd954ff134eb82c7382549ec726e7f9">ne10_rsbc_vec2f_asm</a> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gaecd954ff134eb82c7382549ec726e7f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> using NEON assembly.  <a href="#gaecd954ff134eb82c7382549ec726e7f9">More...</a><br /></td></tr>
 <tr class="separator:gaecd954ff134eb82c7382549ec726e7f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3f41efb96d9fb9e4548b43c5d2248478"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga3f41efb96d9fb9e4548b43c5d2248478"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec3f_c</b> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga3f41efb96d9fb9e4548b43c5d2248478"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga3f41efb96d9fb9e4548b43c5d2248478">ne10_rsbc_vec3f_c</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga3f41efb96d9fb9e4548b43c5d2248478"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> using plain C code.  <a href="#ga3f41efb96d9fb9e4548b43c5d2248478">More...</a><br /></td></tr>
 <tr class="separator:ga3f41efb96d9fb9e4548b43c5d2248478"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga66c796b2c0e87f86ba8ce68db4c08af3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga66c796b2c0e87f86ba8ce68db4c08af3"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec3f_neon</b> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga66c796b2c0e87f86ba8ce68db4c08af3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga66c796b2c0e87f86ba8ce68db4c08af3">ne10_rsbc_vec3f_neon</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga66c796b2c0e87f86ba8ce68db4c08af3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> using NEON intrinsics.  <a href="#ga66c796b2c0e87f86ba8ce68db4c08af3">More...</a><br /></td></tr>
 <tr class="separator:ga66c796b2c0e87f86ba8ce68db4c08af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ab169c7329f3e8c99f4ea50f75e7ec5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga8ab169c7329f3e8c99f4ea50f75e7ec5"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec3f_asm</b> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga8ab169c7329f3e8c99f4ea50f75e7ec5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga8ab169c7329f3e8c99f4ea50f75e7ec5">ne10_rsbc_vec3f_asm</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga8ab169c7329f3e8c99f4ea50f75e7ec5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> using NEON assembly.  <a href="#ga8ab169c7329f3e8c99f4ea50f75e7ec5">More...</a><br /></td></tr>
 <tr class="separator:ga8ab169c7329f3e8c99f4ea50f75e7ec5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga91a2bcf79bf4ccafc61fb14c08c9d914"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga91a2bcf79bf4ccafc61fb14c08c9d914"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec4f_c</b> (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga91a2bcf79bf4ccafc61fb14c08c9d914"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga91a2bcf79bf4ccafc61fb14c08c9d914">ne10_rsbc_vec4f_c</a> (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga91a2bcf79bf4ccafc61fb14c08c9d914"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> using plain C code.  <a href="#ga91a2bcf79bf4ccafc61fb14c08c9d914">More...</a><br /></td></tr>
 <tr class="separator:ga91a2bcf79bf4ccafc61fb14c08c9d914"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga79639a4ca7e4fd657ffd0c495dd415cb"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga79639a4ca7e4fd657ffd0c495dd415cb"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec4f_neon</b> (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga79639a4ca7e4fd657ffd0c495dd415cb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga79639a4ca7e4fd657ffd0c495dd415cb">ne10_rsbc_vec4f_neon</a> (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga79639a4ca7e4fd657ffd0c495dd415cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> using NEON intrinsics.  <a href="#ga79639a4ca7e4fd657ffd0c495dd415cb">More...</a><br /></td></tr>
 <tr class="separator:ga79639a4ca7e4fd657ffd0c495dd415cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2966789ddfcc2c460c60e8c6487c505e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2966789ddfcc2c460c60e8c6487c505e"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_rsbc_vec4f_asm</b> (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga2966789ddfcc2c460c60e8c6487c505e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga2966789ddfcc2c460c60e8c6487c505e">ne10_rsbc_vec4f_asm</a> (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga2966789ddfcc2c460c60e8c6487c505e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> using NEON assembly.  <a href="#ga2966789ddfcc2c460c60e8c6487c505e">More...</a><br /></td></tr>
 <tr class="separator:ga2966789ddfcc2c460c60e8c6487c505e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:gaf981169cdf3ff2a639d7cf698e034f12"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> )(ne10_float32_t *dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gaf981169cdf3ff2a639d7cf698e034f12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> )(<a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *dst, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *src, const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:gaf981169cdf3ff2a639d7cf698e034f12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts all scalar elements of an input array from a constant value, storing the results in an output array.  <a href="#gaf981169cdf3ff2a639d7cf698e034f12">More...</a><br /></td></tr>
 <tr class="separator:gaf981169cdf3ff2a639d7cf698e034f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga0692227b7f02b662f38448a0310b9a65"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> )(<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga0692227b7f02b662f38448a0310b9a65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> )(<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:ga0692227b7f02b662f38448a0310b9a65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts all the 2D vectors in an input array from a constant vector, storing the results in an output array.  <a href="#ga0692227b7f02b662f38448a0310b9a65">More...</a><br /></td></tr>
 <tr class="separator:ga0692227b7f02b662f38448a0310b9a65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga38c2515c3eb598b6c922f5fba8147182"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> )(<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga38c2515c3eb598b6c922f5fba8147182"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> )(<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:ga38c2515c3eb598b6c922f5fba8147182"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts all the 3D vectors in an input array from a constant vector, storing the results in an output array.  <a href="#ga38c2515c3eb598b6c922f5fba8147182">More...</a><br /></td></tr>
 <tr class="separator:ga38c2515c3eb598b6c922f5fba8147182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gabe8cfdff0b9626a743555d5f79b8cdc9"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> )(<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gabe8cfdff0b9626a743555d5f79b8cdc9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> )(<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:gabe8cfdff0b9626a743555d5f79b8cdc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts all the 4D vectors in an input array from a constant vector, storing the results in an output array.  <a href="#gabe8cfdff0b9626a743555d5f79b8cdc9">More...</a><br /></td></tr>
 <tr class="separator:gabe8cfdff0b9626a743555d5f79b8cdc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<dl class="section user"><dt></dt><dd>These functions implement vector "subtract from" RSBC operations for single precision floating point values. </dd></dl>
+<dl class="section user"><dt></dt><dd>These functions implement vector "subtract from" operations for single precision floating point values. </dd></dl>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga1e904a111ca97e1502972be0443819c3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_float_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a>&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="gab102eac75b636bbebea3f2b7b713d5a5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_float_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a>&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8c_source.html#l00037">37</a> of file <a class="el" href="NE10__rsbc_8c_source.html">NE10_rsbc.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga561022b74ca5fb4c08c6ee7ab9b91ac3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_float_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a>&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#gaf981169cdf3ff2a639d7cf698e034f12">ne10_rsbc_float</a> using NEON intrinsics. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8neon_8c_source.html#l00039">39</a> of file <a class="el" href="NE10__rsbc_8neon_8c_source.html">NE10_rsbc.neon.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gaecd954ff134eb82c7382549ec726e7f9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec2f_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga0b56eb6906a0a23fef8b64fb603b62b8"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec2f_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8c_source.html#l00047">47</a> of file <a class="el" href="NE10__rsbc_8c_source.html">NE10_rsbc.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga33c2a469b5be1736edff4a31b692307a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec2f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#ga0692227b7f02b662f38448a0310b9a65">ne10_rsbc_vec2f</a> using NEON intrinsics. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8neon_8c_source.html#l00049">49</a> of file <a class="el" href="NE10__rsbc_8neon_8c_source.html">NE10_rsbc.neon.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga8ab169c7329f3e8c99f4ea50f75e7ec5"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec3f_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga3f41efb96d9fb9e4548b43c5d2248478"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec3f_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8c_source.html#l00058">58</a> of file <a class="el" href="NE10__rsbc_8c_source.html">NE10_rsbc.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga66c796b2c0e87f86ba8ce68db4c08af3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec3f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#ga38c2515c3eb598b6c922f5fba8147182">ne10_rsbc_vec3f</a> using NEON intrinsics. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8neon_8c_source.html#l00059">59</a> of file <a class="el" href="NE10__rsbc_8neon_8c_source.html">NE10_rsbc.neon.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga2966789ddfcc2c460c60e8c6487c505e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec4f_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga91a2bcf79bf4ccafc61fb14c08c9d914"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec4f_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8c_source.html#l00070">70</a> of file <a class="el" href="NE10__rsbc_8c_source.html">NE10_rsbc.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga79639a4ca7e4fd657ffd0c495dd415cb"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_rsbc_vec4f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *&#160;</td>
+          <td class="paramname"><em>cst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__RSBC.html#gabe8cfdff0b9626a743555d5f79b8cdc9">ne10_rsbc_vec4f</a> using NEON intrinsics. </p>
+
+<p>Definition at line <a class="el" href="NE10__rsbc_8neon_8c_source.html#l00073">73</a> of file <a class="el" href="NE10__rsbc_8neon_8c_source.html">NE10_rsbc.neon.c</a>.</p>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="gaf981169cdf3ff2a639d7cf698e034f12"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_rsbc_float) (ne10_float32_t *dst, ne10_float32_t *src, const ne10_float32_t cst, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_rsbc_float) (<a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *dst, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *src, const <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Subtracts all scalar elements of an input array from a constant value, storing the results in an output array. </p>
-<p>Points to <code>ne10_rsbc_float_c</code>, <code>ne10_rsbc_float_neon</code> or <code>ne10_rsbc_float_asm</code>. This operation can be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__RSBC.html#gab102eac75b636bbebea3f2b7b713d5a5">ne10_rsbc_float_c</a>, <a class="el" href="group__RSBC.html#ga561022b74ca5fb4c08c6ee7ab9b91ac3">ne10_rsbc_float_neon</a>, or <a class="el" href="group__RSBC.html#ga1e904a111ca97e1502972be0443819c3">ne10_rsbc_float_asm</a>. This operation can be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Pointer to the source array of elements to subtract </td></tr>
@@ -174,13 +672,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_rsbc_vec2f) (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_rsbc_vec2f) (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dst, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *src, const <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Subtracts all the 2D vectors in an input array from a constant vector, storing the results in an output array. </p>
-<p>Points to <code>ne10_rsbc_vec2f_c</code>, <code>ne10_rsbc_vec2f_neon</code>, or <code>ne10_rsbc_vec2f_asm</code>. This operation can be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__RSBC.html#ga0b56eb6906a0a23fef8b64fb603b62b8">ne10_rsbc_vec2f_c</a>, <a class="el" href="group__RSBC.html#ga33c2a469b5be1736edff4a31b692307a">ne10_rsbc_vec2f_neon</a>, or <a class="el" href="group__RSBC.html#gaecd954ff134eb82c7382549ec726e7f9">ne10_rsbc_vec2f_asm</a>. This operation can be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Pointer to the source array of elements to subtract </td></tr>
@@ -199,13 +698,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_rsbc_vec3f) (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_rsbc_vec3f) (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *dst, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *src, const <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Subtracts all the 3D vectors in an input array from a constant vector, storing the results in an output array. </p>
-<p>Points to <code>ne10_rsbc_vec3f_c</code>, <code>ne10_rsbc_vec3f_neon</code>, or <code>ne10_rsbc_vec3f_asm</code>. This operation can be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__RSBC.html#ga3f41efb96d9fb9e4548b43c5d2248478">ne10_rsbc_vec3f_c</a>, <a class="el" href="group__RSBC.html#ga66c796b2c0e87f86ba8ce68db4c08af3">ne10_rsbc_vec3f_neon</a>, or <a class="el" href="group__RSBC.html#ga8ab169c7329f3e8c99f4ea50f75e7ec5">ne10_rsbc_vec3f_asm</a>. This operation can be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Pointer to the source array of elements to subtract </td></tr>
@@ -224,13 +724,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_rsbc_vec4f) (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_rsbc_vec4f) (<a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *dst, <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *src, const <a class="el" href="structne10__vec4f__t.html">ne10_vec4f_t</a> *cst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Subtracts all the 4D vectors in an input array from a constant vector, storing the results in an output array. </p>
-<p>Points to <code>ne10_rsbc_vec4f_c</code>, <code>ne10_rsbc_vec4f_neon</code>, or <code>ne10_rsbc_vec4f_asm</code>. This operation can be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__RSBC.html#ga91a2bcf79bf4ccafc61fb14c08c9d914">ne10_rsbc_vec4f_c</a>, <a class="el" href="group__RSBC.html#ga79639a4ca7e4fd657ffd0c495dd415cb">ne10_rsbc_vec4f_neon</a>, or <a class="el" href="group__RSBC.html#ga2966789ddfcc2c460c60e8c6487c505e">ne10_rsbc_vec4f_asm</a>. This operation can be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src</td><td>Pointer to the source array of elements to subtract </td></tr>
@@ -247,7 +748,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 17 2017 10:49:50 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

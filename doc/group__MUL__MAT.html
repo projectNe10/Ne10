@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Project Ne10: Matrix Multiply</title>
+<title>Project Ne10: Matrix Multiplication</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,11 +22,11 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="ne10_logo.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="ne10.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Project Ne10
    </div>
-   <div id="projectbrief">An Open Optimized Software Library Project for the ARM Architecture</div>
+   <div id="projectbrief">An open, optimized software library for the ARM architecture.</div>
   </td>
  </tr>
  </tbody>
@@ -42,9 +42,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li class="current"><a href="modules.html"><span>Modules</span></a></li>
-      <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="examples.html"><span>Examples</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -83,67 +83,435 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Matrix Multiply<div class="ingroups"><a class="el" href="group__groupMaths.html">Math Functions</a></div></div>  </div>
+<div class="title">Matrix Multiplication<div class="ingroups"><a class="el" href="group__groupMaths.html">Math Functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gacdc77c517036a6247b4fe1b17bbf234d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gacdc77c517036a6247b4fe1b17bbf234d"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_4x4f_c</b> (ne10_mat4x4f_t *dst, ne10_mat4x4f_t *src1, ne10_mat4x4f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gacdc77c517036a6247b4fe1b17bbf234d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#gacdc77c517036a6247b4fe1b17bbf234d">ne10_mulmat_4x4f_c</a> (<a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *dst, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src1, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gacdc77c517036a6247b4fe1b17bbf234d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> using plain C code.  <a href="#gacdc77c517036a6247b4fe1b17bbf234d">More...</a><br /></td></tr>
 <tr class="separator:gacdc77c517036a6247b4fe1b17bbf234d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga56d24aa509967887b8c268f1ea549b60"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga56d24aa509967887b8c268f1ea549b60"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_4x4f_neon</b> (ne10_mat4x4f_t *dst, ne10_mat4x4f_t *src1, ne10_mat4x4f_t *src2, ne10_uint32_t count) asm(&quot;ne10_mulmat_4x4f_neon&quot;)</td></tr>
+<tr class="memitem:ga56d24aa509967887b8c268f1ea549b60"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga56d24aa509967887b8c268f1ea549b60">ne10_mulmat_4x4f_neon</a> (<a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *dst, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src1, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_mulmat_4x4f_neon&quot;)</td></tr>
+<tr class="memdesc:ga56d24aa509967887b8c268f1ea549b60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> using NEON intrinsics.  <a href="#ga56d24aa509967887b8c268f1ea549b60">More...</a><br /></td></tr>
 <tr class="separator:ga56d24aa509967887b8c268f1ea549b60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga43cc69028ebc012e7542cbf1619c8a4f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga43cc69028ebc012e7542cbf1619c8a4f"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_4x4f_asm</b> (ne10_mat4x4f_t *dst, ne10_mat4x4f_t *src1, ne10_mat4x4f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga43cc69028ebc012e7542cbf1619c8a4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga43cc69028ebc012e7542cbf1619c8a4f">ne10_mulmat_4x4f_asm</a> (<a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *dst, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src1, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga43cc69028ebc012e7542cbf1619c8a4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> using NEON assembly.  <a href="#ga43cc69028ebc012e7542cbf1619c8a4f">More...</a><br /></td></tr>
 <tr class="separator:ga43cc69028ebc012e7542cbf1619c8a4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf81ae285b404c84b32dbe967bbcd2211"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaf81ae285b404c84b32dbe967bbcd2211"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_3x3f_c</b> (ne10_mat3x3f_t *dst, ne10_mat3x3f_t *src1, ne10_mat3x3f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gaf81ae285b404c84b32dbe967bbcd2211"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#gaf81ae285b404c84b32dbe967bbcd2211">ne10_mulmat_3x3f_c</a> (<a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *dst, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src1, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gaf81ae285b404c84b32dbe967bbcd2211"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> using plain C code.  <a href="#gaf81ae285b404c84b32dbe967bbcd2211">More...</a><br /></td></tr>
 <tr class="separator:gaf81ae285b404c84b32dbe967bbcd2211"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5f8760d298367a0955425510836a815c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5f8760d298367a0955425510836a815c"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_3x3f_neon</b> (ne10_mat3x3f_t *dst, ne10_mat3x3f_t *src1, ne10_mat3x3f_t *src2, ne10_uint32_t count) asm(&quot;ne10_mulmat_3x3f_neon&quot;)</td></tr>
+<tr class="memitem:ga5f8760d298367a0955425510836a815c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga5f8760d298367a0955425510836a815c">ne10_mulmat_3x3f_neon</a> (<a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *dst, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src1, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_mulmat_3x3f_neon&quot;)</td></tr>
+<tr class="memdesc:ga5f8760d298367a0955425510836a815c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> using NEON intrinsics.  <a href="#ga5f8760d298367a0955425510836a815c">More...</a><br /></td></tr>
 <tr class="separator:ga5f8760d298367a0955425510836a815c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga32db390f1495f151a83117332bf05330"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga32db390f1495f151a83117332bf05330"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_3x3f_asm</b> (ne10_mat3x3f_t *dst, ne10_mat3x3f_t *src1, ne10_mat3x3f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga32db390f1495f151a83117332bf05330"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga32db390f1495f151a83117332bf05330">ne10_mulmat_3x3f_asm</a> (<a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *dst, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src1, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:ga32db390f1495f151a83117332bf05330"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> using NEON assembly.  <a href="#ga32db390f1495f151a83117332bf05330">More...</a><br /></td></tr>
 <tr class="separator:ga32db390f1495f151a83117332bf05330"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad4a597d507426f6af5cd8d1bf541cb8c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad4a597d507426f6af5cd8d1bf541cb8c"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_2x2f_c</b> (ne10_mat2x2f_t *dst, ne10_mat2x2f_t *src1, ne10_mat2x2f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gad4a597d507426f6af5cd8d1bf541cb8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#gad4a597d507426f6af5cd8d1bf541cb8c">ne10_mulmat_2x2f_c</a> (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *dst, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src1, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gad4a597d507426f6af5cd8d1bf541cb8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> using plain C code.  <a href="#gad4a597d507426f6af5cd8d1bf541cb8c">More...</a><br /></td></tr>
 <tr class="separator:gad4a597d507426f6af5cd8d1bf541cb8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga77fc25f03ecc59f04eb6e6925a5b40f2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga77fc25f03ecc59f04eb6e6925a5b40f2"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_2x2f_neon</b> (ne10_mat2x2f_t *dst, ne10_mat2x2f_t *src1, ne10_mat2x2f_t *src2, ne10_uint32_t count) asm(&quot;ne10_mulmat_2x2f_neon&quot;)</td></tr>
+<tr class="memitem:ga77fc25f03ecc59f04eb6e6925a5b40f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga77fc25f03ecc59f04eb6e6925a5b40f2">ne10_mulmat_2x2f_neon</a> (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *dst, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src1, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_mulmat_2x2f_neon&quot;)</td></tr>
+<tr class="memdesc:ga77fc25f03ecc59f04eb6e6925a5b40f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> using NEON intrinsics.  <a href="#ga77fc25f03ecc59f04eb6e6925a5b40f2">More...</a><br /></td></tr>
 <tr class="separator:ga77fc25f03ecc59f04eb6e6925a5b40f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab970110b7d67c70d946cf3ea522ded4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab970110b7d67c70d946cf3ea522ded4a"></a>
-ne10_result_t&#160;</td><td class="memItemRight" valign="bottom"><b>ne10_mulmat_2x2f_asm</b> (ne10_mat2x2f_t *dst, ne10_mat2x2f_t *src1, ne10_mat2x2f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gab970110b7d67c70d946cf3ea522ded4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#gab970110b7d67c70d946cf3ea522ded4a">ne10_mulmat_2x2f_asm</a> (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *dst, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src1, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gab970110b7d67c70d946cf3ea522ded4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> using NEON assembly.  <a href="#gab970110b7d67c70d946cf3ea522ded4a">More...</a><br /></td></tr>
 <tr class="separator:gab970110b7d67c70d946cf3ea522ded4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ga244e3ff5af1be230d3b41315072e2ccf"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> )(ne10_mat4x4f_t *dst, ne10_mat4x4f_t *src1, ne10_mat4x4f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga244e3ff5af1be230d3b41315072e2ccf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> )(<a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *dst, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src1, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:ga244e3ff5af1be230d3b41315072e2ccf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies the 4x4 matrices of one input array by those of the same index in another, storing the results in an output array.  <a href="#ga244e3ff5af1be230d3b41315072e2ccf">More...</a><br /></td></tr>
 <tr class="separator:ga244e3ff5af1be230d3b41315072e2ccf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga315717a25a469397a358c360607c4b78"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> )(ne10_mat3x3f_t *dst, ne10_mat3x3f_t *src1, ne10_mat3x3f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:ga315717a25a469397a358c360607c4b78"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> )(<a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *dst, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src1, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:ga315717a25a469397a358c360607c4b78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies the 3x3 matrices of one input array by those of the same index in another, storing the results in an output array.  <a href="#ga315717a25a469397a358c360607c4b78">More...</a><br /></td></tr>
 <tr class="separator:ga315717a25a469397a358c360607c4b78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadc68819b67a364f6efb285230d99ede7"><td class="memItemLeft" align="right" valign="top">ne10_result_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> )(ne10_mat2x2f_t *dst, ne10_mat2x2f_t *src1, ne10_mat2x2f_t *src2, ne10_uint32_t count)</td></tr>
+<tr class="memitem:gadc68819b67a364f6efb285230d99ede7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> )(<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *dst, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src1, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
 <tr class="memdesc:gadc68819b67a364f6efb285230d99ede7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multiplies the 2x2 matrices of one input array by those of the same index in another, storing the results in an output array.  <a href="#gadc68819b67a364f6efb285230d99ede7">More...</a><br /></td></tr>
 <tr class="separator:gadc68819b67a364f6efb285230d99ede7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>These functions implement matrix multiplication operations for single precision floating point values. </dd></dl>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="gab970110b7d67c70d946cf3ea522ded4a"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_2x2f_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad4a597d507426f6af5cd8d1bf541cb8c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_2x2f_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__mulmat_8c_source.html#l00037">37</a> of file <a class="el" href="NE10__mulmat_8c_source.html">NE10_mulmat.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga77fc25f03ecc59f04eb6e6925a5b40f2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_2x2f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#gadc68819b67a364f6efb285230d99ede7">ne10_mulmat_2x2f</a> using NEON intrinsics. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga32db390f1495f151a83117332bf05330"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_3x3f_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="gaf81ae285b404c84b32dbe967bbcd2211"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_3x3f_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__mulmat_8c_source.html#l00069">69</a> of file <a class="el" href="NE10__mulmat_8c_source.html">NE10_mulmat.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga5f8760d298367a0955425510836a815c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_3x3f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#ga315717a25a469397a358c360607c4b78">ne10_mulmat_3x3f</a> using NEON intrinsics. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga43cc69028ebc012e7542cbf1619c8a4f"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_4x4f_asm </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> using NEON assembly. </p>
+
+</div>
+</div>
+<a class="anchor" id="gacdc77c517036a6247b4fe1b17bbf234d"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_4x4f_c </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> using plain C code. </p>
+
+<p>Definition at line <a class="el" href="NE10__mulmat_8c_source.html#l00127">127</a> of file <a class="el" href="NE10__mulmat_8c_source.html">NE10_mulmat.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga56d24aa509967887b8c268f1ea549b60"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_mulmat_4x4f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src1</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *&#160;</td>
+          <td class="paramname"><em>src2</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__MUL__MAT.html#ga244e3ff5af1be230d3b41315072e2ccf">ne10_mulmat_4x4f</a> using NEON intrinsics. </p>
+
+</div>
+</div>
 <h2 class="groupheader">Variable Documentation</h2>
 <a class="anchor" id="gadc68819b67a364f6efb285230d99ede7"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_mulmat_2x2f) (ne10_mat2x2f_t *dst, ne10_mat2x2f_t *src1, ne10_mat2x2f_t *src2, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_mulmat_2x2f) (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *dst, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src1, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Multiplies the 2x2 matrices of one input array by those of the same index in another, storing the results in an output array. </p>
-<p>Points to <code>ne10_mulmat_2x2f_c</code>, <code>ne10_mulmat_2x2f_neon</code> or <code>ne10_mulmat_2x2f_asm</code>. This operation cannot be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__MUL__MAT.html#gad4a597d507426f6af5cd8d1bf541cb8c">ne10_mulmat_2x2f_c</a>, <a class="el" href="group__MUL__MAT.html#ga77fc25f03ecc59f04eb6e6925a5b40f2">ne10_mulmat_2x2f_neon</a>, or <a class="el" href="group__MUL__MAT.html#gab970110b7d67c70d946cf3ea522ded4a">ne10_mulmat_2x2f_asm</a>. This operation cannot be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src1</td><td>Pointer to the first source array </td></tr>
@@ -162,13 +530,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_mulmat_3x3f) (ne10_mat3x3f_t *dst, ne10_mat3x3f_t *src1, ne10_mat3x3f_t *src2, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_mulmat_3x3f) (<a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *dst, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src1, <a class="el" href="structne10__mat3x3f__t.html">ne10_mat3x3f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Multiplies the 3x3 matrices of one input array by those of the same index in another, storing the results in an output array. </p>
-<p>Points to <code>ne10_mulmat_3x3f_c</code>, <code>ne10_mulmat_3x3f_neon</code> or <code>ne10_mulmat_3x3f_asm</code>. This operation cannot be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__MUL__MAT.html#gaf81ae285b404c84b32dbe967bbcd2211">ne10_mulmat_3x3f_c</a>, <a class="el" href="group__MUL__MAT.html#ga5f8760d298367a0955425510836a815c">ne10_mulmat_3x3f_neon</a>, or <a class="el" href="group__MUL__MAT.html#ga32db390f1495f151a83117332bf05330">ne10_mulmat_3x3f_asm</a>. This operation cannot be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src1</td><td>Pointer to the first source array </td></tr>
@@ -177,7 +546,8 @@ Variables</h2></td></tr>
   </table>
   </dd>
 </dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_matrix_multiply_8c-example.html#a6">NE10_sample_matrix_multiply.c</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="NE10__init__math_8c_source.html#l00291">291</a> of file <a class="el" href="NE10__init__math_8c_source.html">NE10_init_math.c</a>.</p>
 
 </div>
@@ -187,13 +557,14 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ne10_result_t(* ne10_mulmat_4x4f) (ne10_mat4x4f_t *dst, ne10_mat4x4f_t *src1, ne10_mat4x4f_t *src2, ne10_uint32_t count)</td>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>(* ne10_mulmat_4x4f) (<a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *dst, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src1, <a class="el" href="structne10__mat4x4f__t.html">ne10_mat4x4f_t</a> *src2, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Multiplies the 4x4 matrices of one input array by those of the same index in another, storing the results in an output array. </p>
-<p>Points to <code>ne10_mulmat_4x4f_c</code>, <code>ne10_mulmat_4x4f_neon</code> or <code>ne10_mulmat_4x4f_asm</code>. This operation cannot be performed in-place. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>Points to <a class="el" href="group__MUL__MAT.html#gacdc77c517036a6247b4fe1b17bbf234d">ne10_mulmat_4x4f_c</a>, <a class="el" href="group__MUL__MAT.html#ga56d24aa509967887b8c268f1ea549b60">ne10_mulmat_4x4f_neon</a>, or <a class="el" href="group__MUL__MAT.html#ga43cc69028ebc012e7542cbf1619c8a4f">ne10_mulmat_4x4f_asm</a>. This operation cannot be performed in-place.</p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">dst</td><td>Pointer to the destination array </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">src1</td><td>Pointer to the first source array </td></tr>
@@ -210,7 +581,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Jan 17 2017 10:49:50 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
