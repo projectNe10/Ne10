@@ -73,15 +73,10 @@ static inline ne10_vec2f_t max_2f (ne10_vec2f_t a, ne10_vec2f_t b)
 }
 
 /**
- * @brief Compute the AABB for a polygon.
- * @param[out] *aabb               return axis aligned box
- * @param[in]  *vertices           a convex polygon
- * @param[in]  *xf                 the position and orientation of rigid
- * @param[in]  radius              the aligned bounding
- * @param[in]  vertex_count        vertices count of convex ploygen
- *
- * The function is to compute AABB for polygon where vertex_count is a multiple of 4.
- * To improve performance, four vertices are processed in one loop.
+ * @ingroup COLLISION_DETECT
+ * Specific implementation of @ref ne10_physics_compute_aabb_vec2f using NEON SIMD capabilities.
+ * To improve performance, four vertices are processed per loop iteration. As such, vertex_count
+ * must be a multiple of four.
  */
 #ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 void ne10_physics_compute_aabb_vec2f_neon (ne10_mat2x2f_t *aabb,

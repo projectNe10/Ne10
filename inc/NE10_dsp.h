@@ -524,98 +524,36 @@ extern "C" {
     extern void ne10_fft_destroy_r2c_int16 (ne10_fft_r2c_cfg_int16_t);
 /** @} */ // R2C_FFT_IFFT
 
-    /* FIR functions */
-
-    extern void (*ne10_fir_float) (const ne10_fir_instance_f32_t * S,
-                                   ne10_float32_t * pSrc,
-                                   ne10_float32_t * pDst,
-                                   ne10_uint32_t blockSize);
-
-    extern void (*ne10_fir_decimate_float) (const ne10_fir_decimate_instance_f32_t * S,
-                                            ne10_float32_t * pSrc,
-                                            ne10_float32_t * pDst,
-                                            ne10_uint32_t blockSize);
-
-    extern void (*ne10_fir_interpolate_float) (const ne10_fir_interpolate_instance_f32_t * S,
-            ne10_float32_t * pSrc,
-            ne10_float32_t * pDst,
-            ne10_uint32_t blockSize);
-
-    extern void (*ne10_fir_lattice_float) (const ne10_fir_lattice_instance_f32_t * S,
-                                           ne10_float32_t * pSrc,
-                                           ne10_float32_t * pDst,
-                                           ne10_uint32_t blockSize);
-
-    extern void (*ne10_fir_sparse_float) (ne10_fir_sparse_instance_f32_t * S,
-                                          ne10_float32_t * pSrc,
-                                          ne10_float32_t * pDst,
-                                          ne10_float32_t * pScratchIn,
-                                          ne10_uint32_t blockSize);
-
+    /**
+     * @addtogroup FIR
+     * @{
+     */
     extern ne10_result_t ne10_fir_init_float (ne10_fir_instance_f32_t * S,
             ne10_uint16_t numTaps,
             ne10_float32_t * pCoeffs,
             ne10_float32_t * pState,
             ne10_uint32_t blockSize);
 
-    extern ne10_result_t ne10_fir_decimate_init_float (ne10_fir_decimate_instance_f32_t * S,
-            ne10_uint16_t numTaps,
-            ne10_uint8_t M,
-            ne10_float32_t * pCoeffs,
-            ne10_float32_t * pState,
-            ne10_uint32_t blockSize);
-
-    extern ne10_result_t ne10_fir_interpolate_init_float (ne10_fir_interpolate_instance_f32_t * S,
-            ne10_uint8_t L,
-            ne10_uint16_t numTaps,
-            ne10_float32_t * pCoeffs,
-            ne10_float32_t * pState,
-            ne10_uint32_t blockSize);
-
-    extern ne10_result_t ne10_fir_lattice_init_float (ne10_fir_lattice_instance_f32_t * S,
-            ne10_uint16_t numStages,
-            ne10_float32_t * pCoeffs,
-            ne10_float32_t * pState);
-
-    extern ne10_result_t ne10_fir_sparse_init_float (ne10_fir_sparse_instance_f32_t * S,
-            ne10_uint16_t numTaps,
-            ne10_float32_t * pCoeffs,
-            ne10_float32_t * pState,
-            ne10_int32_t * pTapDelay,
-            ne10_uint16_t maxDelay,
-            ne10_uint32_t blockSize);
-
+    /**
+     * @param[in]  *S points to an instance of the floating-point FIR filter structure.
+     * @param[in]  *pSrc points to the block of input data.
+     * @param[out] *pDst points to the block of output data.
+     * @param[in]  blockSize number of samples to process per call.
+     *
+     * Points to @ref ne10_fir_float_c or @ref ne10_fir_float_neon.
+     */
+    extern void (*ne10_fir_float) (const ne10_fir_instance_f32_t * S,
+                                   ne10_float32_t * pSrc,
+                                   ne10_float32_t * pDst,
+                                   ne10_uint32_t blockSize);
     extern void ne10_fir_float_c (const ne10_fir_instance_f32_t * S,
                                   ne10_float32_t * pSrc,
                                   ne10_float32_t * pDst,
                                   ne10_uint32_t blockSize);
-
-    extern void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
-                                           ne10_float32_t * pSrc,
-                                           ne10_float32_t * pDst,
-                                           ne10_uint32_t blockSize);
-
-    extern void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S,
-            ne10_float32_t * pSrc,
-            ne10_float32_t * pDst,
-            ne10_uint32_t blockSize);
-
-    extern void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
-                                          ne10_float32_t * pSrc,
-                                          ne10_float32_t * pDst,
-                                          ne10_uint32_t blockSize);
-
-    extern void ne10_fir_sparse_float_c (ne10_fir_sparse_instance_f32_t * S,
-                                         ne10_float32_t * pSrc,
-                                         ne10_float32_t * pDst,
-                                         ne10_float32_t * pScratchIn,
-                                         ne10_uint32_t blockSize);
-
-    /**
-     * @addtogroup FIR
-     * @{
-     */
 #ifdef ENABLE_NE10_FIR_FLOAT_NEON
+    /**
+     * Specific implementation of @ref ne10_fir_float using NEON SIMD capabilities.
+     */
     extern void ne10_fir_float_neon (const ne10_fir_instance_f32_t * S,
                                      ne10_float32_t * pSrc,
                                      ne10_float32_t * pDst,
@@ -628,7 +566,35 @@ extern "C" {
      * @addtogroup FIR_Decimate
      * @{
      */
+    extern ne10_result_t ne10_fir_decimate_init_float (ne10_fir_decimate_instance_f32_t * S,
+            ne10_uint16_t numTaps,
+            ne10_uint8_t M,
+            ne10_float32_t * pCoeffs,
+            ne10_float32_t * pState,
+            ne10_uint32_t blockSize);
+
+    /**
+     * @brief Processing function for the floating-point FIR decimator.
+     *
+     * @param[in] *S        points to an instance of the floating-point FIR decimator structure.
+     * @param[in] *pSrc     points to the block of input data.
+     * @param[out] *pDst    points to the block of output data.
+     * @param[in] blockSize number of input samples to process per call.
+     *
+     * Points to @ref ne10_fir_decimate_float_c or @ref ne10_fir_decimate_float_neon.
+     */
+    extern void (*ne10_fir_decimate_float) (const ne10_fir_decimate_instance_f32_t * S,
+                                            ne10_float32_t * pSrc,
+                                            ne10_float32_t * pDst,
+                                            ne10_uint32_t blockSize);
+    extern void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
+                                           ne10_float32_t * pSrc,
+                                           ne10_float32_t * pDst,
+                                           ne10_uint32_t blockSize);
 #ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
+    /**
+     * Specific implementation of @ref ne10_fir_decimate_float using NEON SIMD capabilities.
+     */
     extern void ne10_fir_decimate_float_neon (const ne10_fir_decimate_instance_f32_t * S,
             ne10_float32_t *pSrc,
             ne10_float32_t *pDst,
@@ -641,7 +607,35 @@ extern "C" {
      * @addtogroup FIR_Interpolate
      * @{
      */
+    extern ne10_result_t ne10_fir_interpolate_init_float (ne10_fir_interpolate_instance_f32_t * S,
+            ne10_uint8_t L,
+            ne10_uint16_t numTaps,
+            ne10_float32_t * pCoeffs,
+            ne10_float32_t * pState,
+            ne10_uint32_t blockSize);
+
+    /**
+     * @brief Processing function for the floating-point FIR interpolator.
+     *
+     * @param[in] *S        points to an instance of the floating-point FIR interpolator structure.
+     * @param[in] *pSrc     points to the block of input data.
+     * @param[out] *pDst    points to the block of output data.
+     * @param[in] blockSize number of input samples to process per call.
+     *
+     * Points to @ref ne10_fir_interpolate_float_c or @ref ne10_fir_interpolate_float_neon.
+     */
+    extern void (*ne10_fir_interpolate_float) (const ne10_fir_interpolate_instance_f32_t * S,
+            ne10_float32_t * pSrc,
+            ne10_float32_t * pDst,
+            ne10_uint32_t blockSize);
+    extern void ne10_fir_interpolate_float_c (const ne10_fir_interpolate_instance_f32_t * S,
+            ne10_float32_t * pSrc,
+            ne10_float32_t * pDst,
+            ne10_uint32_t blockSize);
 #ifdef ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON
+    /**
+     * Specific implementation of @ref ne10_fir_interpolate_float using NEON SIMD capabilities.
+     */
     extern void ne10_fir_interpolate_float_neon (const ne10_fir_interpolate_instance_f32_t * S,
             ne10_float32_t *pSrc,
             ne10_float32_t *pDst,
@@ -653,7 +647,33 @@ extern "C" {
      * @addtogroup FIR_Lattice
      * @{
      */
+    extern ne10_result_t ne10_fir_lattice_init_float (ne10_fir_lattice_instance_f32_t * S,
+            ne10_uint16_t numStages,
+            ne10_float32_t * pCoeffs,
+            ne10_float32_t * pState);
+
+    /**
+     * @brief Processing function for the floating-point FIR lattice filter.
+     *
+     * @param[in]  *S        points to an instance of the floating-point FIR lattice structure.
+     * @param[in]  *pSrc     points to the block of input data.
+     * @param[out] *pDst     points to the block of output data
+     * @param[in]  blockSize number of samples to process.
+     *
+     * Points to @ref ne10_fir_lattice_float_c or @ref ne10_fir_lattice_float_neon.
+     */
+    extern void (*ne10_fir_lattice_float) (const ne10_fir_lattice_instance_f32_t * S,
+                                           ne10_float32_t * pSrc,
+                                           ne10_float32_t * pDst,
+                                           ne10_uint32_t blockSize);
+    extern void ne10_fir_lattice_float_c (const ne10_fir_lattice_instance_f32_t * S,
+                                          ne10_float32_t * pSrc,
+                                          ne10_float32_t * pDst,
+                                          ne10_uint32_t blockSize);
 #ifdef ENABLE_NE10_FIR_LATTICE_FLOAT_NEON
+    /**
+     * Specific implementation of @ref ne10_fir_lattice_float using NEON SIMD capabilities.
+     */
     extern void ne10_fir_lattice_float_neon (const ne10_fir_lattice_instance_f32_t * S,
             ne10_float32_t * pSrc,
             ne10_float32_t * pDst,
@@ -665,7 +685,39 @@ extern "C" {
      * @addtogroup FIR_Sparse
      * @{
      */
+    extern ne10_result_t ne10_fir_sparse_init_float (ne10_fir_sparse_instance_f32_t * S,
+            ne10_uint16_t numTaps,
+            ne10_float32_t * pCoeffs,
+            ne10_float32_t * pState,
+            ne10_int32_t * pTapDelay,
+            ne10_uint16_t maxDelay,
+            ne10_uint32_t blockSize);
+
+    /**
+     * @brief Processing function for the floating-point sparse FIR filter.
+     *
+     * @param[in]  *S          points to an instance of the floating-point sparse FIR structure.
+     * @param[in]  *pSrc       points to the block of input data.
+     * @param[out] *pDst       points to the block of output data
+     * @param[in]  *pScratchIn points to a temporary buffer of size blockSize.
+     * @param[in]  blockSize   number of input samples to process per call.
+     *
+     * Points to @ref ne10_fir_sparse_float_c or @ref ne10_fir_sparse_float_neon.
+     */
+    extern void (*ne10_fir_sparse_float) (ne10_fir_sparse_instance_f32_t * S,
+                                          ne10_float32_t * pSrc,
+                                          ne10_float32_t * pDst,
+                                          ne10_float32_t * pScratchIn,
+                                          ne10_uint32_t blockSize);
+    extern void ne10_fir_sparse_float_c (ne10_fir_sparse_instance_f32_t * S,
+                                         ne10_float32_t * pSrc,
+                                         ne10_float32_t * pDst,
+                                         ne10_float32_t * pScratchIn,
+                                         ne10_uint32_t blockSize);
 #ifdef ENABLE_NE10_FIR_SPARSE_FLOAT_NEON
+    /**
+     * Specific implementation of @ref ne10_fir_sparse_float using NEON SIMD capabilities.
+     */
     extern void ne10_fir_sparse_float_neon (ne10_fir_sparse_instance_f32_t * S,
                                             ne10_float32_t * pSrc,
                                             ne10_float32_t * pDst,
@@ -676,13 +728,10 @@ extern "C" {
     /** @} */ // FIR_sparse
 
 
-    /* IIR functions */
-
-    extern void (*ne10_iir_lattice_float) (const ne10_iir_lattice_instance_f32_t * S,
-                                           ne10_float32_t * pSrc,
-                                           ne10_float32_t * pDst,
-                                           ne10_uint32_t blockSize);
-
+    /**
+     * @addtogroup IIR_Lattice
+     * @{
+     */
     extern ne10_result_t ne10_iir_lattice_init_float (ne10_iir_lattice_instance_f32_t * S,
             ne10_uint16_t numStages,
             ne10_float32_t * pkCoeffs,
@@ -690,16 +739,28 @@ extern "C" {
             ne10_float32_t * pState,
             ne10_uint32_t blockSize);
 
+    /**
+     * @brief Processing function for the floating-point IIR lattice filter.
+     *
+     * @param[in] *S points to an instance of the floating-point IIR lattice structure.
+     * @param[in] *pSrc points to the block of input data.
+     * @param[out] *pDst points to the block of output data.
+     * @param[in] blockSize number of samples to process.
+     *
+     * Points to @ref ne10_iir_lattice_float_c or @ref ne10_iir_lattice_float_neon.
+     */
+    extern void (*ne10_iir_lattice_float) (const ne10_iir_lattice_instance_f32_t * S,
+                                           ne10_float32_t * pSrc,
+                                           ne10_float32_t * pDst,
+                                           ne10_uint32_t blockSize);
     extern void ne10_iir_lattice_float_c (const ne10_iir_lattice_instance_f32_t * S,
                                           ne10_float32_t * pSrc,
                                           ne10_float32_t * pDst,
                                           ne10_uint32_t blockSize);
-
-    /**
-     * @addtogroup IIR_Lattice
-     * @{
-     */
 #ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
+    /**
+     * Specific implementation of @ref ne10_iir_lattice_float using NEON SIMD capabilities.
+     */
     extern void ne10_iir_lattice_float_neon (const ne10_iir_lattice_instance_f32_t * S,
             ne10_float32_t * pSrc,
             ne10_float32_t * pDst,

@@ -78,8 +78,6 @@
 
 /**
  * @ingroup groupIMGPROCs
- */
-/**
  * @defgroup IMG_ROTATE Image Rotation
  *
  * \par
@@ -208,20 +206,8 @@ void ne10_img_rotate_get_quad_rangle_subpix_rgba_c (ne10_uint8_t *dst,
 
 
 /**
- * @addtogroup IMG_ROTATE
- * @{
- */
-/**
- * @brief Image rotate of 8-bit data.
- * @param[out]  *dst                  point to the destination image
- * @param[out]  *dst_width            width of destination image
- * @param[out]  *dst_height           height of destination image
- * @param[in]   *src                  point to the source image
- * @param[in]   src_width             width of source image
- * @param[in]   src_height            height of source image
- * @param[in]   angle                 angle of rotate
- *
- * The function extracts pixels from src at sub-pixel accuracy and stores them to dst
+ * @ingroup IMG_ROTATE
+ * Specific implementation of @ref ne10_img_rotate_rgba using plain C.
  */
 void ne10_img_rotate_rgba_c (ne10_uint8_t* dst,
                              ne10_uint32_t* dst_width,
@@ -264,16 +250,8 @@ extern void ne10_img_rotate_get_quad_rangle_subpix_rgba_neon (ne10_uint8_t *dst,
     asm("ne10_img_rotate_get_quad_rangle_subpix_rgba_neon");
 
 /**
- * @brief Image rotate of 8-bit data.
- * @param[out]  *dst                  point to the destination image
- * @param[out]  *dst_width            width of destination image
- * @param[out]  *dst_height           height of destination image
- * @param[in]   *src                  point to the source image
- * @param[in]   src_width             width of source image
- * @param[in]   src_height            height of source image
- * @param[in]   angle                 angle of rotate
- *
- * The function extracts pixels from src at sub-pixel accuracy and stores them to dst.
+ * @ingroup IMG_ROTATE
+ * Specific implementation of @ref ne10_img_rotate_rgba using NEON SIMD capabilities.
  */
 void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
                                 ne10_uint32_t* dst_width,
@@ -304,8 +282,4 @@ void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
     *dst_height = dsth;
     ne10_img_rotate_get_quad_rangle_subpix_rgba_neon (dst, src, srcw, srch, dstw, dsth, m);
 }
-
-/**
- * @} end of IMG_ROTATE group
- */
 #endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON

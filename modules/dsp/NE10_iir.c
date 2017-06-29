@@ -107,13 +107,8 @@
  */
 
 /**
- * @brief Processing function for the floating-point IIR lattice filter.
- * @param[in] *S points to an instance of the floating-point IIR lattice structure.
- * @param[in] *pSrc points to the block of input data.
- * @param[out] *pDst points to the block of output data.
- * @param[in] blockSize number of samples to process.
+ * Specific implementation of @ref ne10_iir_lattice_float using plain C.
  */
-
 void ne10_iir_lattice_float_c (const ne10_iir_lattice_instance_f32_t * S,
                                ne10_float32_t * pSrc,
                                ne10_float32_t * pDst,

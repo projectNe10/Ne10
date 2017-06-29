@@ -30,6 +30,7 @@
 #include "NE10_types.h"
 
 /**
+ * @ingroup FIR
  * @details
  *
  * @param[in,out] *S points to an instance of the floating-point FIR filter structure.
@@ -70,7 +71,9 @@ ne10_result_t ne10_fir_init_float (ne10_fir_instance_f32_t * S,
 }
 
 /**
+ * @ingroup FIR_Decimate
  * @brief Initialization function for the floating-point FIR decimator.
+ *
  * @param[in,out] *S points to an instance of the floating-point FIR decimator structure.
  * @param[in] numTaps  number of coefficients in the filter.
  * @param[in] M  decimation factor.
@@ -133,7 +136,9 @@ ne10_result_t ne10_fir_decimate_init_float (
 }
 
 /**
+ * @ingroup FIR_Interpolate
  * @brief Initialization function for the floating-point FIR interpolator.
+ *
  * @param[in,out] *S        points to an instance of the floating-point FIR interpolator structure.
  * @param[in]     L         upsample factor.
  * @param[in]     numTaps   number of filter coefficients in the filter.
@@ -200,7 +205,9 @@ ne10_result_t ne10_fir_interpolate_init_float (
 }
 
 /**
+ * @ingroup FIR_Lattice
  * @brief Initialization function for the floating-point FIR lattice filter.
+ *
  * @param[in] *S points to an instance of the floating-point FIR lattice structure.
  * @param[in] numStages  number of filter stages.
  * @param[in] *pCoeffs points to the coefficient buffer.  The array is of length numStages.
@@ -229,7 +236,9 @@ ne10_result_t ne10_fir_lattice_init_float (
 }
 
 /**
+ * @ingroup FIR_Sparse
  * @brief Initialization function for the floating-point sparse FIR filter.
+ *
  * @param[in,out] *S         points to an instance of the floating-point sparse FIR structure.
  * @param[in]     numTaps    number of nonzero coefficients in the filter.
  * @param[in]     *pCoeffs   points to the array of filter coefficients.

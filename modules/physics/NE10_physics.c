@@ -77,19 +77,8 @@ static inline ne10_vec2f_t max_2f (ne10_vec2f_t a, ne10_vec2f_t b)
 }
 
 /**
- * @addtogroup COLLISION_DETECT
- * @{
- */
-
-/**
- * @brief Compute the AABB for a polygon.
- * @param[out] *aabb               return axis aligned box
- * @param[in]  *vertices           a convex polygon
- * @param[in]  *xf                 the position and orientation of rigid
- * @param[in]  radius              the aligned bounding
- * @param[in]  vertex_count        vertices count of convex ploygen
- *
- * The function computes the AABB for a polygon with vertex_count > 0.
+ * @ingroup COLLISION_DETECT
+ * Specific implementation of @ref ne10_physics_compute_aabb_vec2f using plain C.
  */
 void ne10_physics_compute_aabb_vec2f_c (ne10_mat2x2f_t *aabb,
                                         ne10_vec2f_t *vertices,
@@ -117,15 +106,8 @@ void ne10_physics_compute_aabb_vec2f_c (ne10_mat2x2f_t *aabb,
 }
 
 /**
- * @brief Calculate relative velocity at contact.
- * @param[out] *dv               return relative velocity
- * @param[in]  *v_wa             velocity and angular velocity of body a
- * @param[in]  *ra               distance vector from center of mass of body a to contact point
- * @param[in]  *v_wb             velocity and angular velocity of body b
- * @param[in]  *rb               distance vector from center of mass of body b to contact point
- * @param[in]  count             the number of items
- *
- * To improve performance, two items are processed in one loop.
+ * @ingroup COLLISION_DETECT
+ * Specific implementation of @ref ne10_physics_relative_v_vec2f using plain C.
  */
 void ne10_physics_relative_v_vec2f_c (ne10_vec2f_t *dv,
                                       ne10_vec3f_t *v_wa,
@@ -158,17 +140,8 @@ void ne10_physics_relative_v_vec2f_c (ne10_vec2f_t *dv,
 }
 
 /**
- * @brief Apply contact impulse.
- * @param[in,out] *v_wa          return velocity and angular velocity of body a
- * @param[in,out] *v_wb          return velocity and angular velocity of body b
- * @param[in]  *ra               distance vector from center of mass of body a to contact point
- * @param[in]  *rb               distance vector from center of mass of body b to contact point
- * @param[in]  *ima              constant of body a
- * @param[in]  *imb              constant of body b
- * @param[in]  *p                constant
- * @param[in]  count             the number of items
- *
- * To improve performance, two items are processed in one loop.
+ * @ingroup COLLISION_DETECT
+ * Specific implementation of @ref ne10_physics_apply_impulse_vec2f using plain C.
  */
 void ne10_physics_apply_impulse_vec2f_c (ne10_vec3f_t *v_wa,
         ne10_vec3f_t *v_wb,
@@ -200,6 +173,3 @@ void ne10_physics_apply_impulse_vec2f_c (ne10_vec3f_t *v_wa,
         p++;
     }
 }
-/**
- * @} end of COLLISION_DETECT group
- */

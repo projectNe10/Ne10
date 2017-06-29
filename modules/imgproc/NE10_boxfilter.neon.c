@@ -33,9 +33,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <arm_neon.h>
-/**
- * @ingroup groupIMGPROCs
- */
 
 extern void ne10_img_boxfilter_row_border (const ne10_uint8_t* src,
                                            ne10_uint8_t* dst,
@@ -414,18 +411,9 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
 
 /**
  * @ingroup IMG_BOXFILTER
- * @brief NEON optimized box filter.
- * @param[out]  *dst                  point to the destination image
- * @param[in]   *src                  point to the source image
- * @param[in]   src_sz              source image size struction
- * @param[in]   src_stride            stride of source image
- * @param[in]   dst_stride            stride of destination image
- * @param[in]   kernel                kernel size of box filter, both of kernel
- * edge supports from 2 to 127 are all supported. and for 1 and larger than 127
- * case, it is supported by calling the c version of box filter
- *
- * The function implements box filter, destination image's size is smae as
- * source image
+ * Specific implementation of @ref ne10_img_boxfilter_rgba8888 using NEON SIMD capabilities.
+ * Calls through to the non-optimised @ref ne10_img_boxfilter_rgba8888_c routine for
+ * kernels with sides smaller than 2 pixels or larger than 127 pixels.
  */
 void ne10_img_boxfilter_rgba8888_neon (const ne10_uint8_t *src,
                                        ne10_uint8_t *dst,

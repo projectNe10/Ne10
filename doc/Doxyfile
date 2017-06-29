@@ -1507,7 +1507,17 @@ INCLUDE_FILE_PATTERNS  =
 # undefined via #undef or recursively expanded use the := operator
 # instead of the = operator.
 
-PREDEFINED             = __attribute__(x)=
+PREDEFINED             = __attribute__(x)= \
+                         ENABLE_NE10_FIR_FLOAT_NEON \
+                         ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON \
+                         ENABLE_NE10_FIR_INTERPOLATE_FLOAT_NEON \
+                         ENABLE_NE10_FIR_LATTICE_FLOAT_NEON \
+                         ENABLE_NE10_FIR_SPARSE_FLOAT_NEON \
+                         ENABLE_NE10_IIR_LATTICE_FLOAT_NEON \
+                         ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON \
+                         ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON \
+                         ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON \
+                         ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then
 # this tag can be used to specify a list of macro names that should be expanded.

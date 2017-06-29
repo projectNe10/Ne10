@@ -334,24 +334,12 @@ void ne10_img_boxfilter_col_c (const ne10_uint8_t *src,
 
 /**
  * @ingroup groupIMGPROCs
- * @defgroup IMG_BOXFILTER Image Box Filter
- * @{
+ * @defgroup IMG_BOXFILTER Image Box Filter (Blur)
  */
 
 /**
  * @ingroup IMG_BOXFILTER
- * @brief Box filter.
- * @param[out]  *dst                  point to the destination image
- * @param[in]   *src                  point to the source image
- * @param[in]   src_sz              source image size struction
- * @param[in]   src_stride            stride of source image
- * @param[in]   dst_stride            stride of destination image
- * @param[in]   kernel                kernel size of box filter, both of kernel edge
- * supports from 1 to 65535, that is 1x1 1x2 1x3 ... 1x65535 2x1 2x2 2x3 ... 2x65535
- * ... are all supported.
- *
- * The function implements box filter, where the destination image size is the same as
- * that of the source image.
+ * Specific implementation of @ref ne10_img_boxfilter_rgba8888 using plain C.
  */
 void ne10_img_boxfilter_rgba8888_c (const ne10_uint8_t *src,
                                     ne10_uint8_t *dst,

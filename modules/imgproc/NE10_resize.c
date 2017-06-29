@@ -440,21 +440,8 @@ static void ne10_img_resize_generic_linear_neon (ne10_uint8_t* src,
 }
 
 /**
- * @addtogroup IMG_RESIZE
- * @{
- */
-
-/**
- * @brief Image resize of 8-bit data.
- * @param[out]  *dst                  point to the destination image
- * @param[in]   dst_width             width of destination image
- * @param[in]   dst_height            height of destination image
- * @param[in]   *src                  point to the source image
- * @param[in]   src_width             width of source image
- * @param[in]   src_height            height of source image
- * @param[in]   src_stride            stride of source buffer
- *
- * The function implements image resize.
+ * @ingroup IMG_RESIZE
+ * Specific implementation of @ref ne10_img_resize_bilinear_rgba using plain C.
  */
 void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
                                       ne10_uint32_t dst_width,
@@ -494,16 +481,8 @@ void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
 }
 
 /**
- * @brief Image resize of 8-bit data.
- * @param[out]  *dst                  point to the destination image
- * @param[in]   dst_width             width of destination image
- * @param[in]   dst_height            height of destination image
- * @param[in]   *src                  point to the source image
- * @param[in]   src_width             width of source image
- * @param[in]   src_height            height of source image
- * @param[in]   src_stride            stride of source buffer
- *
- * The function implements image resize.
+ * @ingroup IMG_RESIZE
+ * Specific implementation of @ref ne10_img_resize_bilinear_rgba using NEON SIMD capabilities.
  */
 void ne10_img_resize_bilinear_rgba_neon (ne10_uint8_t* dst,
         ne10_uint32_t dst_width,

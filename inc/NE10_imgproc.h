@@ -38,15 +38,23 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
     ne10_result_t ne10_init_imgproc (ne10_int32_t is_NEON_available);
 
-///////////////////////////
-// function prototypes:
-///////////////////////////
-
-    /* image resize functions*/
-    /* function pointers*/
+    /**
+     * @ingroup IMG_RESIZE
+     * @brief Image resize of 8-bit data.
+     *
+     * @param[out]  *dst                  point to the destination image
+     * @param[in]   dst_width             width of destination image
+     * @param[in]   dst_height            height of destination image
+     * @param[in]   *src                  point to the source image
+     * @param[in]   src_width             width of source image
+     * @param[in]   src_height            height of source image
+     * @param[in]   src_stride            stride of source buffer
+     *
+     * The function implements image resize.
+     * Points to @ref ne10_img_resize_bilinear_rgba_c or @ref ne10_img_resize_bilinear_rgba_neon.
+     */
     extern void (*ne10_img_resize_bilinear_rgba) (ne10_uint8_t* dst,
             ne10_uint32_t dst_width,
             ne10_uint32_t dst_height,
@@ -54,7 +62,6 @@ extern "C" {
             ne10_uint32_t src_width,
             ne10_uint32_t src_height,
             ne10_uint32_t src_stride);
-    /* C version*/
     extern void ne10_img_resize_bilinear_rgba_c (ne10_uint8_t* dst,
             ne10_uint32_t dst_width,
             ne10_uint32_t dst_height,
@@ -62,7 +69,6 @@ extern "C" {
             ne10_uint32_t src_width,
             ne10_uint32_t src_height,
             ne10_uint32_t src_stride);
-    /* NEON version*/
     extern void ne10_img_resize_bilinear_rgba_neon (ne10_uint8_t* dst,
             ne10_uint32_t dst_width,
             ne10_uint32_t dst_height,
@@ -72,8 +78,21 @@ extern "C" {
             ne10_uint32_t src_stride)
     asm ("ne10_img_resize_bilinear_rgba_neon");
 
-    /* image rotate functions*/
-    /* function pointers*/
+    /**
+     * @ingroup IMG_ROTATE
+     * @brief Image rotate of 8-bit data.
+     *
+     * @param[out]  *dst                  point to the destination image
+     * @param[out]  *dst_width            width of destination image
+     * @param[out]  *dst_height           height of destination image
+     * @param[in]   *src                  point to the source image
+     * @param[in]   src_width             width of source image
+     * @param[in]   src_height            height of source image
+     * @param[in]   angle                 angle of rotate
+     *
+     * The function extracts pixels from src at sub-pixel accuracy and stores them to dst.
+     * Points to @ref ne10_img_rotate_rgba_c or @ref ne10_img_rotate_rgba_neon.
+     */
     extern void (*ne10_img_rotate_rgba) (ne10_uint8_t* dst,
                                          ne10_uint32_t* dst_width,
                                          ne10_uint32_t* dst_height,
@@ -81,7 +100,6 @@ extern "C" {
                                          ne10_uint32_t src_width,
                                          ne10_uint32_t src_height,
                                          ne10_int32_t angle);
-    /* C version*/
     extern void ne10_img_rotate_rgba_c (ne10_uint8_t* dst,
                                         ne10_uint32_t* dst_width,
                                         ne10_uint32_t* dst_height,
@@ -90,7 +108,6 @@ extern "C" {
                                         ne10_uint32_t src_height,
                                         ne10_int32_t angle);
 #ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
-    /* NEON version*/
     extern void ne10_img_rotate_rgba_neon (ne10_uint8_t* dst,
                                            ne10_uint32_t* dst_width,
                                            ne10_uint32_t* dst_height,
@@ -101,22 +118,38 @@ extern "C" {
     asm ("ne10_img_rotate_rgba_neon");
 #endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON
 
-    /* image boxfilter functions */
-    /* function pointers */
+    /**
+     * @ingroup IMG_BOXFILTER
+     * @brief Box blur of RGBA8888 image data
+     *
+     * @param[out]  *dst       pointer to the output buffer
+     * @param[in]   *src       pointer to the input buffer
+     * @param[in]   src_sz     size of the source image
+     * @param[in]   src_stride source stride
+     * @param[in]   dst_stride destination stride
+     * @param[in]   kernel     blurring kernel size (with sides between 1 and 65535 pixels wide)
+     *
+     * Applies a box filter (also known as a [box blur](https://en.wikipedia.org/wiki/Box_blur))
+     * to an input image in the RGBA8888 format, producing a blurred output
+     * image of the same size and format. The blurring kernel is anchored at its
+     * center. When values must be obtained from beyond the source image
+     * boundaries, zero-valued pixels are assumed.
+     *
+     * Points to @ref ne10_img_boxfilter_rgba8888_c or
+     * @ref ne10_img_boxfilter_rgba8888_neon. This is an out-of-place algorithm.
+     */
     extern void (*ne10_img_boxfilter_rgba8888) (const ne10_uint8_t *src,
             ne10_uint8_t *dst,
             ne10_size_t src_size,
             ne10_int32_t src_stride,
             ne10_int32_t dst_stride,
             ne10_size_t kernel_size);
-    /* C version*/
     extern void ne10_img_boxfilter_rgba8888_c (const ne10_uint8_t *src,
             ne10_uint8_t *dst,
             ne10_size_t src_size,
             ne10_int32_t src_stride,
             ne10_int32_t dst_stride,
             ne10_size_t kernel_size);
-    /* NEON version*/
     extern void ne10_img_boxfilter_rgba8888_neon (const ne10_uint8_t *src,
             ne10_uint8_t *dst,
             ne10_size_t src_size,

@@ -38,60 +38,32 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
     ne10_result_t ne10_init_physics (ne10_int32_t is_NEON_available);
 
-///////////////////////////
-// function prototypes:
-///////////////////////////
-
-    /* function pointers*/
+    /**
+     * @ingroup COLLISION_DETECT
+     * @brief Compute the AABB for a polygon.
+     *
+     * @param[out] *aabb               return axis aligned box
+     * @param[in]  *vertices           a convex polygon
+     * @param[in]  *xf                 the position and orientation of rigid
+     * @param[in]  radius              the aligned bounding
+     * @param[in]  vertex_count        vertices count of convex ploygen
+     *
+     * The function computes the AABB for a polygon. Points to @ref ne10_physics_compute_aabb_vec2f_c
+     * or @ref ne10_physics_compute_aabb_vec2f_neon, the latter of which requires that vertex_count
+     * is a multiple of 4.
+     */
     extern void (*ne10_physics_compute_aabb_vec2f) (ne10_mat2x2f_t *aabb,
             ne10_vec2f_t *vertices,
             ne10_mat2x2f_t *xf,
             ne10_vec2f_t *radius,
             ne10_uint32_t vertex_count);
-    extern void (*ne10_physics_relative_v_vec2f) (ne10_vec2f_t *dv,
-            ne10_vec3f_t *v_wa,
-            ne10_vec2f_t *ra,
-            ne10_vec3f_t *v_wb,
-            ne10_vec2f_t *rb,
-            ne10_uint32_t count);
-    extern void (*ne10_physics_apply_impulse_vec2f) (ne10_vec3f_t *v_wa,
-            ne10_vec3f_t *v_wb,
-            ne10_vec2f_t *ra,
-            ne10_vec2f_t *rb,
-            ne10_vec2f_t *ima,
-            ne10_vec2f_t *imb,
-            ne10_vec2f_t *p,
-            ne10_uint32_t count);
-
-    /* C version*/
     extern void ne10_physics_compute_aabb_vec2f_c (ne10_mat2x2f_t *aabb,
             ne10_vec2f_t *vertices,
             ne10_mat2x2f_t *xf,
             ne10_vec2f_t *radius,
             ne10_uint32_t vertex_count);
-    extern void ne10_physics_relative_v_vec2f_c (ne10_vec2f_t *dv,
-            ne10_vec3f_t *v_wa,
-            ne10_vec2f_t *ra,
-            ne10_vec3f_t *v_wb,
-            ne10_vec2f_t *rb,
-            ne10_uint32_t count);
-    extern void ne10_physics_apply_impulse_vec2f_c (ne10_vec3f_t *v_wa,
-            ne10_vec3f_t *v_wb,
-            ne10_vec2f_t *ra,
-            ne10_vec2f_t *rb,
-            ne10_vec2f_t *ima,
-            ne10_vec2f_t *imb,
-            ne10_vec2f_t *p,
-            ne10_uint32_t count);
-
-    /* NEON version*/
-    /**
-     * @addtogroup COLLISION_DETECT
-     * @{
-     */
 #ifdef ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
     extern void ne10_physics_compute_aabb_vec2f_neon (ne10_mat2x2f_t *aabb,
             ne10_vec2f_t *vertices,
@@ -100,7 +72,37 @@ extern "C" {
             ne10_uint32_t vertex_count);
 #endif // ENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON
 
+    /**
+     * @ingroup COLLISION_DETECT
+     * @brief Calculate relative velocity at contact.
+     *
+     * @param[out] *dv               return relative velocity
+     * @param[in]  *v_wa             velocity and angular velocity of body a
+     * @param[in]  *ra               distance vector from center of mass of body a to contact point
+     * @param[in]  *v_wb             velocity and angular velocity of body b
+     * @param[in]  *rb               distance vector from center of mass of body b to contact point
+     * @param[in]  count             the number of items
+     *
+     * To improve performance, two items are processed in one loop.
+     * Points to @ref ne10_physics_relative_v_vec2f_c or @ref ne10_physics_relative_v_vec2f_neon.
+     */
+    extern void (*ne10_physics_relative_v_vec2f) (ne10_vec2f_t *dv,
+            ne10_vec3f_t *v_wa,
+            ne10_vec2f_t *ra,
+            ne10_vec3f_t *v_wb,
+            ne10_vec2f_t *rb,
+            ne10_uint32_t count);
+    extern void ne10_physics_relative_v_vec2f_c (ne10_vec2f_t *dv,
+            ne10_vec3f_t *v_wa,
+            ne10_vec2f_t *ra,
+            ne10_vec3f_t *v_wb,
+            ne10_vec2f_t *rb,
+            ne10_uint32_t count);
 #ifdef ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
+    /**
+     * @ingroup COLLISION_DETECT
+     * Specific implementation of @ref ne10_physics_relative_v_vec2f using NEON SIMD capabilities.
+     */
     extern void ne10_physics_relative_v_vec2f_neon (ne10_vec2f_t *dv,
             ne10_vec3f_t *v_wa,
             ne10_vec2f_t *ra,
@@ -110,7 +112,43 @@ extern "C" {
     asm ("ne10_physics_relative_v_vec2f_neon");
 #endif // ENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON
 
+    /**
+     * @ingroup COLLISION_DETECT
+     * @brief Apply contact impulse.
+     *
+     * @param[in,out] *v_wa          return velocity and angular velocity of body a
+     * @param[in,out] *v_wb          return velocity and angular velocity of body b
+     * @param[in]  *ra               distance vector from center of mass of body a to contact point
+     * @param[in]  *rb               distance vector from center of mass of body b to contact point
+     * @param[in]  *ima              constant of body a
+     * @param[in]  *imb              constant of body b
+     * @param[in]  *p                constant
+     * @param[in]  count             the number of items
+     *
+     * To improve performance, two items are processed in one loop.
+     * Points to @ref ne10_physics_apply_impulse_vec2f_c or @ref ne10_physics_apply_impulse_vec2f_neon.
+     */
+    extern void (*ne10_physics_apply_impulse_vec2f) (ne10_vec3f_t *v_wa,
+            ne10_vec3f_t *v_wb,
+            ne10_vec2f_t *ra,
+            ne10_vec2f_t *rb,
+            ne10_vec2f_t *ima,
+            ne10_vec2f_t *imb,
+            ne10_vec2f_t *p,
+            ne10_uint32_t count);
+    extern void ne10_physics_apply_impulse_vec2f_c (ne10_vec3f_t *v_wa,
+            ne10_vec3f_t *v_wb,
+            ne10_vec2f_t *ra,
+            ne10_vec2f_t *rb,
+            ne10_vec2f_t *ima,
+            ne10_vec2f_t *imb,
+            ne10_vec2f_t *p,
+            ne10_uint32_t count);
 #ifdef ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
+    /**
+     * @ingroup COLLISION_DETECT
+     * Specific implementation of @ref ne10_physics_apply_impulse_vec2f using NEON SIMD capabilities.
+     */
     extern void ne10_physics_apply_impulse_vec2f_neon (ne10_vec3f_t *v_wa,
             ne10_vec3f_t *v_wb,
             ne10_vec2f_t *ra,
@@ -121,10 +159,6 @@ extern "C" {
             ne10_uint32_t count)
     asm ("ne10_physics_apply_impulse_vec2f_neon");
 #endif // ENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON
-    /**
-     * @} end of COLLISION_DETECT group
-     */
-
 
 #ifdef __cplusplus
 }
