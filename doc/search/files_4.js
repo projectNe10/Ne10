@@ -81,6 +81,7 @@ var searchData=
   ['ne10_5fsample_5ffir_2ec',['NE10_sample_fir.c',['../NE10__sample__fir_8c.html',1,'']]],
   ['ne10_5fsample_5fintro_2ec',['NE10_sample_intro.c',['../NE10__sample__intro_8c.html',1,'']]],
   ['ne10_5fsample_5fmatrix_5fmultiply_2ec',['NE10_sample_matrix_multiply.c',['../NE10__sample__matrix__multiply_8c.html',1,'']]],
+  ['ne10_5fsample_5freal_5ffft_2ec',['NE10_sample_real_fft.c',['../NE10__sample__real__fft_8c.html',1,'']]],
   ['ne10_5fsamples_2ec',['NE10_samples.c',['../NE10__samples_8c.html',1,'']]],
   ['ne10_5fsetc_2ec',['NE10_setc.c',['../NE10__setc_8c.html',1,'']]],
   ['ne10_5fsetc_2eneon_2ec',['NE10_setc.neon.c',['../NE10__setc_8neon_8c.html',1,'']]],

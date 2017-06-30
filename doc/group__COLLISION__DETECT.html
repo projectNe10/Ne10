@@ -80,7 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Collision Detection<div class="ingroups"><a class="el" href="group__groupPhysics.html">Physics Functions</a></div></div>  </div>
 </div><!--header-->
@@ -88,15 +89,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga4414d7b6527a55655586783220d3e35b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga4414d7b6527a55655586783220d3e35b">ne10_physics_relative_v_vec2f_neon</a> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dv, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_physics_relative_v_vec2f_neon&quot;)</td></tr>
+<tr class="memdesc:ga4414d7b6527a55655586783220d3e35b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gacc329104c83f594529f6aea800c17a61">ne10_physics_relative_v_vec2f</a> using NEON SIMD capabilities.  <a href="#ga4414d7b6527a55655586783220d3e35b">More...</a><br /></td></tr>
+<tr class="separator:ga4414d7b6527a55655586783220d3e35b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1448f192d65e34b32b63800541ad1ea4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga1448f192d65e34b32b63800541ad1ea4">ne10_physics_apply_impulse_vec2f_neon</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ima, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *imb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *p, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_physics_apply_impulse_vec2f_neon&quot;)</td></tr>
+<tr class="memdesc:ga1448f192d65e34b32b63800541ad1ea4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gafed4ebc378dfcc8853f0047554ddc1c4">ne10_physics_apply_impulse_vec2f</a> using NEON SIMD capabilities.  <a href="#ga1448f192d65e34b32b63800541ad1ea4">More...</a><br /></td></tr>
+<tr class="separator:ga1448f192d65e34b32b63800541ad1ea4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga56217a1498088bfdcf766162f5bed082"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga56217a1498088bfdcf766162f5bed082">ne10_physics_compute_aabb_vec2f_c</a> (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *aabb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *vertices, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *xf, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *radius, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> vertex_count)</td></tr>
-<tr class="memdesc:ga56217a1498088bfdcf766162f5bed082"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the AABB for a polygon.  <a href="#ga56217a1498088bfdcf766162f5bed082">More...</a><br /></td></tr>
+<tr class="memdesc:ga56217a1498088bfdcf766162f5bed082"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#ga3545b96144021eb1bd9c182c477573e7">ne10_physics_compute_aabb_vec2f</a> using plain C.  <a href="#ga56217a1498088bfdcf766162f5bed082">More...</a><br /></td></tr>
 <tr class="separator:ga56217a1498088bfdcf766162f5bed082"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8bbbab93df2edc94845635ca49b6e4fb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga8bbbab93df2edc94845635ca49b6e4fb">ne10_physics_relative_v_vec2f_c</a> (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dv, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
-<tr class="memdesc:ga8bbbab93df2edc94845635ca49b6e4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate relative velocity at contact.  <a href="#ga8bbbab93df2edc94845635ca49b6e4fb">More...</a><br /></td></tr>
+<tr class="memdesc:ga8bbbab93df2edc94845635ca49b6e4fb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gacc329104c83f594529f6aea800c17a61">ne10_physics_relative_v_vec2f</a> using plain C.  <a href="#ga8bbbab93df2edc94845635ca49b6e4fb">More...</a><br /></td></tr>
 <tr class="separator:ga8bbbab93df2edc94845635ca49b6e4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga5a2aacf9ec76997b40964898f11ce74a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga5a2aacf9ec76997b40964898f11ce74a">ne10_physics_apply_impulse_vec2f_c</a> (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ima, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *imb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *p, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
-<tr class="memdesc:ga5a2aacf9ec76997b40964898f11ce74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply contact impulse.  <a href="#ga5a2aacf9ec76997b40964898f11ce74a">More...</a><br /></td></tr>
+<tr class="memdesc:ga5a2aacf9ec76997b40964898f11ce74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gafed4ebc378dfcc8853f0047554ddc1c4">ne10_physics_apply_impulse_vec2f</a> using plain C.  <a href="#ga5a2aacf9ec76997b40964898f11ce74a">More...</a><br /></td></tr>
 <tr class="separator:ga5a2aacf9ec76997b40964898f11ce74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c6bbe58953fe01d89c570a9b927b543"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga2c6bbe58953fe01d89c570a9b927b543">ne10_physics_compute_aabb_vec2f_neon</a> (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *aabb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *vertices, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *xf, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *radius, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> vertex_count)</td></tr>
+<tr class="memdesc:ga2c6bbe58953fe01d89c570a9b927b543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#ga3545b96144021eb1bd9c182c477573e7">ne10_physics_compute_aabb_vec2f</a> using NEON SIMD capabilities.  <a href="#ga2c6bbe58953fe01d89c570a9b927b543">More...</a><br /></td></tr>
+<tr class="separator:ga2c6bbe58953fe01d89c570a9b927b543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga3545b96144021eb1bd9c182c477573e7"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga3545b96144021eb1bd9c182c477573e7">ne10_physics_compute_aabb_vec2f</a> )(<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *aabb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *vertices, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *xf, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *radius, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> vertex_count)</td></tr>
+<tr class="memdesc:ga3545b96144021eb1bd9c182c477573e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute the AABB for a polygon.  <a href="#ga3545b96144021eb1bd9c182c477573e7">More...</a><br /></td></tr>
+<tr class="separator:ga3545b96144021eb1bd9c182c477573e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc329104c83f594529f6aea800c17a61"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#gacc329104c83f594529f6aea800c17a61">ne10_physics_relative_v_vec2f</a> )(<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dv, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gacc329104c83f594529f6aea800c17a61"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate relative velocity at contact.  <a href="#gacc329104c83f594529f6aea800c17a61">More...</a><br /></td></tr>
+<tr class="separator:gacc329104c83f594529f6aea800c17a61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafed4ebc378dfcc8853f0047554ddc1c4"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#gafed4ebc378dfcc8853f0047554ddc1c4">ne10_physics_apply_impulse_vec2f</a> )(<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ima, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *imb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *p, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td></tr>
+<tr class="memdesc:gafed4ebc378dfcc8853f0047554ddc1c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply contact impulse.  <a href="#gafed4ebc378dfcc8853f0047554ddc1c4">More...</a><br /></td></tr>
+<tr class="separator:gafed4ebc378dfcc8853f0047554ddc1c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>Collision detection typically refers to the computational problem of detecting the intersection of two or more objects. </dd></dl>
@@ -162,23 +184,73 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Apply contact impulse. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*v_wa</td><td>return velocity and angular velocity of body a </td></tr>
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">*v_wb</td><td>return velocity and angular velocity of body b </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*ra</td><td>distance vector from center of mass of body a to contact point </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*rb</td><td>distance vector from center of mass of body b to contact point </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*ima</td><td>constant of body a </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*imb</td><td>constant of body b </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*p</td><td>constant </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>the number of items</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>To improve performance, two items are processed in one loop. </p>
+<p>Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gafed4ebc378dfcc8853f0047554ddc1c4">ne10_physics_apply_impulse_vec2f</a> using plain C. </p>
 
-<p>Definition at line <a class="el" href="NE10__physics_8c_source.html#l00173">173</a> of file <a class="el" href="NE10__physics_8c_source.html">NE10_physics.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__physics_8c_source.html#l00146">146</a> of file <a class="el" href="NE10__physics_8c_source.html">NE10_physics.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga1448f192d65e34b32b63800541ad1ea4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_physics_apply_impulse_vec2f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>v_wa</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>v_wb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>ra</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>rb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>ima</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>imb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gafed4ebc378dfcc8853f0047554ddc1c4">ne10_physics_apply_impulse_vec2f</a> using NEON SIMD capabilities. </p>
 
 </div>
 </div>
@@ -224,20 +296,58 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Compute the AABB for a polygon. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*aabb</td><td>return axis aligned box </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*vertices</td><td>a convex polygon </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*xf</td><td>the position and orientation of rigid </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">radius</td><td>the aligned bounding </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">vertex_count</td><td>vertices count of convex ploygen</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The function computes the AABB for a polygon with vertex_count &gt; 0. </p>
+<p>Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#ga3545b96144021eb1bd9c182c477573e7">ne10_physics_compute_aabb_vec2f</a> using plain C. </p>
 
-<p>Definition at line <a class="el" href="NE10__physics_8c_source.html#l00094">94</a> of file <a class="el" href="NE10__physics_8c_source.html">NE10_physics.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__physics_8c_source.html#l00083">83</a> of file <a class="el" href="NE10__physics_8c_source.html">NE10_physics.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga2c6bbe58953fe01d89c570a9b927b543"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_physics_compute_aabb_vec2f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>aabb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>xf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>vertex_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#ga3545b96144021eb1bd9c182c477573e7">ne10_physics_compute_aabb_vec2f</a> using NEON SIMD capabilities. </p>
+<p>To improve performance, four vertices are processed per loop iteration. As such, vertex_count must be a multiple of four. </p>
+
+<p>Definition at line <a class="el" href="NE10__physics_8neon_8c_source.html#l00082">82</a> of file <a class="el" href="NE10__physics_8neon_8c_source.html">NE10_physics.neon.c</a>.</p>
 
 </div>
 </div>
@@ -289,6 +399,132 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gacc329104c83f594529f6aea800c17a61">ne10_physics_relative_v_vec2f</a> using plain C. </p>
+
+<p>Definition at line <a class="el" href="NE10__physics_8c_source.html#l00112">112</a> of file <a class="el" href="NE10__physics_8c_source.html">NE10_physics.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga4414d7b6527a55655586783220d3e35b"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_physics_relative_v_vec2f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>dv</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>v_wa</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>ra</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *&#160;</td>
+          <td class="paramname"><em>v_wb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>rb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#gacc329104c83f594529f6aea800c17a61">ne10_physics_relative_v_vec2f</a> using NEON SIMD capabilities. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="gafed4ebc378dfcc8853f0047554ddc1c4"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_physics_apply_impulse_vec2f) (<a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ima, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *imb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *p, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Apply contact impulse. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*v_wa</td><td>return velocity and angular velocity of body a </td></tr>
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*v_wb</td><td>return velocity and angular velocity of body b </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*ra</td><td>distance vector from center of mass of body a to contact point </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*rb</td><td>distance vector from center of mass of body b to contact point </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*ima</td><td>constant of body a </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*imb</td><td>constant of body b </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*p</td><td>constant </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>the number of items</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>To improve performance, two items are processed in one loop. Points to <a class="el" href="group__COLLISION__DETECT.html#ga5a2aacf9ec76997b40964898f11ce74a">ne10_physics_apply_impulse_vec2f_c</a> or <a class="el" href="group__COLLISION__DETECT.html#ga1448f192d65e34b32b63800541ad1ea4">ne10_physics_apply_impulse_vec2f_neon</a>. </p>
+
+<p>Definition at line <a class="el" href="NE10__init__physics_8c_source.html#l00079">79</a> of file <a class="el" href="NE10__init__physics_8c_source.html">NE10_init_physics.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga3545b96144021eb1bd9c182c477573e7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_physics_compute_aabb_vec2f) (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *aabb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *vertices, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *xf, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *radius, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> vertex_count)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Compute the AABB for a polygon. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">*aabb</td><td>return axis aligned box </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*vertices</td><td>a convex polygon </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*xf</td><td>the position and orientation of rigid </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">radius</td><td>the aligned bounding </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vertex_count</td><td>vertices count of convex ploygen</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>The function computes the AABB for a polygon. Points to <a class="el" href="group__COLLISION__DETECT.html#ga56217a1498088bfdcf766162f5bed082">ne10_physics_compute_aabb_vec2f_c</a> or <a class="el" href="group__COLLISION__DETECT.html#ga2c6bbe58953fe01d89c570a9b927b543">ne10_physics_compute_aabb_vec2f_neon</a>, the latter of which requires that vertex_count is a multiple of 4. </p>
+
+<p>Definition at line <a class="el" href="NE10__init__physics_8c_source.html#l00068">68</a> of file <a class="el" href="NE10__init__physics_8c_source.html">NE10_init_physics.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gacc329104c83f594529f6aea800c17a61"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_physics_relative_v_vec2f) (<a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *dv, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wa, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *ra, <a class="el" href="structne10__vec3f__t.html">ne10_vec3f_t</a> *v_wb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *rb, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> count)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Calculate relative velocity at contact. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -301,16 +537,16 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>To improve performance, two items are processed in one loop. </p>
+<p>To improve performance, two items are processed in one loop. Points to <a class="el" href="group__COLLISION__DETECT.html#ga8bbbab93df2edc94845635ca49b6e4fb">ne10_physics_relative_v_vec2f_c</a> or <a class="el" href="group__COLLISION__DETECT.html#ga4414d7b6527a55655586783220d3e35b">ne10_physics_relative_v_vec2f_neon</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__physics_8c_source.html#l00130">130</a> of file <a class="el" href="NE10__physics_8c_source.html">NE10_physics.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__init__physics_8c_source.html#l00073">73</a> of file <a class="el" href="NE10__init__physics_8c_source.html">NE10_init_physics.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

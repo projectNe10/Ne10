@@ -80,7 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Finite Impulse Response (FIR) Decimation<div class="ingroups"><a class="el" href="group__groupDSPs.html">Signal Processing Functions</a></div></div>  </div>
 </div><!--header-->
@@ -88,9 +89,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga901dda00a8d3aa8e8aa01d6c95634d09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Decimate.html#ga901dda00a8d3aa8e8aa01d6c95634d09">ne10_fir_decimate_init_float</a> (<a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a> numTaps, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> M, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pCoeffs, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pState, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="memdesc:ga901dda00a8d3aa8e8aa01d6c95634d09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the floating-point FIR decimator.  <a href="#ga901dda00a8d3aa8e8aa01d6c95634d09">More...</a><br /></td></tr>
+<tr class="separator:ga901dda00a8d3aa8e8aa01d6c95634d09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaec604418277427a584b2a42937813c94"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Decimate.html#gaec604418277427a584b2a42937813c94">ne10_fir_decimate_float_c</a> (const <a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
-<tr class="memdesc:gaec604418277427a584b2a42937813c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point FIR decimator.  <a href="#gaec604418277427a584b2a42937813c94">More...</a><br /></td></tr>
+<tr class="memdesc:gaec604418277427a584b2a42937813c94"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR__Decimate.html#ga6f112ff36cb9d93f0f275f9d54a4bfed">ne10_fir_decimate_float</a> using plain C.  <a href="#gaec604418277427a584b2a42937813c94">More...</a><br /></td></tr>
 <tr class="separator:gaec604418277427a584b2a42937813c94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6900b0dd7c6628556c8b407d86c478dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Decimate.html#ga6900b0dd7c6628556c8b407d86c478dd">ne10_fir_decimate_float_neon</a> (const <a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_fir_decimate_float_neon&quot;)</td></tr>
+<tr class="memdesc:ga6900b0dd7c6628556c8b407d86c478dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR__Decimate.html#ga6f112ff36cb9d93f0f275f9d54a4bfed">ne10_fir_decimate_float</a> using NEON SIMD capabilities.  <a href="#ga6900b0dd7c6628556c8b407d86c478dd">More...</a><br /></td></tr>
+<tr class="separator:ga6900b0dd7c6628556c8b407d86c478dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga6f112ff36cb9d93f0f275f9d54a4bfed"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Decimate.html#ga6f112ff36cb9d93f0f275f9d54a4bfed">ne10_fir_decimate_float</a> )(const <a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="memdesc:ga6f112ff36cb9d93f0f275f9d54a4bfed"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point FIR decimator.  <a href="#ga6f112ff36cb9d93f0f275f9d54a4bfed">More...</a><br /></td></tr>
+<tr class="separator:ga6f112ff36cb9d93f0f275f9d54a4bfed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>These functions combine an FIR filter together with a decimator. They are used in multirate systems for reducing the sample rate of a signal without introducing aliasing distortion. Conceptually, the functions are equivalent to the block diagram below: <div class="image">
@@ -159,25 +172,153 @@ Components included in the FIR Decimator functions</div></div>
       </table>
 </div><div class="memdoc">
 
+<p>Specific implementation of <a class="el" href="group__FIR__Decimate.html#ga6f112ff36cb9d93f0f275f9d54a4bfed">ne10_fir_decimate_float</a> using plain C. </p>
+
+<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00429">429</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga6900b0dd7c6628556c8b407d86c478dd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_fir_decimate_float_neon </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__FIR__Decimate.html#ga6f112ff36cb9d93f0f275f9d54a4bfed">ne10_fir_decimate_float</a> using NEON SIMD capabilities. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga901dda00a8d3aa8e8aa01d6c95634d09"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_fir_decimate_init_float </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a>&#160;</td>
+          <td class="paramname"><em>numTaps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a>&#160;</td>
+          <td class="paramname"><em>M</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pCoeffs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialization function for the floating-point FIR decimator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR decimator structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numTaps</td><td>number of coefficients in the filter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">M</td><td>decimation factor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pCoeffs</td><td>points to the filter coefficients. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to the state buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of input samples to process per call. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns NE10_OK if initialization was successful or NE10_ERR if <code>blockSize</code> is not a multiple of <code>M</code>.</dd></dl>
+<p><b>Description:</b> </p><dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
+</pre> </dd></dl>
+<dl class="section user"><dt></dt><dd><code>pState</code> points to the array of state variables. <code>pState</code> is of length <code>numTaps+blockSize-1</code> words where <code>blockSize</code> is the number of input samples passed to <code>arm_fir_decimate_f32()</code>. <code>M</code> is the decimation factor. </dd></dl>
+
+<p>Definition at line <a class="el" href="NE10__fir__init_8c_source.html#l00098">98</a> of file <a class="el" href="NE10__fir__init_8c_source.html">NE10_fir_init.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="ga6f112ff36cb9d93f0f275f9d54a4bfed"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_fir_decimate_float) (const <a class="el" href="structne10__fir__decimate__instance__f32__t.html">ne10_fir_decimate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Processing function for the floating-point FIR decimator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR decimator structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to the block of input data. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to the block of output data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of input samples to process per call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of input samples to process per call.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Points to <a class="el" href="group__FIR__Decimate.html#gaec604418277427a584b2a42937813c94">ne10_fir_decimate_float_c</a> or <a class="el" href="group__FIR__Decimate.html#ga6900b0dd7c6628556c8b407d86c478dd">ne10_fir_decimate_float_neon</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00439">439</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00168">168</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

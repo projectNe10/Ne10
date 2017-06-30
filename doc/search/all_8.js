@@ -6,7 +6,7 @@ var searchData=
   ['i2',['I2',['../NE10__mulmat_8c.html#a964f933e75944a909cc698a3997c8f14',1,'I2():&#160;NE10_mulmat.c'],['../NE10__mulmat_8c.html#a964f933e75944a909cc698a3997c8f14',1,'I2():&#160;NE10_mulmat.c']]],
   ['ii',['ii',['../NE10__invmat_8c.html#a42e9a863c1f6c785301bf4664e47fdf3',1,'ii():&#160;NE10_invmat.c'],['../NE10__invmat_8c.html#a42e9a863c1f6c785301bf4664e47fdf3',1,'ii():&#160;NE10_invmat.c']]],
   ['infinite_20impulse_20response_20_28iir_29_20lattice_20filters',['Infinite Impulse Response (IIR) Lattice Filters',['../group__IIR__Lattice.html',1,'']]],
-  ['image_20box_20filter',['Image Box Filter',['../group__IMG__BOXFILTER.html',1,'']]],
+  ['image_20box_20filter_20_28blur_29',['Image Box Filter (Blur)',['../group__IMG__BOXFILTER.html',1,'']]],
   ['image_20resize',['Image Resize',['../group__IMG__RESIZE.html',1,'']]],
   ['image_20rotation',['Image Rotation',['../group__IMG__ROTATE.html',1,'']]],
   ['include',['include',['../modules_2CMakeLists_8txt.html#a62194e16b6d58ddec0826bb218807c7e',1,'CMakeLists.txt']]],

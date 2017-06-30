@@ -80,7 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Finite Impulse Response (FIR) Filters<div class="ingroups"><a class="el" href="group__groupDSPs.html">Signal Processing Functions</a></div></div>  </div>
 </div><!--header-->
@@ -88,8 +89,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga8e2b393fcecbbf08092a6f044beaea35"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR.html#ga8e2b393fcecbbf08092a6f044beaea35">ne10_fir_init_float</a> (<a class="el" href="structne10__fir__instance__f32__t.html">ne10_fir_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a> numTaps, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pCoeffs, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pState, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="separator:ga8e2b393fcecbbf08092a6f044beaea35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga93eac5df955fa1d9262f3753774d12c1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR.html#ga93eac5df955fa1d9262f3753774d12c1">ne10_fir_float_c</a> (const <a class="el" href="structne10__fir__instance__f32__t.html">ne10_fir_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="memdesc:ga93eac5df955fa1d9262f3753774d12c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR.html#ga932ca559ae4425b193507e045038b013">ne10_fir_float</a> using plain C.  <a href="#ga93eac5df955fa1d9262f3753774d12c1">More...</a><br /></td></tr>
 <tr class="separator:ga93eac5df955fa1d9262f3753774d12c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga13f95ae497ae07a6a0162096212d8acd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR.html#ga13f95ae497ae07a6a0162096212d8acd">ne10_fir_float_neon</a> (const <a class="el" href="structne10__fir__instance__f32__t.html">ne10_fir_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_fir_float_neon&quot;)</td></tr>
+<tr class="memdesc:ga13f95ae497ae07a6a0162096212d8acd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR.html#ga932ca559ae4425b193507e045038b013">ne10_fir_float</a> using NEON SIMD capabilities.  <a href="#ga13f95ae497ae07a6a0162096212d8acd">More...</a><br /></td></tr>
+<tr class="separator:ga13f95ae497ae07a6a0162096212d8acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga932ca559ae4425b193507e045038b013"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR.html#ga932ca559ae4425b193507e045038b013">ne10_fir_float</a> )(const <a class="el" href="structne10__fir__instance__f32__t.html">ne10_fir_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="separator:ga932ca559ae4425b193507e045038b013"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>This set of functions implements Finite Impulse Response (FIR) filters for floating-point data types. The functions operate on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> and <code>pDst</code> points to input and output arrays containing <code>blockSize</code> values.</dd></dl>
@@ -157,24 +169,144 @@ Finite Impulse Response filter</div></div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__FIR.html#ga932ca559ae4425b193507e045038b013">ne10_fir_float</a> using plain C. </p>
+
+<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00111">111</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga13f95ae497ae07a6a0162096212d8acd"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_fir_float_neon </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structne10__fir__instance__f32__t.html">ne10_fir_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__FIR.html#ga932ca559ae4425b193507e045038b013">ne10_fir_float</a> using NEON SIMD capabilities. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga8e2b393fcecbbf08092a6f044beaea35"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_fir_init_float </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__fir__instance__f32__t.html">ne10_fir_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a>&#160;</td>
+          <td class="paramname"><em>numTaps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pCoeffs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR filter structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numTaps</td><td>Number of filter coefficients in the filter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pCoeffs</td><td>points to the filter coefficients buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to the state buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples that are processed per call.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p><b>Description:</b> </p><dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[N-2], ..., b[1], b[0]}
+</pre> </dd></dl>
+<dl class="section user"><dt></dt><dd><code>pState</code> points to the array of state variables. <code>pState</code> is of length <code>numTaps+blockSize-1</code> samples, where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_f32()</code>. </dd></dl>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_fir_8c-example.html#a7">NE10_sample_fir.c</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="NE10__fir__init_8c_source.html#l00053">53</a> of file <a class="el" href="NE10__fir__init_8c_source.html">NE10_fir_init.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="ga932ca559ae4425b193507e045038b013"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_fir_float) (const <a class="el" href="structne10__fir__instance__f32__t.html">ne10_fir_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR filter structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to the block of input data. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to the block of output data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples to process per call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples to process per call.</td></tr>
   </table>
   </dd>
 </dl>
-
-<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00116">116</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+<p>Points to <a class="el" href="group__FIR.html#ga93eac5df955fa1d9262f3753774d12c1">ne10_fir_float_c</a> or <a class="el" href="group__FIR.html#ga13f95ae497ae07a6a0162096212d8acd">ne10_fir_float_neon</a>. </p>
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_fir_8c-example.html#a10">NE10_sample_fir.c</a>.</dd>
+</dl>
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00163">163</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

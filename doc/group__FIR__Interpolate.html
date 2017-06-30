@@ -80,7 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Finite Impulse Response (FIR) Interpolation<div class="ingroups"><a class="el" href="group__groupDSPs.html">Signal Processing Functions</a></div></div>  </div>
 </div><!--header-->
@@ -88,9 +89,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga92642b04c3eab4dc3772f58f99deb1dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Interpolate.html#ga92642b04c3eab4dc3772f58f99deb1dc">ne10_fir_interpolate_init_float</a> (<a class="el" href="structne10__fir__interpolate__instance__f32__t.html">ne10_fir_interpolate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> L, <a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a> numTaps, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pCoeffs, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pState, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="memdesc:ga92642b04c3eab4dc3772f58f99deb1dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the floating-point FIR interpolator.  <a href="#ga92642b04c3eab4dc3772f58f99deb1dc">More...</a><br /></td></tr>
+<tr class="separator:ga92642b04c3eab4dc3772f58f99deb1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac7e573959794555c8d3f78ac7bc037c4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Interpolate.html#gac7e573959794555c8d3f78ac7bc037c4">ne10_fir_interpolate_float_c</a> (const <a class="el" href="structne10__fir__interpolate__instance__f32__t.html">ne10_fir_interpolate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
-<tr class="memdesc:gac7e573959794555c8d3f78ac7bc037c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point FIR interpolator.  <a href="#gac7e573959794555c8d3f78ac7bc037c4">More...</a><br /></td></tr>
+<tr class="memdesc:gac7e573959794555c8d3f78ac7bc037c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR__Interpolate.html#gaa4079480485f20bd8d1387794e104b55">ne10_fir_interpolate_float</a> using plain C.  <a href="#gac7e573959794555c8d3f78ac7bc037c4">More...</a><br /></td></tr>
 <tr class="separator:gac7e573959794555c8d3f78ac7bc037c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3d93cb7fea04eee821c2eb082d990373"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Interpolate.html#ga3d93cb7fea04eee821c2eb082d990373">ne10_fir_interpolate_float_neon</a> (const <a class="el" href="structne10__fir__interpolate__instance__f32__t.html">ne10_fir_interpolate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_fir_interpolate_float_neon&quot;)</td></tr>
+<tr class="memdesc:ga3d93cb7fea04eee821c2eb082d990373"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR__Interpolate.html#gaa4079480485f20bd8d1387794e104b55">ne10_fir_interpolate_float</a> using NEON SIMD capabilities.  <a href="#ga3d93cb7fea04eee821c2eb082d990373">More...</a><br /></td></tr>
+<tr class="separator:ga3d93cb7fea04eee821c2eb082d990373"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gaa4079480485f20bd8d1387794e104b55"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Interpolate.html#gaa4079480485f20bd8d1387794e104b55">ne10_fir_interpolate_float</a> )(const <a class="el" href="structne10__fir__interpolate__instance__f32__t.html">ne10_fir_interpolate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="memdesc:gaa4079480485f20bd8d1387794e104b55"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point FIR interpolator.  <a href="#gaa4079480485f20bd8d1387794e104b55">More...</a><br /></td></tr>
+<tr class="separator:gaa4079480485f20bd8d1387794e104b55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>These functions combine an upsampler (zero stuffer) and an FIR filter. They are used in multirate systems for increasing the sample rate of a signal without introducing high frequency images. Conceptually, the functions are equivalent to the block diagram below: <div class="image">
@@ -162,25 +175,153 @@ After upsampling by a factor of <code>L</code>, the signal should be filtered by
       </table>
 </div><div class="memdoc">
 
+<p>Specific implementation of <a class="el" href="group__FIR__Interpolate.html#gaa4079480485f20bd8d1387794e104b55">ne10_fir_interpolate_float</a> using plain C. </p>
+
+<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00679">679</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ga3d93cb7fea04eee821c2eb082d990373"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_fir_interpolate_float_neon </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structne10__fir__interpolate__instance__f32__t.html">ne10_fir_interpolate_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__FIR__Interpolate.html#gaa4079480485f20bd8d1387794e104b55">ne10_fir_interpolate_float</a> using NEON SIMD capabilities. </p>
+
+</div>
+</div>
+<a class="anchor" id="ga92642b04c3eab4dc3772f58f99deb1dc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_fir_interpolate_init_float </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__fir__interpolate__instance__f32__t.html">ne10_fir_interpolate_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a>&#160;</td>
+          <td class="paramname"><em>L</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a>&#160;</td>
+          <td class="paramname"><em>numTaps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pCoeffs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialization function for the floating-point FIR interpolator. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR interpolator structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">L</td><td>upsample factor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numTaps</td><td>number of filter coefficients in the filter. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pCoeffs</td><td>points to the filter coefficient buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to the state buffer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of input samples to process per call. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The function returns NE10_OK if initialization was successful or NE10_ERR if the filter length <code>numTaps</code> is not a multiple of the interpolation factor <code>L</code>.</dd></dl>
+<p><b>Description:</b> </p><dl class="section user"><dt></dt><dd><code>pCoeffs</code> points to the array of filter coefficients stored in time reversed order: <pre>
+   {b[numTaps-1], b[numTaps-2], b[numTaps-2], ..., b[1], b[0]}
+</pre> The length of the filter <code>numTaps</code> must be a multiple of the interpolation factor <code>L</code>. </dd></dl>
+<dl class="section user"><dt></dt><dd><code>pState</code> points to the array of state variables. <code>pState</code> is of length <code>(numTaps/L)+blockSize-1</code> words where <code>blockSize</code> is the number of input samples processed by each call to <code>arm_fir_interpolate_f32()</code>. </dd></dl>
+
+<p>Definition at line <a class="el" href="NE10__fir__init_8c_source.html#l00164">164</a> of file <a class="el" href="NE10__fir__init_8c_source.html">NE10_fir_init.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="gaa4079480485f20bd8d1387794e104b55"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_fir_interpolate_float) (const <a class="el" href="structne10__fir__interpolate__instance__f32__t.html">ne10_fir_interpolate_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Processing function for the floating-point FIR interpolator. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR interpolator structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to the block of input data. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to the block of output data. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of input samples to process per call. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of input samples to process per call.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Points to <a class="el" href="group__FIR__Interpolate.html#gac7e573959794555c8d3f78ac7bc037c4">ne10_fir_interpolate_float_c</a> or <a class="el" href="group__FIR__Interpolate.html#ga3d93cb7fea04eee821c2eb082d990373">ne10_fir_interpolate_float_neon</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00694">694</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00174">174</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -226,7 +226,8 @@ Complex-to-Real (C2R) IFFT:
 </dl>
 <p>Allocates and initialises an <a class="el" href="NE10__types_8h.html#a2f710f86d57b4dad08c9ecaf441700be">ne10_fft_r2c_cfg_float32_t</a> configuration structure for the FP32 real-to-complex and complex-to-real FFT/IFFT. As part of this, it reserves a buffer used internally by the FFT algorithm, factors the length of the FFT into simpler chunks, and generates a "twiddle table" of coefficients used in the FFT "butterfly" calculations.</p>
 <p>To free the returned structure, call <a class="el" href="group__R2C__FFT__IFFT.html#gad00083f6ccf7b08490df71018e5b52fb">ne10_fft_destroy_r2c_float32</a>. </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_real_fft_8c-example.html#a6">NE10_sample_real_fft.c</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="NE10__fft__float32_8c_source.html#l00943">943</a> of file <a class="el" href="NE10__fft__float32_8c_source.html">NE10_fft_float32.c</a>.</p>
 
 </div>
@@ -560,7 +561,8 @@ Complex-to-Real (C2R) IFFT:
   </table>
   </dd>
 </dl>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_real_fft_8c-example.html#a9">NE10_sample_real_fft.c</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="NE10__fft_8c_source.html#l00593">593</a> of file <a class="el" href="NE10__fft_8c_source.html">NE10_fft.c</a>.</p>
 
 </div>
@@ -956,7 +958,8 @@ Complex-to-Real (C2R) IFFT:
 </dl>
 <p>The function implements a mixed radix-2/4 real-to-complex FFT, supporting input lengths of the form 2<sup>N</sup> (N &gt; 0). Points to <a class="el" href="group__R2C__FFT__IFFT.html#gad1d4b5445787387f4e547ecee2215b31">ne10_fft_r2c_1d_float32_c</a> or <a class="el" href="group__R2C__FFT__IFFT.html#ga48dda98722214c5134a47dc600bd9c92">ne10_fft_r2c_1d_float32_neon</a>. This is an out-of-place algorithm. For usage information, please check <a class="el" href="test__suite__fft__float32_8c.html">test/test_suite_fft_float32.c</a>.</p>
 <p>For the inverse transform (IFFT), call <a class="el" href="group__R2C__FFT__IFFT.html#gadfd9b740b3c3bc4e5bf773a817943d3e">ne10_fft_c2r_1d_float32</a>. </p>
-
+<dl><dt><b>Examples: </b></dt><dd><a class="el" href="NE10_sample_real_fft_8c-example.html#a8">NE10_sample_real_fft.c</a>.</dd>
+</dl>
 <p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00122">122</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
 
 </div>
@@ -1018,7 +1021,7 @@ Complex-to-Real (C2R) IFFT:
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

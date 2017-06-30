@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['samples',['SAMPLES',['../NE10__sample__complex__fft_8c.html#ad0c329adebc27917fc0a4f51079acf6a',1,'NE10_sample_complex_fft.c']]],
+  ['samples',['SAMPLES',['../NE10__sample__complex__fft_8c.html#ad0c329adebc27917fc0a4f51079acf6a',1,'SAMPLES():&#160;NE10_sample_complex_fft.c'],['../NE10__sample__real__fft_8c.html#ad0c329adebc27917fc0a4f51079acf6a',1,'SAMPLES():&#160;NE10_sample_real_fft.c']]],
   ['snr_5fthreshold_5ffloat32',['SNR_THRESHOLD_FLOAT32',['../test__suite__fft__float32_8c.html#a2d2474aa0ea968da3f33816c3f759494',1,'test_suite_fft_float32.c']]],
   ['snr_5fthreshold_5fint16',['SNR_THRESHOLD_INT16',['../test__suite__fft__int16_8c.html#a2ab4a64d7438e139ad182a7c734590e0',1,'test_suite_fft_int16.c']]],
   ['snr_5fthreshold_5fint32',['SNR_THRESHOLD_INT32',['../test__suite__fft__int32_8c.html#a7763ef5d3061ad182072843949e51293',1,'test_suite_fft_int32.c']]],

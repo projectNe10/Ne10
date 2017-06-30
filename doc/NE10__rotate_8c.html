@@ -104,8 +104,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a92ebc250ae5744724b22c45ffac91613"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="NE10__rotate_8c.html#a92ebc250ae5744724b22c45ffac91613">ne10_img_rotate_get_quad_rangle_subpix_rgba_c</a> (<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> srcw, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> srch, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dstw, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dsth, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *matrix)</td></tr>
 <tr class="separator:a92ebc250ae5744724b22c45ffac91613"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf5a70f4362b6fc69cf57c1bb9ec006d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__ROTATE.html#gaf5a70f4362b6fc69cf57c1bb9ec006d2">ne10_img_rotate_rgba_c</a> (<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> *dst_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> *dst_height, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_height, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> angle)</td></tr>
-<tr class="memdesc:gaf5a70f4362b6fc69cf57c1bb9ec006d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Image rotate of 8-bit data.  <a href="group__IMG__ROTATE.html#gaf5a70f4362b6fc69cf57c1bb9ec006d2">More...</a><br /></td></tr>
+<tr class="memdesc:gaf5a70f4362b6fc69cf57c1bb9ec006d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__IMG__ROTATE.html#ga75d1ea0e5d2fce847102ce284e38d704">ne10_img_rotate_rgba</a> using plain C.  <a href="group__IMG__ROTATE.html#gaf5a70f4362b6fc69cf57c1bb9ec006d2">More...</a><br /></td></tr>
 <tr class="separator:gaf5a70f4362b6fc69cf57c1bb9ec006d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaae1396219d1a8b5dd189e03e1701fe2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="NE10__rotate_8c.html#aaae1396219d1a8b5dd189e03e1701fe2">ne10_img_rotate_get_quad_rangle_subpix_rgba_neon</a> (<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> srcw, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> srch, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dstw, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dsth, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *matrix) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_img_rotate_get_quad_rangle_subpix_rgba_neon&quot;)</td></tr>
+<tr class="separator:aaae1396219d1a8b5dd189e03e1701fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaef1b31cd1f2ae7f5bb5f521449e8c4c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__ROTATE.html#gaef1b31cd1f2ae7f5bb5f521449e8c4c0">ne10_img_rotate_rgba_neon</a> (<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> *dst_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> *dst_height, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_height, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> angle)</td></tr>
+<tr class="memdesc:gaef1b31cd1f2ae7f5bb5f521449e8c4c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__IMG__ROTATE.html#ga75d1ea0e5d2fce847102ce284e38d704">ne10_img_rotate_rgba</a> using NEON SIMD capabilities.  <a href="group__IMG__ROTATE.html#gaef1b31cd1f2ae7f5bb5f521449e8c4c0">More...</a><br /></td></tr>
+<tr class="separator:gaef1b31cd1f2ae7f5bb5f521449e8c4c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a class="anchor" id="a92ebc250ae5744724b22c45ffac91613"></a>
@@ -162,14 +167,70 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Definition at line <a class="el" href="NE10__rotate_8c_source.html#l00094">94</a> of file <a class="el" href="NE10__rotate_8c_source.html">NE10_rotate.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__rotate_8c_source.html#l00092">92</a> of file <a class="el" href="NE10__rotate_8c_source.html">NE10_rotate.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aaae1396219d1a8b5dd189e03e1701fe2"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_img_rotate_get_quad_rangle_subpix_rgba_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *&#160;</td>
+          <td class="paramname"><em>dst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *&#160;</td>
+          <td class="paramname"><em>src</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
+          <td class="paramname"><em>srcw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
+          <td class="paramname"><em>srch</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
+          <td class="paramname"><em>dstw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a>&#160;</td>
+          <td class="paramname"><em>dsth</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>matrix</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

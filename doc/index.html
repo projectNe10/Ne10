@@ -89,15 +89,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>Out of the box, Ne10 supports the Linux, Android, and iOS platforms. For instructions on building Ne10 for these platforms, please consult the build instructions in <a href="https://github.com/projectNe10/Ne10/tree/master/doc/building.md#building-ne10"><code>building.md</code></a>. It is possible to use the library on other platforms (or, indeed, “without a platform”), however you may have to fiddle with some of the build configuration files.</p>
 <p>Once Ne10 has been built, it can be linked against just like any other C library. To link C code against Ne10, for instance, the compiler must first be aware of Ne10's library and header files — those within <code>build/modules/</code> and <code>inc/</code>. To do this, these files can be copied to the standard directories used by compilation tools by running <code>make install</code>, or by installing Ne10 from a package manager. Following this, you can simply include <code>Ne10.h</code> in your C code, and ask the compiler to link against the <code>NE10</code> library (e.g. with <code>-lNE10</code>).</p>
 <h2>Documentation</h2>
-<p>Ne10’s official documentation is generated from <a href="https://www.stack.nl/~dimitri/doxygen/">doxygen</a> annotations in the source code. As such, these documents can be generated locally from the codebase by running <code>doxygen</code> within the <code>doc</code> directory (producing results in <code>doc/html</code>), or viewed remotely as <a href="http://projectne10.github.io/Ne10/doc/">hosted copies available over the Internet</a>.</p>
+<p>Ne10’s official documentation is generated from <a href="https://www.stack.nl/~dimitri/doxygen/">doxygen</a> annotations in the source code. As such, these documents can be generated locally from the codebase by running <code>doxygen</code> within the <code>doc</code> directory (producing results in <code>doc/html</code>), or viewed remotely as <a href="http://projectne10.github.io/Ne10/doc/modules.html">hosted copies available over the Internet</a>.</p>
 <p>We also have a handful of carefully prepared sample code snippets in the <a href="https://github.com/projectNe10/Ne10/tree/master/samples"><code>samples/</code></a> directory that outline how Ne10 can be used to accomplish a number of common tasks. These include example programs to perform the <a href="https://github.com/projectNe10/Ne10/tree/master/samples/NE10_sample_complex_fft.c">FFT</a>, <a href="https://github.com/projectNe10/Ne10/tree/master/samples/NE10_sample_fir.c">FIR</a>, and <a href="https://github.com/projectNe10/Ne10/tree/master/samples/NE10_sample_matrix_multiply.c">matrix multiply</a> operations.</p>
 <h2>Contributing</h2>
 <p>Ne10 welcomes and encourages external contributions of any and all forms. If you’ve found a bug or have a suggestion, please don’t hesitate to detail these in the <a href="https://github.com/projectNe10/Ne10/issues">official issue tracker</a>. For those looking to get their hands dirty and contribute code (the best kind of contribution!), please see <a href="https://github.com/projectNe10/Ne10/tree/master/CONTRIBUTING.md#contributing-to-project-ne10"><code>CONTRIBUTING.md</code></a> for more details.</p>
-<h2>Miscellaneous</h2>
+<h2>Quick Links</h2>
 <ul>
 <li><a href="http://projectne10.org/">Official website</a></li>
+<li><a href="https://github.com/projectNe10/Ne10">Source repository</a></li>
+<li><a href="https://github.com/projectNe10/Ne10/issues">Issue tracker</a></li>
+<li><a href="http://projectne10.github.io/Ne10/doc/modules.html">Doxygen documentation</a></li>
 <li><a href="https://github.com/projectNe10/Ne10/wiki/Ne10-Coding-Style">Coding style guidelines</a></li>
 </ul>
+<h2>Call for Use Cases</h2>
 <p>Find Project Ne10 useful? You can help us justify spending more engineering resources on the project! Please email us, outlining how you are using the project in your applications.</p>
 <p>Want us to help cross-promote your product using Ne10 at developer events? We’re also looking for Ne10 use cases to show at conferences and meetups.</p>
 <h2>Contacts</h2>
@@ -109,7 +113,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:55 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

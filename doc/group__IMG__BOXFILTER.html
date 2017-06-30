@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.11"/>
-<title>Project Ne10: Image Box Filter</title>
+<title>Project Ne10: Image Box Filter (Blur)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -80,20 +80,27 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
-<div class="title">Image Box Filter<div class="ingroups"><a class="el" href="group__groupIMGPROCs.html">Image Processing Functions</a></div></div>  </div>
+<div class="title">Image Box Filter (Blur)<div class="ingroups"><a class="el" href="group__groupIMGPROCs.html">Image Processing Functions</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gad16b7add29f5484ec552fdfbe3660009"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__BOXFILTER.html#gad16b7add29f5484ec552fdfbe3660009">ne10_img_boxfilter_rgba8888_c</a> (const <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="structne10__size__t.html">ne10_size_t</a> src_sz, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> src_stride, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dst_stride, <a class="el" href="structne10__size__t.html">ne10_size_t</a> kernel)</td></tr>
-<tr class="memdesc:gad16b7add29f5484ec552fdfbe3660009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Box filter.  <a href="#gad16b7add29f5484ec552fdfbe3660009">More...</a><br /></td></tr>
+<tr class="memdesc:gad16b7add29f5484ec552fdfbe3660009"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__IMG__BOXFILTER.html#gada4cecb8ea03a2269072eecbf47141a3">ne10_img_boxfilter_rgba8888</a> using plain C.  <a href="#gad16b7add29f5484ec552fdfbe3660009">More...</a><br /></td></tr>
 <tr class="separator:gad16b7add29f5484ec552fdfbe3660009"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac9ffee47cb54608ada3cf82a6c589924"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__BOXFILTER.html#gac9ffee47cb54608ada3cf82a6c589924">ne10_img_boxfilter_rgba8888_neon</a> (const <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="structne10__size__t.html">ne10_size_t</a> src_sz, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> src_stride, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dst_stride, <a class="el" href="structne10__size__t.html">ne10_size_t</a> kernel)</td></tr>
-<tr class="memdesc:gac9ffee47cb54608ada3cf82a6c589924"><td class="mdescLeft">&#160;</td><td class="mdescRight">NEON optimized box filter.  <a href="#gac9ffee47cb54608ada3cf82a6c589924">More...</a><br /></td></tr>
+<tr class="memdesc:gac9ffee47cb54608ada3cf82a6c589924"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__IMG__BOXFILTER.html#gada4cecb8ea03a2269072eecbf47141a3">ne10_img_boxfilter_rgba8888</a> using NEON SIMD capabilities.  <a href="#gac9ffee47cb54608ada3cf82a6c589924">More...</a><br /></td></tr>
 <tr class="separator:gac9ffee47cb54608ada3cf82a6c589924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gada4cecb8ea03a2269072eecbf47141a3"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__BOXFILTER.html#gada4cecb8ea03a2269072eecbf47141a3">ne10_img_boxfilter_rgba8888</a> )(const <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="structne10__size__t.html">ne10_size_t</a> src_size, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> src_stride, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dst_stride, <a class="el" href="structne10__size__t.html">ne10_size_t</a> kernel_size)</td></tr>
+<tr class="memdesc:gada4cecb8ea03a2269072eecbf47141a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Box blur of RGBA8888 image data.  <a href="#gada4cecb8ea03a2269072eecbf47141a3">More...</a><br /></td></tr>
+<tr class="separator:gada4cecb8ea03a2269072eecbf47141a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <h2 class="groupheader">Function Documentation</h2>
@@ -145,21 +152,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Box filter. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*dst</td><td>point to the destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*src</td><td>point to the source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_sz</td><td>source image size struction </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_stride</td><td>stride of source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dst_stride</td><td>stride of destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>kernel size of box filter, both of kernel edge supports from 1 to 65535, that is 1x1 1x2 1x3 ... 1x65535 2x1 2x2 2x3 ... 2x65535 ... are all supported.</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The function implements box filter, where the destination image size is the same as that of the source image. </p>
+<p>Specific implementation of <a class="el" href="group__IMG__BOXFILTER.html#gada4cecb8ea03a2269072eecbf47141a3">ne10_img_boxfilter_rgba8888</a> using plain C. </p>
 
-<p>Definition at line <a class="el" href="NE10__boxfilter_8c_source.html#l00356">356</a> of file <a class="el" href="NE10__boxfilter_8c_source.html">NE10_boxfilter.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__boxfilter_8c_source.html#l00344">344</a> of file <a class="el" href="NE10__boxfilter_8c_source.html">NE10_boxfilter.c</a>.</p>
 
 </div>
 </div>
@@ -211,28 +206,47 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>NEON optimized box filter. </p>
+<p>Specific implementation of <a class="el" href="group__IMG__BOXFILTER.html#gada4cecb8ea03a2269072eecbf47141a3">ne10_img_boxfilter_rgba8888</a> using NEON SIMD capabilities. </p>
+<p>Calls through to the non-optimised <a class="el" href="group__IMG__BOXFILTER.html#gad16b7add29f5484ec552fdfbe3660009">ne10_img_boxfilter_rgba8888_c</a> routine for kernels with sides smaller than 2 pixels or larger than 127 pixels. </p>
+
+<p>Definition at line <a class="el" href="NE10__boxfilter_8neon_8c_source.html#l00418">418</a> of file <a class="el" href="NE10__boxfilter_8neon_8c_source.html">NE10_boxfilter.neon.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="gada4cecb8ea03a2269072eecbf47141a3"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_img_boxfilter_rgba8888) (const <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="structne10__size__t.html">ne10_size_t</a> src_size, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> src_stride, <a class="el" href="NE10__types_8h.html#adf4e003d838b8230b20f0b119f7249b9">ne10_int32_t</a> dst_stride, <a class="el" href="structne10__size__t.html">ne10_size_t</a> kernel_size)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Box blur of RGBA8888 image data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*dst</td><td>point to the destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*src</td><td>point to the source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_sz</td><td>source image size struction </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_stride</td><td>stride of source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dst_stride</td><td>stride of destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>kernel size of box filter, both of kernel edge supports from 2 to 127 are all supported. and for 1 and larger than 127 case, it is supported by calling the c version of box filter</td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*dst</td><td>pointer to the output buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*src</td><td>pointer to the input buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_sz</td><td>size of the source image </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">src_stride</td><td>source stride </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dst_stride</td><td>destination stride </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kernel</td><td>blurring kernel size (with sides between 1 and 65535 pixels wide)</td></tr>
   </table>
   </dd>
 </dl>
-<p>The function implements box filter, destination image's size is smae as source image </p>
+<p>Applies a box filter (also known as a <a href="https://en.wikipedia.org/wiki/Box_blur">box blur</a>) to an input image in the RGBA8888 format, producing a blurred output image of the same size and format. The blurring kernel is anchored at its center. When values must be obtained from beyond the source image boundaries, zero-valued pixels are assumed.</p>
+<p>Points to <a class="el" href="group__IMG__BOXFILTER.html#gad16b7add29f5484ec552fdfbe3660009">ne10_img_boxfilter_rgba8888_c</a> or <a class="el" href="group__IMG__BOXFILTER.html#gac9ffee47cb54608ada3cf82a6c589924">ne10_img_boxfilter_rgba8888_neon</a>. This is an out-of-place algorithm. </p>
 
-<p>Definition at line <a class="el" href="NE10__boxfilter_8neon_8c_source.html#l00430">430</a> of file <a class="el" href="NE10__boxfilter_8neon_8c_source.html">NE10_boxfilter.neon.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__init__imgproc_8c_source.html#l00069">69</a> of file <a class="el" href="NE10__init__imgproc_8c_source.html">NE10_init_imgproc.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

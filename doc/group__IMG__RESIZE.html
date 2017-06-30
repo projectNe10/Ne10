@@ -80,7 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Image Resize<div class="ingroups"><a class="el" href="group__groupIMGPROCs.html">Image Processing Functions</a></div></div>  </div>
 </div><!--header-->
@@ -89,11 +90,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gab70d8cdd743c408708424cda4477f7f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__RESIZE.html#gab70d8cdd743c408708424cda4477f7f8">ne10_img_resize_bilinear_rgba_c</a> (<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_height, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_height, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_stride)</td></tr>
-<tr class="memdesc:gab70d8cdd743c408708424cda4477f7f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Image resize of 8-bit data.  <a href="#gab70d8cdd743c408708424cda4477f7f8">More...</a><br /></td></tr>
+<tr class="memdesc:gab70d8cdd743c408708424cda4477f7f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__IMG__RESIZE.html#ga4778dab5fb035108f3f5574396cdbf03">ne10_img_resize_bilinear_rgba</a> using plain C.  <a href="#gab70d8cdd743c408708424cda4477f7f8">More...</a><br /></td></tr>
 <tr class="separator:gab70d8cdd743c408708424cda4477f7f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa8f7057434478ec9b75e349d45eac3ef"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__RESIZE.html#gaa8f7057434478ec9b75e349d45eac3ef">ne10_img_resize_bilinear_rgba_neon</a> (<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_height, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_height, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_stride)</td></tr>
-<tr class="memdesc:gaa8f7057434478ec9b75e349d45eac3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Image resize of 8-bit data.  <a href="#gaa8f7057434478ec9b75e349d45eac3ef">More...</a><br /></td></tr>
+<tr class="memdesc:gaa8f7057434478ec9b75e349d45eac3ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__IMG__RESIZE.html#ga4778dab5fb035108f3f5574396cdbf03">ne10_img_resize_bilinear_rgba</a> using NEON SIMD capabilities.  <a href="#gaa8f7057434478ec9b75e349d45eac3ef">More...</a><br /></td></tr>
 <tr class="separator:gaa8f7057434478ec9b75e349d45eac3ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ga4778dab5fb035108f3f5574396cdbf03"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__IMG__RESIZE.html#ga4778dab5fb035108f3f5574396cdbf03">ne10_img_resize_bilinear_rgba</a> )(<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_height, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_height, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_stride)</td></tr>
+<tr class="memdesc:ga4778dab5fb035108f3f5574396cdbf03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Image resize of 8-bit data.  <a href="#ga4778dab5fb035108f3f5574396cdbf03">More...</a><br /></td></tr>
+<tr class="separator:ga4778dab5fb035108f3f5574396cdbf03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>Image resize is a generic functionality in image processing. In Ne10 library, we use the bilinear interpolation algorithm (<a href="http://en.wikipedia.org/wiki/Bilinear_interpolation">http://en.wikipedia.org/wiki/Bilinear_interpolation</a>) to implement image resize. For C implementation, we take the cvResize function from OpenCV (<a href="http://opencv.org/">http://opencv.org/</a>) for reference. </dd></dl>
@@ -153,22 +160,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Image resize of 8-bit data. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*dst</td><td>point to the destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dst_width</td><td>width of destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">dst_height</td><td>height of destination image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*src</td><td>point to the source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_width</td><td>width of source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_height</td><td>height of source image </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">src_stride</td><td>stride of source buffer</td></tr>
-  </table>
-  </dd>
-</dl>
-<p>The function implements image resize. </p>
+<p>Specific implementation of <a class="el" href="group__IMG__RESIZE.html#ga4778dab5fb035108f3f5574396cdbf03">ne10_img_resize_bilinear_rgba</a> using plain C. </p>
 
-<p>Definition at line <a class="el" href="NE10__resize_8c_source.html#l00459">459</a> of file <a class="el" href="NE10__resize_8c_source.html">NE10_resize.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__resize_8c_source.html#l00446">446</a> of file <a class="el" href="NE10__resize_8c_source.html">NE10_resize.c</a>.</p>
 
 </div>
 </div>
@@ -226,6 +220,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Specific implementation of <a class="el" href="group__IMG__RESIZE.html#ga4778dab5fb035108f3f5574396cdbf03">ne10_img_resize_bilinear_rgba</a> using NEON SIMD capabilities. </p>
+
+<p>Definition at line <a class="el" href="NE10__resize_8c_source.html#l00487">487</a> of file <a class="el" href="NE10__resize_8c_source.html">NE10_resize.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="ga4778dab5fb035108f3f5574396cdbf03"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_img_resize_bilinear_rgba) (<a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *dst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> dst_height, <a class="el" href="NE10__types_8h.html#adffb391be96467d289c9af722a0894e2">ne10_uint8_t</a> *src, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_width, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_height, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> src_stride)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Image resize of 8-bit data. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -239,16 +250,16 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<p>The function implements image resize. </p>
+<p>The function implements image resize. Points to <a class="el" href="group__IMG__RESIZE.html#gab70d8cdd743c408708424cda4477f7f8">ne10_img_resize_bilinear_rgba_c</a> or <a class="el" href="group__IMG__RESIZE.html#gaa8f7057434478ec9b75e349d45eac3ef">ne10_img_resize_bilinear_rgba_neon</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__resize_8c_source.html#l00508">508</a> of file <a class="el" href="NE10__resize_8c_source.html">NE10_resize.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__init__imgproc_8c_source.html#l00055">55</a> of file <a class="el" href="NE10__init__imgproc_8c_source.html">NE10_init_imgproc.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

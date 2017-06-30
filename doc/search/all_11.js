@@ -31,5 +31,6 @@ var searchData=
   ['rand_5frange',['rand_range',['../test__suite__boxfilter_8c.html#a1ab0d52a5f583e6f915a9dba47c951dd',1,'test_suite_boxfilter.c']]],
   ['readme_2emd',['README.md',['../README_8md.html',1,'']]],
   ['real',['REAL',['../NE10__fft__generic__float32_8neonintrinsic_8cpp.html#aa98be735c91af61c6a9bd8cb486cbf7a',1,'REAL():&#160;NE10_fft_generic_float32.neonintrinsic.cpp'],['../NE10__fft__generic__int32_8neonintrinsic_8h.html#a91085a0be63ec6235283c88e8b0c8861',1,'REAL():&#160;NE10_fft_generic_int32.neonintrinsic.h']]],
+  ['real_5ffft_5fsample_5fmain',['real_fft_sample_main',['../NE10__sample__real__fft_8c.html#a5c71068a1aabd93e7327d7bac8c974ec',1,'real_fft_sample_main(void):&#160;NE10_sample_real_fft.c'],['../NE10__samples_8c.html#a5c71068a1aabd93e7327d7bac8c974ec',1,'real_fft_sample_main(void):&#160;NE10_sample_real_fft.c']]],
   ['rgba_5fch',['RGBA_CH',['../NE10__boxfilter_8c.html#aa673ba7a345d9ab3fa1f0886876ab1c0',1,'RGBA_CH():&#160;NE10_boxfilter.c'],['../NE10__boxfilter_8neon_8c.html#aa673ba7a345d9ab3fa1f0886876ab1c0',1,'RGBA_CH():&#160;NE10_boxfilter.neon.c']]]
 ];

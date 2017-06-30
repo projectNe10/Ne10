@@ -1,7 +1,7 @@
 var searchData=
 [
   ['signal_20processing_20functions',['Signal Processing Functions',['../group__groupDSPs.html',1,'']]],
-  ['samples',['SAMPLES',['../NE10__sample__complex__fft_8c.html#ad0c329adebc27917fc0a4f51079acf6a',1,'NE10_sample_complex_fft.c']]],
+  ['samples',['SAMPLES',['../NE10__sample__complex__fft_8c.html#ad0c329adebc27917fc0a4f51079acf6a',1,'SAMPLES():&#160;NE10_sample_complex_fft.c'],['../NE10__sample__real__fft_8c.html#ad0c329adebc27917fc0a4f51079acf6a',1,'SAMPLES():&#160;NE10_sample_real_fft.c']]],
   ['set',['set',['../modules_2CMakeLists_8txt.html#ac0722f065a4e26942deb86f192cdb33a',1,'CMakeLists.txt']]],
   ['snr_5fthreshold_5ffloat32',['SNR_THRESHOLD_FLOAT32',['../test__suite__fft__float32_8c.html#a2d2474aa0ea968da3f33816c3f759494',1,'test_suite_fft_float32.c']]],
   ['snr_5fthreshold_5fint16',['SNR_THRESHOLD_INT16',['../test__suite__fft__int16_8c.html#a2ab4a64d7438e139ad182a7c734590e0',1,'test_suite_fft_int16.c']]],

@@ -89,6 +89,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">NE10_physics.neon.c File Reference</div>  </div>
 </div><!--header-->
@@ -96,10 +98,64 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="textblock"><code>#include &quot;<a class="el" href="NE10__types_8h_source.html">NE10_types.h</a>&quot;</code><br />
 </div>
 <p><a href="NE10__physics_8neon_8c_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a994bfe1f6a71f1e2be2c2c952dd11a20"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="NE10__physics_8neon_8c.html#a994bfe1f6a71f1e2be2c2c952dd11a20">ne10_physics_compute_aabb_vertex4_vec2f_neon</a> (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *aabb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *vertices, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *xf, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *radius, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> vertex_count) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_physics_compute_aabb_vertex4_vec2f_neon&quot;)</td></tr>
+<tr class="separator:a994bfe1f6a71f1e2be2c2c952dd11a20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga2c6bbe58953fe01d89c570a9b927b543"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__COLLISION__DETECT.html#ga2c6bbe58953fe01d89c570a9b927b543">ne10_physics_compute_aabb_vec2f_neon</a> (<a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *aabb, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *vertices, <a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *xf, <a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *radius, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> vertex_count)</td></tr>
+<tr class="memdesc:ga2c6bbe58953fe01d89c570a9b927b543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__COLLISION__DETECT.html#ga3545b96144021eb1bd9c182c477573e7">ne10_physics_compute_aabb_vec2f</a> using NEON SIMD capabilities.  <a href="group__COLLISION__DETECT.html#ga2c6bbe58953fe01d89c570a9b927b543">More...</a><br /></td></tr>
+<tr class="separator:ga2c6bbe58953fe01d89c570a9b927b543"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a994bfe1f6a71f1e2be2c2c952dd11a20"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_physics_compute_aabb_vertex4_vec2f_neon </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>aabb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__mat2x2f__t.html">ne10_mat2x2f_t</a> *&#160;</td>
+          <td class="paramname"><em>xf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structne10__vec2f__t.html">ne10_vec2f_t</a> *&#160;</td>
+          <td class="paramname"><em>radius</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>vertex_count</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

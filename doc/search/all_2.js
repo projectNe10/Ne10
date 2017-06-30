@@ -7,15 +7,17 @@ var searchData=
   ['c4',['c4',['../structne10__mat4x4f__t.html#a2805fed029cef62876bedfa0f9980353',1,'ne10_mat4x4f_t']]],
   ['cal_5fpsnr_5fuint8_5frgba',['cal_psnr_uint8_rgba',['../test__suite__boxfilter_8c.html#a0b89a769e485d994f89b2857b8c84c50',1,'test_suite_boxfilter.c']]],
   ['cc',['cc',['../NE10__invmat_8c.html#ab4f83dc456530b76524da0756cc48dad',1,'cc():&#160;NE10_invmat.c'],['../NE10__invmat_8c.html#ab4f83dc456530b76524da0756cc48dad',1,'cc():&#160;NE10_invmat.c']]],
-  ['cmakelists_2etxt',['CMakeLists.txt',['../samples_2CMakeLists_8txt.html',1,'']]],
   ['cmakelists_2etxt',['CMakeLists.txt',['../modules_2CMakeLists_8txt.html',1,'']]],
+  ['cmakelists_2etxt',['CMakeLists.txt',['../samples_2CMakeLists_8txt.html',1,'']]],
   ['collision_20detection',['Collision Detection',['../group__COLLISION__DETECT.html',1,'']]],
   ['complex_5ffft_5fsample_5fmain',['complex_fft_sample_main',['../NE10__sample__complex__fft_8c.html#a8a0df25ff89caf2cbd3541b8479e93cc',1,'complex_fft_sample_main(void):&#160;NE10_sample_complex_fft.c'],['../NE10__samples_8c.html#a8a0df25ff89caf2cbd3541b8479e93cc',1,'complex_fft_sample_main(void):&#160;NE10_sample_complex_fft.c']]],
   ['const_5ftw_5f81',['CONST_TW_81',['../NE10__fft_8neonintrinsic_8h.html#ab96a7622a23e168ce38c8b46b4c7883c',1,'NE10_fft.neonintrinsic.h']]],
   ['const_5ftw_5f81n',['CONST_TW_81N',['../NE10__fft_8neonintrinsic_8h.html#a5016d397f63709b4f4c55bffc698d4ab',1,'NE10_fft.neonintrinsic.h']]],
+  ['contributing_2emd',['CONTRIBUTING.md',['../CONTRIBUTING_8md.html',1,'']]],
   ['copyright_5fholder',['COPYRIGHT_HOLDER',['../versionheader_8h.html#a0bff94a0d5c29e72fd5459933019db7d',1,'versionheader.h']]],
   ['copyright_5fyear',['COPYRIGHT_YEAR',['../versionheader_8h.html#a5a3262b73772541f8d42a66de97909ed',1,'versionheader.h']]],
   ['cplx',['CPLX',['../NE10__fft__generic__float32_8neonintrinsic_8cpp.html#acc6adfb4df5bc5d474aaf3cdaff2a92d',1,'CPLX():&#160;NE10_fft_generic_float32.neonintrinsic.cpp'],['../NE10__fft__generic__int32_8neonintrinsic_8h.html#a6d98abea1c6b0ab8e8b165ea0a21ab96',1,'CPLX():&#160;NE10_fft_generic_int32.neonintrinsic.h']]],
   ['cpuinfo_5fbuffer_5fsize',['CPUINFO_BUFFER_SIZE',['../NE10__init_8c.html#a5e56c6b2108eb98373eabb987ca82f6f',1,'NE10_init.c']]],
-  ['create_5frgba8888_5fimage',['create_rgba8888_image',['../test__suite__boxfilter_8c.html#a153e1fc66b52d3917f6161d9259e4a1a',1,'test_suite_boxfilter.c']]]
+  ['create_5frgba8888_5fimage',['create_rgba8888_image',['../test__suite__boxfilter_8c.html#a153e1fc66b52d3917f6161d9259e4a1a',1,'test_suite_boxfilter.c']]],
+  ['contributing_20to_20project_20ne10',['Contributing to Project Ne10',['../md_CONTRIBUTING.html',1,'']]]
 ];

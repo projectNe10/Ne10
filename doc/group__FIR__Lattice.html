@@ -80,7 +80,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">Finite Impulse Response (FIR) Lattice Filters<div class="ingroups"><a class="el" href="group__groupDSPs.html">Signal Processing Functions</a></div></div>  </div>
 </div><!--header-->
@@ -88,9 +89,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:gad974c028e9482a5730a46212fd72bef6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Lattice.html#gad974c028e9482a5730a46212fd72bef6">ne10_fir_lattice_init_float</a> (<a class="el" href="structne10__fir__lattice__instance__f32__t.html">ne10_fir_lattice_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a> numStages, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pCoeffs, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pState)</td></tr>
+<tr class="memdesc:gad974c028e9482a5730a46212fd72bef6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization function for the floating-point FIR lattice filter.  <a href="#gad974c028e9482a5730a46212fd72bef6">More...</a><br /></td></tr>
+<tr class="separator:gad974c028e9482a5730a46212fd72bef6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gafb63cce140da772f11feaf67174de3de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Lattice.html#gafb63cce140da772f11feaf67174de3de">ne10_fir_lattice_float_c</a> (const <a class="el" href="structne10__fir__lattice__instance__f32__t.html">ne10_fir_lattice_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
-<tr class="memdesc:gafb63cce140da772f11feaf67174de3de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point FIR lattice filter.  <a href="#gafb63cce140da772f11feaf67174de3de">More...</a><br /></td></tr>
+<tr class="memdesc:gafb63cce140da772f11feaf67174de3de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR__Lattice.html#gaad0400f88a8eaf8a42d7457884a1a3c9">ne10_fir_lattice_float</a> using plain C.  <a href="#gafb63cce140da772f11feaf67174de3de">More...</a><br /></td></tr>
 <tr class="separator:gafb63cce140da772f11feaf67174de3de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gae0c6cf8e888aa784837e9a16729572ab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Lattice.html#gae0c6cf8e888aa784837e9a16729572ab">ne10_fir_lattice_float_neon</a> (const <a class="el" href="structne10__fir__lattice__instance__f32__t.html">ne10_fir_lattice_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize) <a class="el" href="NE10__mask__table_8h.html#af4458f0199e46d3738d0670481b65da9">asm</a>(&quot;ne10_fir_lattice_float_neon&quot;)</td></tr>
+<tr class="memdesc:gae0c6cf8e888aa784837e9a16729572ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specific implementation of <a class="el" href="group__FIR__Lattice.html#gaad0400f88a8eaf8a42d7457884a1a3c9">ne10_fir_lattice_float</a> using NEON SIMD capabilities.  <a href="#gae0c6cf8e888aa784837e9a16729572ab">More...</a><br /></td></tr>
+<tr class="separator:gae0c6cf8e888aa784837e9a16729572ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:gaad0400f88a8eaf8a42d7457884a1a3c9"><td class="memItemLeft" align="right" valign="top">void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__FIR__Lattice.html#gaad0400f88a8eaf8a42d7457884a1a3c9">ne10_fir_lattice_float</a> )(const <a class="el" href="structne10__fir__lattice__instance__f32__t.html">ne10_fir_lattice_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td></tr>
+<tr class="memdesc:gaad0400f88a8eaf8a42d7457884a1a3c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Processing function for the floating-point FIR lattice filter.  <a href="#gaad0400f88a8eaf8a42d7457884a1a3c9">More...</a><br /></td></tr>
+<tr class="separator:gaad0400f88a8eaf8a42d7457884a1a3c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <dl class="section user"><dt></dt><dd>This set of functions implements Finite Impulse Response (FIR) lattice filters for floating-point data types. Lattice filters are used in a variety of adaptive filter applications. The filter structure is feedforward and the net impulse response is finite length. The functions operate on blocks of input and output data and each call to the function processes <code>blockSize</code> samples through the filter. <code>pSrc</code> and <code>pDst</code> point to input and output arrays containing <code>blockSize</code> values.</dd></dl>
@@ -159,25 +172,134 @@ Finite Impulse Response Lattice filter</div></div>
       </table>
 </div><div class="memdoc">
 
+<p>Specific implementation of <a class="el" href="group__FIR__Lattice.html#gaad0400f88a8eaf8a42d7457884a1a3c9">ne10_fir_lattice_float</a> using plain C. </p>
+
+<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00929">929</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="gae0c6cf8e888aa784837e9a16729572ab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ne10_fir_lattice_float_neon </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structne10__fir__lattice__instance__f32__t.html">ne10_fir_lattice_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pSrc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pDst</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a>&#160;</td>
+          <td class="paramname"><em>blockSize</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specific implementation of <a class="el" href="group__FIR__Lattice.html#gaad0400f88a8eaf8a42d7457884a1a3c9">ne10_fir_lattice_float</a> using NEON SIMD capabilities. </p>
+
+</div>
+</div>
+<a class="anchor" id="gad974c028e9482a5730a46212fd72bef6"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="NE10__types_8h.html#ad9807cf61e3886e27d29ef37e3f871be">ne10_result_t</a> ne10_fir_lattice_init_float </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structne10__fir__lattice__instance__f32__t.html">ne10_fir_lattice_instance_f32_t</a> *&#160;</td>
+          <td class="paramname"><em>S</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#ae4837820f58f17806eae4629cb2f0559">ne10_uint16_t</a>&#160;</td>
+          <td class="paramname"><em>numStages</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pCoeffs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *&#160;</td>
+          <td class="paramname"><em>pState</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialization function for the floating-point FIR lattice filter. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR lattice structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">numStages</td><td>number of filter stages. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pCoeffs</td><td>points to the coefficient buffer. The array is of length numStages. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*pState</td><td>points to the state buffer. The array is of length numStages. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="NE10__fir__init_8c_source.html#l00217">217</a> of file <a class="el" href="NE10__fir__init_8c_source.html">NE10_fir_init.c</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a class="anchor" id="gaad0400f88a8eaf8a42d7457884a1a3c9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void(* ne10_fir_lattice_float) (const <a class="el" href="structne10__fir__lattice__instance__f32__t.html">ne10_fir_lattice_instance_f32_t</a> *S, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pSrc, <a class="el" href="NE10__types_8h.html#a18e2e5abd60dea21147a422c61e74664">ne10_float32_t</a> *pDst, <a class="el" href="NE10__types_8h.html#a0fe3f71573011825238e2202c574d68f">ne10_uint32_t</a> blockSize)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 <p>Processing function for the floating-point FIR lattice filter. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*S</td><td>points to an instance of the floating-point FIR lattice structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">*pSrc</td><td>points to the block of input data. </td></tr>
     <tr><td class="paramdir">[out]</td><td class="paramname">*pDst</td><td>points to the block of output data </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples to process. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blockSize</td><td>number of samples to process.</td></tr>
   </table>
   </dd>
 </dl>
+<p>Points to <a class="el" href="group__FIR__Lattice.html#gafb63cce140da772f11feaf67174de3de">ne10_fir_lattice_float_c</a> or <a class="el" href="group__FIR__Lattice.html#gae0c6cf8e888aa784837e9a16729572ab">ne10_fir_lattice_float_neon</a>. </p>
 
-<p>Definition at line <a class="el" href="NE10__fir_8c_source.html#l00949">949</a> of file <a class="el" href="NE10__fir_8c_source.html">NE10_fir.c</a>.</p>
+<p>Definition at line <a class="el" href="NE10__init__dsp_8c_source.html#l00180">180</a> of file <a class="el" href="NE10__init__dsp_8c_source.html">NE10_init_dsp.c</a>.</p>
 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

@@ -85,7 +85,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="contents">
 <div class="textblock"><h2>Prerequisites</h2>
 <p>Ne10 uses <a href="https://cmake.org/">CMake</a> to manage the project's build process in a toolchain-independent, cross-platform manner. As such, you will need CMake installed to build Ne10. It can typically be obtained via a package manager (for example, with <code>sudo apt-get install cmake</code>), but can otherwise be built from source. More information about CMake is available at <a href="https://cmake.org/">cmake.org</a>.</p>
-<h2>Native compilation on *nix platforms</h2>
+<p>All builds also require a local copy of the codebase. If you haven't already done so, you can download the latest Ne10 release as a <a href="https://github.com/projectNe10/Ne10/zipball/master">zip</a> or <a href="https://github.com/projectNe10/Ne10/tarball/master">tarball</a>. Or, alternatively, you can clone the current cutting-edge version of Ne10 directly with Git by running:</p>
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;git clone https://github.com/projectNe10/Ne10</div></div><!-- fragment --><h2>Native compilation on *nix platforms</h2>
 <p>As CMake does most of the cross-platform heavy lifting, Ne10 can be natively compiled on *nix systems by running just a few simple commands:</p>
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;cd $NE10_PATH                       # Change directory to the location of the Ne10 source</div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;mkdir build &amp;&amp; cd build             # Create the `build` directory and navigate into it</div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;export NE10_LINUX_TARGET_ARCH=armv7 # Set the target architecture (can also be &quot;aarch64&quot;)</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;cmake -DGNULINUX_PLATFORM=ON ..     # Run CMake to generate the build files</div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;make                                # Build the project</div></div><!-- fragment --><p>This process, if completed successfully, will yield the <code>libNE10.a</code> static library file in the <code>$NE10_PATH/build/modules/</code> directory. In addition, a sample program <code>NE10_test_static</code> compiled with this static library will be generated in <code>$NE10_PATH/build/samples/</code>.</p>
 <p>You can also generate a dynamic, shared library file by passing CMake the <code>-DNE10_BUILD_SHARED=ON</code> option. This generates a handful of <code>*.so</code> files in the same directory as the static library file, in addition to the dynamically linked <code>NE10_test_dynamic</code> sample program.</p>
@@ -128,7 +129,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 28 2017 13:54:08 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jun 30 2017 10:50:54 for Project Ne10 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
