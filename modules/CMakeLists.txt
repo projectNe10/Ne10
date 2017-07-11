@@ -383,6 +383,14 @@ if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
         LINKER_LANGUAGE C
     )
 
+    # If the CMake version supports it, attach header directory information
+    # to the targets for when we are part of a parent build (ie being pulled
+    # in via add_subdirectory() rather than being a standalone build).
+    if (DEFINED CMAKE_VERSION AND NOT "${CMAKE_VERSION}" VERSION_LESS "2.8.11")
+        target_include_directories(NE10 INTERFACE "${PROJECT_SOURCE_DIR}/inc")
+	target_include_directories(NE10 INTERFACE "${PROJECT_SOURCE_DIR}/common")
+    endif()
+
   if(IOS_DEMO)
     install(TARGETS NE10
       DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../ios/NE10Demo/libs/)
@@ -421,5 +429,13 @@ if(NE10_BUILD_SHARED)
     )
 
     target_link_libraries(NE10_test m)
+
+    # If the CMake version supports it, attach header directory information
+    # to the targets for when we are part of a parent build (ie being pulled
+    # in via add_subdirectory() rather than being a standalone build).
+    if (DEFINED CMAKE_VERSION AND NOT "${CMAKE_VERSION}" VERSION_LESS "2.8.11")
+        target_include_directories(NE10_shared INTERFACE "${PROJECT_SOURCE_DIR}/inc")
+	target_include_directories(NE10_shared INTERFACE "${PROJECT_SOURCE_DIR}/common")
+    endif()
 
 endif()
