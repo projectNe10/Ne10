@@ -43,7 +43,7 @@ if (NE10_BUILD_UNIT_TEST)
     #should build the releave version, see the BUILD_DEBUG below.
     option(NE10_SMOKE_TEST "Run smoke test" OFF)
     option(NE10_REGRESSION_TEST "Run regression test" OFF)
-    option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
+    option(NE10_PERFORMANCE_TEST "Run performance test" ON)
 
     option(NE10_DEBUG_TRACE "Print debug trace" OFF)
 endif()
@@ -67,26 +67,35 @@ endif()
 if(DEFINED NE10_LINUX_TARGET_ARCH)
     if(${NE10_LINUX_TARGET_ARCH} STREQUAL "armv7")
         set(NE10_TARGET_ARCH "armv7")
-    else()
+    elsif(${NE10_LINUX_TARGET_ARCH} STREQUAL "aarch64")
         set(NE10_TARGET_ARCH "aarch64")
+    else()
+        # Catch all. Will only build plain C variant of library, with no intrinsics
+        set(NE10_TARGET_ARCH "other")
     endif()
 endif()
 
 if(DEFINED NE10_IOS_TARGET_ARCH)
     if(${NE10_IOS_TARGET_ARCH} STREQUAL "armv7")
         set(NE10_TARGET_ARCH "armv7")
-    else()
+    elsif(${NE10_LINUX_TARGET_ARCH} STREQUAL "aarch64")
         set(NE10_TARGET_ARCH "aarch64")
+    else()
+        # Catch all. Will only build plain C variant of library, with no intrinsics
+        set(NE10_TARGET_ARCH "other")
     endif()
 endif()
 
-message("-- Target architecture: ${NE10_TARGET_ARCH}")
+if(NOT DEFINED NE10_IOS_TARGET_ARCH AND NOT DEFINED NE10_LINUX_TARGET_ARCH AND NOT DEFINED NE10_ANDROID_TARGET_ARCH)
+    set(NE10_TARGET_ARCH "other")
+endif()
+message("-- Target architecture:" ${NE10_TARGET_ARCH})
 
 #select functionalities to be compiled
 if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
-    # Math module has not been optimized for aarch64.
+    # Math module has only been optimized for armv7
     option(NE10_ENABLE_MATH "Build math functionalities to NE10" ON)
-    # Physics module has not been optimized for aarch64.
+    # Physics module has only been optimized for armv7
     option(NE10_ENABLE_PHYSICS "Build physics functionalities to NE10" ON)
 endif()
 option(NE10_ENABLE_DSP "Build dsp functionalities to NE10" ON)

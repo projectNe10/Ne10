@@ -366,12 +366,17 @@ include_directories (
 )
 
 if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
-    add_library( NE10 STATIC
-        ${NE10_C_SRCS}
-        ${NE10_INTRINSIC_SRCS}
-        ${NE10_NEON_SRCS}
-        ${NE10_INIT_SRCS}
-    )
+
+    if("${NE10_TARGET_ARCH}" STREQUAL "other")
+        add_library( NE10 STATIC ${NE10_C_SRCS} )
+    else()
+        add_library( NE10 STATIC
+            ${NE10_C_SRCS}
+            ${NE10_INTRINSIC_SRCS}
+            ${NE10_NEON_SRCS}
+            ${NE10_INIT_SRCS}
+        )
+    endif()
     set_target_properties(NE10 PROPERTIES
         CLEAN_DIRECT_OUTPUT 1
         VERSION ${NE10_VERSION}
@@ -399,12 +404,16 @@ endif()
 
 if(NE10_BUILD_SHARED)
 
-    add_library( NE10_shared SHARED
-        ${NE10_C_SRCS}
-        ${NE10_INTRINSIC_SRCS}
-        ${NE10_NEON_SRCS}
-        ${NE10_INIT_SRCS}
-    )
+    if("${NE10_TARGET_ARCH}" STREQUAL "other")
+        add_library( NE10_shared SHARED ${NE10_C_SRCS} )
+    else()
+        add_library( NE10_shared SHARED
+            ${NE10_C_SRCS}
+            ${NE10_INTRINSIC_SRCS}
+            ${NE10_NEON_SRCS}
+            ${NE10_INIT_SRCS}
+        )
+    endif()
 
     target_link_libraries(NE10_shared m)
 
