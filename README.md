@@ -30,8 +30,3 @@ Find Project Ne10 useful? You can help us justify spending more engineering reso
 
 Want us to help cross-promote your product using Ne10 at developer events? We’re also looking for Ne10 use cases to show at conferences and meetups.
 
-## Contacts
-
-- roberto.mijat@arm.com
-- matthew.dupuy@arm.com
-- fang.bao@arm.com
