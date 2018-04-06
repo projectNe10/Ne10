@@ -114,6 +114,8 @@ if(ANDROID_PLATFORM)
 
     #TODO: Fine tune pic and pie flag for executable, share library and static library.
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=${NDK_SYSROOT_PATH} -pie")
+    string(APPEND CMAKE_C_FLAGS " -isysroot ${NDK_ISYSROOT_PATH}")
+    add_definitions(-D__ANDROID_API__=${ANDROID_API_LEVEL})
 
     # Adding cflags for armv7. Aarch64 does not need such flags.
     if(${NE10_TARGET_ARCH} STREQUAL "armv7")

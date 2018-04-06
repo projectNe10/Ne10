@@ -86,6 +86,7 @@ if(DEFINED ENV{ANDROID_NDK})
 
     #NDK_SYSROOT_PATH is used in compiler's '--sysroot' flags
     set(NDK_SYSROOT_PATH "$ENV{ANDROID_NDK}/platforms/android-${ANDROID_API_LEVEL}/arch-${ANDROID_NDK_PLATFORMS_ARCH_SUFFIX}/")
+    set(NDK_ISYSROOT_PATH "$ENV{ANDROID_NDK}/sysroot -I$ENV{ANDROID_NDK}/sysroot/usr/include/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}")
 
     if(APPLE)
         #TODO: Check whether this path is correct for aarch64 under mac.
