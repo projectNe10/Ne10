@@ -1,0 +1,124 @@
+all_jobs: &all_jobs
+  jobs:
+    - ios-armv7-release
+    - ios-armv7-debug
+    - ios-aarch64-release
+    - ios-aarch64-debug
+    - android-armv7-release
+    - android-armv7-debug
+    - android-aarch64-release
+    - android-aarch64-debug
+
+build_steps: &build_steps
+  steps:
+    - run:
+        name: Setup
+        command: |
+          PLATFORM=`uname`
+          if [ "${PLATFORM}" == "Darwin" ]; then
+            mkdir -p ~/cmake
+            curl -L https://cmake.org/files/v3.10/cmake-3.10.3-Darwin-x86_64.tar.gz | \
+                  tar -xz -C ~/cmake --strip-components 1
+            CMAKE_BIN_DIR="${HOME}/cmake/CMake.app/Contents/bin"
+            LOCAL_BIN_DIR="/usr/local/bin"
+            ln -s ${CMAKE_BIN_DIR}/cmake ${LOCAL_BIN_DIR}/cmake
+            ln -s ${CMAKE_BIN_DIR}/cpack ${LOCAL_BIN_DIR}/cpack
+            ln -s ${CMAKE_BIN_DIR}/ctest ${LOCAL_BIN_DIR}/ctest
+          else
+            NDK_VERSION="r16b"
+            sudo apt-get update
+            sudo apt-get install cmake
+            cd ${HOME}
+            curl -L https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux-x86_64.zip -o ndk.zip
+            unzip ndk.zip
+            mv android-ndk-${NDK_VERSION} android-ndk
+          fi
+    - checkout
+    - run:
+        name: Build
+        command: |
+          ./circle/build_${PLATFORM}.sh
+
+mac_build: &mac_build
+  macos:
+    xcode: "9.2.0"
+  <<: *build_steps
+
+linux_build: &linux_build
+  docker:
+    - image: circleci/buildpack-deps:bionic
+  <<: *build_steps
+
+# TODO(tom): release/debug variant
+# also clang variant for NDK
+# enable warnings as errors
+version: 2
+jobs:
+  ios-armv7-release:
+    <<: *mac_build
+    environment:
+      - PLATFORM: "ios"
+      - ARCH: "armv7"
+
+  ios-armv7-debug:
+    <<: *mac_build
+    environment:
+      - PLATFORM: "ios"
+      - ARCH: "armv7"
+      - DEBUG: "1"
+
+  ios-aarch64-release:
+    <<: *mac_build
+    environment:
+      - PLATFORM: "ios"
+      - ARCH: "aarch64"
+
+  ios-aarch64-debug:
+    <<: *mac_build
+    environment:
+      - PLATFORM: "ios"
+      - ARCH: "aarch64"
+      - DEBUG: "1"
+
+  android-armv7-release:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "android"
+      - ARCH: "armv7"
+
+  android-armv7-debug:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "android"
+      - ARCH: "armv7"
+      - DEBUG: "1"
+
+  android-aarch64-release:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "android"
+      - ARCH: "aarch64"
+
+  android-aarch64-debug:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "android"
+      - ARCH: "aarch64"
+      - DEBUG: "1"
+
+workflows:
+  version: 2
+  continous:
+    <<: *all_jobs
+
+  nightly:
+    <<: *all_jobs
+    triggers:
+      - schedule:
+          cron: "0 8 * * *"
+          filters:
+            branches:
+              only:
+                - master
+                - circleci
+
