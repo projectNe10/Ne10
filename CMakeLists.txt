@@ -114,6 +114,8 @@ if(ANDROID_PLATFORM)
 
     #TODO: Fine tune pic and pie flag for executable, share library and static library.
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=${NDK_SYSROOT_PATH} -pie")
+    string(APPEND CMAKE_C_FLAGS " -isysroot ${NDK_ISYSROOT_PATH}")
+    add_definitions(-D__ANDROID_API__=${ANDROID_API_LEVEL})
 
     # Adding cflags for armv7. Aarch64 does not need such flags.
     if(${NE10_TARGET_ARCH} STREQUAL "armv7")
@@ -148,7 +150,7 @@ elseif(IOS_PLATFORM)
     #5.0.2 would generate code for iOS 7.0, which would lead runtime
     #error when run on device with earlier iOS version.
     if(NOT MIN_IOS_VER)
-      set(MIN_IOS_VER "5.0")
+      set(MIN_IOS_VER "6.0")
     endif()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -miphoneos-version-min=" ${MIN_IOS_VER})
     set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
