@@ -8,14 +8,17 @@ all_jobs: &all_jobs
     - android-armv7-debug
     - android-aarch64-release
     - android-aarch64-debug
+    - linux-armv7-release
+    - linux-armv7-debug
+    - linux-aarch64-release
+    - linux-aarch64-debug
 
 build_steps: &build_steps
   steps:
     - run:
         name: Setup
         command: |
-          PLATFORM=`uname`
-          if [ "${PLATFORM}" == "Darwin" ]; then
+          if [ "${PLATFORM}" == "ios" ]; then
             mkdir -p ~/cmake
             curl -L https://cmake.org/files/v3.10/cmake-3.10.3-Darwin-x86_64.tar.gz | \
                   tar -xz -C ~/cmake --strip-components 1
@@ -24,7 +27,7 @@ build_steps: &build_steps
             ln -s ${CMAKE_BIN_DIR}/cmake ${LOCAL_BIN_DIR}/cmake
             ln -s ${CMAKE_BIN_DIR}/cpack ${LOCAL_BIN_DIR}/cpack
             ln -s ${CMAKE_BIN_DIR}/ctest ${LOCAL_BIN_DIR}/ctest
-          else
+          elif [ "${PLATFORM}" == "android" ]; then
             NDK_VERSION="r16b"
             sudo apt-get update
             sudo apt-get install cmake
@@ -32,6 +35,18 @@ build_steps: &build_steps
             curl -L https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux-x86_64.zip -o ndk.zip
             unzip ndk.zip
             mv android-ndk-${NDK_VERSION} android-ndk
+          else
+            sudo apt-get update
+            sudo apt-get install cmake
+            if [ "${ARCH}" == "armv7" ]; then
+              sudo apt-get install g++-arm-linux-gnueabihf
+            else
+              # gcc7 aarch64 fails due to this bug:
+              # https://bugs.launchpad.net/gcc-linaro/+bug/1759369
+              # sudo apt-get install g++-aarch64-linux-gnu
+              sudo apt-get install g++-8-aarch64-linux-gnu
+              sudo update-alternatives --install /usr/bin/aarch64-linux-gnu-gcc aarch64-linux-gnu-gcc /usr/bin/aarch64-linux-gnu-gcc-8 1 --slave /usr/bin/aarch64-linux-gnu-g++ aarch64-linux-gnu-g++ /usr/bin/aarch64-linux-gnu-g++-8
+            fi
           fi
     - checkout
     - run:
@@ -103,6 +118,32 @@ jobs:
     <<: *linux_build
     environment:
       - PLATFORM: "android"
+      - ARCH: "aarch64"
+      - DEBUG: "1"
+
+  linux-armv7-release:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "linux"
+      - ARCH: "armv7"
+
+  linux-armv7-debug:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "linux"
+      - ARCH: "armv7"
+      - DEBUG: "1"
+
+  linux-aarch64-release:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "linux"
+      - ARCH: "aarch64"
+
+  linux-aarch64-debug:
+    <<: *linux_build
+    environment:
+      - PLATFORM: "linux"
       - ARCH: "aarch64"
       - DEBUG: "1"
 
