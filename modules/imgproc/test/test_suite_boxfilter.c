@@ -98,7 +98,7 @@ int valid_result (const ne10_uint8_t *image1,
 
     if (diff_mat == 0)
     {
-        printf ("**ERROR**: allocating %d bytes memory for kernels fails!",
+        printf ("**ERROR**: allocating %zu bytes memory for kernels fails!",
                 sizeof (ne10_int32_t)
                 * src_sz.x
                 * src_sz.y
@@ -160,7 +160,7 @@ void boxfilter_get_kernels (size_t max_kernel_length,
     *kernels_ptr = (ne10_size_t *) malloc (sizeof (ne10_size_t) * (*size));
     if (*kernels_ptr == 0)
     {
-        printf ("**ERROR**: allocating %d bytes memory for kernels fails!\n",
+        printf ("**ERROR**: allocating %zu bytes memory for kernels fails!\n",
                 sizeof (ne10_size_t) * (*size));
     }
 
