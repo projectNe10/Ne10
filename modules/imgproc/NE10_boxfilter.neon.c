@@ -274,7 +274,7 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
     if (!sum_row)
     {
         fprintf (stderr,
-                 "ERROR: buffer allocation fails!\nallocation size: %d\n",
+                 "ERROR: buffer allocation fails!\nallocation size: %lu\n",
                  sizeof (ne10_uint32_t) *
                  src_sz.x *
                  RGBA_CH);

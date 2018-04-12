@@ -3,7 +3,7 @@
 ## What’s Ne10?
 Ne10 is a library of common, useful functions that have been heavily optimised for ARM-based CPUs equipped with [NEON](https://www.arm.com/products/processors/technologies/neon.php) SIMD capabilities. It provides consistent, well-tested behaviour, allowing for painless integration into a wide variety of applications. The library currently focuses primarily around math, signal processing, image processing, and physics functions.
 
-## Building
+## Building [![CircleCI](https://circleci.com/gh/projectNe10/Ne10.svg?style=svg)](https://circleci.com/gh/projectNe10/Ne10)
 Out of the box, Ne10 supports the Linux, Android, and iOS platforms. For instructions on building Ne10 for these platforms, please consult the build instructions in [`building.md`](https://github.com/projectNe10/Ne10/tree/master/doc/building.md#building-ne10). It is possible to use the library on other platforms (or, indeed, “without a platform”), however you may have to fiddle with some of the build configuration files.
 
 Once Ne10 has been built, it can be linked against just like any other C library. To link C code against Ne10, for instance, the compiler must first be aware of Ne10's library and header files — those within `build/modules/` and `inc/`. To do this, these files can be copied to the standard directories used by compilation tools by running `make install`, or by installing Ne10 from a package manager. Following this, you can simply include `Ne10.h` in your C code, and ask the compiler to link against the `NE10` library (e.g. with `-lNE10`).
