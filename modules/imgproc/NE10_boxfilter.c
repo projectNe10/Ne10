@@ -368,7 +368,7 @@ void ne10_img_boxfilter_rgba8888_c (const ne10_uint8_t *src,
     if (!dst_buf)
     {
         fprintf (stderr,
-                 "ERROR: buffer allocation fails!\nallocation size: %lu\n",
+                 "ERROR: buffer allocation fails!\nallocation size: %zu\n",
                  sizeof (ne10_uint8_t) *
                  src_sz.x *
                  src_sz.y *
