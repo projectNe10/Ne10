@@ -377,8 +377,6 @@ if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
         VERSION ${NE10_VERSION}
     )
 
-    target_link_libraries(NE10 stdc++)
-
     set_target_properties(NE10 PROPERTIES
         LINKER_LANGUAGE C
     )
