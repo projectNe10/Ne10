@@ -14,6 +14,7 @@ for test_type in ${TEST_TYPES}; do
   rm -rf build && mkdir build && pushd build
   cmake \
     -DCMAKE_TOOLCHAIN_FILE=../GNUlinux_config.cmake \
+    -DNE10_BUILD_UNIT_TEST=ON \
     -DBUILD_DEBUG=${BUILD_DEBUG} \
     ${test_type} \
     ..
