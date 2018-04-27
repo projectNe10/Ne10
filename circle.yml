@@ -53,6 +53,8 @@ build_steps: &build_steps
         name: Build
         command: |
           ./circle/build_${PLATFORM}.sh
+        environment:
+          TERM: "xterm"  # color output
 
 mac_build: &mac_build
   macos:
