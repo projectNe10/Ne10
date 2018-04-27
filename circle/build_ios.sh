@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 export IOS_DEVELOPER_PATH=/Applications/Xcode.app/Contents/Developer
 export NE10_IOS_TARGET_ARCH=${ARCH:-armv7}
 BUILD_DEBUG=${DEBUG:-0}
