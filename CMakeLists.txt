@@ -146,11 +146,9 @@ elseif(GNULINUX_PLATFORM)
       set(NE10_ASM_OPTIMIZATION on)
     endif()
 elseif(IOS_PLATFORM)
-    #set minimal target ios version.If not provided this option, Xcode
-    #5.0.2 would generate code for iOS 7.0, which would lead runtime
-    #error when run on device with earlier iOS version.
+    #set minimal target ios version.
     if(NOT MIN_IOS_VER)
-      set(MIN_IOS_VER "6.0")
+      set(MIN_IOS_VER "7.0")
     endif()
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -miphoneos-version-min=" ${MIN_IOS_VER})
     set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
