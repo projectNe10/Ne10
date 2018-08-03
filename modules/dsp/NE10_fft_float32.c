@@ -836,14 +836,14 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft)
 
     st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
 
-    // Only backward FFT is scaled by default.
-    st->is_forward_scaled = 0;
-    st->is_backward_scaled = 1;
-
     if (st == NULL)
     {
         return st;
     }
+
+    // Only backward FFT is scaled by default.
+    st->is_forward_scaled = 0;
+    st->is_backward_scaled = 1;
 
     uintptr_t address = (uintptr_t) st + sizeof (ne10_fft_state_float32_t);
     NE10_BYTE_ALIGNMENT (address, NE10_FFT_BYTE_ALIGNMENT);
