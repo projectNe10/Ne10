@@ -36,17 +36,14 @@ option(NE10_BUILD_EXAMPLES "Build NE10 examples" ON)
 option(NE10_ARM_HARD_FLOAT "Build NE10 for hard float abi" ON)
 
 #unit test options
-option(NE10_BUILD_UNIT_TEST "Build NE10 unit test" OFF)
-if (NE10_BUILD_UNIT_TEST)
-    #decide the test is smoke, regression or performance test, only one of
-    #three options can be ON! And if you want to run performance test, you
-    #should build the releave version, see the BUILD_DEBUG below.
-    option(NE10_SMOKE_TEST "Run smoke test" OFF)
-    option(NE10_REGRESSION_TEST "Run regression test" OFF)
-    option(NE10_PERFORMANCE_TEST "Run performance test" OFF)
+#decide the test is smoke, regression or performance test, only one of
+#three options can be ON! And if you want to run performance test, you
+#should build the release version, see the BUILD_DEBUG below.
+set(NE10_TEST_NAME "none" CACHE STRING "Build the test.")
+set(NE10_TEST_VALUES "none;smoke;regression;performance" CACHE STRING "List of available test types.")
+set_property(CACHE NE10_TEST_NAME PROPERTY STRINGS ${NE10_TEST_VALUES})
 
-    option(NE10_DEBUG_TRACE "Print debug trace" OFF)
-endif()
+option(NE10_DEBUG_TRACE "Print debug trace" OFF)
 
 #check if proper platform is set.
 if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM) AND (NOT IOS_PLATFORM))
@@ -176,7 +173,7 @@ if(NE10_BUILD_EXAMPLES AND NE10_ENABLE_MATH)
     add_subdirectory(samples)
 endif()
 
-if(NE10_BUILD_UNIT_TEST)
+if(NOT NE10_TEST_NAME STREQUAL "none")
     add_subdirectory(test)
 endif()
 

@@ -98,7 +98,7 @@ Ne10 has a number of unit tests, built around a modified version of the testing 
 - Regression testing, which is similar to conformance testing but is aimed more specifically at testing whether the library still operates correctly after a change.
 - Performance testing, which gives an indication of how quickly the library performs certain tasks.
 
-These can be built by specifying the `-DNE10_BUILD_UNIT_TEST=ON` option to CMake in addition to one of `-DNE10_SMOKE_TEST=ON`, `-DNE10_REGRESSION_TEST=ON`, and `-DNE10_PERFORMANCE_TEST=ON`. The corresponding test programs for each Ne10 module will then be generated in the `$NE10_PATH/build/test/` directory.
+These can be built by specifying `-DNE10_SMOKE_TEST` with one of `smoke`, `regression`, and `performance`. The corresponding test programs for each Ne10 module will then be generated in the `$NE10_PATH/build/test/` directory.
 
 
 ## Building the Android and iOS demo applications
