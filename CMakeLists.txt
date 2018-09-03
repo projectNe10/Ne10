@@ -173,10 +173,6 @@ if(NE10_BUILD_EXAMPLES AND NE10_ENABLE_MATH)
     add_subdirectory(samples)
 endif()
 
-if(NOT NE10_TEST_NAME STREQUAL "none")
-    add_subdirectory(test)
-endif()
-
 if(ANDROID_PLATFORM AND ANDROID_DEMO)
     add_subdirectory(android/NE10Demo/jni)
 endif()
