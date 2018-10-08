@@ -52,3 +52,5 @@ local.properties
 
 *.so
 
+# ignore visual studio code files
+.vscode
