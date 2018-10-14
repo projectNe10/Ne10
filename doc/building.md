@@ -32,7 +32,7 @@ By default, the release version of the library is built. The debug version can i
 
 ### ...for other general \*nix platforms
 
-Cross-compiling Ne10 for \*nix platforms is similar to native compilation, but using a cross-compilation toolchain. A boilerplate toolchain file `GNUlinux_config.cmake` is present in the root directory of the project to allow for cross-compilation using the Linaro GCC ARM toolchain (obtained, for example, via `sudo apt-get install gcc-arm-linux-gnueabihf`), but this can also be modified to work with other toolchains. Using this augments the compilation process to look something like the following:
+Cross-compiling Ne10 for \*nix platforms is similar to native compilation, but using a cross-compilation toolchain. A boilerplate toolchain file `GNUlinux_config.cmake` is present in the root directory of the project to allow for cross-compilation using the Linaro GCC ARM toolchain (obtained, for example, via `sudo apt-get install gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf`), but this can also be modified to work with other toolchains. Using this augments the compilation process to look something like the following:
 
 ```bash
 cd $NE10_PATH
