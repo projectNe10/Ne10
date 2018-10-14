@@ -36,6 +36,8 @@
 #     armv7 or aarch64 (Not done yet). Defaut is armv7.
 
 set(GNULINUX_PLATFORM ON)
+set(CMAKE_SYSTEM_NAME "Linux")
+set(CMAKE_SYSTEM_PROCESSOR "arm")
 
 if(NOT DEFINED ENV{NE10_LINUX_TARGET_ARCH})
    set(NE10_LINUX_TARGET_ARCH "armv7")

@@ -184,6 +184,13 @@ if(ANDROID_PLATFORM AND ANDROID_DEMO)
     add_subdirectory(android/NE10Demo/jni)
 endif()
 
+# Make sure we are compiling for an ARM system.
+# This is a verbose fail-fast in case we are trying to compile for non-ARM;
+# otherwise it would fail at `make` with obscure errors.
+if(GNULINUX_PLATFORM AND (NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^arm"))
+    message(FATAL_ERROR "You are trying to compile for non-ARM (CMAKE_SYSTEM_PROCESSOR='${CMAKE_SYSTEM_PROCESSOR}')! see doc/building.md for cross compilation instructions.")
+endif()
+
 if(IOS_PLATFORM AND IOS_DEMO)
     add_subdirectory(ios)
 endif()
