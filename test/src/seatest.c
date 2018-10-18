@@ -185,9 +185,9 @@ void seatest_assert_ulong_equal(unsigned long expected, unsigned long actual, co
 
 void seatest_assert_float_vec_equal( float expected, float actual, unsigned int delta, unsigned int seatest_vec, const char* function, unsigned int line )
 {
-    char s[SEATEST_PRINT_BUFFER_SIZE];
     if (!EQUALS_FLOAT(expected, actual, delta))
     {
+        char s[SEATEST_PRINT_BUFFER_SIZE];
         sprintf(s, "Expected %e (0x%04X) but was %e (0x%04X) at vector->%d ",
                 expected, *(unsigned int*)&expected, actual, *(unsigned int*)&actual, seatest_vec);
         seatest_simple_test_result( 0, s, function, line);
@@ -196,9 +196,9 @@ void seatest_assert_float_vec_equal( float expected, float actual, unsigned int 
 
 void seatest_assert_float_equal( float expected, float actual, unsigned int  delta, unsigned int loop_round, const char* function, unsigned int line )
 {
-    char s[SEATEST_PRINT_BUFFER_SIZE];
     if (!EQUALS_FLOAT(expected, actual, delta))
     {
+        char s[SEATEST_PRINT_BUFFER_SIZE];
         sprintf(s, "Expected %e (0x%04X) but was %e (0x%04X) in loop round %d",
                 expected, *(unsigned int*)&expected, actual, *(unsigned int*)&actual, loop_round);
         seatest_simple_test_result( 0, s, function, line);

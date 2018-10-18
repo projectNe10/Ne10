@@ -43,15 +43,14 @@ ne10_result_t ne10_HasNEON()
 
 ne10_result_t ne10_init()
 {
-    ne10_result_t status = NE10_ERR;
+    ne10_result_t status;
 #ifndef __MACH__
-    FILE*   infofile = NULL;               // To open the file /proc/cpuinfo
     ne10_int8_t    cpuinfo[CPUINFO_BUFFER_SIZE];  // The buffer to read in the string
     ne10_uint32_t  bytes = 0;                     // Numbers of bytes read from the file
     ne10_int32_t     i = 0;                         // Temporary loop counter
 
     memset (cpuinfo, 0, CPUINFO_BUFFER_SIZE);
-    infofile = fopen ("/proc/cpuinfo", "r");
+    FILE* infofile = fopen ("/proc/cpuinfo", "r");
 
     if (!infofile)
     {

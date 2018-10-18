@@ -254,12 +254,6 @@ void test_iir_lattice_case0()
 {
     ne10_iir_lattice_instance_f32_t SC, SN;
 
-    ne10_uint16_t loop = 0;
-    ne10_uint16_t block = 0;
-    ne10_uint16_t i = 0;
-
-    test_config *config;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init input memory */
@@ -276,17 +270,16 @@ void test_iir_lattice_case0()
 
 #ifdef ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
-    ne10_uint16_t pos = 0;
-    for (loop = 0; loop < NUM_TESTS; loop++)
+    for (ne10_uint16_t loop = 0; loop < NUM_TESTS; loop++)
     {
-        config = &CONFIG[loop];
+        test_config *config = &CONFIG[loop];
 
         /* Initialize the CFFT/CIFFT module */
         ne10_iir_lattice_init_float (&SC, config->numTaps, config->kCoeffsF32, config->vCoeffsF32, iir_state_c, config->blockSize);
         ne10_iir_lattice_init_float (&SN, config->numTaps, config->kCoeffsF32, config->vCoeffsF32, iir_state_neon, config->blockSize);
 
         /* copy input to input buffer */
-        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
+        for (ne10_uint16_t i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -297,11 +290,11 @@ void test_iir_lattice_case0()
         GUARD_ARRAY (out_c, TEST_LENGTH_SAMPLES);
         GUARD_ARRAY (out_neon, TEST_LENGTH_SAMPLES);
 
-        for (block = 0; block < config->numFrames; block++)
+        for (ne10_uint16_t block = 0; block < config->numFrames; block++)
         {
             ne10_iir_lattice_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize), config->blockSize);
         }
-        for (block = 0; block < config->numFrames; block++)
+        for (ne10_uint16_t block = 0; block < config->numFrames; block++)
         {
             ne10_iir_lattice_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), config->blockSize);
         }
@@ -318,7 +311,7 @@ void test_iir_lattice_case0()
         assert_false ( (snr < SNR_THRESHOLD));
 
         //conformance test 2: compare output of C and neon
-        for (pos = 0; pos < TEST_LENGTH_SAMPLES; pos++)
+        for (ne10_uint16_t pos = 0; pos < TEST_LENGTH_SAMPLES; pos++)
         {
 #if defined (DEBUG_TRACE)
             printf ("pos %d \n", pos);
@@ -332,18 +325,17 @@ void test_iir_lattice_case0()
 #endif // ENABLE_NE10_IIR_LATTICE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
-    ne10_uint16_t k;
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "IIR Length&Taps", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
-    for (loop = 0; loop < NUM_PERF_TESTS; loop++)
+    for (ne10_uint16_t loop = 0; loop < NUM_PERF_TESTS; loop++)
     {
-        config = &CONFIG_PERF[loop];
+        test_config *config = &CONFIG_PERF[loop];
 
         /* Initialize the CFFT/CIFFT module */
         ne10_iir_lattice_init_float (&SC, config->numTaps, config->kCoeffsF32, config->vCoeffsF32, iir_state_c, config->blockSize);
         ne10_iir_lattice_init_float (&SN, config->numTaps, config->kCoeffsF32, config->vCoeffsF32, iir_state_neon, config->blockSize);
 
         /* copy input to input buffer */
-        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
+        for (ne10_uint16_t i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -353,9 +345,9 @@ void test_iir_lattice_case0()
         (
             time_c,
         {
-            for (k = 0; k < TEST_COUNT; k++)
+            for (ne10_uint16_t k = 0; k < TEST_COUNT; k++)
             {
-                for (block = 0; block < config->numFrames; block++)
+                for (ne10_uint16_t block = 0; block < config->numFrames; block++)
                 {
                     ne10_iir_lattice_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize), config->blockSize);
                 }
@@ -368,9 +360,9 @@ void test_iir_lattice_case0()
         (
             time_neon,
         {
-            for (k = 0; k < TEST_COUNT; k++)
+            for (ne10_uint16_t k = 0; k < TEST_COUNT; k++)
             {
-                for (block = 0; block < config->numFrames; block++)
+                for (ne10_uint16_t block = 0; block < config->numFrames; block++)
                 {
                     ne10_iir_lattice_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize), config->blockSize);
                 }

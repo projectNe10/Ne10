@@ -199,15 +199,6 @@ void test_fir_decimate_case0()
 {
     ne10_fir_decimate_instance_f32_t SC, SN;
 
-    ne10_uint16_t loop = 0;
-    ne10_uint16_t block = 0;
-    ne10_uint16_t i = 0;
-    ne10_uint16_t length = 0;
-
-    test_config *config;
-    ne10_result_t status_c = NE10_OK;
-    ne10_result_t status_neon = NE10_OK;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init input memory */
@@ -224,15 +215,14 @@ void test_fir_decimate_case0()
 
 #ifdef ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
 #if defined (SMOKE_TEST)||(REGRESSION_TEST)
-    ne10_uint16_t pos = 0;
-    for (loop = 0; loop < NUM_TESTS; loop++)
+    for (ne10_uint16_t loop = 0; loop < NUM_TESTS; loop++)
     {
-        config = &CONFIG[loop];
-        length = config->numFrames * config->blockSize / config->D;
+        test_config *config = &CONFIG[loop];
+        ne10_uint16_t length = config->numFrames * config->blockSize / config->D;
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_decimate_init_float (&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
-        status_neon = ne10_fir_decimate_init_float (&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
+        ne10_result_t status_c = ne10_fir_decimate_init_float (&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
+        ne10_result_t status_neon = ne10_fir_decimate_init_float (&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
 
         if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
@@ -247,7 +237,7 @@ void test_fir_decimate_case0()
             }
         }
         /* copy input to input buffer */
-        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
+        for (ne10_uint16_t i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -256,12 +246,12 @@ void test_fir_decimate_case0()
         GUARD_ARRAY (out_c, length);
         GUARD_ARRAY (out_neon, length);
 
-        for (block = 0; block < config->numFrames; block++)
+        for (ne10_uint16_t block = 0; block < config->numFrames; block++)
         {
             ne10_fir_decimate_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize / config->D), config->blockSize);
         }
 
-        for (block = 0; block < config->numFrames; block++)
+        for (ne10_uint16_t block = 0; block < config->numFrames; block++)
         {
             ne10_fir_decimate_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize / config->D), config->blockSize);
         }
@@ -278,7 +268,7 @@ void test_fir_decimate_case0()
         printf ("--------------------config %d\n", loop);
         printf ("snr %f\n", snr);
 #endif
-        for (pos = 0; pos < length; pos++)
+        for (ne10_uint16_t pos = 0; pos < length; pos++)
         {
 #if defined (DEBUG_TRACE)
             printf ("pos %d \n", pos);
@@ -291,16 +281,15 @@ void test_fir_decimate_case0()
 #endif // ENABLE_NE10_FIR_DECIMATE_FLOAT_NEON
 
 #ifdef PERFORMANCE_TEST
-    ne10_uint16_t k;
     fprintf (stdout, "%25s%20s%20s%20s%20s\n", "FIR Length&Taps", "C Time (micro-s)", "NEON Time (micro-s)", "Time Savings", "Performance Ratio");
-    for (loop = 0; loop < NUM_PERF_TESTS; loop++)
+    for (ne10_uint16_t loop = 0; loop < NUM_PERF_TESTS; loop++)
     {
-        config = &CONFIG_PERF[loop];
-        length = config->numFrames * config->blockSize / config->D;
+        test_config *config = &CONFIG_PERF[loop];
+        ne10_uint16_t length = config->numFrames * config->blockSize / config->D;
 
         /* Initialize the CFFT/CIFFT module */
-        status_c = ne10_fir_decimate_init_float (&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
-        status_neon = ne10_fir_decimate_init_float (&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
+        ne10_result_t status_c = ne10_fir_decimate_init_float (&SC, config->numTaps, config->D, config->coeffsF32, fir_state_c, config->blockSize);
+        ne10_result_t status_neon = ne10_fir_decimate_init_float (&SN, config->numTaps, config->D, config->coeffsF32, fir_state_neon, config->blockSize);
 
         if ( ( (status_c == NE10_ERR) || (status_neon == NE10_ERR)))
         {
@@ -316,7 +305,7 @@ void test_fir_decimate_case0()
         }
 
         /* copy input to input buffer */
-        for (i = 0; i < TEST_LENGTH_SAMPLES; i++)
+        for (ne10_uint16_t i = 0; i < TEST_LENGTH_SAMPLES; i++)
         {
             in_c[i] = testInput_f32[i];
             in_neon[i] = testInput_f32[i];
@@ -326,9 +315,9 @@ void test_fir_decimate_case0()
         (
             time_c,
         {
-            for (k = 0; k < TEST_COUNT; k++)
+            for (ne10_uint16_t k = 0; k < TEST_COUNT; k++)
             {
-                for (block = 0; block < config->numFrames; block++)
+                for (ne10_uint16_t block = 0; block < config->numFrames; block++)
                 {
                     ne10_fir_decimate_float_c (&SC, in_c + (block * config->blockSize), out_c + (block * config->blockSize / config->D), config->blockSize);
                 }
@@ -340,9 +329,9 @@ void test_fir_decimate_case0()
         (
             time_neon,
         {
-            for (k = 0; k < TEST_COUNT; k++)
+            for (ne10_uint16_t k = 0; k < TEST_COUNT; k++)
             {
-                for (block = 0; block < config->numFrames; block++)
+                for (ne10_uint16_t block = 0; block < config->numFrames; block++)
                 {
                     ne10_fir_decimate_float_neon (&SN, in_neon + (block * config->blockSize), out_neon + (block * config->blockSize / config->D), config->blockSize);
                 }

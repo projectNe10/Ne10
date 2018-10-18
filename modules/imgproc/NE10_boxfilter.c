@@ -98,31 +98,26 @@ void ne10_img_boxfilter_row_border (const ne10_uint8_t* src,
     *border_l_p = anchor.x;
     *border_r_p = kernel.x - (anchor.x + 1);
 
-    ne10_int32_t x, y, k;
-
-    const ne10_uint8_t *src_row;
-    ne10_uint8_t *dst_row;
-
-    for (y = 0; y < src_sz.y; y++)
+    for (ne10_int32_t y = 0; y < src_sz.y; y++)
     {
-        src_row = src + y * src_stride;
-        dst_row = dst + y * dst_stride;
+        const ne10_uint8_t *src_row = src + y * src_stride;
+        ne10_uint8_t *dst_row = dst + y * dst_stride;
         ne10_float32_t sum[RGBA_CH];
 
         /* compute left border */
         ne10_int32_t offset = kernel.x - *border_l_p - 1;
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
             sum[k] = 0;
-            for (x = 0; x < offset; x++)
+            for (ne10_int32_t x = 0; x < offset; x++)
             {
                 sum[k] += * (src_row + x * RGBA_CH + k);
             }
         }
 
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
-            for (x = 0; x < *border_l_p; x++)
+            for (ne10_int32_t x = 0; x < *border_l_p; x++)
             {
                 sum[k] += * (src_row + (offset + x) *
                              RGBA_CH + k);
@@ -132,19 +127,19 @@ void ne10_img_boxfilter_row_border (const ne10_uint8_t* src,
         }
 
         /* compute right border */
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
             sum[k] = 0;
-            for (x = 0; x < kernel.x; x++)
+            for (ne10_int32_t x = 0; x < kernel.x; x++)
             {
                 sum[k] += * (src_row + (src_sz.x - kernel.x + x) *
                              RGBA_CH + k);
             }
         }
 
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
-            for (x = 0; x < *border_r_p; x++)
+            for (ne10_int32_t x = 0; x < *border_r_p; x++)
             {
                 sum[k] -= * (src_row + (src_sz.x - kernel.x + x) *
                              RGBA_CH + k);
@@ -223,31 +218,27 @@ void ne10_img_boxfilter_col_border (const ne10_uint8_t *src,
     *border_t_p = anchor.y;
     *border_b_p = kernel.y - (anchor.y + 1);
 
-    ne10_int32_t x, y, k;
-    const ne10_uint8_t *src_col;
-    ne10_uint8_t *dst_col;
-
-    for (x = 0; x < src_sz.x; x++)
+    for (ne10_int32_t x = 0; x < src_sz.x; x++)
     {
-        src_col = src + x * RGBA_CH;
-        dst_col = dst + x * RGBA_CH;
+        const ne10_uint8_t *src_col = src + x * RGBA_CH;
+        ne10_uint8_t *dst_col = dst + x * RGBA_CH;
         ne10_float32_t sum[RGBA_CH];
 
         /* compute top border */
         ne10_int32_t offset = kernel.y - *border_t_p - 1;
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
             sum[k] = 0;
 
-            for (y = 0; y < offset; y++)
+            for (ne10_int32_t y = 0; y < offset; y++)
             {
                 sum[k] += * (src_col + y * src_stride + k);
             }
         }
 
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
-            for (y = 0; y < *border_t_p; y++)
+            for (ne10_int32_t y = 0; y < *border_t_p; y++)
             {
                 sum[k] += * (src_col + (offset + y) *
                              src_stride + k);
@@ -257,19 +248,19 @@ void ne10_img_boxfilter_col_border (const ne10_uint8_t *src,
         }
 
         /* compute the bottom border */
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
             sum[k] = 0;
-            for (y = 0; y < kernel.y; y++)
+            for (ne10_int32_t y = 0; y < kernel.y; y++)
             {
                 sum[k] += * (src_col + (src_sz.y - kernel.y + y) *
                              src_stride + k);
             }
         }
 
-        for (k = 0; k < RGBA_CH; k++)
+        for (ne10_int32_t k = 0; k < RGBA_CH; k++)
         {
-            for (y = 0; y < *border_b_p; y++)
+            for (ne10_int32_t y = 0; y < *border_b_p; y++)
             {
                 sum[k] -= * (src_col + (src_sz.y - kernel.y + y) *
                              src_stride + k);

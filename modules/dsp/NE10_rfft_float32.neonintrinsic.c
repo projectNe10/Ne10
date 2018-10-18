@@ -487,11 +487,10 @@ NE10_INLINE void ne10_radix4x4_r2c_with_twiddles_neon (ne10_fft_cpx_float32_t *F
 
     const float32x4_t *Fin_neon  = (float32x4_t*) Fin;
           float32x4_t *Fout_neon = (float32x4_t*) Fout;
-    const ne10_fft_cpx_float32_t *tw;
 
     for (f_count = fstride; f_count; f_count --)
     {
-        tw = twiddles + 3;
+        const ne10_fft_cpx_float32_t* tw = twiddles + 3;
 
         // first butterfly
         ne10_radix4x4_r2c_with_twiddles_first_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, NULL);
@@ -529,11 +528,10 @@ NE10_INLINE void ne10_radix4x4_c2r_with_twiddles_neon (ne10_fft_cpx_float32_t *F
 
     const float32x4_t *Fin_neon  = (float32x4_t*) Fin;
           float32x4_t *Fout_neon = (float32x4_t*) Fout;
-    const ne10_fft_cpx_float32_t *tw;
 
     for (f_count = fstride; f_count; f_count --)
     {
-        tw = twiddles + 3;
+        const ne10_fft_cpx_float32_t* tw = twiddles + 3;
 
         // first butterfly
         ne10_radix4x4_c2r_with_twiddles_first_butterfly_neon ( Fout_neon, Fin_neon, out_step, in_step, NULL);

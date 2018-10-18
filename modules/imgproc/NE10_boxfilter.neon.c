@@ -318,7 +318,7 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
     ne10_uint32_t prev = (anchor.y + 1) * src_stride;
     ne10_uint32_t next = (kernel.y - anchor.y - 1) * src_stride;
 
-    uint16x8_t sum_vec, sum_vec_pre;
+    uint16x8_t sum_vec_pre;
     int16x8_t sum_vec_s;
     uint8x8_t src_pixel_prev_vec, src_pixel_next_vec;
     uint8x8_t src_pixel_prev_vec_pre, src_pixel_next_vec_pre;
@@ -345,13 +345,12 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
         ne10_uint8_t *dst_pixel = dst_row;
         src_pixel_prev_vec = vld1_u8 (src_pixel - prev);
         src_pixel_next_vec = vld1_u8 (src_pixel + next);
-        ne10_uint16_t *sum, *sum_pre;
-        sum_vec = vld1q_u16 (sum_row);
+        uint16x8_t sum_vec = vld1q_u16 (sum_row);
 
         for (x = 0; x < src_sz_x_adjust; x += 2)
         {
-            sum = sum_row + x * RGBA_CH;
-            sum_pre = sum + 2 * RGBA_CH;
+            ne10_uint16_t *sum = sum_row + x * RGBA_CH;
+            ne10_uint16_t *sum_pre = sum + 2 * RGBA_CH;
             sum_vec_pre = vld1q_u16 (sum_pre);
             /* preload */
             src_pixel = src_row + (x + 2) * RGBA_CH;
@@ -385,7 +384,7 @@ void ne10_img_boxfilter_col_neon (const ne10_uint8_t *src,
         dst_row = dst + (1 + border_t) * dst_stride;
         /* step back one column */
         x = src_sz.x - 2;
-        sum_vec = vld1q_u16 (sum_row + x * RGBA_CH);
+        uint16x8_t sum_vec = vld1q_u16 (sum_row + x * RGBA_CH);
 
         while (src_row < src_row_end)
         {

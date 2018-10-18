@@ -477,7 +477,6 @@ static void ne10_fft_split_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
     float32x4_t q_tw_r, q_tw_i;
     float32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3, q_val;
     float32x4_t q_dst_r, q_dst_i, q_dst2_r, q_dst2_i;
-    float32_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
     tdc.r = src[0].r;
     tdc.i = src[0].i;
@@ -490,11 +489,11 @@ static void ne10_fft_split_r2c_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
     {
         for (k = 1; k <= count ; k += 4)
         {
-            p_src  = (float32_t*) (& (src[k]));
-            p_src2  = (float32_t*) (& (src[ncfft - k - 3]));
-            p_twiddles  = (float32_t*) (& (twiddles[k - 1]));
-            p_dst  = (float32_t*) (& (dst[k]));
-            p_dst2  = (float32_t*) (& (dst[ncfft - k - 3]));
+            float32_t* p_src  = (float32_t*) (& (src[k]));
+            float32_t* p_src2  = (float32_t*) (& (src[ncfft - k - 3]));
+            float32_t* p_twiddles  = (float32_t*) (& (twiddles[k - 1]));
+            float32_t* p_dst  = (float32_t*) (& (dst[k]));
+            float32_t* p_dst2  = (float32_t*) (& (dst[ncfft - k - 3]));
 
             q2_fpk  = vld2q_f32 (p_src);
             q2_fpnk = vld2q_f32 (p_src2);
@@ -575,7 +574,6 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
     float32x4_t q_fek_r, q_fek_i, q_fok_r, q_fok_i;
     float32x4_t q_tmp0, q_tmp1, q_tmp2, q_tmp3, q_val;
     float32x4_t q_dst2_r, q_dst2_i;
-    float32_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
     dst[0].r = (src[0].r + src[ncfft].r) * 0.5f;
     dst[0].i = (src[0].r - src[ncfft].r) * 0.5f;
@@ -584,11 +582,11 @@ static void ne10_fft_split_c2r_1d_float32_neon (ne10_fft_cpx_float32_t *dst,
     {
         for (k = 1; k <= count ; k += 4)
         {
-            p_src  = (float32_t*) (& (src[k]));
-            p_src2  = (float32_t*) (& (src[ncfft - k - 3]));
-            p_twiddles  = (float32_t*) (& (twiddles[k - 1]));
-            p_dst  = (float32_t*) (& (dst[k]));
-            p_dst2  = (float32_t*) (& (dst[ncfft - k - 3]));
+            float32_t* p_src  = (float32_t*) (& (src[k]));
+            float32_t* p_src2  = (float32_t*) (& (src[ncfft - k - 3]));
+            float32_t* p_twiddles  = (float32_t*) (& (twiddles[k - 1]));
+            float32_t* p_dst  = (float32_t*) (& (dst[k]));
+            float32_t* p_dst2  = (float32_t*) (& (dst[ncfft - k - 3]));
 
             q2_fk  = vld2q_f32 (p_src);
             q2_fnkc = vld2q_f32 (p_src2);

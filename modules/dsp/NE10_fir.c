@@ -434,7 +434,6 @@ void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
     ne10_float32_t *pState = S->pState;                 /* State pointer */
     ne10_float32_t *pCoeffs = S->pCoeffs;               /* Coefficient pointer */
     ne10_float32_t *pStateCurnt;                        /* Points to the current sample of the state */
-    ne10_float32_t *px, *pb;                            /* Temporary pointers for state and coefficient buffers */
     ne10_float32_t sum0;                                /* Accumulator */
     ne10_float32_t x0, c0;                              /* Temporary variables to hold state and coefficient values */
     ne10_uint32_t numTaps = S->numTaps;                 /* Number of filter coefficients in the filter */
@@ -465,11 +464,11 @@ void ne10_fir_decimate_float_c (const ne10_fir_decimate_instance_f32_t * S,
         /* Set accumulator to zero */
         sum0 = 0.0f;
 
-        /* Initialize state pointer */
-        px = pState;
+        /* Initialize temporary state pointer */
+        ne10_float32_t *px = pState;
 
-        /* Initialize coeff pointer */
-        pb = pCoeffs;
+        /* Initialize temporary coeff pointer */
+        ne10_float32_t *pb = pCoeffs;
 
         /* Loop unrolling.  Process 4 taps at a time. */
         tapCnt = numTaps >> 2;
@@ -1235,7 +1234,6 @@ static void ne10_circular_write_float (ne10_int32_t * circBuffer,
                                        ne10_int32_t srcInc,
                                        ne10_uint32_t blockSize)
 {
-    ne10_uint32_t i = 0u;
     ne10_int32_t wOffset;
 
     /* Copy the value of Index pointer that points
@@ -1243,7 +1241,7 @@ static void ne10_circular_write_float (ne10_int32_t * circBuffer,
     wOffset = *writeOffset;
 
     /* Loop over the blockSize */
-    i = blockSize;
+    ne10_uint32_t i = blockSize;
 
     while (i > 0u)
     {
@@ -1281,7 +1279,6 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
                                       ne10_int32_t dstInc,
                                       ne10_uint32_t blockSize)
 {
-    ne10_uint32_t i = 0u;
     ne10_int32_t rOffset, *dst_end;
 
     /* Copy the value of Index pointer that points
@@ -1290,7 +1287,7 @@ static void ne10_circular_read_float (ne10_int32_t * circBuffer,
     dst_end = dst_base + dst_length;
 
     /* Loop over the blockSize */
-    i = blockSize;
+    ne10_uint32_t i = blockSize;
 
     while (i > 0u)
     {
