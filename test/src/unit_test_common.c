@@ -76,14 +76,19 @@ void FILL_FLOAT_ARRAY_LIMIT_GT1 (ne10_float32_t *arr, ne10_uint32_t count)
 }
 
 // this function checks whether the difference between two ne10_float32_t values is within the acceptable error range
-ne10_int32_t EQUALS_FLOAT (ne10_float32_t fa, ne10_float32_t fb , ne10_uint32_t err)
-{   ne10_float32_t tolerance = (ne10_float32_t)err / 200000;
-    if (fabs(fa-fb) <= tolerance)
+ne10_int32_t EQUALS_FLOAT (ne10_float32_t fa, ne10_float32_t fb , ne10_uint32_t delta)
+{
+    ne10_uint32_t mask = ~((1u << delta) - 1);
+    ne10_uint32_t ua = *(ne10_uint32_t *)&fa;
+    ne10_uint32_t ub = *(ne10_uint32_t *)&fb;
+    ne10_uint32_t diff = ua & ub;
+    if (~(diff & mask))
     {
         return 1;
     }
     else
     {
+        // printf("%u, %u, %u, %u\n", ua, ub, ua ^ ub, mask);
         return 0;
     }
 }

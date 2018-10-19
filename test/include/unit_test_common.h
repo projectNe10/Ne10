@@ -81,7 +81,7 @@
 
 // What's the acceptable error between the integer representations of two ne10_float32_t values
 #define ERROR_MARGIN_SMALL 1
-#define ERROR_MARGIN_LARGE 1
+#define ERROR_MARGIN_LARGE 5
 #define SNR_THRESHOLD 50.0f
 #define PSNR_THRESHOLD 30.0f
 
