@@ -136,7 +136,7 @@ void seatest_simple_test_result_log(int passed, char* reason, const char* functi
                 }
                 else
                 {
-                        printf("%-30s Line %-5d %s\r\n", function, line, reason );
+                        printf("%-30s Line %-5u %s\r\n", function, line, reason );
                 }
                 sea_tests_failed++;
         }
@@ -150,7 +150,7 @@ void seatest_simple_test_result_log(int passed, char* reason, const char* functi
                         }
                         else
                         {
-                                printf("%-30s Line %-5d Passed\r\n", function, line);
+                                printf("%-30s Line %-5u Passed\r\n", function, line);
                         }
                 }
                 sea_tests_passed++;
@@ -188,7 +188,7 @@ void seatest_assert_float_vec_equal( float expected, float actual, unsigned int 
     if (!EQUALS_FLOAT(expected, actual, delta))
     {
         char s[SEATEST_PRINT_BUFFER_SIZE];
-        sprintf(s, "Expected %e (0x%04X) but was %e (0x%04X) at vector->%d ",
+        sprintf(s, "Expected %e (0x%04X) but was %e (0x%04X) at vector->%u ",
                 expected, *(unsigned int*)&expected, actual, *(unsigned int*)&actual, seatest_vec);
         seatest_simple_test_result( 0, s, function, line);
     }
@@ -199,7 +199,7 @@ void seatest_assert_float_equal( float expected, float actual, unsigned int  del
     if (!EQUALS_FLOAT(expected, actual, delta))
     {
         char s[SEATEST_PRINT_BUFFER_SIZE];
-        sprintf(s, "Expected %e (0x%04X) but was %e (0x%04X) in loop round %d",
+        sprintf(s, "Expected %e (0x%04X) but was %e (0x%04X) in loop round %u",
                 expected, *(unsigned int*)&expected, actual, *(unsigned int*)&actual, loop_round);
         seatest_simple_test_result( 0, s, function, line);
     }
