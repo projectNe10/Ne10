@@ -194,3 +194,25 @@ endif()
 if(IOS_PLATFORM AND IOS_DEMO)
     add_subdirectory(ios)
 endif()
+
+# This may run the static code analyzer CppCheck on all the project sources,
+# if it is available on the system.
+# NOTE This only works wit hcmake 3.10 or later
+# If you want to run CppCheck manually,
+# you may use this command:
+#     cppcheck --enable=all --std=c99 . 2>&1 \
+#         | grep -v " is never used." \
+#         | grep -v "Checking " \
+#         | grep -v " files checked " \
+#         > cppcheck.log
+find_program(CMAKE_CXX_CPPCHECK NAMES cppcheck)
+if(CMAKE_CXX_CPPCHECK)
+    list(
+        APPEND CMAKE_CXX_CPPCHECK
+            "--std=c99"
+            "--enable=all"
+            "--inconclusive"
+            "--inline-suppr"
+    )
+endif()
+
