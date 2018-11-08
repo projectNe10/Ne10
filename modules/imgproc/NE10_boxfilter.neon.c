@@ -33,6 +33,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <arm_neon.h>
+#include <stdio.h>
 
 extern void ne10_img_boxfilter_row_border (const ne10_uint8_t* src,
                                            ne10_uint8_t* dst,

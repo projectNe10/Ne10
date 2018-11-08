@@ -49,6 +49,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
  */
 
 #include "NE10_fft_generic_int32.neonintrinsic.h"
+#include <stdlib.h>
 
 template<bool is_inverse>
 inline void ne10_mixed_radix_generic_butterfly_int32_neon_dispatch (

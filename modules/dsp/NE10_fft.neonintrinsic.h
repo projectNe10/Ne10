@@ -34,6 +34,8 @@
 
 #include "NE10_fft.h"
 #include <arm_neon.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define NE10_CPX_ADD_NEON_F32(Z,A,B) do {           \
     Z.val[0] = A.val[0] + B.val[0];    \

@@ -47,6 +47,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_types.h"
 #include "NE10_macros.h"
 #include "NE10_fft.h"
+#include <math.h>
+#include <stdlib.h>
 
 /*
  * This function calculates the FFT for power-of-two input sizes using an ordered, mixed

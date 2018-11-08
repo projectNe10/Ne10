@@ -48,6 +48,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_macros.h"
 #include "NE10_fft.h"
 #include "NE10_dsp.h"
+#include <math.h>
+#include <stdlib.h>
 
 #if (NE10_UNROLL_LEVEL > 0)
 

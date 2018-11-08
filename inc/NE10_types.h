@@ -36,11 +36,7 @@
 #ifndef NE10_TYPES_H
 #define NE10_TYPES_H
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
-#include <math.h>
-#include <string.h>
 #include <assert.h>
 
 /**

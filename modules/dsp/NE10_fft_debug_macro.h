@@ -30,6 +30,8 @@
  */
 
 #include "NE10_types.h"
+#include <stdlib.h>
+#include <stdio.h>
 
 #ifndef NE10_FFT_DEBUG_MACRO_H
 #define NE10_FFT_DEBUG_MACRO_H

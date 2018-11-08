@@ -52,6 +52,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_macros.h"
 #include "NE10_fft.neonintrinsic.h"
 #include "NE10_fft_generic_float32.h"
+#include <stdlib.h>
 
 typedef float32x4x2_t CPLX;
 typedef float32x4_t   REAL;

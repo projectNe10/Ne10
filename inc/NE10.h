@@ -67,11 +67,6 @@
 extern "C" {
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-
 #include "NE10_types.h"
 #include "NE10_macros.h"
 #include "NE10_init.h"

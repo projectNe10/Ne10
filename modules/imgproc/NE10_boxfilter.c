@@ -73,6 +73,7 @@
 
 #include "NE10.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /* RGBA CHANNEL number is 4 */
 #define RGBA_CH 4

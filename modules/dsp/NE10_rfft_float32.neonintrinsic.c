@@ -51,6 +51,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_fft.h"
 #include "NE10_dsp.h"
 #include "NE10_fft.neonintrinsic.h"
+#include <stdlib.h>
 
 NE10_INLINE void ne10_radix8x4_r2c_neon (ne10_fft_cpx_float32_t *Fout,
                                   const ne10_fft_cpx_float32_t *Fin,

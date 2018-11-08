@@ -48,6 +48,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_macros.h"
 #include "NE10_fft.h"
 #include "NE10_fft_generic_int32.h"
+#include <stdlib.h>
 
 /**
  * @brief Generic butterfly function for 32-bit fixed point.
