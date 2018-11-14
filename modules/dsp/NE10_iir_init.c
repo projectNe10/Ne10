@@ -29,6 +29,7 @@
  * NE10 Library : dsp/NE10_iir_init.c
  */
 #include "NE10_types.h"
+#include <string.h>
 
 
 /**

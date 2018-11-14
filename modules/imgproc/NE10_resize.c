@@ -73,6 +73,7 @@
  */
 
 #include "NE10.h"
+#include <string.h>
 
 /**
  * @ingroup groupIMGPROCs

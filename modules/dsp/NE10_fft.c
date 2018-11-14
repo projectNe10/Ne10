@@ -47,6 +47,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "NE10_types.h"
 #include "NE10_macros.h"
 #include "NE10_fft.h"
+#include <math.h>
+#include <string.h>
 
 /*
  * This function outputs a factor buffer ('facbuf') that decomposes an FFT of input size

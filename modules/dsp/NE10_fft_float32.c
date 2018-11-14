@@ -46,6 +46,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 #include "NE10_types.h"
 #include "NE10_macros.h"
+#include <math.h>
 #include "NE10_fft.h"
 
 /*

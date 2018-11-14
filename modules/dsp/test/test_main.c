@@ -30,6 +30,7 @@
  */
 
 #include "seatest.h"
+#include <stdio.h>
 
 void test_fixture_fft_c2c_1d_float32 (void);
 void test_fixture_fft_c2c_1d_int32 (void);

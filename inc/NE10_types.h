@@ -36,12 +36,8 @@
 #ifndef NE10_TYPES_H
 #define NE10_TYPES_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <math.h>
-#include <string.h>
 #include <assert.h>
+#include <stdint.h>
 
 /**
  * @TODO Move the definition of NE10_UNROLL_LEVEL to cmake configuration files.
@@ -130,7 +126,7 @@ typedef struct
 
 static inline void createColumnMajorMatrix2x2 (ne10_mat2x2f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m12, ne10_float32_t m22)
 {
-    assert (NULL != outMat);
+    assert (0 != outMat);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
@@ -158,7 +154,7 @@ static inline void createColumnMajorMatrix3x3 (ne10_mat3x3f_t * outMat, ne10_flo
         ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32,
         ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33)
 {
-    assert (NULL != outMat);
+    assert (0 != outMat);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
@@ -196,7 +192,7 @@ static inline void createColumnMajorMatrix4x4 (ne10_mat4x4f_t * outMat, ne10_flo
         ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33, ne10_float32_t m43,
         ne10_float32_t m14, ne10_float32_t m24, ne10_float32_t m34, ne10_float32_t m44)
 {
-    assert (NULL != outMat);
+    assert (0 != outMat);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
