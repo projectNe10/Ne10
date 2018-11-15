@@ -72,7 +72,7 @@
  * NE10 Library : imgproc/NE10_rotate.c
  */
 
-//#include <math.h>
+#include <math.h>
 #include "NE10.h"
 
 

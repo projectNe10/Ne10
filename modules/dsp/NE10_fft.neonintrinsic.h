@@ -33,6 +33,7 @@
 #define NE10_FFT_NEONINTRINSIC_H
 
 #include "NE10_fft.h"
+#include <stdio.h>
 #include <arm_neon.h>
 
 #define NE10_CPX_ADD_NEON_F32(Z,A,B) do {           \

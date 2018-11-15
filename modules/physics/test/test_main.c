@@ -30,6 +30,7 @@
  */
 
 #include "seatest.h"
+#include <stdio.h>
 
 void test_fixture_physics (void);
 

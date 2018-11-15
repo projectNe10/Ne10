@@ -36,6 +36,7 @@
 #ifndef NE10_MACROS_H
 #define NE10_MACROS_H
 
+#include <stdlib.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -54,7 +55,7 @@ extern "C" {
 #define NE10_FREE(p) \
     do { \
         free(p); \
-        p = NULL; \
+        p = 0; \
     }while(0)
 
 #define NE10_MIN(a,b) ((a)>(b)?(b):(a))

@@ -30,6 +30,7 @@
  */
 
 #include "NE10_types.h"
+#include <math.h>
 
 #ifndef NE10_FFT_COMMON_VARIBLES_H
 #define NE10_FFT_COMMON_VARIBLES_H
