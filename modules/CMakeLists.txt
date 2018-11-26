@@ -385,6 +385,8 @@ if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
     install(TARGETS NE10
       DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../ios/NE10Demo/libs/)
   endif(IOS_DEMO)
+
+    install(TARGETS NE10 DESTINATION lib)
 endif()
 
 if(NE10_BUILD_SHARED)
@@ -420,4 +422,5 @@ if(NE10_BUILD_SHARED)
 
     target_link_libraries(NE10_test m)
 
+    install(TARGETS NE10_shared DESTINATION lib)
 endif()
