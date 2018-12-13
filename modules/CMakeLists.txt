@@ -381,6 +381,8 @@ if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
         LINKER_LANGUAGE C
     )
 
+    target_include_directories(NE10 PUBLIC ../inc)
+
   if(IOS_DEMO)
     install(TARGETS NE10
       DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../ios/NE10Demo/libs/)
@@ -397,6 +399,8 @@ if(NE10_BUILD_SHARED)
     )
 
     target_link_libraries(NE10_shared m)
+    
+    target_include_directories(NE10_shared PUBLIC ../inc)
 
     set_target_properties(NE10_shared PROPERTIES
         OUTPUT_NAME "NE10"
