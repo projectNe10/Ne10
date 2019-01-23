@@ -366,12 +366,17 @@ include_directories (
 )
 
 if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
-    add_library( NE10 STATIC
-        ${NE10_C_SRCS}
-        ${NE10_INTRINSIC_SRCS}
-        ${NE10_NEON_SRCS}
-        ${NE10_INIT_SRCS}
-    )
+
+    if("${NE10_TARGET_ARCH}" STREQUAL "other")
+        add_library( NE10 STATIC ${NE10_C_SRCS} )
+    else()
+        add_library( NE10 STATIC
+            ${NE10_C_SRCS}
+            ${NE10_INTRINSIC_SRCS}
+            ${NE10_NEON_SRCS}
+            ${NE10_INIT_SRCS}
+        )
+    endif()
     set_target_properties(NE10 PROPERTIES
         CLEAN_DIRECT_OUTPUT 1
         VERSION ${NE10_VERSION}
@@ -381,6 +386,14 @@ if(NE10_BUILD_STATIC OR ANDROID_PLATFORM OR IOS_DEMO)
         LINKER_LANGUAGE C
     )
 
+    # If the CMake version supports it, attach header directory information
+    # to the targets for when we are part of a parent build (ie being pulled
+    # in via add_subdirectory() rather than being a standalone build).
+    if (DEFINED CMAKE_VERSION AND NOT "${CMAKE_VERSION}" VERSION_LESS "2.8.11")
+        target_include_directories(NE10 INTERFACE "${PROJECT_SOURCE_DIR}/inc")
+	target_include_directories(NE10 INTERFACE "${PROJECT_SOURCE_DIR}/common")
+    endif()
+
   if(IOS_DEMO)
     install(TARGETS NE10
       DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../ios/NE10Demo/libs/)
@@ -389,12 +402,16 @@ endif()
 
 if(NE10_BUILD_SHARED)
 
-    add_library( NE10_shared SHARED
-        ${NE10_C_SRCS}
-        ${NE10_INTRINSIC_SRCS}
-        ${NE10_NEON_SRCS}
-        ${NE10_INIT_SRCS}
-    )
+    if("${NE10_TARGET_ARCH}" STREQUAL "other")
+        add_library( NE10_shared SHARED ${NE10_C_SRCS} )
+    else()
+        add_library( NE10_shared SHARED
+            ${NE10_C_SRCS}
+            ${NE10_INTRINSIC_SRCS}
+            ${NE10_NEON_SRCS}
+            ${NE10_INIT_SRCS}
+        )
+    endif()
 
     target_link_libraries(NE10_shared m)
 
@@ -419,5 +436,13 @@ if(NE10_BUILD_SHARED)
     )
 
     target_link_libraries(NE10_test m)
+
+    # If the CMake version supports it, attach header directory information
+    # to the targets for when we are part of a parent build (ie being pulled
+    # in via add_subdirectory() rather than being a standalone build).
+    if (DEFINED CMAKE_VERSION AND NOT "${CMAKE_VERSION}" VERSION_LESS "2.8.11")
+        target_include_directories(NE10_shared INTERFACE "${PROJECT_SOURCE_DIR}/inc")
+	target_include_directories(NE10_shared INTERFACE "${PROJECT_SOURCE_DIR}/common")
+    endif()
 
 endif()
