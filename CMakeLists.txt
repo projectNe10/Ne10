@@ -106,6 +106,11 @@ message("-- Loaded toolchain:
 
 if(ANDROID_PLATFORM)
     option(ANDROID_DEMO "Build Android Demo" ON)
+
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
+        set(NE10_ENABLE_IMGPROC OFF)
+    endif()
+
     if(ANDROID_DEMO)
         add_definitions(-DNE10_ANDROID_DEMO)
     endif()

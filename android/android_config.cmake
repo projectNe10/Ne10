@@ -71,7 +71,7 @@ set(CMAKE_SYSTEM_VERSION ${ANDROID_API_LEVEL})
 
 if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
     set(ANDROID_NDK_PLATFORMS_ARCH_SUFFIX "arm")
-    set(ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX "arm-linux-androideabi")
+    set(ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX "armv7a-linux-androideabi")
 elseif(${NE10_ANDROID_TARGET_ARCH} STREQUAL "aarch64")
     if(${ANDROID_API_LEVEL} LESS "21")
         message(FATAL_ERROR "Aarch64 target is only availiable under ANDROID_API_LEVEL version 21 and later. Current ANDROID_API_LEVEL is ${ANDROID_API_LEVEL}.")
@@ -96,9 +96,16 @@ endif()
 #change toolchain name according to your configuration
 set(CMAKE_C_COMPILER ${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}${ANDROID_API_LEVEL}-clang)
 set(CMAKE_CXX_COMPILER ${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}${ANDROID_API_LEVEL}-clang++)
-set(CMAKE_ASM_COMPILER ${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}-as)
-find_program(CMAKE_AR NAMES "${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}-ar")
-find_program(CMAKE_RANLIB NAMES "${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}-ranlib")
+
+if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
+	set(CMAKE_ASM_COMPILER "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/arm-linux-androideabi/bin/as")
+    find_program(CMAKE_AR NAMES "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/arm-linux-androideabi/bin/ar")
+    find_program(CMAKE_RANLIB NAMES "$ENV{ANDROID_NDK}/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/arm-linux-androideabi/bin/ranlib")
+else()
+    set(CMAKE_ASM_COMPILER ${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}-as)
+    find_program(CMAKE_AR NAMES "${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}-ar")
+    find_program(CMAKE_RANLIB NAMES "${ANDROID_TOOLCHAIN_PATH}/${ANDROID_NDK_TOOLCHAIN_CROSS_PREFIX}-ranlib")
+endif()
 
 # Skip the platform compiler checks for cross compiling
 set(CMAKE_C_COMPILER_WORKS 1)
@@ -116,6 +123,7 @@ endif()
 #TODO: Fine tune pic and pie flag for executable, share library and static library.
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=${NDK_SYSROOT_PATH} -pie")
 string(APPEND CMAKE_C_FLAGS " -isysroot ${NDK_ISYSROOT_PATH}")
+# set(CMAKE_ASM_FLAGS "")
 add_definitions(-D__ANDROID_API__=${ANDROID_API_LEVEL})
 
 # Adding cflags for armv7. Aarch64 does not need such flags.
@@ -131,5 +139,5 @@ if(${NE10_TARGET_ARCH} STREQUAL "armv7")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,--no-warn-mismatch")
     endif()
     # Turn on asm optimization for Android on ARM v7.
-    set(NE10_ASM_OPTIMIZATION on)
+    set(NE10_ASM_OPTIMIZATION OFF)
 endif()

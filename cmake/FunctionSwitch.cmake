@@ -27,9 +27,18 @@
 
 # Following definition is only available under armv7.
 if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
-    if(IOS_PLATFORM)
-        # We use intrinsic for iOS, no definition is needed.
-    else()
+    if(ANDROID_PLATFORM)
+        if(NE10_ENABLE_PHYSICS)
+            add_definitions(-DENABLE_NE10_PHYSICS_COMPUTE_AABB_VEC2F_NEON)
+            add_definitions(-DENABLE_NE10_PHYSICS_RELATIVE_V_VEC2F_NEON)
+            add_definitions(-DENABLE_NE10_PHYSICS_APPLY_IMPULSE_VEC2F_NEON)
+        endif()
+        if(NE10_ENABLE_IMGPROC)
+            add_definitions(-DENABLE_NE10_IMG_ROTATE_RGBA_NEON)
+        endif()
+    endif()
+
+    if (GNULINUX_PLATFORM)
         if(NE10_ENABLE_DSP)
             add_definitions(-DENABLE_NE10_FIR_FLOAT_NEON)
             add_definitions(-DENABLE_NE10_FIR_DECIMATE_FLOAT_NEON)
@@ -46,5 +55,9 @@ if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
         if(NE10_ENABLE_IMGPROC)
             add_definitions(-DENABLE_NE10_IMG_ROTATE_RGBA_NEON)
         endif()
+    endif()
+
+    if(IOS_PLATFORM)
+        # We use intrinsic for iOS, no definition is needed.
     endif()
 endif()

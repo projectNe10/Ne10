@@ -199,11 +199,15 @@ if(NE10_ENABLE_DSP)
         if(IOS_PLATFORM)
         else()
             # Add dsp NEON files.
-            set(NE10_DSP_NEON_SRCS
-                ${NE10_DSP_NEON_SRCS}
-                ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
-                ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
-                )
+            if(NE10_ASM_OPTIMIZATION)
+                set(NE10_DSP_NEON_SRCS
+                    ${NE10_DSP_NEON_SRCS}
+                    ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_fir.neon.s
+                    ${PROJECT_SOURCE_DIR}/modules/dsp/NE10_iir.neon.s
+                    )
+            else()
+                # TODO
+            endif()
         endif()
     endif()
 
