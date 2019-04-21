@@ -28,7 +28,7 @@ build_steps: &build_steps
             ln -s ${CMAKE_BIN_DIR}/cpack ${LOCAL_BIN_DIR}/cpack
             ln -s ${CMAKE_BIN_DIR}/ctest ${LOCAL_BIN_DIR}/ctest
           elif [ "${PLATFORM}" == "android" ]; then
-            NDK_VERSION="r16b"
+            NDK_VERSION="r19c"
             sudo apt-get update
             sudo apt-get install cmake
             cd ${HOME}
