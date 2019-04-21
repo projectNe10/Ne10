@@ -53,14 +53,6 @@ if((NOT ANDROID_PLATFORM) AND (NOT GNULINUX_PLATFORM) AND (NOT IOS_PLATFORM))
     message(FATAL_ERROR "No platform is defined! see doc/building.md for build instructions.")
 endif()
 
-if(DEFINED NE10_ANDROID_TARGET_ARCH)
-    if(${NE10_ANDROID_TARGET_ARCH} STREQUAL "armv7")
-        set(NE10_TARGET_ARCH "armv7")
-    else()
-        set(NE10_TARGET_ARCH "aarch64")
-    endif()
-endif()
-
 if(NOT DEFINED NE10_LINUX_TARGET_ARCH AND DEFINED ENV{NE10_LINUX_TARGET_ARCH})
     set(NE10_LINUX_TARGET_ARCH $ENV{NE10_LINUX_TARGET_ARCH})
 endif()
@@ -105,39 +97,18 @@ endif(BUILD_DEBUG)
 # By default, we compile c intrinsic.
 set(NE10_ASM_OPTIMIZATION off)
 
-if(ANDROID_PLATFORM)
-    if(NE10_ARM_HARD_FLOAT)
-        set(FLOAT_ABI "hard")
-    else()
-        set(FLOAT_ABI "softfp")
-    endif()
-
-    #TODO: Fine tune pic and pie flag for executable, share library and static library.
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --sysroot=${NDK_SYSROOT_PATH} -pie")
-    string(APPEND CMAKE_C_FLAGS " -isysroot ${NDK_ISYSROOT_PATH}")
-    add_definitions(-D__ANDROID_API__=${ANDROID_API_LEVEL})
-
-    # Adding cflags for armv7. Aarch64 does not need such flags.
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb -march=armv7-a -mfloat-abi=${FLOAT_ABI} -mfpu=vfp3")
-        if(NE10_ARM_HARD_FLOAT)
-            # "--no-warn-mismatch" is needed for linker to suppress linker error about not all functions use VFP register to pass argument, eg.
-            #   .../arm-linux-androideabi/bin/ld: error: ..../test-float.o
-            #           uses VFP register arguments, output does not
-            # There is call convension mismatch between NDK's crt*.o and ne10's object files.
-            # crt*.o still uses softfp while ne10's object files use hard floating point.
-            # Refer $NDK/tests/device/hard-float/jni/Android.mk for more details.
-            set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wl,--no-warn-mismatch")
-        endif()
-        # Turn on asm optimization for Android on ARM v7.
-        set(NE10_ASM_OPTIMIZATION on)
-    endif()
-    message("-- Loaded toolchain:
+message("-- Loaded toolchain:
     ${CMAKE_C_COMPILER}
     ${CMAKE_CXX_COMPILER}
     ${CMAKE_ASM_COMPILER}")
     message("-- CMAKE_C_FLAGS:
     ${CMAKE_C_FLAGS}")
+
+if(ANDROID_PLATFORM)
+    option(ANDROID_DEMO "Build Android Demo" ON)
+    if(ANDROID_DEMO)
+        add_definitions(-DNE10_ANDROID_DEMO)
+    endif()
 elseif(GNULINUX_PLATFORM)
     if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mthumb -march=armv7-a -mfpu=vfp3 -funsafe-math-optimizations")
