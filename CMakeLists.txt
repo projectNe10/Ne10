@@ -197,7 +197,7 @@ endif()
 
 # This may run the static code analyzer CppCheck on all the project sources,
 # if it is available on the system.
-# NOTE This only works wit hcmake 3.10 or later
+# NOTE This only works with CMake 3.10 or later
 # If you want to run CppCheck manually,
 # you may use this command:
 #     cppcheck --enable=all --std=c99 . 2>&1 \
@@ -215,4 +215,3 @@ if(CMAKE_CXX_CPPCHECK)
             "--inline-suppr"
     )
 endif()
-
