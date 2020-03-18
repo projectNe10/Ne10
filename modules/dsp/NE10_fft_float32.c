@@ -828,14 +828,13 @@ static void ne10_fft_split_c2r_1d_float32 (ne10_fft_cpx_float32_t *dst,
  */
 ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_c (ne10_int32_t nfft)
 {
-    ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
                               + sizeof (ne10_fft_cpx_float32_t) * nfft       /* twiddles */
                               + sizeof (ne10_fft_cpx_float32_t) * nfft         /* buffer */
                               + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
 
-    st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
+    ne10_fft_cfg_float32_t st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
 
     if (st == NULL)
     {
@@ -943,7 +942,6 @@ void ne10_fft_c2c_1d_float32_c (ne10_fft_cpx_float32_t *fout,
  */
 ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
 {
-    ne10_fft_r2c_cfg_float32_t st = NULL;
     ne10_int32_t ncfft = nfft >> 1;
 
     ne10_uint32_t memneeded = sizeof (ne10_fft_r2c_state_float32_t)
@@ -953,7 +951,7 @@ ne10_fft_r2c_cfg_float32_t ne10_fft_alloc_r2c_float32 (ne10_int32_t nfft)
                               + sizeof (ne10_fft_cpx_float32_t) * nfft                /* buffer */
                               + NE10_FFT_BYTE_ALIGNMENT;                    /* 64-bit alignment */
 
-    st = (ne10_fft_r2c_cfg_float32_t) NE10_MALLOC (memneeded);
+    ne10_fft_r2c_cfg_float32_t st = (ne10_fft_r2c_cfg_float32_t) NE10_MALLOC (memneeded);
 
     if (st)
     {

@@ -117,7 +117,6 @@ void ne10_iir_lattice_float_c (const ne10_iir_lattice_instance_f32_t * S,
     ne10_float32_t fcurr, fnext = 0, gcurr, gnext;      /* Temporary variables for lattice stages */
     ne10_float32_t acc;                                 /* Accumlator */
     ne10_uint32_t blkCnt, tapCnt;                       /* temporary variables for counts */
-    ne10_float32_t *px1, *px2, *pk, *pv;                /* temporary pointers for state and coef */
     ne10_uint32_t numStages = S->numStages;             /* number of stages */
     ne10_float32_t *pState;                             /* State pointer */
     ne10_float32_t *pStateCurnt;                        /* State current pointer */
@@ -138,15 +137,15 @@ void ne10_iir_lattice_float_c (const ne10_iir_lattice_instance_f32_t * S,
         fcurr = *pSrc++;
 
         /* Initialize state read pointer */
-        px1 = pState;
+        ne10_float32_t* px1 = pState;
         /* Initialize state write pointer */
-        px2 = pState;
+        ne10_float32_t* px2 = pState;
         /* Set accumulator to zero */
         acc = 0.0f;
         /* Initialize Ladder coeff pointer */
-        pv = &S->pvCoeffs[S->numStages];
+        ne10_float32_t* pv = &S->pvCoeffs[S->numStages];
         /* Initialize Reflection coeff pointer */
-        pk = &S->pkCoeffs[0];
+        ne10_float32_t* pk = &S->pkCoeffs[0];
 
 
         /* Process sample for first tap */

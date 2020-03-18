@@ -14,6 +14,7 @@
 # ignore output text files
 testlog.txt
 res_*.txt
+*.log
 
 # Release files
 release_*

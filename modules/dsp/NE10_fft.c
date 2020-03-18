@@ -356,14 +356,13 @@ ne10_fft_cfg_float32_t ne10_fft_alloc_c2c_float32_neon (ne10_int32_t nfft)
         return ne10_fft_alloc_c2c_float32_c (nfft);
     }
 
-    ne10_fft_cfg_float32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_float32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
                               + sizeof (ne10_fft_cpx_float32_t) * nfft       /* twiddles */
                               + sizeof (ne10_fft_cpx_float32_t) * nfft         /* buffer */
                               + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
 
-    st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
+    ne10_fft_cfg_float32_t st = (ne10_fft_cfg_float32_t) NE10_MALLOC (memneeded);
 
     // Bad allocation.
     if (st == NULL)
@@ -459,14 +458,13 @@ ne10_fft_cfg_int32_t ne10_fft_alloc_c2c_int32_neon (ne10_int32_t nfft)
         return ne10_fft_alloc_c2c_int32_c (nfft);
     }
 
-    ne10_fft_cfg_int32_t st = NULL;
     ne10_uint32_t memneeded = sizeof (ne10_fft_state_int32_t)
                               + sizeof (ne10_int32_t) * (NE10_MAXFACTORS * 2) /* factors */
                               + sizeof (ne10_fft_cpx_int32_t) * nfft         /* twiddles */
                               + sizeof (ne10_fft_cpx_int32_t) * nfft           /* buffer */
                               + NE10_FFT_BYTE_ALIGNMENT;             /* 64-bit alignment */
 
-    st = (ne10_fft_cfg_int32_t) NE10_MALLOC (memneeded);
+    ne10_fft_cfg_int32_t st = (ne10_fft_cfg_int32_t) NE10_MALLOC (memneeded);
 
     // Bad allocation.
     if (st == NULL)

@@ -88,9 +88,6 @@ static ne10_float32_t time_savings = 0.0f;
 void test_abs_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     /* init function table */
     memset (ftbl_3args, 0, sizeof (ftbl_3args));
     ftbl_3args[ 0] = (ne10_func_3args_t) ne10_abs_float_c;
@@ -116,9 +113,9 @@ void test_abs_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -160,13 +157,13 @@ void test_abs_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -185,9 +182,6 @@ void test_abs_case0()
 void test_addc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -215,9 +209,9 @@ void test_addc_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -271,13 +265,13 @@ void test_addc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < 1; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < 1; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -286,10 +280,10 @@ void test_addc_case0()
     for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -309,9 +303,6 @@ void test_addc_case0()
 void test_add_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -338,9 +329,9 @@ void test_add_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -385,13 +376,13 @@ void test_add_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -411,9 +402,6 @@ void test_add_case0()
 void test_cross_case0()
 {
 #define MAX_VEC_COMPONENTS 3
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -434,9 +422,9 @@ void test_cross_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 2; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 2; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -481,13 +469,13 @@ void test_cross_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 2; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 2; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -507,9 +495,6 @@ void test_cross_case0()
 void test_divc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -537,9 +522,9 @@ void test_divc_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -592,13 +577,13 @@ void test_divc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < 1; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < 1; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -607,10 +592,10 @@ void test_divc_case0()
     for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -630,9 +615,6 @@ void test_divc_case0()
 void test_div_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -659,9 +641,9 @@ void test_div_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -706,13 +688,13 @@ void test_div_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -732,9 +714,6 @@ void test_div_case0()
 void test_dot_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -758,9 +737,9 @@ void test_dot_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
 #ifdef DEBUG_TRACE
             ne10_int32_t vec_size = func_loop + 1;
@@ -807,13 +786,13 @@ void test_dot_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -833,9 +812,6 @@ void test_dot_case0()
 void test_len_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     /* init function table */
     memset (ftbl_3args, 0, sizeof (ftbl_3args));
     ftbl_3args[ 2] = (ne10_func_3args_t) ne10_len_vec2f_c;
@@ -859,9 +835,9 @@ void test_len_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -903,13 +879,13 @@ void test_len_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -928,9 +904,6 @@ void test_len_case0()
 void test_mlac_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -959,9 +932,9 @@ void test_mlac_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1017,13 +990,13 @@ void test_mlac_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < 1; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < 1; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args_cst[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args_cst[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1032,10 +1005,10 @@ void test_mlac_case0()
     for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thecst, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thecst, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1056,9 +1029,6 @@ void test_mlac_case0()
 void test_mla_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1086,9 +1056,9 @@ void test_mla_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1136,13 +1106,13 @@ void test_mla_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop] (perftest_thedst_c, perftest_theacc, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_5args[2 * func_loop + 1] (perftest_thedst_neon, perftest_theacc, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1163,9 +1133,6 @@ void test_mla_case0()
 void test_mulc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1193,9 +1160,9 @@ void test_mulc_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1248,13 +1215,13 @@ void test_mulc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < 1; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < 1; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1263,10 +1230,10 @@ void test_mulc_case0()
     for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1286,9 +1253,6 @@ void test_mulc_case0()
 void test_mul_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1315,9 +1279,9 @@ void test_mul_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1362,13 +1326,13 @@ void test_mul_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1388,9 +1352,6 @@ void test_mul_case0()
 void test_normalize_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     /* init function table */
     memset (ftbl_3args, 0, sizeof (ftbl_3args));
     ftbl_3args[ 2] = (ne10_func_3args_t) ne10_normalize_vec2f_c;
@@ -1414,9 +1375,9 @@ void test_normalize_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1458,13 +1419,13 @@ void test_normalize_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1483,9 +1444,6 @@ void test_normalize_case0()
 void test_rsbc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1513,9 +1471,9 @@ void test_rsbc_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1568,13 +1526,13 @@ void test_rsbc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < 1; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < 1; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1583,10 +1541,10 @@ void test_rsbc_case0()
     for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1606,9 +1564,6 @@ void test_rsbc_case0()
 void test_setc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1635,9 +1590,9 @@ void test_setc_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1688,13 +1643,13 @@ void test_setc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < 1; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < 1; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args_cst[2 * func_loop] (perftest_thedst_c, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args_cst[2 * func_loop] (perftest_thedst_c, perftest_thecst[0], loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst[0], loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1703,10 +1658,10 @@ void test_setc_case0()
     for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thecst, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1725,9 +1680,6 @@ void test_setc_case0()
 void test_subc_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1755,9 +1707,9 @@ void test_subc_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1810,13 +1762,13 @@ void test_subc_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < 1; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < 1; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args_cst[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst[0], loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1825,10 +1777,10 @@ void test_subc_case0()
     for (; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thecst, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thecst, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1848,9 +1800,6 @@ void test_subc_case0()
 void test_sub_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1877,9 +1826,9 @@ void test_sub_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -1924,13 +1873,13 @@ void test_sub_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 0; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -1950,9 +1899,6 @@ void test_sub_case0()
 void test_addmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -1977,9 +1923,9 @@ void test_addmat_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = (func_loop + 1) * (func_loop + 1);
 
@@ -2024,13 +1970,13 @@ void test_addmat_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -2050,9 +1996,6 @@ void test_addmat_case0()
 void test_detmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -2076,9 +2019,9 @@ void test_detmat_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = (func_loop + 1) * (func_loop + 1);
 
@@ -2120,13 +2063,13 @@ void test_detmat_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -2145,9 +2088,6 @@ void test_detmat_case0()
 void test_identitymat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -2168,9 +2108,9 @@ void test_identitymat_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = (func_loop + 1) * (func_loop + 1);
 
@@ -2203,13 +2143,13 @@ void test_identitymat_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_2args[2 * func_loop] (perftest_thedst_c, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_2args[2 * func_loop] (perftest_thedst_c, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_2args[2 * func_loop + 1] (perftest_thedst_neon, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_2args[2 * func_loop + 1] (perftest_thedst_neon, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -2227,9 +2167,6 @@ void test_identitymat_case0()
 void test_invmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -2253,9 +2190,9 @@ void test_invmat_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = (func_loop + 1) * (func_loop + 1);
 
@@ -2297,13 +2234,13 @@ void test_invmat_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -2322,9 +2259,6 @@ void test_invmat_case0()
 void test_mulmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -2349,9 +2283,9 @@ void test_mulmat_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = (func_loop + 1) * (func_loop + 1);
 
@@ -2396,13 +2330,13 @@ void test_mulmat_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -2422,9 +2356,6 @@ void test_mulmat_case0()
 void test_submat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -2449,9 +2380,9 @@ void test_submat_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = (func_loop + 1) * (func_loop + 1);
 
@@ -2496,13 +2427,13 @@ void test_submat_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, perftest_thesrc2, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -2522,9 +2453,6 @@ void test_submat_case0()
 void test_transmat_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -2548,9 +2476,9 @@ void test_transmat_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = (func_loop + 1) * (func_loop + 1);
 
@@ -2592,13 +2520,13 @@ void test_transmat_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop] (perftest_thedst_c, perftest_thesrc1, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_3args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thesrc1, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;
@@ -2617,9 +2545,6 @@ void test_transmat_case0()
 void test_mulcmatvec_case0()
 {
 #define MAX_VEC_COMPONENTS 4
-    ne10_int32_t loop;
-    ne10_int32_t func_loop;
-
     fprintf (stdout, "----------%30s start\n", __FUNCTION__);
 
     /* init function table */
@@ -2644,9 +2569,9 @@ void test_mulcmatvec_case0()
     NE10_DST_ALLOC (thedst_c, guarded_dst_c, fixed_length);
     NE10_DST_ALLOC (thedst_neon, guarded_dst_neon, fixed_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
-        for (loop = 0; loop < TEST_ITERATION; loop++)
+        for (ne10_int32_t loop = 0; loop < TEST_ITERATION; loop++)
         {
             vec_size = func_loop + 1;
 
@@ -2694,13 +2619,13 @@ void test_mulcmatvec_case0()
     NE10_DST_ALLOC (perftest_thedst_c, perftest_guarded_dst_c, perftest_length);
     NE10_DST_ALLOC (perftest_thedst_neon, perftest_guarded_dst_neon, perftest_length);
 
-    for (func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
+    for (ne10_int32_t func_loop = 1; func_loop < MAX_VEC_COMPONENTS; func_loop++)
     {
         GET_TIME (time_c,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thecst, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop] (perftest_thedst_c, perftest_thecst, perftest_thesrc1, loop);
                  );
         GET_TIME (time_neon,
-                  for (loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst, perftest_thesrc1, loop);
+                  for (ne10_int32_t loop = 0; loop < PERF_TEST_ITERATION; loop++) ftbl_4args[2 * func_loop + 1] (perftest_thedst_neon, perftest_thecst, perftest_thesrc1, loop);
                  );
         time_speedup = (ne10_float32_t) time_c / time_neon;
         time_savings = ( ( (ne10_float32_t) (time_c - time_neon)) / time_c) * 100;

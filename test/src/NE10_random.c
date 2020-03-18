@@ -95,14 +95,14 @@ void NE10_float_rng_init_g (NE10_float_rng_t* float_rng, uint32_t seed)
 
 float NE10_float_rng_next_g (NE10_float_rng_t* float_rng)
 {
-    uint32_t frc, exp, sgn, ret;
+    uint32_t ret;
 
     do
     {
         // generate three random numbers
-        frc = NE10_rng_next_g (&float_rng->_private_m_rngs[0]);
-        exp = NE10_rng_next_g (&float_rng->_private_m_rngs[1]);
-        sgn = NE10_rng_next_g (&float_rng->_private_m_rngs[2]);
+        uint32_t frc = NE10_rng_next_g (&float_rng->_private_m_rngs[0]);
+        uint32_t exp = NE10_rng_next_g (&float_rng->_private_m_rngs[1]);
+        uint32_t sgn = NE10_rng_next_g (&float_rng->_private_m_rngs[2]);
 
         // take the top bits ( the sign uses the 17th bit)
         frc = (frc >> 9) & 0x7FFFFF        ;      // (1)b^23

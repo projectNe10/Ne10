@@ -118,7 +118,9 @@ void test_rotate_performance_case()
     ne10_int32_t srcw = SRC_WIDTH;
     ne10_int32_t srch = SRC_HEIGHT;
     ne10_uint32_t dstw_c, dsth_c;
+#ifdef ENABLE_NE10_IMG_ROTATE_RGBA_NEON
     ne10_uint32_t dstw_neon, dsth_neon;
+#endif // ENABLE_NE10_IMG_ROTATE_RGBA_NEON
     ne10_int32_t angle;
     ne10_int64_t time_c = 0;
     ne10_int64_t time_neon = 0;

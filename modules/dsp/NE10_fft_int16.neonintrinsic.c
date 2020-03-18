@@ -1008,7 +1008,6 @@ void ne10_mixed_radix_fft_forward_int16_##scaled##_neon (ne10_fft_cpx_int16_t * 
         ne10_fft_cpx_int16_t * buffer) \
 { \
     ne10_int32_t fstride, mstride, N; \
-    ne10_int32_t fstride1; \
     ne10_int32_t f_count; \
     ne10_int32_t stage_count; \
  \
@@ -1092,7 +1091,6 @@ void ne10_mixed_radix_fft_backward_int16_##scaled##_neon (ne10_fft_cpx_int16_t *
         ne10_fft_cpx_int16_t * buffer) \
 { \
     ne10_int32_t fstride, mstride, N; \
-    ne10_int32_t fstride1; \
     ne10_int32_t f_count; \
     ne10_int32_t stage_count; \
  \
@@ -1190,7 +1188,6 @@ static void ne10_fft_split_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
     int16x8_t q_tw_r, q_tw_i;
     int16x8_t q_tmp0, q_tmp1, q_tmp2, q_tmp3;
     int16x8_t q_dst2_r, q_dst2_i;
-    int16_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
     tdc.r = src[0].r;
     tdc.i = src[0].i;
@@ -1208,11 +1205,11 @@ static void ne10_fft_split_r2c_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
         {
             for (k = 1; k <= count ; k += 8)
             {
-                p_src  = (int16_t*) (& (src[k]));
-                p_src2  = (int16_t*) (& (src[ncfft - k - 7]));
-                p_twiddles  = (int16_t*) (& (twiddles[k - 1]));
-                p_dst  = (int16_t*) (& (dst[k]));
-                p_dst2  = (int16_t*) (& (dst[ncfft - k - 7]));
+                int16_t* p_src  = (int16_t*) (& (src[k]));
+                int16_t* p_src2  = (int16_t*) (& (src[ncfft - k - 7]));
+                int16_t* p_twiddles  = (int16_t*) (& (twiddles[k - 1]));
+                int16_t* p_dst  = (int16_t*) (& (dst[k]));
+                int16_t* p_dst2  = (int16_t*) (& (dst[ncfft - k - 7]));
 
                 q2_fpk  = vld2q_s16 (p_src);
                 q2_fpnk = vld2q_s16 (p_src2);
@@ -1353,7 +1350,6 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
     int16x8_t q_fek_r, q_fek_i, q_fok_r, q_fok_i;
     int16x8_t q_tmp0, q_tmp1, q_tmp2, q_tmp3;
     int16x8_t q_dst2_r, q_dst2_i;
-    int16_t *p_src, *p_src2, *p_dst, *p_dst2, *p_twiddles;
 
 
     dst[0].r = src[0].r + src[ncfft].r;
@@ -1367,11 +1363,11 @@ static void ne10_fft_split_c2r_1d_int16_neon (ne10_fft_cpx_int16_t *dst,
         {
             for (k = 1; k <= count ; k += 8)
             {
-                p_src  = (int16_t*) (& (src[k]));
-                p_src2  = (int16_t*) (& (src[ncfft - k - 7]));
-                p_twiddles  = (int16_t*) (& (twiddles[k - 1]));
-                p_dst  = (int16_t*) (& (dst[k]));
-                p_dst2  = (int16_t*) (& (dst[ncfft - k - 7]));
+                int16_t* p_src  = (int16_t*) (& (src[k]));
+                int16_t* p_src2  = (int16_t*) (& (src[ncfft - k - 7]));
+                int16_t* p_twiddles  = (int16_t*) (& (twiddles[k - 1]));
+                int16_t* p_dst  = (int16_t*) (& (dst[k]));
+                int16_t* p_dst2  = (int16_t*) (& (dst[ncfft - k - 7]));
 
                 q2_fk  = vld2q_s16 (p_src);
                 q2_fnkc = vld2q_s16 (p_src2);
