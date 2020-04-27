@@ -32,7 +32,7 @@ include_directories (
 
 file(GLOB SAMPLE_SOURCE_FILES "${PROJECT_SOURCE_DIR}/samples/*.c")
 
-if(NE10_BUILD_SHARED)
+if(NE10_BUILD_SHARED AND NE10_BUILD_UNIT_TEST)
     add_executable(NE10_test_dynamic ${SAMPLE_SOURCE_FILES})
     target_link_libraries (
         NE10_test_dynamic
@@ -41,7 +41,7 @@ if(NE10_BUILD_SHARED)
     )
 endif()
 
-if(NE10_BUILD_STATIC)
+if(NE10_BUILD_STATIC AND NE10_BUILD_UNIT_TEST)
     add_executable(NE10_test_static ${SAMPLE_SOURCE_FILES})
     target_link_libraries (
         NE10_test_static
