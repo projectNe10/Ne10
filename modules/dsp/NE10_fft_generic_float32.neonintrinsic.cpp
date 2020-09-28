@@ -343,7 +343,7 @@ static inline void NE10_FFT8_FUC_NEON_F32 (CPLX out[8],
         const CPLX in[8])
 {
     CPLX s[8];
-    const static ne10_fft_cpx_float32_t TW_8[4] =
+    static const ne10_fft_cpx_float32_t TW_8[4] =
     {
         {  1.00000,  0.00000 },
         {  0.70711, -0.70711 },

@@ -83,7 +83,7 @@ static inline void FFT8_FCU (ne10_fft_cpx_float32_t out[8],
 {
     ne10_fft_cpx_float32_t s[8];
 
-    const static ne10_fft_cpx_float32_t TW_8[4] = {
+    static const ne10_fft_cpx_float32_t TW_8[4] = {
         {  1.00000,  0.00000 },
         {  0.70711, -0.70711 },
         {  0.00000, -1.00000 },
