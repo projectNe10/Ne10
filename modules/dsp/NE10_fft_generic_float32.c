@@ -652,6 +652,7 @@ static inline void ne10_mixed_radix_generic_butterfly_float32_impl_c (ne10_fft_c
     case 8:
         ne10_radix_8_butterfly_float32_c (Fout, Fin, NULL, fstride, 1, nfft, 1,
                 is_inverse, is_scaled);
+        break;
     default:
         ne10_radix_generic_butterfly_float32_c (Fout, Fin, twiddles, radix,
                 fstride, 1, is_inverse, is_scaled);
