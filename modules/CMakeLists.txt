@@ -173,6 +173,8 @@ endif(IOS_PLATFORM)
 endif()
 
 if(NE10_ENABLE_DSP)
+    enable_language(CXX)
+
     #enable NE10_init_dsp
     add_definitions(-DNE10_ENABLE_DSP)
 

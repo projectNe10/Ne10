@@ -26,7 +26,7 @@
 #
 cmake_minimum_required(VERSION 2.6)
 
-project(NE10 C CXX ASM)
+project(NE10 C ASM)
 
 option(NE10_BUILD_SHARED "Build NE10 shared libraries" OFF)
 option(NE10_BUILD_STATIC "Build NE10 static libraries" ON)
