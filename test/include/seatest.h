@@ -20,7 +20,7 @@ typedef void (*seatest_void_string)(char*);
 /*
 Declarationsresult_size
 */
-void (*seatest_simple_test_result)(int passed, char* reason, const char* function, unsigned int line);
+//void (*seatest_simple_test_result)(int passed, char* reason, const char* function, unsigned int line);//may cause multiple definition
 void seatest_test_fixture_start(char* filepath);
 void seatest_test_fixture_end( void );
 void seatest_simple_test_result_log(int passed, char* reason, const char* function, unsigned int line);
