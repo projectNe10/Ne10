@@ -192,7 +192,7 @@ static inline void createColumnMajorMatrix4x4 (ne10_mat4x4f_t * outMat, ne10_flo
         ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33, ne10_float32_t m43,
         ne10_float32_t m14, ne10_float32_t m24, ne10_float32_t m34, ne10_float32_t m44)
 {
-    assert (0 != outMat);
+    assert (outMat != nullptr);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
