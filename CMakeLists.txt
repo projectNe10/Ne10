@@ -154,7 +154,7 @@ elseif(IOS_PLATFORM)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -miphoneos-version-min=" ${MIN_IOS_VER})
     set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -mfpu=neon -miphoneos-version-min=" ${MIN_IOS_VER})
 
-    if(${NE10_TARGET_ARCH} STREQUAL "armv7")
+    if("${NE10_TARGET_ARCH}" STREQUAL "armv7")
         set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -mfpu=vfp3 -arch armv7 -arch armv7s")
         set(CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS} -arch armv7 -arch armv7s")
     else()
