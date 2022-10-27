@@ -126,7 +126,7 @@ typedef struct
 
 static inline void createColumnMajorMatrix2x2 (ne10_mat2x2f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m12, ne10_float32_t m22)
 {
-    assert (outMat != 0);
+    assert (outMat != nullptr);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
