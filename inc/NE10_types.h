@@ -126,7 +126,7 @@ typedef struct
 
 static inline void createColumnMajorMatrix2x2 (ne10_mat2x2f_t * outMat, ne10_float32_t m11, ne10_float32_t m21, ne10_float32_t m12, ne10_float32_t m22)
 {
-    assert (0 != outMat);
+    assert (outMat != 0);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
@@ -154,7 +154,7 @@ static inline void createColumnMajorMatrix3x3 (ne10_mat3x3f_t * outMat, ne10_flo
         ne10_float32_t m12, ne10_float32_t m22, ne10_float32_t m32,
         ne10_float32_t m13, ne10_float32_t m23, ne10_float32_t m33)
 {
-    assert (0 != outMat);
+    assert (outMat != nullptr);
 
     outMat->c1.r1 = m11;
     outMat->c1.r2 = m21;
