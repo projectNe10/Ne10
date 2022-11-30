@@ -318,7 +318,7 @@ extern "C" {
  *
  * {
  *     ne10_int32_t fftSize = 1024;
- *     ne10_fft_r2c_cfg_float32_t cfg = ne10_fft_alloc_r2c_float32_neon(fftSize);      // Allocate a configuration structure for R2C/C2R FP32 NEON FFTs of size fftSize
+ *     ne10_fft_r2c_cfg_float32_t cfg = ne10_fft_alloc_r2c_float32(fftSize);           // Allocate a configuration structure for R2C/C2R FP32 FFTs of size fftSize
  *     ne10_float32_t *in          = malloc(fftSize * sizeof(ne10_float32_t));         // Allocate an input array of samples
  *     ne10_fft_cpx_float32_t *out = malloc(fftSize * sizeof(ne10_fft_cpx_float32_t)); // Allocate an (oversized) output array of samples
  *
