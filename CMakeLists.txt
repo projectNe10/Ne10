@@ -187,7 +187,7 @@ endif()
 # Make sure we are compiling for an ARM system.
 # This is a verbose fail-fast in case we are trying to compile for non-ARM;
 # otherwise it would fail at `make` with obscure errors.
-if(GNULINUX_PLATFORM AND (NOT CMAKE_SYSTEM_PROCESSOR MATCHES "^arm"))
+if(GNULINUX_PLATFORM AND (NOT ((CMAKE_SYSTEM_PROCESSOR MATCHES "^arm") OR (CMAKE_SYSTEM_PROCESSOR MATCHES "^aarch"))))
     message(FATAL_ERROR "You are trying to compile for non-ARM (CMAKE_SYSTEM_PROCESSOR='${CMAKE_SYSTEM_PROCESSOR}')! see doc/building.md for cross compilation instructions.")
 endif()
 
