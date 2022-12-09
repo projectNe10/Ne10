@@ -73,7 +73,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 template<int RADIX>
 inline void FFT_MUL_TW (ne10_fft_cpx_int32_t out[RADIX],
         const ne10_fft_cpx_int32_t in[RADIX],
-        const ne10_fft_cpx_int32_t tw[RADIX]);
+        const ne10_fft_cpx_int32_t tw[RADIX-1]);
 
 template<>
 inline void FFT_MUL_TW<2> (ne10_fft_cpx_int32_t out[2],
